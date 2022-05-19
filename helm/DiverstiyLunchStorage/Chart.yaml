@@ -1,0 +1,7 @@
+apiVersion: v2
+name: diversity-lunch-storage
+description: Diversit Lunch storage Charts
+
+version: 1.0.0
+
+type: application

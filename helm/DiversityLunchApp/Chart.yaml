@@ -1,0 +1,9 @@
+apiVersion: v2
+name: diversity-lunch-app
+description: Diversit Lunch App Helm Charts
+
+version: 0.1.0
+
+type: application
+
+appVersion: 0.5.0

@@ -1,0 +1,32 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: {{ .Values.storageClass.name }}
+provisioner: {{ .Values.storageClass.provisioner }}
+reclaimPolicy: Retain
+{{- if and .Values.storageClass.provisioner ( eq  .Values.storageClass.provisioner "kubernetes.io/no-provisioner" ) }}
+volumeBindingMode: WaitForFirstConsumer
+{{- end}}
+{{- if ( ne .Values.storageClass.provisioner "kubernetes.io/no-provisioner" )}}
+parameters:
+  storageaccounttype: Standard_LRS
+  kind: Managed
+{{- end}}
+---
+{{- if and .Values.storageClass.provisioner ( eq  .Values.storageClass.provisioner "kubernetes.io/no-provisioner" ) }}
+apiVersion: v1
+kind: PersistentVolume
+
+metadata:
+  name: {{ .Values.persistentVolume.name }}
+  labels:
+    type: {{ .Values.persistentVolume.name }}
+spec:
+  storageClassName: {{ .Values.storageClass.name }}
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/vol"
+{{- end}}

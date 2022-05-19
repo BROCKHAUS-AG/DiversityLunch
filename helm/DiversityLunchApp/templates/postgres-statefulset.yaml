@@ -1,0 +1,63 @@
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.persitentVloumeClaim.claimName }}
+  namespace: {{ .Values.namespace}}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: {{ .Values.storageClass.name }}
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-sts
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: postgres
+spec:
+  serviceName: postgres-headless-svc
+  selector:
+    matchLabels:
+      app: postgres
+  replicas: 1
+  template:
+    metadata:
+      namespace: diversitylunch
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: diversitylunch-db
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: diversitylunch-db
+                  key: password
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  key: db-name
+                  name: dl-backend-configmap
+            - name: PGDATA
+              value: "/var/lib/postgresql/data/pgdata/db"
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data/pgdata
+              name: pv-data
+      volumes:
+        - name: pv-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.persitentVloumeClaim.claimName}}

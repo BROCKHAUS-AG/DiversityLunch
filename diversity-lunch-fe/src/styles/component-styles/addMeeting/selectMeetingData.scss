@@ -1,0 +1,60 @@
+.SelectMeetingData {
+
+  background-color: #f0f0f0;
+  width: 100%;
+  max-width: 700px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ChooseDate-infoText {
+  margin: 10%;
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.ChooseDate-date-text {
+  margin: 10%;
+  font-size: 1.3em;
+}
+
+.ChooseDate-button {
+  width: 60%;
+  padding: 2% 0 2% 0;
+  margin: 10%;
+  font-size: 1.5em;
+}
+
+.ChooseTime-segment-control {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+}
+
+.ChooseTime-segment-control-segment {
+  border: solid 2px;
+  padding: 2%;
+  margin: 2%;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.ChooseTime-segment-control-segment:focus {
+  background-color: #b81f40;
+  color: white;
+  border-color: black;
+}
+
+
+.ChooseTime-segment-control-segment:hover {
+  background-color: #b81f40;
+  border-color: black;
+  color: white;
+}

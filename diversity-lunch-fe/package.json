@@ -1,0 +1,81 @@
+{
+  "name": "diversity-lunch-ui",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:8080",
+  "dependencies": {
+    "@date-io/date-fns": "^2.10.8",
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/lab": "^4.0.0-alpha.58",
+    "@material-ui/pickers": "^3.3.10",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.7.3",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^12.20.4",
+    "@types/react": "^17.0.2",
+    "@types/react-calendar": "^3.1.4",
+    "@types/react-dom": "^17.0.1",
+    "@types/react-redux": "^7.1.16",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/redux": "^3.6.0",
+    "@types/redux-thunk": "^2.1.0",
+    "axios": "^0.21.1",
+    "history": "^5.3.0",
+    "react": "^17.0.1",
+    "react-calendar": "^3.4.0",
+    "react-dom": "^17.0.1",
+    "react-dropdown": "^1.9.2",
+    "react-modern-calendar-datepicker": "^3.1.6",
+    "react-redux": "^7.2.4",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "5.0.1",
+    "redux": "^4.1.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.3.0",
+    "rn-segmented-control": "^0.2.7",
+    "sass": "^1.32.8",
+    "typescript": "^4.2.2",
+    "web-vitals": "^1.1.0"
+  },
+  "scripts": {
+    "start": "PORT=4000 react-scripts start",
+    "start-port-80": "set PORT=80 && react-scripts start",
+    "start-win": "set PORT=4000 && react-scripts start",
+    "ci:build": "CI=true && npm run build",
+    "ci:build-win": "set CI=true && npm run build",
+    "ci:test": "CI=true && npm run test -- --coverage --watchAll=false",
+    "ci:test-win": "set CI=true && npm run test -- --coverage --watchAll=false",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "test-html": "npm run test -- --coverage --watchAll=false --coverageReporters=cobertura --coverageReporters=html",
+    "eject": "react-scripts eject",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
+    "lint:fix": "eslint --fix \"**/*.{ts,tsx}\""
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.1",
+    "@typescript-eslint/parser": "^5.12.1",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0"
+  }
+}

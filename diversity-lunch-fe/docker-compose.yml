@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: "."
+    container_name: "diversity-lunch-frontend"
+    ports:
+      - "4000:4000"
+    environment:
+      BACKEND_HOST: "http://localhost:8080"

@@ -1,0 +1,47 @@
+  .Dashboard{
+  width:100%;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Dashboard-logo-container{
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.Dashboard-icon-container{
+  width: 100%;
+  max-width: 600px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+}
+
+.Dashboard-icons{
+  max-width: 8%;
+  margin: 5%;
+}
+
+
+.Dashboard-tiles-container{
+  width: 100%;
+  height:50vh;
+
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+}
+
+p {
+  font-family: SourceSansProRegular, sans-serif;
+}

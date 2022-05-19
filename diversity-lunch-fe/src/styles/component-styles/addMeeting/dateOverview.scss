@@ -1,0 +1,66 @@
+.DateOverview {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.DateOverview-logo-container{
+  width: 100%;
+  height: 40vh;
+}
+
+.DateOverview-info-text-container{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20vh;
+}
+
+.DateOverview-info-text{
+  width: 80%;
+  max-width: 400px;
+  hyphens: auto;
+}
+
+.DateOverview-meeting-container{
+  width: 80%;
+  height: 15vh;
+  max-width: 400px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.DateOverview-meeting{
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  justify-items: start;
+}
+
+.DateOverview-meeting-text{
+  margin: 2%;
+  font-weight: bold;
+  min-width: 220px;
+}
+
+.DateOverview-meeting-icon{
+  max-width: 40px;
+}
+
+.DateOverview-button-container{
+  width: 100%;
+  height: 25vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+

@@ -1,0 +1,56 @@
+namespace: diversitylunch
+
+persitentVloumeClaim:
+  claimName: managed-disk
+
+storageClass:
+  name: diversity-db-storage
+
+db:
+  username: spring-backend
+  password: SuperSecurePW
+  dbname: DiversityLunchDb
+
+configBackend:
+  clientId: client-i-d
+  tenantId: tenantid
+  issuerUri: https://sts.windows.net/<<tenantid>>/
+  mailHost: smtp.example.net
+  mailPort: 587
+  mailAddress: DiversityLunch@example.de
+
+configFrontend:
+  appConfig: |+
+    window.appConfig = {
+        REACT_APP_OIDC_CLIENT_ID: 'client-i-d',
+        REACT_APP_OIDC_SCOPE: 'client-i-d/.default openid profile email',
+        REACT_APP_OIDC_CONFIG_ENDPOINT: 'https://login.microsoftonline.com/<<tenatnid>>/.well-known/openid-configuration',
+        REACT_APP_OIDC_REDIRECT_URI: 'localhost',
+        REACT_APP_OIDC_AUTHORIZATION_ENDPOINT: 'https://login.microsoftonline.com/<<tenantid>>/oauth2/v2.0/authorize',};
+
+smtp:
+  password: pw
+  username: admin
+
+tcUser:
+  userId: ek-f
+  clientSecret: ek-f
+
+imageCredentials:
+  registry: diversitylunchregistry.azurecr.io
+  username: putInUsername
+  password: putInPassword/secret
+
+ingressController:
+  - ingress:
+      metadata:
+        name: diversity-lunch
+        annotations: {}
+          #cert-manager.io/issuer: letsencrypt
+          #acme.cert-manager.io/http01-edit-in-place: "true"
+      tls: {}
+        #- hosts:
+        #  - localhost
+      # secretName: frontend-ingress-cert
+      rules:
+        - host: localhost

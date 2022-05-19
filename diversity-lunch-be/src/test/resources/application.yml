@@ -1,0 +1,27 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://sts.windows.net/27c03e6b-896a-4617-9f07-00ec1f9a074e/
+
+  liquibase:
+    enabled: false
+
+  mail:
+    host: localhost
+    port: 1025
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+
+diversity:
+  ms-teams:
+    time-zone: "Europe/Berlin"

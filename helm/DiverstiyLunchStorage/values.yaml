@@ -1,0 +1,6 @@
+storageClass:
+  name: diversity-db-storage
+  provisioner: kubernetes.io/no-provisioner
+
+persistentVolume:
+  name: diversity-db-storage-volume

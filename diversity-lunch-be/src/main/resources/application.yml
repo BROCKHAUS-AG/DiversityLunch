@@ -1,0 +1,57 @@
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: "jdbc:postgresql://${DB_HOST}:5432/${POSTGRES_DB}"
+    username: "${POSTGRES_USER}"
+    password: "${POSTGRES_PASSWORD}"
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: true
+
+  mvc:
+    format:
+      date: iso
+      date-time: iso
+      time: iso
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "${ISSUER_URI}"
+  # Mail Settings
+  mail:
+    host: "${MAIL_HOST}"
+    port: "${MAIL_PORT}"
+    username: "${MAIL_USERNAME}"
+    password: "${MAIL_PASSWORD}"
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+logging:
+  level:
+    root: info
+
+azure:
+  activedirectory:
+    tenant-id: "${TENANT_ID}"
+    client-id: "${CLIENT_ID}"
+
+diversity:
+  mail:
+    sender: "${MAIL_ADDRESS}"
+
+  ms-teams:
+    client-secret: "${CLIENT_SECRET}"
+    diversity-lunch-user-id: "${DIVERSITY_LUNCH_USER_ID}"
+    time-zone: "Europe/Berlin"

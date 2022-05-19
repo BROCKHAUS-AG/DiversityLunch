@@ -1,0 +1,27 @@
+.Tile{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10%;
+  text-decoration: none;
+}
+
+.Tile-link{
+  text-decoration: none;
+  color: black;
+}
+
+.Tile-icon{
+  max-width: 30%;
+  margin: 5%;
+}
+
+.Tile-title{
+  margin: 5%;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.9em;
+  color: #b81f40;
+}

@@ -1,0 +1,16 @@
+Hallo %s und %s,
+
+vielen Dank für eure Teilnahme am Diversity-Lunch.
+
+Ihr trefft euch am %s um %s Uhr zum Mittagessen.
+
+Bitte vermerkt euch diesen Termin in eurem Kalender. Eine Stunde vor dem eigentlichen Treffen erhaltet ihr noch eine Erinnerung mit einem kleinen Leitfaden für euer Gespräch.
+
+Wir wünschen schon jetzt viel Spaß bei eurem gemeinsamen Mittagessen.
+
+
+Viele Grüße
+das Diversity-Lunch-Team
+
+
+powered by BROCKHAUS AG

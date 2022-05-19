@@ -1,0 +1,134 @@
+//Übergeordneter Container in dem alle Components liegen
+.App {
+  background-color: darkgray;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  height: 100%;
+  font-family: SourceSansProRegular, sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  letter-spacing: 0;
+  line-height: 100%;
+}
+
+//Die Mobile View, die auf jedem Gerät angezeigt wird
+.Screen {
+  width: 100%;
+  max-width: 700px;
+  min-height: 100vh;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: #f0f0f0;
+}
+
+h1 {
+  font-family: GilroyLight, sans-serif;
+  text-transform: uppercase;
+  font-size: 61px !important;
+  letter-spacing: -0.015em;
+  line-height: 140%;
+  color: #b81f40;
+}
+
+h2 {
+  font-family: GilroyLight, sans-serif;
+  text-transform: uppercase;
+  font-size: 49px !important;
+  letter-spacing: -0.005em;
+  line-height: 140%;
+  color: #b81f40;
+}
+
+h3 {
+  font-family: GilroyRegular, sans-serif;
+  text-transform: uppercase;
+  font-size: 39px !important;
+  letter-spacing: 0;
+  line-height: 140%;
+  color: #b81f40;
+}
+
+h4 {
+  font-family: GilroyRegular, sans-serif;
+  text-transform: uppercase;
+  font-size: 31px !important;
+  letter-spacing: 0.0025em;
+  line-height: 140%;
+  color: #b81f40;
+}
+
+h5 {
+  font-family: GilroyRegular, sans-serif;
+  text-transform: uppercase;
+  font-size: 25px !important;
+  letter-spacing: 0;
+  line-height: 140%;
+  color: #b81f40;
+}
+
+h6 {
+  font-family: GilroyMedium, sans-serif;
+  text-transform: uppercase;
+  font-size: 20px !important;
+  letter-spacing: 0.0015em;
+  line-height: 140%;
+  color: #b81f40;
+}
+
+p {
+  color: #575756;
+  font-family: SourceSansProRegular, sans-serif;
+}
+
+text {
+  color: #575756;
+}
+
+:host {
+
+  --color-text-primary: var(--color-secondary-2-10);
+  --color-disabled: var(--color-secondary-2-13);
+
+  // Font
+  --font-1-size: 1.2rem;
+
+  // Border
+  --border-radius-none: 0;
+  --border-radius-round: 50%;
+  --border-radius-rounded: 0.15em;
+
+}
+
+
+Button {
+  background-color: #ffffff;
+  white-space: nowrap;
+  padding: 14px;
+  border: 1px solid #F8E9EC;
+
+  color: #B81F40;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+  font-family: GilroyMedium, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+
+}
+
+Button:hover{
+  border: 1px solid #F1D2D9;
+  color: #931933;
+}
+
+Button:focus{
+  border: 1px solid #E3A4B3;
+  color: #6E1326;
+}
+
+Button:disabled{
+  border: 1px solid #F3F3F3;
+  color: #575756;
+}

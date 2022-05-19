@@ -1,0 +1,48 @@
+version: "3.8"
+
+
+networks:
+  diversity-lunch:
+
+services:
+  db:
+    image: postgres
+    container_name: diversity-lunch-db
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+    ports:
+      - "5432:5432"
+    networks:
+      - diversity-lunch
+
+  backend:
+    build:
+      context: ".."
+    container_name: diversity-lunch-backend
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+      MAIL_HOST: mailhog
+      MAIL_PORT: 1025
+      MAIL_USERNAME: "${MAIL_USERNAME}"
+      MAIL_PASSWORD: "${MAIL_PASSWORD}"
+      MAIL_ADDRESS: "${MAIL_ADDRESS}"
+    ports:
+      - "8080:8080"
+    networks:
+      - diversity-lunch
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: diversity-lunch-mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - diversity-lunch

@@ -1,0 +1,84 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop, main ]
+  workflow_dispatch:
+
+jobs:
+  test-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 17.0.2
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17.0.2
+      - name: Add execution privileges
+        run: chmod +x ./mvnw
+        working-directory: ./diversity-lunch-be
+      - name: Test Backend
+        run: ./mvnw test
+        working-directory: ./diversity-lunch-be
+
+  build-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 17.0.2
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17.0.2
+      - name: Add execution privileges
+        run: chmod +x ./mvnw
+        working-directory: ./diversity-lunch-be
+      - name: Build Backend .jar
+        run: ./mvnw package
+        working-directory: ./diversity-lunch-be
+
+  test-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Npm Setup
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+      - name: Npm Install
+        run: npm install
+        working-directory: ./diversity-lunch-fe
+      - name: Test frontend
+        run: npm test
+        working-directory: ./diversity-lunch-fe
+
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Npm Setup
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+      - name: Npm Install
+        run: npm install
+        working-directory: ./diversity-lunch-fe
+      - name: Build Frontend
+        run: npm run build
+        working-directory: ./diversity-lunch-fe
+
+  lint-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Npm Setup
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+      - name: Npm Install
+        run: npm install
+        working-directory: ./diversity-lunch-fe
+      - name: Test frontend
+        run: npm run lint
+        working-directory: ./diversity-lunch-fe

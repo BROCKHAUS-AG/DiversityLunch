@@ -1,0 +1,14 @@
+Hallo %s,
+
+Vielen Dank für deine Teilnahme am Diversity-Lunch.
+
+Du triffst in einer Stunde %s zum Mittagessen.
+Damit ihr direkt in euer Gespräch einsteigen könnt,
+möchten wir euch ein paar Diskussionsfragen zu dem Thema %s mitgeben.
+
+%s
+
+Diese Fragen sollen nur als Einstieg in das Gespräch dienen.
+Unterhaltet euch gerne über unterschiedliche Themen, identifiziert Gemeinsamkeiten und erläutert Unterschiede.
+
+Viel Spaß und gute Gespräche bei eurem gemeinsamen Mittagessen wünscht das Diversity-Lunch-Team.

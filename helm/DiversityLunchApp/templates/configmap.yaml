@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dl-backend-configmap
+  namespace: {{ .Values.namespace }}
+data:
+  db-name: {{ .Values.db.dbname }}
+  tenant-id: {{ .Values.configBackend.tenantId }}
+  client-id: {{ .Values.configBackend.clientId }}
+  db-host: postgres-headless-svc
+  issuer-uri: {{ .Values.configBackend.issuerUri | quote }}
+  mail-address: {{ .Values.configBackend.mailAddress }}
+  mail-host: {{ .Values.configBackend.mailHost }}
+  mail-port: {{ .Values.configBackend.mailPort | quote }}
+
+---
+
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: frontend-configuration
+  namespace: {{ .Values.namespace }}
+data:
+  app-config.js: |
+  {{ .Values.configFrontend.appConfig | indent 2 }}
