@@ -57,7 +57,6 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 To learn React, check out the [React documentation](https://reactjs.org/).
 
 <h1>Backend</h1>
-# Diversity Lunch Spring Boot Backend
 
 ## IntelliJ
 ### 1. build
@@ -123,11 +122,6 @@ with one customer/ project thats inside `customers.txt`.
 
 -------------------------
 
-## CI / CD
-The CI pipeline runs automatically when pushed to ``dev`` and builds a Docker image which is loaded into our registry.
-The CD pipeline runs automatically after the CI pipeline runs and deploys our Kubernetes configs to our cluster.
-
--------------------------
 <h1>Deployment</h1>
 <h2>Azure Active Directory</h2>
 
