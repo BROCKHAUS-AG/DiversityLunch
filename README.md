@@ -7,12 +7,6 @@ ReactJS, TypeScript, SwaggerUI, Jest, JavaScript, Redux, Sass, EsLint, Lombok, M
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-##Configuration
-###Configure OICD
-You can configure your OICD Environment Variables (like Client ID).
-Create app-config.js file as specified in example.
-For BAG -> see Onboarding Wiki
-
 ## Available Scripts
 
 In the project directory, you can run:
@@ -90,7 +84,7 @@ For coverage, the coverage runner in IntelliJ should be converted to JaCoCo.
 ## Docker
 ### 1. Dockerfile
 ### 2. Docker Compose
-The Docker compose 'docker/docker-compose.yaml' can be used to start the database and backend locally.
+The Docker compose 'docker/docker-compose.yaml' can be used to start the database, mailhog and backend locally.
 In order for the containers to be configured correctly, there must be a file with environment variables under the path
 'docker/.env', in which the variables 'POSTGRES_USER', 'POSTGRES_PASSWORD' and 'POSTGRES_DB' are set.
 
@@ -98,8 +92,6 @@ In order for the containers to be configured correctly, there must be a file wit
 ## Kubernetes
 
 We recommend a Kubernetes cluster to deploy.
-
-More information for BAG employees: https://dev.azure.com/brockhaus-ag/Diversity-Lunch/_wiki/wikis/Diversity-Lunch.wiki/2857/Kubernetes
 
 -------------------------
 

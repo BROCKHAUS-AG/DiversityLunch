@@ -19,7 +19,7 @@ services:
 
   backend:
     build:
-      context: ".."
+      context: ..
     container_name: diversity-lunch-backend
     depends_on:
       - db
@@ -33,6 +33,11 @@ services:
       MAIL_USERNAME: "${MAIL_USERNAME}"
       MAIL_PASSWORD: "${MAIL_PASSWORD}"
       MAIL_ADDRESS: "${MAIL_ADDRESS}"
+      ISSUER_URI: "${ISSUER_URI}"
+      TENANT_ID: "${TENANT_ID}"
+      CLIENT_ID: "${CLIENT_ID}"
+      DIVERSITY_LUNCH_USER_ID: "${DIVERSITY_LUNCH_USER_ID}"
+      CLIENT_SECRET: "${CLIENT_SECRET}"
     ports:
       - "8080:8080"
     networks:
