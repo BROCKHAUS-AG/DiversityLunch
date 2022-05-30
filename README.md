@@ -1,9 +1,10 @@
-
+<h1>Diversity-Lunch App Installation</h1>
 <h2>Used Technologies</h2>
 ReactJS, TypeScript, SwaggerUI, Jest, JavaScript, Redux, Sass, EsLint, Lombok, ModelMapper, H2 Database, Material, Java Spring Boot, Postgres, Docker, Kubernetes, Azure, Git
 <br>
-<h2> Frontend </h2>
-# Getting Started with Create React App
+<h1> Frontend </h1>
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
