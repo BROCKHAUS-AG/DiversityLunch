@@ -1,13 +1,139 @@
+#Inhaltsverzeichnis
+1. Setting up the app
+    - 1.1 Adding customers to project
+    - 1.2 Setup Authentication
+        - 1.2.1 Backend 
+        - 1.2.2 Frontend
+    - 1.3 Build and start the app
+2. Used Technologies
+3. Getting started with create react app
+4. Fronted - Available scripts
+5. Backend - IntelliJ
+6. Liquibase
 
-<h2>Used Technologies</h2>
+
+#1. Setting up the app
+##1.1 Adding customers to project
+
+To add a list of customers to Diversity Lunch, you have to edit the file `customers.txt` located
+in `Diversity-Lunch-App`. Take your list and paste it into the file, **with one customer a line**.
+
+Afterwards start `AddCustomersToProject.js`. This file takes care of adding the customers to all necessary files.
+
+You can start the script with the console by typing `node AddCustomersToProject.js`. Assure that you are
+located in `Diversity-Lunch-App` where `diversity-lunch-be` and `diversity-lunch-fe` are located.
+
+**Be aware to leave an entry `Sonstiges` in `customers.txt`. The reason for this is that the tests
+need this entry to work properly.**
+
+If you dont want to have an entry like this you have to edit the tests
+in `diversity-lunch-fe` in `ProfileOverview.test.tsx`. Under `projects:'Sonstiges'` you have to replace `Sonstiges`
+with one customer/ project thats inside `customers.txt`.
+
+-------------------------
+##1.2 Setup authentication
+
+###1.2.1 Backend Configuration
+A `.env` file is required for the local installation of the backend. A sample file is located in the subfolder  `docker`. Creates the `.env` file in the same place and populate it with the following content:
+
+```
+POSTGRES_USER=exampleUser
+POSTGRES_PASSWORD=examplePassword
+POSTGRES_DB=exampleDBName
+DB_HOST=IP-Address of DBHost eg. localhost
+MAIL_HOST=IP-Address of MailHost
+MAIL_PORT=1025
+MAIL_USERNAME=exampleUser
+MAIL_PASSWORD=examplePassword
+MAIL_ADDRESS=exampleMail
+ISSUER_URI=https://sts.windows.net/TENANT_ID/`
+TENANT_ID=your Tenant ID
+CLIENT_ID=your Client ID
+CLIENT_SECRET=your Client Secret
+DIVERSITY_LUNCH_USER_ID=your Diversity Lunch User ID
+```
+
+-------------------------
+
+###How to set the Ids?
+
+We use azure active directory for authentication. 
+To get the required ids you have to go into your azure account to your application.
+You have to copy and paste the **application-id** to `CLIENT_ID`, **directory-id** to `TENANT_ID`,
+and your **private key** to `CLIENT_SECRET`. To get the `ISSUER_URI` you have to concatenate
+the `TENANT_ID` to `https://sts.windows.net/`.
+<br/>
+<br/>
+Example:
+`ISSUER_URI=https://sts.windows.net/TENANT_ID/`
+
+The `DIVERSITY_LUNCH_USER_ID` is required to send emails to users after a match.
+You have to create a technical user in your azure app. The technical users task is to
+send notification-mails to each user of a match.<br/>
+To get the `DIVERSITY_LUNCH_USER_ID` just copy the **Object-Id** from your technical user and
+paste it to `DIVERSITY_LUNCH_USER_ID`.
+
+
+With the plugin [EnvFile](https://plugins.jetbrains.com/plugin/7861-envfile) IntelliJ can set the file as an environment for the run time configuration:
+![image.png](.attachments/image-0ea4fb06-178f-4e0f-9535-5294d87eab38.png)
+
+
+
+###1.2.2 Frontend Configuration
+To configure this, the file 'app-config.js' must be created in the folder 'Public/config' and the following content must be added:
+```javascript
+    window.appConfig = {
+       REACT_APP_OIDC_CLIENT_ID: 'your Client ID',
+       REACT_APP_OIDC_SCOPE: 'your Client ID/.default openid profile email',
+       REACT_APP_OIDC_CONFIG_ENDPOINT: 'Microsoft Endpoint Configuration',
+       REACT_APP_OIDC_REDIRECT_URI: 'https://DomainOfYourSite.com/',
+       REACT_APP_OIDC_AUTHORIZATION_ENDPOINT: 'Microsoft Endpoint Authorization',
+    };
+```
+
+The client-Id ist the id from your App that you already used for the backend. <br/><br/>
+`REACT_APP_OIDC_CLIENT_ID`: Your Client-Id.<br/><br/>
+`REACT_APP_OIDC_SCOPE`: `REACT_APP_OIDC_CLIENT_ID/.default openid profile email`<br/><br/>
+`REACT_APP_OIDC_CONFIG_ENDPOINT`: `https://login.microsoftonline.com/TENANT_ID/.well-known/openid-configuration` <br/><br/>
+`REACT_APP_OIDC_REDIRECT_URI`: URL to your Diversity-Lunch-App<br/><br/>
+`REACT_APP_OIDC_AUTHORIZATION_ENDPOINT`: `'https://login.microsoftonline.com/TENANT_ID/oauth2/v2.0/authorize` <br/><br/>
+
+-------------------------
+
+#1.3 Build and start the app
+
+##1.3.1 Frontend
+Go to the diversity-lunch-fe directory and run ```npm run build-fe-win``` on windows or ```npm run build-fe``` otherwise.
+
+##1.3.2 Backend
+Using the Maven tool window or via `./mvnw package` the project can be compiled, tested and packaged.
+
+##1.3.3 Running the app
+### Docker
+
+### Docker Compose
+The Docker compose 'docker/docker-compose.yaml' can be used to start the database, mailhog and backend locally.
+Inside the folder ```DiversityLunch/diversity-lunch-be/docker``` you can run ```docker-compose build```, then ```docker-compose up```.
+
+In order for the containers to be configured correctly, there must be a file with environment variables under the path
+'docker/.env', in which the variables 'POSTGRES_USER', 'POSTGRES_PASSWORD' and 'POSTGRES_DB' are set.
+
+
+## Kubernetes
+
+We recommend a Kubernetes cluster to deploy.
+
+
+
+
+#2. Used Technologies
 ReactJS, TypeScript, SwaggerUI, Jest, JavaScript, Redux, Sass, EsLint, Lombok, ModelMapper, H2 Database, Material, Java Spring Boot, Postgres, Docker, Kubernetes, Azure, Git
 <br>
-<h2> Frontend </h2>
-# Getting Started with Create React App
+#3. Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+#4. Frontend - Available scripts
 
 In the project directory, you can run:
 
@@ -50,9 +176,8 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-<h1>Backend</h1>
+#5. Backend - IntelliJ
 
-## IntelliJ
 ### 1. build
 Using the Maven tool window or via `./mvnw package` the project can be compiled, tested and packaged.
 
@@ -81,109 +206,10 @@ For coverage, the coverage runner in IntelliJ should be converted to JaCoCo.
 
 ------------------------
 
-## Docker
-### 1. Dockerfile
-### 2. Docker Compose
-The Docker compose 'docker/docker-compose.yaml' can be used to start the database, mailhog and backend locally.
-In order for the containers to be configured correctly, there must be a file with environment variables under the path
-'docker/.env', in which the variables 'POSTGRES_USER', 'POSTGRES_PASSWORD' and 'POSTGRES_DB' are set.
 
 
-## Kubernetes
-
-We recommend a Kubernetes cluster to deploy.
-
--------------------------
-
-## Adding Customers to Project
-
-To add a list of customers to Diversity Lunch, you have to edit the file `customers.txt` located
-in `Diversity-Lunch-App`. Take your list and paste it into the file, **with one customer a line**.
-
-Afterwards start `AddCustomersToProject.js`. This file takes care of adding the customers to all necessary files.
-
-You can start the script with the console by typing `node AddCustomersToProject.js`. Assure that you are
-located in `Diversity-Lunch-App` where `diversity-lunch-be` and `diversity-lunch-fe` are located.
-
-**Be aware to leave an entry `Sonstiges` in `customers.txt`. The reason for this is that the tests
-need this entry to work properly.**
-
-If you dont want to have an entry like this you have to edit the tests
-in `diversity-lunch-fe` in `ProfileOverview.test.tsx`. Under `projects:'Sonstiges'` you have to replace `Sonstiges`
-with one customer/ project thats inside `customers.txt`.
-
--------------------------
-
-<h1>Deployment</h1>
-<h2>Azure Active Directory</h2>
-
-###Backend Configuration
-A `.env` file is required for the local installation of the backend. A sample file is located in the subfolder  `docker`. Creates the `.env` file in the same place and populate it with the following content:
-
-```
-POSTGRES_USER=exampleUser
-POSTGRES_PASSWORD=examplePassword
-POSTGRES_DB=exampleDBName
-DB_HOST=IP-Address of DBHost eg. localhost
-MAIL_HOST=IP-Address of MailHost
-MAIL_PORT=1025
-MAIL_USERNAME=exampleUser
-MAIL_PASSWORD=examplePassword
-MAIL_ADDRESS=exampleMail
-ISSUER_URI=https://sts.windows.net/TENANT_ID/`
-TENANT_ID=your Tenant ID
-CLIENT_ID=your Client ID
-CLIENT_SECRET=your Client Secret
-DIVERSITY_LUNCH_USER_ID=your Diversity Lunch User ID
-```
-
-###How to set the Ids?
-
-To get the required ids you have to go into your azure account to your application. 
-You have to copy and paste the **application-id** to `CLIENT_ID`, **directory-id** to `TENANT_ID`,
-and your **private key** to `CLIENT_SECRET`. To get the `ISSUER_URI` you have to concatenate
-the `TENANT_ID` to `https://sts.windows.net/`.
-<br/>
-<br/>
-Example:
-`ISSUER_URI=https://sts.windows.net/TENANT_ID/`
-
-The `DIVERSITY_LUNCH_USER_ID` is required to send emails to users after a match.
-You have to create a technical user in your azure app. The technical users task is to
-send notification-mails to each user of a match.<br/>
-To get the `DIVERSITY_LUNCH_USER_ID` just copy the **Object-Id** from your technical user and 
-paste it to `DIVERSITY_LUNCH_USER_ID`.
-
-
-With the plugin [EnvFile](https://plugins.jetbrains.com/plugin/7861-envfile) IntelliJ can set the file as an environment for the run time configuration:
-![image.png](.attachments/image-0ea4fb06-178f-4e0f-9535-5294d87eab38.png)
-### Deployment
-
-
-###Frontend Configuration
-To configure this, the file 'app-config.js' must be created in the folder 'Public/config' and the following content must be added:
-```javascript
-    window.appConfig = {
-       REACT_APP_OIDC_CLIENT_ID: 'your Client ID',
-       REACT_APP_OIDC_SCOPE: 'your Client ID/.default openid profile email',
-       REACT_APP_OIDC_CONFIG_ENDPOINT: 'Microsoft Endpoint Configuration',
-       REACT_APP_OIDC_REDIRECT_URI: 'https://DomainOfYourSite.com/',
-       REACT_APP_OIDC_AUTHORIZATION_ENDPOINT: 'Microsoft Endpoint Authorization',
-    };
-```
-
-The client-Id ist the id from your App that you already used for the backend. <br/><br/>
-`REACT_APP_OIDC_CLIENT_ID`: Your Client-Id.<br/><br/>
-`REACT_APP_OIDC_SCOPE`: `REACT_APP_OIDC_CLIENT_ID/.default openid profile email`<br/><br/>
-`REACT_APP_OIDC_CONFIG_ENDPOINT`: `https://login.microsoftonline.com/TENANT_ID/.well-known/openid-configuration` <br/><br/>
-`REACT_APP_OIDC_REDIRECT_URI`: URL to your Diversity-Lunch-App<br/><br/>
-`REACT_APP_OIDC_AUTHORIZATION_ENDPOINT`: `'https://login.microsoftonline.com/TENANT_ID/oauth2/v2.0/authorize` <br/><br/>
-
-
-###Liquibase
+#6. Liquibase
 More information at: https://www.liquibase.org/
-Initial setting of Liquibase:
-For local tests/execution (BAGler) create the liquibase.poproperties file as specified in the sample:
 ``` 
 url=jdbc:postgresql://localhost:5432/diversity-lunch
 username=spring-backend
