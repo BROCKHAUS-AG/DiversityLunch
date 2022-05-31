@@ -31,7 +31,7 @@ If you dont want to have an entry like this you have to edit the tests
 in `diversity-lunch-fe` in `ProfileOverview.test.tsx`. Under `projects:'Sonstiges'` you have to replace `Sonstiges`
 with one customer/ project thats inside `customers.txt`.
 
--------------------------
+
 <h2>1.2 Setup authentication<h2>
 
 <h3>1.2.1 Backend Configuration</h3>
@@ -54,7 +54,7 @@ CLIENT_SECRET=your Client Secret
 DIVERSITY_LUNCH_USER_ID=your Diversity Lunch User ID
 ```
 
--------------------------
+
 
 <h3>How to set the Ids?</h3>
 
@@ -99,7 +99,7 @@ The client-Id ist the id from your App that you already used for the backend. <b
 `REACT_APP_OIDC_REDIRECT_URI`: URL to your Diversity-Lunch-App<br/><br/>
 `REACT_APP_OIDC_AUTHORIZATION_ENDPOINT`: `'https://login.microsoftonline.com/TENANT_ID/oauth2/v2.0/authorize` <br/><br/>
 
--------------------------
+
 
 <h1>1.3 Build and start the app</h1>
 
