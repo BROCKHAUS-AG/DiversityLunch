@@ -1,4 +1,5 @@
-#Inhaltsverzeichnis
+<h1>Inhaltsverzeichnis</h1>
+
 1. Setting up the app
     - 1.1 Adding customers to project
     - 1.2 Setup Authentication
@@ -12,8 +13,8 @@
 6. Liquibase
 
 
-#1. Setting up the app
-##1.1 Adding customers to project
+<h1>1. Setting up the app</h1>
+<h2>1.1 Adding customers to project</h2>
 
 To add a list of customers to Diversity Lunch, you have to edit the file `customers.txt` located
 in `Diversity-Lunch-App`. Take your list and paste it into the file, **with one customer a line**.
@@ -31,9 +32,9 @@ in `diversity-lunch-fe` in `ProfileOverview.test.tsx`. Under `projects:'Sonstige
 with one customer/ project thats inside `customers.txt`.
 
 -------------------------
-##1.2 Setup authentication
+<h2>1.2 Setup authentication<h2>
 
-###1.2.1 Backend Configuration
+<h3>1.2.1 Backend Configuration</h3>
 A `.env` file is required for the local installation of the backend. A sample file is located in the subfolder  `docker`. Creates the `.env` file in the same place and populate it with the following content:
 
 ```
@@ -55,7 +56,7 @@ DIVERSITY_LUNCH_USER_ID=your Diversity Lunch User ID
 
 -------------------------
 
-###How to set the Ids?
+<h3>How to set the Ids?</h3>
 
 We use azure active directory for authentication. 
 To get the required ids you have to go into your azure account to your application.
@@ -79,7 +80,7 @@ With the plugin [EnvFile](https://plugins.jetbrains.com/plugin/7861-envfile) Int
 
 
 
-###1.2.2 Frontend Configuration
+<h3>1.2.2 Frontend Configuration</h3>
 To configure this, the file 'app-config.js' must be created in the folder 'Public/config' and the following content must be added:
 ```javascript
     window.appConfig = {
@@ -100,18 +101,19 @@ The client-Id ist the id from your App that you already used for the backend. <b
 
 -------------------------
 
-#1.3 Build and start the app
+<h1>1.3 Build and start the app</h1>
 
-##1.3.1 Frontend
+<h2>1.3.1 Frontend</h2>
 Go to the diversity-lunch-fe directory and run ```npm run build-fe-win``` on windows or ```npm run build-fe``` otherwise.
 
-##1.3.2 Backend
+<h2>1.3.2 Backend</h2>
 Using the Maven tool window or via `./mvnw package` the project can be compiled, tested and packaged.
 
-##1.3.3 Running the app
-### Docker
+<h2>1.3.3 Running the app</h2>
+<h3>  Docker </h3>
 
-### Docker Compose
+<h3>  Docker Compose</h3>
+
 The Docker compose 'docker/docker-compose.yaml' can be used to start the database, mailhog and backend locally.
 Inside the folder ```DiversityLunch/diversity-lunch-be/docker``` you can run ```docker-compose build```, then ```docker-compose up```.
 
@@ -119,25 +121,29 @@ In order for the containers to be configured correctly, there must be a file wit
 'docker/.env', in which the variables 'POSTGRES_USER', 'POSTGRES_PASSWORD' and 'POSTGRES_DB' are set.
 
 
-## Kubernetes
+<h2>  Kubernetes</h2>
 
 We recommend a Kubernetes cluster to deploy.
 
 
 
 
-#2. Used Technologies
+<h1> 2. Used Technologies</h1>
 ReactJS, TypeScript, SwaggerUI, Jest, JavaScript, Redux, Sass, EsLint, Lombok, ModelMapper, H2 Database, Material, Java Spring Boot, Postgres, Docker, Kubernetes, Azure, Git
 <br>
-#3. Getting Started with Create React App
+<h1> 3. Getting Started with Create React App</h1>
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-#4. Frontend - Available scripts
+<h1> 4. Frontend - Available scripts</h1>
 
 In the project directory, you can run:
 
-### `npm start`
+<h3>  
+
+`npm start` 
+
+</h3>
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -145,12 +151,20 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
+<h3>  
+
+`npm test`
+
+</h3>
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+<h3>  
+
+`npm run build`
+
+</h3>
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -160,7 +174,11 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+<h3>  
+
+`npm run eject`
+
+</h3>
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
@@ -170,37 +188,41 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+<h2>  Learn More </h2>
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-#5. Backend - IntelliJ
+<h1> 5. Backend - IntelliJ </h1>
 
-### 1. build
+<h3>  1. build </h3>
+
 Using the Maven tool window or via `./mvnw package` the project can be compiled, tested and packaged.
 
-### 2. resources
+<h3>  2. resources </h3>
+
 Via the Docker Compose file, a database and SMTP server can be started for development.
 The command ``docker-compoise up -d db`` can be used for the database
 and the command ``docker-compose up -d mailhog`` for the SMTP server.
 
 The application.yml under ``src/main/resources`` must be adapted for local development.
-For this the commented out part under ``# Mail Settings Local`` must be inserted and the part under ``# Mail Setting Sendgrid`` must be commented out.
+For this the commented out part under ``<h1>  Mail Settings Local`` must be inserted and the part under ``<h1>  Mail Setting Sendgrid`` must be commented out.
 must be commented out.
 
 **!Important!:** For the Dev environment SendGrind must be inserted again.
 
 **Disclaimer:** A local application.yml still needs to be introduced.
 
-### 3. run / debug
+<h3>  3. run / debug</h3>
+
 A new Spring Boot Config must be created, which points to the class `en.brockhausag.diversitylunchspringboot.DiversityLunchSpringBootApplication`.
 To start, the database must be running (can be started via Docker Compose).
 In order for the backend to connect to the DB, the environment variables must be set in IntelliJ Config as they are entered in the file ``docker/.env``.
 Additionally the environment variable DB_HOST=localhost must be set.<br>
-### 4. Testing
-#### Unit und Integration Tests
+<h3>  4. Testing</h3>
+
+<h3>Unit und Integration Tests</h3>
 The tests are found under ''src/test/''. <br>
 For coverage, the coverage runner in IntelliJ should be converted to JaCoCo.
 
@@ -208,7 +230,8 @@ For coverage, the coverage runner in IntelliJ should be converted to JaCoCo.
 
 
 
-#6. Liquibase
+<h1> 6. Liquibase</h1>
+
 More information at: https://www.liquibase.org/
 ``` 
 url=jdbc:postgresql://localhost:5432/diversity-lunch
