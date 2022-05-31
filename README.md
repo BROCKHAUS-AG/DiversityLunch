@@ -1,4 +1,4 @@
-<h1>Inhaltsverzeichnis</h1>
+<h1>Index</h1>
 
 1. Setting up the app
     - 1.1 Adding customers to project
