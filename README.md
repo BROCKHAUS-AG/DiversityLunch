@@ -81,6 +81,7 @@ With the plugin [EnvFile](https://plugins.jetbrains.com/plugin/7861-envfile) Int
 
 
 <h3>1.2.2 Frontend Configuration</h3>
+
 To configure this, the file 'app-config.js' must be created in the folder 'Public/config' and the following content must be added:
 ```javascript
     window.appConfig = {
