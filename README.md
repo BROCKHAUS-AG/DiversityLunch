@@ -121,6 +121,8 @@ Inside the folder ```DiversityLunch/diversity-lunch-be/docker``` you can run ```
 In order for the containers to be configured correctly, there must be a file with environment variables under the path
 'docker/.env', in which the variables 'POSTGRES_USER', 'POSTGRES_PASSWORD' and 'POSTGRES_DB' are set.
 
+Locally the app runs on http://localhost:8080
+
 
 <h2>  Kubernetes</h2>
 
