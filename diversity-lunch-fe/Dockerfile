@@ -2,15 +2,14 @@ FROM node:16-alpine as build
 
 WORKDIR /app
 
+COPY package*.json /app/
+RUN npm install
+
 COPY ./public /app/public/
 COPY ./src /app/src/
 COPY ./.env.production /app/.env
 COPY ./tsconfig.json /app/tsconfig.json
 COPY ./.eslintrc.json /app/
-
-COPY package*.json /app/
-RUN npm install
-
 RUN npm run build
 
 ### STAGE 2: Run ###

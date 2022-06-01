@@ -1,6 +1,5 @@
 version: "3.8"
 
-
 networks:
   diversity-lunch:
 
@@ -23,6 +22,7 @@ services:
     container_name: diversity-lunch-backend
     depends_on:
       - db
+      - mailhog
     environment:
       DB_HOST: db
       POSTGRES_USER: "${POSTGRES_USER}"

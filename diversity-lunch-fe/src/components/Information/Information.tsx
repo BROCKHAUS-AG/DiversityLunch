@@ -1,15 +1,10 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
 import '../../styles/component-styles/information/information.scss';
-import { Button } from '../General/Button/Button';
 
 export const Information = () => {
-  const history = useHistory();
-  const impressum = () => {
-    history.push('/impressum');
-  };
+
   return (
     <div className="Information">
       <CloseSiteContainer />
@@ -39,7 +34,7 @@ export const Information = () => {
         <br />
         Das Diversity-Team der BROCKHAUS AG
       </p>
-      <Button label="Impressum" onClick={impressum} />
+
     </div>
   );
 };

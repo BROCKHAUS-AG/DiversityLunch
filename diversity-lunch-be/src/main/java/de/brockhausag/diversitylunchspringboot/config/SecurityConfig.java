@@ -11,6 +11,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 @RequiredArgsConstructor
 public class SecurityConfig extends AADResourceServerWebSecurityConfigurerAdapter {
     private static final String[] WHITELIST = {
+            "/",
+            "/static/**",
+            "/config/**",
+            "/*.png",
+            "/favicon.ico",
+            "/robots.txt",
+            "/asset-manifest.json",
+            "/manifest.json",
             "/swagger-ui.html",
             "/swagger-ui/**",
             "/v3/api-docs/**"
