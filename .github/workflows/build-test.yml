@@ -8,6 +8,51 @@ on:
   workflow_dispatch:
 
 jobs:
+  test-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Npm Setup
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+      - name: Npm Install
+        run: npm install
+        working-directory: ./diversity-lunch-fe
+      - name: Test frontend
+        run: npm test
+        working-directory: ./diversity-lunch-fe
+
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Npm Setup
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+      - name: Npm Install
+        run: npm install
+        working-directory: ./diversity-lunch-fe
+      - name: Build Frontend
+        run: npm run build-fe
+        working-directory: ./diversity-lunch-fe
+
+  lint-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Npm Setup
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+      - name: Npm Install
+        run: npm install
+        working-directory: ./diversity-lunch-fe
+      - name: Test frontend
+        run: npm run lint
+        working-directory: ./diversity-lunch-fe
+
   test-backend:
     runs-on: ubuntu-latest
     steps:
@@ -38,47 +83,3 @@ jobs:
         run: ./mvnw package
         working-directory: ./diversity-lunch-be
 
-  test-frontend:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Npm Setup
-        uses: actions/setup-node@v1
-        with:
-          node-version: '16.x'
-      - name: Npm Install
-        run: npm install
-        working-directory: ./diversity-lunch-fe
-      - name: Test frontend
-        run: npm test
-        working-directory: ./diversity-lunch-fe
-
-  build-frontend:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Npm Setup
-        uses: actions/setup-node@v1
-        with:
-          node-version: '16.x'
-      - name: Npm Install
-        run: npm install
-        working-directory: ./diversity-lunch-fe
-      - name: Build Frontend
-        run: npm run build
-        working-directory: ./diversity-lunch-fe
-
-  lint-frontend:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Npm Setup
-        uses: actions/setup-node@v1
-        with:
-          node-version: '16.x'
-      - name: Npm Install
-        run: npm install
-        working-directory: ./diversity-lunch-fe
-      - name: Test frontend
-        run: npm run lint
-        working-directory: ./diversity-lunch-fe

@@ -105,6 +105,7 @@ The client-Id ist the id from your App that you already used for the backend. <b
 <h1>1.3 Build and start the app</h1>
 
 <h2>1.3.1 Frontend</h2>
+
 Go to the diversity-lunch-fe directory and run ```npm run build-fe-win``` on windows or ```npm run build-fe``` otherwise.
 
 <h2>1.3.2 Backend</h2>

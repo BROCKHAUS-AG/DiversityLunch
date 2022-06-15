@@ -1,0 +1,69 @@
+version: "3.8"
+
+networks:
+  diversity-lunch:
+
+services:
+  db:
+    image: postgres
+    container_name: diversity-lunch-db
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+    ports:
+      - "5432:5432"
+    networks:
+      - diversity-lunch
+
+  backend:
+    image: ghcr.io/xammaxjammaj/diversitylunchbe:latest
+    container_name: diversity-lunch-backend
+    depends_on:
+      - db
+      - mailhog
+    environment:
+      - DB_HOST=db
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - MAIL_HOST=mailhog
+      - MAIL_PORT=1025
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - MAIL_ADDRESS=${MAIL_ADDRESS}
+      - ISSUER_URI=${ISSUER_URI}
+      - TENANT_ID=${TENANT_ID}
+      - CLIENT_ID=${CLIENT_ID}
+      - DIVERSITY_LUNCH_USER_ID=${DIVERSITY_LUNCH_USER_ID}
+      - CLIENT_SECRET=${CLIENT_SECRET}
+    ports:
+      - "8080:8080"
+    networks:
+      - diversity-lunch
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: diversity-lunch-mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - diversity-lunch
+
+  frontend:
+    image: ghcr.io/xammaxjammaj/divtest:latest
+    container_name: "diversity-lunch-frontend"
+    ports:
+      - "4000:80"
+    environment:
+      - BACKEND_HOST="http://localhost:8080"
+      - PUBLIC_URL="/"
+      - DISABLE_ESLINT_PLUGIN=true
+      - REACT_APP_OIDC_CLIENT_ID=${REACT_APP_OIDC_CLIENT_ID}
+      - REACT_APP_OIDC_SCOPE=${REACT_APP_OIDC_SCOPE}
+      - REACT_APP_OIDC_CONFIG_ENDPOINT=${REACT_APP_OIDC_CONFIG_ENDPOINT}
+      - REACT_APP_OIDC_REDIRECT_URI=${REACT_APP_OIDC_REDIRECT_URI}
+      - REACT_APP_OIDC_AUTHORIZATION_ENDPOINT=${REACT_APP_OIDC_AUTHORIZATION_ENDPOINT}
+    networks:
+      - diversity-lunch
