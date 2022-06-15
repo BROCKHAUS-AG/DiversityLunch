@@ -17,7 +17,7 @@ services:
       - diversity-lunch
 
   backend:
-    image: ghcr.io/xammaxjammaj/diversitylunchbe:latest
+    image: ghcr.io/brockhaus-ag/diversitylunchbe:latest
     container_name: diversity-lunch-backend
     depends_on:
       - db
@@ -52,7 +52,7 @@ services:
       - diversity-lunch
 
   frontend:
-    image: ghcr.io/xammaxjammaj/divtest:latest
+    image: ghcr.io/brockhaus-ag/divtest:latest
     container_name: "diversity-lunch-frontend"
     ports:
       - "4000:80"
