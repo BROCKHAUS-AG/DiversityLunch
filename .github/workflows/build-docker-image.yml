@@ -37,7 +37,6 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: ghcr.io/brockhaus-ag/frontend-image:latest
-
   backend-image:
     runs-on: ubuntu-latest
     steps:
