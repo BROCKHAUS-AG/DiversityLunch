@@ -38,3 +38,4 @@ build/
 ### Secrets and Enviorment Varibales ###
 .env
 /src/main/resources/static/
+kubernetes/config
