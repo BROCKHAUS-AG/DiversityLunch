@@ -1,0 +1,41 @@
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-sts
+  namespace: diversitylunch
+  labels:
+    app: postgres
+spec:
+  serviceName: postgres-headless-svc
+  selector:
+    matchLabels:
+      app: postgres
+  replicas: 1
+  template:
+    metadata:
+      namespace: diversitylunch
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: "spring-backend"
+            - name: POSTGRES_PASSWORD
+              value: "SomeRandomPassword"
+            - name: POSTGRES_DB
+              value: "diversity-lunch"
+            - name: PGDATA
+              value: "/var/lib/postgresql/data/pgdata/db"
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data/pgdata
+              name: pv-data
+      volumes:
+        - name: pv-data
+          persistentVolumeClaim:
+            claimName: azure-managed-disk

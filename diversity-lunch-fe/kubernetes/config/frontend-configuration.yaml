@@ -1,0 +1,17 @@
+apiVersion: v1
+data:
+  app-config.js: |
+    window.appConfig = {
+        REACT_APP_OIDC_CLIENT_ID: 'e41e69a4-8ec5-4b14-8e68-a883ef39538d',
+        REACT_APP_OIDC_SCOPE: 'e41e69a4-8ec5-4b14-8e68-a883ef39538d/.default openid profile email',
+        REACT_APP_OIDC_CONFIG_ENDPOINT: 'https://login.microsoftonline.com/27c03e6b-896a-4617-9f07-00ec1f9a074e/.well-known/openid-configuration',
+        REACT_APP_OIDC_REDIRECT_URI: 'https://dev-diversitylunch.brockhaus-ag.de/',
+        REACT_APP_OIDC_AUTHORIZATION_ENDPOINT: 'https://login.microsoftonline.com/27c03e6b-896a-4617-9f07-00ec1f9a074e/oauth2/v2.0/authorize',
+    };
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2022-04-13T08:10:31Z"
+  name: frontend-configuration
+  namespace: diversitylunch
+  resourceVersion: "20171752"
+  uid: 8b8b4fcc-b801-47d8-b97d-6583f02dba23
