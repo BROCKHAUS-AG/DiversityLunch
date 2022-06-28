@@ -26,3 +26,5 @@ yarn-debug.log*
 yarn-error.log*
 .idea
 /public/config/app-config.js
+kubernetes/config
+kubernetes/config-prod
