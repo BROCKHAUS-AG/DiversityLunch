@@ -69,4 +69,14 @@ public class AccountController {
         }
     }
 
+    @GetMapping("/testEmail3")
+    public ResponseEntity<Object> sendTestEmail3() {
+        try {
+            this.eMailService.sendEmail("diversitylunch@brockhaus-ag.de","mwilman@brockhaus-ag.de", "test", "test", "test");
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
