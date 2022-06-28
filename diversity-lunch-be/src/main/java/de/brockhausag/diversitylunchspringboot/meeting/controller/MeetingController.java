@@ -1,9 +1,11 @@
 package de.brockhausag.diversitylunchspringboot.meeting.controller;
 
+import de.brockhausag.diversitylunchspringboot.email.DiversityLunchEMailService;
 import de.brockhausag.diversitylunchspringboot.meeting.mapper.MeetingMapper;
 import de.brockhausag.diversitylunchspringboot.meeting.model.CreateMeetingProposalDto;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingDto;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
+import de.brockhausag.diversitylunchspringboot.meeting.service.MatchingService;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MeetingService;
 import de.brockhausag.diversitylunchspringboot.meeting.utils.MeetingProposalValidation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +33,7 @@ import java.util.Optional;
 public class MeetingController {
     private final MeetingService meetingService;
     private final MeetingMapper meetingMapper;
+    private final DiversityLunchEMailService eMailService;
 
     @Operation(summary = "die anstehenden Meetings eines Benutzers werden ausgegeben")
     @ApiResponses(value = {
@@ -83,5 +87,19 @@ public class MeetingController {
     ResponseEntity<String> deleteMeetingProposal(@PathVariable long id) {
         this.meetingService.deleteMeetingProposal(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "Test Mail")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Test Mail"),
+    })
+    @GetMapping("/testEmail")
+    public ResponseEntity sendTestEmail() {
+        try {
+            this.eMailService.sendEmail("mwilman@brockhaus-ag.de", "test", "test", "test");
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
