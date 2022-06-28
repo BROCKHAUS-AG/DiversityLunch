@@ -30,6 +30,19 @@ public class DiversityLunchEMailService {
         messageHelper.setSubject(subject);
         messageHelper.setText(textPlain, textHTML);
 
+        System.out.println("Sending message from: "+properties.getSender());
+        emailSender.send(message);
+    }
+
+    public void sendEmail(String from, String to, String subject, String textHTML, String textPlain) throws MessagingException {
+        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper messageHelper = new MimeMessageHelper(message, true);
+
+        messageHelper.setFrom(from);
+        messageHelper.setTo(to);
+        messageHelper.setSubject(subject);
+        messageHelper.setText(textPlain, textHTML);
+
         emailSender.send(message);
     }
 
