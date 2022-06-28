@@ -33,7 +33,6 @@ import java.util.Optional;
 public class MeetingController {
     private final MeetingService meetingService;
     private final MeetingMapper meetingMapper;
-    private final DiversityLunchEMailService eMailService;
 
     @Operation(summary = "die anstehenden Meetings eines Benutzers werden ausgegeben")
     @ApiResponses(value = {
@@ -87,19 +86,5 @@ public class MeetingController {
     ResponseEntity<String> deleteMeetingProposal(@PathVariable long id) {
         this.meetingService.deleteMeetingProposal(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @Operation(summary = "Test Mail")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Test Mail"),
-    })
-    @GetMapping("/testEmail")
-    public ResponseEntity sendTestEmail() {
-        try {
-            this.eMailService.sendEmail("mwilman@brockhaus-ag.de", "test", "test", "test");
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

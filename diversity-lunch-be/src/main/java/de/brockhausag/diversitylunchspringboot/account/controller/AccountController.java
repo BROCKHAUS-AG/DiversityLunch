@@ -4,15 +4,19 @@ import de.brockhausag.diversitylunchspringboot.account.mapper.AccountMapper;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountDto;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
+import de.brockhausag.diversitylunchspringboot.email.DiversityLunchEMailService;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.mail.MessagingException;
 
 @RestController
 @RequestMapping("/api/account")
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountController {
     private final AccountMapper mapper;
     private final AccountService service;
+    private final DiversityLunchEMailService eMailService;
 
     @GetMapping(produces = {"application/json"})
     public ResponseEntity<AccountDto> getAccount(@Parameter(hidden = true) @AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal) {
@@ -42,6 +47,16 @@ public class AccountController {
         AccountDto accountDto = mapper.mapEntityToDto(accountEntity);
 
         return ResponseEntity.ok(accountDto);
+    }
+
+    @GetMapping("/testEmail")
+    public ResponseEntity<Object> sendTestEmail() {
+        try {
+            this.eMailService.sendEmail("mwilman@brockhaus-ag.de", "test", "test", "test");
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
