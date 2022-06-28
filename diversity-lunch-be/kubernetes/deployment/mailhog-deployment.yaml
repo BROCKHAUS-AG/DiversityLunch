@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: mailhog-deployment
+  namespace: diversitylunch
+  labels:
+    app: mailhog
+
+spec:
+  selector:
+    matchLabels:
+      app: mailhog
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mailhog
+    spec:
+      containers:
+        - name: diversity-lunch-mailhog
+          image: mailhog/mailhog
+          ports:
+            - containerPort: 1025
+            - containerPort: 8025
