@@ -39,3 +39,4 @@ build/
 .env
 /src/main/resources/static/
 kubernetes/config
+kubernetes/config-prod

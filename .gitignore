@@ -2,3 +2,4 @@
 **/.DS_STORE
 /customers.txt
 kubernetes/config/
+kubernetes/config-prod/
