@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: backend-deployment
+  namespace: diversitylunch
+  labels:
+    app: backend
+
+spec:
+  selector:
+    matchLabels:
+      app: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: ghcr.io/brockhaus-ag/backend-image:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: diversitylunch-db
+              key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: diversitylunch-db
+              key: password
+        - name: CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: dl-technical-user
+              key: client-secret
+        - name: DIVERSITY_LUNCH_USER_ID
+          valueFrom:
+            secretKeyRef:
+              name: dl-technical-user
+              key: user-id
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              key: db-name
+              name: dl-backend-configmap
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: db-host
+              name: dl-backend-configmap
+        - name: MAIL_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: mail-host
+              name: dl-backend-configmap
+        - name: MAIL_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: mail-port
+              name: dl-backend-configmap
+        - name: MAIL_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              key: mail-address
+              name: dl-backend-configmap
+        - name: MAIL_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mailingsecret
+              key: username
+              optional: false
+        - name: MAIL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mailingsecret
+              key: password
+              optional: false
+        - name: ISSUER_URI
+          valueFrom:
+            configMapKeyRef:
+              key: issuer-uri
+              name: dl-backend-configmap
+        - name: TENANT_ID
+          valueFrom:
+            configMapKeyRef:
+              key: tenant-id
+              name: dl-backend-configmap
+        - name: CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              key: client-id
+              name: dl-backend-configmap
+      #imagePullSecrets:
+      #- name: diversity-lunch-registry-secret

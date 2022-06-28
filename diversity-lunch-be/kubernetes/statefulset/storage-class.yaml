@@ -1,0 +1,25 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: diversity-db-storage
+  namespace: diversitylunch
+provisioner: kubernetes.io/azure-disk
+reclaimPolicy: Retain
+parameters:
+  storageaccounttype: Standard_LRS
+  kind: Managed
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: azure-managed-disk
+  namespace: diversitylunch
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: diversity-db-storage
+  resources:
+    requests:
+      storage: 5Gi

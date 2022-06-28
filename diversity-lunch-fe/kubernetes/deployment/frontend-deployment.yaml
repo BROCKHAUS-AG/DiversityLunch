@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: frontend-deployment
+  namespace: diversitylunch
+  labels:
+    app: frontend
+
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: ghcr.io/brockhaus-ag/frontend-image:latest
+        imagePullPolicy: Always
+        volumeMounts:
+          - mountPath: /usr/share/nginx/html/config
+            name: frontend-configuration-volume
+        ports:
+        - containerPort: 80
+      #imagePullSecrets:
+      #- name: diversity-lunch-registry-secret
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: frontend-configuration
+          optional: false
+        name: frontend-configuration-volume

@@ -2,7 +2,7 @@ name: Build Docker-Image
 
 on:
   push:
-    branches: [development]
+    branches: [main]
   workflow_dispatch:
 jobs:
   frontend-image:
@@ -36,7 +36,7 @@ jobs:
           file: ./diversity-lunch-fe/Dockerfile
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/brockhaus-ag/frontend-image-dev:latest
+          tags: ghcr.io/brockhaus-ag/frontend-image:latest
   backend-image:
     runs-on: ubuntu-latest
     steps:
@@ -72,4 +72,4 @@ jobs:
           file: ./diversity-lunch-be/Dockerfile
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/brockhaus-ag/backend-image-dev:latest
+          tags: ghcr.io/brockhaus-ag/backend-image:latest
