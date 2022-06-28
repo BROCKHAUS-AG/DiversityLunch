@@ -49,7 +49,7 @@ jobs:
         run: chmod +x ./mvnw
         working-directory: ./diversity-lunch-be
       - name: Build Backend
-        run: ./mvnw package
+        run: ./mvnw package -DskipTests
         working-directory: ./diversity-lunch-be
       - name: Set up QEMU
         uses: docker/setup-qemu-action@master
