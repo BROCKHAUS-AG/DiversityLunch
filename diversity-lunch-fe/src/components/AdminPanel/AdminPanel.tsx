@@ -1,16 +1,25 @@
-import React from 'react';
+import { FC } from 'react';
 import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import { IconList } from '../Shared/IconList/IconList';
 import { Project } from './Project';
 
 interface AdminPanelListItemProp {
-  project: Project
+  item: Project
 }
 
-const AdminPanelListItem = ({ project }: AdminPanelListItemProp) => <p>{project.descriptor}</p>;
+const AdminPanelListItem: FC<AdminPanelListItemProp>
+  = ({ item: project }: AdminPanelListItemProp) => <p>{project.descriptor}</p>;
 
-export const AdminPanel: React.FC = () => (
+const data: Project[] = [{
+  id: 0,
+  descriptor: 'hello',
+}, {
+  id: 2,
+  descriptor: 'world',
+}];
+
+export const AdminPanel: FC = () => (
   <section>
     <header className="Profile-logo-container">
       <CloseSiteContainer />
@@ -18,13 +27,7 @@ export const AdminPanel: React.FC = () => (
     </header>
     <main>
       <IconList
-        data={[{
-          id: 0,
-          descriptor: 'hello',
-        }, {
-          id: 2,
-          descriptor: 'world',
-        }]}
+        data={data}
         getKeyFunction={(item) => item.id}
         itemComponent={AdminPanelListItem}
       />
