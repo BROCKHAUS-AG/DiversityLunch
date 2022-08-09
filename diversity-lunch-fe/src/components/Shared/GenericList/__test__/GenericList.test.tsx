@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { IconList, IconListComponentProp } from '../IconList';
+import { GenericList, GenericListItemComponentProp } from '../GenericList';
 import { FC } from 'react';
 
 interface SomeDataType {id: number, name:string}
@@ -7,14 +7,14 @@ interface SomeDataType {id: number, name:string}
 describe('Profile Overview', () => {
   let someData: SomeDataType[];
   let container: HTMLElement;
-  let itemComponent: FC<IconListComponentProp<SomeDataType>>;
+  let itemComponent: FC<GenericListItemComponentProp<SomeDataType>>;
   let getKeyFunction: (_:SomeDataType) => number;
 
   beforeEach(() => {
     someData = [{id:0, name: "klaus"}, {id:42, name: "peter"}];
     itemComponent = ({item})=> <p>{item.name}</p>;
     getKeyFunction = (item) => item.id;
-    ({ container } = render(<IconList data={someData} itemComponent={itemComponent} getKeyFunction={getKeyFunction}/>));
+    ({ container } = render(<GenericList data={someData} itemComponent={itemComponent} getKeyFunction={getKeyFunction}/>));
   });
 
   it('should render component without crashing', () => {

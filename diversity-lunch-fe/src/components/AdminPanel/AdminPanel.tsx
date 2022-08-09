@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
-import { IconList } from '../Shared/IconList/IconList';
+import { GenericList } from '../Shared/GenericList/GenericList';
 import { Project } from './Project';
 
 interface AdminPanelListItemProp {
@@ -26,7 +26,7 @@ export const AdminPanel: FC = () => (
       <DiversityIconContainer title="ADMIN PANEL" />
     </header>
     <main>
-      <IconList
+      <GenericList
         data={data}
         getKeyFunction={(item) => item.id}
         itemComponent={AdminPanelListItem}
