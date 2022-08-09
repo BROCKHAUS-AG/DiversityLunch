@@ -18,6 +18,7 @@ export const Dashboard = () => (
       <Tile title="TERMIN WÄHLEN" icon={iconCalendar} link="/add+meetings/choose+date" />
       <Tile title="ANSTEHENDE MEETINGS" icon={iconMeeting} link="upcoming+meetings" />
       <Tile title="INFORMATIONEN" icon={iconInfo} link="information" />
+      <Tile title="ADMIN" icon={iconInfo} link="admin-panel" />
     </div>
 
   </div>

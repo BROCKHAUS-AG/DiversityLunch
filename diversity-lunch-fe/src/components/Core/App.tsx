@@ -13,6 +13,7 @@ import { HasProfileCheck } from './HasProfileCheck';
 import { ProfileOverviewLoader } from '../Profile/ProfileOverviewLoader';
 import { MeetingAlreadyBooked } from '../MeetingAlreadyBooked/MeetingAlreadyBooked';
 import { BookingError } from '../BookingError/BookingError';
+import { AdminPanel } from '../AdminPanel/AdminPanel';
 
 export const App = () => (
   <div className="App">
@@ -21,6 +22,10 @@ export const App = () => (
         <Switch>
           <Route exact path="/">
             <Redirect to="/profile-check" />
+          </Route>
+
+          <Route path="/admin-panel">
+            <AdminPanel />
           </Route>
 
           <Route path="/profile-check">
