@@ -3,6 +3,9 @@ import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import { GenericList } from '../Shared/GenericList/GenericList';
 import { Project } from './Project';
+import {IconButton} from "../Shared/Controlls/IconButton";
+import iconMeeting from '../../resources/icons/icon-anstehende-termine.svg';
+
 
 interface AdminPanelListItemProp {
   item: Project
@@ -26,6 +29,8 @@ export const AdminPanel: FC = () => (
       <DiversityIconContainer title="ADMIN PANEL" />
     </header>
     <main>
+
+        <IconButton text="bla" iconPath={iconMeeting} onClick={() => console.log('halo')}/>
       <GenericList
         data={data}
         getKeyFunction={(item) => item.id}
