@@ -38,8 +38,7 @@
         "jsx-a11y/interactive-supports-focus": "off",
         "no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars": "error",
-        "max-len": ["error", { "code": 150 }]
-        "@typescript-eslint/no-unused-vars": "error",
+        "max-len": ["error", { "code": 150 }],
         "linebreak-style": "off",
         "no-plusplus": "off"
     },
