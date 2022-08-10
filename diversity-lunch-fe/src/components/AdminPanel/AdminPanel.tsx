@@ -18,17 +18,8 @@ const data: Project[] = [{
   descriptor: 'world',
 }];
 
-// TODO: die Referenz muss man (anscheinend) in React ändern, damit das Objekt in State zu einem
-// neuen Rendern führt. BITTE PRÜFEN OB DIES DIE BESTE METHODE IST, UM STATE MIT OBJECTS/ARRAYS
-// ZU VERWALTEN!
 function updateProjectDescriptor(projects: Project[], project: Project): Project[] {
-  for (const p of projects) {
-    if (p.id === project.id) {
-      p.descriptor = 'ja lol ey';
-      return projects;
-    }
-  }
-  return projects;
+  return [...projects.map((p) => (p.id === project.id ? { ...p, descriptor: 'ja lol ey' } : p))];
 }
 
 export const AdminPanel: FC = () => {
@@ -38,14 +29,14 @@ export const AdminPanel: FC = () => {
     setProjects(projects.filter((p) => p.id !== project.id));
   };
   const updateProject = (project: Project) => {
-    setProjects(updateProjectDescriptor(projects, project).slice());
+    setProjects(updateProjectDescriptor(projects, project));
   };
 
   const AdminPanelListItem: FC<AdminPanelListItemProp> = ({ item: project }: AdminPanelListItemProp) => (
     <article>
       <span>{project.descriptor}</span>
-      <IconButton iconPath={iconMeeting} altText="Projekt bearbeiten" onClick={() => updateProject(project)} />
-      <IconButton iconPath={iconMeeting} altText="Projekt löschen" onClick={() => removeProject(project)} />
+      <IconButton iconPath={iconMeeting} altText="Projekt bearbeiten" onClick={() => updateProject(project)} text="bearbeiten" />
+      <IconButton iconPath={iconMeeting} altText="Projekt löschen" onClick={() => removeProject(project)} text="löschen" />
     </article>
   );
 
