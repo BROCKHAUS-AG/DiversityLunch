@@ -37,7 +37,9 @@
         "jsx-a11y/click-events-have-key-events": "off",
         "jsx-a11y/interactive-supports-focus": "off",
         "no-unused-vars": "off",
-        "@typescript-eslint/no-unused-vars": "error"
+        "@typescript-eslint/no-unused-vars": "error",
+        "linebreak-style": "off",
+        "no-plusplus": "off"
     },
     "settings": {
         "react": {
