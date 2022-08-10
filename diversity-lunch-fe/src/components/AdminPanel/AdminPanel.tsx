@@ -30,7 +30,7 @@ export const AdminPanel: FC = () => (
     </header>
     <main>
 
-        <IconButton text="bla" iconPath={iconMeeting} onClick={() => console.log('halo')}/>
+        <IconButton iconPath={iconMeeting} onClick={() => console.log('halo')} altText="Alt"/>
       <GenericList
         data={data}
         getKeyFunction={(item) => item.id}

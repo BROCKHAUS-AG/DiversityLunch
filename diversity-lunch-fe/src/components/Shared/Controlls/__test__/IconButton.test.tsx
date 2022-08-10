@@ -13,10 +13,11 @@ describe('IconButton', () => {
 
        buttonProps = {
            text : "Hallo",
+           altText: "Hey",
            iconPath : "test",
            onClick : () => {counter++;}
        };
-       ({container} = render(<IconButton text={buttonProps.text} iconPath={buttonProps.iconPath} onClick={buttonProps.onClick}/>))
+       ({container} = render(<IconButton text={buttonProps.text} altText={buttonProps.altText} iconPath={buttonProps.iconPath} onClick={buttonProps.onClick}/>))
     });
 
     it('should render component without crashing', () => {
@@ -24,11 +25,15 @@ describe('IconButton', () => {
     });
 
     it('should render the correct text', () => {
-        expect(container.firstElementChild!.querySelectorAll("p").item(0).innerHTML).toEqual(buttonProps.text);
+        expect(container.firstElementChild!.querySelector("p")!.innerHTML).toEqual(buttonProps.text);
+    });
+
+    it('should assign given altText to the img element', () => {
+        expect(container.firstElementChild!.querySelector("img")!.alt).toEqual(buttonProps.altText);
     });
 
     it('should render the correct icon', () => {
-        expect(container.firstElementChild!.querySelectorAll("img").item(0).src).toEqual("http://localhost/" + buttonProps.iconPath);
+        expect(container.firstElementChild!.querySelector("img")!.src).toEqual("http://localhost/" + buttonProps.iconPath);
     });
 
     it('should execute given function', () => {
