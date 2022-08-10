@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
-import { GenericList, GenericListItemComponentProp } from '../GenericList';
 import { FC } from 'react';
+import { GenericList, GenericListItemComponentProp } from '../GenericList';
 
 interface SomeDataType {id: number, name:string}
 
@@ -11,10 +11,12 @@ describe('Profile Overview', () => {
   let getKeyFunction: (_:SomeDataType) => number;
 
   beforeEach(() => {
-    someData = [{id:0, name: "klaus"}, {id:42, name: "peter"}];
-    itemComponent = ({item})=> <p>{item.name}</p>;
+    someData = [{ id: 0, name: 'klaus' }, { id: 42, name: 'peter' }];
+    itemComponent = function ({ item }) {
+      return <p>{item.name}</p>;
+    };
     getKeyFunction = (item) => item.id;
-    ({ container } = render(<GenericList data={someData} itemComponent={itemComponent} getKeyFunction={getKeyFunction}/>));
+    ({ container } = render(<GenericList data={someData} itemComponent={itemComponent} getKeyFunction={getKeyFunction} />));
   });
 
   it('should render component without crashing', () => {
@@ -25,8 +27,8 @@ describe('Profile Overview', () => {
     expect(container.firstChild!.childNodes.length).toEqual(someData.length);
   });
 
-  it('should render data elements according to the given itemComponent', ()=>{
-    for(let i = 0; i < someData.length; ++i) {
+  it('should render data elements according to the given itemComponent', () => {
+    for (let i = 0; i < someData.length; ++i) {
       expect(container.firstElementChild!.querySelectorAll('p')
         .item(i).innerHTML)
         .toEqual(someData[i].name);
