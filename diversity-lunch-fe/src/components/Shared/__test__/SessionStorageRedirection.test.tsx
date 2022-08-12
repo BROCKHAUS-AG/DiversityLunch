@@ -84,4 +84,37 @@ describe('SessionStorageRedirection', () => {
     expect(result)
       .toStrictEqual(path);
   });
+
+  it('SessionStorageRedirection routes to the correct path', () => {
+    const path = '/i/am/a/happy/path';
+
+    storePath(path);
+    render((
+      <BrowserRouter>
+        <Switch>
+          <SessionStorageRedirection />
+        </Switch>
+      </BrowserRouter>
+    ));
+
+    const result = window.location.pathname;
+
+    expect(result)
+      .toStrictEqual(path);
+  });
+
+  it('SessionStorageRedirection routes to the correct path', () => {
+    const expected = '/';
+    render((
+      <BrowserRouter>
+        <Switch>
+          <SessionStorageRedirection />
+        </Switch>
+      </BrowserRouter>
+    ));
+
+    const result = window.location.pathname;
+    expect(result)
+      .toStrictEqual(expected);
+  });
 });
