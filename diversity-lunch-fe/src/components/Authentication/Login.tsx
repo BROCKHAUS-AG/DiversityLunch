@@ -1,7 +1,7 @@
 import React from 'react';
 import { LoadingAnimation } from '../Shared/LoadingAnimation';
 import { APP_CONFIG } from '../../config/app-config.const';
-import { STORED_PATH_KEY } from '../Shared/SessionStorageRedirection';
+import { storePath } from '../Shared/SessionStorageRedirection';
 
 const oidcWellKnown = {
   authorization_endpoint: APP_CONFIG.REACT_APP_OIDC_AUTHORIZATION_ENDPOINT,
@@ -16,7 +16,7 @@ const createOidcUrl = async () => `${oidcWellKnown.authorization_endpoint
 export const Login: React.FC = () => {
   React.useEffect(() => {
     createOidcUrl().then((res) => {
-      sessionStorage.setItem(STORED_PATH_KEY, window.location.pathname);
+      storePath(window.location.pathname);
       window.location.href = res;
     });
   }, []);
