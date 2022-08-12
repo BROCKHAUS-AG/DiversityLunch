@@ -1,5 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.email;
 
+import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMailProperties;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
