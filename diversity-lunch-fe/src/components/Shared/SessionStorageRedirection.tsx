@@ -21,12 +21,12 @@ export const SessionStorageRedirection = ({ defaultPath }: LocalStorageRedirecti
   /*
   TODO 12.08.2022 TGohlisch: Der Routing-Loop von '/' -> '/profile-check' -> '/' könnte durch
   besseres Routing umgangen werden. Bis dahin ist das ersetzen von '/' zu '/dashboard'
-  per 'forbidden_routes.includes(storedPath)' ein Workaround
+  per 'forbiddenRoutes.includes(storedPath)' ein Workaround
    */
-  return <Redirect to={forbidden_routes.includes(storedPath) ? defaultPath : storedPath} />;
+  return <Redirect to={forbiddenRoutes.includes(storedPath) ? defaultPath : storedPath} />;
 };
 
 SessionStorageRedirection.defaultProps = { defaultPath: '/dashboard' };
 
 export const STORED_PATH_KEY = 'storedPath';
-const forbidden_routes = ['/'];
+const forbiddenRoutes = ['/'];
