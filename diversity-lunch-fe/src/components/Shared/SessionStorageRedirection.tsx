@@ -17,12 +17,12 @@ export function storePath(path: string) {
   sessionStorage.setItem(STORED_PATH_KEY, path);
 }
 
-function getStoredPath(): string | null {
+export function getStoredPath(): string | null {
   return sessionStorage.getItem(STORED_PATH_KEY);
 }
 
-function clearStoredPath() {
+export function clearStoredPath() {
   sessionStorage.removeItem(STORED_PATH_KEY);
 }
 
-const STORED_PATH_KEY = 'storedPath';
+export const STORED_PATH_KEY = 'storedPath';
