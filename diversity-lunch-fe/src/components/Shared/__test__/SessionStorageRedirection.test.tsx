@@ -14,7 +14,7 @@ describe('SessionStorageRedirection', () => {
   });
 
   it('storePath should store path in local storage', () => {
-    const path = 'i/am/a/happy/path';
+    const path = '/i/am/a/happy/path';
 
     storePath(path);
 
@@ -23,7 +23,7 @@ describe('SessionStorageRedirection', () => {
   });
 
   it('getPath should retrieve the data from storePath ', () => {
-    const path = 'i/am/a/happy/path';
+    const path = '/i/am/a/happy/path';
 
     storePath(path);
     const result = getStoredPath();
@@ -40,7 +40,7 @@ describe('SessionStorageRedirection', () => {
   });
 
   it('after clearPath was called, getPath should return null even if storedPath was called prior', () => {
-    const path = 'i/am/a/happy/path';
+    const path = '/i/am/a/happy/path';
 
     storePath(path);
     clearStoredPath();
@@ -51,7 +51,7 @@ describe('SessionStorageRedirection', () => {
   });
 
   it('SessionStorageRedirection consumes the stored Path on unmount', () => {
-    const path = 'i/am/a/happy/path';
+    const path = '/i/am/a/happy/path';
 
     storePath(path);
     const { unmount } = render((
@@ -69,7 +69,7 @@ describe('SessionStorageRedirection', () => {
   });
 
   it('SessionStorageRedirection doesn\'t consume the stored Path if not unmounted', () => {
-    const path = 'i/am/a/happy/path';
+    const path = '/i/am/a/happy/path';
 
     storePath(path);
     render((
@@ -96,15 +96,13 @@ describe('SessionStorageRedirection', () => {
         </Switch>
       </BrowserRouter>
     ));
-
     const result = window.location.pathname;
 
     expect(result)
       .toStrictEqual(path);
   });
 
-  it('SessionStorageRedirection routes to the correct path', () => {
-    const expected = '/';
+  it('should route to the components default path, if no path was stored and no defaultPath was given', () => {
     render((
       <BrowserRouter>
         <Switch>
@@ -114,7 +112,24 @@ describe('SessionStorageRedirection', () => {
     ));
 
     const result = window.location.pathname;
+
     expect(result)
-      .toStrictEqual(expected);
+      .toStrictEqual(SessionStorageRedirection.defaultProps.defaultPath);
+  });
+
+  it('should route to the given defaultPath, if no path was stored and defaultPath was given', () => {
+    const path = '/another/path/to/be/tested';
+
+    render((
+      <BrowserRouter>
+        <Switch>
+          <SessionStorageRedirection defaultPath={path} />
+        </Switch>
+      </BrowserRouter>
+    ));
+    const result = window.location.pathname;
+
+    expect(result)
+      .toStrictEqual(path);
   });
 });
