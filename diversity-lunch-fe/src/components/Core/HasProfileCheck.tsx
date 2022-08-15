@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { useHasProfile } from '../../hooks/profile/has-profile.hook';
 import { LoadingAnimation } from '../Shared/LoadingAnimation';
 import { GenericErrorPage } from '../Shared/GenericErrorPage';
+import { SessionStorageRedirection } from '../Shared/SessionStorageRedirection';
 
 export const HasProfileCheck: React.FC = () => {
   const { profileStatus } = useHasProfile();
@@ -12,7 +13,7 @@ export const HasProfileCheck: React.FC = () => {
   }
 
   if (profileStatus === 'OK') {
-    return <Redirect to="/dashboard" />;
+    return <SessionStorageRedirection />;
   }
 
   if (profileStatus === 'NOT_CREATED_YET') {
