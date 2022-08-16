@@ -4,6 +4,7 @@ import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMail
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMailProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -36,11 +37,13 @@ public class ExperimentalIT {
     public void shouldSendMailToMailhog() {
         String emailAddress = "test@test.de";
         String subject = "subject";
-        String bodyHtml = "subject";
-        String bodyPlain = "subject";
+        String bodyHtml = "bodyHtml";
+        String bodyPlain = "bodyPlain";
 
         when(this.diversityLunchMailProperties.getSender()).thenReturn("test@test.de");
 
-        this.diversityLunchEMailService.sendEmail(emailAddress, subject, bodyHtml, bodyPlain);
+        Assertions.assertDoesNotThrow(() ->
+                this.diversityLunchEMailService.sendEmail(emailAddress, subject, bodyHtml, bodyPlain)
+        );
     }
 }
