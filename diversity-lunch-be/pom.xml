@@ -124,6 +124,12 @@
             <artifactId>liquibase-maven-plugin</artifactId>
             <version>4.9.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <version>3.0.0-M7</version>
+            <type>maven-plugin</type>
+        </dependency>
 
     </dependencies>
     <dependencyManagement>
@@ -181,7 +187,51 @@
                     <propertyFile>src/main/resources/liquibase.properties</propertyFile>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>3.0.0-M7</version>
+                <configuration>
+                    <includes>
+                        <include>**/*IT.java</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
+    <!-- TODO: failsafe should be handled in a separate profile like this:
+     <profiles>
+         <profile>
+             <id>failsafe</id>
+             <build>
+                 <plugins>
+                     <plugin>
+                         <artifactId>maven-failsafe-plugin</artifactId>
+                         <version>3.0.0-M7</version>
+                         <configuration>
+                             <includes>
+                                 <include>**/*IT.java</include>
+                             </includes>
+                         </configuration>
+                         <executions>
+                             <execution>
+                                 <goals>
+                                     <goal>integration-test</goal>
+                                     <goal>verify</goal>
+                                 </goals>
+                             </execution>
+                         </executions>
+                     </plugin>
+                 </plugins>
+             </build>
+         </profile>
+     </profiles>
+     -->
 </project>
