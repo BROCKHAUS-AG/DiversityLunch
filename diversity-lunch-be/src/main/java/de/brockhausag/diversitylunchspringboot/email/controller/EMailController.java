@@ -29,7 +29,7 @@ public class EMailController {
     public ResponseEntity<String> sendTestMail(){
         String body = "Hallo :)";
         try {
-            this.diversityLunchEMailService.sendEmail("", "Testsubject", body, body);
+            this.diversityLunchEMailService.sendEmail("test@test.de", "Testsubject", body, body);
         } catch (MessagingException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
