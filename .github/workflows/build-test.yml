@@ -27,6 +27,9 @@ jobs:
       - name: Test Backend
         run: ./mvnw test
         working-directory: ./diversity-lunch-be
+      - name: Integration Test Backend
+        run: ./mvnw verify
+        working-directory: ./diversity-lunch-be
 
   build-backend:
     runs-on: ubuntu-latest
