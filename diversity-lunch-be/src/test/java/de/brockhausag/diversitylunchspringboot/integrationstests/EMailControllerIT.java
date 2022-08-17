@@ -1,49 +1,46 @@
 package de.brockhausag.diversitylunchspringboot.integrationstests;
 
-import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMailProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @RequiredArgsConstructor
 public class EMailControllerIT {
 
-    private DiversityLunchEMailService diversityLunchEMailService;
-
-    @Autowired
-    private JavaMailSender mailSender;
-
-    @Mock
+    @MockBean
     private DiversityLunchMailProperties diversityLunchMailProperties;
 
+    private MockMvc mockMvc;
+
+    @Autowired
+    private WebApplicationContext appContext;
 
     @BeforeEach
-    void setUp() {
-        this.diversityLunchEMailService = new DiversityLunchEMailService(this.mailSender, this.diversityLunchMailProperties);
+    void setup() {
+        mockMvc = MockMvcBuilders.webAppContextSetup(appContext).build();
     }
 
     @SneakyThrows
     @Test
-    public void testSendMail_expectedToNotThrowException() {
-        String emailAddress = "test@test.de";
-        String subject = "subject";
-        String bodyHtml = "bodyHtml";
-        String bodyPlain = "bodyPlain";
-
+    public void testSendTestMail_expectedToNotThrowException() {
         when(this.diversityLunchMailProperties.getSender()).thenReturn("test@test.de");
 
-        Assertions.assertDoesNotThrow(() ->
-                this.diversityLunchEMailService.sendEmail(emailAddress, subject, bodyHtml, bodyPlain)
-        );
+        mockMvc.perform(
+                post("/mailing/sendTestMail")
+        ).andExpect(status().isOk());
     }
 }
