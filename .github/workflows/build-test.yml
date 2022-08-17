@@ -2,7 +2,7 @@ name: Build and Test
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ develop, feature/17434-github_pipeline_erweitern ]
   pull_request:
     branches: [ develop, main ]
   workflow_dispatch:
