@@ -34,7 +34,7 @@ public class ExperimentalIT {
 
     @SneakyThrows
     @Test
-    public void shouldSendMailToMailhog() {
+    public void testSendMail_expectedToNotThrowException() {
         String emailAddress = "test@test.de";
         String subject = "subject";
         String bodyHtml = "bodyHtml";
