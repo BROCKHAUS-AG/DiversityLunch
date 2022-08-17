@@ -20,7 +20,7 @@ jobs:
       - name: Pull mailhog image
         run: docker pull mailhog/mailhog:latest
       - name: Build container
-        run: docker run --publish 8025:8025 mailhog/mailhog
+        run: docker run --publish 8025:8025 -d mailhog/mailhog
       - name: Add execution privileges
         run: chmod +x ./mvnw
         working-directory: ./diversity-lunch-be
