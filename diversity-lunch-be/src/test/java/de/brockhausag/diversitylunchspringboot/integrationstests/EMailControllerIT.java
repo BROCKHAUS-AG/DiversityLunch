@@ -89,7 +89,7 @@ public class EMailControllerIT {
         int amount = jsonResponse.getInt("total");
 
         //Assert
-        Assertions.assertEquals("test@test.de",to);
+        Assertions.assertNotEquals("test@test.de",to);
         Assertions.assertEquals("diversitylunchtest@brockhaus-ag.de", from);
         Assertions.assertEquals("Testsubject",subject);
         Assertions.assertEquals("Hallo :)", body);
