@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ActiveProfiles(profiles = {"Test", "IssuerLocationTest"})
 @Import(de.brockhausag.diversitylunchspringboot.config.SecurityConfig.class)
-class AccountControllerIntegrationTest {
+class AccountControllerIT {
 
     private final ProfileTestdataFactory profileTestdataFactory = new ProfileTestdataFactory();
 

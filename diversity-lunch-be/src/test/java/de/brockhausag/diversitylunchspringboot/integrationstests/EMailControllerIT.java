@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot;
+package de.brockhausag.diversitylunchspringboot.integrationstests;
 
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMailProperties;
@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @RequiredArgsConstructor
-public class ExperimentalIT {
+public class EMailControllerIT {
 
     private DiversityLunchEMailService diversityLunchEMailService;
 

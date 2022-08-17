@@ -28,7 +28,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 @Import(SecurityConfig.class)
 @SpringBootTest
 @ActiveProfiles("Test")
-class ProfileControllerIntegrationTest {
+class ProfileControllerIT {
 
     private final ProfileTestdataFactory profileFactory = new ProfileTestdataFactory();
 

@@ -34,7 +34,7 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 })
 @ActiveProfiles("Test")
 @Import(MsTeamsTestConfig.class)
-class MatchingServiceIntegrationTest {
+class MatchingServiceIT {
     @Autowired
     private MeetingRepository meetingRepository;
 
