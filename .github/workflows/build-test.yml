@@ -24,7 +24,7 @@ jobs:
       - name: Add execution privileges
         run: chmod +x ./mvnw
         working-directory: ./diversity-lunch-be
-      - name: Test and Integration Test Backend
+      - name: Unit Test and Integration Test Backend
         run: ./mvnw verify -P failsafe
         working-directory: ./diversity-lunch-be
 
