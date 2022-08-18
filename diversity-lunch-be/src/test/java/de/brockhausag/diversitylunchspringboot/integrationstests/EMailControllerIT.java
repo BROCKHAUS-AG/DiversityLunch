@@ -59,7 +59,7 @@ public class EMailControllerIT {
 
     @SneakyThrows
     @Test
-    public void testSendTestMail_expectedToNotThrowException2() {
+    public void testSendTestMail_expectedCorrectTestContentInMail() {
         //Send email
         when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
 
