@@ -5,7 +5,7 @@ import com.microsoft.graph.models.AttendeeType;
 import com.microsoft.graph.models.Event;
 import com.microsoft.graph.models.OnlineMeetingProviderType;
 import de.brockhausag.diversitylunchspringboot.data.MeetingTestdataFactory;
-import de.brockhausag.diversitylunchspringboot.email.DiversityLunchEMailService;
+import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
 import de.brockhausag.diversitylunchspringboot.meeting.mapper.MsTeamsMapper;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMsTeamsProperties;

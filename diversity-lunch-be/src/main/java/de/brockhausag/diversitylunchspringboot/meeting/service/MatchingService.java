@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.meeting.service;
 
-import de.brockhausag.diversitylunchspringboot.email.DiversityLunchEMailService;
+import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;

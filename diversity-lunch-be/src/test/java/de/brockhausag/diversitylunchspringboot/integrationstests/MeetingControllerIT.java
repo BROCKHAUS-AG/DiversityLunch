@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @Import(SecurityConfig.class)
 @ActiveProfiles("Test")
-class MeetingControllerIntegrationTest {
+class MeetingControllerIT {
 
     private final ProfileTestdataFactory profileFactory = new ProfileTestdataFactory();
 
