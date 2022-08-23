@@ -41,4 +41,4 @@ jobs:
           file: ./diversity-lunch-be/Dockerfile
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/brockhaus-ag/diversity-lunch-be:latest
+          tags: ghcr.io/brockhaus-ag/backend-image-dev:latest
