@@ -6,10 +6,12 @@ import iconInfo from '../../resources/icons/icon-info.svg';
 import iconProfile from '../../resources/icons/icon-profil.svg';
 import iconMeeting from '../../resources/icons/icon-anstehende-termine.svg';
 import iconCalendar from '../../resources/icons/icon-termin-auswählen.svg';
+import { AdminPanelIconContainer } from '../General/HeaderTemplate/AdminPanelIconContainer';
 
 export const Dashboard = () => (
   <div className="Dashboard">
     <div className="Dashboard-logo-container">
+      <AdminPanelIconContainer />
       <DiversityIconContainer title="DIVERSITY LUNCH" poweredBy />
     </div>
 
@@ -18,7 +20,6 @@ export const Dashboard = () => (
       <Tile title="TERMIN WÄHLEN" icon={iconCalendar} link="/add+meetings/choose+date" />
       <Tile title="ANSTEHENDE MEETINGS" icon={iconMeeting} link="upcoming+meetings" />
       <Tile title="INFORMATIONEN" icon={iconInfo} link="information" />
-      <Tile title="ADMIN" icon={iconInfo} link="admin-panel" />
     </div>
 
   </div>
