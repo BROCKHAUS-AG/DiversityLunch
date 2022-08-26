@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import { GenericList } from '../Shared/GenericList/GenericList';
@@ -41,20 +41,18 @@ export const AdminPanel: FC = () => {
   );
 
   return (
-    <section>
-      <header className="Profile-logo-container">
+    <main>
+      <div className="Profile-logo-container">
         <CloseSiteContainer />
         <DiversityIconContainer title="ADMIN PANEL" />
-      </header>
-      <main>
+      </div>
 
-        <IconButton iconPath={iconMeeting} onClick={() => console.log('halo')} altText="Alt" />
-        <GenericList
-          data={projects}
-          getKeyFunction={(item) => item.id}
-          itemComponent={AdminPanelListItem}
-        />
-      </main>
-    </section>
+      <IconButton iconPath={iconMeeting} onClick={() => console.log('halo')} altText="Alt" />
+      <GenericList
+        data={projects}
+        getKeyFunction={(item) => item.id}
+        itemComponent={AdminPanelListItem}
+      />
+    </main>
   );
 };

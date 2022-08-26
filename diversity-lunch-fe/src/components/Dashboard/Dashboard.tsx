@@ -10,10 +10,8 @@ import { AdminPanelIconContainer } from '../General/HeaderTemplate/AdminPanelIco
 
 export const Dashboard = () => (
   <div className="Dashboard">
-    <div className="Dashboard-logo-container">
-      <AdminPanelIconContainer />
-      <DiversityIconContainer title="DIVERSITY LUNCH" poweredBy />
-    </div>
+    <AdminPanelIconContainer />
+    <DiversityIconContainer title="DIVERSITY LUNCH" poweredBy />
 
     <div className="Dashboard-tiles-container">
       <Tile title="DEIN PROFIL" icon={iconProfile} link="profile" />

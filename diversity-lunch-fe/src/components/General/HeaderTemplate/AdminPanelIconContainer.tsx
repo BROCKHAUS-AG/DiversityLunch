@@ -6,12 +6,8 @@ import iconAdmin from '../../../resources/icons/icon-admin.svg';
 
 export const AdminPanelIconContainer = () => (
   <div className="IconHeader">
-    <div className="IconHeader-header-container">
-      <div>
-        <Link to="/admin-panel">
-          <img alt="admin icon" className="IconHeader-admin-icon" src={iconAdmin} />
-        </Link>
-      </div>
-    </div>
+    <Link to="/admin-panel">
+      <img alt="admin icon" className="IconHeader-admin-icon" src={iconAdmin} />
+    </Link>
   </div>
 );
