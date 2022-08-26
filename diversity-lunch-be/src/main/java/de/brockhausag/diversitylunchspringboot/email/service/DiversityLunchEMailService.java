@@ -2,6 +2,8 @@ package de.brockhausag.diversitylunchspringboot.email.service;
 
 import com.nimbusds.jose.util.StandardCharset;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Question;
+import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.service.ProfileService;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMailProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +15,7 @@ import org.springframework.util.FileCopyUtils;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -20,6 +23,7 @@ import javax.mail.internet.MimeMessage;
 public class DiversityLunchEMailService {
     private final JavaMailSender emailSender;
     private final DiversityLunchMailProperties properties;
+    private final ProfileService profileService;
 
     public void sendEmail(String to, String subject, String textHTML, String textPlain) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
@@ -64,5 +68,12 @@ public class DiversityLunchEMailService {
             log.error("Failed to read Resource: email.txt", e);
         }
         return "";
+    }
+
+    public void sendMailToUser(long id, String body) throws MessagingException {
+        Optional<ProfileEntity> pe = this.profileService.getProfile(id);
+        if (pe.isPresent()) {
+            this.sendEmail(pe.get().getEmail(), "Testsubject", body, body);
+        }
     }
 }

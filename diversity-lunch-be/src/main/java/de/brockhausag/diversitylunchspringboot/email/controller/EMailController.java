@@ -1,8 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.email.controller;
 
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
-import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
-import de.brockhausag.diversitylunchspringboot.profile.service.ProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -23,7 +21,6 @@ import javax.mail.MessagingException;
 @RequiredArgsConstructor
 public class EMailController {
     private final DiversityLunchEMailService diversityLunchEMailService;
-    private final ProfileService profileService;
     @Operation(summary = "Test Mail wird versendet.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Test Mail wurde versendet."),
@@ -43,13 +40,12 @@ public class EMailController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Test Mail wurde versendet."),
     })
-    @PostMapping("/sendTestMail")
+    @PostMapping("/sendTestMailToUser")
     @PreAuthorize("isProfileOwner(#id)")
-    public ResponseEntity<String> sendTestMailToUser(String id){
+    public ResponseEntity<String> sendTestMailToUser(long id){
         String body = "Hallo :)";
         try {
-            ProfileEntity pe = this.profileService.getProfile(id);
-            this.diversityLunchEMailService.sendEmail("test@test.de", "Testsubject", body, body);
+            diversityLunchEMailService.sendMailToUser(id, body);
         } catch (MessagingException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
