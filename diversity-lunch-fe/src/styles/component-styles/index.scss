@@ -23,3 +23,9 @@
   src: url('../../resources/fonts/SourceSansPro-Regular.otf') format("trueType");
   font-weight: normal;
 }
+
+.view {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}

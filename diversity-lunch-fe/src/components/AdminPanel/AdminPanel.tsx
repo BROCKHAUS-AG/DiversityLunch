@@ -41,11 +41,9 @@ export const AdminPanel: FC = () => {
   );
 
   return (
-    <main>
-      <div className="Profile-logo-container">
-        <CloseSiteContainer />
-        <DiversityIconContainer title="ADMIN PANEL" />
-      </div>
+    <section className="view">
+      <CloseSiteContainer />
+      <DiversityIconContainer title="ADMIN PANEL" />
 
       <IconButton iconPath={iconMeeting} onClick={() => console.log('halo')} altText="Alt" />
       <GenericList
@@ -53,6 +51,6 @@ export const AdminPanel: FC = () => {
         getKeyFunction={(item) => item.id}
         itemComponent={AdminPanelListItem}
       />
-    </main>
+    </section>
   );
 };
