@@ -26,4 +26,3 @@ export const GenericList = <T extends unknown>(
     </ul>
   );
 };
-

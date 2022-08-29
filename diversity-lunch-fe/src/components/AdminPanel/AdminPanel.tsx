@@ -3,10 +3,7 @@ import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import { GenericList } from '../Shared/GenericList/GenericList';
 import { Project } from './Project';
-import { IconButton } from '../Shared/Controlls/IconButton';
-import iconMeeting from '../../resources/icons/icon-anstehende-termine.svg';
 import { AdminPanelListItem } from './admin-panel-list-item';
-
 
 const data: Project[] = [{
   id: 0,
@@ -34,8 +31,6 @@ export const AdminPanel: FC = () => {
     <section className="view">
       <CloseSiteContainer />
       <DiversityIconContainer title="ADMIN PANEL" />
-
-      <IconButton iconPath={iconMeeting} onClick={() => console.log('halo')} altText="Alt" />
       <GenericList
         data={projects}
         getKeyFunction={(item) => item.id}
