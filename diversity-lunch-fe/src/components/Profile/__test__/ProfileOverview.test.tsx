@@ -65,7 +65,7 @@ describe('Profile Overview', () => {
     col = container.children.item(0)?.children.item(2)?.children || [];
   });
   it('render component without crashing', () => {
-    expect(container.firstChild).toHaveClass('Profile');
+    expect(container.firstChild!.firstChild).toHaveClass('Profile-logo-container');
   });
   it('profile edit form diversity logo space', () => {
     const logoElement = container.children.item(0)?.children.item(0);

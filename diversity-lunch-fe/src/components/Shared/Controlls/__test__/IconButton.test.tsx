@@ -29,7 +29,7 @@ describe('IconButton', () => {
   });
 
   it('should render the correct text', () => {
-    expect(container.firstElementChild!.querySelector('p')!.innerHTML).toEqual(buttonProps.text);
+    expect(container.firstElementChild!.querySelector('span')!.innerHTML).toEqual(buttonProps.text);
   });
 
   it('should assign given altText to the img element', () => {
