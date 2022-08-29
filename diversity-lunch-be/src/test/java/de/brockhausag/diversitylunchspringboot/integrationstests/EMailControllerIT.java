@@ -128,7 +128,6 @@ public class EMailControllerIT {
         when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
         ProfileEntity tmpProfileEntity = profileTestdataFactory.createEntity();
         AccountEntity accountEntity = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
-        //ProfileEntity is needed, please don't remove it, although IntelliJ suggests to do so.
         profileService.createProfile(tmpProfileEntity, accountEntity.getId()).orElseThrow();
         long id = tmpProfileEntity.getId();
         String url = "/mailing/sendTestMailToUser?id=" + id;
@@ -142,7 +141,6 @@ public class EMailControllerIT {
         when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
         ProfileEntity tmpProfileEntity = profileTestdataFactory.createEntity();
         AccountEntity accountEntity = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
-        //ProfileEntity is needed, please don't remove it, although IntelliJ suggests to do so.
         profileService.createProfile(tmpProfileEntity, accountEntity.getId()).orElseThrow();
         long id = tmpProfileEntity.getId() + 1;
         String url = "/mailing/sendTestMailToUser?id=" + id;
