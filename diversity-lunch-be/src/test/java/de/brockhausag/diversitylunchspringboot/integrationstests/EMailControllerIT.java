@@ -1,5 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.integrationstests;
 
+import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.config.SecurityConfig;
 import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
@@ -49,20 +50,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(SecurityConfig.class)
 public class EMailControllerIT {
 
-
-
     @MockBean
     private DiversityLunchMailProperties diversityLunchMailProperties;
     @MockBean
-    private ProfileService profileService;
-    @MockBean
     private DiversityLunchSecurityExpressionRoot diversityLunchSecurityExpressionRoot;
-    @MockBean
+    @Autowired
     private AccountService accountService;
+    @Autowired
+    private ProfileService profileService;
 
+    private final ProfileTestdataFactory profileTestdataFactory = new ProfileTestdataFactory();
 
-    private ProfileTestdataFactory profileTestdataFactory = new ProfileTestdataFactory();
     private MockMvc mockMvc;
+
+    private MockMvc mockMvcSecurity;
 
     @Autowired
     private WebApplicationContext appContext;
@@ -70,13 +71,12 @@ public class EMailControllerIT {
     @SneakyThrows
     @BeforeEach
     void setup(){
-        mockMvc = MockMvcBuilders.webAppContextSetup(appContext).apply(springSecurity()).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(appContext).build();
 
-
-
+        mockMvcSecurity = MockMvcBuilders.webAppContextSetup(appContext).apply(springSecurity()).build();
         // Nach jedem Test soll die Test Mail geloescht werden
         HttpUriRequest request = new HttpDelete( "http://localhost:8025/api/v1/messages");
-        HttpClientBuilder.create().build().execute( request );
+        CloseableHttpResponse httpResponse = HttpClientBuilder.create().build().execute( request );
     }
 
 
@@ -131,14 +131,33 @@ public class EMailControllerIT {
 
     @SneakyThrows
     @Test
-    public void testSendTestMailToUser_expectedToNotThrowException() {
+    public void testSendTestMailToUser_withValidId_expectedOkStatus() {
+        when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
         ProfileEntity tmpProfileEntity = profileTestdataFactory.createEntity();
-        var accountEntity1 = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
-        long id = 42;
+        AccountEntity accountEntity1 = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
+        //ProfileEntity is needed, please don't remove it, although IntelliJ suggests to do so.
+        ProfileEntity profileEntity1 = profileService.createProfile(tmpProfileEntity, accountEntity1.getId()).orElseThrow();
+        long id = tmpProfileEntity.getId();
 
-        mockMvc.perform(
+        mockMvcSecurity.perform(
                 post("/mailing/sendTestMailToUser?id=" + id)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileTestdataFactory.getTokenStringFromId(accountEntity1.getUniqueName()))
         ).andExpect(status().isOk());
+    }
+
+    @SneakyThrows
+    @Test
+    public void testSendTestMailToUser_withInvalidId_expectedForbiddenStatus() {
+        when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
+        ProfileEntity tmpProfileEntity = profileTestdataFactory.createEntity();
+        var accountEntity1 = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
+        //ProfileEntity is needed, please don't remove it, although IntelliJ suggests to do so.
+        var profileEntity1 = profileService.createProfile(tmpProfileEntity, accountEntity1.getId()).orElseThrow();
+        long id = tmpProfileEntity.getId() + 1;
+
+        mockMvcSecurity.perform(
+                post("/mailing/sendTestMailToUser?id=" + id)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileTestdataFactory.getTokenStringFromId(accountEntity1.getUniqueName()))
+        ).andExpect(status().isForbidden());
     }
 }
