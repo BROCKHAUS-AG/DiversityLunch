@@ -5,10 +5,8 @@ import { GenericList } from '../Shared/GenericList/GenericList';
 import { Project } from './Project';
 import { IconButton } from '../Shared/Controlls/IconButton';
 import iconMeeting from '../../resources/icons/icon-anstehende-termine.svg';
+import { AdminPanelListItem } from './admin-panel-list-item';
 
-interface AdminPanelListItemProp {
-  item: Project
-}
 
 const data: Project[] = [{
   id: 0,
@@ -31,14 +29,6 @@ export const AdminPanel: FC = () => {
   const updateProject = (project: Project) => {
     setProjects(updateProjectDescriptor(projects, project));
   };
-  // TODO jevers 10.08.22: Outsource AdminPanelListItem into its own component
-  const AdminPanelListItem: FC<AdminPanelListItemProp> = ({ item: project }: AdminPanelListItemProp) => (
-    <article>
-      <span>{project.descriptor}</span>
-      <IconButton iconPath={iconMeeting} altText="Projekt bearbeiten" onClick={() => updateProject(project)} text="bearbeiten" />
-      <IconButton iconPath={iconMeeting} altText="Projekt löschen" onClick={() => removeProject(project)} text="löschen" />
-    </article>
-  );
 
   return (
     <section className="view">
@@ -50,6 +40,7 @@ export const AdminPanel: FC = () => {
         data={projects}
         getKeyFunction={(item) => item.id}
         itemComponent={AdminPanelListItem}
+        itemComponentProps={{ onEditClicked: (p: Project) => updateProject(p), onRemoveClicked: (p: Project) => removeProject(p) }}
       />
     </section>
   );
