@@ -6,12 +6,12 @@ import iconInfo from '../../resources/icons/icon-info.svg';
 import iconProfile from '../../resources/icons/icon-profil.svg';
 import iconMeeting from '../../resources/icons/icon-anstehende-termine.svg';
 import iconCalendar from '../../resources/icons/icon-termin-auswählen.svg';
+import { AdminPanelIconContainer } from '../General/HeaderTemplate/AdminPanelIconContainer';
 
 export const Dashboard = () => (
   <div className="Dashboard">
-    <div className="Dashboard-logo-container">
-      <DiversityIconContainer title="DIVERSITY LUNCH" poweredBy />
-    </div>
+    <AdminPanelIconContainer />
+    <DiversityIconContainer title="DIVERSITY LUNCH" poweredBy />
 
     <div className="Dashboard-tiles-container">
       <Tile title="DEIN PROFIL" icon={iconProfile} link="profile" />

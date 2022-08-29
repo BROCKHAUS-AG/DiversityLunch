@@ -6,12 +6,8 @@ import iconClose from '../../../resources/icons/icon-close.svg';
 
 export const CloseSiteContainer = () => (
   <div className="IconHeader">
-    <div className="IconHeader-header-container">
-      <div>
-        <Link to="/dashboard">
-          <img alt="logout icon" className="IconHeader-leave-icon" src={iconClose} />
-        </Link>
-      </div>
-    </div>
+    <Link to="/dashboard">
+      <img alt="logout icon" className="IconHeader-leave-icon" src={iconClose} />
+    </Link>
   </div>
 );

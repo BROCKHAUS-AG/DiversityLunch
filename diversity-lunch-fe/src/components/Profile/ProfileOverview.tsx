@@ -81,7 +81,7 @@ export const ProfileOverview = (props: ProfileOverviewProps) => {
   }, [currentFormState, dispatch, history]);
 
   return (
-    <div className="Profile">
+    <section className="view">
       <div className="Profile-logo-container">
         <CloseSiteContainer />
         <DiversityIconContainer title="DEIN PROFIL" />
@@ -177,6 +177,6 @@ export const ProfileOverview = (props: ProfileOverviewProps) => {
           <Button type="submit" label="Speichern" disabled={!profileChanged} />
         </div>
       </form>
-    </div>
+    </section>
   );
 };

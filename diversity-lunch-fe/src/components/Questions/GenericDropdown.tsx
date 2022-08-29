@@ -33,9 +33,8 @@ export function GenerateGenericDropdown<T>(): React.FC<GenericDropdownProps<T>> 
           options={options}
           getOptionLabel={(o) => o.label}
           renderInput={
-            (params: AutocompleteRenderInputParams) =>
-              // eslint-disable-next-line react/jsx-props-no-spreading,implicit-arrow-linebreak
-              <TextField {...params} variant="outlined" label={placeholder} />
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            (params: AutocompleteRenderInputParams) => <TextField {...params} variant="outlined" label={placeholder} />
           }
           onChange={(_, value: DropdownOption<T> | null) => onChange(value?.value)}
           value={currentViewValue}
