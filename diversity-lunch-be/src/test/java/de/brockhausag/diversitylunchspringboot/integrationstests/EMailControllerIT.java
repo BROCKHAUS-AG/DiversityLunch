@@ -148,9 +148,9 @@ public class EMailControllerIT {
         performRequestWithToken(url, accountEntity).andExpect(status().isForbidden());
     }
 
-    private ResultActions performRequestWithToken(String url, AccountEntity accountEntity) throws Exception {
+    private ResultActions performRequestWithToken(String path, AccountEntity accountEntity) throws Exception {
         return mockMvcSecurity.perform(
-                post(url)
+                post(path)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileTestdataFactory.getTokenStringFromId(accountEntity.getUniqueName()))
         );
     }
