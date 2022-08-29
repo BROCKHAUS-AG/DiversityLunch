@@ -18,26 +18,20 @@ import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.io.IOException;
-import java.util.Optional;
+import java.util.function.Function;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -85,6 +79,7 @@ public class EMailControllerIT {
     public void testSendTestMail_expectedToNotThrowException() {
         when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
 
+
         mockMvc.perform(
                 post("/mailing/sendTestMail")
         ).andExpect(status().isOk());
@@ -131,33 +126,36 @@ public class EMailControllerIT {
 
     @SneakyThrows
     @Test
-    public void testSendTestMailToUser_withValidId_expectedOkStatus() {
+    public void testAuthenticationSendTestMailToLoggedInUser_withValidId_expectedOkStatus() {
         when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
         ProfileEntity tmpProfileEntity = profileTestdataFactory.createEntity();
-        AccountEntity accountEntity1 = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
+        AccountEntity accountEntity = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
         //ProfileEntity is needed, please don't remove it, although IntelliJ suggests to do so.
-        ProfileEntity profileEntity1 = profileService.createProfile(tmpProfileEntity, accountEntity1.getId()).orElseThrow();
+        profileService.createProfile(tmpProfileEntity, accountEntity.getId()).orElseThrow();
         long id = tmpProfileEntity.getId();
+        String url = "/mailing/sendTestMailToUser?id=" + id;
 
-        mockMvcSecurity.perform(
-                post("/mailing/sendTestMailToUser?id=" + id)
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileTestdataFactory.getTokenStringFromId(accountEntity1.getUniqueName()))
-        ).andExpect(status().isOk());
+        performRequestWithToken(url, accountEntity).andExpect(status().isOk());
     }
 
     @SneakyThrows
     @Test
-    public void testSendTestMailToUser_withInvalidId_expectedForbiddenStatus() {
+    public void testAuthenticationSendTestMailToLoggedInUser_withInvalidId_expectedForbiddenStatus() {
         when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
         ProfileEntity tmpProfileEntity = profileTestdataFactory.createEntity();
-        var accountEntity1 = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
+        AccountEntity accountEntity = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
         //ProfileEntity is needed, please don't remove it, although IntelliJ suggests to do so.
-        var profileEntity1 = profileService.createProfile(tmpProfileEntity, accountEntity1.getId()).orElseThrow();
+        profileService.createProfile(tmpProfileEntity, accountEntity.getId()).orElseThrow();
         long id = tmpProfileEntity.getId() + 1;
+        String url = "/mailing/sendTestMailToUser?id=" + id;
 
-        mockMvcSecurity.perform(
-                post("/mailing/sendTestMailToUser?id=" + id)
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileTestdataFactory.getTokenStringFromId(accountEntity1.getUniqueName()))
-        ).andExpect(status().isForbidden());
+        performRequestWithToken(url, accountEntity).andExpect(status().isForbidden());
+    }
+
+    private ResultActions performRequestWithToken(String url, AccountEntity accountEntity) throws Exception {
+        return mockMvcSecurity.perform(
+                post(url)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileTestdataFactory.getTokenStringFromId(accountEntity.getUniqueName()))
+        );
     }
 }
