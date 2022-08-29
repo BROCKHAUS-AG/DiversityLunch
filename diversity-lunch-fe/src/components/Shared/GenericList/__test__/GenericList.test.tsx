@@ -12,9 +12,7 @@ describe('Profile Overview', () => {
 
   beforeEach(() => {
     someData = [{ id: 0, name: 'klaus' }, { id: 42, name: 'peter' }];
-    itemComponent = function ({ item }) {
-      return <p>{item.name}</p>;
-    };
+    itemComponent = ({item:SomeDataType}) => <p>{item.name}</p>;
     getKeyFunction = (item) => item.id;
     ({ container } = render(<GenericList data={someData} itemComponent={itemComponent} getKeyFunction={getKeyFunction} />));
   });

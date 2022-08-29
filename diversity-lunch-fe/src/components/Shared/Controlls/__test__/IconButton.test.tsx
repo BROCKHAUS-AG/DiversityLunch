@@ -16,7 +16,12 @@ describe('IconButton', () => {
       iconPath: 'test',
       onClick: () => { counter++; },
     };
-    ({ container } = render(<IconButton text={buttonProps.text} altText={buttonProps.altText} iconPath={buttonProps.iconPath} onClick={buttonProps.onClick} />));
+    ({ container } = render(<IconButton
+      text={buttonProps.text}
+      altText={buttonProps.altText}
+      iconPath={buttonProps.iconPath}
+      onClick={buttonProps.onClick}
+    />));
   });
 
   it('should render component without crashing', () => {

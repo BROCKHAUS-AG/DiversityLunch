@@ -73,7 +73,10 @@ describe('Profile Overview', () => {
     expect(logoElement).toHaveClass('Profile-logo-container');
   });
   it('form has needed fields', () => {
-    const formFieldLabels : Array<string> = Array.from(col).map((e) => e.getElementsByClassName('Characteristic-attribute').item(0)?.innerHTML).filter((e):e is string => e !== undefined);
+    const formFieldLabels : Array<string> = Array.from(col).map((e) => e
+      .getElementsByClassName('Characteristic-attribute')
+      .item(0)?.innerHTML)
+      .filter((e):e is string => e !== undefined);
     expect(formFieldLabels.length).toBeGreaterThan(0);
     expect(formFieldLabels).toEqual(formFields);
   });
