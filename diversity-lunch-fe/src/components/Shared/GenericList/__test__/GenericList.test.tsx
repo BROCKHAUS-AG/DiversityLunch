@@ -4,15 +4,15 @@ import { GenericList, GenericListItemComponentProp } from '../GenericList';
 
 interface SomeDataType {id: number, name:string}
 
+const itemComponent: FC<GenericListItemComponentProp<SomeDataType>> = ({ item }) => <p>{item.name}</p>;
+
 describe('Profile Overview', () => {
   let someData: SomeDataType[];
   let container: HTMLElement;
-  let itemComponent: FC<GenericListItemComponentProp<SomeDataType>>;
   let getKeyFunction: (_:SomeDataType) => number;
 
   beforeEach(() => {
     someData = [{ id: 0, name: 'klaus' }, { id: 42, name: 'peter' }];
-    itemComponent = ({item:SomeDataType}) => <p>{item.name}</p>;
     getKeyFunction = (item) => item.id;
     ({ container } = render(<GenericList data={someData} itemComponent={itemComponent} getKeyFunction={getKeyFunction} />));
   });
