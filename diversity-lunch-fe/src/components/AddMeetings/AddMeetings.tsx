@@ -8,24 +8,24 @@ import { DateOverview } from './DateOverview';
 import { CreateMeeting } from '../../types/Meeting';
 
 export const AddMeetings = () => {
-  const [meeting, setMeeting] = useState<CreateMeeting>({
-    fromDateTime: new Date(),
-  });
+    const [meeting, setMeeting] = useState<CreateMeeting>({
+        fromDateTime: new Date(),
+    });
 
-  const onAddMeeting = (createMeeting: CreateMeeting) => {
-    setMeeting(createMeeting);
-  };
+    const onAddMeeting = (createMeeting: CreateMeeting) => {
+        setMeeting(createMeeting);
+    };
 
-  return (
-    <div className="AddMeeting">
-      <Switch>
-        <Route exact path="/add+meetings/choose+date">
-          <SelectMeetingData onAddMeeting={onAddMeeting} />
-        </Route>
-        <Route exact path="/add+meetings/meeting+overview">
-          <DateOverview meeting={meeting} />
-        </Route>
-      </Switch>
-    </div>
-  );
+    return (
+      <div className="AddMeeting">
+          <Switch>
+              <Route exact path="/add+meetings/choose+date">
+                  <SelectMeetingData onAddMeeting={onAddMeeting} />
+                </Route>
+              <Route exact path="/add+meetings/meeting+overview">
+                  <DateOverview meeting={meeting} />
+                </Route>
+            </Switch>
+        </div>
+    );
 };

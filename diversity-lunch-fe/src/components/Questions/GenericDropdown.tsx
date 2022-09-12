@@ -14,32 +14,32 @@ type GenericDropdownProps<T> = {
 };
 
 export function GenerateGenericDropdown<T>(): React.FC<GenericDropdownProps<T>> {
-  // eslint-disable-next-line react/display-name
-  return function GenericDropdown(props: GenericDropdownProps<T>) {
-    const {
-      label,
-      options,
-      currentValue,
-      onChange,
-      placeholder,
-    } = props;
+    // eslint-disable-next-line react/display-name
+    return function GenericDropdown(props: GenericDropdownProps<T>) {
+        const {
+            label,
+            options,
+            currentValue,
+            onChange,
+            placeholder,
+        } = props;
 
-    const currentViewValue = options.find((o) => o.value === currentValue);
+        const currentViewValue = options.find((o) => o.value === currentValue);
 
-    return (
-      <div className="DropdownQuestion">
-        <p className="DropdownQuestion-question">{label}</p>
-        <Autocomplete
-          options={options}
-          getOptionLabel={(o) => o.label}
-          renderInput={
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            (params: AutocompleteRenderInputParams) => <TextField {...params} variant="outlined" label={placeholder} />
-          }
-          onChange={(_, value: DropdownOption<T> | null) => onChange(value?.value)}
-          value={currentViewValue}
-        />
-      </div>
-    );
-  };
+        return (
+          <div className="DropdownQuestion">
+              <p className="DropdownQuestion-question">{label}</p>
+              <Autocomplete
+                  options={options}
+                  getOptionLabel={(o) => o.label}
+                  renderInput={
+                        // eslint-disable-next-line react/jsx-props-no-spreading
+                        (params: AutocompleteRenderInputParams) => <TextField {...params} variant="outlined" label={placeholder} />
+                    }
+                  onChange={(_, value: DropdownOption<T> | null) => onChange(value?.value)}
+                  value={currentViewValue}
+                />
+            </div>
+        );
+    };
 }

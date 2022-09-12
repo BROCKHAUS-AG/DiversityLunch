@@ -13,11 +13,11 @@ import { AuthenticationCheck } from './components/Core/AuthenticationCheck';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={APP_STORE}>
-      <AuthenticationCheck />
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root'),
+      <Provider store={APP_STORE}>
+          <AuthenticationCheck />
+        </Provider>
+    </React.StrictMode>,
+    document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function

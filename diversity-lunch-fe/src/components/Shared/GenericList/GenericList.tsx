@@ -10,19 +10,19 @@ export interface GenericListProps<T>{
 }
 
 export const GenericList = <T extends unknown>(
-  {
-    data, itemComponentProps, itemComponent, getKeyFunction,
-  }: GenericListProps<T>,
+    {
+        data, itemComponentProps, itemComponent, getKeyFunction,
+    }: GenericListProps<T>,
 ) => {
-  const items = data.map((item: T) => (
-    <li key={getKeyFunction(item)}>
-      {itemComponent({ item, ...itemComponentProps })}
-    </li>
-  ));
+    const items = data.map((item: T) => (
+      <li key={getKeyFunction(item)}>
+          {itemComponent({ item, ...itemComponentProps })}
+        </li>
+    ));
 
-  return (
-    <ul>
-      {items}
-    </ul>
-  );
+    return (
+      <ul>
+          {items}
+        </ul>
+    );
 };

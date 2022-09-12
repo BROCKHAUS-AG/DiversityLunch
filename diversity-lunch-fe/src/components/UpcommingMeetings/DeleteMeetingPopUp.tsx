@@ -15,38 +15,38 @@ interface MeetingContainerProps {
 }
 
 export const DeleteMeetingPopUp = (props: MeetingContainerProps) => {
-  const {
-    meeting,
-    onDelete,
-    onCancel,
-  } = props;
+    const {
+        meeting,
+        onDelete,
+        onCancel,
+    } = props;
 
-  return (
-    <div className="DeleteMeetingPopUp">
-      <div className="DeleteMeetingPopUp-container">
-        <h6 className="DeleteMeetingPopUp-text">
-          Willst du den Termin wirklich löschen?
-        </h6>
-        <div className="DeleteMeetingPopUp-meeting-container">
-          {dateToString(meeting.fromDateTime)}
-          <div>
-            {substringLocalTime(meeting.fromDateTime)}
-            {' '}
-            -
-            {getMeetingEndTime(meeting.fromDateTime)}
-          </div>
+    return (
+      <div className="DeleteMeetingPopUp">
+          <div className="DeleteMeetingPopUp-container">
+              <h6 className="DeleteMeetingPopUp-text">
+                  Willst du den Termin wirklich löschen?
+                </h6>
+              <div className="DeleteMeetingPopUp-meeting-container">
+                  {dateToString(meeting.fromDateTime)}
+                  <div>
+                      {substringLocalTime(meeting.fromDateTime)}
+                      {' '}
+                      -
+                        {getMeetingEndTime(meeting.fromDateTime)}
+                    </div>
+                </div>
+              <div className="DeleteMeetingPopUp-button-container">
+                  <Button label="Zeitslot löschen" onClick={onDelete} />
+                  <button
+                      type="button"
+                      className="DeleteMeetingPopUp-delete-button"
+                      onClick={() => onCancel()}
+                    >
+                      Abbrechen
+                    </button>
+                </div>
+            </div>
         </div>
-        <div className="DeleteMeetingPopUp-button-container">
-          <Button label="Zeitslot löschen" onClick={onDelete} />
-          <button
-            type="button"
-            className="DeleteMeetingPopUp-delete-button"
-            onClick={() => onCancel()}
-          >
-            Abbrechen
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };

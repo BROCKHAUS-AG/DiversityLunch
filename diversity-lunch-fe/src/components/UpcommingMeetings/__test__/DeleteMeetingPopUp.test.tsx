@@ -5,51 +5,51 @@ import { DeleteMeetingPopUp } from '../DeleteMeetingPopUp';
 import Mock = jest.Mock;
 
 describe('DeleteMeetingPopUp', () => {
-  let defaultMeeting: Meeting;
-  let popup: JSX.Element;
-  let deleteFunction: Mock;
-  let cancelFunction: Mock;
+    let defaultMeeting: Meeting;
+    let popup: JSX.Element;
+    let deleteFunction: Mock;
+    let cancelFunction: Mock;
 
-  beforeEach(() => {
-    defaultMeeting = {
-      id: '1',
-      fromDateTime: new Date(2022, 1, 25, 12, 30, 0, 0),
-      partnerName: 'Name',
+    beforeEach(() => {
+        defaultMeeting = {
+            id: '1',
+            fromDateTime: new Date(2022, 1, 25, 12, 30, 0, 0),
+            partnerName: 'Name',
 
-    };
+        };
 
-    deleteFunction = jest.fn();
-    cancelFunction = jest.fn();
-    popup = (
-      <DeleteMeetingPopUp
-        meeting={defaultMeeting}
-        onDelete={deleteFunction}
-        onCancel={cancelFunction}
-      />
-    );
-  });
-  it('shows DeleteMeetingPopUp', () => {
-    const renderResult = render(popup);
-    expect(renderResult.container.firstChild)
-      .toHaveClass('DeleteMeetingPopUp');
-  });
-  it('calls the delete function', () => {
-    const renderResult = render(popup);
-    const deleteButton = renderResult.container.getElementsByClassName('CustomButton-container')
-      .item(0)
-      ?.firstElementChild;
-    userEvent.click(deleteButton!);
+        deleteFunction = jest.fn();
+        cancelFunction = jest.fn();
+        popup = (
+          <DeleteMeetingPopUp
+              meeting={defaultMeeting}
+              onDelete={deleteFunction}
+              onCancel={cancelFunction}
+            />
+        );
+    });
+    it('shows DeleteMeetingPopUp', () => {
+        const renderResult = render(popup);
+        expect(renderResult.container.firstChild)
+            .toHaveClass('DeleteMeetingPopUp');
+    });
+    it('calls the delete function', () => {
+        const renderResult = render(popup);
+        const deleteButton = renderResult.container.getElementsByClassName('CustomButton-container')
+            .item(0)
+            ?.firstElementChild;
+        userEvent.click(deleteButton!);
 
-    expect(deleteFunction)
-      .toBeCalled();
-  });
-  it('calls the cancel function', () => {
-    const renderResult = render(popup);
-    const cancelButton = renderResult.container.getElementsByClassName('DeleteMeetingPopUp-delete-button')
-      .item(0);
-    userEvent.click(cancelButton!);
+        expect(deleteFunction)
+            .toBeCalled();
+    });
+    it('calls the cancel function', () => {
+        const renderResult = render(popup);
+        const cancelButton = renderResult.container.getElementsByClassName('DeleteMeetingPopUp-delete-button')
+            .item(0);
+        userEvent.click(cancelButton!);
 
-    expect(cancelFunction)
-      .toBeCalled();
-  });
+        expect(cancelFunction)
+            .toBeCalled();
+    });
 });

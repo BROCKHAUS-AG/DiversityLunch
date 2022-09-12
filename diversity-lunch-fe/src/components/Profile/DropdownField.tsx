@@ -17,32 +17,32 @@ type DropdownFieldProps = {
 }
 
 export const DropdownField = (props: DropdownFieldProps) => {
-  const {
-    defaultOption, options, changeCurrentFormState, attribute, changeCurrentValue,
-  } = props;
+    const {
+        defaultOption, options, changeCurrentFormState, attribute, changeCurrentValue,
+    } = props;
 
-  const onChangeValue = (event: React.ChangeEvent<any>, value: string | null) => {
-    if (value != null) {
-      changeCurrentFormState(attribute, value);
-      changeCurrentValue(value);
-    } else {
-      changeCurrentFormState(attribute, defaultOption);
-    }
-  };
-
-  return (
-    <div className="DropdownQuestion">
-      <Autocomplete
-        id="combo-box-demo"
-        options={options}
-        renderInput={
-          (params: AutocompleteRenderInputParams) =>
-            // eslint-disable-next-line react/jsx-props-no-spreading,implicit-arrow-linebreak
-            <TextField {...params} variant="outlined" />
+    const onChangeValue = (event: React.ChangeEvent<any>, value: string | null) => {
+        if (value != null) {
+            changeCurrentFormState(attribute, value);
+            changeCurrentValue(value);
+        } else {
+            changeCurrentFormState(attribute, defaultOption);
         }
-        onChange={(event: ChangeEvent<{}>, value) => onChangeValue(event, value)}
-        defaultValue={defaultOption}
-      />
-    </div>
-  );
+    };
+
+    return (
+      <div className="DropdownQuestion">
+          <Autocomplete
+              id="combo-box-demo"
+              options={options}
+              renderInput={
+                    (params: AutocompleteRenderInputParams) =>
+                    // eslint-disable-next-line react/jsx-props-no-spreading,implicit-arrow-linebreak
+                      <TextField {...params} variant="outlined" />
+                }
+              onChange={(event: ChangeEvent<{}>, value) => onChangeValue(event, value)}
+              defaultValue={defaultOption}
+            />
+        </div>
+    );
 };

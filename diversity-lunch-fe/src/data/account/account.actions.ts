@@ -5,32 +5,32 @@ import { AccountDto } from '../../types/dtos/AccountDto';
 import { mapDtoToAccount } from '../../mapper/AccountMapper';
 
 export const loadAccountErroredAction: AccountStateAction = {
-  type: 'ACCOUNT_ERROR',
+    type: 'ACCOUNT_ERROR',
 };
 
 export const startAccountLoadingAction: AccountStateAction = {
-  type: 'ACCOUNT_LOADING',
+    type: 'ACCOUNT_LOADING',
 };
 
 export const startAccountPendingAction: AccountStateAction = {
-  type: 'ACCOUNT_PENDING',
+    type: 'ACCOUNT_PENDING',
 };
 
 export const loadAccount = async (dispatch: Dispatch) => {
-  dispatch(startAccountLoadingAction);
+    dispatch(startAccountLoadingAction);
 
-  const result: Response = await authenticatedFetchGet('/api/account');
+    const result: Response = await authenticatedFetchGet('/api/account');
 
-  if (result.ok) {
-    const accountDto: AccountDto = await result.json();
+    if (result.ok) {
+        const accountDto: AccountDto = await result.json();
 
-    const accountOkAction: AccountStateAction = {
-      type: 'ACCOUNT_LOADING_SUCCEEDED',
-      payload: mapDtoToAccount(accountDto),
-    };
+        const accountOkAction: AccountStateAction = {
+            type: 'ACCOUNT_LOADING_SUCCEEDED',
+            payload: mapDtoToAccount(accountDto),
+        };
 
-    dispatch(accountOkAction);
-  } else {
-    dispatch(loadAccountErroredAction);
-  }
+        dispatch(accountOkAction);
+    } else {
+        dispatch(loadAccountErroredAction);
+    }
 };

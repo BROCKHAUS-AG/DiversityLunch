@@ -16,75 +16,75 @@ type CharacterProps<T> = {
 };
 
 export function GenericCharacteristic<T>(): React.FC<CharacterProps<T>> {
-  const [chosen, setChosen] = useState(false);
+    const [chosen, setChosen] = useState(false);
 
-  const changeIcon = (): void => {
-    setChosen(!chosen);
-  };
-
-  return function Character(props: CharacterProps<T>) {
-    const {
-      showingAttribute,
-      options,
-      currentValue,
-      changeCurrentFormState,
-      attribute,
-    } = props;
-
-    const Dropdown = GenerateGenericDropdown<T>();
-
-    const onChangeValue = (value: T | undefined) => {
-      if (value != null) {
-        changeCurrentFormState(attribute, (value) as unknown as number | string);
-      }
+    const changeIcon = (): void => {
+        setChosen(!chosen);
     };
 
-    const currentOption = options.find((option) => option.value === currentValue);
+    return function Character(props: CharacterProps<T>) {
+        const {
+            showingAttribute,
+            options,
+            currentValue,
+            changeCurrentFormState,
+            attribute,
+        } = props;
 
-    const optionToString = (option: DropdownOption<T> | undefined) => {
-      if (option === undefined) {
-        return '';
-      }
+        const Dropdown = GenerateGenericDropdown<T>();
 
-      return option.label;
+        const onChangeValue = (value: T | undefined) => {
+            if (value != null) {
+                changeCurrentFormState(attribute, (value) as unknown as number | string);
+            }
+        };
+
+        const currentOption = options.find((option) => option.value === currentValue);
+
+        const optionToString = (option: DropdownOption<T> | undefined) => {
+            if (option === undefined) {
+                return '';
+            }
+
+            return option.label;
+        };
+
+        return (
+          <div className="Characteristic">
+              <div className="Characteristic-left-container">
+                  <h6 className="Characteristic-attribute">{showingAttribute}</h6>
+                  {
+                        chosen
+                            ? (
+                              <Dropdown
+                                  label=""
+                                  options={options}
+                                  currentValue={currentValue}
+                                  onChange={onChangeValue}
+                                  placeholder=""
+                                />
+                            )
+                            : <p className="Characteristic-value">{optionToString(currentOption)}</p>
+                    }
+                </div>
+              <div
+                  className="Characteristic-right-container"
+                  onClick={changeIcon}
+                  role="button"
+                >
+                  {
+                        chosen
+                            ? (
+                              <img
+                                  alt="icon_check"
+                                  className="Characteristic-icons"
+                                  src={iconCheck}
+                                />
+                            )
+                            : <img alt="icon_edit" className="Characteristic-icons" src={iconEdit} />
+                    }
+                </div>
+            </div>
+        );
     };
-
-    return (
-      <div className="Characteristic">
-        <div className="Characteristic-left-container">
-          <h6 className="Characteristic-attribute">{showingAttribute}</h6>
-          {
-            chosen
-              ? (
-                <Dropdown
-                  label=""
-                  options={options}
-                  currentValue={currentValue}
-                  onChange={onChangeValue}
-                  placeholder=""
-                />
-              )
-              : <p className="Characteristic-value">{optionToString(currentOption)}</p>
-          }
-        </div>
-        <div
-          className="Characteristic-right-container"
-          onClick={changeIcon}
-          role="button"
-        >
-          {
-            chosen
-              ? (
-                <img
-                  alt="icon_check"
-                  className="Characteristic-icons"
-                  src={iconCheck}
-                />
-              )
-              : <img alt="icon_edit" className="Characteristic-icons" src={iconEdit} />
-          }
-        </div>
-      </div>
-    );
-  };
 }

@@ -9,13 +9,13 @@ export interface IconButtonProps {
 }
 
 export const IconButton = ({
-  iconPath, text, onClick, altText,
+    iconPath, text, onClick, altText,
 }: IconButtonProps) => {
-  const textElement = text ? <span>{text}</span> : null;
-  return (
-    <button type="button" onClick={onClick}>
-      {textElement}
-      <img src={iconPath} alt={altText} />
-    </button>
-  );
+    const textElement = text ? <span>{text}</span> : null;
+    return (
+      <button type="button" onClick={onClick}>
+          {textElement}
+          <img src={iconPath} alt={altText} />
+        </button>
+    );
 };

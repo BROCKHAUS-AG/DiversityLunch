@@ -42,6 +42,7 @@ class AccountControllerTest {
 
     @Test
     void testGetAccount_withExistentAccount_expectedGetAccountDtoWithStatusOk() {
+
         AccountDto expectedAccountDto = accountTestDataFactory.buildAccountDto();
         AccountEntity accountEntity = accountTestDataFactory.buildAccountWithoutProfile();
 

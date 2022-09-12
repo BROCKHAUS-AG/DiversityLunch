@@ -12,41 +12,41 @@ type MeetingTimeProps = {
 }
 
 export const MeetingTimeButton: React.FC<MeetingTimeProps> = (props: MeetingTimeProps) => {
-  const [timeLabel, setTimeLabel] = useState<string>('');
+    const [timeLabel, setTimeLabel] = useState<string>('');
 
-  const {
-    timeSpan, onTimeChange, setCurrentTimeLabel, isActive,
-  } = props;
-
-  useEffect(() => {
-    setTimeLabel(prepareTimeLabel(timeSpan));
-  }, [timeSpan]);
-
-  const prepareTimeLabel = (timespan: MeetingTimespan): string => {
     const {
-      fromHour, fromMinute, toHour, toMinute,
-    } = timespan;
+        timeSpan, onTimeChange, setCurrentTimeLabel, isActive,
+    } = props;
 
-    return `${fromHour}:${
-      (fromMinute === 0)
-        ? `${fromMinute}0`
-        : fromMinute
-    } - ${toHour}:${
-      (toMinute === 0)
-        ? `${toMinute}0`
-        : toMinute}`;
-  };
+    useEffect(() => {
+        setTimeLabel(prepareTimeLabel(timeSpan));
+    }, [timeSpan]);
 
-  return (
-    <button
-      type="button"
-      className={`MeetingTimeButton${isActive ? '-is-active' : ''}`}
-      onClick={() => {
-        onTimeChange(timeSpan);
-        setCurrentTimeLabel(timeLabel);
-      }}
-    >
-      {timeLabel}
-    </button>
-  );
+    const prepareTimeLabel = (timespan: MeetingTimespan): string => {
+        const {
+            fromHour, fromMinute, toHour, toMinute,
+        } = timespan;
+
+        return `${fromHour}:${
+            (fromMinute === 0)
+                ? `${fromMinute}0`
+                : fromMinute
+        } - ${toHour}:${
+            (toMinute === 0)
+                ? `${toMinute}0`
+                : toMinute}`;
+    };
+
+    return (
+      <button
+          type="button"
+          className={`MeetingTimeButton${isActive ? '-is-active' : ''}`}
+          onClick={() => {
+                onTimeChange(timeSpan);
+                setCurrentTimeLabel(timeLabel);
+            }}
+        >
+          {timeLabel}
+        </button>
+    );
 };

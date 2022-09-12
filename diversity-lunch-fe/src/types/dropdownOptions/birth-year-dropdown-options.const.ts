@@ -8,7 +8,7 @@ const arrayWithUndefinedValues = [...Array(100)];
 const hundredYearsToThePast = arrayWithUndefinedValues.map((_, index) => tenYearsInThePast - index);
 
 export const BIRTH_YEAR_DROPDOWN_OPTIONS: DropdownOptions<number> = hundredYearsToThePast
-  .map((year) => ({
-    value: year,
-    label: `${year}`,
-  }));
+    .map((year) => ({
+        value: year,
+        label: `${year}`,
+    }));

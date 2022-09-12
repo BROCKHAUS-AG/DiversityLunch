@@ -10,16 +10,16 @@ import { AdminPanelIconContainer } from '../General/HeaderTemplate/AdminPanelIco
 
 export const Dashboard = () => (
   <div className="Dashboard">
-    <AdminPanelIconContainer />
-    <DiversityIconContainer title="DIVERSITY LUNCH" poweredBy />
+      <AdminPanelIconContainer />
+      <DiversityIconContainer title="DIVERSITY LUNCH" poweredBy />
 
-    <div className="Dashboard-tiles-container">
-      <Tile title="DEIN PROFIL" icon={iconProfile} link="profile" />
-      <Tile title="TERMIN WÄHLEN" icon={iconCalendar} link="/add+meetings/choose+date" />
-      <Tile title="ANSTEHENDE MEETINGS" icon={iconMeeting} link="upcoming+meetings" />
-      <Tile title="INFORMATIONEN" icon={iconInfo} link="information" />
+      <div className="Dashboard-tiles-container">
+          <Tile title="DEIN PROFIL" icon={iconProfile} link="profile" />
+          <Tile title="TERMIN WÄHLEN" icon={iconCalendar} link="/add+meetings/choose+date" />
+          <Tile title="ANSTEHENDE MEETINGS" icon={iconMeeting} link="upcoming+meetings" />
+          <Tile title="INFORMATIONEN" icon={iconInfo} link="information" />
+        </div>
+
     </div>
-
-  </div>
 
 );

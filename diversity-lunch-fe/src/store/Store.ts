@@ -1,16 +1,18 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { authenticationReducer } from '../Redux/authentication/authentication.reducer';
-import { meetingsReducer } from '../Redux/meetings/meetings.reducer';
-import { profileReducer } from '../Redux/profile/profile.reducer';
-import { accountReducer } from '../Redux/account/account.reducer';
+import { authenticationReducer } from '../data/authentication/authentication.reducer';
+import { meetingsReducer } from '../data/meeting/meetings.reducer';
+import { profileReducer } from '../data/profile/profile.reducer';
+import { accountReducer } from '../data/account/account.reducer';
+import experienceLevelReducer from '../data/experienceLevel/experience-level.reducer';
 
 const reducers = {
-  meetings: meetingsReducer,
-  authentication: authenticationReducer,
-  profile: profileReducer,
-  account: accountReducer,
+    meetings: meetingsReducer,
+    authentication: authenticationReducer,
+    profile: profileReducer,
+    account: accountReducer,
+    experienceLevel: experienceLevelReducer,
 };
 
 const rootReducer = combineReducers(reducers);

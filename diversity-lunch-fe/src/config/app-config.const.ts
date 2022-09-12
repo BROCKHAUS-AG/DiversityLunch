@@ -9,8 +9,8 @@ declare global{
 const reactAppEnv = process.env as unknown as ReactAppEnv;
 
 const appConfig: AppConfig = {
-  ...reactAppEnv,
-  ...window?.appConfig,
+    ...reactAppEnv,
+    ...window?.appConfig,
 };
 
 export const APP_CONFIG: AppConfig = Object.freeze(appConfig);
