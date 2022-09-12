@@ -2,9 +2,9 @@ package de.brockhausag.diversitylunchspringboot.profile.service;
 
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
-import de.brockhausag.diversitylunchspringboot.profile.repository.ProfileRepository;
-import org.junit.jupiter.api.BeforeEach;
+import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

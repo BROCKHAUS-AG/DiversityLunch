@@ -7,7 +7,7 @@ import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposa
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MatchingService;
 import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
-import de.brockhausag.diversitylunchspringboot.profile.repository.ProfileRepository;
+import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

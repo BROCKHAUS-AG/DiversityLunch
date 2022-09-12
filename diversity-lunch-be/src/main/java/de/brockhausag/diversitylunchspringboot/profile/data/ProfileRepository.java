@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.profile.repository;
+package de.brockhausag.diversitylunchspringboot.profile.data;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
 import org.springframework.data.repository.CrudRepository;
