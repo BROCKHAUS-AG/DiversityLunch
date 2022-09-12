@@ -2,6 +2,7 @@ package de.brockhausag.diversitylunchspringboot.profile.utils;
 
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,8 +40,9 @@ public class GenericService <RepositoryType extends CrudRepository<EntityType, L
     }
 
     public List<EntityType> getAllEntities(){
-        //TODO
-        return null;
+        List<EntityType> result = Collections.emptyList();
+        repository.findAll().forEach(result::add);
+        return result;
     }
 
 }
