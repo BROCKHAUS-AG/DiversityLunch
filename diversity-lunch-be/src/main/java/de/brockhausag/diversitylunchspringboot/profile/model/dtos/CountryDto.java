@@ -1,10 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.dtos;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.Size;
 
@@ -13,6 +10,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class CountryDto {
     private Long id;
     @Schema(description = "A country of the planet earth", example = "Deutschland")
