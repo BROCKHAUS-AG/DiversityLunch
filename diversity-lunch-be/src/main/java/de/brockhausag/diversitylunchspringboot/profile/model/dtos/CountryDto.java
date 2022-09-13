@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @Builder
+@EqualsAndHashCode
 public class CountryDto {
     private Long id;
     @Schema(description = "A country of the planet earth", example = "Deutschland")
