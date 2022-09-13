@@ -2,9 +2,10 @@ package de.brockhausag.diversitylunchspringboot.profile.utils;
 
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class GenericService <RepositoryType extends CrudRepository<EntityType, Long>, EntityType extends BaseEntity> {
 
@@ -40,9 +41,10 @@ public class GenericService <RepositoryType extends CrudRepository<EntityType, L
     }
 
     public List<EntityType> getAllEntities(){
-        List<EntityType> result = Collections.emptyList();
-        repository.findAll().forEach(result::add);
-        return result;
+        Iterable<EntityType> dbEntitiesIterable = repository.findAll();
+        return StreamSupport
+                .stream(dbEntitiesIterable.spliterator(), false)
+                .collect(Collectors.toList());
     }
 
 }
