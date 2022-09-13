@@ -1,6 +1,6 @@
 // styles
 import '../../styles/component-styles/questions/questionSite.scss';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
@@ -41,6 +41,7 @@ import { MOTHER_TONGUE_DROPDOWN_OPTIONS } from '../../types/dropdownOptions/moth
 import { Country } from '../../types/enums/country.type';
 import { Language } from '../../types/enums/language.type';
 import { countryFetch } from '../../data/country/fetch-country';
+import { Dropdown } from './Dropdown';
 
 const REQUIRED_FIELDS: (keyof Profile)[] = [
     'birthYear',
@@ -103,12 +104,6 @@ export const QuestionSite = () => {
     const WorkExperienceDropdown = GenerateGenericDropdown<WorkExperience>();
 
     const countries = useSelector((store: AppStoreState) => store.country);
-
-    useEffect(() => {
-        dispatch(countryFetch.getAll());
-    }, []);
-
-
 
     return (
         <div className="QuestionSite">
@@ -211,9 +206,7 @@ export const QuestionSite = () => {
                     placeholder="Ernährung"
                 />
 
-                <select>
-                    {countries.items.map((item) => <option key={item.id}>{item.descriptor}</option>)}
-                </select>
+                <Dropdown reducer={countries} fetch={countryFetch} text="Was ist dein Herkunftsland?" />
 
                 <Button
                     disabled={!isValid()}
