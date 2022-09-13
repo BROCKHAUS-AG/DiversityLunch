@@ -17,7 +17,7 @@ export class GenericFetch<T extends Identifiable> {
     private initFetch;
     private endpoint : string;
 
-    private url : string = 'http://localhost:8080/';
+    private url : string = '/';
 
     constructor(slice: GenericSlice<T>, endpoint : string, private readonly _errorSlice = globalErrorSlice) {
         this.update = slice.actions.update;
@@ -30,7 +30,7 @@ export class GenericFetch<T extends Identifiable> {
     public getAll() {
         return async (dispatch: Dispatch) => {
             try {
-                const response = await authenticatedFetchGet(this.url + this.endpoint);
+                const response = await authenticatedFetchGet(this.url + 'api/' + this.endpoint + '/all');
 
                 if (!response.ok) {
                     dispatch(this._errorSlice.httpError({ statusCode: response.status }));
