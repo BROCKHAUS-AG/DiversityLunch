@@ -6,6 +6,7 @@ import { meetingsReducer } from '../data/meeting/meetings.reducer';
 import { profileReducer } from '../data/profile/profile.reducer';
 import { accountReducer } from '../data/account/account.reducer';
 import experienceLevelReducer from '../data/experienceLevel/experience-level.reducer';
+import countryReducer from '../data/country/country-reducer';
 
 const reducers = {
     meetings: meetingsReducer,
@@ -13,6 +14,7 @@ const reducers = {
     profile: profileReducer,
     account: accountReducer,
     experienceLevel: experienceLevelReducer,
+    country: countryReducer,
 };
 
 const rootReducer = combineReducers(reducers);

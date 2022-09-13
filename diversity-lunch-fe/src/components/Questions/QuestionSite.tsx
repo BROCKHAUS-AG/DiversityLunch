@@ -1,6 +1,6 @@
 // styles
 import '../../styles/component-styles/questions/questionSite.scss';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
@@ -40,6 +40,7 @@ import { ORIGIN_COUNTRY_DROPDOWN_OPTIONS } from '../../types/dropdownOptions/ori
 import { MOTHER_TONGUE_DROPDOWN_OPTIONS } from '../../types/dropdownOptions/mother-tongue-options.const';
 import { Country } from '../../types/enums/country.type';
 import { Language } from '../../types/enums/language.type';
+import { countryFetch } from '../../data/country/fetch-country';
 
 const REQUIRED_FIELDS: (keyof Profile)[] = [
     'birthYear',
@@ -100,6 +101,14 @@ export const QuestionSite = () => {
     const EducationDropdown = GenerateGenericDropdown<Education>();
     const HobbyDropdown = GenerateGenericDropdown<Hobby>();
     const WorkExperienceDropdown = GenerateGenericDropdown<WorkExperience>();
+
+    const countries = useSelector((store: AppStoreState) => store.country);
+
+    useEffect(() => {
+        dispatch(countryFetch.getAll());
+    }, []);
+
+
 
     return (
         <div className="QuestionSite">
@@ -201,6 +210,10 @@ export const QuestionSite = () => {
                     onChange={(value) => updateProfileField('diet', value)}
                     placeholder="Ernährung"
                 />
+
+                <select>
+                    {countries.items.map((item) => <option key={item.id}>{item.descriptor}</option>)}
+                </select>
 
                 <Button
                     disabled={!isValid()}

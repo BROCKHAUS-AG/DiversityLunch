@@ -29,3 +29,23 @@
   display: flex;
   flex-direction: column;
 }
+
+select {
+  font-family: "GilroyLight";
+  font-size: 1.2rem;
+  padding: 17px;
+  border: 1px solid #e0e0e0;
+  font-weight: 600;
+  width: 17rem;
+  backgorund-color: red;
+  color: #333333;
+}
+
+select:focus, select:active {
+  border: 1px solid #e0e0e0;
+}
+
+select option {
+  padding: 15px;
+  border: 10px solid red;
+}
