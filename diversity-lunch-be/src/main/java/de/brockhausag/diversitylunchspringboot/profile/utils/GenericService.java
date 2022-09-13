@@ -12,7 +12,6 @@ public class GenericService <RepositoryType extends CrudRepository<EntityType, L
     private final RepositoryType repository;
 
     public GenericService(RepositoryType repository) {
-
         this.repository = repository;
     }
 
@@ -23,12 +22,10 @@ public class GenericService <RepositoryType extends CrudRepository<EntityType, L
     }
 
     public Optional<EntityType> getEntityById(Long id){
-
         return repository.findById(id);
     }
 
     public EntityType updateOrCreateEntity(EntityType entity){
-
         return repository.save(entity);
     }
 
