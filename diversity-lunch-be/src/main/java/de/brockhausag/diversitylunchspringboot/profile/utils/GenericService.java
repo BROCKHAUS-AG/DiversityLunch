@@ -41,9 +41,9 @@ public class GenericService <RepositoryType extends CrudRepository<EntityType, L
     }
 
     public List<EntityType> getAllEntities(){
-        Iterable<EntityType> dbEntitiesIterable = repository.findAll();
+        Iterable<EntityType> entitiesIterable = repository.findAll();
         return StreamSupport
-                .stream(dbEntitiesIterable.spliterator(), false)
+                .stream(entitiesIterable.spliterator(), false)
                 .collect(Collectors.toList());
     }
 

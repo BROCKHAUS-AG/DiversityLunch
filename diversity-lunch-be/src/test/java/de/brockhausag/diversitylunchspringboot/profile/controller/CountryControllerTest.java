@@ -5,6 +5,7 @@ import de.brockhausag.diversitylunchspringboot.profile.logic.CountryService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.CountryMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.CountryDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.CountryEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,11 +26,14 @@ public class CountryControllerTest {
     private CountryService countryService;
     @Mock
     private CountryMapper countryMapper;
-
     @InjectMocks
     private CountryController countryController;
+    private CountryTestDataFactory factory;
 
-    private final CountryTestDataFactory factory = new CountryTestDataFactory();
+    @BeforeEach
+    void setup() {
+        factory = new CountryTestDataFactory();
+    }
 
     @Test
     void testGetCountry_withExistingId_returnsOkWithCountryDto() {
@@ -65,7 +69,7 @@ public class CountryControllerTest {
     }
 
     @Test
-    void testGetAllCountries_withEmptyDb_returnsEmptyList(){
+    void testGetAllCountries_withNoEntitiesInRepository_returnsEmptyList(){
         //Arrange
         List<CountryDto> emptyDtoList = Collections.emptyList();
         List<CountryEntity> emptyEntityList = Collections.emptyList();
@@ -85,7 +89,7 @@ public class CountryControllerTest {
     }
 
     @Test
-    void testGetAllCountries_withTwoDbEntries_returnsListOfTwoCountryEntities(){
+    void testGetAllCountries_withTwoEntitiesInRepository_returnsListOfTwoCountryEntities(){
         //Arrange
         CountryEntity firstCountryEntity = this.factory.buildCountryEntity();
         CountryEntity secondCountryEntity = this.factory.buildSecondCountryEntity();
