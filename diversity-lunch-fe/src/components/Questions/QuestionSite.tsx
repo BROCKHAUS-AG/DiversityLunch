@@ -40,6 +40,8 @@ import { ORIGIN_COUNTRY_DROPDOWN_OPTIONS } from '../../types/dropdownOptions/ori
 import { MOTHER_TONGUE_DROPDOWN_OPTIONS } from '../../types/dropdownOptions/mother-tongue-options.const';
 import { Country } from '../../types/enums/country.type';
 import { Language } from '../../types/enums/language.type';
+import { countryFetch } from '../../data/country/fetch-country';
+import { Dropdown } from './Dropdown';
 
 const REQUIRED_FIELDS: (keyof Profile)[] = [
     'birthYear',
@@ -100,6 +102,8 @@ export const QuestionSite = () => {
     const EducationDropdown = GenerateGenericDropdown<Education>();
     const HobbyDropdown = GenerateGenericDropdown<Hobby>();
     const WorkExperienceDropdown = GenerateGenericDropdown<WorkExperience>();
+
+    const countries = useSelector((store: AppStoreState) => store.country);
 
     return (
         <div className="QuestionSite">
@@ -201,6 +205,8 @@ export const QuestionSite = () => {
                     onChange={(value) => updateProfileField('diet', value)}
                     placeholder="Ernährung"
                 />
+
+                <Dropdown reducer={countries} fetch={countryFetch} text="Was ist dein Herkunftsland?" />
 
                 <Button
                     disabled={!isValid()}

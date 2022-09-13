@@ -1,11 +1,12 @@
 import React, { FC, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import { GenericList } from '../Shared/GenericList/GenericList';
 import { Project } from './Project';
 import { AdminPanelListItem } from './admin-panel-list-item';
 import { experienceLevelFetch } from '../../data/experienceLevel/fetch-experience-level';
+import { AppStoreState } from '../../store/Store';
 
 const data: Project[] = [{
     id: 0,
@@ -20,10 +21,10 @@ function updateProjectDescriptor(projects: Project[], project: Project): Project
 }
 
 export const AdminPanel: FC = () => {
-    const dispatch = useDispatch();
-    // const experienceLevels = useSelector((state) => state.account);
-
-    dispatch(experienceLevelFetch.getAll());
+    // const dispatch = useDispatch();
+    // const experienceLevels = useSelector((store: AppStoreState) => store.experienceLevel);
+    //
+    // dispatch(experienceLevelFetch.getAll());
 
     const [projects, setProjects] = useState(data);
 
