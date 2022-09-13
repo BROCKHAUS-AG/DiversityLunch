@@ -8,12 +8,12 @@ export const ProfileOverviewLoader: React.FC = () => {
     const profileState = useSelector((store: AppStoreState) => store.profile);
 
     return (
-      <>
-          {
+        <>
+            {
                 (profileState.status === 'OK' || profileState.status === 'UPDATING')
         && <ProfileOverview profileData={profileState.profileData} />
             }
-          {
+            {
                 profileState.status === 'UPDATING' && <LoadingAnimation size="block-app" />
             }
         </>

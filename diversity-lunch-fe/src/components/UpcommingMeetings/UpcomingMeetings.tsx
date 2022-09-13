@@ -41,13 +41,13 @@ export const UpcomingMeetings = () => {
     }, [isPending, dispatch, profileId, meetingsState]);
 
     return (
-      <div className="UpcomingMeetings">
-          <CloseSiteContainer />
-          <DiversityIconContainer title="Anstehende Meetings" />
-          <div className="UpcomingMeetings-container">
-              <h5 className="UpcomingMeetings-header">Deine Meetings</h5>
-              <h6 className="UpcomingMeetings-subheader">Anstehende Verabredungen</h6>
-              {
+        <div className="UpcomingMeetings">
+            <CloseSiteContainer />
+            <DiversityIconContainer title="Anstehende Meetings" />
+            <div className="UpcomingMeetings-container">
+                <h5 className="UpcomingMeetings-header">Deine Meetings</h5>
+                <h6 className="UpcomingMeetings-subheader">Anstehende Verabredungen</h6>
+                {
                     meetingsState.status === 'OK'
                         ? meetings
                             .filter((meeting: Meeting) => meeting.partnerName)
@@ -56,8 +56,8 @@ export const UpcomingMeetings = () => {
                             )
                         : <LoadingAnimation />
                 }
-              <h6 className="UpcomingMeetings-subheader">Offene Termine</h6>
-              {
+                <h6 className="UpcomingMeetings-subheader">Offene Termine</h6>
+                {
                     meetingsState.status === 'OK'
                         ? meetings
                             .filter((meeting: any) => !meeting.partnerName)
@@ -67,8 +67,8 @@ export const UpcomingMeetings = () => {
                         : <LoadingAnimation />
                 }
             </div>
-          <div className="CustomButton-container">
-              <Button label="Weiteren Termin buchen" onClick={() => history.push('/add+meetings/choose+date')} />
+            <div className="CustomButton-container">
+                <Button label="Weiteren Termin buchen" onClick={() => history.push('/add+meetings/choose+date')} />
             </div>
         </div>
     );

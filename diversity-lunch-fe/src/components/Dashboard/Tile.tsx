@@ -15,12 +15,12 @@ type TilesProps = {
 export const Tile = (props:TilesProps) => {
     const { title, icon, link } = props;
     return (
-      <div>
-          <Link to={link} className="Tile-link">
-              <div className="Tile">
-                  <img alt="Tile Icon" className="Tile-icon" src={icon} />
+        <div>
+            <Link to={link} className="Tile-link">
+                <div className="Tile">
+                    <img alt="Tile Icon" className="Tile-icon" src={icon} />
                 </div>
-              <h5 className="Tile-title">{title}</h5>
+                <h5 className="Tile-title">{title}</h5>
             </Link>
         </div>
     );

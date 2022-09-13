@@ -21,10 +21,10 @@ describe('DeleteMeetingPopUp', () => {
         deleteFunction = jest.fn();
         cancelFunction = jest.fn();
         popup = (
-          <DeleteMeetingPopUp
-              meeting={defaultMeeting}
-              onDelete={deleteFunction}
-              onCancel={cancelFunction}
+            <DeleteMeetingPopUp
+                meeting={defaultMeeting}
+                onDelete={deleteFunction}
+                onCancel={cancelFunction}
             />
         );
     });

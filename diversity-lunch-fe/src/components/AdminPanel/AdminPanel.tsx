@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import { GenericList } from '../Shared/GenericList/GenericList';
@@ -35,14 +35,14 @@ export const AdminPanel: FC = () => {
     };
 
     return (
-      <section className="view">
-          <CloseSiteContainer />
-          <DiversityIconContainer title="ADMIN PANEL" />
-          <GenericList
-              data={projects}
-              getKeyFunction={(item) => item.id}
-              itemComponent={AdminPanelListItem}
-              itemComponentProps={{ onEditClicked: (p: Project) => updateProject(p), onRemoveClicked: (p: Project) => removeProject(p) }}
+        <section className="view">
+            <CloseSiteContainer />
+            <DiversityIconContainer title="ADMIN PANEL" />
+            <GenericList
+                data={projects}
+                getKeyFunction={(item) => item.id}
+                itemComponent={AdminPanelListItem}
+                itemComponentProps={{ onEditClicked: (p: Project) => updateProject(p), onRemoveClicked: (p: Project) => removeProject(p) }}
             />
         </section>
     );

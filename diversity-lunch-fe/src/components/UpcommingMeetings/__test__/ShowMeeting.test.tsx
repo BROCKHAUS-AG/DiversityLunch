@@ -17,8 +17,8 @@ describe('Show Meeting', () => {
         };
 
         providerElement = (
-          <Provider store={APP_STORE}>
-              <ShowMeeting meeting={defaultMeeting} />
+            <Provider store={APP_STORE}>
+                <ShowMeeting meeting={defaultMeeting} />
             </Provider>
         );
     });

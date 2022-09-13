@@ -15,11 +15,11 @@ export const LoadingAnimation: React.FC<LoadingAnimationProps> = (props: Loading
     }, [size]);
 
     return (
-      <div className={getClassName()}>
-          <div className="animation">
-              <div className="bounce1" />
-              <div className="bounce2" />
-              <div className="bounce3" />
+        <div className={getClassName()}>
+            <div className="animation">
+                <div className="bounce1" />
+                <div className="bounce2" />
+                <div className="bounce3" />
             </div>
         </div>
     );

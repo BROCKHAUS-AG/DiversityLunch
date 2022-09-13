@@ -11,10 +11,10 @@ describe('Generic Dropdown', () => {
 
     it('renders without crashing with render()', () => {
         render(<GenderDropdown
-          label="gender"
-          placeholder="gender"
-          options={GENDER_DROPDOWN_OPTIONS}
-          onChange={() => {
+            label="gender"
+            placeholder="gender"
+            options={GENDER_DROPDOWN_OPTIONS}
+            onChange={() => {
             }}
         />);
         const linkElement = screen.getByLabelText('gender');
@@ -23,34 +23,34 @@ describe('Generic Dropdown', () => {
 
     it('renders without crashing', () => {
         renderIntoDocument(<GenderDropdown
-          label="label"
-          placeholder=""
-          options={GENDER_DROPDOWN_OPTIONS}
-          onChange={() => {
+            label="label"
+            placeholder=""
+            options={GENDER_DROPDOWN_OPTIONS}
+            onChange={() => {
             }}
         />);
         expect(isElement(<GenderDropdown
-          label=""
-          placeholder=""
-          options={GENDER_DROPDOWN_OPTIONS}
-          onChange={() => {
+            label=""
+            placeholder=""
+            options={GENDER_DROPDOWN_OPTIONS}
+            onChange={() => {
             }}
         />)).toBe(true);
         expect(isElementOfType(<GenderDropdown
-          label=""
-          placeholder=""
-          options={GENDER_DROPDOWN_OPTIONS}
-          onChange={() => {
+            label=""
+            placeholder=""
+            options={GENDER_DROPDOWN_OPTIONS}
+            onChange={() => {
             }}
         />, GenderDropdown)).toBe(true);
     });
 
     it('checks if value exists in dropdown', () => {
         render(<GenderDropdown
-          label="label"
-          placeholder="label"
-          options={GENDER_DROPDOWN_OPTIONS}
-          onChange={() => {
+            label="label"
+            placeholder="label"
+            options={GENDER_DROPDOWN_OPTIONS}
+            onChange={() => {
             }}
         />);
         fireEvent.click(screen.getByLabelText('label'));

@@ -13,13 +13,13 @@ export const MeetingAlreadyBooked = () => {
     };
 
     return (
-      <div className="Information">
-          <CloseSiteContainer />
-          <DiversityIconContainer title="INFORMATION" />
-          <p className="Information-info-text">
-              Diesen Termin hast du bereits gebucht.
+        <div className="Information">
+            <CloseSiteContainer />
+            <DiversityIconContainer title="INFORMATION" />
+            <p className="Information-info-text">
+                Diesen Termin hast du bereits gebucht.
             </p>
-          <Button label="Termin buchen" onClick={terminBuchen} />
+            <Button label="Termin buchen" onClick={terminBuchen} />
         </div>
     );
 };

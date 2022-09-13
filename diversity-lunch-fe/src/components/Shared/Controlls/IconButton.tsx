@@ -13,9 +13,9 @@ export const IconButton = ({
 }: IconButtonProps) => {
     const textElement = text ? <span>{text}</span> : null;
     return (
-      <button type="button" onClick={onClick}>
-          {textElement}
-          <img src={iconPath} alt={altText} />
+        <button type="button" onClick={onClick}>
+            {textElement}
+            <img src={iconPath} alt={altText} />
         </button>
     );
 };

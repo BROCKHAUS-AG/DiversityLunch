@@ -50,35 +50,35 @@ export function GenericCharacteristic<T>(): React.FC<CharacterProps<T>> {
         };
 
         return (
-          <div className="Characteristic">
-              <div className="Characteristic-left-container">
-                  <h6 className="Characteristic-attribute">{showingAttribute}</h6>
-                  {
+            <div className="Characteristic">
+                <div className="Characteristic-left-container">
+                    <h6 className="Characteristic-attribute">{showingAttribute}</h6>
+                    {
                         chosen
                             ? (
-                              <Dropdown
-                                  label=""
-                                  options={options}
-                                  currentValue={currentValue}
-                                  onChange={onChangeValue}
-                                  placeholder=""
+                                <Dropdown
+                                    label=""
+                                    options={options}
+                                    currentValue={currentValue}
+                                    onChange={onChangeValue}
+                                    placeholder=""
                                 />
                             )
                             : <p className="Characteristic-value">{optionToString(currentOption)}</p>
                     }
                 </div>
-              <div
-                  className="Characteristic-right-container"
-                  onClick={changeIcon}
-                  role="button"
+                <div
+                    className="Characteristic-right-container"
+                    onClick={changeIcon}
+                    role="button"
                 >
-                  {
+                    {
                         chosen
                             ? (
-                              <img
-                                  alt="icon_check"
-                                  className="Characteristic-icons"
-                                  src={iconCheck}
+                                <img
+                                    alt="icon_check"
+                                    className="Characteristic-icons"
+                                    src={iconCheck}
                                 />
                             )
                             : <img alt="icon_edit" className="Characteristic-icons" src={iconEdit} />

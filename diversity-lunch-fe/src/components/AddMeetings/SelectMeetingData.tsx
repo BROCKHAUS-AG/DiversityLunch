@@ -119,44 +119,44 @@ export const SelectMeetingData = (props: SelectMeetingDataProps) => {
     && t1.toHour === t2.toHour
     && t1.toMinute === t2.toMinute);
     return (
-      <div className="SelectMeetingData">
-          <CloseSiteContainer />
-          <DiversityIconContainer title="TERMIN WÄHLEN" />
+        <div className="SelectMeetingData">
+            <CloseSiteContainer />
+            <DiversityIconContainer title="TERMIN WÄHLEN" />
 
-          <p className="ChooseDate-infoText">An welchem Tag möchtest du dein Diversity Lunch haben?</p>
-          <Calendar
-              defaultValue={nextDay}
-              onChange={onDateChange}
-              minDate={nextDay}
-              maxDate={finalDay}
+            <p className="ChooseDate-infoText">An welchem Tag möchtest du dein Diversity Lunch haben?</p>
+            <Calendar
+                defaultValue={nextDay}
+                onChange={onDateChange}
+                minDate={nextDay}
+                maxDate={finalDay}
             />
 
-          <div className="ChooseTime-segment-control">
+            <div className="ChooseTime-segment-control">
 
-              {
+                {
                     meetingTimespans.map((meetingTimespan) => (
-                      <MeetingTimeButton
-                          isActive={compareTwoMeetingTimespans(meetingTimespan, currentTime)}
-                          timeSpan={meetingTimespan}
-                          onTimeChange={setCurrentTime}
-                          setCurrentTimeLabel={setCurrentTimeLabel}
-                          key={meetingTimespan.id}
+                        <MeetingTimeButton
+                            isActive={compareTwoMeetingTimespans(meetingTimespan, currentTime)}
+                            timeSpan={meetingTimespan}
+                            onTimeChange={setCurrentTime}
+                            setCurrentTimeLabel={setCurrentTimeLabel}
+                            key={meetingTimespan.id}
                         />
                     ))
                 }
 
             </div>
 
-          <div className="DateOverview-meeting-container">
-              <div className="DateOverview-meeting">
-                  <div>
-                      <p className="DateOverview-meeting-text">{dateToString(currentDate)}</p>
-                      <p className="DateOverview-meeting-text">{currentTimeLabel}</p>
+            <div className="DateOverview-meeting-container">
+                <div className="DateOverview-meeting">
+                    <div>
+                        <p className="DateOverview-meeting-text">{dateToString(currentDate)}</p>
+                        <p className="DateOverview-meeting-text">{currentTimeLabel}</p>
                     </div>
-                  <img alt="icon_food" className="DateOverview-meeting-icon" src={iconFood} />
+                    <img alt="icon_food" className="DateOverview-meeting-icon" src={iconFood} />
                 </div>
             </div>
-          <Button label="Termin buchen" onClick={createAndAddMeeting} />
+            <Button label="Termin buchen" onClick={createAndAddMeeting} />
         </div>
     );
 };

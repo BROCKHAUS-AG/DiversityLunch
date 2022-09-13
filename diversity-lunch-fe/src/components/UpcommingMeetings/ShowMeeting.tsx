@@ -24,54 +24,54 @@ export const ShowMeeting = ({ meeting }: MeetingContainerProps) => {
     };
 
     return (
-      <div className="ShowMeeting">
-          <div className="ShowMeeting-text-container">
-              <p className="ShowMeeting-text">{meeting.fromDateTime.toLocaleDateString('de-DE')}</p>
+        <div className="ShowMeeting">
+            <div className="ShowMeeting-text-container">
+                <p className="ShowMeeting-text">{meeting.fromDateTime.toLocaleDateString('de-DE')}</p>
 
-              <p className="ShowMeeting-text">
-                  {substringLocalTime(meeting.fromDateTime)}
-                  {' '}
-                  -
+                <p className="ShowMeeting-text">
+                    {substringLocalTime(meeting.fromDateTime)}
+                    {' '}
+                    -
                     {` ${getMeetingEndTime(meeting.fromDateTime)}`}
                 </p>
-              {
+                {
                     meeting.partnerName
                         ? <p className="ShowMeeting-text">{meeting.partnerName}</p> : null
                 }
             </div>
 
-          <div className="ShowMeeting-icon-container">
-              <img
-                  alt="icon_hamburger"
-                  src={hamburgerIcon}
-                  className="ShowMeeting-hamburgerIcon"
+            <div className="ShowMeeting-icon-container">
+                <img
+                    alt="icon_hamburger"
+                    src={hamburgerIcon}
+                    className="ShowMeeting-hamburgerIcon"
                 />
-              {
+                {
                     !meeting.partnerName
                     && (
-                    <div
-                          className="ShowMeeting-closeIcon"
-                          role="none"
-                          onClick={() => {
+                        <div
+                            className="ShowMeeting-closeIcon"
+                            role="none"
+                            onClick={() => {
                                 setIsDeleting(true);
                             }}
                         >
-                          <img
-                              alt="icon_close"
-                              src={closeIcon}
+                            <img
+                                alt="icon_close"
+                                src={closeIcon}
                             />
                         </div>
                     )
                 }
             </div>
 
-          {
+            {
                 isDeleting
                 && (
-                <DeleteMeetingPopUp
-                      meeting={meeting}
-                      onDelete={deleteMeetingCallback}
-                      onCancel={() => setIsDeleting(false)}
+                    <DeleteMeetingPopUp
+                        meeting={meeting}
+                        onDelete={deleteMeetingCallback}
+                        onCancel={() => setIsDeleting(false)}
                     />
                 )
             }

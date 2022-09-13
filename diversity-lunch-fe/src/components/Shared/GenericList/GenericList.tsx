@@ -15,14 +15,14 @@ export const GenericList = <T extends unknown>(
     }: GenericListProps<T>,
 ) => {
     const items = data.map((item: T) => (
-      <li key={getKeyFunction(item)}>
-          {itemComponent({ item, ...itemComponentProps })}
+        <li key={getKeyFunction(item)}>
+            {itemComponent({ item, ...itemComponentProps })}
         </li>
     ));
 
     return (
-      <ul>
-          {items}
+        <ul>
+            {items}
         </ul>
     );
 };

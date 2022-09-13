@@ -17,8 +17,8 @@ export const RedirectHandler: React.FC<RedirectHandlerProps> = (props: RedirectH
     }, [dispatch, authData]);
 
     return (
-      <div>
-          <LoadingAnimation size="block-app" />
+        <div>
+            <LoadingAnimation size="block-app" />
         </div>
     );
 };

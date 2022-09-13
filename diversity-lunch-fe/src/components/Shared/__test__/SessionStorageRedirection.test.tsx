@@ -55,9 +55,9 @@ describe('SessionStorageRedirection', () => {
 
         storePath(path);
         const { unmount } = render((
-          <BrowserRouter>
-              <Switch>
-                  <SessionStorageRedirection />
+            <BrowserRouter>
+                <Switch>
+                    <SessionStorageRedirection />
                 </Switch>
             </BrowserRouter>
         ));
@@ -73,9 +73,9 @@ describe('SessionStorageRedirection', () => {
 
         storePath(path);
         render((
-          <BrowserRouter>
-              <Switch>
-                  <SessionStorageRedirection />
+            <BrowserRouter>
+                <Switch>
+                    <SessionStorageRedirection />
                 </Switch>
             </BrowserRouter>
         ));
@@ -90,9 +90,9 @@ describe('SessionStorageRedirection', () => {
 
         storePath(path);
         render((
-          <BrowserRouter>
-              <Switch>
-                  <SessionStorageRedirection />
+            <BrowserRouter>
+                <Switch>
+                    <SessionStorageRedirection />
                 </Switch>
             </BrowserRouter>
         ));
@@ -104,9 +104,9 @@ describe('SessionStorageRedirection', () => {
 
     it('should route to the components default path, if no path was stored and no defaultPath was given', () => {
         render((
-          <BrowserRouter>
-              <Switch>
-                  <SessionStorageRedirection />
+            <BrowserRouter>
+                <Switch>
+                    <SessionStorageRedirection />
                 </Switch>
             </BrowserRouter>
         ));
@@ -121,9 +121,9 @@ describe('SessionStorageRedirection', () => {
         const path = '/another/path/to/be/tested';
 
         render((
-          <BrowserRouter>
-              <Switch>
-                  <SessionStorageRedirection defaultPath={path} />
+            <BrowserRouter>
+                <Switch>
+                    <SessionStorageRedirection defaultPath={path} />
                 </Switch>
             </BrowserRouter>
         ));

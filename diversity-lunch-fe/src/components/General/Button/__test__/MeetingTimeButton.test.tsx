@@ -16,20 +16,20 @@ describe('MeetingTimeButton', () => {
 
         };
         buttonActive = (
-          <MeetingTimeButton
-              onTimeChange={jest.fn()}
-              setCurrentTimeLabel={jest.fn()}
-              isActive
-              timeSpan={meetingTimespan}
+            <MeetingTimeButton
+                onTimeChange={jest.fn()}
+                setCurrentTimeLabel={jest.fn()}
+                isActive
+                timeSpan={meetingTimespan}
             />
         );
 
         buttonInactive = (
-          <MeetingTimeButton
-              onTimeChange={jest.fn()}
-              setCurrentTimeLabel={jest.fn()}
-              isActive={false}
-              timeSpan={meetingTimespan}
+            <MeetingTimeButton
+                onTimeChange={jest.fn()}
+                setCurrentTimeLabel={jest.fn()}
+                isActive={false}
+                timeSpan={meetingTimespan}
             />
         );
     });

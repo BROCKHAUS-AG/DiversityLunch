@@ -22,6 +22,6 @@ export const Login: React.FC = () => {
     }, []);
 
     return (
-      <LoadingAnimation size="block-app" />
+        <LoadingAnimation size="block-app" />
     );
 };

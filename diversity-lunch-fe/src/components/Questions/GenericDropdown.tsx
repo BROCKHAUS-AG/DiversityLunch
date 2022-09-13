@@ -27,17 +27,17 @@ export function GenerateGenericDropdown<T>(): React.FC<GenericDropdownProps<T>> 
         const currentViewValue = options.find((o) => o.value === currentValue);
 
         return (
-          <div className="DropdownQuestion">
-              <p className="DropdownQuestion-question">{label}</p>
-              <Autocomplete
-                  options={options}
-                  getOptionLabel={(o) => o.label}
-                  renderInput={
+            <div className="DropdownQuestion">
+                <p className="DropdownQuestion-question">{label}</p>
+                <Autocomplete
+                    options={options}
+                    getOptionLabel={(o) => o.label}
+                    renderInput={
                         // eslint-disable-next-line react/jsx-props-no-spreading
                         (params: AutocompleteRenderInputParams) => <TextField {...params} variant="outlined" label={placeholder} />
                     }
-                  onChange={(_, value: DropdownOption<T> | null) => onChange(value?.value)}
-                  value={currentViewValue}
+                    onChange={(_, value: DropdownOption<T> | null) => onChange(value?.value)}
+                    value={currentViewValue}
                 />
             </div>
         );

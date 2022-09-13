@@ -16,18 +16,18 @@ export const DiversityIconContainer = (props: DiversityIconContainerProps) => {
     } = props;
 
     return (
-      <div className="IconHeader-diversity-logo-container">
-          <img alt="diversity icon" className="IconHeader-diversity-icon" src={iconDiversity} />
-          <div className="IconHeader-title-container">
-              <h4 className="IconHeader-title">{title}</h4>
-              {
+        <div className="IconHeader-diversity-logo-container">
+            <img alt="diversity icon" className="IconHeader-diversity-icon" src={iconDiversity} />
+            <div className="IconHeader-title-container">
+                <h4 className="IconHeader-title">{title}</h4>
+                {
                     poweredBy
           && (
-          <div className="IconHeader-title-powered-by-container">
-                <p className="IconHeader-title-powered-by">powered by</p>
-                <p className="IconHeader-title-brockhaus-ag">
-                    {'\u00A0'}
-                    BROCKHAUS AG
+              <div className="IconHeader-title-powered-by-container">
+                  <p className="IconHeader-title-powered-by">powered by</p>
+                  <p className="IconHeader-title-brockhaus-ag">
+                      {'\u00A0'}
+                      BROCKHAUS AG
                   </p>
               </div>
           )
@@ -35,7 +35,7 @@ export const DiversityIconContainer = (props: DiversityIconContainerProps) => {
 
             </div>
 
-          <p className="IconHeader-subtitle">{subtitle}</p>
+            <p className="IconHeader-subtitle">{subtitle}</p>
         </div>
     );
 };

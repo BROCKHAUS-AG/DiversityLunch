@@ -81,100 +81,100 @@ export const ProfileOverview = (props: ProfileOverviewProps) => {
     }, [currentFormState, dispatch, history]);
 
     return (
-      <section className="view">
-          <div className="Profile-logo-container">
-              <CloseSiteContainer />
-              <DiversityIconContainer title="DEIN PROFIL" />
+        <section className="view">
+            <div className="Profile-logo-container">
+                <CloseSiteContainer />
+                <DiversityIconContainer title="DEIN PROFIL" />
             </div>
 
-          <div className="Profile-name-container">
-              <h5 className="Profile-user-name">{fullName}</h5>
+            <div className="Profile-name-container">
+                <h5 className="Profile-user-name">{fullName}</h5>
             </div>
 
-          <form className="Profile-settings-container" onSubmit={submit}>
+            <form className="Profile-settings-container" onSubmit={submit}>
 
-              <BirthYearCharacteristic
-                  showingAttribute="GEBURTSJAHR"
-                  currentValue={currentFormState.birthYear}
-                  options={BIRTH_YEAR_DROPDOWN_OPTIONS}
-                  attribute="birthYear"
-                  changeCurrentFormState={updateProfileField}
+                <BirthYearCharacteristic
+                    showingAttribute="GEBURTSJAHR"
+                    currentValue={currentFormState.birthYear}
+                    options={BIRTH_YEAR_DROPDOWN_OPTIONS}
+                    attribute="birthYear"
+                    changeCurrentFormState={updateProfileField}
                 />
 
-              <GenderCharacteristic
-                  showingAttribute="GESCHLECHT"
-                  currentValue={currentFormState.gender}
-                  options={GENDER_DROPDOWN_OPTIONS}
-                  attribute="gender"
-                  changeCurrentFormState={updateProfileField}
+                <GenderCharacteristic
+                    showingAttribute="GESCHLECHT"
+                    currentValue={currentFormState.gender}
+                    options={GENDER_DROPDOWN_OPTIONS}
+                    attribute="gender"
+                    changeCurrentFormState={updateProfileField}
                 />
 
-              <ProjectCharacteristic
-                  showingAttribute="KUNDE"
-                  options={PROJECT_DROPDOWN_OPTIONS}
-                  attribute="project"
-                  changeCurrentFormState={updateProfileField}
-                  currentValue={currentFormState.project}
+                <ProjectCharacteristic
+                    showingAttribute="KUNDE"
+                    options={PROJECT_DROPDOWN_OPTIONS}
+                    attribute="project"
+                    changeCurrentFormState={updateProfileField}
+                    currentValue={currentFormState.project}
                 />
 
-              <OriginCountryCharacteristic
-                  showingAttribute="HERKUNFTSLAND"
-                  options={ORIGIN_COUNTRY_DROPDOWN_OPTIONS}
-                  attribute="originCountry"
-                  currentValue={currentFormState.originCountry}
-                  changeCurrentFormState={updateProfileField}
+                <OriginCountryCharacteristic
+                    showingAttribute="HERKUNFTSLAND"
+                    options={ORIGIN_COUNTRY_DROPDOWN_OPTIONS}
+                    attribute="originCountry"
+                    currentValue={currentFormState.originCountry}
+                    changeCurrentFormState={updateProfileField}
                 />
 
-              <MotherTongueCharacteristic
-                  showingAttribute="MUTTERSPRACHE"
-                  attribute="motherTongue"
-                  options={MOTHER_TONGUE_DROPDOWN_OPTIONS}
-                  currentValue={currentFormState.motherTongue}
-                  changeCurrentFormState={updateProfileField}
+                <MotherTongueCharacteristic
+                    showingAttribute="MUTTERSPRACHE"
+                    attribute="motherTongue"
+                    options={MOTHER_TONGUE_DROPDOWN_OPTIONS}
+                    currentValue={currentFormState.motherTongue}
+                    changeCurrentFormState={updateProfileField}
                 />
 
-              <HobbyCharacteristic
-                  showingAttribute="HOBBY"
-                  options={HOBBY_DROPDOWN_OPTIONS}
-                  currentValue={currentFormState.hobby}
-                  attribute="hobby"
-                  changeCurrentFormState={updateProfileField}
+                <HobbyCharacteristic
+                    showingAttribute="HOBBY"
+                    options={HOBBY_DROPDOWN_OPTIONS}
+                    currentValue={currentFormState.hobby}
+                    attribute="hobby"
+                    changeCurrentFormState={updateProfileField}
                 />
 
-              <ReligionCharacteristic
-                  showingAttribute="RELIGION"
-                  options={RELIGION_DROPDOWN_OPTIONS}
-                  currentValue={currentFormState.religion}
-                  attribute="religion"
-                  changeCurrentFormState={updateProfileField}
+                <ReligionCharacteristic
+                    showingAttribute="RELIGION"
+                    options={RELIGION_DROPDOWN_OPTIONS}
+                    currentValue={currentFormState.religion}
+                    attribute="religion"
+                    changeCurrentFormState={updateProfileField}
                 />
 
-              <WorkExperienceCharacteristic
-                  showingAttribute="BERUFSERFAHRUNG (JAHRE)"
-                  options={WORK_EXPERIENCE_DROPDOWN_OPTIONS}
-                  currentValue={currentFormState.workExperience}
-                  attribute="workExperience"
-                  changeCurrentFormState={updateProfileField}
+                <WorkExperienceCharacteristic
+                    showingAttribute="BERUFSERFAHRUNG (JAHRE)"
+                    options={WORK_EXPERIENCE_DROPDOWN_OPTIONS}
+                    currentValue={currentFormState.workExperience}
+                    attribute="workExperience"
+                    changeCurrentFormState={updateProfileField}
                 />
 
-              <EducationCharacteristics
-                  showingAttribute="BILDUNGSWEG"
-                  options={EDUCATION_DROPDOWN_OPTIONS}
-                  currentValue={currentFormState.education}
-                  attribute="education"
-                  changeCurrentFormState={updateProfileField}
+                <EducationCharacteristics
+                    showingAttribute="BILDUNGSWEG"
+                    options={EDUCATION_DROPDOWN_OPTIONS}
+                    currentValue={currentFormState.education}
+                    attribute="education"
+                    changeCurrentFormState={updateProfileField}
                 />
 
-              <DietCharacteristic
-                  options={DIET_DROPDOWN_OPTIONS}
-                  currentValue={currentFormState.diet}
-                  changeCurrentFormState={updateProfileField}
-                  attribute="diet"
-                  showingAttribute="ERNÄHRUNGSWEISE"
+                <DietCharacteristic
+                    options={DIET_DROPDOWN_OPTIONS}
+                    currentValue={currentFormState.diet}
+                    changeCurrentFormState={updateProfileField}
+                    attribute="diet"
+                    showingAttribute="ERNÄHRUNGSWEISE"
                 />
 
-              <div className="Profile-button-container">
-                  <Button type="submit" label="Speichern" disabled={!profileChanged} />
+                <div className="Profile-button-container">
+                    <Button type="submit" label="Speichern" disabled={!profileChanged} />
                 </div>
             </form>
         </section>

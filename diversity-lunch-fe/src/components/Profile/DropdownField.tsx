@@ -31,17 +31,17 @@ export const DropdownField = (props: DropdownFieldProps) => {
     };
 
     return (
-      <div className="DropdownQuestion">
-          <Autocomplete
-              id="combo-box-demo"
-              options={options}
-              renderInput={
+        <div className="DropdownQuestion">
+            <Autocomplete
+                id="combo-box-demo"
+                options={options}
+                renderInput={
                     (params: AutocompleteRenderInputParams) =>
                     // eslint-disable-next-line react/jsx-props-no-spreading,implicit-arrow-linebreak
-                      <TextField {...params} variant="outlined" />
+                        <TextField {...params} variant="outlined" />
                 }
-              onChange={(event: ChangeEvent<{}>, value) => onChangeValue(event, value)}
-              defaultValue={defaultOption}
+                onChange={(event: ChangeEvent<{}>, value) => onChangeValue(event, value)}
+                defaultValue={defaultOption}
             />
         </div>
     );

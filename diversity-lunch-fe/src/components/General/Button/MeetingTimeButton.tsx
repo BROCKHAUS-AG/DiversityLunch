@@ -38,15 +38,15 @@ export const MeetingTimeButton: React.FC<MeetingTimeProps> = (props: MeetingTime
     };
 
     return (
-      <button
-          type="button"
-          className={`MeetingTimeButton${isActive ? '-is-active' : ''}`}
-          onClick={() => {
+        <button
+            type="button"
+            className={`MeetingTimeButton${isActive ? '-is-active' : ''}`}
+            onClick={() => {
                 onTimeChange(timeSpan);
                 setCurrentTimeLabel(timeLabel);
             }}
         >
-          {timeLabel}
+            {timeLabel}
         </button>
     );
 };

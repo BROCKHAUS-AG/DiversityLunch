@@ -18,14 +18,14 @@ export const BookingError = () => {
     };
 
     return (
-      <div className="Information">
-          <CloseSiteContainer />
-          <DiversityIconContainer title="INFORMATION" />
-          <p className="Information-info-text">
-              Die Informationen wurden leider nicht erfolgreich an uns übermittelt.
-              Bitte versuche es erneut.
+        <div className="Information">
+            <CloseSiteContainer />
+            <DiversityIconContainer title="INFORMATION" />
+            <p className="Information-info-text">
+                Die Informationen wurden leider nicht erfolgreich an uns übermittelt.
+                Bitte versuche es erneut.
             </p>
-          <Button label="Termin buchen" onClick={terminBuchen} />
+            <Button label="Termin buchen" onClick={terminBuchen} />
         </div>
     );
 };

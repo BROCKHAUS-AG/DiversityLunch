@@ -35,41 +35,41 @@ export const TextfieldCharacteristic: React.FC<CharacteristicProps> = (props: Ch
     };
 
     return (
-      <div className="Characteristic">
-          <div className="Characteristic-left-container">
-              <h1 className="Characteristic-attribute">{showingAttribute}</h1>
-              {
+        <div className="Characteristic">
+            <div className="Characteristic-left-container">
+                <h1 className="Characteristic-attribute">{showingAttribute}</h1>
+                {
 
                     chosen
                         ? (
-                          <TextField
-                              defaultValue={defaultStartValue}
-                              onChange={(event) => onChangeCurrentValue(event.target.value)}
+                            <TextField
+                                defaultValue={defaultStartValue}
+                                onChange={(event) => onChangeCurrentValue(event.target.value)}
                             />
                         )
                         : <h1 className="Characteristic-value">{currentValue}</h1>
 
                 }
             </div>
-          <div
-              className="Characteristic-right-container"
-              onClick={changeIcon}
-              role="button"
+            <div
+                className="Characteristic-right-container"
+                onClick={changeIcon}
+                role="button"
             >
-              {
+                {
                     chosen
                         ? (
-                          <img
-                              alt="icon_check"
-                              className="Characteristic-icons"
-                              src={iconCheck}
+                            <img
+                                alt="icon_check"
+                                className="Characteristic-icons"
+                                src={iconCheck}
                             />
                         )
                         : (
-                          <img
-                              alt="icon_edit"
-                              className="Characteristic-icons"
-                              src={iconEdit}
+                            <img
+                                alt="icon_edit"
+                                className="Characteristic-icons"
+                                src={iconEdit}
                             />
                         )
                 }

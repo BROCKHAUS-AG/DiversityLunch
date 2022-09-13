@@ -24,9 +24,9 @@ export const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
 
     return (
 
-      <div className="CustomButton-container">
-          {/* eslint-disable-next-line react/button-has-type */}
-          <button className="CustomButton" type={type} onClick={handleClick} disabled={disabled}>{label}</button>
+        <div className="CustomButton-container">
+            {/* eslint-disable-next-line react/button-has-type */}
+            <button className="CustomButton" type={type} onClick={handleClick} disabled={disabled}>{label}</button>
         </div>
     );
 };

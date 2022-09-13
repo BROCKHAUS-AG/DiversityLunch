@@ -31,8 +31,8 @@ describe('Profile Overview', () => {
         };
 
         providerElement = (
-          <Provider store={APP_STORE}>
-              <ProfileOverview profileData={profileData} />
+            <Provider store={APP_STORE}>
+                <ProfileOverview profileData={profileData} />
             </Provider>
         );
         formFields = [

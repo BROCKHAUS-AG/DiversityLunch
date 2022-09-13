@@ -102,110 +102,110 @@ export const QuestionSite = () => {
     const WorkExperienceDropdown = GenerateGenericDropdown<WorkExperience>();
 
     return (
-      <div className="QuestionSite">
-          <DiversityIconContainer />
-          {
+        <div className="QuestionSite">
+            <DiversityIconContainer />
+            {
                 profileStatus === 'LOADING' && <LoadingAnimation size="block-app" />
             }
-          {
+            {
                 profileStatus === 'OK' && accountState.status === 'OK' && <Redirect to="/dashboard" />
             }
 
-          <h4>
-              Hallo
+            <h4>
+                Hallo
                 {' '}
-              {firstName}
+                {firstName}
             </h4>
 
-          <form onSubmit={submit}>
-              <NumberDropdown
-                  label="Wann wurdest du geboren?"
-                  currentValue={currentFormState.birthYear}
-                  options={BIRTH_YEAR_DROPDOWN_OPTIONS}
-                  onChange={(value) => updateProfileField('birthYear', value)}
-                  placeholder="Geburtsjahr"
+            <form onSubmit={submit}>
+                <NumberDropdown
+                    label="Wann wurdest du geboren?"
+                    currentValue={currentFormState.birthYear}
+                    options={BIRTH_YEAR_DROPDOWN_OPTIONS}
+                    onChange={(value) => updateProfileField('birthYear', value)}
+                    placeholder="Geburtsjahr"
                 />
 
-              <ProjectDropdown
-                  label="In welchem Projekt arbeitest du derzeit?"
-                  options={PROJECT_DROPDOWN_OPTIONS}
-                  onChange={((value) => updateProfileField('project', value))}
-                  currentValue={currentFormState.project}
-                  placeholder="Projekt"
+                <ProjectDropdown
+                    label="In welchem Projekt arbeitest du derzeit?"
+                    options={PROJECT_DROPDOWN_OPTIONS}
+                    onChange={((value) => updateProfileField('project', value))}
+                    currentValue={currentFormState.project}
+                    placeholder="Projekt"
                 />
 
-              <GenderDropdown
-                  options={GENDER_DROPDOWN_OPTIONS}
-                  label="Wähle ein Geschlecht"
-                  currentValue={currentFormState.gender}
-                  onChange={(value) => updateProfileField('gender', value)}
-                  placeholder="Geschlecht"
+                <GenderDropdown
+                    options={GENDER_DROPDOWN_OPTIONS}
+                    label="Wähle ein Geschlecht"
+                    currentValue={currentFormState.gender}
+                    onChange={(value) => updateProfileField('gender', value)}
+                    placeholder="Geschlecht"
                 />
 
-              <OriginCountryDropdown
-                  options={ORIGIN_COUNTRY_DROPDOWN_OPTIONS}
-                  label="Was ist dein Herkunftsland?"
-                  currentValue={currentFormState.originCountry}
-                  onChange={(value) => updateProfileField('originCountry', value)}
-                  placeholder="Herkunftsland"
+                <OriginCountryDropdown
+                    options={ORIGIN_COUNTRY_DROPDOWN_OPTIONS}
+                    label="Was ist dein Herkunftsland?"
+                    currentValue={currentFormState.originCountry}
+                    onChange={(value) => updateProfileField('originCountry', value)}
+                    placeholder="Herkunftsland"
                 />
 
-              <MotherTongueDropdown
-                  options={MOTHER_TONGUE_DROPDOWN_OPTIONS}
-                  label="Was ist deine Muttersprache?"
-                  onChange={(value) => updateProfileField('motherTongue', value)}
-                  currentValue={currentFormState.motherTongue}
-                  placeholder="Muttersprache"
+                <MotherTongueDropdown
+                    options={MOTHER_TONGUE_DROPDOWN_OPTIONS}
+                    label="Was ist deine Muttersprache?"
+                    onChange={(value) => updateProfileField('motherTongue', value)}
+                    currentValue={currentFormState.motherTongue}
+                    placeholder="Muttersprache"
                 />
 
-              <ReligionDropdown
-                  label="An welche Religion glaubst du?"
-                  options={RELIGION_DROPDOWN_OPTIONS}
-                  currentValue={currentFormState.religion}
-                  onChange={(value) => {
+                <ReligionDropdown
+                    label="An welche Religion glaubst du?"
+                    options={RELIGION_DROPDOWN_OPTIONS}
+                    currentValue={currentFormState.religion}
+                    onChange={(value) => {
                         updateProfileField('religion', value);
                     }}
-                  placeholder="Religion"
+                    placeholder="Religion"
                 />
 
-              <WorkExperienceDropdown
-                  label="Wie viele Jahre Berufserfahrung hast du schon gesammelt?"
-                  currentValue={currentFormState.workExperience}
-                  options={WORK_EXPERIENCE_DROPDOWN_OPTIONS}
-                  onChange={(value) => updateProfileField('workExperience', value)}
-                  placeholder="Berufserfahrung"
+                <WorkExperienceDropdown
+                    label="Wie viele Jahre Berufserfahrung hast du schon gesammelt?"
+                    currentValue={currentFormState.workExperience}
+                    options={WORK_EXPERIENCE_DROPDOWN_OPTIONS}
+                    onChange={(value) => updateProfileField('workExperience', value)}
+                    placeholder="Berufserfahrung"
                 />
 
-              <HobbyDropdown
-                  label="Was hast du für ein Hobby?"
-                  options={HOBBY_DROPDOWN_OPTIONS}
-                  onChange={(value) => updateProfileField('hobby', value)}
-                  currentValue={currentFormState.hobby}
-                  placeholder="Hobby"
+                <HobbyDropdown
+                    label="Was hast du für ein Hobby?"
+                    options={HOBBY_DROPDOWN_OPTIONS}
+                    onChange={(value) => updateProfileField('hobby', value)}
+                    currentValue={currentFormState.hobby}
+                    placeholder="Hobby"
                 />
 
-              <EducationDropdown
-                  label="Welchen Bildungsweg hast du bisher bestritten?"
-                  options={EDUCATION_DROPDOWN_OPTIONS}
-                  onChange={((value) => {
+                <EducationDropdown
+                    label="Welchen Bildungsweg hast du bisher bestritten?"
+                    options={EDUCATION_DROPDOWN_OPTIONS}
+                    onChange={((value) => {
                         updateProfileField('education', value);
                     })}
-                  currentValue={currentFormState.education}
-                  placeholder="Bildung"
+                    currentValue={currentFormState.education}
+                    placeholder="Bildung"
                 />
 
-              <DietDropdown
-                  options={DIET_DROPDOWN_OPTIONS}
-                  label="Wie ernährst du dich?"
-                  currentValue={currentFormState.diet}
-                  onChange={(value) => updateProfileField('diet', value)}
-                  placeholder="Ernährung"
+                <DietDropdown
+                    options={DIET_DROPDOWN_OPTIONS}
+                    label="Wie ernährst du dich?"
+                    currentValue={currentFormState.diet}
+                    onChange={(value) => updateProfileField('diet', value)}
+                    placeholder="Ernährung"
                 />
 
-              <Button
-                  disabled={!isValid()}
-                  label="Profil anlegen"
-                  type="submit"
+                <Button
+                    disabled={!isValid()}
+                    label="Profil anlegen"
+                    type="submit"
                 />
             </form>
         </div>

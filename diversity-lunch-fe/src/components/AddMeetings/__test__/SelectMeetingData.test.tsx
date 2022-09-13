@@ -11,8 +11,8 @@ describe('Show alreadybooked-page', () => {
     let providerElement: JSX.Element;
     beforeEach(() => {
         providerElement = (
-          <redux.Provider store={APP_STORE}>
-              <SelectMeetingData onAddMeeting={jest.fn()} />
+            <redux.Provider store={APP_STORE}>
+                <SelectMeetingData onAddMeeting={jest.fn()} />
             </redux.Provider>
         );
     });

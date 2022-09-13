@@ -42,62 +42,62 @@ export const Characteristic: React.FC<CharacteristicProps> = (props: Characteris
     };
 
     return (
-      <div className="Characteristic">
-          <div className="Characteristic-left-container">
-              <h1 className="Characteristic-attribute">{showingAttribute}</h1>
-              {
+        <div className="Characteristic">
+            <div className="Characteristic-left-container">
+                <h1 className="Characteristic-attribute">{showingAttribute}</h1>
+                {
 
                     chosen
                         ? (
-                          <DropdownField
-                              defaultOption={defaultOption}
-                              options={options}
-                              changeCurrentFormState={changeCurrentFormState}
-                              attribute={attribute}
-                              changeCurrentValue={onChangeCurrentValue}
+                            <DropdownField
+                                defaultOption={defaultOption}
+                                options={options}
+                                changeCurrentFormState={changeCurrentFormState}
+                                attribute={attribute}
+                                changeCurrentValue={onChangeCurrentValue}
                             />
                         )
                         : <h1 className="Characteristic-value">{currentValue}</h1>
 
                 }
 
-              {
+                {
                     chosen
                         ? (
-                          <GenderDropdownV2
-                              showingAttribute="Geschlecht"
-                              options={GENDER_DROPDOWN_OPTIONS}
-                              currentValue={currentValue as Gender}
-                              changeCurrentFormState={changeCurrentFormState}
-                              attribute={attribute}
+                            <GenderDropdownV2
+                                showingAttribute="Geschlecht"
+                                options={GENDER_DROPDOWN_OPTIONS}
+                                currentValue={currentValue as Gender}
+                                changeCurrentFormState={changeCurrentFormState}
+                                attribute={attribute}
                             />
                         )
                         : (
-                          <h1 className="Characteristic-value">
-                              {GENDER_DROPDOWN_OPTIONS.find((o) => o.value === currentValue)?.label}
+                            <h1 className="Characteristic-value">
+                                {GENDER_DROPDOWN_OPTIONS.find((o) => o.value === currentValue)?.label}
                             </h1>
                         )
                 }
             </div>
-          <div
-              className="Characteristic-right-container"
-              onClick={changeIcon}
-              role="button"
+            <div
+                className="Characteristic-right-container"
+                onClick={changeIcon}
+                role="button"
             >
-              {
+                {
                     chosen
                         ? (
-                          <img
-                              alt="icon_check"
-                              className="Characteristic-icons"
-                              src={iconCheck}
+                            <img
+                                alt="icon_check"
+                                className="Characteristic-icons"
+                                src={iconCheck}
                             />
                         )
                         : (
-                          <img
-                              alt="icon_edit"
-                              className="Characteristic-icons"
-                              src={iconEdit}
+                            <img
+                                alt="icon_edit"
+                                className="Characteristic-icons"
+                                src={iconEdit}
                             />
                         )
                 }

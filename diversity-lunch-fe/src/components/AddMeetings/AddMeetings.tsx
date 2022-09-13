@@ -17,13 +17,13 @@ export const AddMeetings = () => {
     };
 
     return (
-      <div className="AddMeeting">
-          <Switch>
-              <Route exact path="/add+meetings/choose+date">
-                  <SelectMeetingData onAddMeeting={onAddMeeting} />
+        <div className="AddMeeting">
+            <Switch>
+                <Route exact path="/add+meetings/choose+date">
+                    <SelectMeetingData onAddMeeting={onAddMeeting} />
                 </Route>
-              <Route exact path="/add+meetings/meeting+overview">
-                  <DateOverview meeting={meeting} />
+                <Route exact path="/add+meetings/meeting+overview">
+                    <DateOverview meeting={meeting} />
                 </Route>
             </Switch>
         </div>

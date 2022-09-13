@@ -12,9 +12,9 @@ import { APP_STORE } from './store/Store';
 import { AuthenticationCheck } from './components/Core/AuthenticationCheck';
 
 ReactDOM.render(
-  <React.StrictMode>
-      <Provider store={APP_STORE}>
-          <AuthenticationCheck />
+    <React.StrictMode>
+        <Provider store={APP_STORE}>
+            <AuthenticationCheck />
         </Provider>
     </React.StrictMode>,
     document.getElementById('root'),

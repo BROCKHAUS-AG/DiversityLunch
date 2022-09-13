@@ -22,28 +22,28 @@ export const DeleteMeetingPopUp = (props: MeetingContainerProps) => {
     } = props;
 
     return (
-      <div className="DeleteMeetingPopUp">
-          <div className="DeleteMeetingPopUp-container">
-              <h6 className="DeleteMeetingPopUp-text">
-                  Willst du den Termin wirklich löschen?
+        <div className="DeleteMeetingPopUp">
+            <div className="DeleteMeetingPopUp-container">
+                <h6 className="DeleteMeetingPopUp-text">
+                    Willst du den Termin wirklich löschen?
                 </h6>
-              <div className="DeleteMeetingPopUp-meeting-container">
-                  {dateToString(meeting.fromDateTime)}
-                  <div>
-                      {substringLocalTime(meeting.fromDateTime)}
-                      {' '}
-                      -
+                <div className="DeleteMeetingPopUp-meeting-container">
+                    {dateToString(meeting.fromDateTime)}
+                    <div>
+                        {substringLocalTime(meeting.fromDateTime)}
+                        {' '}
+                        -
                         {getMeetingEndTime(meeting.fromDateTime)}
                     </div>
                 </div>
-              <div className="DeleteMeetingPopUp-button-container">
-                  <Button label="Zeitslot löschen" onClick={onDelete} />
-                  <button
-                      type="button"
-                      className="DeleteMeetingPopUp-delete-button"
-                      onClick={() => onCancel()}
+                <div className="DeleteMeetingPopUp-button-container">
+                    <Button label="Zeitslot löschen" onClick={onDelete} />
+                    <button
+                        type="button"
+                        className="DeleteMeetingPopUp-delete-button"
+                        onClick={() => onCancel()}
                     >
-                      Abbrechen
+                        Abbrechen
                     </button>
                 </div>
             </div>
