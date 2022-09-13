@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 
-@RequestMapping("/country/")
+@RequestMapping("/api/country")
 @RestController
 public class CountryController extends ErrorHandlingController {
 
@@ -27,7 +27,7 @@ public class CountryController extends ErrorHandlingController {
         this.countryService = countryService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/all")
     public ResponseEntity<List<CountryDto>> getAllCountries(){
         List<CountryEntity> countryEntityList = countryService.getAllEntities();
         return new ResponseEntity<>(
