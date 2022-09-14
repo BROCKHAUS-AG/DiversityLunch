@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.service;
 
 import de.brockhausag.diversitylunchspringboot.profile.utils.BaseEntity;
-import de.brockhausag.diversitylunchspringboot.profile.utils.GenericService;
+import de.brockhausag.diversitylunchspringboot.profile.utils.GenericServiceForBaseEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,7 +11,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,7 +33,7 @@ public class GenericServiceTest {
     private TestEntityType secondTestEntity;
 
     @InjectMocks
-    private GenericService<TestRepositoryType, TestEntityType> service;
+    private GenericServiceForBaseEntity<TestRepositoryType, TestEntityType> service;
 
     @Test
     void testDeleteEntityById_withExistingId_returnsTrue(){

@@ -1,8 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.utils;
 
-import lombok.Builder;
-
-public interface BaseEntity {
+public interface BaseDto {
     Long getId();
     void setId(Long id);
     String getDescriptor();
