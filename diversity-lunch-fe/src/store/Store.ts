@@ -10,6 +10,7 @@ import countryReducer from '../data/country/country-reducer';
 import dietReducer from '../data/diet/diet-reducer';
 import activityReducer from '../data/activity/activity-reducer';
 import categoryReducer from '../data/category/category-reducer';
+import cultureReducer from '../data/culture/culture-reducer';
 
 const reducers = {
     meetings: meetingsReducer,
@@ -21,6 +22,7 @@ const reducers = {
     diet: dietReducer,
     activity: activityReducer,
     category: categoryReducer,
+    culture: cultureReducer,
 };
 
 const rootReducer = combineReducers(reducers);
