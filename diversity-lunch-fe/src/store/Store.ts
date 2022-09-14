@@ -8,6 +8,8 @@ import { accountReducer } from '../data/account/account.reducer';
 import experienceLevelReducer from '../data/experienceLevel/experience-level.reducer';
 import countryReducer from '../data/country/country-reducer';
 import dietReducer from '../data/diet/diet-reducer';
+import activityReducer from '../data/activity/activity-reducer';
+import categoryReducer from '../data/category/category-reducer';
 
 const reducers = {
     meetings: meetingsReducer,
@@ -17,6 +19,8 @@ const reducers = {
     experienceLevel: experienceLevelReducer,
     country: countryReducer,
     diet: dietReducer,
+    activity: activityReducer,
+    category: categoryReducer,
 };
 
 const rootReducer = combineReducers(reducers);

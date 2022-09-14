@@ -1,7 +1,7 @@
 import { GenericSlice } from '../generic/GenericSlice';
 import { Activity } from '../../model/Activity';
 
-export const activitySlice = new GenericSlice<Activity>('experienceLevelReducer');
+export const activitySlice = new GenericSlice<Activity>('activityReducer');
 
 export const {
     add, update, remove, initFetch,
