@@ -8,6 +8,12 @@ import { accountReducer } from '../data/account/account.reducer';
 import experienceLevelReducer from '../data/experienceLevel/experience-level.reducer';
 import countryReducer from '../data/country/country-reducer';
 import dietReducer from '../data/diet/diet-reducer';
+import activityReducer from '../data/activity/activity-reducer';
+import categoryReducer from '../data/category/category-reducer';
+import cultureReducer from '../data/culture/culture-reducer';
+import educationReducer from '../data/education/education-reducer';
+import genderReducer from '../data/gender/gender-reducer';
+import hobbyReducer from '../data/hobby/hobby-reducer';
 
 const reducers = {
     meetings: meetingsReducer,
@@ -17,6 +23,12 @@ const reducers = {
     experienceLevel: experienceLevelReducer,
     country: countryReducer,
     diet: dietReducer,
+    activity: activityReducer,
+    category: categoryReducer,
+    culture: cultureReducer,
+    education: educationReducer,
+    gender: genderReducer,
+    hobby: hobbyReducer,
 };
 
 const rootReducer = combineReducers(reducers);

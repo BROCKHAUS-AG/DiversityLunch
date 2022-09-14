@@ -1,0 +1,30 @@
+.questionSelection{
+  width: 20rem;
+  margin: 1rem auto;
+}
+
+.questionSelection select {
+  font-family: "GilroyLight", sans-serif;
+  font-size: 1.1rem;
+  padding: 15px 10px;
+  border: 1px solid #b8b8b8;
+  background-color: transparent;
+  color: #8d8b8b;
+  margin-top:0.5rem;
+  width:20rem;
+  cursor: pointer;
+}
+
+select:focus, select:active {
+  border: 1px solid #b8b8b8;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.questionSelection select option {
+  border: 10px solid white;
+}
+
+.questionSelection select option:hover {
+  background: gray;
+}
