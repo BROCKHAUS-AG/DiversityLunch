@@ -29,29 +29,3 @@
   display: flex;
   flex-direction: column;
 }
-
-.question{
-  text-align: center;
-}
-
-.questionSelection{
-  text-align: left;
-}
-
-
-select {
-  font-family: "GilroyLight";
-  font-size: 1.2rem;
-  padding: 17px;
-  border: 1px solid #b8b8b8;
-  font-weight: 600;
-  width: 17rem;
-  background-color: transparent;
-  color: #8d8b8b;
-}
-
-select:focus, select:active {
-  border: 1px solid #b8b8b8;
-  outline: none !important;
-  box-shadow: none !important;
-}

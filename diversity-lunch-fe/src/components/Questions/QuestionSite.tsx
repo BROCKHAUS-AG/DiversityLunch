@@ -206,7 +206,7 @@ export const QuestionSite = () => {
                     placeholder="Ernährung"
                 />
 
-                <Dropdown reducer={countries} fetch={countryFetch} text="Was ist dein Herkunftsland?" />
+                <Dropdown data={countries} fetch={countryFetch} text="Was ist dein Herkunftsland?" />
 
                 <Button
                     disabled={!isValid()}
