@@ -46,7 +46,12 @@ public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot
     public void setThis(Object target){ this.target = target; }
 
     public boolean isProfileOwner(long id) {
+        System.out.println("Inside isProfileOwner");
         Optional<Long> profileId = getProfileId();
+        System.out.println("ProfileId.isPresent(): " + profileId.isPresent());
+        System.out.println("Id from Swagger: " + id);
+        System.out.println("profileId: " + id + " " + (profileId.isPresent() ? profileId.get() : "not found"));
+        System.out.println("Should be true: " + (profileId.isPresent() && profileId.get() == id));
         return profileId.isPresent() && profileId.get() == id;
     }
 

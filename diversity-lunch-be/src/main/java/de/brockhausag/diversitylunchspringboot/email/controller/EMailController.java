@@ -43,8 +43,10 @@ public class EMailController {
     @PostMapping("/sendTestMailToUser")
     @PreAuthorize("isProfileOwner(#id)")
     public ResponseEntity<String> sendTestMailToUser(long id){
+        System.out.println("Beginning of sendTestMailToUser");
         String body = "Hallo :)";
         try {
+            System.out.println("Beginning of try block of sendTestMailToUser");
             diversityLunchEMailService.sendMailToUser(id, body);
         } catch (MessagingException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
