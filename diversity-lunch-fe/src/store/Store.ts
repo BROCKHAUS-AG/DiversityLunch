@@ -13,6 +13,7 @@ import categoryReducer from '../data/category/category-reducer';
 import cultureReducer from '../data/culture/culture-reducer';
 import educationReducer from '../data/education/education-reducer';
 import genderReducer from '../data/gender/gender-reducer';
+import hobbyReducer from '../data/hobby/hobby-reducer';
 
 const reducers = {
     meetings: meetingsReducer,
@@ -27,6 +28,7 @@ const reducers = {
     culture: cultureReducer,
     education: educationReducer,
     gender: genderReducer,
+    hobby: hobbyReducer,
 };
 
 const rootReducer = combineReducers(reducers);
