@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.mail.MessagingException;
 
 @RestController
-@RequestMapping("/mailing")
+@RequestMapping("/api/mailing")
 @Slf4j
 @RequiredArgsConstructor
 public class EMailController {

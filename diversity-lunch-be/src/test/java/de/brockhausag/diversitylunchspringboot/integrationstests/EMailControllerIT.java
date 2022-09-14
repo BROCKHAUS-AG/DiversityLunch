@@ -79,7 +79,7 @@ public class EMailControllerIT {
 
 
         mockMvc.perform(
-                post("/mailing/sendTestMail")
+                post("/api/mailing/sendTestMail")
         ).andExpect(status().isOk());
     }
 
@@ -90,7 +90,7 @@ public class EMailControllerIT {
         when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
 
         mockMvc.perform(
-                post("/mailing/sendTestMail")
+                post("/api/mailing/sendTestMail")
         );
 
         // Prepare request to Mailhog
@@ -130,7 +130,7 @@ public class EMailControllerIT {
         AccountEntity accountEntity = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
         profileService.createProfile(tmpProfileEntity, accountEntity.getId()).orElseThrow();
         long id = tmpProfileEntity.getId();
-        String url = "/mailing/sendTestMailToUser?id=" + id;
+        String url = "/api/mailing/sendTestMailToUser?id=" + id;
 
         performRequestWithToken(url, accountEntity).andExpect(status().isOk());
     }
@@ -143,7 +143,7 @@ public class EMailControllerIT {
         AccountEntity accountEntity = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
         profileService.createProfile(tmpProfileEntity, accountEntity.getId()).orElseThrow();
         long id = tmpProfileEntity.getId() + 1;
-        String url = "/mailing/sendTestMailToUser?id=" + id;
+        String url = "/api/mailing/sendTestMailToUser?id=" + id;
 
         performRequestWithToken(url, accountEntity).andExpect(status().isForbidden());
     }
