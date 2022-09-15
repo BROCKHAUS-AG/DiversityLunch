@@ -3,24 +3,28 @@ package de.brockhausag.diversitylunchspringboot.data;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountDto;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.security.AccountRole;
 
 public class AccountTestDataFactory {
 
     private static final long id = 8L;
     private static final String uniqueName = "Account";
     private static final ProfileEntity profile = new ProfileTestdataFactory().entity();
+    private static final AccountRole role = AccountRole.STANDARD;
 
     public AccountEntity.AccountEntityBuilder entityBuilder() {
         return AccountEntity.builder()
                 .id(id)
                 .uniqueName(uniqueName)
-                .profile(profile);
+                .profile(profile)
+                .role(role);
     }
 
     public AccountDto.AccountDtoBuilder dtoBuilder() {
         return AccountDto.builder()
                 .id(id)
-                .profileId(profile.getId());
+                .profileId(profile.getId())
+                .role(role);
     }
 
     public AccountEntity buildAccountWithoutProfile() {
