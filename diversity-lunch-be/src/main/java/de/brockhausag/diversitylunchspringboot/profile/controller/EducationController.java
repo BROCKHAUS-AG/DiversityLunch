@@ -6,6 +6,7 @@ import de.brockhausag.diversitylunchspringboot.profile.mapper.EducationMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.EducationDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.EducationEntity;
 import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericControllerForBaseModels;
+import de.brockhausag.diversitylunchspringboot.profile.utils.genericOverload.GenericControllerWithGenericMapper;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class EducationController extends GenericControllerForBaseModels<
         EducationDto, EducationEntity, EducationRepository, EducationService, EducationMapper> {
-
     public EducationController(EducationMapper mapper, EducationService service) {
         super(mapper, service);
     }

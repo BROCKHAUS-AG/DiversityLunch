@@ -22,15 +22,12 @@ import static org.mockito.Mockito.when;
 public class GenericServiceForBaseEntityTest {
     private interface TestRepositoryType extends CrudRepository<TestBaseEntity, Long>{}
 
+    private TestBaseEntity firstTestEntity;
+    private TestBaseEntity secondTestEntity;
+    private TestBaseEntity thirdTestEntity;
+
     @Mock
     private TestRepositoryType testRepository;
-    @Mock
-    private TestBaseEntity firstTestEntity;
-    @Mock
-    private TestBaseEntity secondTestEntity;
-    @Mock
-    private TestBaseEntity thirdEntity;
-
     @InjectMocks
     private GenericServiceForBaseEntity<TestBaseEntity, TestRepositoryType> service;
 
@@ -39,7 +36,7 @@ public class GenericServiceForBaseEntityTest {
         BaseModelTestDataFactory factory = new BaseModelTestDataFactory();
         firstTestEntity = factory.buildFirstEntity();
         secondTestEntity = factory.buildSecondEntity();
-        thirdEntity = factory.buildThirdEntity();
+        thirdTestEntity = factory.buildThirdEntity();
     }
 
     @Test
@@ -86,7 +83,7 @@ public class GenericServiceForBaseEntityTest {
     @Test
     void testGetAllEntities_withThreeEntitiesInRepository_returnsListOfThreeEntities(){
         //Arrange
-        List<TestBaseEntity> expectedList = Arrays.asList(firstTestEntity, secondTestEntity, thirdEntity);
+        List<TestBaseEntity> expectedList = Arrays.asList(firstTestEntity, secondTestEntity, thirdTestEntity);
 
         when(testRepository.findAll()).thenReturn((Iterable<TestBaseEntity>) expectedList);
         //Act

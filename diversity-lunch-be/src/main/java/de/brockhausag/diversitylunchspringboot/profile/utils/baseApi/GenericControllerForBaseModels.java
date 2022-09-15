@@ -28,7 +28,7 @@ public class GenericControllerForBaseModels <
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<DtoType>> getAllCountries(){
+    public ResponseEntity<List<DtoType>> getAll(){
         List<EntityType> countryEntityList = service.getAllEntities();
         return new ResponseEntity<>(
                 mapper.entityToDto(countryEntityList),
@@ -37,7 +37,7 @@ public class GenericControllerForBaseModels <
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DtoType> getCountry(@PathVariable Long id){
+    public ResponseEntity<DtoType> getOne(@PathVariable Long id){
         Optional<EntityType> optionalEntityType = service.getEntityById(id);
         if (optionalEntityType.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

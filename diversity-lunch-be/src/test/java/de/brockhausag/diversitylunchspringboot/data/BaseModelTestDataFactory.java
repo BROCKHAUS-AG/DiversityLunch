@@ -36,7 +36,7 @@ public class BaseModelTestDataFactory {
                 .id(firstId)
                 .descriptor(firstDescriptor);
     }
-    public TestBaseDto buildTestBaseDto() {return firstDtoBuilder().build();}
+    public TestBaseDto buildFirstDto() {return firstDtoBuilder().build();}
 
 
     public TestBaseDto.TestBaseDtoBuilder secondDtoBuilder(){
@@ -44,12 +44,12 @@ public class BaseModelTestDataFactory {
                 .id(secondId)
                 .descriptor(secondDescriptor);
     }
-    public TestBaseDto buildSecondTestBaseDto(){return secondDtoBuilder().build();}
+    public TestBaseDto buildSecondDto(){return secondDtoBuilder().build();}
 
     public TestBaseDto.TestBaseDtoBuilder thirdDtoBuilder(){
         return TestBaseDto.builder()
                 .id(thirdId)
                 .descriptor(thirdDescriptor);
     }
-    public TestBaseDto buildThirdTestBaseDto(){return thirdDtoBuilder().build();}
+    public TestBaseDto buildThirdDto(){return thirdDtoBuilder().build();}
 }
