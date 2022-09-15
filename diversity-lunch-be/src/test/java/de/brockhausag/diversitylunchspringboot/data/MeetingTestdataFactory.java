@@ -3,7 +3,7 @@ package de.brockhausag.diversitylunchspringboot.data;
 import de.brockhausag.diversitylunchspringboot.meeting.model.CreateMeetingProposalDto;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingDto;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
-import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.modelTest.ProfileEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;

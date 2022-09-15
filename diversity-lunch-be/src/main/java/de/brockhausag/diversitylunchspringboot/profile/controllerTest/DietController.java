@@ -1,0 +1,21 @@
+package de.brockhausag.diversitylunchspringboot.profile.controllerTest;
+
+import de.brockhausag.diversitylunchspringboot.profile.data.DietRepository;
+import de.brockhausag.diversitylunchspringboot.profile.logic.DietService;
+import de.brockhausag.diversitylunchspringboot.profile.mapperTest.DietMapper;
+import de.brockhausag.diversitylunchspringboot.profile.modelTest.dtos.DietDto;
+import de.brockhausag.diversitylunchspringboot.profile.modelTest.entities.DietEntity;
+import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericBaseModelController;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RequestMapping("/api/diet")
+@CrossOrigin(origins = "http://localhost:4000/admin-panel")
+@RestController
+public class DietController extends GenericBaseModelController<
+        DietDto, DietEntity, DietRepository, DietService, DietMapper> {
+    public DietController(DietMapper mapper, DietService service) {
+        super(mapper, service);
+    }
+}

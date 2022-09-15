@@ -10,7 +10,7 @@ import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingReposit
 import de.brockhausag.diversitylunchspringboot.meeting.utils.Match;
 import de.brockhausag.diversitylunchspringboot.meeting.utils.MatchingUtils;
 import de.brockhausag.diversitylunchspringboot.meeting.utils.ScoreAndCategory;
-import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.modelTest.ProfileEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

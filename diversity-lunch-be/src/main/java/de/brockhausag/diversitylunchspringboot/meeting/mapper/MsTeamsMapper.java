@@ -3,7 +3,7 @@ package de.brockhausag.diversitylunchspringboot.meeting.mapper;
 import com.microsoft.graph.models.*;
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
-import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.modelTest.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMsTeamsProperties;
 import de.brockhausag.diversitylunchspringboot.utils.DiversityLunchTimeAndDateFormatter;
 import lombok.RequiredArgsConstructor;

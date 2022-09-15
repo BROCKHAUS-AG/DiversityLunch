@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class GenericControllerWithGenericMapper<
-        DtoType extends BaseDtoForGenericMapper<DtoType>,
-        EntityType extends BaseEntityForGenericMapper<EntityType>,
+        DtoType extends GenericMapperBaseDto<DtoType>,
+        EntityType extends GenericMapperBaseEntity<EntityType>,
         RepositoryType extends CrudRepository<EntityType, Long>,
-        ServiceType extends GenericServiceWithGenericMapper<EntityType, RepositoryType>,
-        MapperType extends MapperForBaseModels<DtoType, EntityType>>
+        ServiceType extends GenericMapperService<EntityType, RepositoryType>,
+        MapperType extends BaseModelMapper<DtoType, EntityType>>
         extends ErrorHandlingController {
 
 

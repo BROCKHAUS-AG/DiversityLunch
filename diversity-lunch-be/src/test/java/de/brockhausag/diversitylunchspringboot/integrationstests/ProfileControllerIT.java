@@ -6,7 +6,7 @@ import de.brockhausag.diversitylunchspringboot.account.repository.AccountReposit
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.config.SecurityConfig;
 import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
-import de.brockhausag.diversitylunchspringboot.profile.model.*;
+import de.brockhausag.diversitylunchspringboot.profile.modelTest.*;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import org.junit.jupiter.api.*;
