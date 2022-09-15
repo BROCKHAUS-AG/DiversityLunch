@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
-import de.brockhausag.diversitylunchspringboot.profile.utils.BaseEntity;
+import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.BaseEntity;
 import lombok.*;
 
 import javax.persistence.Entity;

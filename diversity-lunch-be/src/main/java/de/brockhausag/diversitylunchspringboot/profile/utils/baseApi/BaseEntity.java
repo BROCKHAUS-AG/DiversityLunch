@@ -1,6 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.profile.utils;
-
-import lombok.Builder;
+package de.brockhausag.diversitylunchspringboot.profile.utils.baseApi;
 
 public interface BaseEntity {
     Long getId();

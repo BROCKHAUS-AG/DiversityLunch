@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
-import de.brockhausag.diversitylunchspringboot.profile.utils.genericOverload.TestBaseEntity;
+import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.BaseEntity;
+import de.brockhausag.diversitylunchspringboot.profile.utils.genericOverload.BaseEntityForGenericMapper;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
@@ -14,8 +15,7 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @Builder
-@Component
-public class EducationEntity implements TestBaseEntity<EducationEntity> {
+public class EducationEntity implements BaseEntity {
     @Id
     @GeneratedValue
     private Long id;
@@ -37,12 +37,4 @@ public class EducationEntity implements TestBaseEntity<EducationEntity> {
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
     }
 
-    @Override
-    public EducationEntity clone() {
-        try {
-            return (EducationEntity) super.clone();
-        } catch (CloneNotSupportedException e) {
-            return new EducationEntity(this.id, this.descriptor);
-        }
-    }
 }

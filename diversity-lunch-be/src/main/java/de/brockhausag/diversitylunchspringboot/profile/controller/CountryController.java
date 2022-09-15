@@ -4,7 +4,7 @@ import de.brockhausag.diversitylunchspringboot.profile.logic.CountryService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.CountryMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.CountryDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.CountryEntity;
-import de.brockhausag.diversitylunchspringboot.profile.utils.ErrorHandlingController;
+import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.ErrorHandlingController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

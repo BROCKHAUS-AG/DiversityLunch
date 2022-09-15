@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.utils.genericOverload;
 
-import de.brockhausag.diversitylunchspringboot.profile.utils.ErrorHandlingController;
+import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.ErrorHandlingController;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 import java.util.Optional;
 
-public class GenericControllerForBaseModels<
-        DtoType extends TestBaseDto<DtoType>,
-        EntityType extends TestBaseEntity<EntityType>,
+public class GenericControllerWithGenericMapper<
+        DtoType extends BaseDtoForGenericMapper<DtoType>,
+        EntityType extends BaseEntityForGenericMapper<EntityType>,
         RepositoryType extends CrudRepository<EntityType, Long>,
-        ServiceType extends TestGenericService<EntityType, RepositoryType>,
+        ServiceType extends GenericServiceWithGenericMapper<EntityType, RepositoryType>,
         MapperType extends MapperForBaseModels<DtoType, EntityType>>
         extends ErrorHandlingController {
 
@@ -22,7 +22,7 @@ public class GenericControllerForBaseModels<
     private final MapperType mapper;
     private final ServiceType service;
 
-    public GenericControllerForBaseModels(MapperType mapper, ServiceType service) {
+    public GenericControllerWithGenericMapper(MapperType mapper, ServiceType service) {
         this.mapper = mapper;
         this.service = service;
     }

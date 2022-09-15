@@ -4,7 +4,7 @@ import de.brockhausag.diversitylunchspringboot.profile.logic.DietService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.DietMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.DietDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.DietEntity;
-import de.brockhausag.diversitylunchspringboot.profile.utils.ErrorHandlingController;
+import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.ErrorHandlingController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

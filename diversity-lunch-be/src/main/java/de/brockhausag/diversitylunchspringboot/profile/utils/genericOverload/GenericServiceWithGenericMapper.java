@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.profile.utils;
+package de.brockhausag.diversitylunchspringboot.profile.utils.genericOverload;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -7,11 +7,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class GenericServiceForBaseEntity<RepositoryType extends CrudRepository<EntityType, Long>, EntityType extends BaseEntity> {
+public class GenericServiceWithGenericMapper<
+        EntityType extends BaseEntityForGenericMapper<EntityType>,
+        RepositoryType extends CrudRepository<EntityType, Long>> {
 
     private final RepositoryType repository;
 
-    public GenericServiceForBaseEntity(RepositoryType repository) {
+    public GenericServiceWithGenericMapper(RepositoryType repository) {
         this.repository = repository;
     }
 

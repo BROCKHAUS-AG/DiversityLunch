@@ -1,5 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.dtos;
 
+import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.BaseDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -13,7 +14,7 @@ import javax.validation.constraints.Size;
 @Setter
 @Builder
 @EqualsAndHashCode
-public class DietDto {
+public class DietDto implements BaseDto {
 
     private Long id;
 

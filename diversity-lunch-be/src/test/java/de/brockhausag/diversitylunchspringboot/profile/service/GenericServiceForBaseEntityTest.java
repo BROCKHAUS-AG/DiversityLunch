@@ -1,7 +1,9 @@
 package de.brockhausag.diversitylunchspringboot.profile.service;
 
-import de.brockhausag.diversitylunchspringboot.profile.utils.BaseEntity;
-import de.brockhausag.diversitylunchspringboot.profile.utils.GenericServiceForBaseEntity;
+import de.brockhausag.diversitylunchspringboot.data.BaseModelTestDataFactory;
+import de.brockhausag.diversitylunchspringboot.data.TestBaseEntity;
+import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericServiceForBaseEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,23 +19,28 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class GenericServiceTest {
-
-    private interface TestEntityType extends BaseEntity {}
-
-    private interface TestRepositoryType extends CrudRepository<TestEntityType, Long>{}
+public class GenericServiceForBaseEntityTest {
+    private interface TestRepositoryType extends CrudRepository<TestBaseEntity, Long>{}
 
     @Mock
     private TestRepositoryType testRepository;
-
     @Mock
-    private TestEntityType firstTestEntity;
-
+    private TestBaseEntity firstTestEntity;
     @Mock
-    private TestEntityType secondTestEntity;
+    private TestBaseEntity secondTestEntity;
+    @Mock
+    private TestBaseEntity thirdEntity;
 
     @InjectMocks
-    private GenericServiceForBaseEntity<TestRepositoryType, TestEntityType> service;
+    private GenericServiceForBaseEntity<TestBaseEntity, TestRepositoryType> service;
+
+    @BeforeEach
+    void setup(){
+        BaseModelTestDataFactory factory = new BaseModelTestDataFactory();
+        firstTestEntity = factory.buildFirstEntity();
+        secondTestEntity = factory.buildSecondEntity();
+        thirdEntity = factory.buildThirdEntity();
+    }
 
     @Test
     void testDeleteEntityById_withExistingId_returnsTrue(){
@@ -66,24 +73,24 @@ public class GenericServiceTest {
     @Test
     void testGetAllEntities_withNoEntitiesInRepository_returnsEmptyList(){
         //Arrange
-        List<TestEntityType> expectedList = Collections.emptyList();
+        List<TestBaseEntity> expectedList = Collections.emptyList();
 
-        when(testRepository.findAll()).thenReturn((Iterable<TestEntityType>) expectedList);
+        when(testRepository.findAll()).thenReturn((Iterable<TestBaseEntity>) expectedList);
         //Act
-        List<TestEntityType> actualList = service.getAllEntities();
+        List<TestBaseEntity> actualList = service.getAllEntities();
 
         //Assert
         assertEquals(expectedList, actualList);
     }
 
     @Test
-    void testGetAllEntities_withTwoEntitiesInRepository_returnsListOfTwoEntities(){
+    void testGetAllEntities_withThreeEntitiesInRepository_returnsListOfThreeEntities(){
         //Arrange
-        List<TestEntityType> expectedList = Arrays.asList(firstTestEntity, secondTestEntity);
+        List<TestBaseEntity> expectedList = Arrays.asList(firstTestEntity, secondTestEntity, thirdEntity);
 
-        when(testRepository.findAll()).thenReturn((Iterable<TestEntityType>) expectedList);
+        when(testRepository.findAll()).thenReturn((Iterable<TestBaseEntity>) expectedList);
         //Act
-        List<TestEntityType> actualList = service.getAllEntities();
+        List<TestBaseEntity> actualList = service.getAllEntities();
 
         //Assert
         assertEquals(expectedList, actualList);

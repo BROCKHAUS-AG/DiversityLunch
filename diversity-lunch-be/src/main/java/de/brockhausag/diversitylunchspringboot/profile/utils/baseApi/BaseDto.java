@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.profile.utils;
+package de.brockhausag.diversitylunchspringboot.profile.utils.baseApi;
 
 public interface BaseDto {
     Long getId();
