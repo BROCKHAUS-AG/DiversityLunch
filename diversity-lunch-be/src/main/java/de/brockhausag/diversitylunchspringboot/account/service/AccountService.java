@@ -3,6 +3,7 @@ package de.brockhausag.diversitylunchspringboot.account.service;
 import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.security.AccountRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,8 @@ public class AccountService {
 
     public AccountEntity getOrCreateAccount(String uniqueName) {
         Optional<AccountEntity> optionaleAccountEntity = getAccount(uniqueName);
-        return optionaleAccountEntity.orElseGet(() -> repository.save(new AccountEntity(0, null, uniqueName)));
+        return optionaleAccountEntity.orElseGet(
+                () -> repository.save(new AccountEntity(0, null, uniqueName, AccountRole.STANDARD))
+        );
     }
 }

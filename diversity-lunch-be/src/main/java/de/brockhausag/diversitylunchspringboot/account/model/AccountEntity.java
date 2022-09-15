@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.account.model;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.security.AccountRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,4 +27,6 @@ public class AccountEntity {
     private ProfileEntity profile;
 
     private String uniqueName;
+
+    private AccountRole role;
 }
