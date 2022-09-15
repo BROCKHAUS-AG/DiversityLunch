@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.profile.service;
+package de.brockhausag.diversitylunchspringboot.profile.serviceTest;
 
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;

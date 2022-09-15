@@ -7,13 +7,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class GenericServiceWithGenericMapper<
-        EntityType extends BaseEntityForGenericMapper<EntityType>,
+public class GenericMapperService<
+        EntityType extends GenericMapperBaseEntity<EntityType>,
         RepositoryType extends CrudRepository<EntityType, Long>> {
 
     private final RepositoryType repository;
 
-    public GenericServiceWithGenericMapper(RepositoryType repository) {
+    public GenericMapperService(RepositoryType repository) {
         this.repository = repository;
     }
 

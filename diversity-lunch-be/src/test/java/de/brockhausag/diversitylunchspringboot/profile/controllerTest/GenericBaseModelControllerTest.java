@@ -1,11 +1,11 @@
-package de.brockhausag.diversitylunchspringboot.profile.controller;
+package de.brockhausag.diversitylunchspringboot.profile.controllerTest;
 
 import de.brockhausag.diversitylunchspringboot.data.BaseModelTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.data.TestBaseDto;
 import de.brockhausag.diversitylunchspringboot.data.TestBaseEntity;
 import de.brockhausag.diversitylunchspringboot.profile.utils.Mapper;
-import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericControllerForBaseModels;
-import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericServiceForBaseEntity;
+import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericBaseModelController;
+import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericBaseEntityService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,9 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class GenericControllerForBaseModelsTest {
+public class GenericBaseModelControllerTest {
     private interface TestRepositoryType extends CrudRepository<TestBaseEntity, Long> {}
-    private static class TestServiceType extends GenericServiceForBaseEntity<TestBaseEntity, TestRepositoryType>{
+    private static class TestServiceType extends GenericBaseEntityService<TestBaseEntity, TestRepositoryType> {
         public TestServiceType(TestRepositoryType repository) {
             super(repository);
         }
@@ -47,8 +47,8 @@ public class GenericControllerForBaseModelsTest {
     private TestServiceType service ;
 
     @InjectMocks
-    private GenericControllerForBaseModels<TestBaseDto,TestBaseEntity,
-            TestRepositoryType,TestServiceType, Mapper<TestBaseDto, TestBaseEntity> > controller;
+    private GenericBaseModelController<TestBaseDto,TestBaseEntity,
+                TestRepositoryType,TestServiceType, Mapper<TestBaseDto, TestBaseEntity> > controller;
     
     @BeforeEach
     void setup(){

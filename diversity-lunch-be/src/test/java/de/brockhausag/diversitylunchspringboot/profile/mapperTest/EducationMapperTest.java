@@ -1,5 +1,6 @@
-package de.brockhausag.diversitylunchspringboot.profile.mapper;
+package de.brockhausag.diversitylunchspringboot.profile.mapperTest;
 
+import de.brockhausag.diversitylunchspringboot.profile.mapper.EducationMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.EducationDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.EducationEntity;
 import org.junit.jupiter.api.BeforeEach;

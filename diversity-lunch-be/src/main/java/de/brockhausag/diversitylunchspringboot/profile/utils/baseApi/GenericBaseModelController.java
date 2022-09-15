@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 import java.util.Optional;
 
-public class GenericControllerForBaseModels <
+public class GenericBaseModelController<
         DtoType extends BaseDto,
         EntityType extends BaseEntity,
         RepositoryType extends CrudRepository<EntityType, Long>,
-        ServiceType extends GenericServiceForBaseEntity<EntityType, RepositoryType>,
+        ServiceType extends GenericBaseEntityService<EntityType, RepositoryType>,
         MapperType extends Mapper<DtoType, EntityType>>
         extends ErrorHandlingController {
 
@@ -22,7 +22,7 @@ public class GenericControllerForBaseModels <
     private final MapperType mapper;
     private final ServiceType service;
 
-    public GenericControllerForBaseModels(MapperType mapper, ServiceType service) {
+    public GenericBaseModelController(MapperType mapper, ServiceType service) {
         this.mapper = mapper;
         this.service = service;
     }

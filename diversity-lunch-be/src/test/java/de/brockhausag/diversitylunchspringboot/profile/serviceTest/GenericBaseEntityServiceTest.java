@@ -1,8 +1,8 @@
-package de.brockhausag.diversitylunchspringboot.profile.service;
+package de.brockhausag.diversitylunchspringboot.profile.serviceTest;
 
 import de.brockhausag.diversitylunchspringboot.data.BaseModelTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.data.TestBaseEntity;
-import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericServiceForBaseEntity;
+import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericBaseEntityService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class GenericServiceForBaseEntityTest {
+public class GenericBaseEntityServiceTest {
     private interface TestRepositoryType extends CrudRepository<TestBaseEntity, Long>{}
 
     private TestBaseEntity firstTestEntity;
@@ -29,7 +29,7 @@ public class GenericServiceForBaseEntityTest {
     @Mock
     private TestRepositoryType testRepository;
     @InjectMocks
-    private GenericServiceForBaseEntity<TestBaseEntity, TestRepositoryType> service;
+    private GenericBaseEntityService<TestBaseEntity, TestRepositoryType> service;
 
     @BeforeEach
     void setup(){

@@ -3,12 +3,12 @@ package de.brockhausag.diversitylunchspringboot.profile.utils.genericOverload;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MapperForBaseModels<DtoType extends BaseDtoForGenericMapper<DtoType>, EntityType extends BaseEntityForGenericMapper<EntityType>> {
+public class BaseModelMapper<DtoType extends GenericMapperBaseDto<DtoType>, EntityType extends GenericMapperBaseEntity<EntityType>> {
 
     private final DtoType emptyDto;
     private final EntityType emptyEntity;
 
-    public MapperForBaseModels(DtoType emptyDto, EntityType emptyEntity) {
+    public BaseModelMapper(DtoType emptyDto, EntityType emptyEntity) {
         this.emptyDto = emptyDto;
         this.emptyEntity = emptyEntity;
     }

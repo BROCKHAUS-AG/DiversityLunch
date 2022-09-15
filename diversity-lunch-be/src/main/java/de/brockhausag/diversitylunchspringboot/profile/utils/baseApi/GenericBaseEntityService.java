@@ -7,13 +7,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class GenericServiceForBaseEntity<
+public class GenericBaseEntityService<
         EntityType extends BaseEntity,
         RepositoryType extends CrudRepository<EntityType, Long> > {
 
     private final RepositoryType repository;
 
-    public GenericServiceForBaseEntity(RepositoryType repository) {
+    public GenericBaseEntityService(RepositoryType repository) {
         this.repository = repository;
     }
 

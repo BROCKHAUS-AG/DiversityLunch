@@ -1,5 +1,6 @@
-package de.brockhausag.diversitylunchspringboot.profile.model;
+package de.brockhausag.diversitylunchspringboot.profile.modelTest;
 
+import de.brockhausag.diversitylunchspringboot.profile.model.Hobby;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
