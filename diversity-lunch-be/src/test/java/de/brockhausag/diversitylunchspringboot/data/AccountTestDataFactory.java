@@ -1,8 +1,7 @@
-package de.brockhausag.diversitylunchspringboot.data.factoriesForMapperTests;
+package de.brockhausag.diversitylunchspringboot.data;
 
 import de.brockhausag.diversitylunchspringboot.account.model.AccountDto;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
-import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
 
 public class AccountTestDataFactory {

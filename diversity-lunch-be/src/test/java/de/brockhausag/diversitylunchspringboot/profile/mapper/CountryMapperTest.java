@@ -1,7 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
 
-import de.brockhausag.diversitylunchspringboot.data.factoriesForMapperTests.CountryTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.CountryDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.CountryEntity;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,20 +14,38 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CountryMapperTest {
 
-    private CountryMapper countryMapper;
-    private CountryTestDataFactory factory;
+    private CountryEntity firstEntity;
+    private CountryEntity secondEntity;
+    private CountryEntity thirdEntity;
 
+    private CountryDto firstDto;
+    private CountryDto secondDto;
+    private CountryDto thirdDto;
+
+
+    private CountryMapper countryMapper;
     @BeforeEach
     void setup(){
+        final Long firstId = 1L, secondId = 2L, thirdId = 3L;
+        final String firstDescriptor = "First Object", secondDescriptor = "Second Object",
+                thirdDescriptor = "Third Object";
+
+        firstEntity = new CountryEntity(firstId, firstDescriptor);
+        secondEntity = new CountryEntity(secondId, secondDescriptor);
+        thirdEntity = new CountryEntity(thirdId, thirdDescriptor);
+
+        firstDto = new CountryDto(firstId, firstDescriptor);
+        secondDto = new CountryDto(secondId, secondDescriptor);
+        thirdDto = new CountryDto(thirdId, thirdDescriptor);
+
         countryMapper = new CountryMapper();
-        factory = new CountryTestDataFactory();
     }
 
     @Test
     void testEntityToDto_withOneEntity_returnsOneDto(){
         //Arrange
-        CountryEntity inputEntity = this.factory.buildCountryEntity();
-        CountryDto expectedDto = this.factory.buildCountryDto();
+        CountryEntity inputEntity = firstEntity;
+        CountryDto expectedDto = firstDto;
 
         //Act
         CountryDto actualDto = countryMapper.entityToDto(inputEntity);
@@ -38,15 +55,10 @@ public class CountryMapperTest {
     }
 
     @Test
-    void testEntityToDto_withListOfTwoEntities_returnsListOfTwoDtos(){
+    void testEntityToDto_withListOfThreeEntities_returnsListOfThreeDtos(){
         //Arrange
-        CountryEntity firstCountryEntity = this.factory.buildCountryEntity();
-        CountryEntity secondCountryEntity = this.factory.buildSecondCountryEntity();
-        List<CountryEntity> inputEntityList = Arrays.asList(firstCountryEntity, secondCountryEntity);
-
-        CountryDto firstCountryDto = this.factory.buildCountryDto();
-        CountryDto secondCountryDto = this.factory.buildSecondCountryDto();
-        List<CountryDto> expectedDtoList = Arrays.asList(firstCountryDto, secondCountryDto);
+        List<CountryEntity> inputEntityList = Arrays.asList(firstEntity, secondEntity, thirdEntity);
+        List<CountryDto> expectedDtoList = Arrays.asList(firstDto, secondDto, thirdDto);
 
         //Act
         List<CountryDto> actualDtoList = countryMapper.entityToDto(inputEntityList);
@@ -71,8 +83,8 @@ public class CountryMapperTest {
     @Test
     void testDtoToEntity_withOneDto_returnsOneEntity(){
         //Arrange
-        CountryDto inputDto = factory.buildCountryDto();
-        CountryEntity expectedEntity = factory.buildCountryEntity();
+        CountryDto inputDto = firstDto;
+        CountryEntity expectedEntity = firstEntity;
 
 
         //Act
@@ -85,13 +97,8 @@ public class CountryMapperTest {
     @Test
     void testDtoToEntity_withListOfTwoDtos_returnsListOfTwoEntities(){
         //Arrange
-        CountryEntity firstCountryEntity = this.factory.buildCountryEntity();
-        CountryEntity secondCountryEntity = this.factory.buildSecondCountryEntity();
-        List<CountryEntity> expectedEntityList = Arrays.asList(firstCountryEntity, secondCountryEntity);
-
-        CountryDto firstCountryDto = this.factory.buildCountryDto();
-        CountryDto secondCountryDto = this.factory.buildSecondCountryDto();
-        List<CountryDto> inputDtoList = Arrays.asList(firstCountryDto, secondCountryDto);
+        List<CountryEntity> expectedEntityList = Arrays.asList(firstEntity, secondEntity, thirdEntity);
+        List<CountryDto> inputDtoList = Arrays.asList(firstDto, secondDto, thirdDto);
 
         //Act
         List<CountryEntity> actualEntityList = countryMapper.dtoToEntity(inputDtoList);

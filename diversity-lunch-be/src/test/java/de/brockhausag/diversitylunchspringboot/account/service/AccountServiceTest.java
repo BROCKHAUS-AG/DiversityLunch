@@ -2,7 +2,7 @@ package de.brockhausag.diversitylunchspringboot.account.service;
 
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
-import de.brockhausag.diversitylunchspringboot.data.factoriesForMapperTests.AccountTestDataFactory;
+import de.brockhausag.diversitylunchspringboot.data.AccountTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
 import org.junit.jupiter.api.Assertions;

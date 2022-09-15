@@ -2,7 +2,7 @@ package de.brockhausag.diversitylunchspringboot.security;
 
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
-import de.brockhausag.diversitylunchspringboot.data.factoriesForMapperTests.AccountTestDataFactory;
+import de.brockhausag.diversitylunchspringboot.data.AccountTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.data.MeetingTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
