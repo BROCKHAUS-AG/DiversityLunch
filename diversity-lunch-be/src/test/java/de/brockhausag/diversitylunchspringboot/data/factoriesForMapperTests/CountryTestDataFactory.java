@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.data;
+package de.brockhausag.diversitylunchspringboot.data.factoriesForMapperTests;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.CountryDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.CountryEntity;

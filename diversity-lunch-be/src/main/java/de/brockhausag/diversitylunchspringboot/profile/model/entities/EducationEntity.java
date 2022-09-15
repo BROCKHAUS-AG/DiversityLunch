@@ -1,9 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
 import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.BaseEntity;
-import de.brockhausag.diversitylunchspringboot.profile.utils.genericOverload.BaseEntityForGenericMapper;
 import lombok.*;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -7,8 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DietService extends GenericServiceForBaseEntity<DietEntity, DietRepository> {
-    public DietService(DietRepository repository)
-    {
+    public DietService(DietRepository repository) {
         super(repository);
     }
 }

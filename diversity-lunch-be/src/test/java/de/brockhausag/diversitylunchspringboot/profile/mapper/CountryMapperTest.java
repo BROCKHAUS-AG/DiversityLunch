@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
 
-import de.brockhausag.diversitylunchspringboot.data.CountryTestDataFactory;
+import de.brockhausag.diversitylunchspringboot.data.factoriesForMapperTests.CountryTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.CountryDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.CountryEntity;
 import org.junit.jupiter.api.BeforeEach;

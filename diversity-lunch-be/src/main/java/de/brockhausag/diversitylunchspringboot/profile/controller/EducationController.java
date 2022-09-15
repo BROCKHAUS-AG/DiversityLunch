@@ -6,7 +6,6 @@ import de.brockhausag.diversitylunchspringboot.profile.mapper.EducationMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.EducationDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.EducationEntity;
 import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericControllerForBaseModels;
-import de.brockhausag.diversitylunchspringboot.profile.utils.genericOverload.GenericControllerWithGenericMapper;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

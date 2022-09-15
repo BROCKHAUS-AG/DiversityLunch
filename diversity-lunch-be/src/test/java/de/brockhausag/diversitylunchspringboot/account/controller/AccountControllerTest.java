@@ -4,7 +4,7 @@ import de.brockhausag.diversitylunchspringboot.account.mapper.AccountMapper;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountDto;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
-import de.brockhausag.diversitylunchspringboot.data.AccountTestDataFactory;
+import de.brockhausag.diversitylunchspringboot.data.factoriesForMapperTests.AccountTestDataFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
