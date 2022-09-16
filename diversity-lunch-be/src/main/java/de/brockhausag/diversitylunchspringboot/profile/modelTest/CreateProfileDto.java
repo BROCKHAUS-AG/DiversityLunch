@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.profile.model;
+package de.brockhausag.diversitylunchspringboot.profile.modelTest;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

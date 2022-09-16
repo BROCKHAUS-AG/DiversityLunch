@@ -1,7 +1,7 @@
-package de.brockhausag.diversitylunchspringboot.profile.mapper;
+package de.brockhausag.diversitylunchspringboot.profile.mapperTest;
 
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.DietDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.DietEntity;
+import de.brockhausag.diversitylunchspringboot.profile.modelTest.dtos.DietDto;
+import de.brockhausag.diversitylunchspringboot.profile.modelTest.entities.DietEntity;
 import de.brockhausag.diversitylunchspringboot.profile.utils.Mapper;
 import org.springframework.stereotype.Component;
 

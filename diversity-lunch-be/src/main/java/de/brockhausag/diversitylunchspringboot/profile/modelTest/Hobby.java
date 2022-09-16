@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.profile.model;
+package de.brockhausag.diversitylunchspringboot.profile.modelTest;
 
 public enum Hobby {
     BALL_GAMES("SPORT", "BALLSPORT"),

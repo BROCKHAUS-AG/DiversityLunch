@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.data;
 
 import com.nimbusds.jose.util.Base64URL;
-import de.brockhausag.diversitylunchspringboot.profile.model.*;
+import de.brockhausag.diversitylunchspringboot.profile.modelTest.*;
 import lombok.SneakyThrows;
 
 import javax.crypto.Mac;

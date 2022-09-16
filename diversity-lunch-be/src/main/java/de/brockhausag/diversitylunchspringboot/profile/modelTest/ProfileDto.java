@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.profile.model;
+package de.brockhausag.diversitylunchspringboot.profile.modelTest;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
