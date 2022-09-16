@@ -67,6 +67,18 @@ public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot
         return accountId.isPresent() && accountId.get() == id;
     }
 
+    public boolean hasAccountRole(AccountRole role) {
+        String uniqueName = getUniqueName();
+        Optional<AccountEntity> account = accountService.getAccount(uniqueName);
+        return account.isPresent() && account.get().getRole().equals(role);
+    }
+
+    public boolean hasAccountPermission(AccountPermission permission) {
+        String uniqueName = getUniqueName();
+        Optional<AccountEntity> account = accountService.getAccount(uniqueName);
+        return account.isPresent() && account.get().getRole().getPermissions().contains(permission);
+    }
+
     private OAuth2AuthenticatedPrincipal getOAuth2AuthenticatedPrincipal(){
         Object principal = this.getAuthentication().getPrincipal();
 

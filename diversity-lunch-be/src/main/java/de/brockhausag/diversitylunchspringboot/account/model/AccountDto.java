@@ -1,5 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.account.model;
 
+import de.brockhausag.diversitylunchspringboot.security.AccountRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,4 +14,6 @@ public class AccountDto {
     private long id;
 
     private long profileId;
+
+    private AccountRole role;
 }

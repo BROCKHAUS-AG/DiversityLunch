@@ -7,6 +7,7 @@ import de.brockhausag.diversitylunchspringboot.data.MeetingTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MeetingService;
+import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -176,5 +178,68 @@ class DiversityLunchSecurityExpressionRootTest {
         when(accountService.getAccount(accountEntity.getUniqueName())).thenReturn(Optional.empty());
 
         assertFalse(diversityLunchSecurityExpressionRoot.isAccountOwner(accountEntity.getId() +1));
+    }
+
+    @Test
+    void hasAccountRole_withRole_returnTrue() {
+        AccountEntity accountEntity = accountFactory.buildAccountWithProfile();
+        when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
+        when(oAuth2AuthenticatedPrincipal.getAttribute(any())).thenReturn(accountEntity.getUniqueName());
+        when(accountService.getAccount(accountEntity.getUniqueName())).thenReturn(Optional.of(accountEntity));
+
+        assertTrue(diversityLunchSecurityExpressionRoot.hasAccountRole(AccountRole.STANDARD));
+    }
+
+    @Test
+    void hasAccountRole_withInvalidRole_returnFalse() {
+        AccountEntity accountEntity = accountFactory.buildAccountWithProfile();
+        when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
+        when(oAuth2AuthenticatedPrincipal.getAttribute(any())).thenReturn(accountEntity.getUniqueName());
+        when(accountService.getAccount(accountEntity.getUniqueName())).thenReturn(Optional.of(accountEntity));
+
+        assertFalse(diversityLunchSecurityExpressionRoot.hasAccountRole(AccountRole.ADMIN));
+    }
+
+    @Test
+    void hasAccountPermission_withPermission_returnTrue() {
+        AccountEntity accountEntity = accountFactory.buildAccountWithProfile();
+        when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
+        when(oAuth2AuthenticatedPrincipal.getAttribute(any())).thenReturn(accountEntity.getUniqueName());
+        when(accountService.getAccount(accountEntity.getUniqueName())).thenReturn(Optional.of(accountEntity));
+
+        assertTrue(diversityLunchSecurityExpressionRoot.hasAccountPermission(AccountPermission.PROFILE_OPTION_READ));
+    }
+
+    @Test
+    void hasAccountPermission_withInvalidPermission_returnFalse() {
+        AccountEntity accountEntity = accountFactory.buildAccountWithProfile();
+        when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
+        when(oAuth2AuthenticatedPrincipal.getAttribute(any())).thenReturn(accountEntity.getUniqueName());
+        when(accountService.getAccount(accountEntity.getUniqueName())).thenReturn(Optional.of(accountEntity));
+
+        assertFalse(diversityLunchSecurityExpressionRoot.hasAccountPermission(AccountPermission.PROFILE_OPTION_WRITE));
+    }
+
+    @Test
+    void hasAccountPermission_withMultiplePermissions_returnTrue() {
+        AccountEntity accountEntity =
+                new AccountEntity(0, mock(ProfileEntity.class), "email", AccountRole.ADMIN);
+        when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
+        when(oAuth2AuthenticatedPrincipal.getAttribute(any())).thenReturn(accountEntity.getUniqueName());
+        when(accountService.getAccount(accountEntity.getUniqueName())).thenReturn(Optional.of(accountEntity));
+
+        assertTrue(diversityLunchSecurityExpressionRoot.hasAccountPermission(AccountPermission.PROFILE_OPTION_READ));
+        assertTrue(diversityLunchSecurityExpressionRoot.hasAccountPermission(AccountPermission.PROFILE_OPTION_WRITE));
+    }
+
+    @Test
+    void hasAccountPermission_withMultiplePermissions_returnFalse() {
+        AccountEntity accountEntity = accountFactory.buildAccountWithProfile();
+        when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
+        when(oAuth2AuthenticatedPrincipal.getAttribute(any())).thenReturn(accountEntity.getUniqueName());
+        when(accountService.getAccount(accountEntity.getUniqueName())).thenReturn(Optional.of(accountEntity));
+
+        assertTrue(diversityLunchSecurityExpressionRoot.hasAccountPermission(AccountPermission.PROFILE_OPTION_READ));
+        assertFalse(diversityLunchSecurityExpressionRoot.hasAccountPermission(AccountPermission.PROFILE_OPTION_WRITE));
     }
 }
