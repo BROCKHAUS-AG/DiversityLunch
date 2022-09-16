@@ -6,8 +6,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public enum AccountPermission {
-    PROFILE_OPTION_READ("profile_option_read:read"),
-    PROFILE_OPTION_WRITE("profile_option_read:write");
+    PROFILE_OPTION_READ("profile_option:read"),
+    PROFILE_OPTION_WRITE("profile_option:write");
 
     private final String name;
 }
