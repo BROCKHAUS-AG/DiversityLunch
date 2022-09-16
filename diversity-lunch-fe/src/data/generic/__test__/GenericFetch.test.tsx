@@ -28,7 +28,7 @@ import genderReducer from '../../gender/gender-reducer';
 import hobbyReducer from '../../hobby/hobby-reducer';
 import industryReducer from '../../industry/industry-reducer';
 
-const data = [{
+/*const data = [{
     id: 1,
     descriptor: 'Deutschland',
 }];
@@ -120,4 +120,5 @@ it('a', async () => {
     //
     // jest.spyOn(global, 'getAll').mockReturnValue();
     // dispatch(countryFetch.getAll());
-});
+});*/
+
