@@ -40,4 +40,8 @@ describe('DropDown', () => {
         expect(container.querySelectorAll('option')[1].selected).toBe(true);
         expect(counter).toBe(1);
     });
+
+    it('is visible', () => {
+        expect(screen.getByText('Genau das')).toBeVisible();
+    });
 });
