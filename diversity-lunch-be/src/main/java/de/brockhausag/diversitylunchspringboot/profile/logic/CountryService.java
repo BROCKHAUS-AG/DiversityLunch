@@ -6,7 +6,7 @@ import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericBase
 import org.springframework.stereotype.Service;
 
 @Service
-public class CountryService extends GenericBaseEntityService<CountryEntity, CountryRepository > {
+public class CountryService extends GenericBaseEntityService<CountryEntity, CountryRepository> {
     public CountryService(CountryRepository repository) {
         super(repository);
     }
