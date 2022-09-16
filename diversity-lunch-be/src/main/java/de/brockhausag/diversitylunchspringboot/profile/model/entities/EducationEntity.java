@@ -12,8 +12,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CountryEntity implements BaseEntity {
-
+public class EducationEntity implements BaseEntity {
     @Id
     @GeneratedValue
     private Long id;
@@ -31,7 +30,7 @@ public class CountryEntity implements BaseEntity {
         if ((obj == null) || (obj.getClass() != this.getClass())) {
             return false;
         }
-        final CountryEntity other = (CountryEntity) obj;
+        final EducationEntity other = (EducationEntity) obj;
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
     }
 

@@ -1,21 +1,15 @@
-package de.brockhausag.diversitylunchspringboot.profile.model.entities;
+package de.brockhausag.diversitylunchspringboot.data;
 
 import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.BaseEntity;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class CountryEntity implements BaseEntity {
+@Builder
+public class TestBaseEntity implements BaseEntity {
 
-    @Id
-    @GeneratedValue
     private Long id;
 
     private String descriptor;
@@ -31,7 +25,7 @@ public class CountryEntity implements BaseEntity {
         if ((obj == null) || (obj.getClass() != this.getClass())) {
             return false;
         }
-        final CountryEntity other = (CountryEntity) obj;
+        final TestBaseEntity other = (TestBaseEntity) obj;
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
     }
 

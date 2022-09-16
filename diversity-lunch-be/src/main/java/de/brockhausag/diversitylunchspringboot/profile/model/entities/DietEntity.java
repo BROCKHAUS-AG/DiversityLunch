@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
-import de.brockhausag.diversitylunchspringboot.profile.utils.BaseEntity;
+import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.BaseEntity;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -12,7 +12,6 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
 public class DietEntity implements BaseEntity {
     @Id
     @GeneratedValue

@@ -13,11 +13,11 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class DietDto implements BaseDto {
+public class GenderDto implements BaseDto {
 
     private Long id;
 
-    @Schema(description = "A diet that you stick to", example = "vegan")
+    @Schema(description = "the gender you identify with", example = "female")
     @Size(min=2, max=50, message = "diet descriptor must be between 2 and 50 chars long")
     @NotNull
     @NotBlank

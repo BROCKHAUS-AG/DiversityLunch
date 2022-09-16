@@ -1,7 +1,10 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
 import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.BaseEntity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,8 +15,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CountryEntity implements BaseEntity {
-
+public class GenderEntity implements BaseEntity {
     @Id
     @GeneratedValue
     private Long id;
@@ -31,7 +33,7 @@ public class CountryEntity implements BaseEntity {
         if ((obj == null) || (obj.getClass() != this.getClass())) {
             return false;
         }
-        final CountryEntity other = (CountryEntity) obj;
+        final GenderEntity other = (GenderEntity) obj;
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
     }
 

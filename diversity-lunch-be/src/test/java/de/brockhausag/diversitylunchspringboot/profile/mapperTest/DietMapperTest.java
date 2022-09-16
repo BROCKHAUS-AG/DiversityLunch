@@ -1,6 +1,6 @@
-package de.brockhausag.diversitylunchspringboot.profile.mapper;
+package de.brockhausag.diversitylunchspringboot.profile.mapperTest;
 
-import de.brockhausag.diversitylunchspringboot.data.DietTestDataFactory;
+import de.brockhausag.diversitylunchspringboot.profile.mapper.DietMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.DietDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.DietEntity;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,20 +14,38 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DietMapperTest {
 
-    private DietMapper dietMapper;
-    private DietTestDataFactory factory;
+    private DietEntity firstEntity;
+    private DietEntity secondEntity;
+    private DietEntity thirdEntity;
 
+    private DietDto firstDto;
+    private DietDto secondDto;
+    private DietDto thirdDto;
+
+
+    private DietMapper dietMapper;
     @BeforeEach
     void setup(){
+        final Long firstId = 1L, secondId = 2L, thirdId = 3L;
+        final String firstDescriptor = "First Object", secondDescriptor = "Second Object",
+                thirdDescriptor = "Third Object";
+
+        firstEntity = new DietEntity(firstId, firstDescriptor);
+        secondEntity = new DietEntity(secondId, secondDescriptor);
+        thirdEntity = new DietEntity(thirdId, thirdDescriptor);
+
+        firstDto = new DietDto(firstId, firstDescriptor);
+        secondDto = new DietDto(secondId, secondDescriptor);
+        thirdDto = new DietDto(thirdId, thirdDescriptor);
+
         dietMapper = new DietMapper();
-        factory = new DietTestDataFactory();
     }
 
     @Test
     void testEntityToDto_withOneEntity_returnsOneDto(){
         //Arrange
-        DietEntity inputEntity = this.factory.buildDietEntity();
-        DietDto expectedDto = this.factory.buildDietDto();
+        DietEntity inputEntity = firstEntity;
+        DietDto expectedDto = firstDto;
 
         //Act
         DietDto actualDto = dietMapper.entityToDto(inputEntity);
@@ -37,15 +55,10 @@ public class DietMapperTest {
     }
 
     @Test
-    void testEntityToDto_withListOfTwoEntities_returnsListOfTwoDtos(){
+    void testEntityToDto_withListOfThreeEntities_returnsListOfThreeDtos(){
         //Arrange
-        DietEntity firstDietEntity = this.factory.buildDietEntity();
-        DietEntity secondDietEntity = this.factory.buildSecondDietEntity();
-        List<DietEntity> inputEntityList = Arrays.asList(firstDietEntity, secondDietEntity);
-
-        DietDto firstDietDto = this.factory.buildDietDto();
-        DietDto secondDietDto = this.factory.buildSecondDietDto();
-        List<DietDto> expectedDtoList = Arrays.asList(firstDietDto, secondDietDto);
+        List<DietEntity> inputEntityList = Arrays.asList(firstEntity, secondEntity, thirdEntity);
+        List<DietDto> expectedDtoList = Arrays.asList(firstDto, secondDto, thirdDto);
 
         //Act
         List<DietDto> actualDtoList = dietMapper.entityToDto(inputEntityList);
@@ -70,8 +83,8 @@ public class DietMapperTest {
     @Test
     void testDtoToEntity_withOneDto_returnsOneEntity(){
         //Arrange
-        DietDto inputDto = factory.buildDietDto();
-        DietEntity expectedEntity = factory.buildDietEntity();
+        DietDto inputDto = firstDto;
+        DietEntity expectedEntity = firstEntity;
 
 
         //Act
@@ -84,13 +97,8 @@ public class DietMapperTest {
     @Test
     void testDtoToEntity_withListOfTwoDtos_returnsListOfTwoEntities(){
         //Arrange
-        DietEntity firstDietEntity = this.factory.buildDietEntity();
-        DietEntity secondDietEntity = this.factory.buildSecondDietEntity();
-        List<DietEntity> expectedEntityList = Arrays.asList(firstDietEntity, secondDietEntity);
-
-        DietDto firstDietDto = this.factory.buildDietDto();
-        DietDto secondDietDto = this.factory.buildSecondDietDto();
-        List<DietDto> inputDtoList = Arrays.asList(firstDietDto, secondDietDto);
+        List<DietEntity> expectedEntityList = Arrays.asList(firstEntity, secondEntity, thirdEntity);
+        List<DietDto> inputDtoList = Arrays.asList(firstDto, secondDto, thirdDto);
 
         //Act
         List<DietEntity> actualEntityList = dietMapper.dtoToEntity(inputDtoList);
@@ -111,5 +119,6 @@ public class DietMapperTest {
         //Assert
         assertEquals(expectedEntityList, actualEntityList);
     }
+
 
 }
