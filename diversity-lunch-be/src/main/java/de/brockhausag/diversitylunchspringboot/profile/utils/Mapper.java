@@ -8,7 +8,7 @@ public interface Mapper<DtoType, EntityType> {
 
     EntityType dtoToEntity(DtoType dto);
 
-    List<DtoType> entityToDto(List<EntityType> entity);
+    List<DtoType> entityToDto(List<EntityType> entities);
 
-    List<EntityType> dtoToEntity(List<DtoType> dto);
+    List<EntityType> dtoToEntity(List<DtoType> dtos);
 }
