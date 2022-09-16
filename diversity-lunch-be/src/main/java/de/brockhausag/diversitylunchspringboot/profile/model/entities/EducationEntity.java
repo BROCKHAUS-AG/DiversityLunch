@@ -12,7 +12,6 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
 public class EducationEntity implements BaseEntity {
     @Id
     @GeneratedValue

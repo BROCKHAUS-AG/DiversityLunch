@@ -12,7 +12,6 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
 public class DietEntity implements BaseEntity {
     @Id
     @GeneratedValue

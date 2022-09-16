@@ -13,7 +13,6 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
 @EqualsAndHashCode
 public class CountryDto implements BaseDto {
     private Long id;

@@ -12,7 +12,6 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
 @EqualsAndHashCode
 public class EducationDto implements BaseDto {
 
