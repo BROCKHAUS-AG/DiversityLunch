@@ -1,10 +1,10 @@
-package de.brockhausag.diversitylunchspringboot.profile.controllerTest;
+package de.brockhausag.diversitylunchspringboot.profile.controller;
 
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
-import de.brockhausag.diversitylunchspringboot.profile.mapperTest.ProfileMapper;
-import de.brockhausag.diversitylunchspringboot.profile.modelTest.CreateProfileDto;
-import de.brockhausag.diversitylunchspringboot.profile.modelTest.ProfileDto;
-import de.brockhausag.diversitylunchspringboot.profile.modelTest.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.mapper.ProfileMapper;
+import de.brockhausag.diversitylunchspringboot.profile.model.CreateProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.ProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

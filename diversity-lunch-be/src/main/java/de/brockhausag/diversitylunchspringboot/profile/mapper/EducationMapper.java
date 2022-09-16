@@ -1,7 +1,7 @@
-package de.brockhausag.diversitylunchspringboot.profile.mapperTest;
+package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
-import de.brockhausag.diversitylunchspringboot.profile.modelTest.dtos.EducationDto;
-import de.brockhausag.diversitylunchspringboot.profile.modelTest.entities.EducationEntity;
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.EducationDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.EducationEntity;
 import de.brockhausag.diversitylunchspringboot.profile.utils.Mapper;
 import org.springframework.stereotype.Component;
 

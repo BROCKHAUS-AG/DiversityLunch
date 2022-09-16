@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.profile.modelTest;
+package de.brockhausag.diversitylunchspringboot.profile.model;
 
 public enum Education {
     APPRENTICESHIP,

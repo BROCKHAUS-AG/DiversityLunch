@@ -1,8 +1,8 @@
-package de.brockhausag.diversitylunchspringboot.profile.mapperTest;
+package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
-import de.brockhausag.diversitylunchspringboot.profile.modelTest.CreateProfileDto;
-import de.brockhausag.diversitylunchspringboot.profile.modelTest.ProfileDto;
-import de.brockhausag.diversitylunchspringboot.profile.modelTest.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.model.CreateProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.ProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

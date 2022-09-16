@@ -1,11 +1,11 @@
 package de.brockhausag.diversitylunchspringboot.mapper;
 
 import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
-import de.brockhausag.diversitylunchspringboot.profile.mapperTest.ModelMapperProfileMapper;
-import de.brockhausag.diversitylunchspringboot.profile.mapperTest.ProfileMapper;
-import de.brockhausag.diversitylunchspringboot.profile.modelTest.CreateProfileDto;
-import de.brockhausag.diversitylunchspringboot.profile.modelTest.ProfileDto;
-import de.brockhausag.diversitylunchspringboot.profile.modelTest.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.mapper.ModelMapperProfileMapper;
+import de.brockhausag.diversitylunchspringboot.profile.mapper.ProfileMapper;
+import de.brockhausag.diversitylunchspringboot.profile.model.CreateProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.ProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 

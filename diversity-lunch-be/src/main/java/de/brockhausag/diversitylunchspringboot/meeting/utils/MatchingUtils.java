@@ -1,8 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.meeting.utils;
 
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
-import de.brockhausag.diversitylunchspringboot.profile.modelTest.ProfileEntity;
-import de.brockhausag.diversitylunchspringboot.profile.modelTest.WorkExperience;
+import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.model.WorkExperience;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 

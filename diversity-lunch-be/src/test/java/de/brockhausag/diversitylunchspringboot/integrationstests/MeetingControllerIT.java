@@ -11,7 +11,7 @@ import de.brockhausag.diversitylunchspringboot.meeting.model.CreateMeetingPropos
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MeetingService;
-import de.brockhausag.diversitylunchspringboot.profile.modelTest.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import org.junit.jupiter.api.*;

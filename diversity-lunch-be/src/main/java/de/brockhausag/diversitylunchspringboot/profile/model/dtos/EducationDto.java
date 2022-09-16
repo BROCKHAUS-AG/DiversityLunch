@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.profile.modelTest.dtos;
+package de.brockhausag.diversitylunchspringboot.profile.model.dtos;
 
 import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.BaseDto;
 import io.swagger.v3.oas.annotations.media.Schema;

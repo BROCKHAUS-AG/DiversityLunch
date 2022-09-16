@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.profile.modelTest.entities;
+package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
 import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.BaseEntity;
 import lombok.*;

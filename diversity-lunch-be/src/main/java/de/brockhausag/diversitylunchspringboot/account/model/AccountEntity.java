@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.account.model;
 
-import de.brockhausag.diversitylunchspringboot.profile.modelTest.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

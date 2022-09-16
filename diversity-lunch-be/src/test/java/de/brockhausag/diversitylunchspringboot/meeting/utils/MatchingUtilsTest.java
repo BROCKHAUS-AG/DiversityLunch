@@ -2,7 +2,7 @@ package de.brockhausag.diversitylunchspringboot.meeting.utils;
 
 import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
-import de.brockhausag.diversitylunchspringboot.profile.modelTest.*;
+import de.brockhausag.diversitylunchspringboot.profile.model.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
