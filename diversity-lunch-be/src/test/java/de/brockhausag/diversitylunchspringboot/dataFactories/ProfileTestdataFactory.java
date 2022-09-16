@@ -1,8 +1,9 @@
-package de.brockhausag.diversitylunchspringboot.data;
+package de.brockhausag.diversitylunchspringboot.dataFactories;
 
 import com.nimbusds.jose.util.Base64URL;
 import de.brockhausag.diversitylunchspringboot.profile.model.*;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProjectDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.SneakyThrows;
 
@@ -13,10 +14,17 @@ import java.security.NoSuchAlgorithmException;
 
 public class ProfileTestdataFactory {
 
-    private static final long id = 42;
-    private static final String name = "John Patrick-Test";
-    private static final String email = "joha.patrick@some.tld";
-    private static final int birthYear = 1957;
+    private static final Long firstId = 1L, secondId = 2L, thirdId =3L;
+    private static final String firstDescriptor = "first object", secondDescriptor = "second object",
+                                thirdDescriptor = "third object";
+    private static final String firstName = "first user", secondUser = "second user", thirdUser = "third user";
+    private static final String firstEmail = "first.mail@some.tld", secondEmail = "second.mail@some.tld",
+                                thirdEmail = "third.mail@some.tld";
+    private static final int firstBirthYear = 1957, secondBirthYear = 1930, thirdBirthYear = 2001;
+
+
+
+    private static final ProjectDto firstProjectDto
     private static final Project project = Project.ExampleCompany1;
     private static final Gender gender = Gender.MALE;
     private static final Country originCountry = Country.DEUTSCHLAND;
