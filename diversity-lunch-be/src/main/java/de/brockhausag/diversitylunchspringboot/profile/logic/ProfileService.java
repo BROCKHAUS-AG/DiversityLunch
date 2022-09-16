@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.logic;
 
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
-import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

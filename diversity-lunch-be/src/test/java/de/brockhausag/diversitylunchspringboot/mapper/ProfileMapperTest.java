@@ -4,8 +4,8 @@ import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.ModelMapperProfileMapper;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.ProfileMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.CreateProfileDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.ProfileDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 

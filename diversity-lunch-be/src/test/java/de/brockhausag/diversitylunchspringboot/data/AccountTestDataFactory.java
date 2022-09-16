@@ -2,7 +2,7 @@ package de.brockhausag.diversitylunchspringboot.data;
 
 import de.brockhausag.diversitylunchspringboot.account.model.AccountDto;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
-import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 
 public class AccountTestDataFactory {
 

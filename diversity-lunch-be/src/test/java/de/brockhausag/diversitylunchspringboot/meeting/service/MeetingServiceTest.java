@@ -8,6 +8,7 @@ import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposa
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
 import de.brockhausag.diversitylunchspringboot.profile.model.*;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
