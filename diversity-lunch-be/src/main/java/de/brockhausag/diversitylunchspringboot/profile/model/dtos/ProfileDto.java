@@ -2,7 +2,6 @@ package de.brockhausag.diversitylunchspringboot.profile.model.dtos;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.Hobby;
 import de.brockhausag.diversitylunchspringboot.profile.model.WorkExperience;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -30,6 +29,7 @@ public class ProfileDto {
     @NotNull
     @NotBlank
     @Email
+    @Max(200)
     private String email;
 
     @Schema(description = "year of birth", example = "1999")
@@ -39,19 +39,19 @@ public class ProfileDto {
 
 
     @NotNull
-    private List<ProjectEntity> projects;
+    private EducationDto education;
     @NotNull
-    private GenderEntity gender;
+    private DietDto diet;
     @NotNull
-    private CountryEntity originCountry;
+    private GenderDto gender;
     @NotNull
-    private List<LanguageEntity> motherTongue;
+    private List<LanguageDto> motherTongue;
     @NotNull
-    private ReligionEntity religion;
+    private CountryDto originCountry;
     @NotNull
-    private EducationEntity education;
+    private List<ProjectDto> projects;
     @NotNull
-    private DietEntity diet;
+    private ReligionDto religion;
 
 
     @Schema(description = "a hobby you are practicing", example = "football")

@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.integrationstests;
 
-import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

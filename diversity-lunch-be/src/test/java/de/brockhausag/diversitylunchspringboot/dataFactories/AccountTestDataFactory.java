@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.data;
+package de.brockhausag.diversitylunchspringboot.dataFactories;
 
 import de.brockhausag.diversitylunchspringboot.account.model.AccountDto;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;

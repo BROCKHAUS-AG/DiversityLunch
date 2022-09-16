@@ -1,9 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.profile.controllerTest;
 
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
-import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.profile.controller.ProfileController;
-import de.brockhausag.diversitylunchspringboot.profile.model.CreateProfileDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;

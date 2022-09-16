@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.serviceTest;
 
-import de.brockhausag.diversitylunchspringboot.data.BaseModelTestDataFactory;
-import de.brockhausag.diversitylunchspringboot.data.TestBaseEntity;
+import de.brockhausag.diversitylunchspringboot.dataFactories.BaseModelTestDataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.TestBaseEntity;
 import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericBaseEntityService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

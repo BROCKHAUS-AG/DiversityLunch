@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.config;
 
-import de.brockhausag.diversitylunchspringboot.data.MeetingTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.MeetingTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MatchingService;

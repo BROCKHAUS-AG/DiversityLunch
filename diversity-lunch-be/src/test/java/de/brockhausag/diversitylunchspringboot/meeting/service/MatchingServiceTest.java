@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.meeting.service;
 
-import de.brockhausag.diversitylunchspringboot.data.MeetingTestdataFactory;
-import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.MeetingTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;

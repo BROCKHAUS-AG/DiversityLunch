@@ -1,8 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.profile.controllerTest;
 
-import de.brockhausag.diversitylunchspringboot.data.BaseModelTestDataFactory;
-import de.brockhausag.diversitylunchspringboot.data.TestBaseDto;
-import de.brockhausag.diversitylunchspringboot.data.TestBaseEntity;
+import de.brockhausag.diversitylunchspringboot.dataFactories.BaseModelTestDataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.TestBaseDto;
+import de.brockhausag.diversitylunchspringboot.dataFactories.TestBaseEntity;
 import de.brockhausag.diversitylunchspringboot.profile.utils.Mapper;
 import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericBaseModelController;
 import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericBaseEntityService;

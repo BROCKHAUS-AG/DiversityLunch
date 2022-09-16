@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.meeting.utils;
 
-import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import de.brockhausag.diversitylunchspringboot.profile.model.*;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;

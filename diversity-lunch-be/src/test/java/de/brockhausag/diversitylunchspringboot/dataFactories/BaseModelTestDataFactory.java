@@ -1,13 +1,10 @@
-package de.brockhausag.diversitylunchspringboot.data;
+package de.brockhausag.diversitylunchspringboot.dataFactories;
 
 public class BaseModelTestDataFactory {
 
-    private final Long firstId = 1L;
-    private final Long secondId = 2L;
-    private final Long thirdId = 3L;
-    private final String firstDescriptor = "First Object";
-    private final String secondDescriptor = "Second Object";
-    private final String thirdDescriptor = "Third Object";
+    private static final Long firstId = 1L, secondId = 2L, thirdId = 3L;
+    private static final String firstDescriptor = "First Object", secondDescriptor = "Second Object",
+            thirdDescriptor = "Third Object";
     
     public TestBaseEntity.TestBaseEntityBuilder firstEntityBuilder() {
         return TestBaseEntity.builder()

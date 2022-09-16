@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.data;
+package de.brockhausag.diversitylunchspringboot.dataFactories;
 
 import de.brockhausag.diversitylunchspringboot.meeting.model.CreateMeetingProposalDto;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingDto;

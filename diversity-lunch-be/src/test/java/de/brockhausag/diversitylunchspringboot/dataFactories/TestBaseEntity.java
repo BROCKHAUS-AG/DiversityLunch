@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.data;
+package de.brockhausag.diversitylunchspringboot.dataFactories;
 
 import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.BaseEntity;
 import lombok.*;

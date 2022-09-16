@@ -2,9 +2,9 @@ package de.brockhausag.diversitylunchspringboot.security;
 
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
-import de.brockhausag.diversitylunchspringboot.data.AccountTestDataFactory;
-import de.brockhausag.diversitylunchspringboot.data.MeetingTestdataFactory;
-import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.AccountTestDataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.MeetingTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MeetingService;
 import org.junit.jupiter.api.Test;

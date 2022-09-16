@@ -2,7 +2,6 @@ package de.brockhausag.diversitylunchspringboot.profile.controller;
 
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.ProfileMapper;
-import de.brockhausag.diversitylunchspringboot.profile.model.CreateProfileDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;

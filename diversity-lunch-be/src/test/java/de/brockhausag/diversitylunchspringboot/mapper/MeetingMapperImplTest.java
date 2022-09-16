@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.mapper;
 
-import de.brockhausag.diversitylunchspringboot.data.MeetingTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.MeetingTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.mapper.MeetingMapperImpl;
 import de.brockhausag.diversitylunchspringboot.meeting.model.CreateMeetingProposalDto;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingDto;
