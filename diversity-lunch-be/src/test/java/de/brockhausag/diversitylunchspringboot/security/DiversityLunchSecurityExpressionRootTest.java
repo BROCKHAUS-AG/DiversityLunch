@@ -221,7 +221,7 @@ class DiversityLunchSecurityExpressionRootTest {
     }
 
     @Test
-    void hasAccountMultiplePermission_withPermission_returnTrue() {
+    void hasAccountPermission_withMultiplePermissions_returnTrue() {
         AccountEntity accountEntity =
                 new AccountEntity(0, mock(ProfileEntity.class), "email", AccountRole.ADMIN);
         when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
@@ -230,5 +230,16 @@ class DiversityLunchSecurityExpressionRootTest {
 
         assertTrue(diversityLunchSecurityExpressionRoot.hasAccountPermission(AccountPermission.PROFILE_OPTION_READ));
         assertTrue(diversityLunchSecurityExpressionRoot.hasAccountPermission(AccountPermission.PROFILE_OPTION_WRITE));
+    }
+
+    @Test
+    void hasAccountPermission_withMultiplePermissions_returnFalse() {
+        AccountEntity accountEntity = accountFactory.buildAccountWithProfile();
+        when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
+        when(oAuth2AuthenticatedPrincipal.getAttribute(any())).thenReturn(accountEntity.getUniqueName());
+        when(accountService.getAccount(accountEntity.getUniqueName())).thenReturn(Optional.of(accountEntity));
+
+        assertTrue(diversityLunchSecurityExpressionRoot.hasAccountPermission(AccountPermission.PROFILE_OPTION_READ));
+        assertFalse(diversityLunchSecurityExpressionRoot.hasAccountPermission(AccountPermission.PROFILE_OPTION_WRITE));
     }
 }
