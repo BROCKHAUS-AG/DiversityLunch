@@ -90,7 +90,7 @@ export class GenericFetch<T extends Identifiable> {
                     dispatch(this._errorSlice.httpError({ statusCode: response.status }));
                 } else {
                     const result : T = await response.json();
-                    dispatch(this.update(result));
+                    dispatch(this.update([result]));
                 }
             } catch (error) {
                 dispatch(this._errorSlice.error(undefined));
@@ -98,16 +98,16 @@ export class GenericFetch<T extends Identifiable> {
         };
     }
 
-    public removeById(item: T) {
+    public removeById(id : number) {
         return async (dispatch: Dispatch) => {
             try {
-                const response = await authenticatedFetchDelete(this.url + this.endpoint + item.id);
+                const response = await authenticatedFetchDelete(this.url + this.endpoint + id);
 
                 if (!response.ok) {
                     dispatch(this._errorSlice.httpError({ statusCode: response.status }));
                 } else {
                     // const result : T[] = await response.json();
-                    dispatch(this.remove(item));
+                    dispatch(this.remove([id]));
                 }
             } catch (error) {
                 dispatch(this._errorSlice.error(undefined));

@@ -23,10 +23,10 @@ export class GenericSlice<T extends Identifiable> {
 
     private readonly _reducer : Reducer<IdentifiableState<T>>;
 
-    constructor(name: string) {
+    constructor(name: string, initialData : T[] = []) {
         this._genericSlice = createSlice<IdentifiableState<T>, SliceCaseReducers<IdentifiableState<T>>>({
             name,
-            initialState: { items: [], fetched: false },
+            initialState: { items: initialData, fetched: false },
             reducers: {
                 add: (state, action) => this.addFunction(state, action),
                 update: (state, action) => this.updateFunction(state, action),
@@ -63,7 +63,7 @@ export class GenericSlice<T extends Identifiable> {
         });
     }
 
-    private removeFunction: CaseReducer<IdentifiableState<T>, PayloadAction<T[]>> = (state, action) => {
-        state.items.filter((e) => !action.payload.find((r) => r.id === e.id));
+    private removeFunction: CaseReducer<IdentifiableState<T>, PayloadAction<number[]>> = (state, action) => {
+        state.items.filter((e) => !action.payload.find((r) => r === e.id));
     }
 }
