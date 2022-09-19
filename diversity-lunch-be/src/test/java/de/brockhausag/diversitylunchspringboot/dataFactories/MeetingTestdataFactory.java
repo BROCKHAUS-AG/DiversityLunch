@@ -80,7 +80,7 @@ public class MeetingTestdataFactory {
     public List<MeetingProposalEntity> newMeetingProposalList(LocalDateTime time) {
         MeetingProposalEntity meetingProposal = entityBuilder().proposedDateTime(time).build();
         MeetingProposalEntity meetingProposal2 = entityBuilder().id(meetingProposal.getId() + 1).proposedDateTime(time).
-                proposerProfile(new ProfileTestdataFactory().buildEntity(1)).build();
+                proposerProfile(new ProfileTestdataFactory().buildEntity(2)).build();
         MeetingProposalEntity[] meetings = {meetingProposal, meetingProposal2};
         return Stream.of(meetings).collect(Collectors.toList());
     }
