@@ -49,16 +49,6 @@ export const ProfileOverview = (props: ProfileOverviewProps) => {
     const dispatch = useDispatch();
     const [currentFormState, setCurrentFormState] = useState<Profile>({ ...profileData });
     const [profileChanged, setProfileChanged] = useState<boolean>(false);
-    const DietCharacteristic = GenericCharacteristic<Diet>();
-    const BirthYearCharacteristic = GenericCharacteristic<number>();
-    const GenderCharacteristic = GenericCharacteristic<Gender>();
-    const ProjectCharacteristic = GenericCharacteristic<Project>();
-    const OriginCountryCharacteristic = GenericCharacteristic<Country>();
-    const MotherTongueCharacteristic = GenericCharacteristic<string>();
-    const HobbyCharacteristic = GenericCharacteristic<Hobby>();
-    const ReligionCharacteristic = GenericCharacteristic<Religion>();
-    const WorkExperienceCharacteristic = GenericCharacteristic<WorkExperience>();
-    const EducationCharacteristics = GenericCharacteristic<Education>();
 
     const history = useHistory();
     // eslint-disable-next-line max-len
