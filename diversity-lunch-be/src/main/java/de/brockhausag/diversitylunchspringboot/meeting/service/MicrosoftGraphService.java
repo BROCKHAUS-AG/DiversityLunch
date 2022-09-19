@@ -6,6 +6,7 @@ import com.azure.spring.autoconfigure.aad.AADAuthenticationProperties;
 import com.microsoft.graph.authentication.TokenCredentialAuthProvider;
 import com.microsoft.graph.models.Event;
 import com.microsoft.graph.requests.GraphServiceClient;
+import com.microsoft.graph.requests.GroupCollectionPage;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMsTeamsProperties;
 import lombok.RequiredArgsConstructor;
 import okhttp3.Request;
@@ -53,4 +54,8 @@ public class MicrosoftGraphService {
         return graphClient.users(userId).events().buildRequest().post(event);
     }
 
+    public GroupCollectionPage getGroups() {
+        GraphServiceClient<Request> graphClient = setUpGraphClient();
+        return graphClient.groups().buildRequest().get();
+    }
 }
