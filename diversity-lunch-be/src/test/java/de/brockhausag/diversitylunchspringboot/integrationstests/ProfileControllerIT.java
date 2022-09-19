@@ -6,10 +6,12 @@ import de.brockhausag.diversitylunchspringboot.account.repository.AccountReposit
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.config.SecurityConfig;
 import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
 import de.brockhausag.diversitylunchspringboot.profile.model.*;
 import de.brockhausag.diversitylunchspringboot.profile.repository.ProfileRepository;
 import de.brockhausag.diversitylunchspringboot.profile.service.ProfileService;
 import org.junit.jupiter.api.*;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -20,6 +22,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -35,7 +41,6 @@ class ProfileControllerIT {
     private MockMvc mockMvc;
 
     private ProfileEntity profileEntity1;
-    private ProfileEntity profileEntity2;
 
     private AccountEntity accountEntity1;
     private AccountEntity accountEntity2;
@@ -59,6 +64,9 @@ class ProfileControllerIT {
     @Autowired
     ObjectMapper objectMapper;
 
+    @Mock
+    private MicrosoftGraphService microsoftGraphService;
+
     @BeforeEach
     void tearUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(appContext)
@@ -66,13 +74,15 @@ class ProfileControllerIT {
                 .build();
 
         ProfileEntity tmpProfileEntity = profileFactory.createEntity();
+        when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
+
         accountEntity1 = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
         profileEntity1 = profileService.createProfile(tmpProfileEntity, accountEntity1.getId()).orElseThrow();
 
 
         tmpProfileEntity = profileFactory.createEntityBuilder().email("smith@web.de").build();
         accountEntity2 = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
-        profileEntity2 = profileService.createProfile(tmpProfileEntity, accountEntity2.getId()).orElseThrow();
+        profileService.createProfile(tmpProfileEntity, accountEntity2.getId()).orElseThrow();
     }
 
     @AfterEach
@@ -83,7 +93,6 @@ class ProfileControllerIT {
 
     @Test
     void testGetProfile_withValidId_thenOKWithExpectedProfile() throws Exception {
-
         this.mockMvc
                 .perform(
                         get("/api/profiles/" + profileEntity1.getId())

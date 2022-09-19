@@ -4,10 +4,10 @@ import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.config.SecurityConfig;
 import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
 import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.profile.service.ProfileService;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMailProperties;
-import de.brockhausag.diversitylunchspringboot.security.DiversityLunchSecurityExpressionRoot;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -30,6 +31,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -44,8 +48,8 @@ public class EMailControllerIT {
 
     @MockBean
     private DiversityLunchMailProperties diversityLunchMailProperties;
-    @MockBean
-    private DiversityLunchSecurityExpressionRoot diversityLunchSecurityExpressionRoot;
+    @Mock
+    private MicrosoftGraphService microsoftGraphService;
     @Autowired
     private AccountService accountService;
     @Autowired
@@ -59,7 +63,6 @@ public class EMailControllerIT {
 
     @Autowired
     private WebApplicationContext appContext;
-
     @SneakyThrows
     @BeforeEach
     void setup(){
@@ -68,7 +71,7 @@ public class EMailControllerIT {
         mockMvcSecurity = MockMvcBuilders.webAppContextSetup(appContext).apply(springSecurity()).build();
         // Nach jedem Test soll die Test Mail geloescht werden
         HttpUriRequest request = new HttpDelete( "http://localhost:8025/api/v1/messages");
-        CloseableHttpResponse httpResponse = HttpClientBuilder.create().build().execute( request );
+        HttpClientBuilder.create().build().execute( request );
     }
 
 
@@ -127,6 +130,7 @@ public class EMailControllerIT {
     public void testAuthenticationSendTestMailToLoggedInUser_withValidId_expectedOkStatus() {
         when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
         ProfileEntity tmpProfileEntity = profileTestdataFactory.createEntity();
+        when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
         AccountEntity accountEntity = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
         profileService.createProfile(tmpProfileEntity, accountEntity.getId()).orElseThrow();
         long id = tmpProfileEntity.getId();
@@ -141,6 +145,7 @@ public class EMailControllerIT {
         when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
         ProfileEntity tmpProfileEntity = profileTestdataFactory.createEntity();
         AccountEntity accountEntity = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
+        when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
         profileService.createProfile(tmpProfileEntity, accountEntity.getId()).orElseThrow();
         long id = tmpProfileEntity.getId() + 1;
         String url = "/api/mailing/sendTestMailToUser?id=" + id;

@@ -4,6 +4,7 @@ import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
 import de.brockhausag.diversitylunchspringboot.data.AccountTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
 import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
@@ -23,8 +25,12 @@ class AccountServiceTest {
     @Mock
     private AccountRepository accountRepository;
 
+    @Mock
+    private MicrosoftGraphService microsoftGraphService;
+
     @InjectMocks
     private AccountService accountService;
+
 
     private AccountTestDataFactory accountTestDataFactory;
 
@@ -39,6 +45,7 @@ class AccountServiceTest {
 
         when(accountRepository.save(accountTestDataFactory.buildNewAccount())).thenReturn(expected);
         when(accountRepository.getAccountEntityByUniqueName("Account")).thenReturn(Optional.empty());
+        when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
 
         AccountEntity accountEntity = this.accountService.getOrCreateAccount("Account");
 
@@ -52,6 +59,8 @@ class AccountServiceTest {
     void testGetOrCreateAccount_withExistentAccount_thenReturnAccount() {
         AccountEntity expected = accountTestDataFactory.buildAccountWithoutProfile();
         when(accountRepository.getAccountEntityByUniqueName("Account")).thenReturn(Optional.of(expected));
+        when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
+
         AccountEntity accountEntity = this.accountService.getOrCreateAccount("Account");
 
         Assertions.assertNotNull(accountEntity);
@@ -67,6 +76,7 @@ class AccountServiceTest {
 
         when(accountRepository.findById(1L)).thenReturn(Optional.of(account));
         when(accountRepository.save(accountWithProfile)).thenReturn(accountWithProfile);
+        when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
 
         Optional<AccountEntity> updatedAccount = accountService.updateAccount(existentProfile, 1);
 

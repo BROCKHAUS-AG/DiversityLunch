@@ -1,5 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.account.service;
 
+import com.microsoft.graph.models.Group;
 import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
@@ -8,6 +9,7 @@ import de.brockhausag.diversitylunchspringboot.security.AccountRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -46,9 +48,9 @@ public class AccountService {
     }
 
     private boolean isAccountInAdminGroup() {
-        return microsoftGraphService.getGroups().getCurrentPage().stream()
-                .map(group -> group.description)
-                .filter(Objects::nonNull)
-                .anyMatch(groupName -> groupName.equals("Talents"));
+        Optional<List<Group>> optionalGroups = microsoftGraphService.getGroups();
+        return optionalGroups.map(groups -> groups.stream()
+                .anyMatch(group -> Objects.equals(group.displayName, "Talents")))
+                .orElse(false);
     }
 }
