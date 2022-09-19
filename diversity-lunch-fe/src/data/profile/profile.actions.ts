@@ -1,9 +1,7 @@
 import { Dispatch } from 'redux';
 import { ProfileStateAction } from './profile-state-action.type';
 import { authenticatedFetchGet, authenticatedFetchPost, authenticatedFetchPut } from '../../utils/fetch.utils';
-import { ProfileDto } from '../../types/dtos/ProfileDto';
-import { mapDtoToProfile, mapProfileToDto } from '../../mapper/ProfileMapper';
-import { Profile } from '../../types/Profile';
+import { Profile } from '../../model/Profile';
 import { startAccountPendingAction } from '../account/account.actions';
 
 export const startProfileLoadingAction: ProfileStateAction = {
@@ -35,11 +33,11 @@ export const loadProfile = (profileId: number) => async (dispatch: Dispatch) => 
     } else if (hasError) {
         dispatch(loadProfileErroredAction);
     } else {
-        const profileDto: ProfileDto = await result.json();
+        const profile : Profile = await result.json();
 
         const profileOkAction: ProfileStateAction = {
             type: 'PROFILE_LOADING_SUCCEEDED',
-            payload: mapDtoToProfile(profileDto),
+            payload: profile,
         };
 
         dispatch(profileOkAction);
@@ -50,16 +48,14 @@ export const loadProfile = (profileId: number) => async (dispatch: Dispatch) => 
 export const createProfile = (profile: Profile, accountId: number) => async (dispatch: Dispatch) => {
     dispatch(startProfileLoadingAction);
 
-    const dto: ProfileDto = mapProfileToDto(profile);
-
-    const result: Response = await authenticatedFetchPost(`/api/profiles/byAccount/${accountId}`, dto);
+    const result: Response = await authenticatedFetchPost(`/api/profiles/byAccount/${accountId}`, profile);
 
     if (result.ok) {
-        const profileDto: ProfileDto = await result.json();
+        const profileResult : Profile = await result.json();
 
         const profileOkAction: ProfileStateAction = {
             type: 'PROFILE_LOADING_SUCCEEDED',
-            payload: mapDtoToProfile(profileDto),
+            payload: profileResult,
         };
         dispatch(startAccountPendingAction);
         dispatch(profileOkAction);
@@ -71,16 +67,14 @@ export const createProfile = (profile: Profile, accountId: number) => async (dis
 export const updateProfile = (profile: Profile) => async (dispatch: Dispatch) => {
     dispatch(startProfileUpdatingAction);
 
-    const dto: ProfileDto = mapProfileToDto(profile);
-
-    const result: Response = await authenticatedFetchPut(`/api/profiles/${dto.id}`, dto);
+    const result: Response = await authenticatedFetchPut(`/api/profiles/${profile.id}`, profile);
 
     if (result.ok) {
-        const profileDto: ProfileDto = await result.json();
+        const profileResult : Profile = await result.json();
 
         const profileOkAction: ProfileStateAction = {
             type: 'PROFILE_LOADING_SUCCEEDED',
-            payload: mapDtoToProfile(profileDto),
+            payload: profileResult,
         };
         dispatch(profileOkAction);
     } else {

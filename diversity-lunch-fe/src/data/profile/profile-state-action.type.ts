@@ -1,4 +1,4 @@
-import { Profile } from '../../types/Profile';
+import { Profile } from '../../model/Profile';
 
 type ProfileStateOkAction = {
     type: 'PROFILE_LOADING_SUCCEEDED',

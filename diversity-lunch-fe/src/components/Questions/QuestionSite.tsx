@@ -4,56 +4,27 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
-import { Profile } from '../../types/Profile';
+import { Profile } from '../../model/Profile';
 import '../../styles/component-styles/questions/dropdownQuestion.scss';
 
 import { useGetUserInformation } from '../../hooks/authentication/get-userInfo.hook';
-import { GenerateGenericDropdown } from './GenericDropdown';
 import { createProfile } from '../../data/profile/profile.actions';
 import { useHasProfile } from '../../hooks/profile/has-profile.hook';
 import { LoadingAnimation } from '../Shared/LoadingAnimation';
 import { Button } from '../General/Button/Button';
 
-import { Diet } from '../../types/enums/diet.type';
-import { Education } from '../../types/enums/education.type';
-import { Gender } from '../../types/enums/gender.type';
-import { Hobby } from '../../types/enums/hobby.type';
-import { Project } from '../../types/enums/project.type';
-import { Religion } from '../../types/enums/religion.type';
-
 // Type options
-import { DIET_DROPDOWN_OPTIONS } from '../../types/dropdownOptions/diet-dropdown-options.const';
-import {
-    BIRTH_YEAR_DROPDOWN_OPTIONS,
-} from '../../types/dropdownOptions/birth-year-dropdown-options.const';
-import { GENDER_DROPDOWN_OPTIONS } from '../../types/dropdownOptions/gender-dropdown-options';
-import { RELIGION_DROPDOWN_OPTIONS } from '../../types/dropdownOptions/religion-dropdown-options';
-import {
-    WORK_EXPERIENCE_DROPDOWN_OPTIONS,
-} from '../../types/dropdownOptions/work-experience-dropdown-options';
-import { PROJECT_DROPDOWN_OPTIONS } from '../../types/dropdownOptions/project-dropdown-type';
-import { EDUCATION_DROPDOWN_OPTIONS } from '../../types/dropdownOptions/education-dropdown-options';
-import { HOBBY_DROPDOWN_OPTIONS } from '../../types/dropdownOptions/hobby-dropdown-options';
-import { WorkExperience } from '../../types/enums/workexperience.type';
 import { AppStoreState } from '../../store/Store';
-import { ORIGIN_COUNTRY_DROPDOWN_OPTIONS } from '../../types/dropdownOptions/origin-country-dropdown-options.type';
-import { MOTHER_TONGUE_DROPDOWN_OPTIONS } from '../../types/dropdownOptions/mother-tongue-options.const';
-import { Country } from '../../types/enums/country.type';
-import { Language } from '../../types/enums/language.type';
 import { countryFetch } from '../../data/country/fetch-country';
 import { Dropdown } from './Dropdown';
+import { cultureFetch } from '../../data/culture/fetch-culture';
+import { dietFetch } from '../../data/diet/fetch-diet';
+import { educationFetch } from '../../data/education/fetch-education';
+import { experienceLevelFetch } from '../../data/experienceLevel/fetch-experience-level';
+import { genderFetch } from '../../data/gender/fetch-gender';
 
 const REQUIRED_FIELDS: (keyof Profile)[] = [
-    'birthYear',
-    'project',
-    'gender',
-    'originCountry',
-    'motherTongue',
-    'religion',
-    'hobby',
-    'education',
-    'workExperience',
-    'diet',
+
 ];
 
 export const QuestionSite = () => {
@@ -77,7 +48,7 @@ export const QuestionSite = () => {
         ev.preventDefault();
         ev.stopPropagation();
         const profile = currentFormState as Profile;
-        profile.name = firstName;
+        profile.firstname = firstName;
         profile.email = email;
         if (accountState.status === 'OK') {
             dispatch(createProfile(profile, accountState.accountData.id));
@@ -92,20 +63,23 @@ export const QuestionSite = () => {
         [currentFormState],
     );
 
-    const NumberDropdown = GenerateGenericDropdown<number>();
-    const DietDropdown = GenerateGenericDropdown<Diet>();
-    const GenderDropdown = GenerateGenericDropdown<Gender>();
-    const OriginCountryDropdown = GenerateGenericDropdown<Country>();
-    const MotherTongueDropdown = GenerateGenericDropdown<Language>();
-    const ReligionDropdown = GenerateGenericDropdown<Religion>();
-    const ProjectDropdown = GenerateGenericDropdown<Project>();
-    const EducationDropdown = GenerateGenericDropdown<Education>();
-    const HobbyDropdown = GenerateGenericDropdown<Hobby>();
-    const WorkExperienceDropdown = GenerateGenericDropdown<WorkExperience>();
-
     const countries = useSelector((store: AppStoreState) => store.country);
+    const cultures = useSelector((store: AppStoreState) => store.culture);
+    const diets = useSelector((store: AppStoreState) => store.diet);
+    const educations = useSelector((store: AppStoreState) => store.education);
+    const genders = useSelector((store: AppStoreState) => store.gender);
+    // const hobbies = useSelector((store: AppStoreState) => store.hobby);
+    // const industries = useSelector((store: AppStoreState) => store.industry);
+
     useEffect(() => {
         dispatch(countryFetch.getAll());
+        dispatch(cultureFetch.getAll());
+        dispatch(dietFetch.getAll());
+        dispatch(educationFetch.getAll());
+        dispatch(experienceLevelFetch.getAll());
+        dispatch(genderFetch.getAll());
+        // dispatch(hobbyFetch.getAll());
+        // dispatch(industryFetch.getAll());
     }, []);
 
     return (
@@ -125,91 +99,55 @@ export const QuestionSite = () => {
             </h4>
 
             <form onSubmit={submit}>
-                <NumberDropdown
+                {/* <NumberDropdown
                     label="Wann wurdest du geboren?"
                     currentValue={currentFormState.birthYear}
                     options={BIRTH_YEAR_DROPDOWN_OPTIONS}
                     onChange={(value) => updateProfileField('birthYear', value)}
                     placeholder="Geburtsjahr"
+                /> */}
+
+                <Dropdown
+                    options={countries.items}
+                    text="Was ist dein Herkunftsland?"
+                    onChange={(value) => updateProfileField('country', value)}
                 />
 
-                <ProjectDropdown
-                    label="In welchem Projekt arbeitest du derzeit?"
-                    options={PROJECT_DROPDOWN_OPTIONS}
-                    onChange={((value) => updateProfileField('project', value))}
-                    currentValue={currentFormState.project}
-                    placeholder="Projekt"
+                <Dropdown
+                    options={cultures.items}
+                    text="Was ist dein Herkunftsland?"
+                    onChange={(value) => updateProfileField('culture', value)}
                 />
 
-                <GenderDropdown
-                    options={GENDER_DROPDOWN_OPTIONS}
-                    label="Wähle ein Geschlecht"
-                    currentValue={currentFormState.gender}
-                    onChange={(value) => updateProfileField('gender', value)}
-                    placeholder="Geschlecht"
-                />
-
-                <OriginCountryDropdown
-                    options={ORIGIN_COUNTRY_DROPDOWN_OPTIONS}
-                    label="Was ist dein Herkunftsland?"
-                    currentValue={currentFormState.originCountry}
-                    onChange={(value) => updateProfileField('originCountry', value)}
-                    placeholder="Herkunftsland"
-                />
-
-                <MotherTongueDropdown
-                    options={MOTHER_TONGUE_DROPDOWN_OPTIONS}
-                    label="Was ist deine Muttersprache?"
-                    onChange={(value) => updateProfileField('motherTongue', value)}
-                    currentValue={currentFormState.motherTongue}
-                    placeholder="Muttersprache"
-                />
-
-                <ReligionDropdown
-                    label="An welche Religion glaubst du?"
-                    options={RELIGION_DROPDOWN_OPTIONS}
-                    currentValue={currentFormState.religion}
-                    onChange={(value) => {
-                        updateProfileField('religion', value);
-                    }}
-                    placeholder="Religion"
-                />
-
-                <WorkExperienceDropdown
-                    label="Wie viele Jahre Berufserfahrung hast du schon gesammelt?"
-                    currentValue={currentFormState.workExperience}
-                    options={WORK_EXPERIENCE_DROPDOWN_OPTIONS}
-                    onChange={(value) => updateProfileField('workExperience', value)}
-                    placeholder="Berufserfahrung"
-                />
-
-                <HobbyDropdown
-                    label="Was hast du für ein Hobby?"
-                    options={HOBBY_DROPDOWN_OPTIONS}
-                    onChange={(value) => updateProfileField('hobby', value)}
-                    currentValue={currentFormState.hobby}
-                    placeholder="Hobby"
-                />
-
-                <EducationDropdown
-                    label="Welchen Bildungsweg hast du bisher bestritten?"
-                    options={EDUCATION_DROPDOWN_OPTIONS}
-                    onChange={((value) => {
-                        updateProfileField('education', value);
-                    })}
-                    currentValue={currentFormState.education}
-                    placeholder="Bildung"
-                />
-
-                <DietDropdown
-                    options={DIET_DROPDOWN_OPTIONS}
-                    label="Wie ernährst du dich?"
-                    currentValue={currentFormState.diet}
+                <Dropdown
+                    options={diets.items}
+                    text="Was ist dein Herkunftsland?"
                     onChange={(value) => updateProfileField('diet', value)}
-                    placeholder="Ernährung"
                 />
 
-                <Dropdown data={countries.items} text="Was ist dein Herkunftsland?" onChange={() => alert('Hi')} />
+                <Dropdown
+                    options={educations.items}
+                    text="Was ist dein Herkunftsland?"
+                    onChange={(value) => updateProfileField('education', value)}
+                />
+
+                {/* <Dropdown
+                    options={hobbies.items}
+                    text="Was ist dein Herkunftsland?"
+                    onChange={(value) => updateProfileField('hobbies', value)}
+                /> */}
+
+                <Dropdown
+                    options={genders.items}
+                    text="Was ist dein Herkunftsland?"
+                    onChange={(value) => updateProfileField('gender', value)}
+                />
+
+                {/* <Dropdown
+                    options={industries.items}
+                    text="Was ist dein Herkunftsland?"
+                    onChange={(value) => updateProfileField('industry', value)}
+                /> */}
 
                 <Button
                     disabled={!isValid()}
