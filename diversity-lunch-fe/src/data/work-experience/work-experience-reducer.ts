@@ -1,7 +1,7 @@
 import { GenericSlice } from '../generic/GenericSlice';
-import { Sexuality } from '../../model/Sexuality';
+import { WorkExperience } from '../../model/WorkExperience';
 
-export const workExperienceSlice = new GenericSlice<Sexuality>('workExperienceReducer');
+export const workExperienceSlice = new GenericSlice<WorkExperience>('workExperienceReducer');
 
 export const {
     add, update, remove, initFetch,

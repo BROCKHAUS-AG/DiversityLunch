@@ -1,7 +1,7 @@
 import { GenericSlice } from '../generic/GenericSlice';
-import { Region } from '../../model/Region';
+import { Religion } from '../../model/Religion';
 
-export const religionSlice = new GenericSlice<Region>('religionReducer');
+export const religionSlice = new GenericSlice<Religion>('religionReducer');
 
 export const {
     add, update, remove, initFetch,

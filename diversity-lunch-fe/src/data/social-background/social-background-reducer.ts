@@ -1,7 +1,7 @@
 import { GenericSlice } from '../generic/GenericSlice';
-import { Sexuality } from '../../model/Sexuality';
+import { SocialBackground } from '../../model/SocialBackground';
 
-export const socialBackgroundSlice = new GenericSlice<Sexuality>('socialBackgroundReducer');
+export const socialBackgroundSlice = new GenericSlice<SocialBackground>('socialBackgroundReducer');
 
 export const {
     add, update, remove, initFetch,

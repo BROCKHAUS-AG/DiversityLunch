@@ -16,7 +16,7 @@ describe('DropDown', () => {
             descriptor: 'Jop',
         }];
 
-        ({ container } = render(<Dropdown options={mockData} text="Genau das" onChange={() => counter++} />));
+        ({ container } = render(<Dropdown options={mockData} label="Genau das" onChange={() => counter++} />));
     });
 
     it('renders without crashing', () => {
