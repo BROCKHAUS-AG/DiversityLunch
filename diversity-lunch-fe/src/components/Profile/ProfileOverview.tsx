@@ -6,7 +6,7 @@ import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import { GenericCharacteristic } from './GenericCharacteristic';
 import '../../styles/component-styles/profile/profile.scss';
-import { Profile } from '../../types/Profile';
+
 import { useGetUserInformation } from '../../hooks/authentication/get-userInfo.hook';
 import { updateProfile } from '../../data/profile/profile.actions';
 import { DIET_DROPDOWN_OPTIONS } from '../../types/dropdownOptions/diet-dropdown-options.const';
@@ -33,6 +33,7 @@ import { Button } from '../General/Button/Button';
 import { MOTHER_TONGUE_DROPDOWN_OPTIONS } from '../../types/dropdownOptions/mother-tongue-options.const';
 import { ORIGIN_COUNTRY_DROPDOWN_OPTIONS } from '../../types/dropdownOptions/origin-country-dropdown-options.type';
 import { Country } from '../../types/enums/country.type';
+import { Profile } from '../../model/Profile';
 
 type ProfileOverviewProps = {
   profileData: Profile;
@@ -93,7 +94,7 @@ export const ProfileOverview = (props: ProfileOverviewProps) => {
 
             <form className="Profile-settings-container" onSubmit={submit}>
 
-                <BirthYearCharacteristic
+                {/* <BirthYearCharacteristic
                     showingAttribute="GEBURTSJAHR"
                     currentValue={currentFormState.birthYear}
                     options={BIRTH_YEAR_DROPDOWN_OPTIONS}
@@ -171,7 +172,7 @@ export const ProfileOverview = (props: ProfileOverviewProps) => {
                     changeCurrentFormState={updateProfileField}
                     attribute="diet"
                     showingAttribute="ERNÄHRUNGSWEISE"
-                />
+                /> */}
 
                 <div className="Profile-button-container">
                     <Button type="submit" label="Speichern" disabled={!profileChanged} />
