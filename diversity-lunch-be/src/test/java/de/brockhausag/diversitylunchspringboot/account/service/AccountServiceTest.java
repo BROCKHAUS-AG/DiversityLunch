@@ -7,7 +7,6 @@ import de.brockhausag.diversitylunchspringboot.data.AccountTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
 import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
-import de.brockhausag.diversitylunchspringboot.security.AccountRole;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +31,6 @@ class AccountServiceTest {
 
     @InjectMocks
     private AccountService accountService;
-
 
     private AccountTestDataFactory accountTestDataFactory;
 
@@ -62,41 +60,16 @@ class AccountServiceTest {
     }
 
     @Test
-    void testGetOrCreateAccount_withExistentAccount_thenReturnAccount() {
+    void testGetOrCreateAccount_withExistentAccount_thenReturnAccountWithStandardRole() {
         AccountEntity expected = accountTestDataFactory.buildAccountWithoutProfile();
         when(accountRepository.getAccountEntityByUniqueName("Account")).thenReturn(Optional.of(expected));
-        var groups = new ArrayList<Group>();
-        var group = new Group();
-        group.description = "Test1";
-        groups.add(group);
-        when(microsoftGraphService.getGroups()).thenReturn(Optional.of(groups));
+        when(microsoftGraphService.getGroups()).thenReturn(Optional.empty());
 
         AccountEntity accountEntity = this.accountService.getOrCreateAccount("Account");
 
         Assertions.assertNotNull(accountEntity);
         Assertions.assertEquals(expected.getId(), accountEntity.getId());
         Assertions.assertEquals(expected.getUniqueName(), accountEntity.getUniqueName());
-        Assertions.assertEquals(expected.getRole(), accountEntity.getRole());
-    }
-
-    @Test
-    void testGetOrCreateAccount_withExistentAccount_thenReturnAccountWithAdminRole() {
-        AccountEntity expected = accountTestDataFactory.buildAccountWithoutProfile();
-        expected.setRole(AccountRole.ADMIN);
-        when(accountRepository.getAccountEntityByUniqueName("Account")).thenReturn(Optional.of(expected));
-        when(accountRepository.getAccountEntityByUniqueName("Account")).thenReturn(Optional.of(expected));
-        var groups = new ArrayList<Group>();
-        var group = new Group();
-        group.description = "Test";
-        groups.add(group);
-        when(microsoftGraphService.getGroups()).thenReturn(Optional.of(groups));
-
-        AccountEntity accountEntity = this.accountService.getOrCreateAccount("Account");
-
-        Assertions.assertNotNull(accountEntity);
-        Assertions.assertEquals(expected.getId(), accountEntity.getId());
-        Assertions.assertEquals(expected.getUniqueName(), accountEntity.getUniqueName());
-        Assertions.assertEquals(expected.getRole(), accountEntity.getRole());
     }
 
     @Test

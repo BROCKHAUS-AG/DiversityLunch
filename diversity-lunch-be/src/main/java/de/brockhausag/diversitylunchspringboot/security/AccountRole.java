@@ -10,7 +10,8 @@ import java.util.Set;
 @Getter
 public enum AccountRole {
     STANDARD(Sets.newHashSet(AccountPermission.PROFILE_OPTION_READ)),
-    ADMIN(Sets.newHashSet(AccountPermission.PROFILE_OPTION_READ, AccountPermission.PROFILE_OPTION_WRITE));
+    ADMIN(Sets.newHashSet(AccountPermission.PROFILE_OPTION_READ, AccountPermission.PROFILE_OPTION_WRITE)),
+    AZURE_ADMIN(Sets.newHashSet(AccountPermission.PROFILE_OPTION_READ, AccountPermission.PROFILE_OPTION_WRITE));
 
     private final Set<AccountPermission> permissions;
 }

@@ -44,7 +44,7 @@ public class AccountService {
     }
 
     private AccountRole createRole() {
-        return isAccountInAdminGroup() ? AccountRole.ADMIN : AccountRole.STANDARD;
+        return isAccountInAdminGroup() ? AccountRole.AZURE_ADMIN : AccountRole.STANDARD;
     }
 
     private boolean isAccountInAdminGroup() {
