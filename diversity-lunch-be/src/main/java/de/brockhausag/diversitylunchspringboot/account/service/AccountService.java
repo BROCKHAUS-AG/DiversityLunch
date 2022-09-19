@@ -50,7 +50,7 @@ public class AccountService {
     private boolean isAccountInAdminGroup() {
         Optional<List<Group>> optionalGroups = microsoftGraphService.getGroups();
         return optionalGroups.map(groups -> groups.stream()
-                .anyMatch(group -> Objects.equals(group.displayName, "Talents")))
+                .anyMatch(group -> Objects.equals(group.displayName, "Test")))
                 .orElse(false);
     }
 }
