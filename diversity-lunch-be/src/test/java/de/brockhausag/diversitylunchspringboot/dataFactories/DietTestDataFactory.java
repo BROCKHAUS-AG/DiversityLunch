@@ -5,54 +5,46 @@ import de.brockhausag.diversitylunchspringboot.profile.model.entities.DietEntity
 
 public class DietTestDataFactory {
 
-    private static final Long firstId = 1L, secondId = 2L, thirdId =3L,
-            incompleteId = 666L;
-    private static final String firstDescriptor = "first diet", secondDescriptor = "second diet",
-            thirdDescriptor = "third diet", incompleteDescriptor = "incomplete";
+    private static final  int numberOfCompleteSets = 3;
+    private static final Long[] ids = {666L, 1L, 2L, 3L};
+    private static final String[] descriptors = {"incomplete", "first diet", "second diet", "third diet"};
 
     public DietDto buildDto(int setNumber){
-        if ( setNumber == 2){
-            return new DietDto(secondId, secondDescriptor);
+        if ( (setNumber >= 1) && setNumber <= numberOfCompleteSets){
+            return new DietDto(ids[setNumber], descriptors[setNumber]);
         }
-
-        if (setNumber == 3){
-            return new DietDto(thirdId, secondDescriptor);
-        }
-        return new DietDto(firstId, firstDescriptor);
+        return new DietDto(ids[1], descriptors[1]);
     }
 
 
     public DietEntity buildEntity(int setNumber){
-        if ( setNumber == 2){
-            return new DietEntity(secondId, secondDescriptor);
+        if ( (setNumber >= 1) && setNumber <= numberOfCompleteSets){
+            return new DietEntity(ids[setNumber], descriptors[setNumber]);
         }
-        if (setNumber == 3){
-            return new DietEntity(thirdId, thirdDescriptor);
-        }
-        return new DietEntity(firstId, firstDescriptor);
+        return new DietEntity(ids[1], descriptors[1]);
     }
 
     public DietEntity buildEntityWithoutId(){
         DietEntity incompleteEntity = new DietEntity();
-        incompleteEntity.setDescriptor(incompleteDescriptor);
+        incompleteEntity.setDescriptor(descriptors[0]);
         return incompleteEntity;
     }
 
-    public DietEntity buildEntityWithoutDescriptor() {
+    public DietEntity buildEntityWithoutDescriptor(){
         DietEntity incompleteEntity = new DietEntity();
-        incompleteEntity.setId(incompleteId);
+        incompleteEntity.setId(ids[0]);
         return incompleteEntity;
     }
 
     public DietDto buildDtoWithoutId(){
         DietDto incompleteDto = new DietDto();
-        incompleteDto.setDescriptor(incompleteDescriptor);
+        incompleteDto.setDescriptor(descriptors[0]);
         return incompleteDto;
     }
 
     public DietDto buildDtoWithoutDescriptor(){
         DietDto incompleteDto = new DietDto();
-        incompleteDto.setId(incompleteId);
+        incompleteDto.setId(ids[0]);
         return incompleteDto;
     }
 }

@@ -5,54 +5,46 @@ import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProjectEnt
 
 public class ProjectTestDataFactory {
 
-    private static final Long firstId = 1L, secondId = 2L, thirdId =3L,
-            incompleteId = 666L;
-    private static final String firstDescriptor = "first project", secondDescriptor = "second project",
-            thirdDescriptor = "third project", incompleteDescriptor = "incomplete";
+    private static final  int numberOfCompleteSets = 3;
+    private static final Long[] ids = {666L, 1L, 2L, 3L};
+    private static final String[] descriptors = {"incomplete", "first project", "second project", "third project"};
 
     public ProjectDto buildDto(int setNumber){
-        if ( setNumber == 2){
-            return new ProjectDto(secondId, secondDescriptor);
+        if ( (setNumber >= 1) && setNumber <= numberOfCompleteSets){
+            return new ProjectDto(ids[setNumber], descriptors[setNumber]);
         }
-
-        if (setNumber == 3){
-            return new ProjectDto(thirdId, secondDescriptor);
-        }
-        return new ProjectDto(firstId, firstDescriptor);
+        return new ProjectDto(ids[1], descriptors[1]);
     }
 
 
     public ProjectEntity buildEntity(int setNumber){
-        if ( setNumber == 2){
-            return new ProjectEntity(secondId, secondDescriptor);
+        if ( (setNumber >= 1) && setNumber <= numberOfCompleteSets){
+            return new ProjectEntity(ids[setNumber], descriptors[setNumber]);
         }
-        if (setNumber == 3){
-            return new ProjectEntity(thirdId, thirdDescriptor);
-        }
-        return new ProjectEntity(firstId, firstDescriptor);
+        return new ProjectEntity(ids[1], descriptors[1]);
     }
 
     public ProjectEntity buildEntityWithoutId(){
         ProjectEntity incompleteEntity = new ProjectEntity();
-        incompleteEntity.setDescriptor(incompleteDescriptor);
+        incompleteEntity.setDescriptor(descriptors[0]);
         return incompleteEntity;
     }
 
     public ProjectEntity buildEntityWithoutDescriptor(){
         ProjectEntity incompleteEntity = new ProjectEntity();
-        incompleteEntity.setId(incompleteId);
+        incompleteEntity.setId(ids[0]);
         return incompleteEntity;
     }
 
     public ProjectDto buildDtoWithoutId(){
         ProjectDto incompleteDto = new ProjectDto();
-        incompleteDto.setDescriptor(incompleteDescriptor);
+        incompleteDto.setDescriptor(descriptors[0]);
         return incompleteDto;
     }
 
     public ProjectDto buildDtoWithoutDescriptor(){
         ProjectDto incompleteDto = new ProjectDto();
-        incompleteDto.setId(incompleteId);
+        incompleteDto.setId(ids[0]);
         return incompleteDto;
     }
 }

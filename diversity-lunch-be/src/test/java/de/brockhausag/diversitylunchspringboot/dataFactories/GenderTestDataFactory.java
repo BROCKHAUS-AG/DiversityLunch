@@ -5,54 +5,46 @@ import de.brockhausag.diversitylunchspringboot.profile.model.entities.GenderEnti
 
 public class GenderTestDataFactory {
 
-    private static final Long firstId = 1L, secondId = 2L, thirdId =3L,
-            incompleteId = 666L;
-    private static final String firstDescriptor = "first gender", secondDescriptor = "second gender",
-            thirdDescriptor = "third gender", incompleteDescriptor = "incomplete";
+    private static final  int numberOfCompleteSets = 3;
+    private static final Long[] ids = {666L, 1L, 2L, 3L};
+    private static final String[] descriptors = {"incomplete", "first gender", "second gender", "third gender"};
 
     public GenderDto buildDto(int setNumber){
-        if ( setNumber == 2){
-            return new GenderDto(secondId, secondDescriptor);
+        if ( (setNumber >= 1) && setNumber <= numberOfCompleteSets){
+            return new GenderDto(ids[setNumber], descriptors[setNumber]);
         }
-
-        if (setNumber == 3){
-            return new GenderDto(thirdId, secondDescriptor);
-        }
-        return new GenderDto(firstId, firstDescriptor);
+        return new GenderDto(ids[1], descriptors[1]);
     }
 
 
     public GenderEntity buildEntity(int setNumber){
-        if ( setNumber == 2){
-            return new GenderEntity(secondId, secondDescriptor);
+        if ( (setNumber >= 1) && setNumber <= numberOfCompleteSets){
+            return new GenderEntity(ids[setNumber], descriptors[setNumber]);
         }
-        if (setNumber == 3){
-            return new GenderEntity(thirdId, thirdDescriptor);
-        }
-        return new GenderEntity(firstId, firstDescriptor);
+        return new GenderEntity(ids[1], descriptors[1]);
     }
 
     public GenderEntity buildEntityWithoutId(){
         GenderEntity incompleteEntity = new GenderEntity();
-        incompleteEntity.setDescriptor(incompleteDescriptor);
+        incompleteEntity.setDescriptor(descriptors[0]);
         return incompleteEntity;
     }
 
     public GenderEntity buildEntityWithoutDescriptor(){
         GenderEntity incompleteEntity = new GenderEntity();
-        incompleteEntity.setId(incompleteId);
+        incompleteEntity.setId(ids[0]);
         return incompleteEntity;
     }
 
     public GenderDto buildDtoWithoutId(){
         GenderDto incompleteDto = new GenderDto();
-        incompleteDto.setDescriptor(incompleteDescriptor);
+        incompleteDto.setDescriptor(descriptors[0]);
         return incompleteDto;
     }
 
     public GenderDto buildDtoWithoutDescriptor(){
         GenderDto incompleteDto = new GenderDto();
-        incompleteDto.setId(incompleteId);
+        incompleteDto.setId(ids[0]);
         return incompleteDto;
     }
 }

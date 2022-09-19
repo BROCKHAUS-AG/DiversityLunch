@@ -5,54 +5,46 @@ import de.brockhausag.diversitylunchspringboot.profile.model.entities.LanguageEn
 
 public class LanguageTestDataFactory {
 
-    private static final Long firstId = 1L, secondId = 2L, thirdId =3L,
-            incompleteId = 666L;
-    private static final String firstDescriptor = "first language", secondDescriptor = "second language",
-            thirdDescriptor = "third language", incompleteDescriptor = "incomplete";
+    private static final  int numberOfCompleteSets = 3;
+    private static final Long[] ids = {666L, 1L, 2L, 3L};
+    private static final String[] descriptors = {"incomplete", "first language", "second language", "third language"};
 
     public LanguageDto buildDto(int setNumber){
-        if ( setNumber == 2){
-            return new LanguageDto(secondId, secondDescriptor);
+        if ( (setNumber >= 1) && setNumber <= numberOfCompleteSets){
+            return new LanguageDto(ids[setNumber], descriptors[setNumber]);
         }
-
-        if (setNumber == 3){
-            return new LanguageDto(thirdId, secondDescriptor);
-        }
-        return new LanguageDto(firstId, firstDescriptor);
+        return new LanguageDto(ids[1], descriptors[1]);
     }
 
 
     public LanguageEntity buildEntity(int setNumber){
-        if ( setNumber == 2){
-            return new LanguageEntity(secondId, secondDescriptor);
+        if ( (setNumber >= 1) && setNumber <= numberOfCompleteSets){
+            return new LanguageEntity(ids[setNumber], descriptors[setNumber]);
         }
-        if (setNumber == 3){
-            return new LanguageEntity(thirdId, thirdDescriptor);
-        }
-        return new LanguageEntity(firstId, firstDescriptor);
+        return new LanguageEntity(ids[1], descriptors[1]);
     }
 
     public LanguageEntity buildEntityWithoutId(){
         LanguageEntity incompleteEntity = new LanguageEntity();
-        incompleteEntity.setDescriptor(incompleteDescriptor);
+        incompleteEntity.setDescriptor(descriptors[0]);
         return incompleteEntity;
     }
 
     public LanguageEntity buildEntityWithoutDescriptor(){
         LanguageEntity incompleteEntity = new LanguageEntity();
-        incompleteEntity.setId(incompleteId);
+        incompleteEntity.setId(ids[0]);
         return incompleteEntity;
     }
 
     public LanguageDto buildDtoWithoutId(){
         LanguageDto incompleteDto = new LanguageDto();
-        incompleteDto.setDescriptor(incompleteDescriptor);
+        incompleteDto.setDescriptor(descriptors[0]);
         return incompleteDto;
     }
 
     public LanguageDto buildDtoWithoutDescriptor(){
         LanguageDto incompleteDto = new LanguageDto();
-        incompleteDto.setId(incompleteId);
+        incompleteDto.setId(ids[0]);
         return incompleteDto;
     }
 }

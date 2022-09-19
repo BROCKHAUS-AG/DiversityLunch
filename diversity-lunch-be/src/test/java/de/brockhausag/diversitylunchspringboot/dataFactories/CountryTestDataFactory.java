@@ -1,59 +1,50 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.CountryDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.CountryDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.CountryEntity;
 
 public class CountryTestDataFactory {
 
-    private static final Long firstId = 1L, secondId = 2L, thirdId =3L,
-            incompleteId = 666L;
-    private static final String firstDescriptor = "first country", secondDescriptor = "second country",
-            thirdDescriptor = "third country", incompleteDescriptor = "incomplete";
+    private static final  int numberOfCompleteSets = 3;
+    private static final Long[] ids = {666L, 1L, 2L, 3L};
+    private static final String[] descriptors = {"incomplete", "first country", "second country", "third country"};
 
     public CountryDto buildDto(int setNumber){
-        if ( setNumber == 2){
-            return new CountryDto(secondId, secondDescriptor);
+        if ( (setNumber >= 1) && setNumber <= numberOfCompleteSets){
+            return new CountryDto(ids[setNumber], descriptors[setNumber]);
         }
-
-        if (setNumber == 3){
-            return new CountryDto(thirdId, secondDescriptor);
-        }
-        return new CountryDto(firstId, firstDescriptor);
+        return new CountryDto(ids[1], descriptors[1]);
     }
 
 
     public CountryEntity buildEntity(int setNumber){
-        if ( setNumber == 2){
-            return new CountryEntity(secondId, secondDescriptor);
+        if ( (setNumber >= 1) && setNumber <= numberOfCompleteSets){
+            return new CountryEntity(ids[setNumber], descriptors[setNumber]);
         }
-        if (setNumber == 3){
-            return new CountryEntity(thirdId, thirdDescriptor);
-        }
-        return new CountryEntity(firstId, firstDescriptor);
+        return new CountryEntity(ids[1], descriptors[1]);
     }
 
     public CountryEntity buildEntityWithoutId(){
         CountryEntity incompleteEntity = new CountryEntity();
-        incompleteEntity.setDescriptor(incompleteDescriptor);
+        incompleteEntity.setDescriptor(descriptors[0]);
         return incompleteEntity;
     }
 
     public CountryEntity buildEntityWithoutDescriptor(){
         CountryEntity incompleteEntity = new CountryEntity();
-        incompleteEntity.setId(incompleteId);
+        incompleteEntity.setId(ids[0]);
         return incompleteEntity;
     }
 
     public CountryDto buildDtoWithoutId(){
         CountryDto incompleteDto = new CountryDto();
-        incompleteDto.setDescriptor(incompleteDescriptor);
+        incompleteDto.setDescriptor(descriptors[0]);
         return incompleteDto;
     }
 
     public CountryDto buildDtoWithoutDescriptor(){
         CountryDto incompleteDto = new CountryDto();
-        incompleteDto.setId(incompleteId);
+        incompleteDto.setId(ids[0]);
         return incompleteDto;
     }
 }

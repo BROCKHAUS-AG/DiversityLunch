@@ -5,54 +5,46 @@ import de.brockhausag.diversitylunchspringboot.profile.model.entities.ReligionEn
 
 public class ReligionTestDataFactory {
 
-    private static final Long firstId = 1L, secondId = 2L, thirdId =3L,
-            incompleteId = 666L;
-    private static final String firstDescriptor = "first religion", secondDescriptor = "second religion",
-            thirdDescriptor = "third religion", incompleteDescriptor = "incomplete";
+    private static final  int numberOfCompleteSets = 3;
+    private static final Long[] ids = {666L, 1L, 2L, 3L};
+    private static final String[] descriptors = {"incomplete", "first religion", "second religion", "third religion"};
 
     public ReligionDto buildDto(int setNumber){
-        if ( setNumber == 2){
-            return new ReligionDto(secondId, secondDescriptor);
+        if ( (setNumber >= 1) && setNumber <= numberOfCompleteSets){
+            return new ReligionDto(ids[setNumber], descriptors[setNumber]);
         }
-
-        if (setNumber == 3){
-            return new ReligionDto(thirdId, secondDescriptor);
-        }
-        return new ReligionDto(firstId, firstDescriptor);
+        return new ReligionDto(ids[1], descriptors[1]);
     }
 
 
     public ReligionEntity buildEntity(int setNumber){
-        if ( setNumber == 2){
-            return new ReligionEntity(secondId, secondDescriptor);
+        if ( (setNumber >= 1) && setNumber <= numberOfCompleteSets){
+            return new ReligionEntity(ids[setNumber], descriptors[setNumber]);
         }
-        if (setNumber == 3){
-            return new ReligionEntity(thirdId, thirdDescriptor);
-        }
-        return new ReligionEntity(firstId, firstDescriptor);
+        return new ReligionEntity(ids[1], descriptors[1]);
     }
 
     public ReligionEntity buildEntityWithoutId(){
         ReligionEntity incompleteEntity = new ReligionEntity();
-        incompleteEntity.setDescriptor(incompleteDescriptor);
+        incompleteEntity.setDescriptor(descriptors[0]);
         return incompleteEntity;
     }
 
     public ReligionEntity buildEntityWithoutDescriptor(){
         ReligionEntity incompleteEntity = new ReligionEntity();
-        incompleteEntity.setId(incompleteId);
+        incompleteEntity.setId(ids[0]);
         return incompleteEntity;
     }
 
     public ReligionDto buildDtoWithoutId(){
         ReligionDto incompleteDto = new ReligionDto();
-        incompleteDto.setDescriptor(incompleteDescriptor);
+        incompleteDto.setDescriptor(descriptors[0]);
         return incompleteDto;
     }
 
     public ReligionDto buildDtoWithoutDescriptor(){
         ReligionDto incompleteDto = new ReligionDto();
-        incompleteDto.setId(incompleteId);
+        incompleteDto.setId(ids[0]);
         return incompleteDto;
     }
 }
