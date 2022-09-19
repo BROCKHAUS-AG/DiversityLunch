@@ -11,29 +11,14 @@ import java.util.stream.Collectors;
 @Component
 public class ProfileMapper implements Mapper<ProfileDto, ProfileEntity> {
 
-    private final EducationMapper educationMapper;
-    private final DietMapper dietMapper;
-    private final GenderMapper genderMapper;
-    private final LanguageMapper languageMapper;
-    private final CountryMapper countryMapper;
-    private final ProjectMapper projectMapper;
-    private final ReligionMapper religionMapper;
+    private final EducationMapper educationMapper = new EducationMapper();
+    private final DietMapper dietMapper = new DietMapper();
+    private final GenderMapper genderMapper = new GenderMapper();
+    private final LanguageMapper languageMapper= new LanguageMapper();
+    private final CountryMapper countryMapper = new CountryMapper();
+    private final ProjectMapper projectMapper = new ProjectMapper();
+    private final ReligionMapper religionMapper = new ReligionMapper();
 
-    public ProfileMapper(EducationMapper educationMapper,
-                         DietMapper dietMapper,
-                         GenderMapper genderMapper,
-                         LanguageMapper languageMapper,
-                         CountryMapper countryMapper,
-                         ProjectMapper projectMapper,
-                         ReligionMapper religionMapper) {
-        this.educationMapper = educationMapper;
-        this.dietMapper = dietMapper;
-        this.genderMapper = genderMapper;
-        this.languageMapper = languageMapper;
-        this.countryMapper = countryMapper;
-        this.projectMapper = projectMapper;
-        this.religionMapper = religionMapper;
-    }
 
     @Override
     public ProfileDto entityToDto(ProfileEntity entity) {

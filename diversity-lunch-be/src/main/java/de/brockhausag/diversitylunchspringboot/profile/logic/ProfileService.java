@@ -17,11 +17,11 @@ public class ProfileService {
     private final ProfileRepository repository;
     private final AccountService accountService;
 
-    public Optional<ProfileEntity> getProfile(long id) {
+    public Optional<ProfileEntity> getProfile(Long id) {
         return this.repository.findById(id);
     }
 
-    public Optional<ProfileEntity> createProfile(ProfileEntity profileEntity, long accountId) {
+    public Optional<ProfileEntity> createProfile(ProfileEntity profileEntity, Long accountId) {
 
         ProfileEntity profile = repository.save(profileEntity);
         accountService.updateAccount(profile, accountId);
