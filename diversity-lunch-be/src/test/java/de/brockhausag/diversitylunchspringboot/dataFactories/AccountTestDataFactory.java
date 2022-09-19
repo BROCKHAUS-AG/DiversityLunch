@@ -8,7 +8,7 @@ public class AccountTestDataFactory {
 
     private static final long id = 8L;
     private static final String uniqueName = "Account";
-    private static final ProfileEntity profile = new ProfileTestdataFactory().entity();
+    private static final ProfileEntity profile = new ProfileTestdataFactory().buildEntity(1);
 
     public AccountEntity.AccountEntityBuilder entityBuilder() {
         return AccountEntity.builder()
