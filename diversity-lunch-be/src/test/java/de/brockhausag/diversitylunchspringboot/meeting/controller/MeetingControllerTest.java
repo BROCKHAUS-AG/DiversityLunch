@@ -8,6 +8,7 @@ import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingDto;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MeetingService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -33,10 +34,16 @@ class MeetingControllerTest {
     private MeetingMapper meetingMapper;
 
     @InjectMocks
-    MeetingController meetingController;
+    private MeetingController meetingController;
 
-    final MeetingTestdataFactory meetingTestdataFactory = new MeetingTestdataFactory();
-    final ProfileTestdataFactory profileTestdataFactory = new ProfileTestdataFactory();
+    private MeetingTestdataFactory meetingTestdataFactory; ;
+    private ProfileTestdataFactory profileTestdataFactory;
+
+    @BeforeEach
+    void setup(){
+        this.profileTestdataFactory = new ProfileTestdataFactory();
+        this.meetingTestdataFactory = new MeetingTestdataFactory();
+    }
 
 
     @Test
@@ -44,10 +51,10 @@ class MeetingControllerTest {
         //ASSEMBLE
         MeetingDto meetingDto = meetingTestdataFactory.unmatchedDto();
 
-        when(this.meetingService.getAllMeetingsInFutureForUser(15)).thenReturn(List.of(meetingDto));
+        when(this.meetingService.getAllMeetingsInFutureForUser(15L)).thenReturn(List.of(meetingDto));
 
         //ACT
-        ResponseEntity<List<MeetingDto>> meetingProposalResponse = meetingController.getMeetingProposalsByUser(15);
+        ResponseEntity<List<MeetingDto>> meetingProposalResponse = meetingController.getMeetingProposalsByUser(15L);
 
         //ASSERT
         assertEquals(HttpStatus.OK, meetingProposalResponse.getStatusCode());
@@ -59,7 +66,7 @@ class MeetingControllerTest {
     @Test
     void testPostMeeting_serviceCreateEntity_returnsOkWithMeetingDto() {
         CreateMeetingProposalDto createMeetingProposalDto = this.meetingTestdataFactory.createDto();
-        ProfileEntity profileEntity = this.profileTestdataFactory.entity();
+        ProfileEntity profileEntity = this.profileTestdataFactory.buildEntity(1);
         MeetingProposalEntity meetingProposalEntity = this.meetingTestdataFactory.entity();
         MeetingDto dto = this.meetingTestdataFactory.dto();
         MeetingProposalEntity createMeetingProposalEntity = this.meetingTestdataFactory.createEntity();
@@ -68,7 +75,7 @@ class MeetingControllerTest {
         when(this.meetingMapper.mapEntityToDto(meetingProposalEntity)).thenReturn(dto);
         when(this.meetingService.createMeetingProposal(createMeetingProposalEntity)).thenReturn(meetingProposalEntity);
 
-        ResponseEntity<MeetingDto> response = this.meetingController.createMeetingProposal(42, createMeetingProposalDto);
+        ResponseEntity<MeetingDto> response = this.meetingController.createMeetingProposal(1L, createMeetingProposalDto);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(dto, response.getBody());
@@ -97,7 +104,7 @@ class MeetingControllerTest {
     @Test
     void testCreateMeetingProposal_AlreadyBookedMeetingProposal_shouldReturnConflictStatus() {
         CreateMeetingProposalDto createMeetingProposalDto = meetingTestdataFactory.createDto();
-        ProfileEntity profileEntity = profileTestdataFactory.entity();
+        ProfileEntity profileEntity = profileTestdataFactory.buildEntity(1);
         when(meetingService.meetingExists(profileEntity.getId(), createMeetingProposalDto.getFromDateTime())).thenReturn(true);
 
         ResponseEntity<MeetingDto> response = meetingController.createMeetingProposal(profileEntity.getId(), createMeetingProposalDto);

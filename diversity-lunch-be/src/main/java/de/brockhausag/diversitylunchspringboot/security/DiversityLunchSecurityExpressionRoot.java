@@ -45,21 +45,21 @@ public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot
     @Generated
     public void setThis(Object target){ this.target = target; }
 
-    public boolean isProfileOwner(long id) {
+    public boolean isProfileOwner(Long id) {
         Optional<Long> profileId = getProfileId();
-        return profileId.isPresent() && profileId.get() == id;
+        return profileId.isPresent() && profileId.get().equals(id);
     }
 
-    public boolean isProposalOwner(long id) {
+    public boolean isProposalOwner(Long id) {
         Optional<Long> profileId = getProfileId();
         Optional<MeetingProposalEntity> optionalMeeting = meetingService.getMeetingProposal(id);
         Optional<Long> proposalProfileId = optionalMeeting.map(meeting -> meeting.getProposerProfile().getId());
         return profileId.isPresent() && proposalProfileId.isPresent() && profileId.get().equals(proposalProfileId.get());
     }
 
-    public boolean isAccountOwner(long id) {
+    public boolean isAccountOwner(Long id) {
         Optional<Long> accountId = getAccountId();
-        return accountId.isPresent() && accountId.get() == id;
+        return accountId.isPresent() && accountId.get().equals(id);
     }
 
     private OAuth2AuthenticatedPrincipal getOAuth2AuthenticatedPrincipal(){

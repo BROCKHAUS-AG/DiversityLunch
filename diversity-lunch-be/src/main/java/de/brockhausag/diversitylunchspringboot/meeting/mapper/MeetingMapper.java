@@ -8,7 +8,7 @@ import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEnti
 import java.util.Optional;
 
 public interface MeetingMapper {
-    Optional<MeetingProposalEntity> mapCreateDtoToEntity(CreateMeetingProposalDto proposal, long profileId);
+    Optional<MeetingProposalEntity> mapCreateDtoToEntity(CreateMeetingProposalDto proposal, Long profileId);
 
     MeetingDto mapEntityToDto(MeetingProposalEntity proposal);
 

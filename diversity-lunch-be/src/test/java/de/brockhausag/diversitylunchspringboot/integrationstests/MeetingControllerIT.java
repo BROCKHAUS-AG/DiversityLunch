@@ -79,12 +79,12 @@ class MeetingControllerIT {
         AccountEntity accA = accountService.getOrCreateAccount(accAName);
         AccountEntity accB = accountService.getOrCreateAccount(accBName);
 
-        ProfileEntity tmpProfile = profileFactory.createEntity();
+        ProfileEntity tmpProfile = profileFactory.buildEntity(1);
         profileA = profileService
                 .createProfile(tmpProfile, accA.getId())
                 .orElseThrow();
 
-        tmpProfile = profileFactory.createEntity();
+        tmpProfile = profileFactory.buildEntity(2);
         profileB = profileService
                 .createProfile(tmpProfile, accB.getId())
                 .orElseThrow();

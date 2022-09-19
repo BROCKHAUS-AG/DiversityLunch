@@ -6,7 +6,7 @@ import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEnt
 
 public class AccountTestDataFactory {
 
-    private static final long id = 8L;
+    private static final Long id = 8L;
     private static final String uniqueName = "Account";
     private static final ProfileEntity profile = new ProfileTestdataFactory().buildEntity(1);
 
@@ -28,7 +28,7 @@ public class AccountTestDataFactory {
     }
 
     public AccountEntity buildNewAccount() {
-        return entityBuilder().id(0).profile(null).build();
+        return entityBuilder().id(0L).profile(null).build();
     }
 
     public AccountEntity buildAccountWithProfile() {
@@ -39,7 +39,7 @@ public class AccountTestDataFactory {
         return dtoBuilder().build();
     }
 
-    public AccountDto buildAccountDtoWithoutProfile(){return dtoBuilder().profileId(0).build();}
+    public AccountDto buildAccountDtoWithoutProfile(){return dtoBuilder().profileId(0L).build();}
 
 
 }

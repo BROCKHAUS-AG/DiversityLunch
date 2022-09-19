@@ -18,7 +18,7 @@ public class AccountService {
         return repository.getAccountEntityByUniqueName(uniqueName);
     }
 
-    public Optional<AccountEntity> updateAccount(ProfileEntity profileEntity, long id) {
+    public Optional<AccountEntity> updateAccount(ProfileEntity profileEntity, Long id) {
         Optional<AccountEntity> optionalAccount = repository.findById(id);
 
         return optionalAccount.map(accountEntity -> {
@@ -29,6 +29,6 @@ public class AccountService {
 
     public AccountEntity getOrCreateAccount(String uniqueName) {
         Optional<AccountEntity> optionaleAccountEntity = getAccount(uniqueName);
-        return optionaleAccountEntity.orElseGet(() -> repository.save(new AccountEntity(0, null, uniqueName)));
+        return optionaleAccountEntity.orElseGet(() -> repository.save(new AccountEntity(0L, null, uniqueName)));
     }
 }

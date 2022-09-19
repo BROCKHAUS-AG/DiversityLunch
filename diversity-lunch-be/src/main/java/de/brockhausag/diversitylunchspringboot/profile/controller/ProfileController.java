@@ -97,7 +97,7 @@ public class ProfileController {
             @Valid @RequestBody ProfileDto updateProfileDto
 
     ) {
-        if (updateProfileDto.getId() != id) {
+        if (!updateProfileDto.getId().equals(id)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 

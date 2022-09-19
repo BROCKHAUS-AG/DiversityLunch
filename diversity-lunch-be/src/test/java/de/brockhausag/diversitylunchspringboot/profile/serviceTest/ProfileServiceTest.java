@@ -35,7 +35,7 @@ class ProfileServiceTest {
     @Test
     void testProfileNonexistent() {
         //Assemble
-        long id = 15;
+        Long id = 15L;
         when(profileRepository.findById(id)).thenReturn(Optional.empty());
 
         //Act
@@ -48,7 +48,7 @@ class ProfileServiceTest {
     @Test
     void testGetProfile() {
         //Assemble
-        ProfileEntity entity = this.factory.entity();
+        ProfileEntity entity = this.factory.buildEntity(1);
         long id = entity.getId();
         when(profileRepository.findById(id)).thenReturn(Optional.of(entity));
 
@@ -62,8 +62,8 @@ class ProfileServiceTest {
 
     @Test
     void testCreateProfile() {
-        ProfileEntity expected = this.factory.entity();
-        ProfileEntity createEntity = this.factory.createEntity();
+        ProfileEntity expected = this.factory.buildEntity(1);
+        ProfileEntity createEntity = this.factory.buildEntity(1);
 
         when(profileRepository.save(createEntity)).thenReturn(expected);
         when(accountService.updateAccount(expected, accountId)).thenReturn(Optional.empty());
@@ -76,10 +76,7 @@ class ProfileServiceTest {
 
     @Test
     void testUpdateProfile() {
-        ProfileEntity updateEntity = this.factory
-                .entityBuilder()
-                .email("matthias.reim@schlager.de")
-                .build();
+        ProfileEntity updateEntity = this.factory.buildEntity(1);
 
         when(this.profileRepository.save(updateEntity)).thenReturn(updateEntity);
 

@@ -45,8 +45,8 @@ public class ProfileTestdataFactory {
                     dietFactory.buildEntity(setNumber),
                     educationFactory.buildEntity(setNumber),
                     genderFactory.buildEntity(setNumber),
-                    Arrays.asList(languageFactory.buildEntity(setNumber), languageFactory.buildEntity(setNumber)),
-                    Arrays.asList(projectFactory.buildEntity(setNumber), projectFactory.buildEntity(setNumber)),
+                    languageFactory.buildEntity(setNumber),
+                    projectFactory.buildEntity(setNumber),
                     religionFactory.buildEntity(setNumber),
                     hobbies[setNumber], workExperiences[setNumber]);
         }
@@ -56,8 +56,8 @@ public class ProfileTestdataFactory {
                 dietFactory.buildEntity(1),
                 educationFactory.buildEntity(1),
                 genderFactory.buildEntity(1),
-                Arrays.asList(languageFactory.buildEntity(1), languageFactory.buildEntity(1)),
-                Arrays.asList(projectFactory.buildEntity(1), projectFactory.buildEntity(1)),
+                languageFactory.buildEntity(1),
+                projectFactory.buildEntity(1),
                 religionFactory.buildEntity(1),
                 hobbies[1], workExperiences[1]);
     }
@@ -70,8 +70,8 @@ public class ProfileTestdataFactory {
                     dietFactory.buildDto(setNumber),
                     educationFactory.buildDto(setNumber),
                     genderFactory.buildDto(setNumber),
-                    Arrays.asList(languageFactory.buildDto(setNumber), languageFactory.buildDto(setNumber)),
-                    Arrays.asList(projectFactory.buildDto(setNumber), projectFactory.buildDto(setNumber)),
+                    languageFactory.buildDto(setNumber),
+                    projectFactory.buildDto(setNumber),
                     religionFactory.buildDto(setNumber),
                     hobbies[setNumber], workExperiences[setNumber]);
         }
@@ -81,8 +81,8 @@ public class ProfileTestdataFactory {
                 dietFactory.buildDto(1),
                 educationFactory.buildDto(1),
                 genderFactory.buildDto(1),
-                Arrays.asList(languageFactory.buildDto(1), languageFactory.buildDto(1)),
-                Arrays.asList(projectFactory.buildDto(1), projectFactory.buildDto(1)),
+                languageFactory.buildDto(1),
+                projectFactory.buildDto(1),
                 religionFactory.buildDto(1),
                 hobbies[1], workExperiences[1]);
     }

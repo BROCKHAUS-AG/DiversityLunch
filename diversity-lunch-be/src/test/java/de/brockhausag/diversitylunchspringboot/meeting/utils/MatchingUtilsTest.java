@@ -3,6 +3,7 @@ package de.brockhausag.diversitylunchspringboot.meeting.utils;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import de.brockhausag.diversitylunchspringboot.profile.model.*;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.DietEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,8 +27,8 @@ class MatchingUtilsTest {
         };
     }
 
-    final ProfileEntity profile1 = factory.entity();
-    final ProfileEntity profile2 = factory.entity();
+    final ProfileEntity profile1 = factory.buildEntity(1);
+    final ProfileEntity profile2 = factory.buildEntity(2);
 
     @Test
     void testCurrentScoreStandard() {
@@ -114,7 +115,6 @@ class MatchingUtilsTest {
 
     @Test
     void testCurrentScoreProfileAttributeNotEquals() {
-        profile2.setDiet(Diet.VEGAN);
         int expected = 4;
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
         assertEquals(expected, actual.currentScore());
@@ -123,16 +123,6 @@ class MatchingUtilsTest {
 
     @Test
     void testCurrentScoreProfileAttribute() {
-        profile2.setBirthYear(1990);
-        profile2.setCurrentProject(Project.ExampleCompany2);
-        profile2.setGender(Gender.FEMALE);
-        profile2.setOriginCountry(Country.SPANIEN);
-        profile2.setMotherTongue(Language.SPANISCH);
-        profile2.setReligion(Religion.OTHER);
-        profile2.setHobby(Hobby.ART);
-        profile2.setEducation(Education.OTHER);
-        profile2.setWorkExperience(WorkExperience.LOW_EXPERIENCE);
-        profile2.setDiet(Diet.OTHER);
         int expected = 30;
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
         assertEquals(expected, actual.currentScore());

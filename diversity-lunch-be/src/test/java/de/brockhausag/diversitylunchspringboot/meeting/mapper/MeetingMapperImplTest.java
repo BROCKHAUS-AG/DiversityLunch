@@ -55,7 +55,7 @@ class MeetingMapperImplTest {
         CreateMeetingProposalDto createDto = meetingTestdataFactory.createDto();
         when(profileService.getProfile(anyLong())).thenReturn(Optional.empty());
 
-        assertThrows(ProfileNotFoundException.class, () -> mapper.mapCreateDtoToEntity(createDto, -1));
+        assertThrows(ProfileNotFoundException.class, () -> mapper.mapCreateDtoToEntity(createDto, -1L));
     }
 
     @Test

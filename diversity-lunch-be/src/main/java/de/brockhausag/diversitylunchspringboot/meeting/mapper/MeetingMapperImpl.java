@@ -20,7 +20,7 @@ public class MeetingMapperImpl implements MeetingMapper {
     private final ProfileService profileService;
 
     @Override
-    public Optional<MeetingProposalEntity> mapCreateDtoToEntity(final CreateMeetingProposalDto proposal, long profileId) {
+    public Optional<MeetingProposalEntity> mapCreateDtoToEntity(final CreateMeetingProposalDto proposal, Long profileId) {
         Optional<ProfileEntity> profile = profileService.getProfile(profileId);
 
         if (profile.isEmpty()) {

@@ -115,8 +115,8 @@ class MatchingServiceTest {
 
         List<MeetingEntity> meetingEntities = List.of(MeetingEntity.builder()
                 .fromDateTime(LocalDateTime.now())
-                .partner(profileTestdataFactory.entity())
-                .proposer(profileTestdataFactory.entity())
+                .partner(profileTestdataFactory.buildEntity(1))
+                .proposer(profileTestdataFactory.buildEntity(2))
                 .createdAt(LocalDateTime.now())
                 .question(Question.COUNTRY_OF_ORIGIN2)
                 .build());

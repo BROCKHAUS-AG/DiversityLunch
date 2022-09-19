@@ -1,5 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.meeting.service;
 
+import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.mapper.MeetingMapperImpl;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingDto;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
@@ -42,34 +43,21 @@ class MeetingServiceTest {
     private MeetingProposalEntity existingMeetingProposalEntity;
     private MeetingProposalEntity newMeetingProposalEntity;
 
+    private ProfileTestdataFactory profileFactory;
+
 
     @BeforeEach
     void tearUp() {
-        ProfileEntity profileEntity = ProfileEntity.builder()
-                .id(1)
-                .name("Test")
-                .email("some@brockhaus-ag.de")
-                .birthYear(1990)
-                .currentProject(Project.ExampleCompany1)
-                .gender(Gender.MALE)
-                .originCountry(Country.DEUTSCHLAND)
-                .motherTongue(Language.DEUTSCH)
-                .religion(Religion.NO_FAITH)
-                .hobby(Hobby.ARCHERY)
-                .education(Education.STUDY)
-                .workExperience(WorkExperience.MID_EXPERIENCE)
-                .diet(Diet.MEAT)
-                .build();
-
+        this.profileFactory = new ProfileTestdataFactory();
         newMeetingProposalEntity = MeetingProposalEntity.builder()
-                .proposerProfile(profileEntity)
+                .proposerProfile(profileFactory.buildEntity(1))
                 .proposedDateTime(LocalDateTime.now())
                 .matched(true)
                 .build();
 
         existingMeetingProposalEntity = MeetingProposalEntity.builder()
                 .id(1L)
-                .proposerProfile(profileEntity)
+                .proposerProfile(profileFactory.buildEntity(1))
                 .proposedDateTime(LocalDateTime.now())
                 .matched(true)
                 .build();
@@ -177,11 +165,11 @@ class MeetingServiceTest {
 
         MeetingEntity meetingEntity1 = MeetingEntity.builder()
                 .fromDateTime(LocalDateTime.now().plusDays(6))
-                .proposer(ProfileEntity.builder().name("TestSuccess").build())
+                .proposer(profileFactory.buildEntity(1))
                 .build();
         MeetingEntity meetingEntity2 = MeetingEntity.builder()
                 .fromDateTime(LocalDateTime.now().plusDays(6))
-                .partner(ProfileEntity.builder().name("TestSuccess").build())
+                .partner(profileFactory.buildEntity(1))
                 .build();
         LocalDateTime date = LocalDateTime.now().plusDays(6);
         existingMeetingProposalEntity.setProposedDateTime(date);
@@ -191,9 +179,9 @@ class MeetingServiceTest {
         when(meetingRepository.findByPartnerAndFromDateTimeIsAfter(any(), any())).thenReturn(List.of(meetingEntity1));
         when(meetingRepository.findByProposerAndFromDateTimeIsAfter(any(), any())).thenReturn(List.of(meetingEntity2));
         when(meetingProposalRepository.findByProposerProfileAndMatchedFalseAndProposedDateTimeIsAfter(any(), any())).thenReturn(List.of(existingMeetingProposalEntity));
-        when(profileService.getProfile(1)).thenReturn(Optional.of(existingMeetingProposalEntity.getProposerProfile()));
+        when(profileService.getProfile(1L)).thenReturn(Optional.of(existingMeetingProposalEntity.getProposerProfile()));
 
-        List<MeetingDto> result = service.getAllMeetingsInFutureForUser(1);
+        List<MeetingDto> result = service.getAllMeetingsInFutureForUser(1L);
 
         assertEquals(result.get(0).getPartnerName(), meetingEntity1.getProposer().getName());
         assertEquals(result.get(1).getPartnerName(), meetingEntity2.getPartner().getName());

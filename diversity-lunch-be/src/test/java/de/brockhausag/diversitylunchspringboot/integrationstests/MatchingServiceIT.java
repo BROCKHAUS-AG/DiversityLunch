@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.integrationstests;
 
 import de.brockhausag.diversitylunchspringboot.config.MsTeamsTestConfig;
+import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
@@ -9,6 +10,7 @@ import de.brockhausag.diversitylunchspringboot.meeting.service.MatchingService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -46,6 +48,12 @@ class MatchingServiceIT {
 
     @Autowired
     private ProfileRepository profileRepository;
+    private ProfileTestdataFactory profileFactory;
+
+    @BeforeEach
+    void setup(){
+        this.profileFactory = new ProfileTestdataFactory();
+    }
 
     @Test
     void testMatchingServiceScore0() {
@@ -109,7 +117,7 @@ class MatchingServiceIT {
         LocalDateTime proposedDateTime = LocalDateTime.of(2022, 4, 5, 13, 30);
         MeetingProposalEntity expectedForCaseUnmatched = MeetingProposalEntity.builder()
                 .proposedDateTime(proposedDateTime)
-                .proposerProfile(ProfileEntity.builder().build())
+                .proposerProfile(profileFactory.buildEntity(1))
                 .matched(false)
                 .build();
         matchingService.executeMatching(proposedDateTime, 21);

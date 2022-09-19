@@ -20,7 +20,7 @@ public class AccountEntity {
 
     @GeneratedValue
     @Id
-    private long id;
+    private Long id;
 
     @OneToOne
     private ProfileEntity profile;

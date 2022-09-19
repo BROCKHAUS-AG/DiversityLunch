@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 public class MeetingTestdataFactory {
 
     private static final long id = 1L;
-    private static final ProfileEntity profileEntity = new ProfileTestdataFactory().entity();
+    private static final ProfileEntity profileEntity = new ProfileTestdataFactory().buildEntity(1);
     private static final LocalDateTime localDateTime = LocalDateTime.of(2022, 2, 14, 10, 30, 0, 0);
     private static final LocalDateTime createdAt = LocalDateTime.of(2022, 2, 14, 16, 1, 0, 0);
     private static final boolean matched = false;
@@ -80,7 +80,7 @@ public class MeetingTestdataFactory {
     public List<MeetingProposalEntity> newMeetingProposalList(LocalDateTime time) {
         MeetingProposalEntity meetingProposal = entityBuilder().proposedDateTime(time).build();
         MeetingProposalEntity meetingProposal2 = entityBuilder().id(meetingProposal.getId() + 1).proposedDateTime(time).
-                proposerProfile(new ProfileTestdataFactory().entityBuilder().id(meetingProposal.getProposerProfile().getId() + 1).build()).build();
+                proposerProfile(new ProfileTestdataFactory().buildEntity(1)).build();
         MeetingProposalEntity[] meetings = {meetingProposal, meetingProposal2};
         return Stream.of(meetings).collect(Collectors.toList());
     }

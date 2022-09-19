@@ -126,10 +126,10 @@ public class EMailControllerIT {
     @Test
     public void testAuthenticationSendTestMailToLoggedInUser_withValidId_expectedOkStatus() {
         when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
-        ProfileEntity tmpProfileEntity = profileTestdataFactory.createEntity();
+        ProfileEntity tmpProfileEntity = profileTestdataFactory.buildEntity(1);
         AccountEntity accountEntity = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
         profileService.createProfile(tmpProfileEntity, accountEntity.getId()).orElseThrow();
-        long id = tmpProfileEntity.getId();
+        Long id = tmpProfileEntity.getId();
         String url = "/mailing/sendTestMailToUser?id=" + id;
 
         performRequestWithToken(url, accountEntity).andExpect(status().isOk());
@@ -139,10 +139,10 @@ public class EMailControllerIT {
     @Test
     public void testAuthenticationSendTestMailToLoggedInUser_withInvalidId_expectedForbiddenStatus() {
         when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
-        ProfileEntity tmpProfileEntity = profileTestdataFactory.createEntity();
+        ProfileEntity tmpProfileEntity = profileTestdataFactory.buildEntity(1);
         AccountEntity accountEntity = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
         profileService.createProfile(tmpProfileEntity, accountEntity.getId()).orElseThrow();
-        long id = tmpProfileEntity.getId() + 1;
+        Long id = tmpProfileEntity.getId() + 1;
         String url = "/mailing/sendTestMailToUser?id=" + id;
 
         performRequestWithToken(url, accountEntity).andExpect(status().isForbidden());
