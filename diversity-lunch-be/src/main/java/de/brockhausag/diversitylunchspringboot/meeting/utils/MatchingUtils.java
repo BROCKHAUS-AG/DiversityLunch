@@ -23,7 +23,7 @@ public class MatchingUtils {
         //GeschlechtPunkte
         currentScore += compareProfileAttr(categories, profile1.getGender().toString(), profile2.getGender().toString(), Category.GENDER);
         //KundePunkte
-        currentScore += compareProfileAttr(categories, profile1.getCurrentProject().toString(), profile2.getCurrentProject().toString(), Category.CUSTOMER);
+        currentScore += compareProfileAttr(categories, profile1.getProjects().toString(), profile2.getProjects().toString(), Category.CUSTOMER);
         //HerkunftslandPunkte
         currentScore += compareProfileAttr(categories, profile1.getOriginCountry().toString(), profile2.getOriginCountry().toString(), Category.COUNTRY_OF_ORIGIN);
         //MuttersprachePunkte

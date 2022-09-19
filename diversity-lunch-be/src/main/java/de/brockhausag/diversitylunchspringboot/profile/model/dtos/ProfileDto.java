@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.validation.constraints.*;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -47,9 +46,9 @@ public class ProfileDto {
     @NotNull
     private GenderDto gender;
     @NotNull
-    private List<LanguageDto> motherTongue;
+    private LanguageDto motherTongue;
     @NotNull
-    private List<ProjectDto> projects;
+    private ProjectDto projects;
     @NotNull
     private ReligionDto religion;
 

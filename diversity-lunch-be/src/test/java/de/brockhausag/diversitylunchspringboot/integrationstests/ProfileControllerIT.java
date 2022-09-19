@@ -42,7 +42,7 @@ class ProfileControllerIT {
     private AccountEntity accountEntity2;
 
     @Autowired
-    private AccountRepository accoutRepository;
+    private AccountRepository accountRepository;
 
     @Autowired
     private ProfileRepository profileRepository;
@@ -66,19 +66,19 @@ class ProfileControllerIT {
                 .apply(springSecurity())
                 .build();
 
-        ProfileEntity tmpProfileEntity = profileFactory.createEntity();
+        ProfileEntity tmpProfileEntity = profileFactory.buildEntity(1);
         accountEntity1 = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
         profileEntity1 = profileService.createProfile(tmpProfileEntity, accountEntity1.getId()).orElseThrow();
 
 
-        tmpProfileEntity = profileFactory.createEntityBuilder().email("smith@web.de").build();
+        tmpProfileEntity = profileFactory.buildEntity(2);
         accountEntity2 = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
         profileEntity2 = profileService.createProfile(tmpProfileEntity, accountEntity2.getId()).orElseThrow();
     }
 
     @AfterEach
     void afterEach(){
-        accoutRepository.deleteAll();
+        accountRepository.deleteAll();
         profileRepository.deleteAll();
     }
 
@@ -93,7 +93,7 @@ class ProfileControllerIT {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value(profileEntity1.getName()))
                 .andExpect(jsonPath("$.birthYear").value(profileEntity1.getBirthYear()))
-                .andExpect(jsonPath("$.currentProject").value(profileEntity1.getCurrentProject().toString()))
+                .andExpect(jsonPath("$.currentProject").value(profileEntity1.getProjects().toString()))
                 .andExpect(jsonPath("$.diet").value(profileEntity1.getDiet().toString()))
                 .andExpect(jsonPath("$.education").value(profileEntity1.getEducation().toString()))
                 .andExpect(jsonPath("$.email").value(profileEntity1.getEmail()))
@@ -139,7 +139,7 @@ class ProfileControllerIT {
     void testCreateProfile_withWrongId_thenForbidden() throws Exception{
 
         AccountEntity account = accountService.getOrCreateAccount("irgendwas");
-        CreateProfileDto createProfileDto = profileFactory.createDto();
+        ProfileDto createProfileDto = profileFactory.buildDto(1);
         String profileJSON = objectMapper.writeValueAsString(createProfileDto);
 
         mockMvc.perform(
@@ -152,7 +152,7 @@ class ProfileControllerIT {
     @Test
     void testPutProfile_withWrongId_thenForbidden() throws Exception {
 
-        ProfileDto profileDto = profileFactory.dto();
+        ProfileDto profileDto = profileFactory.buildDto(1);
         String profileJSON = objectMapper.writeValueAsString(profileDto);
 
         mockMvc
