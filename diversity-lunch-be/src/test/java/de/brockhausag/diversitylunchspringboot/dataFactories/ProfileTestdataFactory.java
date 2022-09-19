@@ -15,7 +15,7 @@ import java.util.Arrays;
 
 public class ProfileTestdataFactory {
 
-    private static final int numberOfSets = 3;
+    private static final int numberOfCompleteSets = 3;
     private static final Long[] ids = {666L, 1L,2L,3L};
     private static final String[] names = {"incomplete user", "first user", "second user", "third user"};
     private static final String[] emails = {"incomplete.mail@some.tdl", "first.mail@some.tld", "second.mail@some.tld", "third.mail@some.tld"};
@@ -38,7 +38,7 @@ public class ProfileTestdataFactory {
 
 
     public ProfileEntity buildEntity(int setNumber) {
-        if ((setNumber >= 1) && (setNumber <= numberOfSets)){
+        if ((setNumber >= 1) && (setNumber <= numberOfCompleteSets)){
             return new ProfileEntity(
                     ids[setNumber], names[setNumber], emails[setNumber], birthYears[setNumber],
                     countryFactory.buildEntity(setNumber),
@@ -63,7 +63,7 @@ public class ProfileTestdataFactory {
     }
 
     public ProfileDto buildDto(int setNumber) {
-        if ((setNumber >= 1) && (setNumber <= numberOfSets)){
+        if ((setNumber >= 1) && (setNumber <= numberOfCompleteSets)){
             return new ProfileDto(
                     ids[setNumber], names[setNumber], emails[setNumber], birthYears[setNumber],
                     countryFactory.buildDto(setNumber),

@@ -37,98 +37,118 @@ class ProfileControllerTest {
     private ProfileController profileController;
 
     private final ProfileTestdataFactory factory = new ProfileTestdataFactory();
-    private final long accountId = 5;
+    private final Long accountId = 5L;
 
     @Test
     void testGetProfile_withValidId_returnsOkWithProfileDto() {
-        //ASSEMBLE
-        ProfileEntity profileEntity = this.factory.entity();
-        ProfileDto profileDto = this.factory.dto();
+        //Arrange
+        ProfileEntity inputEntity = this.factory.buildEntity(1);
+        ProfileDto expectedDto = this.factory.buildDto(1);
 
-        when(mapper.mapEntityToDto(profileEntity)).thenReturn(profileDto);
-        when(profileService.getProfile(profileEntity.getId())).thenReturn(Optional.of(profileEntity));
+        when(mapper.entityToDto(inputEntity)).thenReturn(expectedDto);
+        when(profileService.getProfile(inputEntity.getId())).thenReturn(Optional.of(inputEntity));
 
-        //ACT
-        ResponseEntity<ProfileDto> response = profileController.getProfile(profileEntity.getId());
+        //Act
+        ResponseEntity<ProfileDto> response = profileController.getProfile(inputEntity.getId());
 
-        //ASSERT
+        //Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(profileDto, response.getBody());
+        assertEquals(expectedDto, response.getBody());
     }
 
     @Test
-    void testGetProfile_withInvalidId_returnsNotFound() {
-        when(profileService.getProfile(95)).thenReturn(Optional.empty());
+    void testGetProfile_withNotExistingId_returnsNotFound() {
+        //Arrange
+        final Long notExistingId = 666L;
 
-        ResponseEntity<ProfileDto> response = profileController.getProfile(95);
+        when(profileService.getProfile(notExistingId)).thenReturn(Optional.empty());
 
+        //Act
+        ResponseEntity<ProfileDto> response = profileController.getProfile(notExistingId);
+
+        //Assert
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertNull(response.getBody());
     }
 
     @Test
     void testPostProfile_serviceCreatesEntity_returnsOkWithProfileDto() {
-        CreateProfileDto createProfileDto = this.factory.createDto();
-        ProfileEntity createProfileEntity = this.factory.createEntity();
-        ProfileEntity profileEntity = this.factory.entity();
-        ProfileDto dto = this.factory.dto();
+        //Arrange
+        ProfileDto inputDto = this.factory.buildDto(1);
+        ProfileEntity profileEntity = this.factory.buildEntity(1);
+        ProfileDto expectedDto = this.factory.buildDto(1);
 
 
-        when(mapper.mapCreateDtoToEntity(createProfileDto)).thenReturn(createProfileEntity);
-        when(profileService.createProfile(createProfileEntity, accountId)).thenReturn(Optional.of(profileEntity));
-        when(mapper.mapEntityToDto(profileEntity)).thenReturn(dto);
+        when(mapper.dtoToEntity(inputDto)).thenReturn(profileEntity);
+        when(profileService.createProfile(profileEntity, accountId)).thenReturn(Optional.of(profileEntity));
+        when(mapper.entityToDto(profileEntity)).thenReturn(expectedDto);
 
-        ResponseEntity<ProfileDto> response = profileController.createProfile(createProfileDto, accountId);
+        //Act
+        ResponseEntity<ProfileDto> response = profileController.createProfile(inputDto, accountId);
 
+        //Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(dto, response.getBody());
+        assertEquals(expectedDto, response.getBody());
     }
 
     @Test
     void testPostProfile_serviceReturnsEmpty_returnsBadRequest() {
-        CreateProfileDto createProfileDto = this.factory.createDto();
-        ProfileEntity createProfileEntity = this.factory.createEntity();
+        //Arrange
+        ProfileDto inputDto = this.factory.buildDto(1);
+        ProfileEntity profileEntity = this.factory.buildEntity(1);
 
-        when(mapper.mapCreateDtoToEntity(createProfileDto)).thenReturn(createProfileEntity);
-        when(profileService.createProfile(createProfileEntity, accountId)).thenReturn(Optional.empty());
+        when(mapper.dtoToEntity(inputDto)).thenReturn(profileEntity);
+        when(profileService.createProfile(profileEntity, accountId)).thenReturn(Optional.empty());
 
-        ResponseEntity<ProfileDto> response = profileController.createProfile(createProfileDto, accountId);
+        //Act
+        ResponseEntity<ProfileDto> response = profileController.createProfile(inputDto, accountId);
 
+        //Assert
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
     @Test
     void testPutProfile_serviceReturnsUpdatedDTO_returnsStatusOK(){
-        ProfileDto profileDto = this.factory.dto();
-        ProfileEntity profileEntity = this.factory.entity();
+        //Arrange
+        ProfileDto inputDto = this.factory.buildDto(1);
+        ProfileEntity profileEntity = this.factory.buildEntity(1);
 
-        when(mapper.mapDtoToEntity(profileDto)).thenReturn(profileEntity);
+        when(mapper.dtoToEntity(inputDto)).thenReturn(profileEntity);
         when(profileService.updateProfile(profileEntity)).thenReturn(Optional.of(profileEntity));
 
-        ResponseEntity<ProfileDto> response = profileController.updateProfile(profileEntity.getId(), profileDto);
+        //Act
+        ResponseEntity<ProfileDto> response = profileController.updateProfile(profileEntity.getId(), inputDto);
 
+        //Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     void testPutProfile_serviceReturnsEmpty_returnsBadRequest() {
-        ProfileDto profileDto = this.factory.dto();
+        //Arrange
+        final Long notMatchingId = 95L;
+        ProfileDto inputDto = this.factory.buildDto(1);
 
-        ResponseEntity<ProfileDto> response = profileController.updateProfile(95, profileDto);
+        //Act
+        ResponseEntity<ProfileDto> response = profileController.updateProfile(notMatchingId, inputDto);
 
+        //Assert
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
     @Test
     void testPutProfile_serviceReturnsBadRequest() {
-        ProfileEntity profileEntity = factory.entityBuilder().id(95).build();
-        ProfileDto profileDto = factory.dtoBuilder().id(95).build();
+        //Arrange
+        ProfileEntity profileEntity = factory.buildEntity(1);
+        ProfileDto inputDto = factory.buildDto(1);
 
-        when(mapper.mapDtoToEntity(profileDto)).thenReturn(profileEntity);
+        when(mapper.dtoToEntity(inputDto)).thenReturn(profileEntity);
         when(profileService.updateProfile(profileEntity)).thenReturn(Optional.empty());
 
-        ResponseEntity<ProfileDto> response = profileController.updateProfile(profileEntity.getId(), profileDto);
+        //Act
+        ResponseEntity<ProfileDto> response = profileController.updateProfile(profileEntity.getId(), inputDto);
 
+        //Assert
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 }
