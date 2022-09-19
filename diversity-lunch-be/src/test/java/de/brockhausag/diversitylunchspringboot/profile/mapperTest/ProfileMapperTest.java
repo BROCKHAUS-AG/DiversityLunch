@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.mapper;
+package de.brockhausag.diversitylunchspringboot.profile.mapperTest;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.*;
