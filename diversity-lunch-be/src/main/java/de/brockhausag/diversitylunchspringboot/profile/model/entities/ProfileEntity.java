@@ -29,10 +29,10 @@ public class ProfileEntity {
     private EducationEntity education;
     @ManyToOne
     private GenderEntity gender;
-    @ManyToMany
-    private List<LanguageEntity> motherTongue;
-    @ManyToMany
-    private List<ProjectEntity> projects;
+    @ManyToOne
+    private LanguageEntity motherTongue;
+    @ManyToOne
+    private ProjectEntity projects;
     @ManyToOne
     private ReligionEntity religion;
 
