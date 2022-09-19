@@ -21,20 +21,20 @@ public class ProfileEntity {
     private String email;
     private int birthYear;
 
-    @ManyToMany
-    private List<ProjectEntity> projects;
-    @ManyToOne
-    private GenderEntity gender;
     @ManyToOne
     private CountryEntity originCountry;
-    @ManyToMany
-    private List<LanguageEntity> motherTongue;
     @ManyToOne
-    private ReligionEntity religion;
+    private DietEntity diet;
     @ManyToOne
     private EducationEntity education;
     @ManyToOne
-    private DietEntity diet;
+    private GenderEntity gender;
+    @ManyToMany
+    private List<LanguageEntity> motherTongue;
+    @ManyToMany
+    private List<ProjectEntity> projects;
+    @ManyToOne
+    private ReligionEntity religion;
 
 
     @Enumerated(EnumType.STRING)

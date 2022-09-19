@@ -33,18 +33,26 @@ public class LanguageTestDataFactory {
     }
 
     public LanguageEntity buildEntityWithoutId(){
-        return new LanguageEntity(null, incompleteDescriptor);
+        LanguageEntity incompleteEntity = new LanguageEntity();
+        incompleteEntity.setDescriptor(incompleteDescriptor);
+        return incompleteEntity;
     }
 
     public LanguageEntity buildEntityWithoutDescriptor(){
-        return new LanguageEntity(incompleteId, null);
+        LanguageEntity incompleteEntity = new LanguageEntity();
+        incompleteEntity.setId(incompleteId);
+        return incompleteEntity;
     }
 
     public LanguageDto buildDtoWithoutId(){
-        return new LanguageDto(null, incompleteDescriptor);
+        LanguageDto incompleteDto = new LanguageDto();
+        incompleteDto.setDescriptor(incompleteDescriptor);
+        return incompleteDto;
     }
 
     public LanguageDto buildDtoWithoutDescriptor(){
-        return new LanguageDto(incompleteId, null);
+        LanguageDto incompleteDto = new LanguageDto();
+        incompleteDto.setId(incompleteId);
+        return incompleteDto;
     }
 }

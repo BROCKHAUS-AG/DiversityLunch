@@ -33,18 +33,26 @@ public class ProjectTestDataFactory {
     }
 
     public ProjectEntity buildEntityWithoutId(){
-        return new ProjectEntity(null, incompleteDescriptor);
+        ProjectEntity incompleteEntity = new ProjectEntity();
+        incompleteEntity.setDescriptor(incompleteDescriptor);
+        return incompleteEntity;
     }
 
     public ProjectEntity buildEntityWithoutDescriptor(){
-        return new ProjectEntity(incompleteId, null);
+        ProjectEntity incompleteEntity = new ProjectEntity();
+        incompleteEntity.setId(incompleteId);
+        return incompleteEntity;
     }
 
     public ProjectDto buildDtoWithoutId(){
-        return new ProjectDto(null, incompleteDescriptor);
+        ProjectDto incompleteDto = new ProjectDto();
+        incompleteDto.setDescriptor(incompleteDescriptor);
+        return incompleteDto;
     }
 
     public ProjectDto buildDtoWithoutDescriptor(){
-        return new ProjectDto(incompleteId, null);
+        ProjectDto incompleteDto = new ProjectDto();
+        incompleteDto.setId(incompleteId);
+        return incompleteDto;
     }
 }

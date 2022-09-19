@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.CountryDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.CountryDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.CountryEntity;
 
 public class CountryTestDataFactory {
@@ -33,18 +34,26 @@ public class CountryTestDataFactory {
     }
 
     public CountryEntity buildEntityWithoutId(){
-        return new CountryEntity(null, incompleteDescriptor);
+        CountryEntity incompleteEntity = new CountryEntity();
+        incompleteEntity.setDescriptor(incompleteDescriptor);
+        return incompleteEntity;
     }
 
     public CountryEntity buildEntityWithoutDescriptor(){
-        return new CountryEntity(incompleteId, null);
+        CountryEntity incompleteEntity = new CountryEntity();
+        incompleteEntity.setId(incompleteId);
+        return incompleteEntity;
     }
 
     public CountryDto buildDtoWithoutId(){
-        return new CountryDto(null, incompleteDescriptor);
+        CountryDto incompleteDto = new CountryDto();
+        incompleteDto.setDescriptor(incompleteDescriptor);
+        return incompleteDto;
     }
 
     public CountryDto buildDtoWithoutDescriptor(){
-        return new CountryDto(incompleteId, null);
+        CountryDto incompleteDto = new CountryDto();
+        incompleteDto.setId(incompleteId);
+        return incompleteDto;
     }
 }

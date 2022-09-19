@@ -33,18 +33,26 @@ public class ReligionTestDataFactory {
     }
 
     public ReligionEntity buildEntityWithoutId(){
-        return new ReligionEntity(null, incompleteDescriptor);
+        ReligionEntity incompleteEntity = new ReligionEntity();
+        incompleteEntity.setDescriptor(incompleteDescriptor);
+        return incompleteEntity;
     }
 
     public ReligionEntity buildEntityWithoutDescriptor(){
-        return new ReligionEntity(incompleteId, null);
+        ReligionEntity incompleteEntity = new ReligionEntity();
+        incompleteEntity.setId(incompleteId);
+        return incompleteEntity;
     }
 
     public ReligionDto buildDtoWithoutId(){
-        return new ReligionDto(null, incompleteDescriptor);
+        ReligionDto incompleteDto = new ReligionDto();
+        incompleteDto.setDescriptor(incompleteDescriptor);
+        return incompleteDto;
     }
 
     public ReligionDto buildDtoWithoutDescriptor(){
-        return new ReligionDto(incompleteId, null);
+        ReligionDto incompleteDto = new ReligionDto();
+        incompleteDto.setId(incompleteId);
+        return incompleteDto;
     }
 }

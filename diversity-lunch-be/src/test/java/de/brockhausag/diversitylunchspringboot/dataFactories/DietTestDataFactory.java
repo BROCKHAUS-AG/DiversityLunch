@@ -33,18 +33,26 @@ public class DietTestDataFactory {
     }
 
     public DietEntity buildEntityWithoutId(){
-        return new DietEntity(null, incompleteDescriptor);
+        DietEntity incompleteEntity = new DietEntity();
+        incompleteEntity.setDescriptor(incompleteDescriptor);
+        return incompleteEntity;
     }
 
-    public DietEntity buildEntityWithoutDescriptor(){
-        return new DietEntity(incompleteId, null);
+    public DietEntity buildEntityWithoutDescriptor() {
+        DietEntity incompleteEntity = new DietEntity();
+        incompleteEntity.setId(incompleteId);
+        return incompleteEntity;
     }
 
     public DietDto buildDtoWithoutId(){
-        return new DietDto(null, incompleteDescriptor);
+        DietDto incompleteDto = new DietDto();
+        incompleteDto.setDescriptor(incompleteDescriptor);
+        return incompleteDto;
     }
 
     public DietDto buildDtoWithoutDescriptor(){
-        return new DietDto(incompleteId, null);
+        DietDto incompleteDto = new DietDto();
+        incompleteDto.setId(incompleteId);
+        return incompleteDto;
     }
 }

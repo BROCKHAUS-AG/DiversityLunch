@@ -39,15 +39,15 @@ public class ProfileDto {
 
 
     @NotNull
-    private EducationDto education;
+    private CountryDto originCountry;
     @NotNull
     private DietDto diet;
+    @NotNull
+    private EducationDto education;
     @NotNull
     private GenderDto gender;
     @NotNull
     private List<LanguageDto> motherTongue;
-    @NotNull
-    private CountryDto originCountry;
     @NotNull
     private List<ProjectDto> projects;
     @NotNull

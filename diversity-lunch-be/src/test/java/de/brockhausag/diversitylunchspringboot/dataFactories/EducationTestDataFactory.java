@@ -33,18 +33,26 @@ public class EducationTestDataFactory {
     }
 
     public EducationEntity buildEntityWithoutId(){
-        return new EducationEntity(null, incompleteDescriptor);
+        EducationEntity incompleteEntity = new EducationEntity();
+        incompleteEntity.setDescriptor(incompleteDescriptor);
+        return incompleteEntity;
     }
 
     public EducationEntity buildEntityWithoutDescriptor(){
-        return new EducationEntity(incompleteId, null);
+        EducationEntity incompleteEntity = new EducationEntity();
+        incompleteEntity.setId(incompleteId);
+        return incompleteEntity;
     }
 
     public EducationDto buildDtoWithoutId(){
-        return new EducationDto(null, incompleteDescriptor);
+        EducationDto incompleteDto = new EducationDto();
+        incompleteDto.setDescriptor(incompleteDescriptor);
+        return incompleteDto;
     }
 
     public EducationDto buildDtoWithoutDescriptor(){
-        return new EducationDto(incompleteId, null);
+        EducationDto incompleteDto = new EducationDto();
+        incompleteDto.setId(incompleteId);
+        return incompleteDto;
     }
 }

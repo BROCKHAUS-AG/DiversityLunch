@@ -33,18 +33,26 @@ public class GenderTestDataFactory {
     }
 
     public GenderEntity buildEntityWithoutId(){
-        return new GenderEntity(null, incompleteDescriptor);
+        GenderEntity incompleteEntity = new GenderEntity();
+        incompleteEntity.setDescriptor(incompleteDescriptor);
+        return incompleteEntity;
     }
 
     public GenderEntity buildEntityWithoutDescriptor(){
-        return new GenderEntity(incompleteId, null);
+        GenderEntity incompleteEntity = new GenderEntity();
+        incompleteEntity.setId(incompleteId);
+        return incompleteEntity;
     }
 
     public GenderDto buildDtoWithoutId(){
-        return new GenderDto(null, incompleteDescriptor);
+        GenderDto incompleteDto = new GenderDto();
+        incompleteDto.setDescriptor(incompleteDescriptor);
+        return incompleteDto;
     }
 
     public GenderDto buildDtoWithoutDescriptor(){
-        return new GenderDto(incompleteId, null);
+        GenderDto incompleteDto = new GenderDto();
+        incompleteDto.setId(incompleteId);
+        return incompleteDto;
     }
 }
