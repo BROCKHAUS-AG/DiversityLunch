@@ -1,9 +1,9 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
 import com.nimbusds.jose.util.Base64URL;
-import de.brockhausag.diversitylunchspringboot.profile.model.*;
+import de.brockhausag.diversitylunchspringboot.profile.model.Hobby;
+import de.brockhausag.diversitylunchspringboot.profile.model.WorkExperience;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProjectDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.SneakyThrows;
 
@@ -11,98 +11,80 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 public class ProfileTestdataFactory {
 
-    private static final Long firstId = 1L, secondId = 2L, thirdId =3L;
-    private static final String firstDescriptor = "first object", secondDescriptor = "second object",
-                                thirdDescriptor = "third object";
-    private static final String firstName = "first user", secondUser = "second user", thirdUser = "third user";
-    private static final String firstEmail = "first.mail@some.tld", secondEmail = "second.mail@some.tld",
-                                thirdEmail = "third.mail@some.tld";
-    private static final int firstBirthYear = 1957, secondBirthYear = 1930, thirdBirthYear = 2001;
+    private static final int numberOfSets = 3;
+    private static final Long[] ids = {666L, 1L,2L,3L};
+    private static final String[] names = {"incomplete user", "first user", "second user", "third user"};
+    private static final String[] emails = {"incomplete.mail@some.tdl", "first.mail@some.tld", "second.mail@some.tld", "third.mail@some.tld"};
+    private static final int[] birthYears = {1901, 1957, 1930, 2001};
+
+
+    private final  CountryTestDataFactory countryFactory = new CountryTestDataFactory();
+    private final DietTestDataFactory dietFactory = new DietTestDataFactory();
+    private final EducationTestDataFactory educationFactory = new EducationTestDataFactory();
+    private final GenderTestDataFactory genderFactory = new GenderTestDataFactory();
+    private final LanguageTestDataFactory languageFactory = new LanguageTestDataFactory();
+    private final ProjectTestDataFactory projectFactory = new ProjectTestDataFactory();
+    private final ReligionTestDataFactory religionFactory = new ReligionTestDataFactory();
+
+
+    private static final Hobby[] hobbies = {Hobby.ART, Hobby.ARCHERY, Hobby.BALL_GAMES, Hobby.YOGA};
+    private static final WorkExperience[] workExperiences =  {WorkExperience.LOW_EXPERIENCE,
+            WorkExperience.LOW_EXPERIENCE, WorkExperience.MID_EXPERIENCE, WorkExperience.HIGH_EXPERIENCE};
 
 
 
-    private static final ProjectDto firstProjectDto
-    private static final Project project = Project.ExampleCompany1;
-    private static final Gender gender = Gender.MALE;
-    private static final Country originCountry = Country.DEUTSCHLAND;
-    private static final Language motherTongue = Language.DEUTSCH;
-    private static final Religion religion = Religion.ISLAM;
-    private static final Hobby hobby = Hobby.ARCHERY;
-    private static final Education education = Education.STUDY;
-    private static final WorkExperience workExperience = WorkExperience.HIGH_EXPERIENCE;
-    private static final Diet diet = Diet.MEAT;
-
-    public ProfileEntity entity() {
-        return this.entityBuilder().build();
+    public ProfileEntity buildEntity(int setNumber) {
+        if ((setNumber >= 1) && (setNumber <= numberOfSets)){
+            return new ProfileEntity(
+                    ids[setNumber], names[setNumber], emails[setNumber], birthYears[setNumber],
+                    countryFactory.buildEntity(setNumber),
+                    dietFactory.buildEntity(setNumber),
+                    educationFactory.buildEntity(setNumber),
+                    genderFactory.buildEntity(setNumber),
+                    Arrays.asList(languageFactory.buildEntity(setNumber), languageFactory.buildEntity(setNumber)),
+                    Arrays.asList(projectFactory.buildEntity(setNumber), projectFactory.buildEntity(setNumber)),
+                    religionFactory.buildEntity(setNumber),
+                    hobbies[setNumber], workExperiences[setNumber]);
+        }
+        return new ProfileEntity(
+                ids[1], names[1], emails[1], birthYears[1],
+                countryFactory.buildEntity(1),
+                dietFactory.buildEntity(1),
+                educationFactory.buildEntity(1),
+                genderFactory.buildEntity(1),
+                Arrays.asList(languageFactory.buildEntity(1), languageFactory.buildEntity(1)),
+                Arrays.asList(projectFactory.buildEntity(1), projectFactory.buildEntity(1)),
+                religionFactory.buildEntity(1),
+                hobbies[1], workExperiences[1]);
     }
 
-    public ProfileEntity.ProfileEntityBuilder entityBuilder() {
-        return ProfileEntity.builder()
-                .id(id)
-                .name(name)
-                .email(email)
-                .birthYear(birthYear)
-                .currentProject(project)
-                .gender(gender)
-                .originCountry(originCountry)
-                .motherTongue(motherTongue)
-                .religion(religion)
-                .hobby(hobby)
-                .education(education)
-                .workExperience(workExperience)
-                .diet(diet);
-    }
-
-    public ProfileEntity createEntity() {
-        return this.entityBuilder().id(0).build();
-    }
-
-    public ProfileEntity.ProfileEntityBuilder createEntityBuilder() {
-        return this.entityBuilder().id(0);
-    }
-
-    public CreateProfileDto createDto() {
-        return this.createDtoBuilder().build();
-    }
-
-    public CreateProfileDto.CreateProfileDtoBuilder createDtoBuilder() {
-        return CreateProfileDto.builder()
-                .name(name)
-                .email(email)
-                .birthYear(birthYear)
-                .currentProject(project)
-                .gender(gender)
-                .originCountry(originCountry)
-                .motherTongue(motherTongue)
-                .religion(religion)
-                .hobby(Hobby.ARCHERY)
-                .education(education)
-                .workExperience(workExperience)
-                .diet(diet);
-    }
-
-    public ProfileDto dto() {
-        return this.dtoBuilder().build();
-    }
-
-    public ProfileDto.ProfileDtoBuilder dtoBuilder() {
-        return ProfileDto.builder()
-                .id(id)
-                .name(name)
-                .email(email)
-                .birthYear(birthYear)
-                .currentProject(project)
-                .gender(gender)
-                .originCountry(originCountry)
-                .motherTongue(motherTongue)
-                .religion(religion)
-                .hobby(hobby)
-                .education(education)
-                .workExperience(workExperience)
-                .diet(diet);
+    public ProfileDto buildDto(int setNumber) {
+        if ((setNumber >= 1) && (setNumber <= numberOfSets)){
+            return new ProfileDto(
+                    ids[setNumber], names[setNumber], emails[setNumber], birthYears[setNumber],
+                    countryFactory.buildDto(setNumber),
+                    dietFactory.buildDto(setNumber),
+                    educationFactory.buildDto(setNumber),
+                    genderFactory.buildDto(setNumber),
+                    Arrays.asList(languageFactory.buildDto(setNumber), languageFactory.buildDto(setNumber)),
+                    Arrays.asList(projectFactory.buildDto(setNumber), projectFactory.buildDto(setNumber)),
+                    religionFactory.buildDto(setNumber),
+                    hobbies[setNumber], workExperiences[setNumber]);
+        }
+        return new ProfileDto(
+                ids[1], names[1], emails[1], birthYears[1],
+                countryFactory.buildDto(1),
+                dietFactory.buildDto(1),
+                educationFactory.buildDto(1),
+                genderFactory.buildDto(1),
+                Arrays.asList(languageFactory.buildDto(1), languageFactory.buildDto(1)),
+                Arrays.asList(projectFactory.buildDto(1), projectFactory.buildDto(1)),
+                religionFactory.buildDto(1),
+                hobbies[1], workExperiences[1]);
     }
 
     @SneakyThrows
