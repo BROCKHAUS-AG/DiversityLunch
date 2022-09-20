@@ -28,7 +28,10 @@ class ProfileMapperTest {
     }
 
     @Test
-    void testDtoToEntity_withOneEntity_returnsOneDto() {
+    void testDtoToEntity_withEmptyDtoList_returnsEmptyEntityList(){}
+
+    @Test
+    void testDtoToEntity_withOneDto_returnsOneEntity() {
         //Arrange
         ProfileDto inputDto = factory.buildDto(1);
         ProfileEntity expectedEntity = factory.buildEntity(1);
@@ -41,7 +44,12 @@ class ProfileMapperTest {
     }
 
     @Test
-    void testMapEntityToDto() {
+    void testDtoToEntity_withListOfThreeDtos_returnsListOfThreeEntities(){}
 
-    }
+    @Test
+    void testEntityToDto_withEmptyEntityList_returnsEmptyDtoList(){}
+    @Test
+    void testEntityToDto_withOneEntity_returnsOneDto(){}
+    @Test
+    void testEntityToDto_withListOfThreeEntities_returnsListOfThreeDtos(){}
 }
