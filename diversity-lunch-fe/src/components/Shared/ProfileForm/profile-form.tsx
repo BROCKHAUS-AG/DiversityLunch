@@ -1,5 +1,5 @@
 import {
-    ChangeEvent, FC, FormEvent, useCallback, useEffect, useState,
+    ChangeEvent, FC, FormEvent, useEffect, useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Profile } from '../../../model/Profile';
@@ -16,23 +16,22 @@ import { projectFetch } from '../../../data/project/project-fetch';
 import { religionFetch } from '../../../data/religion/religion-fetch';
 import { workExperienceFetch } from '../../../data/work-experience/work-experience-fetch';
 
-export type ProfileFormCallback = (formData: Profile) => void;
+export type ProfileFormCallback = (formData: Partial<Profile>) => void;
+export type ProfileFormIsValidCallback = (formData: Partial<Profile>)=>boolean;
 
 export interface ProfileFormProps {
-    profile?: Profile,
-    disabled?: boolean,
-    onSubmit?: ProfileFormCallback,
+    profile?: Partial<Profile>,
+    isInvalid?: (formData: Partial<Profile>) => boolean,
+    onSubmit: ProfileFormCallback,
     onChange?: ProfileFormCallback,
     buttonText?: string
 }
 
 export const ProfileForm: FC<ProfileFormProps> = ({
-    profile, disabled, onSubmit, onChange, buttonText,
+    profile: initialProfile, isInvalid, onSubmit, onChange, buttonText,
 }: ProfileFormProps) => {
-    const [profileState, setProfileState] = useState(profile || {} as Profile);
-
+    const [profile, setProfile] = useState(initialProfile || {} as Partial<Profile>);
     const dispatch = useDispatch();
-
     const countries = useSelector((store: AppStoreState) => store.country);
     // const cultures = useSelector((store: AppStoreState) => store.culture);
     const diets = useSelector((store: AppStoreState) => store.diet);
@@ -59,23 +58,22 @@ export const ProfileForm: FC<ProfileFormProps> = ({
         dispatch(workExperienceFetch.getAll());
     }, []);
 
-    const updateProfileField = useCallback(<KEY extends keyof Profile>(key: KEY, value?: Profile[KEY]) => {
-        const updatedProfileState = {
-            ...profileState,
+    function updateProfile<KEY extends keyof Profile>(key: KEY, value?: Profile[KEY]) {
+        const updatedProfile = {
+            ...profile,
             [key]: value,
         };
-        setProfileState(updatedProfileState);
-        if (onChange) onChange(updatedProfileState);
-    }, []);
+        setProfile(updatedProfile);
+        if (onChange) onChange(updatedProfile);
+    }
 
     function formSubmitted(formEvent: FormEvent<HTMLFormElement>) {
         formEvent.preventDefault();
         formEvent.stopPropagation();
-        if (onSubmit) onSubmit(profileState);
+        if (onSubmit) onSubmit(profile);
     }
 
     return (
-
         <form onSubmit={formSubmitted}>
             <label>
                 Wann wurdest du geboren?
@@ -83,65 +81,56 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                     type="number"
                     min="1900"
                     max="2022"
-                    onInput={(e: ChangeEvent<HTMLInputElement>) => updateProfileField('birthYear', e.target.valueAsNumber)}
+                    onInput={(e: ChangeEvent<HTMLInputElement>) => updateProfile('birthYear', e.target.valueAsNumber)}
                 />
             </label>
             <Dropdown
                 options={project.items}
                 label="In welchem Projekt arbeitest du derzeit?"
-                onChange={(value) => updateProfileField('project', value)}
+                onChange={(value) => updateProfile('project', value)}
             />
-
             <Dropdown
                 options={genders.items}
                 label="Wähle ein Geschlecht?"
-                onChange={(value) => updateProfileField('gender', value)}
+                onChange={(value) => updateProfile('gender', value)}
             />
-
             <Dropdown
                 options={countries.items}
                 label="Was ist dein Herkunftsland?"
-                onChange={(value) => updateProfileField('originCountry', value)}
+                onChange={(value) => updateProfile('originCountry', value)}
             />
-
             <Dropdown
                 options={languages.items}
                 label="Was ist deine Muttersprache?"
-                onChange={(value) => updateProfileField('motherTongue', value)}
+                onChange={(value) => updateProfile('motherTongue', value)}
             />
-
             <Dropdown
                 options={religions.items}
                 label="An welche Religion glaubst du?"
-                onChange={(value) => updateProfileField('religion', value)}
+                onChange={(value) => updateProfile('religion', value)}
             />
-
             <Dropdown
                 options={workExperience.items}
                 label="Wie viele Jahre Berufserfahrung hast du schon gesammelt?"
-                onChange={(value) => updateProfileField('workExperience', value)}
+                onChange={(value) => updateProfile('workExperience', value)}
             />
-
             <Dropdown
                 options={hobbies.items}
                 label="Was hast du für ein Hobby?"
-                onChange={(value) => updateProfileField('hobbies', value)}
+                onChange={(value) => updateProfile('hobbies', value)}
             />
-
             <Dropdown
                 options={educations.items}
                 label="Welchen Bildungsweg hast du bisher bestritten?"
-                onChange={(value) => updateProfileField('education', value)}
+                onChange={(value) => updateProfile('education', value)}
             />
-
             <Dropdown
                 options={diets.items}
                 label="Was ist dein Herkunftsland?"
-                onChange={(value) => updateProfileField('diet', value)}
+                onChange={(value) => updateProfile('diet', value)}
             />
-
             <Button
-                disabled={disabled}
+                disabled={isInvalid ? isInvalid(profile) : true}
                 label={buttonText || 'Speichern'}
                 type="submit"
             />
