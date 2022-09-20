@@ -1,13 +1,15 @@
-package de.brockhausag.diversitylunchspringboot.meeting.service;
+package de.brockhausag.diversitylunchspringboot.match.service;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.MeetingTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
+import de.brockhausag.diversitylunchspringboot.match.service.MatchingService;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Question;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
+import de.brockhausag.diversitylunchspringboot.meeting.service.MsTeamsService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

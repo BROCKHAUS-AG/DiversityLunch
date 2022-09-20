@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.meeting.service;
+package de.brockhausag.diversitylunchspringboot.match.service;
 
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
@@ -7,9 +7,10 @@ import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEnti
 import de.brockhausag.diversitylunchspringboot.meeting.model.Question;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
-import de.brockhausag.diversitylunchspringboot.meeting.utils.Match;
-import de.brockhausag.diversitylunchspringboot.meeting.utils.MatchingUtils;
-import de.brockhausag.diversitylunchspringboot.meeting.utils.ScoreAndCategory;
+import de.brockhausag.diversitylunchspringboot.match.utils.Match;
+import de.brockhausag.diversitylunchspringboot.match.utils.MatchingUtils;
+import de.brockhausag.diversitylunchspringboot.match.utils.ScoreAndCategory;
+import de.brockhausag.diversitylunchspringboot.meeting.service.MsTeamsService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

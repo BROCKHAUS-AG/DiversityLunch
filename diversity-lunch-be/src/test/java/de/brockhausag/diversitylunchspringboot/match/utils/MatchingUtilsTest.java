@@ -1,9 +1,10 @@
-package de.brockhausag.diversitylunchspringboot.meeting.utils;
+package de.brockhausag.diversitylunchspringboot.match.utils;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.match.utils.MatchingUtils;
+import de.brockhausag.diversitylunchspringboot.match.utils.ScoreAndCategory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import de.brockhausag.diversitylunchspringboot.profile.model.*;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.DietEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
