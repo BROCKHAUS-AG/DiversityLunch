@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/language")
-@CrossOrigin(origins = "http://localhost:4000/admin-panel")
 @RestController
 public class LanguageController extends GenericBaseModelController<
         LanguageDto, LanguageEntity, LanguageRepository, LanguageService, LanguageMapper> {
