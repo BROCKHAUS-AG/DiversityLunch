@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/gender")
-@CrossOrigin(origins = "http://localhost:4000/admin-panel")
 @RestController
 public class GenderController extends GenericBaseModelController<
         GenderDto, GenderEntity, GenderRepository, GenderService, GenderMapper> {

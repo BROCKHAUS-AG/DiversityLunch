@@ -1,5 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.utils.genericOverload;
 
+import org.modelmapper.ModelMapper;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
