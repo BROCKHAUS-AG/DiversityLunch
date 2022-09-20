@@ -81,7 +81,7 @@ class DiversityLunchSecurityExpressionRootTest {
     @Test
     void isProposalOwner_invalidOwner_returnFalse() {
         AccountEntity accountEntity =
-                accountFactory.entityBuilder().profile(profileFactory.buildEntity(1)).build();
+                accountFactory.entityBuilder().profile(profileFactory.buildEntity(2)).build();
         when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
 
         when(oAuth2AuthenticatedPrincipal.getAttribute(any())).thenReturn(accountEntity.getUniqueName());
