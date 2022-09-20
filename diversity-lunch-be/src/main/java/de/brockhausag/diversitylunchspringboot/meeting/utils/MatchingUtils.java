@@ -21,21 +21,21 @@ public class MatchingUtils {
         List<Category> categories = new ArrayList<>();
         int currentScore = 0;
         //GeschlechtPunkte
-        currentScore += compareProfileAttr(categories, profile1.getGender().toString(), profile2.getGender().toString(), Category.GENDER);
+        currentScore += compareProfileAttr(categories, profile1.getGender().getDescriptor(), profile2.getGender().getDescriptor(), Category.GENDER);
         //KundePunkte
-        currentScore += compareProfileAttr(categories, profile1.getProjects().toString(), profile2.getProjects().toString(), Category.CUSTOMER);
+        currentScore += compareProfileAttr(categories, profile1.getProjects().getDescriptor(), profile2.getProjects().getDescriptor(), Category.CUSTOMER);
         //HerkunftslandPunkte
-        currentScore += compareProfileAttr(categories, profile1.getOriginCountry().toString(), profile2.getOriginCountry().toString(), Category.COUNTRY_OF_ORIGIN);
+        currentScore += compareProfileAttr(categories, profile1.getOriginCountry().getDescriptor(), profile2.getOriginCountry().getDescriptor(), Category.COUNTRY_OF_ORIGIN);
         //MuttersprachePunkte
-        currentScore += compareProfileAttr(categories, profile1.getMotherTongue().toString(), profile2.getMotherTongue().toString(), Category.MOTHER_TONGUE);
-        //HobbyPunkte
-        currentScore += compareProfileAttr(categories, profile1.getHobby().getCategory(), profile2.getHobby().getCategory(), Category.HOBBY);
+        currentScore += compareProfileAttr(categories, profile1.getMotherTongue().getDescriptor(), profile2.getMotherTongue().getDescriptor(), Category.MOTHER_TONGUE);
+//        //HobbyPunkte
+//        currentScore += compareProfileAttr(categories, profile1.getHobby().getCategory(), profile2.getHobby().getCategory(), Category.HOBBY);
         //ReligionsPunkte
-        currentScore += compareProfileAttr(categories, profile1.getReligion().toString(), profile2.getReligion().toString(), Category.RELIGION);
+        currentScore += compareProfileAttr(categories, profile1.getReligion().getDescriptor(), profile2.getReligion().getDescriptor(), Category.RELIGION);
         //BildungswegPunkte
-        currentScore += compareProfileAttr(categories, profile1.getEducation().toString(), profile2.getEducation().toString(), Category.EDUCATION);
+        currentScore += compareProfileAttr(categories, profile1.getEducation().getDescriptor(), profile2.getEducation().getDescriptor(), Category.EDUCATION);
         //ErnährungsweisePunkte
-        currentScore += compareProfileAttr(categories, profile1.getDiet().toString(), profile2.getDiet().toString(), Category.DIET);
+        currentScore += compareProfileAttr(categories, profile1.getDiet().getDescriptor(), profile2.getDiet().getDescriptor(), Category.DIET);
 
         currentScore = getScoreAndAddCategoriesForBirthYearAndWorkExperience(currentScore, categories, profile1, profile2);
 

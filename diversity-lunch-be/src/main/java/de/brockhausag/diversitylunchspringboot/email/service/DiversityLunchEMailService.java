@@ -33,8 +33,9 @@ public class DiversityLunchEMailService {
         messageHelper.setTo(to);
         messageHelper.setSubject(subject);
         messageHelper.setText(textPlain, textHTML);
-
+        System.out.println("Finished mail construction, trying to send mail now");
         emailSender.send(message);
+        System.out.println("Sent mail");
     }
 
     public String createEmailTemplateHTML(String recipient, String partner, Question question) {
@@ -71,9 +72,17 @@ public class DiversityLunchEMailService {
     }
 
     public void sendMailToUser(Long id, String body) throws MessagingException {
+        System.out.println("Beginning of sendMailToUser function");
         Optional<ProfileEntity> pe = this.profileService.getProfile(id);
+        System.out.println("Got profile in sendMailToUser function");
         if (pe.isPresent()) {
+            System.out.println("Tried to send mail");
             this.sendEmail(pe.get().getEmail(), "Testsubject", body, body);
+            System.out.println("Successfully sent mail");
         }
+        else {
+            System.out.println("Profile with ID:" + id + " not found");
+        }
+        System.out.println("End of sendMailToUser function");
     }
 }

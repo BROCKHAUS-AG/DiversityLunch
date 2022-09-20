@@ -55,3 +55,6 @@ diversity:
     client-secret: "${CLIENT_SECRET}"
     diversity-lunch-user-id: "${DIVERSITY_LUNCH_USER_ID}"
     time-zone: "Europe/Berlin"
+
+  groups:
+    admin-group-name: "${ADMIN_GROUP_NAME}"

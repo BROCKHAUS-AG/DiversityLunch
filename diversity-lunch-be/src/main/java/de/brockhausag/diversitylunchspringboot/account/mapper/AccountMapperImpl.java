@@ -15,7 +15,8 @@ public class AccountMapperImpl implements AccountMapper {
         Long profileId = entity.getProfile() != null ? entity.getProfile().getId() : 0;
         return new AccountDto(
                 entity.getId(),
-                profileId
+                profileId,
+                entity.getRole()
         );
     }
 }

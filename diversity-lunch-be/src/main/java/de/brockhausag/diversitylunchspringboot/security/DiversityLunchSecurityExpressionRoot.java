@@ -46,7 +46,12 @@ public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot
     public void setThis(Object target){ this.target = target; }
 
     public boolean isProfileOwner(Long id) {
+        System.out.println("Inside isProfileOwner");
         Optional<Long> profileId = getProfileId();
+        System.out.println("ProfileId.isPresent(): " + profileId.isPresent());
+        System.out.println("Id from Swagger: " + id);
+        System.out.println("profileId: " + id + " " + (profileId.isPresent() ? profileId.get() : "not found"));
+        System.out.println("Should be true: " + (profileId.isPresent() && profileId.get() == id));
         return profileId.isPresent() && profileId.get().equals(id);
     }
 
@@ -60,6 +65,18 @@ public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot
     public boolean isAccountOwner(Long id) {
         Optional<Long> accountId = getAccountId();
         return accountId.isPresent() && accountId.get().equals(id);
+    }
+
+    public boolean hasAccountRole(AccountRole role) {
+        String uniqueName = getUniqueName();
+        Optional<AccountEntity> account = accountService.getAccount(uniqueName);
+        return account.isPresent() && account.get().getRole().equals(role);
+    }
+
+    public boolean hasAccountPermission(AccountPermission permission) {
+        String uniqueName = getUniqueName();
+        Optional<AccountEntity> account = accountService.getAccount(uniqueName);
+        return account.isPresent() && account.get().getRole().getPermissions().contains(permission);
     }
 
     private OAuth2AuthenticatedPrincipal getOAuth2AuthenticatedPrincipal(){
