@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -44,7 +46,17 @@ class ProfileMapperTest {
     }
 
     @Test
-    void testDtoToEntity_withListOfThreeDtos_returnsListOfThreeEntities(){}
+    void testDtoToEntity_withListOfThreeDtos_returnsListOfThreeEntities(){
+        //Arrange
+        List<ProfileDto> input = List.of(factory.buildDto(1),factory.buildDto(2),factory.buildDto(3));
+        List<ProfileEntity> expected = List.of(factory.buildEntity(1),factory.buildEntity(2),factory.buildEntity(3));
+
+        //Act
+        List<ProfileEntity> result = profileMapper.dtoToEntity(input);
+
+        //Assert
+        assertEquals(expected, result);
+    }
 
     @Test
     void testEntityToDto_withEmptyEntityList_returnsEmptyDtoList(){}

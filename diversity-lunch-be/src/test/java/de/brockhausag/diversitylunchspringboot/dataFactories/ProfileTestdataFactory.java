@@ -29,13 +29,10 @@ public class ProfileTestdataFactory {
     private final LanguageTestDataFactory languageFactory = new LanguageTestDataFactory();
     private final ProjectTestDataFactory projectFactory = new ProjectTestDataFactory();
     private final ReligionTestDataFactory religionFactory = new ReligionTestDataFactory();
+    private final WorkExperienceTestDataFactory workExperienceFactory = new WorkExperienceTestDataFactory();
 
 
     private static final Hobby[] hobbies = {Hobby.ART, Hobby.ARCHERY, Hobby.BALL_GAMES, Hobby.YOGA};
-    private static final WorkExperience[] workExperiences =  {WorkExperience.LOW_EXPERIENCE,
-            WorkExperience.LOW_EXPERIENCE, WorkExperience.MID_EXPERIENCE, WorkExperience.HIGH_EXPERIENCE};
-
-
 
     public ProfileEntity buildEntity(int setNumber) {
         if ((setNumber >= 1) && (setNumber <= numberOfCompleteSets)){
@@ -48,7 +45,8 @@ public class ProfileTestdataFactory {
                     languageFactory.buildEntity(setNumber),
                     projectFactory.buildEntity(setNumber),
                     religionFactory.buildEntity(setNumber),
-                    hobbies[setNumber], workExperiences[setNumber]);
+                    workExperienceFactory.buildEntity(setNumber),
+                    hobbies[setNumber]);
         }
         return new ProfileEntity(
                 ids[1], names[1], emails[1], birthYears[1],
@@ -59,7 +57,8 @@ public class ProfileTestdataFactory {
                 languageFactory.buildEntity(1),
                 projectFactory.buildEntity(1),
                 religionFactory.buildEntity(1),
-                hobbies[1], workExperiences[1]);
+                workExperienceFactory.buildEntity(1),
+                hobbies[1]);
     }
 
     public ProfileDto buildDto(int setNumber) {
@@ -73,7 +72,8 @@ public class ProfileTestdataFactory {
                     languageFactory.buildDto(setNumber),
                     projectFactory.buildDto(setNumber),
                     religionFactory.buildDto(setNumber),
-                    hobbies[setNumber], workExperiences[setNumber]);
+                    workExperienceFactory.buildDto(setNumber),
+                    hobbies[setNumber]);
         }
         return new ProfileDto(
                 ids[1], names[1], emails[1], birthYears[1],
@@ -84,7 +84,8 @@ public class ProfileTestdataFactory {
                 languageFactory.buildDto(1),
                 projectFactory.buildDto(1),
                 religionFactory.buildDto(1),
-                hobbies[1], workExperiences[1]);
+                workExperienceFactory.buildDto(1),
+                hobbies[1]);
     }
 
     @SneakyThrows

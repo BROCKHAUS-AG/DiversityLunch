@@ -51,14 +51,12 @@ public class ProfileDto {
     private ProjectDto projects;
     @NotNull
     private ReligionDto religion;
+    @NotNull
+    private WorkExperienceDto workExperience;
 
 
     @Schema(description = "a hobby you are practicing", example = "football")
     @NotNull
     private Hobby hobby;
-
-    @Schema(description = "how long you working", example = "0 - 3 years")
-    @NotNull
-    private WorkExperience workExperience;
 
 }
