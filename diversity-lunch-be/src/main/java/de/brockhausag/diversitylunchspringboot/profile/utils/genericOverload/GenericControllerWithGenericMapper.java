@@ -1,5 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.utils.genericOverload;
 
+import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.BaseDto;
+import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.BaseEntity;
 import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.ErrorHandlingController;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
@@ -11,8 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class GenericControllerWithGenericMapper<
-        DtoType extends GenericMapperBaseDto<DtoType>,
-        EntityType extends GenericMapperBaseEntity<EntityType>,
+        DtoType extends BaseDto,
+        EntityType extends BaseEntity,
         RepositoryType extends CrudRepository<EntityType, Long>,
         ServiceType extends GenericMapperService<EntityType, RepositoryType>,
         MapperType extends BaseModelMapper<DtoType, EntityType>>
