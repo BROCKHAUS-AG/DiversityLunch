@@ -45,7 +45,8 @@
         "@typescript-eslint/no-unused-vars": "error",
         "max-len": ["error", { "code": 150 }],
         "linebreak-style": "off",
-        "no-plusplus": "off"
+        "no-plusplus": "off",
+        "react-hooks/exhaustive-deps": "warn"
     },
     "settings": {
         "react": {
