@@ -43,7 +43,7 @@ public class MsTeamsMapperTest {
         final LocalDateTime startDateTime = LocalDateTime.now();
 
         final List<MeetingProposalEntity> entities =
-                new MeetingTestdataFactory().newMeetingProposalList(startDateTime);
+                new MeetingTestdataFactory().newMeetingProposalList_withMatchingScore29(startDateTime);
         final MeetingProposalEntity meetingProposalEntityOne = entities.get(0);
         final MeetingProposalEntity meetingProposalEntityTwo = entities.get(1);
         final String firstExpectedMailAddress = meetingProposalEntityOne.getProposerProfile().getEmail();

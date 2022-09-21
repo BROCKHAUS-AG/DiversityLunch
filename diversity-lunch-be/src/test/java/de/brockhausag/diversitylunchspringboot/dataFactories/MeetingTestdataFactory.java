@@ -77,10 +77,21 @@ public class MeetingTestdataFactory {
                 .build();
     }
 
-    public List<MeetingProposalEntity> newMeetingProposalList(LocalDateTime time) {
+    public List<MeetingProposalEntity> newMeetingProposalList_withMatchingScore29(LocalDateTime time) {
+        ProfileEntity secondProposer = new ProfileTestdataFactory().buildEntity(2);
         MeetingProposalEntity meetingProposal = entityBuilder().proposedDateTime(time).build();
         MeetingProposalEntity meetingProposal2 = entityBuilder().id(meetingProposal.getId() + 1).proposedDateTime(time).
-                proposerProfile(new ProfileTestdataFactory().buildEntity(2)).build();
+                proposerProfile(secondProposer).build();
+        MeetingProposalEntity[] meetings = {meetingProposal, meetingProposal2};
+        return Stream.of(meetings).collect(Collectors.toList());
+    }
+
+    public List<MeetingProposalEntity> newMeetingProposalList_withMatchingScore1(LocalDateTime time) {
+        ProfileEntity secondProposer = new ProfileTestdataFactory().buildEntity(1);
+        secondProposer.setId(2L);
+        MeetingProposalEntity meetingProposal = entityBuilder().proposedDateTime(time).build();
+        MeetingProposalEntity meetingProposal2 = entityBuilder().id(meetingProposal.getId() + 1).proposedDateTime(time).
+                proposerProfile(secondProposer).build();
         MeetingProposalEntity[] meetings = {meetingProposal, meetingProposal2};
         return Stream.of(meetings).collect(Collectors.toList());
     }
