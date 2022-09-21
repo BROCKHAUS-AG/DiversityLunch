@@ -11,6 +11,7 @@ import { useGetUserInformation } from '../../hooks/authentication/get-userInfo.h
 import { Profile } from '../../model/Profile';
 import { createProfile } from '../../data/profile/profile.actions';
 import { AccountStateOk } from '../../data/account/account-state.type';
+import { isValidProfile } from '../../utils/validators/profile-validator';
 
 export const QuestionSite = () => {
     const dispatch = useDispatch();
@@ -24,30 +25,27 @@ export const QuestionSite = () => {
     if (profileState.status === 'OK' && accountState.status === 'OK') return <Redirect to="/dashboard" />;
     if (profileState.status === 'ERROR' || accountState.status === 'ERROR') return <p><strong>error</strong></p>;
     if (profileState.status === 'PENDING'
-        || profileState.status === 'LOADING'
-        || profileState.status === 'UPDATING'
-        || accountState.status === 'PENDING'
-        || accountState.status === 'LOADING') return <p><strong>loading</strong></p>;
+    || profileState.status === 'LOADING'
+    || profileState.status === 'UPDATING'
+    || accountState.status === 'PENDING'
+    || accountState.status === 'LOADING') {
+        return <p><strong>loading</strong></p>;
+    }
 
     const profile: Partial<Profile> = profileState.status === 'NOT_CREATED_YET' ? {
         name: firstName,
         email,
+        id: 0,
     } : profileState.profileData;
 
     const submit = (p: Partial<Profile>) => {
         dispatch(createProfile(p as Profile, (accountState as AccountStateOk).accountData.id));
     };
-
-    const isValidProfile: ProfileFormIsValidCallback = (p) => !!Object.entries(p)
-        .filter((entry) => entry[0] !== 'id')
-        .map((entry) => entry[1])
-        .find((value) => !value);
-
     return (
         <div className="QuestionSite">
             <DiversityIconContainer />
             <h4>{`Hallo ${firstName}`}</h4>
-            <ProfileForm profile={profile} onSubmit={submit} isInvalid={isValidProfile} />
+            <ProfileForm profile={profile} onSubmit={submit} checkValidity={isValidProfile} />
         </div>
     );
 };

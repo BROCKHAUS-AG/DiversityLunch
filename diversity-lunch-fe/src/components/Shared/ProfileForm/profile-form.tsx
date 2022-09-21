@@ -2,6 +2,7 @@ import {
     ChangeEvent, FC, FormEvent, useEffect, useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { TextField } from '@material-ui/core';
 import { Profile } from '../../../model/Profile';
 import { Dropdown } from '../../Questions/Dropdown';
 import { Button } from '../../General/Button/Button';
@@ -21,16 +22,17 @@ export type ProfileFormIsValidCallback = (formData: Partial<Profile>)=>boolean;
 
 export interface ProfileFormProps {
     profile?: Partial<Profile>,
-    isInvalid?: (formData: Partial<Profile>) => boolean,
+    checkValidity: (formData: Partial<Profile>) => boolean,
     onSubmit: ProfileFormCallback,
     onChange?: ProfileFormCallback,
     buttonText?: string
 }
 
 export const ProfileForm: FC<ProfileFormProps> = ({
-    profile: initialProfile, isInvalid, onSubmit, onChange, buttonText,
+    profile: initialProfile, checkValidity, onSubmit, onChange, buttonText,
 }: ProfileFormProps) => {
     const [profile, setProfile] = useState(initialProfile || {} as Partial<Profile>);
+    const [isValid, setIsValid] = useState(checkValidity(profile));
     const dispatch = useDispatch();
     const countries = useSelector((store: AppStoreState) => store.country);
     // const cultures = useSelector((store: AppStoreState) => store.culture);
@@ -64,6 +66,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
             [key]: value,
         };
         setProfile(updatedProfile);
+        setIsValid(checkValidity(updatedProfile));
         if (onChange) onChange(updatedProfile);
     }
 
@@ -75,71 +78,74 @@ export const ProfileForm: FC<ProfileFormProps> = ({
 
     return (
         <form onSubmit={formSubmitted}>
-            <label>
-                Wann wurdest du geboren?
-                <input
+            <div className="DropdownQuestion">
+                <p className="DropdownQuestion-question">Wann wurdest du geboren?</p>
+                <TextField
+                    id="birth_year"
+                    label="Geburtsjahr"
+                    variant="outlined"
                     type="number"
-                    min="1900"
-                    max="2022"
-                    onInput={(e: ChangeEvent<HTMLInputElement>) => updateProfile('birthYear', e.target.valueAsNumber)}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => updateProfile('birthYear', e.target.valueAsNumber)}
+                    InputProps={{ inputProps: { min: 1900, max: new Date().getFullYear() } }}
                 />
-            </label>
+            </div>
             <Dropdown
                 options={project.items}
                 label="In welchem Projekt arbeitest du derzeit?"
                 onChange={(value) => updateProfile('project', value)}
-                placeholder="MOHRHUHN"
+                placeholder="Projekt"
             />
             <Dropdown
                 options={genders.items}
                 label="Wähle ein Geschlecht?"
                 onChange={(value) => updateProfile('gender', value)}
-                placeholder="MOHRHUHN"
+                placeholder="Geschlecht"
             />
             <Dropdown
                 options={countries.items}
                 label="Was ist dein Herkunftsland?"
                 onChange={(value) => updateProfile('originCountry', value)}
-                placeholder="MOHRHUHN"
+                placeholder="Herkunftsland"
             />
             <Dropdown
                 options={languages.items}
                 label="Was ist deine Muttersprache?"
                 onChange={(value) => updateProfile('motherTongue', value)}
-                placeholder="MOHRHUHN"
+                placeholder="Muttersprache"
             />
             <Dropdown
                 options={religions.items}
                 label="An welche Religion glaubst du?"
                 onChange={(value) => updateProfile('religion', value)}
-                placeholder="MOHRHUHN"
+                placeholder="Religion"
             />
             <Dropdown
                 options={workExperience.items}
                 label="Wie viele Jahre Berufserfahrung hast du schon gesammelt?"
                 onChange={(value) => updateProfile('workExperience', value)}
-                placeholder="MOHRHUHN"
+                placeholder="Berufserfahrung"
             />
             <Dropdown
                 options={hobbies.items}
                 label="Was hast du für ein Hobby?"
                 onChange={(value) => updateProfile('hobbies', value)}
-                placeholder="MOHRHUHN"
+                placeholder="Hobby"
             />
             <Dropdown
                 options={educations.items}
                 label="Welchen Bildungsweg hast du bisher bestritten?"
                 onChange={(value) => updateProfile('education', value)}
-                placeholder="MOHRHUHN"
+                placeholder="Bildungsweg"
             />
+
             <Dropdown
                 options={diets.items}
-                label="Was ist dein Herkunftsland?"
+                label="Wie ernährst du dich?"
                 onChange={(value) => updateProfile('diet', value)}
-                placeholder="MOHRHUHN"
+                placeholder="Ernährung"
             />
             <Button
-                disabled={isInvalid ? isInvalid(profile) : true}
+                disabled={!isValid}
                 label={buttonText || 'Speichern'}
                 type="submit"
             />
