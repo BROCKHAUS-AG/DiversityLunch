@@ -34,12 +34,7 @@ public class GenericBaseModelControllerTest {
         }
     }
 
-    private TestBaseEntity firstTestEntity;
-    private TestBaseEntity secondTestEntity;
-    private TestBaseEntity thirdTestEntity;
-    private TestBaseDto firstTestDto;
-    private TestBaseDto secondTestDto;
-    private TestBaseDto thirdTestDto;
+    private BaseModelTestDataFactory factory;
 
     @Mock
     private Mapper<TestBaseDto, TestBaseEntity> mapper;
@@ -52,20 +47,14 @@ public class GenericBaseModelControllerTest {
     
     @BeforeEach
     void setup(){
-        BaseModelTestDataFactory factory = new BaseModelTestDataFactory();
-        firstTestEntity = factory.buildFirstEntity();
-        secondTestEntity = factory.buildSecondEntity();
-        thirdTestEntity = factory.buildThirdEntity();
-        firstTestDto = factory.buildFirstDto();
-        secondTestDto = factory.buildSecondDto();
-        thirdTestDto = factory.buildThirdDto();
+       this.factory = new BaseModelTestDataFactory();
     }
 
     @Test
     void testGetOne_withExistingId_returnsOkWithTestBaseDto() {
         //Arrange
-        TestBaseDto expectedDto = firstTestDto;
-        TestBaseEntity existingEntity = firstTestEntity;
+        TestBaseDto expectedDto = factory.buildDto(1);
+        TestBaseEntity existingEntity = factory.buildEntity(1);
         ResponseEntity<TestBaseDto> expectedResponse = new ResponseEntity<>(expectedDto, HttpStatus.OK);
 
         when(service.getEntityById(existingEntity.getId())).thenReturn(Optional.of(existingEntity));
@@ -117,8 +106,10 @@ public class GenericBaseModelControllerTest {
     @Test
     void testGetAllCountries_withThreeEntitiesInRepository_returnsListOfThreeTestBaseEntities(){
         //Arrange
-        List<TestBaseEntity> entityList = Arrays.asList(firstTestEntity, secondTestEntity, thirdTestEntity);
-        List<TestBaseDto> dtoList =Arrays.asList(firstTestDto, secondTestDto,thirdTestDto);
+        List<TestBaseEntity> entityList = Arrays.asList(factory.buildEntity(1),
+                factory.buildEntity(2), factory.buildEntity(3));
+        List<TestBaseDto> dtoList =Arrays.asList(factory.buildDto(1),
+                factory.buildDto(2), factory.buildDto(3));
 
         ResponseEntity<List<TestBaseDto>> expectedResponse = new ResponseEntity<>(
                 dtoList,

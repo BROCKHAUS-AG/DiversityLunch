@@ -7,7 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
 public class TestBaseEntity implements BaseEntity {
 
     private Long id;

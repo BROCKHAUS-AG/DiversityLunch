@@ -22,10 +22,8 @@ import static org.mockito.Mockito.when;
 public class GenericBaseEntityServiceTest {
     private interface TestRepositoryType extends CrudRepository<TestBaseEntity, Long>{}
 
-    private TestBaseEntity firstTestEntity;
-    private TestBaseEntity secondTestEntity;
-    private TestBaseEntity thirdTestEntity;
 
+    private BaseModelTestDataFactory factory;
     @Mock
     private TestRepositoryType testRepository;
     @InjectMocks
@@ -33,10 +31,7 @@ public class GenericBaseEntityServiceTest {
 
     @BeforeEach
     void setup(){
-        BaseModelTestDataFactory factory = new BaseModelTestDataFactory();
-        firstTestEntity = factory.buildFirstEntity();
-        secondTestEntity = factory.buildSecondEntity();
-        thirdTestEntity = factory.buildThirdEntity();
+        this.factory = new BaseModelTestDataFactory();
     }
 
     @Test
@@ -83,7 +78,8 @@ public class GenericBaseEntityServiceTest {
     @Test
     void testGetAllEntities_withThreeEntitiesInRepository_returnsListOfThreeEntities(){
         //Arrange
-        List<TestBaseEntity> expectedList = Arrays.asList(firstTestEntity, secondTestEntity, thirdTestEntity);
+        List<TestBaseEntity> expectedList = Arrays.asList(factory.buildEntity(1),
+                factory.buildEntity(2), factory.buildEntity(3));
 
         when(testRepository.findAll()).thenReturn((Iterable<TestBaseEntity>) expectedList);
         //Act
@@ -92,6 +88,5 @@ public class GenericBaseEntityServiceTest {
         //Assert
         assertEquals(expectedList, actualList);
     }
-
 
 }

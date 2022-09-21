@@ -1,7 +1,5 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.dtos;
 
-import de.brockhausag.diversitylunchspringboot.profile.model.Hobby;
-import de.brockhausag.diversitylunchspringboot.profile.model.WorkExperience;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 

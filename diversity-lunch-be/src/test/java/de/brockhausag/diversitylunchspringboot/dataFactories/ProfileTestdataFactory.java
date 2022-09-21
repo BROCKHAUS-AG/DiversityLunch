@@ -1,8 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
 import com.nimbusds.jose.util.Base64URL;
-import de.brockhausag.diversitylunchspringboot.profile.model.Hobby;
-import de.brockhausag.diversitylunchspringboot.profile.model.WorkExperience;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.SneakyThrows;
@@ -11,7 +9,6 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 
 public class ProfileTestdataFactory {
 

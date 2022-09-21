@@ -2,51 +2,46 @@ package de.brockhausag.diversitylunchspringboot.dataFactories;
 
 public class BaseModelTestDataFactory {
 
-    private static final Long firstId = 1L, secondId = 2L, thirdId = 3L;
-    private static final String firstDescriptor = "First Object", secondDescriptor = "Second Object",
-            thirdDescriptor = "Third Object";
-    
-    public TestBaseEntity.TestBaseEntityBuilder firstEntityBuilder() {
-        return TestBaseEntity.builder()
-                .id(firstId)
-                .descriptor(firstDescriptor);
+    private static final  int numberOfCompleteSets = 3;
+    private static final Long[] ids = {666L, 1L, 2L, 3L};
+    private static final String[] descriptors = {"incomplete", "first test object", "second test object", "third test object"};
+
+    public TestBaseDto buildDto(int setNumber){
+        if ( (setNumber >= 1) && setNumber <= numberOfCompleteSets){
+            return new TestBaseDto(ids[setNumber], descriptors[setNumber]);
+        }
+        return new TestBaseDto(ids[1], descriptors[1]);
     }
-    public TestBaseEntity buildFirstEntity() {return firstEntityBuilder().build();}
 
-    public TestBaseEntity.TestBaseEntityBuilder secondEntityBuilder(){
-        return TestBaseEntity.builder()
-                .id(secondId)
-                .descriptor(secondDescriptor);
+
+    public TestBaseEntity buildEntity(int setNumber){
+        if ( (setNumber >= 1) && setNumber <= numberOfCompleteSets){
+            return new TestBaseEntity(ids[setNumber], descriptors[setNumber]);
+        }
+        return new TestBaseEntity(ids[1], descriptors[1]);
     }
-    public TestBaseEntity buildSecondEntity(){return secondEntityBuilder().build();}
 
-    public TestBaseEntity.TestBaseEntityBuilder thirdEntityBuilder(){
-        return TestBaseEntity.builder()
-                .id(thirdId)
-                .descriptor(thirdDescriptor);
+    public TestBaseEntity buildEntityWithoutId(){
+        TestBaseEntity incompleteEntity = new TestBaseEntity();
+        incompleteEntity.setDescriptor(descriptors[0]);
+        return incompleteEntity;
     }
-    public TestBaseEntity buildThirdEntity(){return thirdEntityBuilder().build();}
 
-
-    public TestBaseDto.TestBaseDtoBuilder firstDtoBuilder() {
-        return TestBaseDto.builder()
-                .id(firstId)
-                .descriptor(firstDescriptor);
+    public TestBaseEntity buildEntityWithoutDescriptor(){
+        TestBaseEntity incompleteEntity = new TestBaseEntity();
+        incompleteEntity.setId(ids[0]);
+        return incompleteEntity;
     }
-    public TestBaseDto buildFirstDto() {return firstDtoBuilder().build();}
 
-
-    public TestBaseDto.TestBaseDtoBuilder secondDtoBuilder(){
-        return TestBaseDto.builder()
-                .id(secondId)
-                .descriptor(secondDescriptor);
+    public TestBaseDto buildDtoWithoutId(){
+        TestBaseDto incompleteDto = new TestBaseDto();
+        incompleteDto.setDescriptor(descriptors[0]);
+        return incompleteDto;
     }
-    public TestBaseDto buildSecondDto(){return secondDtoBuilder().build();}
 
-    public TestBaseDto.TestBaseDtoBuilder thirdDtoBuilder(){
-        return TestBaseDto.builder()
-                .id(thirdId)
-                .descriptor(thirdDescriptor);
+    public TestBaseDto buildDtoWithoutDescriptor(){
+        TestBaseDto incompleteDto = new TestBaseDto();
+        incompleteDto.setId(ids[0]);
+        return incompleteDto;
     }
-    public TestBaseDto buildThirdDto(){return thirdDtoBuilder().build();}
 }
