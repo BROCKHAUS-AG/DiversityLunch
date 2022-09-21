@@ -3,6 +3,7 @@ package de.brockhausag.diversitylunchspringboot.match.utils;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ExtendWith(MockitoExtension.class)
 class MatchingUtilsTest {
 
-    private final ProfileTestdataFactory factory = new ProfileTestdataFactory();
 
     public static int[][] dataSetYears() {
         return new int[][]{
@@ -25,8 +25,17 @@ class MatchingUtilsTest {
         };
     }
 
-    final ProfileEntity profile1 = factory.buildEntity(1);
-    final ProfileEntity profile2 = factory.buildEntity(2);
+    private ProfileEntity profile1;
+    private ProfileEntity profile2;
+    private ProfileEntity profile3;
+    @BeforeEach
+    void setup(){
+        ProfileTestdataFactory factory = new ProfileTestdataFactory();
+        profile1 = factory.buildEntity(1);
+        profile2 = factory.buildEntity(1);
+        profile2.setId(2L);
+        profile3 = factory.buildEntity(3);
+    }
 
     @Test
     void testCurrentScoreStandard() {
@@ -55,9 +64,9 @@ class MatchingUtilsTest {
 
     @ParameterizedTest(name = "{index} => workExperience={0}, score={1}")
     @CsvSource({
-            "high experience, 1",
+            "low experience, 1",
             "mid experience, 2",
-            "low experience, 3"
+            "high experience, 3"
     })
     void testCurrentScoreLowWorkExperienceProfile2(String workExperience, int score) {
         profile2.getWorkExperience().setDescriptor(workExperience);
@@ -69,9 +78,9 @@ class MatchingUtilsTest {
 
     @ParameterizedTest(name = "{index} => workExperience={0}, score={1}")
     @CsvSource({
-            "high experience, 1",
+            "low experience, 1",
             "mid experience, 2",
-            "low experience, 3"
+            "high experience, 3"
     })
     void testCurrentScoreLowWorkExperienceProfile1(String workExperience, int score) {
         profile1.getWorkExperience().setDescriptor(workExperience);
@@ -114,6 +123,8 @@ class MatchingUtilsTest {
     @Test
     void testCurrentScoreProfileAttributeNotEquals() {
         int expected = 4;
+        profile2.getDiet().setId(2L);
+        profile2.getDiet().setDescriptor("second diet");
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
         assertEquals(expected, actual.currentScore());
         assertEquals(Category.DIET, actual.category());
@@ -122,7 +133,7 @@ class MatchingUtilsTest {
     @Test
     void testCurrentScoreProfileAttribute() {
         int expected = 30;
-        ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
+        ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile3);
         assertEquals(expected, actual.currentScore());
         assertTrue(actual.category() == Category.AGE ||
                 actual.category() == Category.WORK_EXPERIENCE ||
