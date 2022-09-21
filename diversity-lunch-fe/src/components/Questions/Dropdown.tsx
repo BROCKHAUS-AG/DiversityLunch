@@ -13,12 +13,13 @@ interface dropdownProps<T extends Identifiable> {
     currentValue?: T;
 }
 
-function dropdownOptionToIdentifiable<T>(option : DropdownOption<T>) {
-    return {
-        id: option.value,
-        descriptor: option.label,
-    };
-}
+// function dropdownOptionToIdentifiable<T>(option : DropdownOption<T>, options : T[]) {
+//     const result = options.find((e) => e.id === option.value);
+//     return {
+//         id: option.value,
+//         descriptor: option.label,
+//     };
+// }
 
 export const Dropdown = <T extends Identifiable>({
     options, label, onChange, placeholder, currentValue,
@@ -26,6 +27,23 @@ export const Dropdown = <T extends Identifiable>({
     const optionSelected = (event : ChangeEvent<HTMLSelectElement>) => {
         const result = options.find((e) => e.id === +event.target.value);
         if (result) onChange(result);
+    };
+
+    const dropDownOptionToIdentifiable = (option : DropdownOption<T>) => {
+        const result = options.find((e) => e.id === +option.value);
+        if (result) return result;
+        return null;
+    };
+
+    const checkIfPresent = (option: DropdownOption<T> | undefined) => {
+        const result = options.find((e) => e.id === +option.value);
+        if (result) return result;
+        return undefined;
+    };
+
+    const callOnChange = (_ : ChangeEvent<{}>, value : T | null) => {
+        if (!value) return;
+        onChange(value);
     };
 
     const currentViewValue = options.find((o) => o.id === currentValue?.id);
@@ -40,7 +58,7 @@ export const Dropdown = <T extends Identifiable>({
                     // eslint-disable-next-line react/jsx-props-no-spreading
                     (params: AutocompleteRenderInputParams) => <TextField {...params} variant="outlined" label={placeholder} />
                 }
-                onChange={(_, value: DropdownOption<T> | null) => { if (value) { onChange(value.value); } }}
+                onChange={callOnChange}
                 value={currentViewValue}
             />
         </div>
