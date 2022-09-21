@@ -1,31 +1,28 @@
 package de.brockhausag.diversitylunchspringboot.profile.controller;
 
+import de.brockhausag.diversitylunchspringboot.profile.logic.HobbyCategoryService;
 import de.brockhausag.diversitylunchspringboot.profile.logic.HobbyService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.HobbyMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyCategoryEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;
 import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.ErrorHandlingController;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/hobby")
+@RequiredArgsConstructor
 public class HobbyController extends ErrorHandlingController {
 
     private final HobbyMapper mapper;
     private final HobbyService service;
-
-    public HobbyController(HobbyMapper mapper, HobbyService service) {
-        this.mapper = mapper;
-        this.service = service;
-    }
+    private final HobbyCategoryService hobbyCategoryService;
 
     @GetMapping("/all")
     public ResponseEntity<List<HobbyDto>> getAll(){
@@ -47,4 +44,22 @@ public class HobbyController extends ErrorHandlingController {
                 HttpStatus.OK
         );
     }
+
+    @PutMapping
+    public ResponseEntity<HobbyDto> put(@RequestBody HobbyDto hobbyDto){
+        HobbyEntity entity = mapper.dtoToEntity(hobbyDto);
+
+        Optional<HobbyCategoryEntity> category = hobbyCategoryService.getEntityById(entity.getCategory().getId());
+        if(category.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        entity.setCategory(category.get());
+        entity = service.updateOrCreateEntity(entity);
+
+        return new ResponseEntity<>(
+                mapper.entityToDto(entity),
+                HttpStatus.OK
+        );
+    }
+
 }

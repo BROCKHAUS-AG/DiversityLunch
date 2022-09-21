@@ -37,10 +37,8 @@ public class ProfileEntity {
     private ReligionEntity religion;
     @ManyToOne
     private WorkExperienceEntity workExperience;
-
-
-    @Enumerated(EnumType.STRING)
-    private Hobby hobby;
+    @ManyToOne
+    private HobbyEntity hobby;
 
 
 
