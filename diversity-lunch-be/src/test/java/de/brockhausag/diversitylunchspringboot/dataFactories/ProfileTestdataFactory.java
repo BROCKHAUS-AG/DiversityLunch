@@ -30,8 +30,6 @@ public class ProfileTestdataFactory {
     private final HobbyTestDataFactory hobbyFactory = new HobbyTestDataFactory();
 
 
-    private static final Hobby[] hobbies = {Hobby.ART, Hobby.ARCHERY, Hobby.BALL_GAMES, Hobby.YOGA};
-
     public ProfileEntity buildEntity(int setNumber) {
         if ((setNumber >= 1) && (setNumber <= numberOfCompleteSets)){
             return new ProfileEntity(

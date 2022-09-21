@@ -6,7 +6,7 @@ import de.brockhausag.diversitylunchspringboot.profile.model.entities.WorkExperi
 public class WorkExperienceTestDataFactory {
     private static final  int numberOfCompleteSets = 3;
     private static final Long[] ids = {666L, 1L, 2L, 3L};
-    private static final String[] descriptors = {"incomplete", "first workExperience", "second workExperience", "third workExperience"};
+    private static final String[] descriptors = {"incomplete", "low experience", "mid experience", "high experience"};
 
     public WorkExperienceDto buildDto(int setNumber){
         if ( (setNumber >= 1) && setNumber <= numberOfCompleteSets){
