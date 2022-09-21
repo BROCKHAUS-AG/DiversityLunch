@@ -13,15 +13,16 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class HobbyDto {
+public class HobbyDto implements BaseDto {
+
     private Long id;
 
-    @Schema(description = "Your workExperience in years", example = "2 Jahre")
-    @Size(min=1, max=255, message = "workExperience must be between 5 and 255 chars long")
+    @Schema(description = "the hobby you practice", example = "football")
+    @Size(min=2, max=50, message = "diet descriptor must be between 2 and 50 chars long")
     @NotNull
     @NotBlank
     private String descriptor;
-
     @NotNull
     private HobbyCategoryDto category;
+
 }

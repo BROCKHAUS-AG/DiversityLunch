@@ -62,4 +62,29 @@ public class HobbyController extends ErrorHandlingController {
         );
     }
 
+    @PostMapping
+    public ResponseEntity<HobbyDto> post(@RequestBody HobbyDto hobbyDto){
+        HobbyEntity entity = mapper.dtoToEntity(hobbyDto);
+
+        Optional<HobbyCategoryEntity> category = hobbyCategoryService.getEntityById(entity.getCategory().getId());
+        if(category.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        entity.setCategory(category.get());
+        entity = service.createEntity(entity);
+
+        return new ResponseEntity<>(
+                mapper.entityToDto(entity),
+                HttpStatus.OK
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id){
+        if (service.deleteEntityById(id)){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
 }
