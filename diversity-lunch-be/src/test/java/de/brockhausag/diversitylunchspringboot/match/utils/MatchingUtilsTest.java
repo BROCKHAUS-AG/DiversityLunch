@@ -1,10 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.match.utils;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
-import de.brockhausag.diversitylunchspringboot.match.utils.MatchingUtils;
-import de.brockhausag.diversitylunchspringboot.match.utils.ScoreAndCategory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
-import de.brockhausag.diversitylunchspringboot.profile.model.*;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -58,12 +55,12 @@ class MatchingUtilsTest {
 
     @ParameterizedTest(name = "{index} => workExperience={0}, score={1}")
     @CsvSource({
-            "HIGH_EXPERIENCE, 1",
-            "MID_EXPERIENCE, 2",
-            "LOW_EXPERIENCE, 3"
+            "high experience, 1",
+            "mid experience, 2",
+            "low experience, 3"
     })
     void testCurrentScoreLowWorkExperienceProfile2(String workExperience, int score) {
-        profile2.setWorkExperience(WorkExperience.valueOf(workExperience));
+        profile2.getWorkExperience().setDescriptor(workExperience);
         ScoreAndCategory expected = new ScoreAndCategory(score, Category.WORK_EXPERIENCE);
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
         assertEquals(score, actual.currentScore());
@@ -72,12 +69,12 @@ class MatchingUtilsTest {
 
     @ParameterizedTest(name = "{index} => workExperience={0}, score={1}")
     @CsvSource({
-            "HIGH_EXPERIENCE, 1",
-            "MID_EXPERIENCE, 2",
-            "LOW_EXPERIENCE, 3"
+            "high experience, 1",
+            "mid experience, 2",
+            "low experience, 3"
     })
     void testCurrentScoreLowWorkExperienceProfile1(String workExperience, int score) {
-        profile1.setWorkExperience(WorkExperience.valueOf(workExperience));
+        profile1.getWorkExperience().setDescriptor(workExperience);
         ScoreAndCategory expected = new ScoreAndCategory(score, Category.WORK_EXPERIENCE);
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
         assertEquals(score, actual.currentScore());
@@ -86,13 +83,13 @@ class MatchingUtilsTest {
 
     @ParameterizedTest(name = "{index} => workExperience={0}, score={1}")
     @CsvSource({
-            "HIGH_EXPERIENCE, 2",
-            "MID_EXPERIENCE, 1",
-            "LOW_EXPERIENCE, 2"
+            "high experience, 2",
+            "mid experience, 1",
+            "low experience, 2"
     })
     void testCurrentScoreMidWorkExperienceProfile2(String workExperience, int score) {
-        profile1.setWorkExperience(WorkExperience.valueOf(workExperience));
-        profile2.setWorkExperience(WorkExperience.MID_EXPERIENCE);
+        profile1.getWorkExperience().setDescriptor(workExperience);
+        profile2.getWorkExperience().setDescriptor("mid experience");
         ScoreAndCategory expected = new ScoreAndCategory(score, Category.WORK_EXPERIENCE);
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
         assertEquals(score, actual.currentScore());
@@ -101,13 +98,13 @@ class MatchingUtilsTest {
 
     @ParameterizedTest(name = "{index} => workExperience={0}, score={1}")
     @CsvSource({
-            "HIGH_EXPERIENCE, 2",
-            "MID_EXPERIENCE, 1",
-            "LOW_EXPERIENCE, 2"
+            "high experience, 2",
+            "mid experience, 1",
+            "low experience, 2"
     })
     void testCurrentScoreMidWorkExperienceProfile21(String workExperience, int score) {
-        profile2.setWorkExperience(WorkExperience.valueOf(workExperience));
-        profile1.setWorkExperience(WorkExperience.MID_EXPERIENCE);
+        profile2.getWorkExperience().setDescriptor(workExperience);
+        profile1.getWorkExperience().setDescriptor("mid experience");
         ScoreAndCategory expected = new ScoreAndCategory(score, Category.WORK_EXPERIENCE);
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
         assertEquals(score, actual.currentScore());
