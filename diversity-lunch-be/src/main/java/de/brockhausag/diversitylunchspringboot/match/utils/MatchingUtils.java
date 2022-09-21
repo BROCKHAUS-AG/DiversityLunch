@@ -27,8 +27,8 @@ public class MatchingUtils {
         currentScore += compareProfileAttr(categories, profile1.getOriginCountry().getDescriptor(), profile2.getOriginCountry().getDescriptor(), Category.COUNTRY_OF_ORIGIN);
         //MuttersprachePunkte
         currentScore += compareProfileAttr(categories, profile1.getMotherTongue().getDescriptor(), profile2.getMotherTongue().getDescriptor(), Category.MOTHER_TONGUE);
-//        //HobbyPunkte
-//        currentScore += compareProfileAttr(categories, profile1.getHobby().getCategory(), profile2.getHobby().getCategory(), Category.HOBBY);
+        //HobbyPunkte
+        currentScore += compareProfileAttr(categories, profile1.getHobby().getCategory().getDescriptor(), profile2.getHobby().getCategory().getDescriptor(), Category.HOBBY);
         //ReligionsPunkte
         currentScore += compareProfileAttr(categories, profile1.getReligion().getDescriptor(), profile2.getReligion().getDescriptor(), Category.RELIGION);
         //BildungswegPunkte
@@ -76,12 +76,12 @@ public class MatchingUtils {
 
     private int compareWorkExperience(ProfileEntity profile1, ProfileEntity profile2) {
         int currentScore;
-        if (profile1.getWorkExperience().equals(profile2.getWorkExperience())) {
+        if (profile1.getWorkExperience().getDescriptor().equals(profile2.getWorkExperience().getDescriptor())) {
             currentScore = 1;
-        } else if ((profile1.getWorkExperience().equals(WorkExperience.LOW_EXPERIENCE)
-                && profile2.getWorkExperience().equals(WorkExperience.HIGH_EXPERIENCE))
-                || (profile1.getWorkExperience().equals(WorkExperience.HIGH_EXPERIENCE)
-                && profile2.getWorkExperience().equals(WorkExperience.LOW_EXPERIENCE))) {
+        } else if ((profile1.getWorkExperience().getDescriptor().equals("LOW_EXPERIENCE")
+                && profile2.getWorkExperience().getDescriptor().equals("HIGH_EXPERIENCE"))
+                || (profile1.getWorkExperience().getDescriptor().equals("HIGH_EXPERIENCE")
+                && profile2.getWorkExperience().getDescriptor().equals("LOW_EXPERIENCE"))) {
             currentScore = 3;
         } else {
             currentScore = 2;
