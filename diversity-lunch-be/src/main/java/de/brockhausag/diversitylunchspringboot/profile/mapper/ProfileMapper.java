@@ -19,6 +19,7 @@ public class ProfileMapper implements Mapper<ProfileDto, ProfileEntity> {
     private final ProjectMapper projectMapper = new ProjectMapper();
     private final ReligionMapper religionMapper = new ReligionMapper();
     private final WorkExperienceMapper workExperienceMapper = new WorkExperienceMapper();
+    private final HobbyMapper hobbyMapper = new HobbyMapper();
 
 
     @Override
@@ -38,7 +39,7 @@ public class ProfileMapper implements Mapper<ProfileDto, ProfileEntity> {
         dto.setReligion(religionMapper.entityToDto(entity.getReligion()));
         dto.setWorkExperience(workExperienceMapper.entityToDto(entity.getWorkExperience()));
 
-        dto.setHobby(entity.getHobby());
+        dto.setHobby(hobbyMapper.entityToDto(entity.getHobby()));
 
         return dto;
     }
@@ -60,7 +61,7 @@ public class ProfileMapper implements Mapper<ProfileDto, ProfileEntity> {
         entity.setReligion(religionMapper.dtoToEntity(dto.getReligion()));
         entity.setWorkExperience(workExperienceMapper.dtoToEntity(dto.getWorkExperience()));
 
-        entity.setHobby(dto.getHobby());
+        entity.setHobby(hobbyMapper.dtoToEntity(dto.getHobby()));
         return entity;
     }
 
