@@ -88,46 +88,55 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 options={project.items}
                 label="In welchem Projekt arbeitest du derzeit?"
                 onChange={(value) => updateProfile('project', value)}
+                placeholder="MOHRHUHN"
             />
             <Dropdown
                 options={genders.items}
                 label="Wähle ein Geschlecht?"
                 onChange={(value) => updateProfile('gender', value)}
+                placeholder="MOHRHUHN"
             />
             <Dropdown
                 options={countries.items}
                 label="Was ist dein Herkunftsland?"
                 onChange={(value) => updateProfile('originCountry', value)}
+                placeholder="MOHRHUHN"
             />
             <Dropdown
                 options={languages.items}
                 label="Was ist deine Muttersprache?"
                 onChange={(value) => updateProfile('motherTongue', value)}
+                placeholder="MOHRHUHN"
             />
             <Dropdown
                 options={religions.items}
                 label="An welche Religion glaubst du?"
                 onChange={(value) => updateProfile('religion', value)}
+                placeholder="MOHRHUHN"
             />
             <Dropdown
                 options={workExperience.items}
                 label="Wie viele Jahre Berufserfahrung hast du schon gesammelt?"
                 onChange={(value) => updateProfile('workExperience', value)}
+                placeholder="MOHRHUHN"
             />
             <Dropdown
                 options={hobbies.items}
                 label="Was hast du für ein Hobby?"
                 onChange={(value) => updateProfile('hobbies', value)}
+                placeholder="MOHRHUHN"
             />
             <Dropdown
                 options={educations.items}
                 label="Welchen Bildungsweg hast du bisher bestritten?"
                 onChange={(value) => updateProfile('education', value)}
+                placeholder="MOHRHUHN"
             />
             <Dropdown
                 options={diets.items}
                 label="Was ist dein Herkunftsland?"
                 onChange={(value) => updateProfile('diet', value)}
+                placeholder="MOHRHUHN"
             />
             <Button
                 disabled={isInvalid ? isInvalid(profile) : true}
