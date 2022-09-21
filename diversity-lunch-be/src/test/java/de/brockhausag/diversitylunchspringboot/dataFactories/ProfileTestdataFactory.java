@@ -30,6 +30,7 @@ public class ProfileTestdataFactory {
     private final ProjectTestDataFactory projectFactory = new ProjectTestDataFactory();
     private final ReligionTestDataFactory religionFactory = new ReligionTestDataFactory();
     private final WorkExperienceTestDataFactory workExperienceFactory = new WorkExperienceTestDataFactory();
+    private final HobbyTestDataFactory hobbyFactory = new HobbyTestDataFactory();
 
 
     private static final Hobby[] hobbies = {Hobby.ART, Hobby.ARCHERY, Hobby.BALL_GAMES, Hobby.YOGA};
@@ -46,7 +47,7 @@ public class ProfileTestdataFactory {
                     projectFactory.buildEntity(setNumber),
                     religionFactory.buildEntity(setNumber),
                     workExperienceFactory.buildEntity(setNumber),
-                    hobbies[setNumber]);
+                    hobbyFactory.buildEntity(setNumber));
         }
         return new ProfileEntity(
                 ids[1], names[1], emails[1], birthYears[1],
@@ -58,7 +59,7 @@ public class ProfileTestdataFactory {
                 projectFactory.buildEntity(1),
                 religionFactory.buildEntity(1),
                 workExperienceFactory.buildEntity(1),
-                hobbies[1]);
+                hobbyFactory.buildEntity(1));
     }
 
     public ProfileDto buildDto(int setNumber) {
@@ -73,7 +74,8 @@ public class ProfileTestdataFactory {
                     projectFactory.buildDto(setNumber),
                     religionFactory.buildDto(setNumber),
                     workExperienceFactory.buildDto(setNumber),
-                    hobbies[setNumber]);
+                    hobbyFactory.buildDto(setNumber)
+            );
         }
         return new ProfileDto(
                 ids[1], names[1], emails[1], birthYears[1],
@@ -85,7 +87,7 @@ public class ProfileTestdataFactory {
                 projectFactory.buildDto(1),
                 religionFactory.buildDto(1),
                 workExperienceFactory.buildDto(1),
-                hobbies[1]);
+                hobbyFactory.buildDto(1));
     }
 
     @SneakyThrows
