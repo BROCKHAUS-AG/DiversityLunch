@@ -8,17 +8,17 @@ Insert Into project_entity(descriptor) values ('Externes Projekt'), ('Internes P
 Insert Into religion_entity(descriptor) values ('Judentum'),('Christentum'),('Islam'),('Hinduismus'),('Buddhismus'),('Sonstige'),('Kein Glaube');
 Insert Into work_experience_entity(descriptor) values ('0-3 Jahre'), ('4-10 Jahre'),('über 10 Jahre');
 
-\set sport (SELECT id FROM hobby_category_entity WHERE hobby_category_entity.descriptor = 'Sport' LIMIT 1);
-\set kreatives (SELECT id FROM hobby_category_entity WHERE hobby_category_entity.descriptor = 'Kreatives' LIMIT 1);
-\set unterhaltung (SELECT id FROM hobby_category_entity WHERE hobby_category_entity.descriptor = 'Unterhaltung' LIMIT 1);
-\set sonstiges (SELECT id FROM hobby_category_entity WHERE hobby_category_entity.descriptor = 'Sonstiges' LIMIT 1);
-\set natur (SELECT id FROM hobby_category_entity WHERE hobby_category_entity.descriptor = 'Natur' LIMIT 1);
-\set kultur (SELECT id FROM hobby_category_entity WHERE hobby_category_entity.descriptor = 'Kultur' LIMIT 1);
+WITH sport AS (SELECT id FROM hobby_category_entity WHERE hobby_category_entity.descriptor = 'Sport' LIMIT 1),
+kreatives AS (SELECT id FROM hobby_category_entity WHERE hobby_category_entity.descriptor = 'Kreatives' LIMIT 1),
+natur AS (SELECT id FROM hobby_category_entity WHERE hobby_category_entity.descriptor = 'Natur' LIMIT 1),
+unterhaltung AS (SELECT id FROM hobby_category_entity WHERE hobby_category_entity.descriptor = 'Unterhaltung' LIMIT 1),
+kultur AS (SELECT id FROM hobby_category_entity WHERE hobby_category_entity.descriptor = 'Kultur' LIMIT 1),
+sonstiges AS (SELECT id FROM hobby_category_entity WHERE hobby_category_entity.descriptor = 'Sonstiges' LIMIT 1)
 
-INSERT INTO hobby_entity(descriptor, category_id) values ('Angeln', :natur), ('Ballsport', :sport), ('Bogenschießen', :sport), ('Camping', :natur),
-                                                         ('Dart', :sport), ('DIY', :kreatives), ('Filme', :unterhaltung), ('Gaming', :unterhaltung),
-                                                         ('Gärtnern', :natur), ('Fotografie', :kreatives), ('Gesellschaftsspiele', :kultur),
-                                                         ('Jagen', :natur), ('Joggen', :sport), ('Kampfsport', :sport), ('Klettern', :sport),
-                                                         ('Kochen', :kultur), ('Lesen', :unterhaltung), ('Malen', :kreatives), ('Musik', :unterhaltung),
-                                                         ('Puzzlen', :unterhaltung), ('Radsport', :sport), ('Tanzen', :sport), ('Theater', :kultur),
-                                                         ('Wandern', :natur), ('Yoga', :sport), ('Sonstiges', :sonstiges);
+INSERT INTO hobby_entity(descriptor, category_id) values ('Angeln', (SELECT * FROM natur)), ('Ballsport', (SELECT * FROM sport)), ('Bogenschießen', (SELECT * FROM sport)), ('Camping', (SELECT * FROM natur)),
+                                                         ('Dart', (SELECT * FROM sport)), ('DIY', (SELECT * FROM kreatives)), ('Filme', (SELECT * FROM unterhaltung)), ('Gaming', (SELECT * FROM unterhaltung)),
+                                                         ('Gärtnern', (SELECT * FROM natur)), ('Fotografie', (SELECT * FROM kreatives)), ('Gesellschaftsspiele', (SELECT * FROM kultur)),
+                                                         ('Jagen', (SELECT * FROM natur)), ('Joggen', (SELECT * FROM sport)), ('Kampfsport', (SELECT * FROM sport)), ('Klettern', (SELECT * FROM sport)),
+                                                         ('Kochen', (SELECT * FROM kultur)), ('Lesen', (SELECT * FROM unterhaltung)), ('Malen', (SELECT * FROM kreatives)), ('Musik', (SELECT * FROM unterhaltung)),
+                                                         ('Puzzlen', (SELECT * FROM unterhaltung)), ('Radsport', (SELECT * FROM sport)), ('Tanzen', (SELECT * FROM sport)), ('Theater', (SELECT * FROM kultur)),
+                                                         ('Wandern', (SELECT * FROM natur)), ('Yoga', (SELECT * FROM sport)), ('Sonstiges', (SELECT * FROM sonstiges));
