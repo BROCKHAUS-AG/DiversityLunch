@@ -2,14 +2,32 @@ package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
 import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.BaseEntity;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class WorkExperienceEntity extends BaseEntity {
+@Getter
+@Setter
+public class WorkExperienceEntity implements BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String descriptor;
+
+    @Override
+    public int hashCode() {
+        String hashString = this.id.toString() + this.descriptor;
+        return hashString.hashCode() ;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -17,6 +35,6 @@ public class WorkExperienceEntity extends BaseEntity {
             return false;
         }
         final WorkExperienceEntity other = (WorkExperienceEntity) obj;
-        return other.getId().equals(this.getId()) && other.getDescriptor().equals(this.getDescriptor());
+        return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
     }
 }
