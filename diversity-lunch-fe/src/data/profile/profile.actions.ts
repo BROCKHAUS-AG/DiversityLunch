@@ -57,7 +57,6 @@ export const createProfile = (profile: Profile, accountId: number) => async (dis
             type: 'PROFILE_LOADING_SUCCEEDED',
             payload: profileResult,
         };
-        dispatch(startAccountPendingAction);
         dispatch(profileOkAction);
     } else {
         dispatch(loadProfileErroredAction);
