@@ -33,7 +33,7 @@ public class ProfileEntity {
     @ManyToOne
     private LanguageEntity motherTongue;
     @ManyToOne
-    private ProjectEntity projects;
+    private ProjectEntity project;
     @ManyToOne
     private ReligionEntity religion;
     @ManyToOne

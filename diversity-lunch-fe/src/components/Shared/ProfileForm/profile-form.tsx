@@ -86,7 +86,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                     variant="outlined"
                     type="number"
                     onChange={(e: ChangeEvent<HTMLInputElement>) => updateProfile('birthYear', e.target.valueAsNumber)}
-                    InputProps={{ inputProps: { min: 1900, max: new Date().getFullYear() } }}
+                    InputProps={{ inputProps: { min: 1900, max: 2022 } }}
                 />
             </div>
             <Dropdown

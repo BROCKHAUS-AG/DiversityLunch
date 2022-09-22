@@ -13,28 +13,17 @@ import javax.validation.constraints.*;
 @ToString
 @Builder
 public class ProfileDto {
-
     private Long id;
-
     @Schema(description = "name of user")
     @Size(min=2, max=50, message = "name must be between 2 and 50 chars long")
-    @NotNull
-    @NotBlank
     private String name;
-
     @Schema(description = "e-mail of the user", example = "example.mail@brockhaus-ag.de")
-    @NotNull
-    @NotBlank
-    @Email
-    @Max(200)
+    @Size(min = 3, max = 320)
     private String email;
-
     @Schema(description = "year of birth", example = "1999")
-    @Min(value = 1900, message = "year of birth must be greater than 1900")
+    @Min(value = 1900, message = "year of birth must be greater than or equal to 1900")
+    @Max(value=2022, message = "year of birth must be smaller than or equal to 2022")
     private int birthYear;
-
-
-
     @NotNull
     private CountryDto originCountry;
     @NotNull
@@ -46,12 +35,11 @@ public class ProfileDto {
     @NotNull
     private LanguageDto motherTongue;
     @NotNull
-    private ProjectDto projects;
+    private ProjectDto project;
     @NotNull
     private ReligionDto religion;
     @NotNull
     private WorkExperienceDto workExperience;
     @NotNull
     private HobbyDto hobby;
-
 }
