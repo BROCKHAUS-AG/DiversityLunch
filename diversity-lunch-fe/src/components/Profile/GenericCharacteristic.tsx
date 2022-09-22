@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DropdownOption, DropdownOptions } from '../../types/dropdownOptions/dropdown-options.type';
-import { Profile } from '../../types/Profile';
+import { Profile } from '../../model/Profile';
 import iconCheck from '../../resources/icons/icon-check.svg';
 import iconEdit from '../../resources/icons/icon-edit.svg';
 import { GenerateGenericDropdown } from '../Questions/GenericDropdown';

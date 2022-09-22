@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+{/*import React, { useState } from 'react';
 
 import '../../styles/component-styles/profile/characteristic.scss';
 import iconEdit from '../../resources/icons/icon-edit.svg';
@@ -105,3 +106,4 @@ export const Characteristic: React.FC<CharacteristicProps> = (props: Characteris
         </div>
     );
 };
+*/}

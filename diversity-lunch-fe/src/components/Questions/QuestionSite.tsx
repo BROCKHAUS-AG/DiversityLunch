@@ -22,7 +22,7 @@ export const QuestionSite = () => {
         email,
     } = useGetUserInformation();
 
-    console.log(profileState.status + " " + accountState.status);
+
     if (profileState.status === 'OK' && accountState.status === 'OK') return <Redirect to="/dashboard" />;
     if (profileState.status === 'ERROR' || accountState.status === 'ERROR') return <p><strong>error</strong></p>;
     if (profileState.status === 'PENDING'
