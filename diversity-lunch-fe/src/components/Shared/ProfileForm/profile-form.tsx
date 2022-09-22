@@ -128,7 +128,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
             <Dropdown
                 options={hobbies.items}
                 label="Was hast du für ein Hobby?"
-                onChange={(value) => updateProfile('hobbies', value)}
+                onChange={(value) => updateProfile('hobby', value)}
                 placeholder="Hobby"
             />
             <Dropdown

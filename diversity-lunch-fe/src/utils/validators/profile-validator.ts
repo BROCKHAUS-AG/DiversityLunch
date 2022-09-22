@@ -6,7 +6,7 @@ export function isValidProfile(profile: Partial<Profile>): boolean {
         && profile.education
         && profile.email
         && profile.gender
-        && profile.hobbies
+        && profile.hobby
         && profile.id !== undefined
         && profile.motherTongue
         && profile.name

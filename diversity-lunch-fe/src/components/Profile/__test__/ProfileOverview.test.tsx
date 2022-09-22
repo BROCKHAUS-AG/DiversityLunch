@@ -25,7 +25,7 @@ describe('Profile Overview', () => {
             originCountry: { id: 9, descriptor: 'Deutschland' },
             motherTongue: { id: 10, descriptor: 'deutsch' },
             religion: { id: 11, descriptor: 'Christentum' },
-            hobbies: { id: 12, descriptor: 'Gaming' },
+            hobby: { id: 12, descriptor: 'Gaming' },
             education: { id: 13, descriptor: 'APPRENTICESHIP' },
             workExperience: { id: 14, descriptor: 'LOW_EXPERIENCE' },
             diet: { id: 15, descriptor: 'MEAT' },
