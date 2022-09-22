@@ -13,7 +13,7 @@ export interface Profile {
     name: string,
     birthYear: number,
     email: string,
-    hobbies: Hobby,
+    hobby: Hobby,
     project: Project
     originCountry: Country,
     // culture: Culture,

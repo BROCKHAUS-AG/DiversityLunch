@@ -35,7 +35,7 @@ public class ProfileMapper implements Mapper<ProfileDto, ProfileEntity> {
         dto.setGender(genderMapper.entityToDto(entity.getGender()));
         dto.setMotherTongue(languageMapper.entityToDto(entity.getMotherTongue()));
         dto.setOriginCountry(countryMapper.entityToDto(entity.getOriginCountry()));
-        dto.setProjects(projectMapper.entityToDto(entity.getProjects()));
+        dto.setProject(projectMapper.entityToDto(entity.getProject()));
         dto.setReligion(religionMapper.entityToDto(entity.getReligion()));
         dto.setWorkExperience(workExperienceMapper.entityToDto(entity.getWorkExperience()));
 
@@ -57,7 +57,7 @@ public class ProfileMapper implements Mapper<ProfileDto, ProfileEntity> {
         entity.setGender(genderMapper.dtoToEntity(dto.getGender()));
         entity.setMotherTongue(languageMapper.dtoToEntity(dto.getMotherTongue()));
         entity.setOriginCountry(countryMapper.dtoToEntity(dto.getOriginCountry()));
-        entity.setProjects(projectMapper.dtoToEntity(dto.getProjects()));
+        entity.setProject(projectMapper.dtoToEntity(dto.getProject()));
         entity.setReligion(religionMapper.dtoToEntity(dto.getReligion()));
         entity.setWorkExperience(workExperienceMapper.dtoToEntity(dto.getWorkExperience()));
 

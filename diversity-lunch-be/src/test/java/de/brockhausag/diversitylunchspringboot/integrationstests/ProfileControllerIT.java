@@ -101,7 +101,7 @@ class ProfileControllerIT {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value(profileEntity1.getName()))
                 .andExpect(jsonPath("$.birthYear").value(profileEntity1.getBirthYear()))
-                .andExpect(jsonPath("$.currentProject").value(profileEntity1.getProjects().toString()))
+                .andExpect(jsonPath("$.currentProject").value(profileEntity1.getProject().toString()))
                 .andExpect(jsonPath("$.diet").value(profileEntity1.getDiet().toString()))
                 .andExpect(jsonPath("$.education").value(profileEntity1.getEducation().toString()))
                 .andExpect(jsonPath("$.email").value(profileEntity1.getEmail()))
