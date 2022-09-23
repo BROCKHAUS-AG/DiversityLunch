@@ -6,7 +6,7 @@ import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconC
 import { AppStoreState } from '../../store/Store';
 import '../../styles/component-styles/questions/questionSite.scss';
 import '../../styles/component-styles/questions/dropdownQuestion.scss';
-import { ProfileForm, ProfileFormIsValidCallback } from '../Shared/ProfileForm/profile-form';
+import { ProfileForm } from '../Shared/ProfileForm/profile-form';
 import { useGetUserInformation } from '../../hooks/authentication/get-userInfo.hook';
 import { Profile } from '../../model/Profile';
 import { createProfile } from '../../data/profile/profile.actions';
@@ -21,7 +21,6 @@ export const QuestionSite = () => {
         firstName,
         email,
     } = useGetUserInformation();
-
 
     if (profileState.status === 'OK' && accountState.status === 'OK') return <Redirect to="/dashboard" />;
     if (profileState.status === 'ERROR' || accountState.status === 'ERROR') return <p><strong>error</strong></p>;
@@ -46,7 +45,7 @@ export const QuestionSite = () => {
         <div className="QuestionSite">
             <DiversityIconContainer />
             <h4>{`Hallo ${firstName}`}</h4>
-            <ProfileForm profile={profile} onSubmit={submit} checkValidity={isValidProfile} />
+            <ProfileForm initialProfile={profile} onSubmit={submit} checkValidity={isValidProfile} />
         </div>
     );
 };

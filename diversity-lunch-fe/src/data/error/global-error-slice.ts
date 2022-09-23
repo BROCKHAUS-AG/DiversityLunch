@@ -1,7 +1,7 @@
 /* eslint no-unused-vars: off */
 /* eslint no-param-reassign: off */
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { HttpError } from '../../types/http-error';
 
 type HttpErrorAction = {

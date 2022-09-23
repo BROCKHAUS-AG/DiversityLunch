@@ -1,12 +1,9 @@
 import React, { FC, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import { GenericList } from '../Shared/GenericList/GenericList';
 import { Project } from './Project';
 import { AdminPanelListItem } from './admin-panel-list-item';
-import { experienceLevelFetch } from '../../data/experienceLevel/fetch-experience-level';
-import { AppStoreState } from '../../store/Store';
 
 const data: Project[] = [{
     id: 0,

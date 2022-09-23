@@ -21,18 +21,23 @@ export type ProfileFormCallback = (formData: Partial<Profile>) => void;
 export type ProfileFormIsValidCallback = (formData: Partial<Profile>)=>boolean;
 
 export interface ProfileFormProps {
-    profile?: Partial<Profile>,
+    initialProfile?: Partial<Profile>,
     checkValidity: (formData: Partial<Profile>) => boolean,
+    isUpdated?: (profile: Profile, formData: Profile) => boolean,
     onSubmit: ProfileFormCallback,
     onChange?: ProfileFormCallback,
     buttonText?: string
 }
 
 export const ProfileForm: FC<ProfileFormProps> = ({
-    profile: initialProfile, checkValidity, onSubmit, onChange, buttonText,
+    initialProfile, checkValidity, isUpdated, onSubmit, onChange, buttonText,
 }: ProfileFormProps) => {
     const [profile, setProfile] = useState(initialProfile || {} as Partial<Profile>);
-    const [isValid, setIsValid] = useState(checkValidity(profile));
+
+    const [isUpdatedState, setIsUpdatedState] = useState(false);
+    if (!isUpdated) setIsUpdatedState(true);
+
+    const [isValid, setIsValid] = useState(checkValidity(profile) && isUpdatedState);
     const dispatch = useDispatch();
     const countries = useSelector((store: AppStoreState) => store.country);
     // const cultures = useSelector((store: AppStoreState) => store.culture);
@@ -66,7 +71,12 @@ export const ProfileForm: FC<ProfileFormProps> = ({
             [key]: value,
         };
         setProfile(updatedProfile);
-        setIsValid(checkValidity(updatedProfile));
+        if (isUpdated) {
+            setIsValid(checkValidity(updatedProfile) && isUpdated(initialProfile as Profile, updatedProfile as Profile));
+        } else {
+            setIsValid(checkValidity(updatedProfile));
+        }
+
         if (onChange) onChange(updatedProfile);
     }
 
@@ -87,6 +97,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                     type="number"
                     onChange={(e: ChangeEvent<HTMLInputElement>) => updateProfile('birthYear', e.target.valueAsNumber)}
                     InputProps={{ inputProps: { min: 1900, max: 2022 } }}
+                    defaultValue={profile.birthYear}
                 />
             </div>
             <Dropdown
@@ -94,48 +105,56 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 label="In welchem Projekt arbeitest du derzeit?"
                 onChange={(value) => updateProfile('project', value)}
                 placeholder="Projekt"
+                currentValue={profile.project || undefined}
             />
             <Dropdown
                 options={genders.items}
                 label="Wähle ein Geschlecht?"
                 onChange={(value) => updateProfile('gender', value)}
                 placeholder="Geschlecht"
+                currentValue={profile.gender || undefined}
             />
             <Dropdown
                 options={countries.items}
                 label="Was ist dein Herkunftsland?"
                 onChange={(value) => updateProfile('originCountry', value)}
                 placeholder="Herkunftsland"
+                currentValue={profile.originCountry || undefined}
             />
             <Dropdown
                 options={languages.items}
                 label="Was ist deine Muttersprache?"
                 onChange={(value) => updateProfile('motherTongue', value)}
                 placeholder="Muttersprache"
+                currentValue={profile.motherTongue || undefined}
             />
             <Dropdown
                 options={religions.items}
                 label="An welche Religion glaubst du?"
                 onChange={(value) => updateProfile('religion', value)}
                 placeholder="Religion"
+                currentValue={profile.religion || undefined}
             />
             <Dropdown
                 options={workExperience.items}
                 label="Wie viele Jahre Berufserfahrung hast du schon gesammelt?"
                 onChange={(value) => updateProfile('workExperience', value)}
                 placeholder="Berufserfahrung"
+                currentValue={profile.workExperience || undefined}
             />
             <Dropdown
                 options={hobbies.items}
                 label="Was hast du für ein Hobby?"
                 onChange={(value) => updateProfile('hobby', value)}
                 placeholder="Hobby"
+                currentValue={profile.hobby || undefined}
             />
             <Dropdown
                 options={educations.items}
                 label="Welchen Bildungsweg hast du bisher bestritten?"
                 onChange={(value) => updateProfile('education', value)}
                 placeholder="Bildungsweg"
+                currentValue={profile.education || undefined}
             />
 
             <Dropdown
@@ -143,6 +162,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 label="Wie ernährst du dich?"
                 onChange={(value) => updateProfile('diet', value)}
                 placeholder="Ernährung"
+                currentValue={profile.diet || undefined}
             />
             <Button
                 disabled={!isValid}
