@@ -79,7 +79,7 @@ class ProfileControllerTest {
         ProfileDto expectedDto = this.factory.buildDto(1);
 
 
-        when(mapper.dtoToEntity(inputDto)).thenReturn(profileEntity);
+        when(mapper.dtoToEntity(inputDto)).thenReturn(Optional.of(profileEntity));
         when(profileService.createProfile(profileEntity, accountId)).thenReturn(Optional.of(profileEntity));
         when(mapper.entityToDto(profileEntity)).thenReturn(expectedDto);
 
@@ -97,7 +97,7 @@ class ProfileControllerTest {
         ProfileDto inputDto = this.factory.buildDto(1);
         ProfileEntity profileEntity = this.factory.buildEntity(1);
 
-        when(mapper.dtoToEntity(inputDto)).thenReturn(profileEntity);
+        when(mapper.dtoToEntity(inputDto)).thenReturn(Optional.of(profileEntity));
         when(profileService.createProfile(profileEntity, accountId)).thenReturn(Optional.empty());
 
         //Act
@@ -113,7 +113,7 @@ class ProfileControllerTest {
         ProfileDto inputDto = this.factory.buildDto(1);
         ProfileEntity profileEntity = this.factory.buildEntity(1);
 
-        when(mapper.dtoToEntity(inputDto)).thenReturn(profileEntity);
+        when(mapper.dtoToEntity(inputDto)).thenReturn(Optional.of(profileEntity));
         when(profileService.updateProfile(profileEntity)).thenReturn(Optional.of(profileEntity));
 
         //Act
@@ -142,7 +142,7 @@ class ProfileControllerTest {
         ProfileEntity profileEntity = factory.buildEntity(1);
         ProfileDto inputDto = factory.buildDto(1);
 
-        when(mapper.dtoToEntity(inputDto)).thenReturn(profileEntity);
+        when(mapper.dtoToEntity(inputDto)).thenReturn(Optional.of(profileEntity));
         when(profileService.updateProfile(profileEntity)).thenReturn(Optional.empty());
 
         //Act

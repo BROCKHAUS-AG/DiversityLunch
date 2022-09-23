@@ -111,17 +111,18 @@ class ProfileControllerIT {
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value(profileEntity1.getName()))
-                .andExpect(jsonPath("$.birthYear").value(profileEntity1.getBirthYear()))
-                .andExpect(jsonPath("$.currentProject").value(profileEntity1.getProject().toString()))
-                .andExpect(jsonPath("$.diet").value(profileEntity1.getDiet().toString()))
-                .andExpect(jsonPath("$.education").value(profileEntity1.getEducation().toString()))
                 .andExpect(jsonPath("$.email").value(profileEntity1.getEmail()))
-                .andExpect(jsonPath("$.gender").value(profileEntity1.getGender().toString()))
-                .andExpect(jsonPath("$.hobby").value(profileEntity1.getHobby().toString()))
-                .andExpect(jsonPath("$.motherTongue").value(profileEntity1.getMotherTongue().toString()))
-                .andExpect(jsonPath("$.originCountry").value(profileEntity1.getOriginCountry().toString()))
-                .andExpect(jsonPath("$.religion").value(profileEntity1.getReligion().toString()))
-                .andExpect(jsonPath("$.workExperience").value(profileEntity1.getWorkExperience().toString()));
+                .andExpect(jsonPath("$.birthYear").value(profileEntity1.getBirthYear()))
+                .andExpect(jsonPath("$.project.descriptor").value(profileEntity1.getProject().getDescriptor()))
+                .andExpect(jsonPath("$.diet.descriptor").value(profileEntity1.getDiet().getDescriptor()))
+                .andExpect(jsonPath("$.education.descriptor").value(profileEntity1.getEducation().getDescriptor()))
+                .andExpect(jsonPath("$.gender.descriptor").value(profileEntity1.getGender().getDescriptor()))
+                .andExpect(jsonPath("$.hobby.descriptor").value(profileEntity1.getHobby().getDescriptor()))
+                .andExpect(jsonPath("$.hobby.category.descriptor").value(profileEntity1.getHobby().getCategory().getDescriptor()))
+                .andExpect(jsonPath("$.motherTongue.descriptor").value(profileEntity1.getMotherTongue().getDescriptor()))
+                .andExpect(jsonPath("$.originCountry.descriptor").value(profileEntity1.getOriginCountry().getDescriptor()))
+                .andExpect(jsonPath("$.religion.descriptor").value(profileEntity1.getReligion().getDescriptor()))
+                .andExpect(jsonPath("$.workExperience.descriptor").value(profileEntity1.getWorkExperience().getDescriptor()));
     }
 
     @Test
