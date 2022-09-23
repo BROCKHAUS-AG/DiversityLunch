@@ -2,7 +2,6 @@ import { Dispatch } from 'redux';
 import { ProfileStateAction } from './profile-state-action.type';
 import { authenticatedFetchGet, authenticatedFetchPost, authenticatedFetchPut } from '../../utils/fetch.utils';
 import { Profile } from '../../model/Profile';
-import { startAccountPendingAction } from '../account/account.actions';
 
 export const startProfileLoadingAction: ProfileStateAction = {
     type: 'PROFILE_LOADING',

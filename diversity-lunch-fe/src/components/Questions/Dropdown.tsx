@@ -21,7 +21,7 @@ export const Dropdown = <T extends Identifiable>({
         onChange(selected);
     };
 
-    const currentViewValue = options.find((o) => o.id === currentValue?.id);
+    // const currentViewValue = options.find((o) => o.id === currentValue?.id);
 
     return (
         <div className="DropdownQuestion">
@@ -34,7 +34,8 @@ export const Dropdown = <T extends Identifiable>({
                     (params: AutocompleteRenderInputParams) => <TextField {...params} variant="outlined" label={placeholder} />
                 }
                 onChange={callOnChange}
-                value={currentViewValue}
+                defaultValue={currentValue}
+                getOptionSelected={(option, value) => option.id === value.id}
             />
         </div>
     );

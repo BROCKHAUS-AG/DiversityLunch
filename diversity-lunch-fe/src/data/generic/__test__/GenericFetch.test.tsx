@@ -52,9 +52,6 @@ describe('GenericFetch Integrationtests', () => {
     beforeEach(() => {
         const countrySlice = new GenericSlice<Country>('countryReducerTest', [initialData]);
 
-        const {
-            add, update, remove, initFetch,
-        } = countrySlice.actions;
         const { reducer } = countrySlice;
 
         countryFetchTest = new GenericFetch(countrySlice, 'country');
