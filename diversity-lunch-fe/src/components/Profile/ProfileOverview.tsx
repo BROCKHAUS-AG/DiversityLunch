@@ -2,24 +2,28 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import '../../styles/component-styles/profile/profile.scss';
 import { Profile } from '../../model/Profile';
-import { isValidProfile, isUpdatedProfile } from '../../utils/validators/profile-validator';
+import { isValidProfile, isUpdatedProfile, partialProfileToProfile } from '../../utils/validators/profile-validator';
 import { ProfileForm } from '../Shared/ProfileForm/profile-form';
 import { AppStoreState } from '../../store/Store';
 import { updateProfile } from '../../data/profile/profile.actions';
+import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
+import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
+import { ProfileStateOk } from '../../data/profile/profile-state.type';
 
 export const ProfileOverview = () => {
     // const { fullName } = useGetUserInformation();
 
     // const [currentFormState, setCurrentFormState] = useState<Profile>({ ...profileData });
     // const [profileChanged, setProfileChanged] = useState<boolean>(false);
+
     const profileState = useSelector((state: AppStoreState) => state.profile);
     const dispatch = useDispatch();
 
-    const profile: Partial<Profile> = profileState.status !== 'OK' ? {
-        name: '',
-        email: '',
-        id: 0,
-    } : profileState.profileData;
+    if (profileState.status !== 'OK') {
+        return (<p>loading</p>);
+    }
+
+    const profile: Profile = (profileState as ProfileStateOk).profileData;
 
     // const history = useHistory();
     // // eslint-disable-next-line max-len
@@ -39,10 +43,20 @@ export const ProfileOverview = () => {
         dispatch(updateProfile(p as Profile));
     };
 
+    const isUpdated = (updatedProfile: Partial<Profile>) => isValidProfile(updatedProfile) && isUpdatedProfile(updatedProfile as Profile, profile);
+
     return (
-        <div>
+        <section className="view">
+            <div className="Profile-logo-container">
+                <CloseSiteContainer />
+                <DiversityIconContainer title="DEIN PROFIL" />
+            </div>
+
+            <div className="Profile-name-container">
+                <h5 className="Profile-user-name">{profile.name}</h5>
+            </div>
             {profile.name !== ''
-                && <ProfileForm initialProfile={profile} onSubmit={submit} isUpdated={isUpdatedProfile} checkValidity={isValidProfile} />}
-        </div>
+                && <ProfileForm initialProfile={profile} onSubmit={submit} checkValidity={isUpdated} />}
+        </section>
     );
 };

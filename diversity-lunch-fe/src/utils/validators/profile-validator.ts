@@ -16,6 +16,25 @@ export function isValidProfile(profile: Partial<Profile>): boolean {
         && profile.workExperience);
 }
 
+export function partialProfileToProfile(profile: Partial<Profile>): Profile | undefined {
+    if (profile.birthYear
+        && profile.diet
+        && profile.education
+        && profile.email
+        && profile.gender
+        && profile.hobby
+        && profile.id !== undefined
+        && profile.motherTongue
+        && profile.name
+        && profile.originCountry
+        && profile.project
+        && profile.religion
+        && profile.workExperience) {
+        return profile as Profile;
+    }
+    return undefined;
+}
+
 export function isUpdatedProfile(profile: Profile, updatedProfile: Profile): boolean {
     return (profile.diet.id !== updatedProfile.diet.id
         || profile.education.id !== updatedProfile.education.id
