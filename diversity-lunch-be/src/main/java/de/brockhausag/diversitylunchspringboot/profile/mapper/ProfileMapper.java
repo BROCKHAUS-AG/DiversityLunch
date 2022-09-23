@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class ProfileMapper implements Mapper<ProfileDto, ProfileEntity> {
+public class ProfileMapper {
     private final EducationMapper educationMapper;
     private final DietMapper dietMapper;
     private final GenderMapper genderMapper;
@@ -38,7 +38,7 @@ public class ProfileMapper implements Mapper<ProfileDto, ProfileEntity> {
     private final WorkExperienceService workExperienceService;
 
 
-    @Override
+
     public ProfileDto entityToDto(ProfileEntity entity) {
         ProfileDto dto = new ProfileDto();
         dto.setId(entity.getId());
@@ -61,7 +61,6 @@ public class ProfileMapper implements Mapper<ProfileDto, ProfileEntity> {
     }
 
 
-    @Override
     public Optional<ProfileEntity> dtoToEntity(ProfileDto dto) {
         Optional<CountryEntity> countryEntityOptional = this.countryService.getEntityById(dto.getOriginCountry().getId());
         Optional<DietEntity> dietEntityOptional = this.dietService.getEntityById(dto.getDiet().getId());
@@ -102,7 +101,6 @@ public class ProfileMapper implements Mapper<ProfileDto, ProfileEntity> {
         return Arrays.stream(optionals).allMatch(Optional::isPresent);
     }
 
-    @Override
     public List<ProfileDto> entityToDto(List<ProfileEntity> entities) {
         return entities.stream().map(this::entityToDto).collect(Collectors.toList());
     }

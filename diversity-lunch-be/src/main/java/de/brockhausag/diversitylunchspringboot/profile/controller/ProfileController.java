@@ -70,8 +70,14 @@ public class ProfileController {
     ) {
         log.debug("CREATE PROFILE OF USER: " + accountId);
 
-        ProfileEntity createEntity = this.profileMapper.dtoToEntity(createProfileDto);
-        Optional<ProfileEntity> optionalEntity = this.profileService.createProfile(createEntity, accountId);
+        Optional<ProfileEntity> createEntityOptional = this.profileMapper.dtoToEntity(createProfileDto);
+
+        if (createEntityOptional.isEmpty()) {
+            log.error("Create profile failed for account " + accountId);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Optional<ProfileEntity> optionalEntity = this.profileService.createProfile(createEntityOptional.get(), accountId);
 
         if (optionalEntity.isEmpty()) {
             log.error("Create profile failed for account " + accountId);
@@ -102,8 +108,13 @@ public class ProfileController {
         }
 
         log.info("UPDATE PROFILE " + updateProfileDto);
-        ProfileEntity updateEntity = this.profileMapper.dtoToEntity(updateProfileDto);
-        Optional<ProfileEntity> entity = this.profileService.updateProfile(updateEntity);
+        Optional<ProfileEntity> updateEntityOptional = this.profileMapper.dtoToEntity(updateProfileDto);
+        if (updateEntityOptional.isEmpty()) {
+            log.error("Update profile failed." );
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Optional<ProfileEntity> entity = this.profileService.updateProfile(updateEntityOptional.get());
 
         if (entity.isEmpty()) {
             log.info("Update profile failed.");

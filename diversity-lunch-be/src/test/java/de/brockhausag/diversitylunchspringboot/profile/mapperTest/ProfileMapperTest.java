@@ -1,6 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapperTest;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.profile.data.CountryRepository;
+import de.brockhausag.diversitylunchspringboot.profile.logic.*;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.*;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
@@ -19,6 +21,24 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class ProfileMapperTest {
 
+    @Mock
+    private CountryService countryService;
+    @Mock
+    private DietService dietService;
+    @Mock
+    private EducationService educationService;
+    @Mock
+    private GenderService genderService;
+    @Mock
+    private HobbyService hobbyService;
+    @Mock
+    private LanguageService languageService;
+    @Mock
+    private ProjectService projectService;
+    @Mock
+    private ReligionService religionService;
+    @Mock
+    private WorkExperienceService workExperienceService;
 
     @InjectMocks
     private ProfileMapper profileMapper;
