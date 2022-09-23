@@ -11,7 +11,7 @@ export const ProfileOverviewLoader: React.FC = () => {
         <>
             {
                 (profileState.status === 'OK' || profileState.status === 'UPDATING')
-        && <ProfileOverview profileData={profileState.profileData} />
+        && <ProfileOverview />
             }
             {
                 profileState.status === 'UPDATING' && <LoadingAnimation size="block-app" />

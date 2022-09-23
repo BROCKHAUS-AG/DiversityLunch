@@ -15,3 +15,15 @@ export function isValidProfile(profile: Partial<Profile>): boolean {
         && profile.religion
         && profile.workExperience);
 }
+
+export function isUpdatedProfile(profile: Profile, updatedProfile: Profile): boolean {
+    return (profile.diet.id !== updatedProfile.diet.id
+        || profile.education.id !== updatedProfile.education.id
+        || profile.gender.id !== updatedProfile.gender.id
+        || profile.hobby.id !== updatedProfile.hobby.id
+        || profile.motherTongue.id !== updatedProfile.motherTongue.id
+        || profile.originCountry.id !== updatedProfile.originCountry.id
+        || profile.project.id !== updatedProfile.project.id
+        || profile.religion.id !== updatedProfile.religion.id
+        || profile.workExperience.id !== updatedProfile.workExperience.id);
+}

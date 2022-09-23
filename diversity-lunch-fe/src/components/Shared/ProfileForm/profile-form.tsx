@@ -23,16 +23,21 @@ export type ProfileFormIsValidCallback = (formData: Partial<Profile>)=>boolean;
 export interface ProfileFormProps {
     initialProfile?: Partial<Profile>,
     checkValidity: (formData: Partial<Profile>) => boolean,
+    isUpdated?: (profile: Profile, formData: Profile) => boolean,
     onSubmit: ProfileFormCallback,
     onChange?: ProfileFormCallback,
     buttonText?: string
 }
 
 export const ProfileForm: FC<ProfileFormProps> = ({
-    initialProfile, checkValidity, onSubmit, onChange, buttonText,
+    initialProfile, checkValidity, isUpdated, onSubmit, onChange, buttonText,
 }: ProfileFormProps) => {
     const [profile, setProfile] = useState(initialProfile || {} as Partial<Profile>);
-    const [isValid, setIsValid] = useState(checkValidity(profile));
+
+    const [isUpdatedState, setIsUpdatedState] = useState(false);
+    if (!isUpdated) setIsUpdatedState(true);
+
+    const [isValid, setIsValid] = useState(checkValidity(profile) && isUpdatedState);
     const dispatch = useDispatch();
     const countries = useSelector((store: AppStoreState) => store.country);
     // const cultures = useSelector((store: AppStoreState) => store.culture);
@@ -66,7 +71,12 @@ export const ProfileForm: FC<ProfileFormProps> = ({
             [key]: value,
         };
         setProfile(updatedProfile);
-        setIsValid(checkValidity(updatedProfile));
+        if (isUpdated) {
+            setIsValid(checkValidity(updatedProfile) && isUpdated(initialProfile as Profile, updatedProfile as Profile));
+        } else {
+            setIsValid(checkValidity(updatedProfile));
+        }
+
         if (onChange) onChange(updatedProfile);
     }
 

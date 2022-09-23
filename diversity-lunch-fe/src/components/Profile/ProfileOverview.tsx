@@ -1,26 +1,20 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import '../../styles/component-styles/profile/profile.scss';
 import { Profile } from '../../model/Profile';
-import { isValidProfile } from '../../utils/validators/profile-validator';
+import { isValidProfile, isUpdatedProfile } from '../../utils/validators/profile-validator';
 import { ProfileForm } from '../Shared/ProfileForm/profile-form';
 import { AppStoreState } from '../../store/Store';
+import { updateProfile } from '../../data/profile/profile.actions';
 
-type ProfileOverviewProps = {
-  profileData: Profile;
-}
-
-export const ProfileOverview = (props: ProfileOverviewProps) => {
-    const {
-        profileData,
-
-    } = props;
-
+export const ProfileOverview = () => {
     // const { fullName } = useGetUserInformation();
-    // const dispatch = useDispatch();
+
     // const [currentFormState, setCurrentFormState] = useState<Profile>({ ...profileData });
     // const [profileChanged, setProfileChanged] = useState<boolean>(false);
     const profileState = useSelector((state: AppStoreState) => state.profile);
+    const dispatch = useDispatch();
+
     const profile: Partial<Profile> = profileState.status !== 'OK' ? {
         name: '',
         email: '',
@@ -42,13 +36,13 @@ export const ProfileOverview = (props: ProfileOverviewProps) => {
     // }, [currentFormState, profileData]);
     //
     const submit = (p: Partial<Profile>) => {
-
+        dispatch(updateProfile(p as Profile));
     };
 
     return (
         <div>
             {profile.name !== ''
-                && <ProfileForm initialProfile={profile} onSubmit={submit} checkValidity={isValidProfile} />}
+                && <ProfileForm initialProfile={profile} onSubmit={submit} isUpdated={isUpdatedProfile} checkValidity={isValidProfile} />}
         </div>
     );
 };
