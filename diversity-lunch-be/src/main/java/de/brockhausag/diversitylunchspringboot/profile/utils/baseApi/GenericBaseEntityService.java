@@ -46,4 +46,8 @@ public class GenericBaseEntityService<
                 .collect(Collectors.toList());
     }
 
+    public boolean existsById(Long id){
+        return this.repository.existsById(id);
+    }
+
 }

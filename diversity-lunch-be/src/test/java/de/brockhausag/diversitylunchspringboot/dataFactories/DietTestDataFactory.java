@@ -5,8 +5,8 @@ import de.brockhausag.diversitylunchspringboot.profile.model.entities.DietEntity
 
 public class DietTestDataFactory {
 
-    private static final  int numberOfCompleteSets = 3;
     private static final Long[] ids = {666L, 1L, 2L, 3L};
+    private static final  int numberOfCompleteSets = ids.length;
     private static final String[] descriptors = {"incomplete", "first diet", "second diet", "third diet"};
 
     public DietDto buildDto(int setNumber){
