@@ -13,9 +13,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -45,43 +49,60 @@ class ProfileMapperTest {
     private ProfileTestdataFactory factory;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         this.factory = new ProfileTestdataFactory();
     }
-
-    @Test
-    void testDtoToEntity_withEmptyDtoList_returnsEmptyEntityList(){}
 
     @Test
     void testDtoToEntity_withOneDto_returnsOneEntity() {
         //Arrange
         ProfileDto inputDto = factory.buildDto(1);
         ProfileEntity expectedEntity = factory.buildEntity(1);
+        when(countryService.getEntityById(inputDto.getOriginCountry().getId())).thenReturn(Optional.of(expectedEntity.getOriginCountry()));
+        when(workExperienceService.getEntityById(inputDto.getWorkExperience().getId())).thenReturn(Optional.of(expectedEntity.getWorkExperience()));
+        when(religionService.getEntityById(inputDto.getReligion().getId())).thenReturn(Optional.of(expectedEntity.getReligion()));
+        when(projectService.getEntityById(inputDto.getProject().getId())).thenReturn(Optional.of(expectedEntity.getProject()));
+        when(languageService.getEntityById(inputDto.getMotherTongue().getId())).thenReturn(Optional.of(expectedEntity.getMotherTongue()));
+        when(hobbyService.getEntityById(inputDto.getHobby().getId())).thenReturn(Optional.of(expectedEntity.getHobby()));
+        when(genderService.getEntityById(inputDto.getGender().getId())).thenReturn(Optional.of(expectedEntity.getGender()));
+        when(educationService.getEntityById(inputDto.getEducation().getId())).thenReturn(Optional.of(expectedEntity.getEducation()));
+        when(dietService.getEntityById(inputDto.getDiet().getId())).thenReturn(Optional.of(expectedEntity.getDiet()));
 
         //Act
-        ProfileEntity actualEntity = profileMapper.dtoToEntity(inputDto);
+        Optional<ProfileEntity> profileEntityOptional = profileMapper.dtoToEntity(inputDto);
 
         //Assert
-        assertEquals(expectedEntity, actualEntity);
+        assertTrue(profileEntityOptional.isPresent());
+        assertEquals(expectedEntity, profileEntityOptional.get());
     }
 
     @Test
-    void testDtoToEntity_withListOfThreeDtos_returnsListOfThreeEntities(){
+    void testEntityToDto_withEmptyEntityList_returnsEmptyDtoList() {
         //Arrange
-        List<ProfileDto> input = List.of(factory.buildDto(1),factory.buildDto(2),factory.buildDto(3));
-        List<ProfileEntity> expected = List.of(factory.buildEntity(1),factory.buildEntity(2),factory.buildEntity(3));
+        List<ProfileEntity> inputList = Collections.emptyList();
 
         //Act
-        List<ProfileEntity> result = profileMapper.dtoToEntity(input);
+        List<ProfileDto> actualList = this.profileMapper.entityToDto(inputList);
 
         //Assert
-        assertEquals(expected, result);
+        assertTrue(actualList.isEmpty());
     }
 
     @Test
-    void testEntityToDto_withEmptyEntityList_returnsEmptyDtoList(){}
+    void testEntityToDto_withOneEntity_returnsOneDto() {
+        //Arrange
+        ProfileDto expectedDto = factory.buildDto(1);
+        ProfileEntity inputEntity = factory.buildEntity(1);
+
+        //Act
+        ProfileDto actualDto = this.profileMapper.entityToDto(inputEntity);
+
+        //Assert
+        assertEquals(expectedDto, actualDto);
+    }
+
     @Test
-    void testEntityToDto_withOneEntity_returnsOneDto(){}
-    @Test
-    void testEntityToDto_withListOfThreeEntities_returnsListOfThreeDtos(){}
+    void testEntityToDto_withListOfThreeEntities_returnsListOfThreeDtos() {
+
+    }
 }
