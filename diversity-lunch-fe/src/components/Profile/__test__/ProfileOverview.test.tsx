@@ -46,28 +46,9 @@ describe('Profile Overview', () => {
         expect(logoElement).not.toBe(null);
         expect(logoElement).toHaveClass('Profile-logo-container');
     });
-    it('form has needed amount of fields', async () => {
-        const result = await screen.findByText('Horstus');
+    it('correct name is shown in the greeting on top of the page', async () => {
+        const result = await screen.findByText(profileData[0].name);
 
-        expect(result).toBe(true);
-    });
-    it('check correct value is shown', () => {
-        const formFieldValues = [];
-        for (let i = 0; i < col.length; i += 1) {
-            const currentValue = col[i]?.getElementsByClassName('Characteristic-value').item(0)?.innerHTML;
-            if (currentValue !== undefined) {
-                formFieldValues.push(currentValue);
-            }
-        }
-        expect(formFieldValues.length).toBeGreaterThan(0);
-        expect(formFieldValues).toEqual(preFilledProfileDataValues);
-    });
-    it('field name and email are not displayed', () => {
-        const formFieldLabels: Array<string> = [];
-        for (let i = 0; i < col.length; i += 1) {
-            formFieldLabels.push(col[i]?.getElementsByClassName('Characteristic-attribute').item(0)?.innerHTML.toString() || '');
-        }
-        expect(formFieldLabels).not.toContain('NAME');
-        expect(formFieldLabels).not.toContain('E-MAIL');
+        expect(result).toBeInTheDocument();
     });
 });

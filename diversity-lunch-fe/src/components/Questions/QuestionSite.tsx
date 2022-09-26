@@ -12,6 +12,7 @@ import { Profile } from '../../model/Profile';
 import { createProfile } from '../../data/profile/profile.actions';
 import { AccountStateOk } from '../../data/account/account-state.type';
 import { isValidProfile } from '../../utils/validators/profile-validator';
+import { LoadingAnimation } from '../Shared/LoadingAnimation';
 
 export const QuestionSite = () => {
     const dispatch = useDispatch();
@@ -29,7 +30,7 @@ export const QuestionSite = () => {
     || profileState.status === 'UPDATING'
     || accountState.status === 'PENDING'
     || accountState.status === 'LOADING') {
-        return <p><strong>loading</strong></p>;
+        return <LoadingAnimation />;
     }
 
     const profile: Partial<Profile> = profileState.status === 'NOT_CREATED_YET' ? {

@@ -9,13 +9,14 @@ import { updateProfile } from '../../data/profile/profile.actions';
 import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import { ProfileStateOk } from '../../data/profile/profile-state.type';
+import { LoadingAnimation } from '../Shared/LoadingAnimation';
 
 export const ProfileOverview = () => {
     const profileState = useSelector((state: AppStoreState) => state.profile);
     const dispatch = useDispatch();
 
     if (profileState.status !== 'OK') {
-        return (<p>loading</p>);
+        return <LoadingAnimation />;
     }
 
     const profile: Profile = (profileState as ProfileStateOk).profileData;
