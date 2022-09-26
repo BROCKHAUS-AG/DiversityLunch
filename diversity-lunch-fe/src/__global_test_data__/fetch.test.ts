@@ -5,7 +5,7 @@ import {
     dietData,
     educationData,
     genderData, hobbyData,
-    languageData,
+    languageData, profileData,
     projectData,
     religionData,
     workExperienceData,
@@ -19,6 +19,7 @@ import { PROJECT_ENDPOINT } from '../data/project/project-fetch';
 import { RELIGION_ENDPOINT } from '../data/religion/religion-fetch';
 import { WORK_EXPERIENCE_ENDPOINT } from '../data/work-experience/work-experience-fetch';
 import { HOBBY_ENDPOINT } from '../data/hobby/fetch-hobby';
+import { PROFILE_ENDPOINT } from '../data/profile/profile.actions';
 
 export const mockedFetchGet = async (url: string) => {
     if (url.includes(CATEGORY_ENDPOINT)) {
@@ -50,6 +51,9 @@ export const mockedFetchGet = async (url: string) => {
     }
     if (url.includes(HOBBY_ENDPOINT)) {
         return new Response(JSON.stringify(hobbyData));
+    }
+    if (url.includes(PROFILE_ENDPOINT)) {
+        return new Response(JSON.stringify(profileData[0]));
     }
     return new Response('');
 };

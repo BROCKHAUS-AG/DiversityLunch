@@ -9,3 +9,19 @@ export const religionData = [{ id: 9, descriptor: 'katholisch' }, { id: 1337, de
 export const workExperienceData = [{ id: 9, descriptor: '0-4 Jahre' }, { id: 1337, descriptor: '4-10 Jahre' }];
 export const hobbyData = [{ id: 6, descriptor: 'DIY', category: { id: 2, descriptor: 'Kreatives' } },
     { id: 7, descriptor: 'Fußball', category: { id: 1, descriptor: 'Sport' } }];
+
+export const profileData = [{
+    id: 4,
+    name: 'Horstus',
+    email: 'jtonn@brockhaus-ag.de',
+    birthYear: 1920,
+    originCountry: countryData[0],
+    diet: dietData[0],
+    education: educationData[0],
+    gender: genderData[0],
+    motherTongue: languageData[0],
+    project: projectData[0],
+    religion: religionData[0],
+    workExperience: workExperienceData[0],
+    hobby: hobbyData[0],
+}];

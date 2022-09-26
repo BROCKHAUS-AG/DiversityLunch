@@ -11,14 +11,8 @@ import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconC
 import { ProfileStateOk } from '../../data/profile/profile-state.type';
 
 export const ProfileOverview = () => {
-    // const { fullName } = useGetUserInformation();
-
-    // const [currentFormState, setCurrentFormState] = useState<Profile>({ ...profileData });
-    // const [profileChanged, setProfileChanged] = useState<boolean>(false);
-
     const profileState = useSelector((state: AppStoreState) => state.profile);
     const dispatch = useDispatch();
-    console.log(profileState);
 
     if (profileState.status !== 'OK') {
         return (<p>loading</p>);
@@ -26,20 +20,6 @@ export const ProfileOverview = () => {
 
     const profile: Profile = (profileState as ProfileStateOk).profileData;
 
-    // const history = useHistory();
-    // // eslint-disable-next-line max-len
-    // const updateProfileField = React.useCallback(<KEY extends keyof Profile>(key: KEY, value: Profile[KEY],
-    // ) => {
-    //     const updatedFormState = {
-    //         ...currentFormState,
-    //         [key]: value,
-    //     };
-    //
-    //     setProfileChanged(!shallowEquals(profileData, updatedFormState));
-    //
-    //     setCurrentFormState(updatedFormState);
-    // }, [currentFormState, profileData]);
-    //
     const submit = (p: Partial<Profile>) => {
         dispatch(updateProfile(p as Profile));
     };

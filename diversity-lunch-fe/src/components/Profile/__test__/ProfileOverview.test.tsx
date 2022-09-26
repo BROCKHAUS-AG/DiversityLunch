@@ -8,22 +8,7 @@ import { APP_STORE } from '../../../store/Store';
 import * as fetcher from '../../../utils/fetch.utils';
 import { mockedFetchGet } from '../../../__global_test_data__/fetch.test';
 import { loadProfile } from '../../../data/profile/profile.actions';
-
-const data = {
-    id: 4,
-    name: 'Horstus',
-    email: 'jtonn@brockhaus-ag.de',
-    birthYear: 1920,
-    originCountry: { id: 9, descriptor: 'Bahamas' },
-    diet: { id: 3, descriptor: 'Veganer' },
-    education: { id: 2, descriptor: 'Studium' },
-    gender: { id: 2, descriptor: 'Weiblich' },
-    motherTongue: { id: 9, descriptor: 'Bhojpuri' },
-    project: { id: 1, descriptor: 'Externes Projekt' },
-    religion: { id: 5, descriptor: 'Buddhismus' },
-    workExperience: { id: 2, descriptor: '4-10 Jahre' },
-    hobby: { id: 6, descriptor: 'DIY', category: { id: 2, descriptor: 'Kreatives' } },
-};
+import { profileData } from '../../../__global_test_data__/data.test';
 
 describe('Profile Overview', () => {
     let preFilledProfileDataValues: string[];
@@ -36,7 +21,7 @@ describe('Profile Overview', () => {
 
         ProfileLoader = function () {
             const dispatch = useDispatch();
-            useEffect(() => { dispatch(loadProfile(data.id)); }, []);
+            useEffect(() => { dispatch(loadProfile(profileData[0].id)); }, []);
 
             return (
                 <ProfileOverview />
@@ -52,8 +37,8 @@ describe('Profile Overview', () => {
         ));
         col = container.children.item(0)?.children.item(2)?.children || [];
     });
-    it('render component without crashing', async () => {
-        const result = await screen.findByRole('img');
+    it('render content when profile data is loaded', async () => {
+        const result = await screen.findByAltText('diversity icon');
         expect(result).toBeInTheDocument();
     });
     it('profile edit form diversity logo space', () => {

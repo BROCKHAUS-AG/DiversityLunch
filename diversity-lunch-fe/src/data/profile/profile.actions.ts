@@ -19,6 +19,8 @@ export const startProfileUpdatingAction: ProfileStateAction = {
     type: 'PROFILE_UPDATING',
 };
 
+export const PROFILE_ENDPOINT = 'profiles';
+
 export const loadProfile = (profileId: number) => async (dispatch: Dispatch) => {
     dispatch(startProfileLoadingAction);
 
