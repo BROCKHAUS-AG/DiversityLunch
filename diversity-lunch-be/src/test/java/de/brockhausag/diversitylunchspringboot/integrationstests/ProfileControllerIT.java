@@ -8,6 +8,7 @@ import de.brockhausag.diversitylunchspringboot.config.SecurityConfig;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
 import de.brockhausag.diversitylunchspringboot.profile.logic.*;
+import de.brockhausag.diversitylunchspringboot.profile.mapper.ProfileMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.*;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
@@ -48,16 +49,20 @@ class ProfileControllerIT {
     private final ProfileTestdataFactory profileFactory = new ProfileTestdataFactory();
     private MockMvc mockMvc;
 
-    private ProfileEntity profileEntity1;
+    private ProfileEntity myProfileEntity;
+    private ProfileEntity otherProfileEntity;
 
-    private AccountEntity accountEntity1;
-    private AccountEntity accountEntity2;
+    private AccountEntity myAccountEntity;
+    private AccountEntity otherAccountEntity;
 
     @Autowired
     private AccountRepository accountRepository;
 
     @Autowired
     private ProfileRepository profileRepository;
+
+    @Autowired
+    private ProfileMapper profileMapper;
 
     @Autowired
     private WebApplicationContext appContext;
@@ -81,12 +86,15 @@ class ProfileControllerIT {
                 .apply(springSecurity())
                 .build();
 
+        setFreshProfile();
+        setFreshAlternativeProfile();
+        myAccountEntity = accountService.getOrCreateAccount(myProfileEntity.getEmail());
+        otherAccountEntity = accountService.getOrCreateAccount(otherProfileEntity.getEmail());
 
         when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
-        // profileEntity1 = profileService.createProfile(tmpProfileEntity, accountEntity1.getId()).orElseThrow();
 
-        accountEntity2 = accountService.getOrCreateAccount(testProfile.getEmail());
-        testProfile = profileService.createProfile(testProfile, accountEntity2.getId()).orElseThrow();
+        myProfileEntity = profileService.createProfile(myProfileEntity, myAccountEntity.getId()).orElseThrow();
+        otherProfileEntity = profileService.createProfile(otherProfileEntity, otherAccountEntity.getId()).orElseThrow();
     }
 
     @AfterEach
@@ -99,23 +107,23 @@ class ProfileControllerIT {
     void testGetProfile_withValidId_thenOKWithExpectedProfile() throws Exception {
         this.mockMvc
                 .perform(
-                        get("/api/profiles/" + profileEntity1.getId())
-                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(accountEntity1.getUniqueName()))
+                        get("/api/profiles/" + myProfileEntity.getId())
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(myAccountEntity.getUniqueName()))
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value(profileEntity1.getName()))
-                .andExpect(jsonPath("$.email").value(profileEntity1.getEmail()))
-                .andExpect(jsonPath("$.birthYear").value(profileEntity1.getBirthYear()))
-                .andExpect(jsonPath("$.project.descriptor").value(profileEntity1.getProject().getDescriptor()))
-                .andExpect(jsonPath("$.diet.descriptor").value(profileEntity1.getDiet().getDescriptor()))
-                .andExpect(jsonPath("$.education.descriptor").value(profileEntity1.getEducation().getDescriptor()))
-                .andExpect(jsonPath("$.gender.descriptor").value(profileEntity1.getGender().getDescriptor()))
-                .andExpect(jsonPath("$.hobby.descriptor").value(profileEntity1.getHobby().getDescriptor()))
-                .andExpect(jsonPath("$.hobby.category.descriptor").value(profileEntity1.getHobby().getCategory().getDescriptor()))
-                .andExpect(jsonPath("$.motherTongue.descriptor").value(profileEntity1.getMotherTongue().getDescriptor()))
-                .andExpect(jsonPath("$.originCountry.descriptor").value(profileEntity1.getOriginCountry().getDescriptor()))
-                .andExpect(jsonPath("$.religion.descriptor").value(profileEntity1.getReligion().getDescriptor()))
-                .andExpect(jsonPath("$.workExperience.descriptor").value(profileEntity1.getWorkExperience().getDescriptor()));
+                .andExpect(jsonPath("$.name").value(myProfileEntity.getName()))
+                .andExpect(jsonPath("$.email").value(myProfileEntity.getEmail()))
+                .andExpect(jsonPath("$.birthYear").value(myProfileEntity.getBirthYear()))
+                .andExpect(jsonPath("$.project.descriptor").value(myProfileEntity.getProject().getDescriptor()))
+                .andExpect(jsonPath("$.diet.descriptor").value(myProfileEntity.getDiet().getDescriptor()))
+                .andExpect(jsonPath("$.education.descriptor").value(myProfileEntity.getEducation().getDescriptor()))
+                .andExpect(jsonPath("$.gender.descriptor").value(myProfileEntity.getGender().getDescriptor()))
+                .andExpect(jsonPath("$.hobby.descriptor").value(myProfileEntity.getHobby().getDescriptor()))
+                .andExpect(jsonPath("$.hobby.category.descriptor").value(myProfileEntity.getHobby().getCategory().getDescriptor()))
+                .andExpect(jsonPath("$.motherTongue.descriptor").value(myProfileEntity.getMotherTongue().getDescriptor()))
+                .andExpect(jsonPath("$.originCountry.descriptor").value(myProfileEntity.getOriginCountry().getDescriptor()))
+                .andExpect(jsonPath("$.religion.descriptor").value(myProfileEntity.getReligion().getDescriptor()))
+                .andExpect(jsonPath("$.workExperience.descriptor").value(myProfileEntity.getWorkExperience().getDescriptor()));
     }
 
     @Test
@@ -123,8 +131,8 @@ class ProfileControllerIT {
 
         this.mockMvc
                 .perform(
-                        post("/api/profiles/byAccount/" + accountEntity1.getId())
-                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(accountEntity1.getUniqueName()))
+                        post("/api/profiles/byAccount/" + myAccountEntity.getId())
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(myAccountEntity.getUniqueName()))
                                 .contentType(MediaType.APPLICATION_JSON).content("{\"name\":\"Test\"}")
                 )
                 .andExpect(status().isBadRequest());
@@ -134,8 +142,8 @@ class ProfileControllerIT {
     void testGetProfile_withWrongId_thenForbidden() throws Exception {
         this.mockMvc
                 .perform(
-                        get("/api/profiles/" + profileEntity1.getId())
-                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(accountEntity2.getUniqueName()))
+                        get("/api/profiles/" + myProfileEntity.getId())
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(otherAccountEntity.getUniqueName()))
                 ).andExpect(status().isForbidden());
     }
 
@@ -143,8 +151,8 @@ class ProfileControllerIT {
     void testGetProfile_withInvalidToken_thenUnauthorized() throws Exception {
         this.mockMvc
                 .perform(
-                        get("/api/profiles/" + profileEntity1.getId())
-                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromIdWrongKey(accountEntity1.getUniqueName()))
+                        get("/api/profiles/" + myProfileEntity.getId())
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromIdWrongKey(myAccountEntity.getUniqueName()))
                 ).andExpect(status().isUnauthorized());
     }
 
@@ -165,13 +173,13 @@ class ProfileControllerIT {
     @Test
     void testPutProfile_withWrongId_thenForbidden() throws Exception {
 
-        ProfileDto profileDto = profileFactory.buildDto(1);
+        ProfileDto profileDto = profileMapper.entityToDto(myProfileEntity);
         String profileJSON = objectMapper.writeValueAsString(profileDto);
 
         mockMvc
                 .perform(
-                        put("/api/profiles/" + profileEntity1.getId())
-                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(accountEntity2.getUniqueName()))
+                        put("/api/profiles/" + myProfileEntity.getId())
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(otherAccountEntity.getUniqueName()))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(profileJSON)
                 ).andExpect(status().isForbidden());
@@ -196,11 +204,10 @@ class ProfileControllerIT {
     private ReligionService religionService;
     @Autowired
     private WorkExperienceService workExperienceService;
-    private ProfileEntity testProfile;
 
     private void setFreshProfile() {
         final Long id = 0L;
-        final String name = "Max Mustermann";
+        final String name = "Max";
         final String email = "Max@Mustermann.de";
         final int birthyear = 1996;
         final CountryEntity originCountry = countryService.getAllEntities().get(0);
@@ -214,7 +221,7 @@ class ProfileControllerIT {
         final HobbyEntity hobby = hobbyService.getAllEntities().get(0);
 
 
-        testProfile = new ProfileEntity(id,
+        myProfileEntity = new ProfileEntity(id,
                 name,
                 email,
                 birthyear,
@@ -228,6 +235,33 @@ class ProfileControllerIT {
                 workExperience,
                 hobby);
     }
+    private void setFreshAlternativeProfile() {
+        final Long id = 0L;
+        final String name = "Erika";
+        final String email = "Erika@Mustermann.de";
+        final int birthyear = 1976;
+        final CountryEntity originCountry = countryService.getAllEntities().get(1);
+        final DietEntity diet = dietService.getAllEntities().get(1);
+        final EducationEntity education = educationService.getAllEntities().get(1);
+        final GenderEntity gender = genderService.getAllEntities().get(1);
+        final LanguageEntity motherTongue = languageService.getAllEntities().get(1);
+        final ProjectEntity project = projectService.getAllEntities().get(1);
+        final ReligionEntity religion = religionService.getAllEntities().get(1);
+        final WorkExperienceEntity workExperience = workExperienceService.getAllEntities().get(1);
+        final HobbyEntity hobby = hobbyService.getAllEntities().get(1);
 
-
+        otherProfileEntity = new ProfileEntity(id,
+                name,
+                email,
+                birthyear,
+                originCountry,
+                diet,
+                education,
+                gender,
+                motherTongue,
+                project,
+                religion,
+                workExperience,
+                hobby);
+    }
 }
