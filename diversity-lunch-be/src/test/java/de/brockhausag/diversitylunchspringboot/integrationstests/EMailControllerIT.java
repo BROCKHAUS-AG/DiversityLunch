@@ -99,13 +99,7 @@ public class EMailControllerIT {
         when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
         myProfileEntity = profileTestdataFactory.setFreshProfile();
         accountEntity = accountService.getOrCreateAccount(myProfileEntity.getEmail());
-        profileService.createProfile(myProfileEntity, accountEntity.getId()).orElseThrow();
-    }
-
-    @AfterEach
-    void after() {
-        accountRepository.deleteAll();
-        profileRepository.deleteAll();
+        myProfileEntity = profileService.createProfile(myProfileEntity, accountEntity.getId()).orElseThrow();
     }
 
     @SneakyThrows
