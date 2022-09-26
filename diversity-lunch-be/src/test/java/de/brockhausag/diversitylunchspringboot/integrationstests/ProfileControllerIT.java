@@ -2,17 +2,16 @@ package de.brockhausag.diversitylunchspringboot.integrationstests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
-import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.config.SecurityConfig;
-import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.integrationDataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
-import de.brockhausag.diversitylunchspringboot.profile.logic.*;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.ProfileMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.*;
-import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
-import org.junit.jupiter.api.*;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,12 +29,12 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.*;
 
 @Import(SecurityConfig.class)
 @SpringBootTest
@@ -80,8 +79,8 @@ class ProfileControllerIT {
                 .apply(springSecurity())
                 .build();
 
-        myProfileEntity = profileFactory.setFreshProfile();
-        ProfileEntity otherProfileEntity = profileFactory.setFreshAlternativeProfile();
+        myProfileEntity = profileFactory.createNewMaxProfile();
+        ProfileEntity otherProfileEntity = profileFactory.createNewErikaProfile();
         myAccountEntity = accountService.getOrCreateAccount(myProfileEntity.getEmail());
         otherAccountEntity = accountService.getOrCreateAccount(otherProfileEntity.getEmail());
 
@@ -148,8 +147,8 @@ class ProfileControllerIT {
     void testCreateProfile_withWrongId_thenForbidden() throws Exception {
 
         AccountEntity account = accountService.getOrCreateAccount("irgendwas");
-        ProfileDto createProfileDto = profileFactory.buildDto(1);
-        String profileJSON = objectMapper.writeValueAsString(createProfileDto);
+        ProfileDto profileDto = profileMapper.entityToDto(myProfileEntity);
+        String profileJSON = objectMapper.writeValueAsString(profileDto);
 
         mockMvc.perform(
                 post("/api/profiles/byAccount/" + (account.getId() + 1))

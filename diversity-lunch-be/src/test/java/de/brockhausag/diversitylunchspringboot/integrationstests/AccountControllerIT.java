@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.integrationstests;
 
-import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.integrationDataFactories.ProfileTestdataFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(de.brockhausag.diversitylunchspringboot.config.SecurityConfig.class)
 class AccountControllerIT {
 
-    private final ProfileTestdataFactory profileTestdataFactory = new ProfileTestdataFactory();
+    @Autowired
+    private ProfileTestdataFactory profileTestdataFactory;
 
     private MockMvc mockMvc;
 

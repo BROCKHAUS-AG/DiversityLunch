@@ -1,20 +1,19 @@
 package de.brockhausag.diversitylunchspringboot.integrationstests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
-import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.config.SecurityConfig;
 import de.brockhausag.diversitylunchspringboot.dataFactories.MeetingTestdataFactory;
-import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.integrationDataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.CreateMeetingProposalDto;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MeetingService;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
-import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
-import org.junit.jupiter.api.*;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -26,7 +25,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -34,19 +32,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(SecurityConfig.class)
 @ActiveProfiles("Test")
 class MeetingControllerIT {
-
-    private final ProfileTestdataFactory profileFactory = new ProfileTestdataFactory();
-
     private final MeetingTestdataFactory meetingFactory = new MeetingTestdataFactory();
 
     @Autowired
+    private ProfileTestdataFactory profileFactory;
+
+    @Autowired
     private MeetingService meetingService;
-
-    @Autowired
-    private AccountService accountService;
-
-    @Autowired
-    private ProfileService profileService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -76,18 +68,8 @@ class MeetingControllerIT {
                 .apply(springSecurity())
                 .build();
 
-        AccountEntity accA = accountService.getOrCreateAccount(accAName);
-        AccountEntity accB = accountService.getOrCreateAccount(accBName);
-
-        ProfileEntity tmpProfile = profileFactory.buildEntity(1);
-        profileA = profileService
-                .createProfile(tmpProfile, accA.getId())
-                .orElseThrow();
-
-        tmpProfile = profileFactory.buildEntity(2);
-        profileB = profileService
-                .createProfile(tmpProfile, accB.getId())
-                .orElseThrow();
+        profileA = profileFactory.createNewMaxProfile();
+        profileB = profileFactory.createNewErikaProfile();
     }
 
     @AfterEach
@@ -145,6 +127,4 @@ class MeetingControllerIT {
                         .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(accBName))
         ).andExpect(status().isForbidden());
     }
-
-
 }

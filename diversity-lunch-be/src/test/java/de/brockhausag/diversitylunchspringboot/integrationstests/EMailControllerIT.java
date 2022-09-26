@@ -1,15 +1,12 @@
 package de.brockhausag.diversitylunchspringboot.integrationstests;
 
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
-import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.config.SecurityConfig;
-import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
-import de.brockhausag.diversitylunchspringboot.dataFactories.TestBaseDto;
+import de.brockhausag.diversitylunchspringboot.integrationDataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
-import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMailProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -19,9 +16,7 @@ import org.apache.hc.client5.http.classic.methods.HttpUriRequest;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
-import org.apache.maven.surefire.api.util.TempFileManager;
 import org.json.JSONObject;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -80,11 +75,6 @@ public class EMailControllerIT {
     private ProfileEntity myProfileEntity;
     private AccountEntity accountEntity;
 
-    @Autowired
-    private ProfileRepository profileRepository;
-    @Autowired
-    private AccountRepository accountRepository;
-
     @SneakyThrows
     @BeforeEach
     void setup(){
@@ -97,7 +87,7 @@ public class EMailControllerIT {
 
         when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
         when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
-        myProfileEntity = profileTestdataFactory.setFreshProfile();
+        myProfileEntity = profileTestdataFactory.createNewMaxProfile();
         accountEntity = accountService.getOrCreateAccount(myProfileEntity.getEmail());
         myProfileEntity = profileService.createProfile(myProfileEntity, accountEntity.getId()).orElseThrow();
     }
