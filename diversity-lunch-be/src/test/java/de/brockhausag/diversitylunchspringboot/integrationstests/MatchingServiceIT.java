@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.integrationstests;
 
 import de.brockhausag.diversitylunchspringboot.config.MsTeamsTestConfig;
-import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.integrationDataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
@@ -31,21 +31,19 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 @Slf4j
 @SpringBootTest
 @SqlGroup({
-        @Sql(scripts = "classpath:testData.sql", executionPhase = BEFORE_TEST_METHOD),
-        @Sql(scripts = "classpath:testDataCleanUp.sql", executionPhase = AFTER_TEST_METHOD)
+        @Sql(scripts = "classpath:integrationstests/insert_test_data.sql", executionPhase = BEFORE_TEST_METHOD),
+        @Sql(scripts = "classpath:integrationstests/insert_matching_test_data.sql", executionPhase = BEFORE_TEST_METHOD),
+        @Sql(scripts = "classpath:integrationstests/delete_test_data.sql", executionPhase = AFTER_TEST_METHOD)
 })
 @ActiveProfiles("Test")
 @Import(MsTeamsTestConfig.class)
 class MatchingServiceIT {
     @Autowired
     private MeetingRepository meetingRepository;
-
     @Autowired
     private MatchingService matchingService;
-
     @Autowired
     private MeetingProposalRepository meetingProposalRepository;
-
     @Autowired
     private ProfileRepository profileRepository;
     private ProfileTestdataFactory profileFactory;
