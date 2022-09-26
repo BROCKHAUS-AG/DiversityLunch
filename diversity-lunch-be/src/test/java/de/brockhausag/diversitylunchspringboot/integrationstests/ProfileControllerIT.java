@@ -46,11 +46,11 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 })
 class ProfileControllerIT {
 
-    private final ProfileTestdataFactory profileFactory = new ProfileTestdataFactory();
+    @Autowired
+    private ProfileTestdataFactory profileFactory;
     private MockMvc mockMvc;
 
     private ProfileEntity myProfileEntity;
-    private ProfileEntity otherProfileEntity;
 
     private AccountEntity myAccountEntity;
     private AccountEntity otherAccountEntity;
@@ -86,15 +86,15 @@ class ProfileControllerIT {
                 .apply(springSecurity())
                 .build();
 
-        setFreshProfile();
-        setFreshAlternativeProfile();
+        myProfileEntity = profileFactory.setFreshProfile();
+        ProfileEntity otherProfileEntity = profileFactory.setFreshAlternativeProfile();
         myAccountEntity = accountService.getOrCreateAccount(myProfileEntity.getEmail());
         otherAccountEntity = accountService.getOrCreateAccount(otherProfileEntity.getEmail());
 
         when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
 
         myProfileEntity = profileService.createProfile(myProfileEntity, myAccountEntity.getId()).orElseThrow();
-        otherProfileEntity = profileService.createProfile(otherProfileEntity, otherAccountEntity.getId()).orElseThrow();
+        profileService.createProfile(otherProfileEntity, otherAccountEntity.getId()).orElseThrow();
     }
 
     @AfterEach
@@ -183,85 +183,5 @@ class ProfileControllerIT {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(profileJSON)
                 ).andExpect(status().isForbidden());
-    }
-
-    ///// DATA
-    @Autowired
-    private CountryService countryService;
-    @Autowired
-    private DietService dietService;
-    @Autowired
-    private EducationService educationService;
-    @Autowired
-    private GenderService genderService;
-    @Autowired
-    private HobbyService hobbyService;
-    @Autowired
-    private LanguageService languageService;
-    @Autowired
-    private ProjectService projectService;
-    @Autowired
-    private ReligionService religionService;
-    @Autowired
-    private WorkExperienceService workExperienceService;
-
-    private void setFreshProfile() {
-        final Long id = 0L;
-        final String name = "Max";
-        final String email = "Max@Mustermann.de";
-        final int birthyear = 1996;
-        final CountryEntity originCountry = countryService.getAllEntities().get(0);
-        final DietEntity diet = dietService.getAllEntities().get(0);
-        final EducationEntity education = educationService.getAllEntities().get(0);
-        final GenderEntity gender = genderService.getAllEntities().get(0);
-        final LanguageEntity motherTongue = languageService.getAllEntities().get(0);
-        final ProjectEntity project = projectService.getAllEntities().get(0);
-        final ReligionEntity religion = religionService.getAllEntities().get(0);
-        final WorkExperienceEntity workExperience = workExperienceService.getAllEntities().get(0);
-        final HobbyEntity hobby = hobbyService.getAllEntities().get(0);
-
-
-        myProfileEntity = new ProfileEntity(id,
-                name,
-                email,
-                birthyear,
-                originCountry,
-                diet,
-                education,
-                gender,
-                motherTongue,
-                project,
-                religion,
-                workExperience,
-                hobby);
-    }
-    private void setFreshAlternativeProfile() {
-        final Long id = 0L;
-        final String name = "Erika";
-        final String email = "Erika@Mustermann.de";
-        final int birthyear = 1976;
-        final CountryEntity originCountry = countryService.getAllEntities().get(1);
-        final DietEntity diet = dietService.getAllEntities().get(1);
-        final EducationEntity education = educationService.getAllEntities().get(1);
-        final GenderEntity gender = genderService.getAllEntities().get(1);
-        final LanguageEntity motherTongue = languageService.getAllEntities().get(1);
-        final ProjectEntity project = projectService.getAllEntities().get(1);
-        final ReligionEntity religion = religionService.getAllEntities().get(1);
-        final WorkExperienceEntity workExperience = workExperienceService.getAllEntities().get(1);
-        final HobbyEntity hobby = hobbyService.getAllEntities().get(1);
-
-        otherProfileEntity = new ProfileEntity(id,
-                name,
-                email,
-                birthyear,
-                originCountry,
-                diet,
-                education,
-                gender,
-                motherTongue,
-                project,
-                religion,
-                workExperience,
-                hobby);
     }
 }

@@ -1,15 +1,19 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
 import com.nimbusds.jose.util.Base64URL;
+import de.brockhausag.diversitylunchspringboot.profile.logic.*;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.*;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
+@Component
 public class ProfileTestdataFactory {
 
     private static final int numberOfCompleteSets = 3;
@@ -28,6 +32,25 @@ public class ProfileTestdataFactory {
     private final ReligionTestDataFactory religionFactory = new ReligionTestDataFactory();
     private final WorkExperienceTestDataFactory workExperienceFactory = new WorkExperienceTestDataFactory();
     private final HobbyTestDataFactory hobbyFactory = new HobbyTestDataFactory();
+
+    @Autowired
+    private CountryService countryService;
+    @Autowired
+    private DietService dietService;
+    @Autowired
+    private EducationService educationService;
+    @Autowired
+    private GenderService genderService;
+    @Autowired
+    private HobbyService hobbyService;
+    @Autowired
+    private LanguageService languageService;
+    @Autowired
+    private ProjectService projectService;
+    @Autowired
+    private ReligionService religionService;
+    @Autowired
+    private WorkExperienceService workExperienceService;
 
 
     public ProfileEntity buildEntity(int setNumber) {
@@ -211,5 +234,65 @@ public class ProfileTestdataFactory {
         } catch (InvalidKeyException exception) {
             throw new InvalidKeyException("The key was changed and is not longer valid.", exception);
         }
+    }
+
+    public ProfileEntity setFreshProfile() {
+        final Long id = 0L;
+        final String name = "Max";
+        final String email = "Max@Mustermann.de";
+        final int birthyear = 1996;
+        final CountryEntity originCountry = countryService.getAllEntities().get(0);
+        final DietEntity diet = dietService.getAllEntities().get(0);
+        final EducationEntity education = educationService.getAllEntities().get(0);
+        final GenderEntity gender = genderService.getAllEntities().get(0);
+        final LanguageEntity motherTongue = languageService.getAllEntities().get(0);
+        final ProjectEntity project = projectService.getAllEntities().get(0);
+        final ReligionEntity religion = religionService.getAllEntities().get(0);
+        final WorkExperienceEntity workExperience = workExperienceService.getAllEntities().get(0);
+        final HobbyEntity hobby = hobbyService.getAllEntities().get(0);
+
+
+        return new ProfileEntity(id,
+                name,
+                email,
+                birthyear,
+                originCountry,
+                diet,
+                education,
+                gender,
+                motherTongue,
+                project,
+                religion,
+                workExperience,
+                hobby);
+    }
+    public ProfileEntity setFreshAlternativeProfile() {
+        final Long id = 0L;
+        final String name = "Erika";
+        final String email = "Erika@Mustermann.de";
+        final int birthyear = 1976;
+        final CountryEntity originCountry = countryService.getAllEntities().get(1);
+        final DietEntity diet = dietService.getAllEntities().get(1);
+        final EducationEntity education = educationService.getAllEntities().get(1);
+        final GenderEntity gender = genderService.getAllEntities().get(1);
+        final LanguageEntity motherTongue = languageService.getAllEntities().get(1);
+        final ProjectEntity project = projectService.getAllEntities().get(1);
+        final ReligionEntity religion = religionService.getAllEntities().get(1);
+        final WorkExperienceEntity workExperience = workExperienceService.getAllEntities().get(1);
+        final HobbyEntity hobby = hobbyService.getAllEntities().get(1);
+
+        return new ProfileEntity(id,
+                name,
+                email,
+                birthyear,
+                originCountry,
+                diet,
+                education,
+                gender,
+                motherTongue,
+                project,
+                religion,
+                workExperience,
+                hobby);
     }
 }
