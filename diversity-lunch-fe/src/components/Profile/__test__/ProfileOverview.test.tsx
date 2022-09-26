@@ -10,45 +10,68 @@ import { mockedFetchGet } from '../../../__global_test_data__/fetch.test';
 import { loadProfile } from '../../../data/profile/profile.actions';
 import { profileData } from '../../../__global_test_data__/data.test';
 
-describe('Profile Overview', () => {
-    let preFilledProfileDataValues: string[];
-    let ProfileLoader: FC;
-    let container: HTMLElement;
-    let col: HTMLCollection | never[];
+const ProfileLoader: FC = () => {
+    const dispatch = useDispatch();
+    useEffect(() => { dispatch(loadProfile(profileData[0].id)); }, []);
+    return (
+        <ProfileOverview />
+    );
+};
 
-    beforeEach(() => {
-        jest.spyOn(fetcher, 'authenticatedFetchGet').mockImplementation(mockedFetchGet);
+const Container = (
+    <BrowserRouter>
+        <Provider store={APP_STORE}>
+            <ProfileLoader />
+        </Provider>
+    </BrowserRouter>
+);
 
-        ProfileLoader = function () {
-            const dispatch = useDispatch();
-            useEffect(() => { dispatch(loadProfile(profileData[0].id)); }, []);
+let container: HTMLElement;
 
-            return (
-                <ProfileOverview />
-            );
-        };
+describe('ProfileOverview', () => {
+    describe('with not yet loaded data', () => {
+        beforeEach(() => {
+            jest.spyOn(fetcher, 'authenticatedFetchGet')
+                .mockReturnValue(new Promise(() => {
+                }));
+            ({ container } = render(Container));
+        });
 
-        ({ container } = render(
-            <BrowserRouter>
-                <Provider store={APP_STORE}>
-                    <ProfileLoader />
-                </Provider>
-            </BrowserRouter>,
-        ));
-        col = container.children.item(0)?.children.item(2)?.children || [];
+        it('render LoadingAnimation if no profile is loaded yet', () => {
+            const loadingAnimation = container.querySelector('.animation');
+            expect(loadingAnimation).toBeVisible();
+        });
     });
-    it('render content when profile data is loaded', async () => {
-        const result = await screen.findByAltText('diversity icon');
-        expect(result).toBeInTheDocument();
-    });
-    it('profile edit form diversity logo space', () => {
-        const logoElement = container.children.item(0)?.children.item(0);
-        expect(logoElement).not.toBe(null);
-        expect(logoElement).toHaveClass('Profile-logo-container');
-    });
-    it('correct name is shown in the greeting on top of the page', async () => {
-        const result = await screen.findByText(profileData[0].name);
 
-        expect(result).toBeInTheDocument();
+    describe('with loaded data', () => {
+        beforeEach(() => {
+            jest.spyOn(fetcher, 'authenticatedFetchGet')
+                .mockImplementation(mockedFetchGet);
+            ({ container } = render(Container));
+        });
+
+        it('render content when profile data is loaded', async () => {
+            const result = await screen.findByAltText('diversity icon');
+            expect(result)
+                .toBeInTheDocument();
+        });
+
+        it('profile edit form diversity logo space', () => {
+            const logoElement = container.children.item(0)
+                ?.children
+                .item(0);
+            expect(logoElement)
+                .not
+                .toBe(null);
+            expect(logoElement)
+                .toHaveClass('Profile-logo-container');
+        });
+
+        it('correct name is shown in the greeting on top of the page', async () => {
+            const result = await screen.findByText(profileData[0].name);
+
+            expect(result)
+                .toBeInTheDocument();
+        });
     });
 });
