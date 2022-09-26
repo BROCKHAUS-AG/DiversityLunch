@@ -22,7 +22,7 @@ export type ProfileFormIsValidCallback = (formData: Partial<Profile>)=>boolean;
 
 export interface ProfileFormProps {
     initialProfile?: Partial<Profile>,
-    checkValidity: (formData: Partial<Profile>) => boolean,
+    checkValidity: ProfileFormIsValidCallback,
     onSubmit: ProfileFormCallback,
     onChange?: ProfileFormCallback,
     buttonText?: string
@@ -95,66 +95,66 @@ export const ProfileForm: FC<ProfileFormProps> = ({
             </div>
             <Dropdown
                 options={project.items}
-                label="In welchem Projekt arbeitest du derzeit?"
+                placeholder="In welchem Projekt arbeitest du derzeit?"
                 onChange={(value) => updateProfile('project', value)}
-                placeholder="Projekt"
+                label="Projekt"
                 currentValue={profile.project || undefined}
             />
             <Dropdown
                 options={genders.items}
-                label="Wähle ein Geschlecht?"
+                placeholder="Wähle ein Geschlecht?"
                 onChange={(value) => updateProfile('gender', value)}
-                placeholder="Geschlecht"
+                label="Geschlecht"
                 currentValue={profile.gender || undefined}
             />
             <Dropdown
                 options={countries.items}
-                label="Was ist dein Herkunftsland?"
+                placeholder="Was ist dein Herkunftsland?"
                 onChange={(value) => updateProfile('originCountry', value)}
-                placeholder="Herkunftsland"
+                label="Herkunftsland"
                 currentValue={profile.originCountry || undefined}
             />
             <Dropdown
                 options={languages.items}
-                label="Was ist deine Muttersprache?"
+                placeholder="Was ist deine Muttersprache?"
                 onChange={(value) => updateProfile('motherTongue', value)}
-                placeholder="Muttersprache"
+                label="Muttersprache"
                 currentValue={profile.motherTongue || undefined}
             />
             <Dropdown
                 options={religions.items}
-                label="An welche Religion glaubst du?"
+                placeholder="An welche Religion glaubst du?"
                 onChange={(value) => updateProfile('religion', value)}
-                placeholder="Religion"
+                label="Religion"
                 currentValue={profile.religion || undefined}
             />
             <Dropdown
                 options={workExperience.items}
-                label="Wie viele Jahre Berufserfahrung hast du schon gesammelt?"
+                placeholder="Wie viele Jahre Berufserfahrung hast du schon gesammelt?"
                 onChange={(value) => updateProfile('workExperience', value)}
-                placeholder="Berufserfahrung"
+                label="Berufserfahrung"
                 currentValue={profile.workExperience || undefined}
             />
             <Dropdown
                 options={hobbies.items}
-                label="Was hast du für ein Hobby?"
+                placeholder="Was hast du für ein Hobby?"
                 onChange={(value) => updateProfile('hobby', value)}
-                placeholder="Hobby"
+                label="Hobby"
                 currentValue={profile.hobby || undefined}
             />
             <Dropdown
                 options={educations.items}
-                label="Welchen Bildungsweg hast du bisher bestritten?"
+                placeholder="Welchen Bildungsweg hast du bisher bestritten?"
                 onChange={(value) => updateProfile('education', value)}
-                placeholder="Bildungsweg"
+                label="Bildungsweg"
                 currentValue={profile.education || undefined}
             />
 
             <Dropdown
                 options={diets.items}
-                label="Wie ernährst du dich?"
+                placeholder="Wie ernährst du dich?"
                 onChange={(value) => updateProfile('diet', value)}
-                placeholder="Ernährung"
+                label="Ernährung"
                 currentValue={profile.diet || undefined}
             />
             <Button
