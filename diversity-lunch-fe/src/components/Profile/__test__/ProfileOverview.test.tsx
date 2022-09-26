@@ -2,12 +2,11 @@ import { render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import * as redux from 'react-redux';
-import { CombinedState } from '@reduxjs/toolkit/dist/query/core/apiState';
 import { ProfileOverview } from '../ProfileOverview';
-import { APP_STORE, AppStoreState } from '../../../store/Store';
-import { Profile } from '../../../model/Profile';
+import { APP_STORE } from '../../../store/Store';
 import * as fetcher from '../../../utils/fetch.utils';
+import { CATEGORY_ENDPOINT } from '../../../data/category/fetch-category';
+import { COUNTRY_ENDPOINT } from '../../../data/country/fetch-country';
 
 const data = {
     id: 4,
@@ -25,26 +24,24 @@ const data = {
     hobby: { id: 6, descriptor: 'DIY', category: { id: 2, descriptor: 'Kreatives' } },
 };
 
-const fetchProfileData = async () => new Response(JSON.stringify(data));
-
 describe('Profile Overview', () => {
-    let profileData: Profile;
     let preFilledProfileDataValues: string[];
     let providerElement: JSX.Element;
-    let formFields: string[];
     let container: HTMLElement;
     let col: HTMLCollection | never[];
 
     beforeEach(() => {
-        // jest.spyOn(fetcher, 'authenticatedFetchGet').mockReturnValue(fetchProfileData());
-        // jest.spyOn(redux, 'useSelector').mockReturnValue({ status: 'OK', profileData: data });
-        jest.spyOn(redux, 'useSelector').mockImplementation((store: any) => {
-            const profile = (state: AppStoreState) => state.profile;
-            if (store === profile) {
-                return { status: 'OK', profileData: data };
-            }
-            return null;
-        });
+        jest.spyOn(fetcher, 'authenticatedFetchGet').mockImplementation(
+            async (url: string) => {
+                if (url.includes(CATEGORY_ENDPOINT)) {
+                    return new Response(JSON.stringify([{ id: 2, descriptor: 'Kreatives' }, { id: 1337, descriptor: 'Sport' }]));
+                }
+                if (url.includes(COUNTRY_ENDPOINT)) {
+                    return new Response(JSON.stringify([{ id: 9, descriptor: 'Bahamas' }, { id: 1337, descriptor: 'Deutschland' }]));
+                }
+                return new Response('');
+            },
+        );
 
         providerElement = (
             <Provider store={APP_STORE}>
