@@ -5,16 +5,12 @@ import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.config.SecurityConfig;
-import de.brockhausag.diversitylunchspringboot.dataFactories.DietTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
-import de.brockhausag.diversitylunchspringboot.profile.data.DietRepository;
-import de.brockhausag.diversitylunchspringboot.profile.logic.DietService;
+import de.brockhausag.diversitylunchspringboot.profile.logic.*;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.DietEntity;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.*;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
-import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,24 +76,21 @@ class ProfileControllerIT {
     private MicrosoftGraphService microsoftGraphService;
 
     @BeforeEach
-    void tearUp() {
+    void beforeEach() {
         mockMvc = MockMvcBuilders.webAppContextSetup(appContext)
                 .apply(springSecurity())
                 .build();
 
-        ProfileEntity tmpProfileEntity = profileFactory.buildEntity(1);
+
         when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
-        accountEntity1 = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
-        profileEntity1 = profileService.createProfile(tmpProfileEntity, accountEntity1.getId()).orElseThrow();
+        // profileEntity1 = profileService.createProfile(tmpProfileEntity, accountEntity1.getId()).orElseThrow();
 
-
-        tmpProfileEntity = profileFactory.buildEntity(2);
-        accountEntity2 = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
-        profileService.createProfile(tmpProfileEntity, accountEntity2.getId()).orElseThrow();
+        accountEntity2 = accountService.getOrCreateAccount(testProfile.getEmail());
+        testProfile = profileService.createProfile(testProfile, accountEntity2.getId()).orElseThrow();
     }
 
     @AfterEach
-    void afterEach(){
+    void afterEach() {
         accountRepository.deleteAll();
         profileRepository.deleteAll();
     }
@@ -156,7 +149,7 @@ class ProfileControllerIT {
     }
 
     @Test
-    void testCreateProfile_withWrongId_thenForbidden() throws Exception{
+    void testCreateProfile_withWrongId_thenForbidden() throws Exception {
 
         AccountEntity account = accountService.getOrCreateAccount("irgendwas");
         ProfileDto createProfileDto = profileFactory.buildDto(1);
@@ -183,4 +176,58 @@ class ProfileControllerIT {
                                 .content(profileJSON)
                 ).andExpect(status().isForbidden());
     }
+
+    ///// DATA
+    @Autowired
+    private CountryService countryService;
+    @Autowired
+    private DietService dietService;
+    @Autowired
+    private EducationService educationService;
+    @Autowired
+    private GenderService genderService;
+    @Autowired
+    private HobbyService hobbyService;
+    @Autowired
+    private LanguageService languageService;
+    @Autowired
+    private ProjectService projectService;
+    @Autowired
+    private ReligionService religionService;
+    @Autowired
+    private WorkExperienceService workExperienceService;
+    private ProfileEntity testProfile;
+
+    private void setFreshProfile() {
+        final Long id = 0L;
+        final String name = "Max Mustermann";
+        final String email = "Max@Mustermann.de";
+        final int birthyear = 1996;
+        final CountryEntity originCountry = countryService.getAllEntities().get(0);
+        final DietEntity diet = dietService.getAllEntities().get(0);
+        final EducationEntity education = educationService.getAllEntities().get(0);
+        final GenderEntity gender = genderService.getAllEntities().get(0);
+        final LanguageEntity motherTongue = languageService.getAllEntities().get(0);
+        final ProjectEntity project = projectService.getAllEntities().get(0);
+        final ReligionEntity religion = religionService.getAllEntities().get(0);
+        final WorkExperienceEntity workExperience = workExperienceService.getAllEntities().get(0);
+        final HobbyEntity hobby = hobbyService.getAllEntities().get(0);
+
+
+        testProfile = new ProfileEntity(id,
+                name,
+                email,
+                birthyear,
+                originCountry,
+                diet,
+                education,
+                gender,
+                motherTongue,
+                project,
+                religion,
+                workExperience,
+                hobby);
+    }
+
+
 }
