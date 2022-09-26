@@ -1,4 +1,5 @@
 import { GenericFetch } from '../generic/GenericFetch';
 import { religionSlice } from './religion-reducer';
 
-export const religionFetch = new GenericFetch(religionSlice, 'religion');
+export const RELIGION_ENDPOINT = 'religion';
+export const religionFetch = new GenericFetch(religionSlice, RELIGION_ENDPOINT);
