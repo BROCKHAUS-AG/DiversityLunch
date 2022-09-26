@@ -32,7 +32,7 @@ describe('Profile form', () => {
     it('should disable the button if checkValidity returns false', async () => {
         jest.spyOn(fetcher, 'authenticatedFetchGet')
             .mockImplementation(mockedFetchGet);
-        renderContainer(<ProfileForm initialProfile={profileData[0]} checkValidity={() => false} onSubmit={() => {}} />);
+        renderContainer(<ProfileForm checkValidity={() => false} onSubmit={() => {}} />);
 
         const result = await screen.findByText('Speichern');
 
@@ -42,7 +42,7 @@ describe('Profile form', () => {
     it('should enable the button if checkValidity returns true', async () => {
         jest.spyOn(fetcher, 'authenticatedFetchGet')
             .mockImplementation(mockedFetchGet);
-        renderContainer(<ProfileForm initialProfile={profileData[0]} checkValidity={() => true} onSubmit={() => {}} />);
+        renderContainer(<ProfileForm checkValidity={() => true} onSubmit={() => {}} />);
 
         const result = await screen.findByText('Speichern');
 
@@ -52,7 +52,7 @@ describe('Profile form', () => {
     it('should call onSubmit after button was clicked', async () => {
         jest.spyOn(fetcher, 'authenticatedFetchGet')
             .mockImplementation(mockedFetchGet);
-        renderContainer(<ProfileForm initialProfile={profileData[0]} checkValidity={() => true} onSubmit={(p) => expect(p).toBeTruthy()} />);
+        renderContainer(<ProfileForm checkValidity={() => true} onSubmit={(p) => expect(p).toBeTruthy()} />);
 
         const button = await screen.findByText('Speichern');
         button.click();
@@ -124,6 +124,54 @@ describe('Profile form', () => {
         const dietDropdown = await screen.findByLabelText('Ernährung') as HTMLInputElement | null;
         expect(dietDropdown).toBeVisible();
         if (dietDropdown) dietDropdown.value = INSERTED_DIET_DESCRIPTOR;
+
+        const button = await screen.findByText('Speichern');
+        setTimeout(() => button.click(), 0);
+    });
+
+    it('should  fill in the initialProfile props values as input default values', async () => {
+        jest.spyOn(fetcher, 'authenticatedFetchGet').mockImplementation(mockedFetchGet);
+        renderContainer(<ProfileForm initialProfile={profileData[0]} checkValidity={() => true} onSubmit={() => {}} />);
+
+        const birthYearElement = await screen.findByLabelText('Geburtsjahr') as HTMLInputElement | null;
+        expect(birthYearElement).toHaveValue(profileData[0].birthYear);
+
+        const projectDropdown = await screen.findByLabelText('Projekt') as HTMLInputElement | null;
+        expect(projectDropdown).toHaveValue(profileData[0].project.descriptor);
+
+        const genderDropdown = await screen.findByLabelText('Geschlecht') as HTMLInputElement | null;
+        expect(genderDropdown).toHaveValue(profileData[0].gender.descriptor);
+
+        const originCountryDropdown = await screen.findByLabelText('Herkunftsland') as HTMLInputElement | null;
+        expect(originCountryDropdown).toHaveValue(profileData[0].originCountry.descriptor);
+
+        const motherTongueDropdown = await screen.findByLabelText('Muttersprache') as HTMLInputElement | null;
+        expect(motherTongueDropdown).toHaveValue(profileData[0].motherTongue.descriptor);
+
+        const religionDropdown = await screen.findByLabelText('Religion') as HTMLInputElement | null;
+        expect(religionDropdown).toHaveValue(profileData[0].religion.descriptor);
+
+        const workExperienceDropdown = await screen.findByLabelText('Berufserfahrung') as HTMLInputElement | null;
+        expect(workExperienceDropdown).toHaveValue(profileData[0].workExperience.descriptor);
+
+        const hobbyDropdown = await screen.findByLabelText('Hobby') as HTMLInputElement | null;
+        expect(hobbyDropdown).toHaveValue(profileData[0].hobby.descriptor);
+
+        const educationDropdown = await screen.findByLabelText('Bildungsweg') as HTMLInputElement | null;
+        expect(educationDropdown).toHaveValue(profileData[0].education.descriptor);
+
+        const dietDropdown = await screen.findByLabelText('Ernährung') as HTMLInputElement | null;
+        expect(dietDropdown).toHaveValue(profileData[0].diet.descriptor);
+    });
+
+    it('should propagate initial id, name and email values when onSubmit is called', async () => {
+        const expectInputData = (p: Partial<Profile>) => {
+            expect(p.id).toEqual(profileData[0].id);
+            expect(p.email).toEqual(profileData[0].email);
+            expect(p.name).toEqual(profileData[0].name);
+        };
+        jest.spyOn(fetcher, 'authenticatedFetchGet').mockImplementation(mockedFetchGet);
+        renderContainer(<ProfileForm initialProfile={profileData[0]} checkValidity={() => true} onSubmit={expectInputData} />);
 
         const button = await screen.findByText('Speichern');
         setTimeout(() => button.click(), 0);
