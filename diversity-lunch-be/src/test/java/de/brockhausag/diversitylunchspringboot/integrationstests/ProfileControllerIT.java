@@ -56,12 +56,6 @@ class ProfileControllerIT {
     private AccountEntity otherAccountEntity;
 
     @Autowired
-    private AccountRepository accountRepository;
-
-    @Autowired
-    private ProfileRepository profileRepository;
-
-    @Autowired
     private ProfileMapper profileMapper;
 
     @Autowired
@@ -95,12 +89,6 @@ class ProfileControllerIT {
 
         myProfileEntity = profileService.createProfile(myProfileEntity, myAccountEntity.getId()).orElseThrow();
         profileService.createProfile(otherProfileEntity, otherAccountEntity.getId()).orElseThrow();
-    }
-
-    @AfterEach
-    void afterEach() {
-        accountRepository.deleteAll();
-        profileRepository.deleteAll();
     }
 
     @Test

@@ -1,3 +1,5 @@
+DELETE FROM account_entity;
+DELETE FROM profile_entity;
 DELETE FROM country_entity;
 DELETE FROM diet_entity;
 DELETE FROM education_entity;
@@ -8,4 +10,3 @@ DELETE FROM language_entity;
 DELETE FROM project_entity;
 DELETE FROM religion_entity;
 DELETE FROM work_experience_entity;
-
