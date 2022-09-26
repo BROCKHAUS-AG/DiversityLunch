@@ -30,7 +30,7 @@ export class GenericFetch<T extends Identifiable> {
     public getAll() {
         return async (dispatch: Dispatch) => {
             try {
-                const response = await authenticatedFetchGet(this.url + 'api/' + this.endpoint + '/all');
+                const response = await authenticatedFetchGet(`${this.url}api/${this.endpoint}/all`);
 
                 if (!response.ok) {
                     dispatch(this._errorSlice.httpError({ statusCode: response.status }));
