@@ -23,15 +23,15 @@ INSERT INTO profile_entity VALUES (1, 1998, 'first.profile@some.tdl', 'first', (
     (5, 1998, 'copyOfFirst.profile@some.tdl', 'copyOfFirst', (SELECT * FROM meat), (SELECT * FROM study), (SELECT * FROM male), (SELECT * FROM cooking), (SELECT * FROM german), (SELECT * FROM algerien), (SELECT * FROM internProject), (SELECT * FROM jewish),(SELECT * FROM lowExperience) );
 
 
-/*Score under 9*/
+/*Score under 9, matching algorithm at date 26.09.2022 gives a score of 4*/
 INSERT INTO meeting_proposal_entity VALUES (1, '2022-03-16 16:23:53.786276', false, '2022-03-18 12:30:00.000000', 1),
             (2, '2022-03-16 16:23:53.786276', false, '2022-03-18 12:30:00.000000', 2);
 
-/*Score between 9 and 21*/
+/*Score between 9 and 21, matching algorithm at date 26.09.2022 gives a score of 11*/
 INSERT INTO meeting_proposal_entity VALUES (3, '2022-03-16 16:23:53.786276', false, '2022-03-18 11:30:00.000000', 1),
          (4, '2022-03-16 16:23:53.786276', false, '2022-03-18 11:30:00.000000', 3);
 
-/*Score over 21*/
+/*Score over 21, matching algorithm at date 26.09.2022 gives a score of 25*/
 INSERT INTO meeting_proposal_entity VALUES (5, '2022-03-16 16:23:53.786276', false, '2022-04-05 13:30:00.000000', 1),
     (6, '2022-03-16 16:23:53.786276', false, '2022-04-05 13:30:00.000000', 4);
 
