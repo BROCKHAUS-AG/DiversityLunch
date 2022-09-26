@@ -2,9 +2,30 @@ import { render, screen } from '@testing-library/react';
 
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import * as redux from 'react-redux';
+import { CombinedState } from '@reduxjs/toolkit/dist/query/core/apiState';
 import { ProfileOverview } from '../ProfileOverview';
-import { APP_STORE } from '../../../store/Store';
+import { APP_STORE, AppStoreState } from '../../../store/Store';
 import { Profile } from '../../../model/Profile';
+import * as fetcher from '../../../utils/fetch.utils';
+
+const data = {
+    id: 4,
+    name: 'Horstus',
+    email: 'jtonn@brockhaus-ag.de',
+    birthYear: 1920,
+    originCountry: { id: 9, descriptor: 'Bahamas' },
+    diet: { id: 3, descriptor: 'Veganer' },
+    education: { id: 2, descriptor: 'Studium' },
+    gender: { id: 2, descriptor: 'Weiblich' },
+    motherTongue: { id: 9, descriptor: 'Bhojpuri' },
+    project: { id: 1, descriptor: 'Externes Projekt' },
+    religion: { id: 5, descriptor: 'Buddhismus' },
+    workExperience: { id: 2, descriptor: '4-10 Jahre' },
+    hobby: { id: 6, descriptor: 'DIY', category: { id: 2, descriptor: 'Kreatives' } },
+};
+
+const fetchProfileData = async () => new Response(JSON.stringify(data));
 
 describe('Profile Overview', () => {
     let profileData: Profile;
@@ -15,21 +36,15 @@ describe('Profile Overview', () => {
     let col: HTMLCollection | never[];
 
     beforeEach(() => {
-        profileData = {
-            id: 42,
-            name: 'Martin Mustermann',
-            email: 'martin@mustermann.com',
-            birthYear: 1993,
-            project: { id: 7, descriptor: 'sonstiges' },
-            gender: { id: 8, descriptor: 'MALE' },
-            originCountry: { id: 9, descriptor: 'Deutschland' },
-            motherTongue: { id: 10, descriptor: 'deutsch' },
-            religion: { id: 11, descriptor: 'Christentum' },
-            hobby: { id: 12, descriptor: 'Gaming' },
-            education: { id: 13, descriptor: 'APPRENTICESHIP' },
-            workExperience: { id: 14, descriptor: 'LOW_EXPERIENCE' },
-            diet: { id: 15, descriptor: 'MEAT' },
-        };
+        // jest.spyOn(fetcher, 'authenticatedFetchGet').mockReturnValue(fetchProfileData());
+        // jest.spyOn(redux, 'useSelector').mockReturnValue({ status: 'OK', profileData: data });
+        jest.spyOn(redux, 'useSelector').mockImplementation((store: any) => {
+            const profile = (state: AppStoreState) => state.profile;
+            if (store === profile) {
+                return { status: 'OK', profileData: data };
+            }
+            return null;
+        });
 
         providerElement = (
             <Provider store={APP_STORE}>
@@ -49,9 +64,9 @@ describe('Profile Overview', () => {
         expect(logoElement).toHaveClass('Profile-logo-container');
     });
     it('form has needed amount of fields', async () => {
-        const result = await screen.findByRole('button');
-        expect(result).toBeDefined();
-        // expect(formFieldLabels).toEqual(formFields);
+        const result = await screen.findByText('Horstus');
+
+        expect(result).toBe(true);
     });
     it('check correct value is shown', () => {
         const formFieldValues = [];
