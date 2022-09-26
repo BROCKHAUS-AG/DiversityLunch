@@ -2,15 +2,14 @@ package de.brockhausag.diversitylunchspringboot.integrationstests;
 
 import de.brockhausag.diversitylunchspringboot.config.MsTeamsTestConfig;
 import de.brockhausag.diversitylunchspringboot.integrationDataFactories.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.match.service.MatchingService;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
-import de.brockhausag.diversitylunchspringboot.match.service.MatchingService;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -46,12 +45,8 @@ class MatchingServiceIT {
     private MeetingProposalRepository meetingProposalRepository;
     @Autowired
     private ProfileRepository profileRepository;
+    @Autowired
     private ProfileTestdataFactory profileFactory;
-
-    @BeforeEach
-    void setup(){
-        this.profileFactory = new ProfileTestdataFactory();
-    }
 
     @Test
     void testMatchingServiceScore0() {
@@ -61,7 +56,7 @@ class MatchingServiceIT {
         LocalDateTime proposedDateTime = LocalDateTime.of(2022, 3, 18, 12, 30);
         MeetingEntity expectedForCase21First = MeetingEntity.builder()
                 .fromDateTime(proposedDateTime)
-                .score(6)
+                .score(4)
                 .partner(partner)
                 .proposer(proposer)
                 .build();
@@ -76,11 +71,11 @@ class MatchingServiceIT {
     @Test
     void testMatchingServiceScore9() {
         LocalDateTime proposedDateTime = LocalDateTime.of(2022, 3, 18, 11, 30);
-        ProfileEntity partner = profileRepository.findById(3L).orElseThrow();
-        ProfileEntity proposer = profileRepository.findById(4L).orElseThrow();
+        ProfileEntity partner = profileRepository.findById(1L).orElseThrow();
+        ProfileEntity proposer = profileRepository.findById(3L).orElseThrow();
         MeetingEntity expectedForCase9 = MeetingEntity.builder()
                 .fromDateTime(proposedDateTime)
-                .score(13)
+                .score(11)
                 .partner(partner)
                 .proposer(proposer)
                 .build();
@@ -95,11 +90,11 @@ class MatchingServiceIT {
     @Test
     void testMatchingServiceScore21() {
         LocalDateTime proposedDateTime = LocalDateTime.of(2022, 4, 5, 13, 30);
-        ProfileEntity partner = profileRepository.findById(5L).orElseThrow();
-        ProfileEntity proposer = profileRepository.findById(6L).orElseThrow();
+        ProfileEntity partner = profileRepository.findById(1L).orElseThrow();
+        ProfileEntity proposer = profileRepository.findById(4L).orElseThrow();
         MeetingEntity expectedForCase0 = MeetingEntity.builder()
                 .fromDateTime(proposedDateTime)
-                .score(30)
+                .score(25)
                 .partner(partner)
                 .proposer(proposer)
                 .build();
@@ -115,7 +110,7 @@ class MatchingServiceIT {
         LocalDateTime proposedDateTime = LocalDateTime.of(2022, 4, 5, 13, 30);
         MeetingProposalEntity expectedForCaseUnmatched = MeetingProposalEntity.builder()
                 .proposedDateTime(proposedDateTime)
-                .proposerProfile(profileFactory.buildEntity(1))
+                .proposerProfile(profileFactory.createNewMaxProfile())
                 .matched(false)
                 .build();
         matchingService.executeMatching(proposedDateTime, 21);
