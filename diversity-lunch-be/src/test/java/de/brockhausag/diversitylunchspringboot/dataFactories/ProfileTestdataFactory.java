@@ -237,7 +237,7 @@ public class ProfileTestdataFactory {
     }
 
     public ProfileEntity setFreshProfile() {
-        final Long id = 0L;
+        final Long id = 1L;
         final String name = "Max";
         final String email = "Max@Mustermann.de";
         final int birthyear = 1996;
@@ -267,7 +267,7 @@ public class ProfileTestdataFactory {
                 hobby);
     }
     public ProfileEntity setFreshAlternativeProfile() {
-        final Long id = 0L;
+        final Long id = 2L;
         final String name = "Erika";
         final String email = "Erika@Mustermann.de";
         final int birthyear = 1976;

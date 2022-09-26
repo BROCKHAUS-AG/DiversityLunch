@@ -5,6 +5,7 @@ import de.brockhausag.diversitylunchspringboot.account.repository.AccountReposit
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.config.SecurityConfig;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.TestBaseDto;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
@@ -77,7 +78,12 @@ public class EMailControllerIT {
     @Autowired
     private WebApplicationContext appContext;
     private ProfileEntity myProfileEntity;
+    private AccountEntity accountEntity;
 
+    @Autowired
+    private ProfileRepository profileRepository;
+    @Autowired
+    private AccountRepository accountRepository;
 
     @SneakyThrows
     @BeforeEach
@@ -89,7 +95,17 @@ public class EMailControllerIT {
         HttpUriRequest request = new HttpDelete( "http://localhost:8025/api/v1/messages");
         HttpClientBuilder.create().build().execute( request );
 
+        when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
+        when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
         myProfileEntity = profileTestdataFactory.setFreshProfile();
+        accountEntity = accountService.getOrCreateAccount(myProfileEntity.getEmail());
+        profileService.createProfile(myProfileEntity, accountEntity.getId()).orElseThrow();
+    }
+
+    @AfterEach
+    void after() {
+        accountRepository.deleteAll();
+        profileRepository.deleteAll();
     }
 
     @SneakyThrows
@@ -145,10 +161,6 @@ public class EMailControllerIT {
     @SneakyThrows
     @Test
     public void testAuthenticationSendTestMailToLoggedInUser_withValidId_expectedOkStatus() {
-        when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
-        when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
-        AccountEntity accountEntity = accountService.getOrCreateAccount(myProfileEntity.getEmail());
-        profileService.createProfile(myProfileEntity, accountEntity.getId()).orElseThrow();
         Long id = myProfileEntity.getId();
         String url = "/api/mailing/sendTestMailToUser?id=" + id;
 
@@ -158,10 +170,6 @@ public class EMailControllerIT {
     @SneakyThrows
     @Test
     public void testAuthenticationSendTestMailToLoggedInUser_withInvalidId_expectedForbiddenStatus() {
-        when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
-        when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
-        AccountEntity accountEntity = accountService.getOrCreateAccount(myProfileEntity.getEmail());
-        profileService.createProfile(myProfileEntity, accountEntity.getId()).orElseThrow();
         Long id = myProfileEntity.getId() + 1;
         String url = "/api/mailing/sendTestMailToUser?id=" + id;
 
