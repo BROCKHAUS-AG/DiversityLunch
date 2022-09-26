@@ -6,9 +6,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { ProfileOverview } from '../ProfileOverview';
 import { APP_STORE } from '../../../store/Store';
 import * as fetcher from '../../../utils/fetch.utils';
-import { mockedFetchGet } from '../../../__global_test_data__/fetch.test';
+import { mockedFetchGet } from '../../../__global_test_data__/fetch';
 import { loadProfile } from '../../../data/profile/profile.actions';
-import { profileData } from '../../../__global_test_data__/data.test';
+import { profileData } from '../../../__global_test_data__/data';
 
 const ProfileLoader: FC = () => {
     const dispatch = useDispatch();

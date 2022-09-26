@@ -9,7 +9,7 @@ import {
     projectData,
     religionData,
     workExperienceData,
-} from './data.test';
+} from './data';
 import { COUNTRY_ENDPOINT } from '../data/country/fetch-country';
 import { DIET_ENDPOINT } from '../data/diet/fetch-diet';
 import { EDUCATION_ENDPOINT } from '../data/education/fetch-education';
