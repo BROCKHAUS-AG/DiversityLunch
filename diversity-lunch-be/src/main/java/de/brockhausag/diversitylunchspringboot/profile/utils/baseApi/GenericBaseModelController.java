@@ -4,8 +4,8 @@ import de.brockhausag.diversitylunchspringboot.profile.utils.Mapper;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,5 +46,32 @@ public class GenericBaseModelController<
                 mapper.entityToDto(optionalEntityType.get()),
                 HttpStatus.OK
         );
+    }
+
+    @PostMapping
+    @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).PROFILE_OPTION_WRITE)")
+    public ResponseEntity<DtoType> postOne(@RequestBody DtoType dto){
+        EntityType entity = mapper.dtoToEntity(dto);
+
+        entity = service.createEntity(entity);
+
+        return ResponseEntity.ok(mapper.entityToDto((entity)));
+    }
+
+    @PutMapping
+    @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).PROFILE_OPTION_WRITE)")
+    public ResponseEntity<DtoType> putOne(@RequestBody DtoType dto){
+        EntityType entity = mapper.dtoToEntity(dto);
+
+        entity = service.updateOrCreateEntity(entity);
+
+        return ResponseEntity.ok(mapper.entityToDto((entity)));
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).PROFILE_OPTION_WRITE)")
+    public ResponseEntity<?> deleteOne(@PathVariable Long id){
+        if(service.deleteEntityById(id)) return new ResponseEntity<>(HttpStatus.OK);
+        else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

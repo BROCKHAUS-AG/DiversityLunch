@@ -3,15 +3,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider, useDispatch } from 'react-redux';
 import { FC, useEffect } from 'react';
 import * as fetcher from '../../../utils/fetch.utils';
-import { mockedFetchGetAccount, mockedFetchGetAccountByRole } from '../../../__global_test_data__/fetch';
+import { mockedFetchGetAccount } from '../../../__global_test_data__/fetch';
 import { Dashboard } from '../Dashboard';
 import { Role } from '../../../model/Role';
 import { APP_STORE } from '../../../store/Store';
-import { loadProfile } from '../../../data/profile/profile.actions';
-import { profileData } from '../../../__global_test_data__/data';
-import { ProfileOverview } from '../../Profile/ProfileOverview';
 import { loadAccount } from '../../../data/account/account.actions';
-import { Account } from '../../../types/Account';
 
 const AccountLoader: FC = () => {
     const dispatch = useDispatch();
@@ -23,7 +19,7 @@ const AccountLoader: FC = () => {
 
 const renderContainer = (role: Role) => {
     jest.spyOn(fetcher, 'authenticatedFetchGet')
-        .mockImplementation(mockedFetchGetAccount(Role.STANDARD));
+        .mockImplementation(mockedFetchGetAccount(role));
     render(
         <BrowserRouter>
             <Provider store={APP_STORE}>
@@ -35,16 +31,16 @@ const renderContainer = (role: Role) => {
 describe('Dashboard', () => {
     it('should hide admin panel when user has a standard account', async () => {
         renderContainer(Role.STANDARD);
-        jest.spyOn(fetcher, 'authenticatedFetchGet')
-            .mockImplementation(mockedFetchGetAccount(Role.STANDARD));
-        const iconElement = await screen.findByAltText('admin icon');
-        expect(iconElement).toBeFalsy();
+        expect(await screen.queryByAltText('admin icon')).toBeNull();
     });
-    it('should show admin panel when user has a admin account', () => {
+
+    it('should show admin panel when user has a admin account', async () => {
         renderContainer(Role.ADMIN);
-        jest.spyOn(fetcher, 'authenticatedFetchGet')
-            .mockImplementation(mockedFetchGetAccount(Role.ADMIN));
-        const linkElement = screen.getByAltText('admin icon');
-        expect(linkElement).toBeInTheDocument();
+        expect(await screen.findByAltText('admin icon')).toBeInTheDocument();
+    });
+
+    it('should show admin panel when user has a azure admin account', async () => {
+        renderContainer(Role.AZURE_ADMIN);
+        expect(await screen.findByAltText('admin icon')).toBeInTheDocument();
     });
 });
