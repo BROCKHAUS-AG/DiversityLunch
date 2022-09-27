@@ -13,9 +13,9 @@ export const useGetAccountInformation = () => {
         if (account.status === 'OK') {
             const {
                 accountData: {
-                    // eslint-disable-next-line no-shadow
+                    // eslint-disable-next-line @typescript-eslint/no-shadow
                     id,
-                    // eslint-disable-next-line no-shadow
+                    // eslint-disable-next-line @typescript-eslint/no-shadow
                     profileId,
                 },
             } = account;

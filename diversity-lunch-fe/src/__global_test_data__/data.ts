@@ -1,4 +1,4 @@
-import {Role} from "../model/Role";
+import { Role } from '../model/Role';
 
 export const categoryData = [{ id: 2, descriptor: 'Kreatives' }, { id: 1337, descriptor: 'Sport' }];
 export const countryData = [{ id: 9, descriptor: 'Bahamas' }, { id: 1337, descriptor: 'Deutschland' }];
