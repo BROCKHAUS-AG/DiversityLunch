@@ -4,7 +4,7 @@ import { APP_CONFIG } from '../../config/app-config.const';
 import { storePath } from '../Shared/SessionStorageRedirection';
 
 const oidcWellKnown = {
-  authorization_endpoint: APP_CONFIG.REACT_APP_OIDC_AUTHORIZATION_ENDPOINT,
+    authorization_endpoint: APP_CONFIG.REACT_APP_OIDC_AUTHORIZATION_ENDPOINT,
 };
 
 const createOidcUrl = async () => `${oidcWellKnown.authorization_endpoint
@@ -14,14 +14,14 @@ const createOidcUrl = async () => `${oidcWellKnown.authorization_endpoint
         + `&scope=${encodeURIComponent(APP_CONFIG.REACT_APP_OIDC_SCOPE)}`;
 
 export const Login: React.FC = () => {
-  React.useEffect(() => {
-    createOidcUrl().then((res) => {
-      storePath(window.location.pathname);
-      window.location.href = res;
-    });
-  }, []);
+    React.useEffect(() => {
+        createOidcUrl().then((res) => {
+            storePath(window.location.pathname);
+            window.location.href = res;
+        });
+    }, []);
 
-  return (
-    <LoadingAnimation size="block-app" />
-  );
+    return (
+        <LoadingAnimation size="block-app" />
+    );
 };

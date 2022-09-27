@@ -15,66 +15,65 @@ type CharacteristicProps = {
 
 // eslint-disable-next-line max-len
 export const TextfieldCharacteristic: React.FC<CharacteristicProps> = (props: CharacteristicProps) => {
-  const {
-    showingAttribute,
-    defaultStartValue,
-    changeCurrentFormState,
-    attribute,
-  } = props;
+    const {
+        showingAttribute,
+        defaultStartValue,
+        changeCurrentFormState,
+        attribute,
+    } = props;
 
-  const [currentValue, setCurrentValue] = useState(defaultStartValue);
-  const [chosen, setChosen] = useState(false);
+    const [currentValue, setCurrentValue] = useState(defaultStartValue);
+    const [chosen, setChosen] = useState(false);
 
-  const onChangeCurrentValue = (newValue: string) => {
-    setCurrentValue(newValue);
-    changeCurrentFormState(attribute, newValue);
-  };
+    const onChangeCurrentValue = (newValue: string) => {
+        setCurrentValue(newValue);
+        changeCurrentFormState(attribute, newValue);
+    };
 
-  const changeIcon = (): void => {
-    setChosen(!chosen);
-  };
+    const changeIcon = (): void => {
+        setChosen(!chosen);
+    };
 
-  return (
-    <div className="Characteristic">
-      <div className="Characteristic-left-container">
-        <h1 className="Characteristic-attribute">{showingAttribute}</h1>
-        {
+    return (
+        <div className="Characteristic">
+            <div className="Characteristic-left-container">
+                <h1 className="Characteristic-attribute">{showingAttribute}</h1>
+                {
 
-            chosen
-              ? (
-                <TextField
-                  defaultValue={defaultStartValue}
-                  onChange={(event) => onChangeCurrentValue(event.target.value)}
+                    chosen
+                        ? (
+                            <TextField
+                                defaultValue={defaultStartValue}
+                                onChange={(event) => onChangeCurrentValue(event.target.value)}
+                            />
+                        )
+                        : <h1 className="Characteristic-value">{currentValue}</h1>
 
-                />
-              )
-              : <h1 className="Characteristic-value">{currentValue}</h1>
-
-          }
-      </div>
-      <div
-        className="Characteristic-right-container"
-        onClick={changeIcon}
-        role="button"
-      >
-        {
-            chosen
-              ? (
-                <img
-                  alt="icon_check"
-                  className="Characteristic-icons"
-                  src={iconCheck}
-                />
-              )
-              : (
-                <img
-                  alt="icon_edit"
-                  className="Characteristic-icons"
-                  src={iconEdit}
-                />
-              )
-          }
-      </div>
-    </div>
-  );
+                }
+            </div>
+            <div
+                className="Characteristic-right-container"
+                onClick={changeIcon}
+                role="button"
+            >
+                {
+                    chosen
+                        ? (
+                            <img
+                                alt="icon_check"
+                                className="Characteristic-icons"
+                                src={iconCheck}
+                            />
+                        )
+                        : (
+                            <img
+                                alt="icon_edit"
+                                className="Characteristic-icons"
+                                src={iconEdit}
+                            />
+                        )
+                }
+            </div>
+        </div>
+    );
 };

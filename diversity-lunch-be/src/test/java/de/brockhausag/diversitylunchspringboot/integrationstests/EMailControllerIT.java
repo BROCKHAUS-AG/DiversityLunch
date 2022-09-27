@@ -3,10 +3,10 @@ package de.brockhausag.diversitylunchspringboot.integrationstests;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.config.SecurityConfig;
-import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.integrationDataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
-import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
-import de.brockhausag.diversitylunchspringboot.profile.service.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMailProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -27,6 +27,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -37,6 +39,8 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -44,6 +48,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RequiredArgsConstructor
 @ActiveProfiles("Test")
 @Import(SecurityConfig.class)
+@SqlGroup({
+        @Sql(scripts = "classpath:integrationstests/insert_test_data.sql", executionPhase = BEFORE_TEST_METHOD),
+        @Sql(scripts = "classpath:integrationstests/delete_test_data.sql", executionPhase = AFTER_TEST_METHOD)
+})
 public class EMailControllerIT {
 
     @MockBean
@@ -55,7 +63,8 @@ public class EMailControllerIT {
     @Autowired
     private ProfileService profileService;
 
-    private final ProfileTestdataFactory profileTestdataFactory = new ProfileTestdataFactory();
+    @Autowired
+    private ProfileTestdataFactory profileTestdataFactory;
 
     private MockMvc mockMvc;
 
@@ -63,6 +72,9 @@ public class EMailControllerIT {
 
     @Autowired
     private WebApplicationContext appContext;
+    private ProfileEntity myProfileEntity;
+    private AccountEntity accountEntity;
+
     @SneakyThrows
     @BeforeEach
     void setup(){
@@ -72,8 +84,13 @@ public class EMailControllerIT {
         // Nach jedem Test soll die Test Mail geloescht werden
         HttpUriRequest request = new HttpDelete( "http://localhost:8025/api/v1/messages");
         HttpClientBuilder.create().build().execute( request );
-    }
 
+        when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
+        when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
+        myProfileEntity = profileTestdataFactory.createNewMaxProfile();
+        accountEntity = accountService.getOrCreateAccount(myProfileEntity.getEmail());
+        myProfileEntity = profileService.createProfile(myProfileEntity, accountEntity.getId()).orElseThrow();
+    }
 
     @SneakyThrows
     @Test
@@ -128,12 +145,7 @@ public class EMailControllerIT {
     @SneakyThrows
     @Test
     public void testAuthenticationSendTestMailToLoggedInUser_withValidId_expectedOkStatus() {
-        when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
-        ProfileEntity tmpProfileEntity = profileTestdataFactory.createEntity();
-        when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
-        AccountEntity accountEntity = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
-        profileService.createProfile(tmpProfileEntity, accountEntity.getId()).orElseThrow();
-        long id = tmpProfileEntity.getId();
+        Long id = myProfileEntity.getId();
         String url = "/api/mailing/sendTestMailToUser?id=" + id;
 
         performRequestWithToken(url, accountEntity).andExpect(status().isOk());
@@ -142,12 +154,7 @@ public class EMailControllerIT {
     @SneakyThrows
     @Test
     public void testAuthenticationSendTestMailToLoggedInUser_withInvalidId_expectedForbiddenStatus() {
-        when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
-        ProfileEntity tmpProfileEntity = profileTestdataFactory.createEntity();
-        AccountEntity accountEntity = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
-        when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
-        profileService.createProfile(tmpProfileEntity, accountEntity.getId()).orElseThrow();
-        long id = tmpProfileEntity.getId() + 1;
+        Long id = myProfileEntity.getId() + 1;
         String url = "/api/mailing/sendTestMailToUser?id=" + id;
 
         performRequestWithToken(url, accountEntity).andExpect(status().isForbidden());

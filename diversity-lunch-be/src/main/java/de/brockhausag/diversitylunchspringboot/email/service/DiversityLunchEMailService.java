@@ -2,8 +2,8 @@ package de.brockhausag.diversitylunchspringboot.email.service;
 
 import com.nimbusds.jose.util.StandardCharset;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Question;
-import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
-import de.brockhausag.diversitylunchspringboot.profile.service.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMailProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -71,7 +71,7 @@ public class DiversityLunchEMailService {
         return "";
     }
 
-    public void sendMailToUser(long id, String body) throws MessagingException {
+    public void sendMailToUser(Long id, String body) throws MessagingException {
         System.out.println("Beginning of sendMailToUser function");
         Optional<ProfileEntity> pe = this.profileService.getProfile(id);
         System.out.println("Got profile in sendMailToUser function");

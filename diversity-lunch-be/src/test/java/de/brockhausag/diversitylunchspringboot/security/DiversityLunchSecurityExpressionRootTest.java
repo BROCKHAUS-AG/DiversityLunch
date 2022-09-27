@@ -2,12 +2,12 @@ package de.brockhausag.diversitylunchspringboot.security;
 
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
-import de.brockhausag.diversitylunchspringboot.data.AccountTestDataFactory;
-import de.brockhausag.diversitylunchspringboot.data.MeetingTestdataFactory;
-import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.AccountTestDataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.MeetingTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MeetingService;
-import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -83,7 +83,7 @@ class DiversityLunchSecurityExpressionRootTest {
     @Test
     void isProposalOwner_invalidOwner_returnFalse() {
         AccountEntity accountEntity =
-                accountFactory.entityBuilder().profile(profileFactory.entityBuilder().id(1).build()).build();
+                accountFactory.entityBuilder().profile(profileFactory.buildEntity(2)).build();
         when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
 
         when(oAuth2AuthenticatedPrincipal.getAttribute(any())).thenReturn(accountEntity.getUniqueName());
@@ -98,7 +98,7 @@ class DiversityLunchSecurityExpressionRootTest {
     @Test
     void isProposalOwner_noProfileFound_returnFalse(){
         AccountEntity accountEntity =
-                accountFactory.entityBuilder().profile(profileFactory.entityBuilder().id(1).build()).build();
+                accountFactory.entityBuilder().profile(profileFactory.buildEntity(1)).build();
         when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
 
         when(oAuth2AuthenticatedPrincipal.getAttribute(any())).thenReturn(accountEntity.getUniqueName());
@@ -113,7 +113,7 @@ class DiversityLunchSecurityExpressionRootTest {
     @Test
     void isProposalOwner_noMeetingProposalFound_returnFalse(){
         AccountEntity accountEntity =
-                accountFactory.entityBuilder().profile(profileFactory.entityBuilder().id(1).build()).build();
+                accountFactory.entityBuilder().profile(profileFactory.buildEntity(1)).build();
         when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
 
         when(oAuth2AuthenticatedPrincipal.getAttribute(any())).thenReturn(accountEntity.getUniqueName());
@@ -223,7 +223,7 @@ class DiversityLunchSecurityExpressionRootTest {
     @Test
     void hasAccountPermission_withMultiplePermissions_returnTrue() {
         AccountEntity accountEntity =
-                new AccountEntity(0, mock(ProfileEntity.class), "email", AccountRole.ADMIN);
+                new AccountEntity(0L, mock(ProfileEntity.class), "email", AccountRole.ADMIN);
         when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
         when(oAuth2AuthenticatedPrincipal.getAttribute(any())).thenReturn(accountEntity.getUniqueName());
         when(accountService.getAccount(accountEntity.getUniqueName())).thenReturn(Optional.of(accountEntity));

@@ -10,9 +10,9 @@ interface AdminPanelListItemProp {
 }
 
 export const AdminPanelListItem: FC<AdminPanelListItemProp> = ({ item: project, onEditClicked, onRemoveClicked }: AdminPanelListItemProp) => (
-  <article>
-    <span>{project.descriptor}</span>
-    <IconButton iconPath={iconMeeting} altText="Projekt bearbeiten" onClick={() => onEditClicked(project)} text="bearbeiten" />
-    <IconButton iconPath={iconMeeting} altText="Projekt löschen" onClick={() => onRemoveClicked(project)} text="löschen" />
-  </article>
+    <article>
+        <span>{project.descriptor}</span>
+        <IconButton iconPath={iconMeeting} altText="Projekt bearbeiten" onClick={() => onEditClicked(project)} text="bearbeiten" />
+        <IconButton iconPath={iconMeeting} altText="Projekt löschen" onClick={() => onRemoveClicked(project)} text="löschen" />
+    </article>
 );

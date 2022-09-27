@@ -6,68 +6,69 @@ import { APP_STORE } from '../store/Store';
  * @param url
  */
 export const authenticatedFetchGet = (url: string) => {
-  const authState = APP_STORE.getState().authentication;
+    const authState = APP_STORE.getState().authentication;
 
-  let bearerToken = ''; // if not logged in -> no token
-  if (authState.status === 'OK') {
-    bearerToken = `Bearer ${authState.oidcData.access_token}`;
-  }
+    let bearerToken = ''; // if not logged in -> no token
+    if (authState.status === 'OK') {
+        bearerToken = `Bearer ${authState.oidcData.access_token}`;
+    }
 
-  return fetch(url, {
-    headers: {
-      Authorization: bearerToken,
-    },
-  });
+    return fetch(url, {
+        mode: 'cors',
+        headers: {
+            Authorization: bearerToken,
+        },
+    });
 };
 
 export const authenticatedFetchPost = (url: string, data: any) => {
-  const authState = APP_STORE.getState().authentication;
+    const authState = APP_STORE.getState().authentication;
 
-  let bearerToken = '';
-  if (authState.status === 'OK') {
-    bearerToken = `Bearer ${authState.oidcData.access_token}`;
-  }
+    let bearerToken = '';
+    if (authState.status === 'OK') {
+        bearerToken = `Bearer ${authState.oidcData.access_token}`;
+    }
 
-  return fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: {
-      Authorization: bearerToken,
-      'Content-Type': 'application/json',
-    },
-  });
+    return fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            Authorization: bearerToken,
+            'Content-Type': 'application/json',
+        },
+    });
 };
 
 export const authenticatedFetchPut = (url: string, data: any) => {
-  const authState = APP_STORE.getState().authentication;
+    const authState = APP_STORE.getState().authentication;
 
-  let bearerToken = '';
-  if (authState.status === 'OK') {
-    bearerToken = `Bearer ${authState.oidcData.access_token}`;
-  }
+    let bearerToken = '';
+    if (authState.status === 'OK') {
+        bearerToken = `Bearer ${authState.oidcData.access_token}`;
+    }
 
-  return fetch(url, {
-    method: 'PUT',
-    body: JSON.stringify(data),
-    headers: {
-      Authorization: bearerToken,
-      'Content-Type': 'application/json',
-    },
-  });
+    return fetch(url, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers: {
+            Authorization: bearerToken,
+            'Content-Type': 'application/json',
+        },
+    });
 };
 
 export const authenticatedFetchDelete = (url: string) => {
-  const authState = APP_STORE.getState().authentication;
+    const authState = APP_STORE.getState().authentication;
 
-  let bearerToken = '';
-  if (authState.status === 'OK') {
-    bearerToken = `Bearer ${authState.oidcData.access_token}`;
-  }
+    let bearerToken = '';
+    if (authState.status === 'OK') {
+        bearerToken = `Bearer ${authState.oidcData.access_token}`;
+    }
 
-  return fetch(url, {
-    method: 'DELETE',
-    headers: {
-      Authorization: bearerToken,
-    },
-  });
+    return fetch(url, {
+        method: 'DELETE',
+        headers: {
+            Authorization: bearerToken,
+        },
+    });
 };

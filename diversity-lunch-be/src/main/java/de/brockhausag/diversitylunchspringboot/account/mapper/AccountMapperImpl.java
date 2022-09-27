@@ -12,7 +12,7 @@ public class AccountMapperImpl implements AccountMapper {
     @Override
     public AccountDto mapEntityToDto(AccountEntity entity) {
 
-        long profileId = entity.getProfile() != null ? entity.getProfile().getId() : 0;
+        Long profileId = entity.getProfile() != null ? entity.getProfile().getId() : 0;
         return new AccountDto(
                 entity.getId(),
                 profileId,

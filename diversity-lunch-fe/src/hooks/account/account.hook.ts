@@ -6,31 +6,31 @@ type AccountInfo = {
   profileId: number,
 }
 export const useGetAccountInformation = () => {
-  const {
-    id,
-    profileId,
-  } = useSelector<AppStoreState, AccountInfo>(({ account }) => {
-    if (account.status === 'OK') {
-      const {
-        accountData: {
-          // eslint-disable-next-line no-shadow
-          id,
-          // eslint-disable-next-line no-shadow
-          profileId,
-        },
-      } = account;
-      return {
+    const {
         id,
         profileId,
-      };
-    }
+    } = useSelector<AppStoreState, AccountInfo>(({ account }) => {
+        if (account.status === 'OK') {
+            const {
+                accountData: {
+                    // eslint-disable-next-line no-shadow
+                    id,
+                    // eslint-disable-next-line no-shadow
+                    profileId,
+                },
+            } = account;
+            return {
+                id,
+                profileId,
+            };
+        }
+        return {
+            id: 0,
+            profileId: 0,
+        };
+    });
     return {
-      id: 0,
-      profileId: 0,
+        id,
+        profileId,
     };
-  });
-  return {
-    id,
-    profileId,
-  };
 };

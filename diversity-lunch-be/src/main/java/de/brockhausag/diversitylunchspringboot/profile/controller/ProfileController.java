@@ -2,10 +2,9 @@ package de.brockhausag.diversitylunchspringboot.profile.controller;
 
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.ProfileMapper;
-import de.brockhausag.diversitylunchspringboot.profile.model.CreateProfileDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.ProfileDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
-import de.brockhausag.diversitylunchspringboot.profile.service.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -41,7 +40,7 @@ public class ProfileController {
     })
     @GetMapping(produces = {"application/json"}, path = "/{id}")
     @PreAuthorize("isProfileOwner(#id)")
-    public ResponseEntity<ProfileDto> getProfile(@PathVariable long id) {
+    public ResponseEntity<ProfileDto> getProfile(@PathVariable Long id) {
         log.info("GET PROFILE " + id);
 
         Optional<ProfileEntity> entityOptional = this.profileService.getProfile(id);
@@ -53,7 +52,7 @@ public class ProfileController {
 
         ProfileEntity entity = entityOptional.get();
         log.info("PROFILE FOUND " + entity);
-        return new ResponseEntity<>(this.profileMapper.mapEntityToDto(entityOptional.get()), HttpStatus.OK);
+        return new ResponseEntity<>(this.profileMapper.entityToDto(entityOptional.get()), HttpStatus.OK);
     }
 
     @Operation(summary = "die Angaben zur Registrierung eines Benutzers werden gespeichert")
@@ -66,22 +65,28 @@ public class ProfileController {
     @PostMapping("/byAccount/{accountId}")
     @PreAuthorize("isAccountOwner(#accountId)")
     public ResponseEntity<ProfileDto> createProfile(
-            @Valid @RequestBody CreateProfileDto createProfileDto,
-            @PathVariable long accountId
+            @Valid @RequestBody ProfileDto createProfileDto,
+            @PathVariable Long accountId
     ) {
         log.debug("CREATE PROFILE OF USER: " + accountId);
 
-        ProfileEntity createEntity = this.profileMapper.mapCreateDtoToEntity(createProfileDto);
-        Optional<ProfileEntity> entity = this.profileService.createProfile(createEntity, accountId);
+        Optional<ProfileEntity> createEntityOptional = this.profileMapper.dtoToEntity(createProfileDto);
 
-        if (entity.isEmpty()) {
+        if (createEntityOptional.isEmpty()) {
             log.error("Create profile failed for account " + accountId);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        log.info("PROFILE CREATED " + entity.get().getId());
+        Optional<ProfileEntity> optionalEntity = this.profileService.createProfile(createEntityOptional.get(), accountId);
 
-        ProfileDto dto = this.profileMapper.mapEntityToDto(entity.get());
+        if (optionalEntity.isEmpty()) {
+            log.error("Create profile failed for account " + accountId);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        log.info("PROFILE CREATED " + optionalEntity.get().getId());
+
+        ProfileDto dto = this.profileMapper.entityToDto(optionalEntity.get());
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
@@ -94,17 +99,22 @@ public class ProfileController {
     @PutMapping("/{id}")
     @PreAuthorize("isProfileOwner(#id)")
     public ResponseEntity<ProfileDto> updateProfile(
-            @PathVariable long id,
+            @PathVariable Long id,
             @Valid @RequestBody ProfileDto updateProfileDto
 
     ) {
-        if (updateProfileDto.getId() != id) {
+        if (!updateProfileDto.getId().equals(id)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         log.info("UPDATE PROFILE " + updateProfileDto);
-        ProfileEntity updateEntity = this.profileMapper.mapDtoToEntity(updateProfileDto);
-        Optional<ProfileEntity> entity = this.profileService.updateProfile(updateEntity);
+        Optional<ProfileEntity> updateEntityOptional = this.profileMapper.dtoToEntity(updateProfileDto);
+        if (updateEntityOptional.isEmpty()) {
+            log.error("Update profile failed." );
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Optional<ProfileEntity> entity = this.profileService.updateProfile(updateEntityOptional.get());
 
         if (entity.isEmpty()) {
             log.info("Update profile failed.");
@@ -113,7 +123,7 @@ public class ProfileController {
 
         log.info("PROFILE UPDATED " + entity);
 
-        ProfileDto dto = this.profileMapper.mapEntityToDto(entity.get());
+        ProfileDto dto = this.profileMapper.entityToDto(entity.get());
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 }

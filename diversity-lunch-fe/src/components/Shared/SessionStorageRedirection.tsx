@@ -6,23 +6,23 @@ export interface LocalStorageRedirectionProps {
 }
 
 export const SessionStorageRedirection = ({ defaultPath }: LocalStorageRedirectionProps) => {
-  const storedPath = getStoredPath();
-  useEffect(() => clearStoredPath, []);
-  return <Redirect to={storedPath || defaultPath} />;
+    const storedPath = getStoredPath();
+    useEffect(() => clearStoredPath, []);
+    return <Redirect to={storedPath || defaultPath} />;
 };
 
 SessionStorageRedirection.defaultProps = { defaultPath: '/dashboard' };
 
 export function storePath(path: string) {
-  sessionStorage.setItem(STORED_PATH_KEY, path);
+    sessionStorage.setItem(STORED_PATH_KEY, path);
 }
 
 export function getStoredPath(): string | null {
-  return sessionStorage.getItem(STORED_PATH_KEY);
+    return sessionStorage.getItem(STORED_PATH_KEY);
 }
 
 export function clearStoredPath() {
-  sessionStorage.removeItem(STORED_PATH_KEY);
+    sessionStorage.removeItem(STORED_PATH_KEY);
 }
 
 export const STORED_PATH_KEY = 'storedPath';

@@ -43,7 +43,7 @@ public class EMailController {
     })
     @PostMapping("/sendTestMailToUser")
     @PreAuthorize("isProfileOwner(#id)")
-    public ResponseEntity<String> sendTestMailToUser(long id){
+    public ResponseEntity<String> sendTestMailToUser(Long id){
         System.out.println("Beginning of sendTestMailToUser");
         String body = "Hallo :)";
         try {

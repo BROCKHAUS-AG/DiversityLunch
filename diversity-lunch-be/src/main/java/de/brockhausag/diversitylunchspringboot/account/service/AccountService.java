@@ -4,7 +4,7 @@ import com.microsoft.graph.models.Group;
 import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
-import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchGroupProperties;
 import de.brockhausag.diversitylunchspringboot.security.AccountRole;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class AccountService {
         return repository.getAccountEntityByUniqueName(uniqueName);
     }
 
-    public Optional<AccountEntity> updateAccount(ProfileEntity profileEntity, long id) {
+    public Optional<AccountEntity> updateAccount(ProfileEntity profileEntity, Long id) {
         Optional<AccountEntity> optionalAccount = repository.findById(id);
 
         return optionalAccount.map(accountEntity -> {
@@ -42,7 +42,7 @@ public class AccountService {
         Optional<AccountEntity> optionaleAccountEntity = getAccount(uniqueName);
         AccountRole role = createRole();
         return optionaleAccountEntity.orElseGet(
-                () -> repository.save(new AccountEntity(0, null, uniqueName, role))
+                () -> repository.save(new AccountEntity(0L, null, uniqueName, role))
         );
     }
 

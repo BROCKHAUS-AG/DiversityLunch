@@ -1,7 +1,7 @@
 module.exports = {
-  globals: {
-    'ts-jest': {
-      isolatedModules: true,
+    globals: {
+        'ts-jest': {
+            isolatedModules: true,
+        },
     },
-  },
 };

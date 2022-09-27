@@ -38,7 +38,7 @@ public class MeetingController {
     @PreAuthorize("isProfileOwner(#id)")
     @GetMapping("/byUser/{id}")
     public ResponseEntity<List<MeetingDto>> getMeetingProposalsByUser(
-            @PathVariable long id
+            @PathVariable Long id
     ) {
         List<MeetingDto> meetingDtos = meetingService.getAllMeetingsInFutureForUser(id);
 
@@ -55,12 +55,12 @@ public class MeetingController {
     @PreAuthorize("isProfileOwner(#id)")
     @PostMapping("byUser/{id}")
     public ResponseEntity<MeetingDto> createMeetingProposal(
-            @PathVariable long id,
+            @PathVariable Long id,
             @Valid @RequestBody CreateMeetingProposalDto createMeetingProposalDto
     ) {
 
         if(meetingService.meetingExists(id ,createMeetingProposalDto.getFromDateTime())) {
-            log.error("Meeting already exists: " + id + " Date: " + createMeetingProposalDto.getFromDateTime());
+            log.error("Meeting already exists: " + id.toString() + " Date: " + createMeetingProposalDto.getFromDateTime());
             return ResponseEntity.status(409).build();
         }
 
@@ -80,7 +80,7 @@ public class MeetingController {
     @PreAuthorize("isProposalOwner(#id)")
     @DeleteMapping("/{id}")
     public @ResponseBody
-    ResponseEntity<String> deleteMeetingProposal(@PathVariable long id) {
+    ResponseEntity<String> deleteMeetingProposal(@PathVariable Long id) {
         this.meetingService.deleteMeetingProposal(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

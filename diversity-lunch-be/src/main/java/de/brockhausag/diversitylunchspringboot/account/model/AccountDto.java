@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class AccountDto {
-    private long id;
+    private Long id;
 
-    private long profileId;
+    private Long profileId;
 
     private AccountRole role;
 }

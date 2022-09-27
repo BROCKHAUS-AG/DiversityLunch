@@ -6,11 +6,11 @@ type ToastMessageProps = {
 }
 
 export const ToastMessage:React.FC<ToastMessageProps> = (props:ToastMessageProps) => {
-  const { message } = props;
+    const { message } = props;
 
-  return (
-    <div className="ToastMessage">
-      <h1>{message}</h1>
-    </div>
-  );
+    return (
+        <div className="ToastMessage">
+            <h1>{message}</h1>
+        </div>
+    );
 };

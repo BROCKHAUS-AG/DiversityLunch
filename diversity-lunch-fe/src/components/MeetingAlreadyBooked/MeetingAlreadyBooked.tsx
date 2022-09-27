@@ -6,20 +6,20 @@ import '../../styles/component-styles/information/information.scss';
 import { Button } from '../General/Button/Button';
 
 export const MeetingAlreadyBooked = () => {
-  const history = useHistory();
+    const history = useHistory();
 
-  const terminBuchen = () => {
-    history.push('/add+meetings/choose+date');
-  };
+    const terminBuchen = () => {
+        history.push('/add+meetings/choose+date');
+    };
 
-  return (
-    <div className="Information">
-      <CloseSiteContainer />
-      <DiversityIconContainer title="INFORMATION" />
-      <p className="Information-info-text">
-        Diesen Termin hast du bereits gebucht.
-      </p>
-      <Button label="Termin buchen" onClick={terminBuchen} />
-    </div>
-  );
+    return (
+        <div className="Information">
+            <CloseSiteContainer />
+            <DiversityIconContainer title="INFORMATION" />
+            <p className="Information-info-text">
+                Diesen Termin hast du bereits gebucht.
+            </p>
+            <Button label="Termin buchen" onClick={terminBuchen} />
+        </div>
+    );
 };

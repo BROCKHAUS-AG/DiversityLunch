@@ -3,10 +3,10 @@ package de.brockhausag.diversitylunchspringboot.account.service;
 import com.microsoft.graph.models.Group;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
-import de.brockhausag.diversitylunchspringboot.data.AccountTestDataFactory;
-import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.AccountTestDataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
-import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchGroupProperties;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,14 +38,16 @@ class AccountServiceTest {
     private AccountService accountService;
 
     private AccountTestDataFactory accountTestDataFactory;
+    private ProfileTestdataFactory profileFactory;
 
     private List<Group> groupForStandardAccount;
 
     private List<Group> groupForAzureAdminAccount;
 
     @BeforeEach
-    void tearUp(){
-        accountTestDataFactory = new AccountTestDataFactory();
+    void setup(){
+        this.profileFactory = new ProfileTestdataFactory();
+        this.accountTestDataFactory = new AccountTestDataFactory();
 
         groupForStandardAccount = new ArrayList<>();
         var standardGroup = new Group();
@@ -111,7 +113,7 @@ class AccountServiceTest {
     @Test
     void testUpdateAccount_withExistentAccount_thenReturnUpdated(){
         AccountEntity account = accountTestDataFactory.buildAccountWithoutProfile();
-        ProfileEntity existentProfile = new ProfileTestdataFactory().entity();
+        ProfileEntity existentProfile = profileFactory.buildEntity(1);
         AccountEntity accountWithProfile = accountTestDataFactory.buildAccountWithProfile();
 
         when(diversityLunchGroupProperties.getAdminGroupName()).thenReturn("AdminGroup");
@@ -119,7 +121,7 @@ class AccountServiceTest {
         when(accountRepository.save(accountWithProfile)).thenReturn(accountWithProfile);
         when(microsoftGraphService.getGroups()).thenReturn(Optional.of(groupForStandardAccount));
 
-        Optional<AccountEntity> updatedAccount = accountService.updateAccount(existentProfile, 1);
+        Optional<AccountEntity> updatedAccount = accountService.updateAccount(existentProfile, 1L);
 
         Assertions.assertTrue(updatedAccount.isPresent());
         Assertions.assertNotSame(account, updatedAccount.get());
@@ -128,11 +130,11 @@ class AccountServiceTest {
 
     @Test
     void testUpdateAccount_withNonExistentAccount_thenReturnEmpty(){
-        ProfileEntity existentProfile = new ProfileTestdataFactory().createEntity();
+        ProfileEntity existentProfile = profileFactory.buildEntity(1);
 
         when(accountRepository.findById(1L)).thenReturn(Optional.empty());
 
-        Optional<AccountEntity> empty = accountService.updateAccount(existentProfile, 1);
+        Optional<AccountEntity> empty = accountService.updateAccount(existentProfile, 1L);
 
         Assertions.assertTrue(empty.isEmpty());
     }

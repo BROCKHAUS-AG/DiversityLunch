@@ -5,8 +5,8 @@ import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingDto;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.profile.ProfileNotFoundException;
-import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
-import de.brockhausag.diversitylunchspringboot.profile.service.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +20,7 @@ public class MeetingMapperImpl implements MeetingMapper {
     private final ProfileService profileService;
 
     @Override
-    public Optional<MeetingProposalEntity> mapCreateDtoToEntity(final CreateMeetingProposalDto proposal, long profileId) {
+    public Optional<MeetingProposalEntity> mapCreateDtoToEntity(final CreateMeetingProposalDto proposal, Long profileId) {
         Optional<ProfileEntity> profile = profileService.getProfile(profileId);
 
         if (profile.isEmpty()) {

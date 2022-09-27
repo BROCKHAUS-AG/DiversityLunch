@@ -13,59 +13,59 @@ type DateOverviewProps = {
 }
 
 export const DateOverview = (props: DateOverviewProps) => {
-  const history = useHistory();
-  const { meeting } = props;
-  const meetingDate = meeting.fromDateTime;
+    const history = useHistory();
+    const { meeting } = props;
+    const meetingDate = meeting.fromDateTime;
 
-  const [meetingLabel, setMeetingLabel] = useState<string>('');
+    const [meetingLabel, setMeetingLabel] = useState<string>('');
 
-  const createDateLabel = useCallback(() => dateToString(meetingDate), [meetingDate]);
+    const createDateLabel = useCallback(() => dateToString(meetingDate), [meetingDate]);
 
-  useEffect(() => {
-    setMeetingLabel(createDateLabel);
-  }, [createDateLabel]);
+    useEffect(() => {
+        setMeetingLabel(createDateLabel);
+    }, [createDateLabel]);
 
-  return (
-    <div className="DateOverview">
-      <div className="DateOverview-logo-container">
-        <CloseSiteContainer />
-        <DiversityIconContainer />
-      </div>
-      <div className="DateOverview-info-text-container">
-        <p className="DateOverview-info-text">
-          Vielen Dank! Die Informationen wurden erfolgreich an uns übermittelt und wir arbeiten
-          daran, dir
-          einen Partner für dein Mittagessen zuzuordnen.
-        </p>
-      </div>
+    return (
+        <div className="DateOverview">
+            <div className="DateOverview-logo-container">
+                <CloseSiteContainer />
+                <DiversityIconContainer />
+            </div>
+            <div className="DateOverview-info-text-container">
+                <p className="DateOverview-info-text">
+                    Vielen Dank! Die Informationen wurden erfolgreich an uns übermittelt und wir arbeiten
+                    daran, dir
+                    einen Partner für dein Mittagessen zuzuordnen.
+                </p>
+            </div>
 
-      <div className="DateOverview-meeting-container">
-        <div className="DateOverview-meeting">
-          <div>
-            <h5 className="DateOverview-meeting-text">Dein Termin</h5>
-            <p className="DateOverview-meeting-text">{meetingLabel}</p>
-            <p className="DateOverview-meeting-text">
-              {
-                substringLocalTime(meeting.fromDateTime)
-              }
-              &nbsp;
-              bis
-              {' '}
-              {getMeetingEndTime(meeting.fromDateTime)}
-            </p>
-          </div>
-          <img alt="icon_food" className="DateOverview-meeting-icon" src={iconFood} />
+            <div className="DateOverview-meeting-container">
+                <div className="DateOverview-meeting">
+                    <div>
+                        <h5 className="DateOverview-meeting-text">Dein Termin</h5>
+                        <p className="DateOverview-meeting-text">{meetingLabel}</p>
+                        <p className="DateOverview-meeting-text">
+                            {
+                                substringLocalTime(meeting.fromDateTime)
+                            }
+                            &nbsp;
+                            bis
+                            {' '}
+                            {getMeetingEndTime(meeting.fromDateTime)}
+                        </p>
+                    </div>
+                    <img alt="icon_food" className="DateOverview-meeting-icon" src={iconFood} />
+                </div>
+            </div>
+
+            <div className="DateOverview-button-container">
+                <Button
+                    label="Weiteren Termin buchen"
+                    onClick={() => history.push('/add+meetings/choose+date')}
+                />
+            </div>
         </div>
-      </div>
-
-      <div className="DateOverview-button-container">
-        <Button
-          label="Weiteren Termin buchen"
-          onClick={() => history.push('/add+meetings/choose+date')}
-        />
-      </div>
-    </div>
-  );
+    );
 };
 
 export default DateOverview;

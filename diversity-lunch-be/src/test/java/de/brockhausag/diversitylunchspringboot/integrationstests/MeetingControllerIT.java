@@ -4,43 +4,59 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
-import de.brockhausag.diversitylunchspringboot.config.SecurityConfig;
-import de.brockhausag.diversitylunchspringboot.data.MeetingTestdataFactory;
-import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.config.MsTeamsTestConfig;
+import de.brockhausag.diversitylunchspringboot.integrationDataFactories.MeetingTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.integrationDataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.CreateMeetingProposalDto;
-import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
-import de.brockhausag.diversitylunchspringboot.meeting.service.MeetingService;
-import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
-import de.brockhausag.diversitylunchspringboot.profile.repository.ProfileRepository;
-import de.brockhausag.diversitylunchspringboot.profile.service.ProfileService;
-import org.junit.jupiter.api.*;
+import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
+import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import java.util.ArrayList;
+import java.util.Optional;
 
+import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Slf4j
 @SpringBootTest
-@Import(SecurityConfig.class)
+@SqlGroup({
+        @Sql(scripts = "classpath:integrationstests/insert_test_data.sql", executionPhase = BEFORE_TEST_METHOD),
+        @Sql(scripts = "classpath:integrationstests/delete_test_data.sql", executionPhase = AFTER_TEST_METHOD)
+})
 @ActiveProfiles("Test")
+@Import(MsTeamsTestConfig.class)
 class MeetingControllerIT {
 
-    private final ProfileTestdataFactory profileFactory = new ProfileTestdataFactory();
-
-    private final MeetingTestdataFactory meetingFactory = new MeetingTestdataFactory();
+    @Autowired
+    private MeetingTestdataFactory meetingFactory;
 
     @Autowired
-    private MeetingService meetingService;
+    private ProfileTestdataFactory profileFactory;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Autowired
     private AccountService accountService;
@@ -49,7 +65,10 @@ class MeetingControllerIT {
     private ProfileService profileService;
 
     @Autowired
-    private ObjectMapper objectMapper;
+    private MicrosoftGraphService microsoftGraphService;
+
+    @Autowired
+    private WebApplicationContext appContext;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -62,13 +81,10 @@ class MeetingControllerIT {
 
     private MockMvc mockMvc;
 
-    @Autowired
-    private WebApplicationContext appContext;
+    private ProfileEntity profileMax;
 
-    private static final String accAName = "A";
-    private static final String accBName = "B";
-    private ProfileEntity profileA;
-    private ProfileEntity profileB;
+    private ProfileEntity profileErika;
+
 
     @BeforeEach
     void init() {
@@ -76,54 +92,46 @@ class MeetingControllerIT {
                 .apply(springSecurity())
                 .build();
 
-        AccountEntity accA = accountService.getOrCreateAccount(accAName);
-        AccountEntity accB = accountService.getOrCreateAccount(accBName);
+        when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
 
-        ProfileEntity tmpProfile = profileFactory.createEntity();
-        profileA = profileService
-                .createProfile(tmpProfile, accA.getId())
-                .orElseThrow();
+        profileMax = profileFactory.createNewMaxProfile();
+        AccountEntity accountEntity = accountService.getOrCreateAccount(profileMax.getEmail());
+        profileMax = profileService.createProfile(profileMax, accountEntity.getId()).orElseThrow();
 
-        tmpProfile = profileFactory.createEntity();
-        profileB = profileService
-                .createProfile(tmpProfile, accB.getId())
-                .orElseThrow();
+        profileErika = profileFactory.createNewErikaProfile();
+        AccountEntity accountEntity1 = accountService.getOrCreateAccount(profileErika.getEmail());
+        profileErika = profileService.createProfile(profileErika, accountEntity1.getId()).orElseThrow();
     }
 
     @AfterEach
-    void shutdown() {
-        meetingProposalRepository.deleteAll();
+    void after() {
         accountRepository.deleteAll();
+        meetingProposalRepository.deleteAll();
         profileRepository.deleteAll();
     }
 
     @Test
     void testGetMeetingProposalByUser_withWrongId_thenForbidden() throws Exception {
-        MeetingProposalEntity meetingProposalEntityOfProfileA = meetingFactory
-                .createEntityBuilder()
-                .proposerProfile(profileA)
-                .build();
+        meetingFactory.create(profileMax);
 
-        meetingService.createMeetingProposal(meetingProposalEntityOfProfileA);
-
-        this.mockMvc.perform(
-                get("/api/meetings/byUser/" + profileA.getId())
-                        .header(HttpHeaders.AUTHORIZATION,
-                                "Bearer " + profileFactory.getTokenStringFromId(accBName))
+        mockMvc.perform(
+                get("/api/meetings/byUser/" + profileMax.getId())
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " +
+                                profileFactory.getTokenStringFromId(profileMax.getName()))
         ).andExpect(status().isForbidden());
     }
 
     @Test
     void testPostMeetingProposal_withWrongId_thenForbidden() throws Exception {
-        CreateMeetingProposalDto meetingProposalDtoOfProfileA = meetingFactory
+        CreateMeetingProposalDto meetingProposalDtoOfProfileMax = meetingFactory
                 .createDto();
 
-        String convertedStringJSON = objectMapper.writeValueAsString(meetingProposalDtoOfProfileA);
+        String convertedStringJSON = objectMapper.writeValueAsString(meetingProposalDtoOfProfileMax);
 
         this.mockMvc.perform(
-                post("/api/meetings/byUser/" + profileB.getId())
+                post("/api/meetings/byUser/" + profileErika.getId())
                         .header(HttpHeaders.AUTHORIZATION,
-                                "Bearer " + profileFactory.getTokenStringFromId(accAName))
+                                "Bearer " + profileFactory.getTokenStringFromId(profileErika.getName()))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(convertedStringJSON)
         ).andExpect(status().isForbidden());
@@ -131,20 +139,12 @@ class MeetingControllerIT {
 
     @Test
     void testDeleteMeetingProposal_withWrongId_thenForbidden() throws Exception {
-        MeetingProposalEntity createMeetingOfProfileA = meetingFactory
-                .createEntityBuilder()
-                .proposerProfile(profileA)
-                .build();
-
-        MeetingProposalEntity existingMeetingOfProfileA = meetingService.createMeetingProposal(createMeetingOfProfileA);
-
-
+        meetingFactory.create(profileMax);
 
         mockMvc.perform(
-                delete("/api/meetings/" + existingMeetingOfProfileA.getId())
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(accBName))
+                delete("/api/meetings/" + profileMax.getId())
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " +
+                                profileFactory.getTokenStringFromId(profileMax.getName()))
         ).andExpect(status().isForbidden());
     }
-
-
 }

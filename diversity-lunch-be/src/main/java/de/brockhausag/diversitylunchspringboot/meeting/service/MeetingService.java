@@ -5,8 +5,8 @@ import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingDto;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
-import de.brockhausag.diversitylunchspringboot.profile.model.ProfileEntity;
-import de.brockhausag.diversitylunchspringboot.profile.service.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,18 +26,18 @@ public class MeetingService {
     private final MeetingMapper meetingMapper;
     private final ProfileService profileService;
 
-    public Optional<MeetingProposalEntity> getMeetingProposal(long id) {
+    public Optional<MeetingProposalEntity> getMeetingProposal(Long id) {
         return this.meetingProposalRepository.findById(id);
     }
 
-    public List<MeetingProposalEntity> getAllMeetingProposals(long profileId) {
+    public List<MeetingProposalEntity> getAllMeetingProposals(Long profileId) {
 
         return profileService.getProfile(profileId)
                 .map(meetingProposalRepository::findByProposerProfile)
                 .orElse(Collections.emptyList());
     }
 
-    public List<MeetingDto> getAllMeetingsInFutureForUser(long profileId) {
+    public List<MeetingDto> getAllMeetingsInFutureForUser(Long profileId) {
         ProfileEntity profile = profileService
                 .getProfile(profileId)
                 .orElseThrow(() -> new IllegalArgumentException("given profileId does not exist"));
@@ -65,11 +65,11 @@ public class MeetingService {
         return meetingProposalRepository.save(meetingProposalEntity);
     }
 
-    public void deleteMeetingProposal(long id) {
+    public void deleteMeetingProposal(Long id) {
         meetingProposalRepository.deleteById(id);
     }
 
-    public boolean meetingExists(long profileId, LocalDateTime newMeetingTime) {
+    public boolean meetingExists(Long profileId, LocalDateTime newMeetingTime) {
         List<MeetingProposalEntity> currentMeetings = this.getAllMeetingProposals(profileId);
         return currentMeetings
                 .stream()

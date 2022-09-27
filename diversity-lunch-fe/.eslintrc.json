@@ -31,6 +31,11 @@
         "no-undef": "off",
         "semi": ["error", "always"],
         "import/extensions": "off",
+        "no-underscore-dangle": "off",
+        "lines-between-class-members": 0,
+        "indent": ["error", 4, {"SwitchCase": 1}],
+        "react/jsx-indent": ["error",4],
+        "react/jsx-indent-props": ["error",4],
         "import/prefer-default-export": "off",
         "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".ts"] }],
         "react/function-component-definition": [2, { "namedComponents": "arrow-function" }],
@@ -40,7 +45,8 @@
         "@typescript-eslint/no-unused-vars": "error",
         "max-len": ["error", { "code": 150 }],
         "linebreak-style": "off",
-        "no-plusplus": "off"
+        "no-plusplus": "off",
+        "react-hooks/exhaustive-deps": "warn"
     },
     "settings": {
         "react": {

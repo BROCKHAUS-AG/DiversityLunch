@@ -2,15 +2,16 @@ package de.brockhausag.diversitylunchspringboot.integrationstests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
-import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.config.SecurityConfig;
-import de.brockhausag.diversitylunchspringboot.data.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.integrationDataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
-import de.brockhausag.diversitylunchspringboot.profile.model.*;
-import de.brockhausag.diversitylunchspringboot.profile.repository.ProfileRepository;
-import de.brockhausag.diversitylunchspringboot.profile.service.ProfileService;
-import org.junit.jupiter.api.*;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.mapper.ProfileMapper;
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +19,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -26,30 +29,33 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.*;
 
 @Import(SecurityConfig.class)
 @SpringBootTest
 @ActiveProfiles("Test")
+@SqlGroup({
+        @Sql(scripts = "classpath:integrationstests/insert_test_data.sql", executionPhase = BEFORE_TEST_METHOD),
+        @Sql(scripts = "classpath:integrationstests/delete_test_data.sql", executionPhase = AFTER_TEST_METHOD)
+})
 class ProfileControllerIT {
 
-    private final ProfileTestdataFactory profileFactory = new ProfileTestdataFactory();
-
+    @Autowired
+    private ProfileTestdataFactory profileFactory;
     private MockMvc mockMvc;
 
-    private ProfileEntity profileEntity1;
+    private ProfileEntity myProfileEntity;
 
-    private AccountEntity accountEntity1;
-    private AccountEntity accountEntity2;
-
-    @Autowired
-    private AccountRepository accoutRepository;
+    private AccountEntity myAccountEntity;
+    private AccountEntity otherAccountEntity;
 
     @Autowired
-    private ProfileRepository profileRepository;
+    private ProfileMapper profileMapper;
 
     @Autowired
     private WebApplicationContext appContext;
@@ -68,49 +74,43 @@ class ProfileControllerIT {
     private MicrosoftGraphService microsoftGraphService;
 
     @BeforeEach
-    void tearUp() {
+    void beforeEach() {
         mockMvc = MockMvcBuilders.webAppContextSetup(appContext)
                 .apply(springSecurity())
                 .build();
 
-        ProfileEntity tmpProfileEntity = profileFactory.createEntity();
+        myProfileEntity = profileFactory.createNewMaxProfile();
+        ProfileEntity otherProfileEntity = profileFactory.createNewErikaProfile();
+        myAccountEntity = accountService.getOrCreateAccount(myProfileEntity.getEmail());
+        otherAccountEntity = accountService.getOrCreateAccount(otherProfileEntity.getEmail());
+
         when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
 
-        accountEntity1 = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
-        profileEntity1 = profileService.createProfile(tmpProfileEntity, accountEntity1.getId()).orElseThrow();
-
-
-        tmpProfileEntity = profileFactory.createEntityBuilder().email("smith@web.de").build();
-        accountEntity2 = accountService.getOrCreateAccount(tmpProfileEntity.getEmail());
-        profileService.createProfile(tmpProfileEntity, accountEntity2.getId()).orElseThrow();
-    }
-
-    @AfterEach
-    void afterEach(){
-        accoutRepository.deleteAll();
-        profileRepository.deleteAll();
+        myProfileEntity = profileService.createProfile(myProfileEntity, myAccountEntity.getId()).orElseThrow();
+        profileService.createProfile(otherProfileEntity, otherAccountEntity.getId()).orElseThrow();
     }
 
     @Test
     void testGetProfile_withValidId_thenOKWithExpectedProfile() throws Exception {
         this.mockMvc
                 .perform(
-                        get("/api/profiles/" + profileEntity1.getId())
-                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(accountEntity1.getUniqueName()))
+                        get("/api/profiles/" + myProfileEntity.getId())
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(myAccountEntity.getUniqueName()))
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value(profileEntity1.getName()))
-                .andExpect(jsonPath("$.birthYear").value(profileEntity1.getBirthYear()))
-                .andExpect(jsonPath("$.currentProject").value(profileEntity1.getCurrentProject().toString()))
-                .andExpect(jsonPath("$.diet").value(profileEntity1.getDiet().toString()))
-                .andExpect(jsonPath("$.education").value(profileEntity1.getEducation().toString()))
-                .andExpect(jsonPath("$.email").value(profileEntity1.getEmail()))
-                .andExpect(jsonPath("$.gender").value(profileEntity1.getGender().toString()))
-                .andExpect(jsonPath("$.hobby").value(profileEntity1.getHobby().toString()))
-                .andExpect(jsonPath("$.motherTongue").value(profileEntity1.getMotherTongue().toString()))
-                .andExpect(jsonPath("$.originCountry").value(profileEntity1.getOriginCountry().toString()))
-                .andExpect(jsonPath("$.religion").value(profileEntity1.getReligion().toString()))
-                .andExpect(jsonPath("$.workExperience").value(profileEntity1.getWorkExperience().toString()));
+                .andExpect(jsonPath("$.name").value(myProfileEntity.getName()))
+                .andExpect(jsonPath("$.email").value(myProfileEntity.getEmail()))
+                .andExpect(jsonPath("$.birthYear").value(myProfileEntity.getBirthYear()))
+                .andExpect(jsonPath("$.project.descriptor").value(myProfileEntity.getProject().getDescriptor()))
+                .andExpect(jsonPath("$.diet.descriptor").value(myProfileEntity.getDiet().getDescriptor()))
+                .andExpect(jsonPath("$.education.descriptor").value(myProfileEntity.getEducation().getDescriptor()))
+                .andExpect(jsonPath("$.gender.descriptor").value(myProfileEntity.getGender().getDescriptor()))
+                .andExpect(jsonPath("$.hobby.descriptor").value(myProfileEntity.getHobby().getDescriptor()))
+                .andExpect(jsonPath("$.hobby.category.descriptor").value(myProfileEntity.getHobby().getCategory().getDescriptor()))
+                .andExpect(jsonPath("$.motherTongue.descriptor").value(myProfileEntity.getMotherTongue().getDescriptor()))
+                .andExpect(jsonPath("$.originCountry.descriptor").value(myProfileEntity.getOriginCountry().getDescriptor()))
+                .andExpect(jsonPath("$.religion.descriptor").value(myProfileEntity.getReligion().getDescriptor()))
+                .andExpect(jsonPath("$.workExperience.descriptor").value(myProfileEntity.getWorkExperience().getDescriptor()));
     }
 
     @Test
@@ -118,8 +118,8 @@ class ProfileControllerIT {
 
         this.mockMvc
                 .perform(
-                        post("/api/profiles/byAccount/" + accountEntity1.getId())
-                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(accountEntity1.getUniqueName()))
+                        post("/api/profiles/byAccount/" + myAccountEntity.getId())
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(myAccountEntity.getUniqueName()))
                                 .contentType(MediaType.APPLICATION_JSON).content("{\"name\":\"Test\"}")
                 )
                 .andExpect(status().isBadRequest());
@@ -129,8 +129,8 @@ class ProfileControllerIT {
     void testGetProfile_withWrongId_thenForbidden() throws Exception {
         this.mockMvc
                 .perform(
-                        get("/api/profiles/" + profileEntity1.getId())
-                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(accountEntity2.getUniqueName()))
+                        get("/api/profiles/" + myProfileEntity.getId())
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(otherAccountEntity.getUniqueName()))
                 ).andExpect(status().isForbidden());
     }
 
@@ -138,17 +138,17 @@ class ProfileControllerIT {
     void testGetProfile_withInvalidToken_thenUnauthorized() throws Exception {
         this.mockMvc
                 .perform(
-                        get("/api/profiles/" + profileEntity1.getId())
-                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromIdWrongKey(accountEntity1.getUniqueName()))
+                        get("/api/profiles/" + myProfileEntity.getId())
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromIdWrongKey(myAccountEntity.getUniqueName()))
                 ).andExpect(status().isUnauthorized());
     }
 
     @Test
-    void testCreateProfile_withWrongId_thenForbidden() throws Exception{
+    void testCreateProfile_withWrongId_thenForbidden() throws Exception {
 
         AccountEntity account = accountService.getOrCreateAccount("irgendwas");
-        CreateProfileDto createProfileDto = profileFactory.createDto();
-        String profileJSON = objectMapper.writeValueAsString(createProfileDto);
+        ProfileDto profileDto = profileMapper.entityToDto(myProfileEntity);
+        String profileJSON = objectMapper.writeValueAsString(profileDto);
 
         mockMvc.perform(
                 post("/api/profiles/byAccount/" + (account.getId() + 1))
@@ -160,13 +160,13 @@ class ProfileControllerIT {
     @Test
     void testPutProfile_withWrongId_thenForbidden() throws Exception {
 
-        ProfileDto profileDto = profileFactory.dto();
+        ProfileDto profileDto = profileMapper.entityToDto(myProfileEntity);
         String profileJSON = objectMapper.writeValueAsString(profileDto);
 
         mockMvc
                 .perform(
-                        put("/api/profiles/" + profileEntity1.getId())
-                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(accountEntity2.getUniqueName()))
+                        put("/api/profiles/" + myProfileEntity.getId())
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(otherAccountEntity.getUniqueName()))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(profileJSON)
                 ).andExpect(status().isForbidden());

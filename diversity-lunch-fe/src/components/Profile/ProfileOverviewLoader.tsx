@@ -5,17 +5,17 @@ import { ProfileOverview } from './ProfileOverview';
 import { LoadingAnimation } from '../Shared/LoadingAnimation';
 
 export const ProfileOverviewLoader: React.FC = () => {
-  const profileState = useSelector((store: AppStoreState) => store.profile);
+    const profileState = useSelector((store: AppStoreState) => store.profile);
 
-  return (
-    <>
-      {
-        (profileState.status === 'OK' || profileState.status === 'UPDATING')
-        && <ProfileOverview profileData={profileState.profileData} />
-      }
-      {
-        profileState.status === 'UPDATING' && <LoadingAnimation size="block-app" />
-      }
-    </>
-  );
+    return (
+        <>
+            {
+                (profileState.status === 'OK' || profileState.status === 'UPDATING')
+        && <ProfileOverview />
+            }
+            {
+                profileState.status === 'UPDATING' && <LoadingAnimation size="block-app" />
+            }
+        </>
+    );
 };

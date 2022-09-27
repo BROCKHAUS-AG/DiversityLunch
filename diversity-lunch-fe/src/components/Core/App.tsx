@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  BrowserRouter, Redirect, Route, Switch,
+    BrowserRouter, Redirect, Route, Switch,
 } from 'react-router-dom';
 import { Dashboard } from '../Dashboard/Dashboard';
 import { UpcomingMeetings } from '../UpcommingMeetings/UpcomingMeetings';
@@ -16,58 +16,58 @@ import { BookingError } from '../BookingError/BookingError';
 import { AdminPanel } from '../AdminPanel/AdminPanel';
 
 export const App = () => (
-  <div className="App">
-    <div className="Screen">
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/">
-            <Redirect to="/profile-check" />
-          </Route>
+    <div className="App">
+        <div className="Screen">
+            <BrowserRouter>
+                <Switch>
+                    <Route exact path="/">
+                        <Redirect to="/profile-check" />
+                    </Route>
 
-          <Route path="/admin-panel">
-            <AdminPanel />
-          </Route>
+                    <Route path="/admin-panel">
+                        <AdminPanel />
+                    </Route>
 
-          <Route path="/profile-check">
-            <HasProfileCheck />
-          </Route>
+                    <Route path="/profile-check">
+                        <HasProfileCheck />
+                    </Route>
 
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
+                    <Route path="/dashboard">
+                        <Dashboard />
+                    </Route>
 
-          <Route path="/profile">
-            <ProfileOverviewLoader />
-          </Route>
+                    <Route path="/profile">
+                        <ProfileOverviewLoader />
+                    </Route>
 
-          <Route path="/add+meetings">
-            <AddMeetings />
-          </Route>
+                    <Route path="/add+meetings">
+                        <AddMeetings />
+                    </Route>
 
-          <Route path="/upcoming+meetings">
-            <UpcomingMeetings />
-          </Route>
+                    <Route path="/upcoming+meetings">
+                        <UpcomingMeetings />
+                    </Route>
 
-          <Route path="/questions">
-            <QuestionSite />
-          </Route>
+                    <Route path="/questions">
+                        <QuestionSite />
+                    </Route>
 
-          <Route path="/information">
-            <Information />
-          </Route>
+                    <Route path="/information">
+                        <Information />
+                    </Route>
 
-          <Route path="/meetingAlreadyBooked">
-            <MeetingAlreadyBooked />
-          </Route>
+                    <Route path="/meetingAlreadyBooked">
+                        <MeetingAlreadyBooked />
+                    </Route>
 
-          <Route path="/bookingError">
-            <BookingError />
-          </Route>
-          <Route path="/" render={() => <GenericErrorPage errorMessage="ERROR 404 - THIS SITE DOES NOT EXIST" />} />
-        </Switch>
-      </BrowserRouter>
+                    <Route path="/bookingError">
+                        <BookingError />
+                    </Route>
+                    <Route path="/" render={() => <GenericErrorPage errorMessage="ERROR 404 - THIS SITE DOES NOT EXIST" />} />
+                </Switch>
+            </BrowserRouter>
+        </div>
     </div>
-  </div>
 );
 
 export default App;
