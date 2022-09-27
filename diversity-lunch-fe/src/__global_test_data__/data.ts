@@ -1,3 +1,5 @@
+import { Role } from '../model/Role';
+
 export const categoryData = [{ id: 2, descriptor: 'Kreatives' }, { id: 1337, descriptor: 'Sport' }];
 export const countryData = [{ id: 9, descriptor: 'Bahamas' }, { id: 1337, descriptor: 'Deutschland' }];
 export const dietData = [{ id: 9, descriptor: 'Fleischesser' }, { id: 1337, descriptor: 'Frutarier' }];
@@ -25,3 +27,20 @@ export const profileData = [{
     workExperience: workExperienceData[0],
     hobby: hobbyData[0],
 }];
+
+export const accountStandardData = {
+    id: 2,
+    email: 'hans@brockhaus-ag.de',
+    role: Role.STANDARD,
+};
+
+export const accountAdminData = {
+    id: 2,
+    email: 'hans@brockhaus-ag.de',
+    role: Role.ADMIN,
+};
+export const accountAzureAdminData = {
+    id: 2,
+    email: 'hans@brockhaus-ag.de',
+    role: Role.AZURE_ADMIN,
+};

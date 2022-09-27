@@ -13,7 +13,7 @@ import {
     workExperienceData,
 } from '../../../../__global_test_data__/data';
 import * as fetcher from '../../../../utils/fetch.utils';
-import { mockedFetchGet } from '../../../../__global_test_data__/fetch';
+import { mockedFetchGetProfile } from '../../../../__global_test_data__/fetch';
 import { Profile } from '../../../../model/Profile';
 
 describe('Profile form', () => {
@@ -31,7 +31,7 @@ describe('Profile form', () => {
 
     it('should disable the button if checkValidity returns false', async () => {
         jest.spyOn(fetcher, 'authenticatedFetchGet')
-            .mockImplementation(mockedFetchGet);
+            .mockImplementation(mockedFetchGetProfile);
         renderContainer(<ProfileForm checkValidity={() => false} onSubmit={() => {}} />);
 
         const result = await screen.findByText('Speichern');
@@ -41,7 +41,7 @@ describe('Profile form', () => {
 
     it('should enable the button if checkValidity returns true', async () => {
         jest.spyOn(fetcher, 'authenticatedFetchGet')
-            .mockImplementation(mockedFetchGet);
+            .mockImplementation(mockedFetchGetProfile);
         renderContainer(<ProfileForm checkValidity={() => true} onSubmit={() => {}} />);
 
         const result = await screen.findByText('Speichern');
@@ -51,7 +51,7 @@ describe('Profile form', () => {
 
     it('should call onSubmit after button was clicked', async () => {
         jest.spyOn(fetcher, 'authenticatedFetchGet')
-            .mockImplementation(mockedFetchGet);
+            .mockImplementation(mockedFetchGetProfile);
         renderContainer(<ProfileForm checkValidity={() => true} onSubmit={(p) => expect(p).toBeTruthy()} />);
 
         const button = await screen.findByText('Speichern');
@@ -82,7 +82,7 @@ describe('Profile form', () => {
             expect(p.education?.descriptor).toEqual(INSERTED_EDUCATION_DESCRIPTOR);
             expect(p.diet?.descriptor).toEqual(INSERTED_DIET_DESCRIPTOR);
         };
-        jest.spyOn(fetcher, 'authenticatedFetchGet').mockImplementation(mockedFetchGet);
+        jest.spyOn(fetcher, 'authenticatedFetchGet').mockImplementation(mockedFetchGetProfile);
         renderContainer(<ProfileForm checkValidity={() => true} onSubmit={expectInputData} />);
 
         const birthYearElement = await screen.findByLabelText('Geburtsjahr') as HTMLInputElement | null;
@@ -130,7 +130,7 @@ describe('Profile form', () => {
     });
 
     it('should  fill in the initialProfile props values as input default values', async () => {
-        jest.spyOn(fetcher, 'authenticatedFetchGet').mockImplementation(mockedFetchGet);
+        jest.spyOn(fetcher, 'authenticatedFetchGet').mockImplementation(mockedFetchGetProfile);
         renderContainer(<ProfileForm initialProfile={profileData[0]} checkValidity={() => true} onSubmit={() => {}} />);
 
         const birthYearElement = await screen.findByLabelText('Geburtsjahr') as HTMLInputElement | null;
@@ -170,7 +170,7 @@ describe('Profile form', () => {
             expect(p.email).toEqual(profileData[0].email);
             expect(p.name).toEqual(profileData[0].name);
         };
-        jest.spyOn(fetcher, 'authenticatedFetchGet').mockImplementation(mockedFetchGet);
+        jest.spyOn(fetcher, 'authenticatedFetchGet').mockImplementation(mockedFetchGetProfile);
         renderContainer(<ProfileForm initialProfile={profileData[0]} checkValidity={() => true} onSubmit={expectInputData} />);
 
         const button = await screen.findByText('Speichern');

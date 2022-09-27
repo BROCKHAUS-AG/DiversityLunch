@@ -1,9 +1,12 @@
 import React, { FC, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import { GenericList } from '../Shared/GenericList/GenericList';
 import { Project } from './Project';
 import { AdminPanelListItem } from './admin-panel-list-item';
+import { AppStoreState } from '../../store/Store';
+import { Role } from '../../model/Role';
 
 const data: Project[] = [{
     id: 0,
@@ -18,12 +21,16 @@ function updateProjectDescriptor(projects: Project[], project: Project): Project
 }
 
 export const AdminPanel: FC = () => {
-    // const dispatch = useDispatch();
-    // const experienceLevels = useSelector((store: AppStoreState) => store.experienceLevel);
-    //
-    // dispatch(experienceLevelFetch.getAll());
-
+    const accountState = useSelector((store: AppStoreState) => store.account);
     const [projects, setProjects] = useState(data);
+
+    if (accountState.status === 'OK') {
+        if (accountState.accountData.role !== Role.ADMIN && accountState.accountData.role !== Role.AZURE_ADMIN) {
+            return (<p>You are not an admin!</p>);
+        }
+    } else {
+        return (<p>Error</p>);
+    }
 
     const removeProject = (project: Project) => {
         setProjects(projects.filter((p) => p.id !== project.id));

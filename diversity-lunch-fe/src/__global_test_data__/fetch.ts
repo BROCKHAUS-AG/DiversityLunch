@@ -9,6 +9,9 @@ import {
     projectData,
     religionData,
     workExperienceData,
+    accountStandardData,
+    accountAdminData,
+    accountAzureAdminData,
 } from './data';
 import { COUNTRY_ENDPOINT } from '../data/country/fetch-country';
 import { DIET_ENDPOINT } from '../data/diet/fetch-diet';
@@ -20,8 +23,9 @@ import { RELIGION_ENDPOINT } from '../data/religion/religion-fetch';
 import { WORK_EXPERIENCE_ENDPOINT } from '../data/work-experience/work-experience-fetch';
 import { HOBBY_ENDPOINT } from '../data/hobby/fetch-hobby';
 import { PROFILE_ENDPOINT } from '../data/profile/profile.actions';
+import { Role } from '../model/Role';
 
-export const mockedFetchGet = async (url: string) => {
+export const mockedFetchGetProfile = async (url: string) => {
     if (url.includes(CATEGORY_ENDPOINT)) {
         return new Response(JSON.stringify(categoryData));
     }
@@ -54,6 +58,26 @@ export const mockedFetchGet = async (url: string) => {
     }
     if (url.includes(PROFILE_ENDPOINT)) {
         return new Response(JSON.stringify(profileData[0]));
+    }
+    return new Response('');
+};
+
+export const mockedFetchGetAccount = (role: Role) => async (url: string) => {
+    if (url.includes('/api/account')) {
+        return mockedFetchGetAccountByRole(role);
+    }
+    return new Response('');
+};
+
+export const mockedFetchGetAccountByRole = async (role: Role) => {
+    if (role === Role.STANDARD) {
+        return new Response(JSON.stringify(accountStandardData));
+    }
+    if (role === Role.ADMIN) {
+        return new Response(JSON.stringify(accountAdminData));
+    }
+    if (role === Role.AZURE_ADMIN) {
+        return new Response(JSON.stringify(accountAzureAdminData));
     }
     return new Response('');
 };
