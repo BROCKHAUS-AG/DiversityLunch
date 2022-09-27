@@ -11,6 +11,7 @@ import { AdminPanelIconContainer } from '../General/HeaderTemplate/AdminPanelIco
 import { Account } from '../../types/Account';
 import { AppStoreState } from '../../store/Store';
 import { Role } from '../../model/Role';
+import { LoadingAnimation } from '../Shared/LoadingAnimation';
 
 export const Dashboard = () => {
     const accountState = useSelector((state: AppStoreState) => state.account);
@@ -19,7 +20,7 @@ export const Dashboard = () => {
     if (accountState.status === 'OK') {
         account = accountState.accountData;
     } else {
-        return (<p>Loading45543445</p>);
+        return <LoadingAnimation />;
     }
     const isAdmin : boolean = account.role === Role.ADMIN || account.role === Role.AZURE_ADMIN;
 
