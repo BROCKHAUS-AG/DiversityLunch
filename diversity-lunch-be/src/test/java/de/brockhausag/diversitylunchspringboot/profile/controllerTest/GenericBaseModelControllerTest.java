@@ -23,7 +23,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -153,6 +152,28 @@ public class GenericBaseModelControllerTest {
         }
 
         verify(service, times(AMOUNT)).updateOrCreateEntity(entity);
+    }
+
+    @Test
+    void testDeleteOne_serviceDeleteByIdReturnTrue_returnStatusCodeOk(){
+        final Long someIdThatExists = 1337L;
+        when(service.deleteEntityById(someIdThatExists)).thenReturn(true);
+        var expected = HttpStatus.OK;
+
+        var actual = controller.deleteOne(someIdThatExists).getStatusCode();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testDeleteOne_serviceDeleteByIdReturnFalse_returnStatusCodeNotFound(){
+        final Long someNotExistingId = 1337L;
+        when(service.deleteEntityById(someNotExistingId)).thenReturn(false);
+        var expected = HttpStatus.NOT_FOUND;
+
+        var actual = controller.deleteOne(someNotExistingId).getStatusCode();
+
+        assertEquals(expected, actual);
     }
 
 
