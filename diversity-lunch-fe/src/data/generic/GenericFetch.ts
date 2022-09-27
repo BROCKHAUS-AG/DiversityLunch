@@ -17,20 +17,20 @@ export class GenericFetch<T extends Identifiable> {
     private initFetch;
     private endpoint : string;
 
-    private url : string = '/';
+    private url : string = '/api/';
 
     constructor(slice: GenericSlice<T>, endpoint : string, private readonly _errorSlice = globalErrorSlice) {
         this.update = slice.actions.update;
         this.add = slice.actions.add;
         this.remove = slice.actions.remove;
         this.initFetch = slice.actions.initFetch;
-        this.endpoint = endpoint;
+        this.endpoint = endpoint + '/';
     }
 
     public getAll() {
         return async (dispatch: Dispatch) => {
             try {
-                const response = await authenticatedFetchGet(`${this.url}api/${this.endpoint}/all`);
+                const response = await authenticatedFetchGet(`${this.url}${this.endpoint}all`);
 
                 if (!response.ok) {
                     dispatch(this._errorSlice.httpError({ statusCode: response.status }));
@@ -108,6 +108,7 @@ export class GenericFetch<T extends Identifiable> {
                 } else {
                     // const result : T[] = await response.json();
                     dispatch(this.remove([id]));
+                    dispatch(this.update())
                 }
             } catch (error) {
                 dispatch(this._errorSlice.error(undefined));
