@@ -19,7 +19,7 @@ export const Dashboard = () => {
     if (accountState.status === 'OK') {
         account = accountState.accountData;
     } else {
-        return (<p>Loading</p>);
+        return (<p>Loading45543445</p>);
     }
     const isAdmin : boolean = account.role === Role.ADMIN || account.role === Role.AZURE_ADMIN;
 
