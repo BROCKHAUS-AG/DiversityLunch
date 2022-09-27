@@ -23,7 +23,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class GenericBaseModelControllerTest {
@@ -44,7 +44,7 @@ public class GenericBaseModelControllerTest {
     @InjectMocks
     private GenericBaseModelController<TestBaseDto,TestBaseEntity,
                 TestRepositoryType,TestServiceType, Mapper<TestBaseDto, TestBaseEntity> > controller;
-    
+
     @BeforeEach
     void setup(){
        this.factory = new BaseModelTestDataFactory();
@@ -124,7 +124,56 @@ public class GenericBaseModelControllerTest {
         //Assert
         assertEquals(expectedResponse.getBody(), actualResponse.getBody());
         assertEquals(expectedResponse.getStatusCode(), actualResponse.getStatusCode());
+    }
 
+    @Test
+    void testPostOne_calledThreeTimesWithSameDto_callCreateEntityThreeTimesWithMappedEntity(){
+        TestBaseDto dto = factory.buildDto(1);
+        TestBaseEntity entity = mapper.dtoToEntity(dto);
+        when(service.createEntity(entity)).thenReturn(entity);
+        final int AMOUNT = 3;
+
+        for (int i = 0; i < AMOUNT; ++i) {
+            controller.postOne(dto);
+        }
+
+        verify(service, times(AMOUNT)).createEntity(entity);
+    }
+
+    @Test
+    void testPutOne_calledThreeTimesWithSameDto_callCreateOrUpdateEntityThreeTimesWithMappedEntity(){
+        TestBaseDto dto = factory.buildDto(1);
+        TestBaseEntity entity = mapper.dtoToEntity(dto);
+        when(service.updateOrCreateEntity(entity)).thenReturn(entity);
+        final int AMOUNT = 3;
+
+        for (int i = 0; i < AMOUNT; ++i) {
+            controller.putOne(dto);
+        }
+
+        verify(service, times(AMOUNT)).updateOrCreateEntity(entity);
+    }
+
+    @Test
+    void testDeleteOne_serviceDeleteByIdReturnTrue_returnStatusCodeOk(){
+        final Long someIdThatExists = 1337L;
+        when(service.deleteEntityById(someIdThatExists)).thenReturn(true);
+        var expected = HttpStatus.OK;
+
+        var actual = controller.deleteOne(someIdThatExists).getStatusCode();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testDeleteOne_serviceDeleteByIdReturnFalse_returnStatusCodeNotFound(){
+        final Long someNotExistingId = 1337L;
+        when(service.deleteEntityById(someNotExistingId)).thenReturn(false);
+        var expected = HttpStatus.NOT_FOUND;
+
+        var actual = controller.deleteOne(someNotExistingId).getStatusCode();
+
+        assertEquals(expected, actual);
     }
 
 

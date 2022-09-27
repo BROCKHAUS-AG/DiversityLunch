@@ -1,5 +1,5 @@
 export enum Role {
-    Standard = 'STANDARD',
-    Admin = 'ADMIN',
-    AzureAdmin = ' AZURE_ADMIN',
+    STANDARD = 'STANDARD',
+    ADMIN = 'ADMIN',
+    AZURE_ADMIN = 'AZURE_ADMIN'
 }
