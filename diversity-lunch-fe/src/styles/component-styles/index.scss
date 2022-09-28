@@ -29,3 +29,21 @@
   display: flex;
   flex-direction: column;
 }
+
+input {
+  background-color: #ffffff;
+  white-space: nowrap;
+  padding: 14px;
+  border: 1px solid #F8E9EC;
+  color: gray;
+
+  letter-spacing: 0.015em;
+  font-family: GilroyLight, sans-serif;
+  font-style: normal;
+  font-size: 16px;
+  margin: 5px;
+}
+
+input:focus {
+  outline: none;
+}

@@ -64,6 +64,6 @@ export class GenericSlice<T extends Identifiable> {
     }
 
     private removeFunction: CaseReducer<IdentifiableState<T>, PayloadAction<number[]>> = (state, action) => {
-        state.items.filter((e) => !action.payload.find((r) => r === e.id));
+        state.items = state.items.filter((e) => !action.payload.find((r) => r === e.id));
     }
 }

@@ -108,7 +108,6 @@ export class GenericFetch<T extends Identifiable> {
                 } else {
                     // const result : T[] = await response.json();
                     dispatch(this.remove([id]));
-                    dispatch(this.update())
                 }
             } catch (error) {
                 dispatch(this._errorSlice.error(undefined));
