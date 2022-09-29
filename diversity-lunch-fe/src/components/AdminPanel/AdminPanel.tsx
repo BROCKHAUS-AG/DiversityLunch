@@ -9,7 +9,6 @@ import { Role } from '../../model/Role';
 import { projectFetch } from '../../data/project/project-fetch';
 import { OptionsList } from './OptionsList';
 import { hobbyFetch } from '../../data/hobby/fetch-hobby';
-import { Project } from '../../model/Project';
 
 export const AdminPanel: FC = () => {
     const accountState = useSelector((store: AppStoreState) => store.account);
@@ -29,17 +28,6 @@ export const AdminPanel: FC = () => {
     } else {
         return (<p>Error</p>);
     }
-
-    const updateProjectTest = () => {
-        const newDescriptor = prompt('Test');
-        if (newDescriptor !== null) {
-            const newProject : Project = {
-                id: 20,
-                descriptor: newDescriptor,
-            };
-            dispatch(projectFetch.put(newProject));
-        }
-    };
 
     return (
         <section className="view">
