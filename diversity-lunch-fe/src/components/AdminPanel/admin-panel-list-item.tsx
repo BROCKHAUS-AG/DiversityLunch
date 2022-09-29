@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Identifiable } from '../../data/generic/Identifiable';
 
 interface AdminPanelListItemProp<T extends Identifiable> {
@@ -11,13 +11,18 @@ export const AdminPanelListItem = <T extends Identifiable>({ item: project, onEd
     const [input, setInput] = useState(project.descriptor);
     const [saveButtonActive, setSaveButtonActive] = useState(false);
 
+    useEffect(() => {
+        setSaveButtonActive(false);
+        setInput(project.descriptor);
+    }, [project.descriptor]);
+
     const inputChangedHandler = (e : ChangeEvent<HTMLInputElement>) => {
         setSaveButtonActive(e.target.value !== project.descriptor);
         setInput(e.target.value);
     };
 
     const updateClickHandler = () => {
-        onEditClicked({ id: project.id, descriptor: `${input}sus` } as T);
+        onEditClicked({ id: project.id, descriptor: input } as T);
     };
 
     return (
