@@ -47,3 +47,16 @@ input {
 input:focus {
   outline: none;
 }
+
+.editListTitle {
+  font-weight: 500;
+  font-size: 1.3rem;
+}
+
+.optionsListContainer {
+  padding: 20px;
+}
+
+.optionsListContainer div {
+  margin: 20px;
+}

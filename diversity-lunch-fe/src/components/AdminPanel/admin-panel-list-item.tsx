@@ -1,15 +1,13 @@
-import React, { ChangeEvent, FC, useState } from 'react';
-import { IconButton } from '../Shared/Controlls/IconButton';
-import iconMeeting from '../../resources/icons/icon-anstehende-termine.svg';
-import { Project } from './Project';
+import React, { ChangeEvent, useState } from 'react';
+import { Identifiable } from '../../data/generic/Identifiable';
 
-interface AdminPanelListItemProp {
-  item: Project,
-  onEditClicked: (_: Project)=>void,
-  onRemoveClicked: (_: Project)=>void
+interface AdminPanelListItemProp<T extends Identifiable> {
+  item: T,
+  onEditClicked: (_: T)=>void,
+  onRemoveClicked: (_: T)=>void
 }
 
-export const AdminPanelListItem: FC<AdminPanelListItemProp> = ({ item: project, onEditClicked, onRemoveClicked }: AdminPanelListItemProp) => {
+export const AdminPanelListItem = <T extends Identifiable>({ item: project, onEditClicked, onRemoveClicked }: AdminPanelListItemProp<T>) => {
     const [input, setInput] = useState(project.descriptor);
     const [saveButtonActive, setSaveButtonActive] = useState(false);
 
@@ -18,11 +16,15 @@ export const AdminPanelListItem: FC<AdminPanelListItemProp> = ({ item: project, 
         setInput(e.target.value);
     };
 
+    const updateClickHandler = () => {
+        onEditClicked({ id: project.id, descriptor: `${input}sus` } as T);
+    };
+
     return (
         <article>
             <input type="text" value={input} onChange={inputChangedHandler} />
             {saveButtonActive && (
-                <button type="button" onClick={() => onEditClicked({ id: project.id, descriptor: `${input}sus` })}>Speichern</button>
+                <button type="button" onClick={updateClickHandler}>Speichern</button>
             )}
 
             <button type="button" onClick={() => onRemoveClicked(project)}>Löschen</button>
