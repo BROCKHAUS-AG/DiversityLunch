@@ -1,6 +1,6 @@
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { render, screen } from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import React, { FC, useEffect } from 'react';
 import { APP_STORE, AppStoreState } from '../../../store/Store';
 import { projectFetch } from '../../../data/project/project-fetch';
@@ -40,8 +40,29 @@ describe('OptionsList', () => {
         ));
     });
 
-    it('should render the component without crashing', async () => {
-        const result = await screen.findByText('Projektliste anpassen');
+    it('should render the correct title', async () => {
+        const result = await screen.queryByText('Projektliste anpassen');
         expect(result).toBeInTheDocument();
+    });
+
+    it('should render the correct amount of inputs', async () => {
+        const result = await screen.queryAllByRole('textbox');
+        expect(result.length).toBe(3);
+    });
+
+    it('should render the correct options', async () => {
+        const intern = await screen.getByDisplayValue('intern');
+        const extern = await screen.getByDisplayValue('extern');
+        expect(intern).toBeInTheDocument();
+        expect(extern).toBeInTheDocument();
+        // expect(result[1].value).toBe("intern");
+    });
+
+    it('should not render the deleted element when remove button is clicked', async () => {
+        const removeButton = await screen.queryAllByText('Löschen');
+        //setTimeout(() => removeButton[1].click(), 0);
+        fireEvent.click(removeButton[1]);
+        const intern = await screen.getByDisplayValue('extern');
+        expect(intern).not.toBeInTheDocument();
     });
 });
