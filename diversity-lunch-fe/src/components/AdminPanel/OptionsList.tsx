@@ -36,7 +36,10 @@ export const OptionsList = <T extends Identifiable>({ state, fetch, title, addBu
         <div className="optionsListContainer">
             <p className="editListTitle">{title}</p>
             <div>
-                <input type="text" value={inputText} onChange={(e : ChangeEvent<HTMLInputElement>) => setInputText(e.target.value)} />
+                <label>
+                    <p>Bezeichner:</p>
+                    <input type="text" value={inputText} onChange={(e : ChangeEvent<HTMLInputElement>) => setInputText(e.target.value)} />
+                </label>
                 <button type="button" onClick={() => addProject(inputText)}>{addButtonLabel}</button>
                 {state.items.map((current : T) => (
                     <AdminPanelListItem

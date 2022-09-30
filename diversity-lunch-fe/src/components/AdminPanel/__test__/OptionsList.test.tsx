@@ -1,15 +1,16 @@
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { fireEvent, render, screen } from '@testing-library/react';
-import React, { FC, useEffect } from 'react';
+import {
+    fireEvent, getByDisplayValue, render, screen,
+} from '@testing-library/react';
+import React, { ChangeEvent, FC } from 'react';
 import { APP_STORE, AppStoreState } from '../../../store/Store';
 import { projectFetch } from '../../../data/project/project-fetch';
 import { OptionsList } from '../OptionsList';
 import * as fetcher from '../../../utils/fetch.utils';
 import { mockedFetchGetProfile } from '../../../__global_test_data__/fetch';
-import { loadProfile } from '../../../data/profile/profile.actions';
-import { categoryData, profileData } from '../../../__global_test_data__/data';
-import { ProfileOverview } from '../../Profile/ProfileOverview';
+
+const addButtonLabel: string = 'Projekt hinzufügen';
 
 const WrapperComponent: FC = () => {
     const projectState = useSelector((store: AppStoreState) => store.project);
@@ -20,12 +21,12 @@ const WrapperComponent: FC = () => {
             state={projectState}
             fetch={projectFetch}
             title="Projektliste anpassen"
-            addButtonLabel="Projekt hinzufügen"
+            addButtonLabel={addButtonLabel}
         />
     );
 };
 
-const mockDeleteReturnValue = async (url: string) => new Response(JSON.stringify({ id: 9, descriptor: 'intern' }));
+const mockAuthenticatedFetchDeleteImpl = async () => new Response(JSON.stringify({ id: 9, descriptor: 'intern' }));
 
 describe('OptionsList', () => {
     let container : HTMLElement;
@@ -34,7 +35,7 @@ describe('OptionsList', () => {
         jest.spyOn(fetcher, 'authenticatedFetchGet')
             .mockImplementation(mockedFetchGetProfile);
         jest.spyOn(fetcher, 'authenticatedFetchDelete')
-            .mockImplementation(mockDeleteReturnValue);
+            .mockImplementation(mockAuthenticatedFetchDeleteImpl);
         ({ container } = render(
             <BrowserRouter>
                 <Provider store={APP_STORE}>
@@ -66,5 +67,27 @@ describe('OptionsList', () => {
         fireEvent.click(removeButton[1]);
         const intern = await screen.getByDisplayValue('extern');
         expect(intern).not.toBeInTheDocument();
+    });
+
+    it('should add new input elements for added element when the add button was clicked', async () => {
+        const newDescriptor = 'Irgendein neuer Descriptor';
+        const mockAuthenticatedFetchPostImpl = async () => new Response(JSON.stringify({ id: 9, descriptor: newDescriptor }));
+        jest.spyOn(fetcher, 'authenticatedFetchPost')
+            .mockImplementation(mockAuthenticatedFetchPostImpl);
+
+        const addButton = await screen.queryByText(addButtonLabel);
+        const addDescriptorTextField = (await screen.queryByText('Bezeichner:'))?.parentElement!.querySelector('input');
+        expect(addButton).not.toBeNull();
+        expect(addDescriptorTextField).not.toBeNull();
+
+        addDescriptorTextField!.onchange = () => {
+            addButton!.click();
+            event.target!.value = '';
+        };
+        fireEvent.change(addDescriptorTextField!, { target: { value: newDescriptor } });
+
+        const addedDescriptorTextField = await screen.getByDisplayValue(newDescriptor);
+        expect(addedDescriptorTextField.parentElement!.tagName).toEqual('article'); // see admin-panel-list-item.tsx
+        expect(addedDescriptorTextField).toBeInTheDocument();
     });
 });
