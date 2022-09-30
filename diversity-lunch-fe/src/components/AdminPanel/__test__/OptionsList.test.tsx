@@ -1,6 +1,6 @@
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import {fireEvent, render, screen} from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import React, { FC, useEffect } from 'react';
 import { APP_STORE, AppStoreState } from '../../../store/Store';
 import { projectFetch } from '../../../data/project/project-fetch';
@@ -8,7 +8,7 @@ import { OptionsList } from '../OptionsList';
 import * as fetcher from '../../../utils/fetch.utils';
 import { mockedFetchGetProfile } from '../../../__global_test_data__/fetch';
 import { loadProfile } from '../../../data/profile/profile.actions';
-import { profileData } from '../../../__global_test_data__/data';
+import { categoryData, profileData } from '../../../__global_test_data__/data';
 import { ProfileOverview } from '../../Profile/ProfileOverview';
 
 const WrapperComponent: FC = () => {
@@ -25,12 +25,16 @@ const WrapperComponent: FC = () => {
     );
 };
 
+const mockDeleteReturnValue = async (url: string) => new Response(JSON.stringify({ id: 9, descriptor: 'intern' }));
+
 describe('OptionsList', () => {
     let container : HTMLElement;
 
     beforeEach(() => {
         jest.spyOn(fetcher, 'authenticatedFetchGet')
             .mockImplementation(mockedFetchGetProfile);
+        jest.spyOn(fetcher, 'authenticatedFetchDelete')
+            .mockImplementation(mockDeleteReturnValue);
         ({ container } = render(
             <BrowserRouter>
                 <Provider store={APP_STORE}>
@@ -55,12 +59,10 @@ describe('OptionsList', () => {
         const extern = await screen.getByDisplayValue('extern');
         expect(intern).toBeInTheDocument();
         expect(extern).toBeInTheDocument();
-        // expect(result[1].value).toBe("intern");
     });
 
     it('should not render the deleted element when remove button is clicked', async () => {
         const removeButton = await screen.queryAllByText('Löschen');
-        //setTimeout(() => removeButton[1].click(), 0);
         fireEvent.click(removeButton[1]);
         const intern = await screen.getByDisplayValue('extern');
         expect(intern).not.toBeInTheDocument();
