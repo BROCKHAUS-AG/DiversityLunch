@@ -71,7 +71,8 @@ describe('OptionsList', () => {
 
     it('should add new input elements for added element when the add button was clicked', async () => {
         const newDescriptor = 'Irgendein neuer Descriptor';
-        const mockAuthenticatedFetchPostImpl = async () => new Response(JSON.stringify({ id: 9, descriptor: newDescriptor }));
+        const newId = 42;
+        const mockAuthenticatedFetchPostImpl = async () => new Response(JSON.stringify({ id: newId, descriptor: newDescriptor }));
         jest.spyOn(fetcher, 'authenticatedFetchPost')
             .mockImplementation(mockAuthenticatedFetchPostImpl);
 
@@ -80,14 +81,11 @@ describe('OptionsList', () => {
         expect(addButton).not.toBeNull();
         expect(addDescriptorTextField).not.toBeNull();
 
-        addDescriptorTextField!.onchange = () => {
-            addButton!.click();
-            event.target!.value = '';
-        };
-        fireEvent.change(addDescriptorTextField!, { target: { value: newDescriptor } });
+        addDescriptorTextField!.value = newDescriptor;
+        addButton!.click();
 
-        const addedDescriptorTextField = await screen.getByDisplayValue(newDescriptor);
-        expect(addedDescriptorTextField.parentElement!.tagName).toEqual('article'); // see admin-panel-list-item.tsx
+        const addedDescriptorTextField = await screen.findByText(addButtonLabel);
+        expect(addedDescriptorTextField.parentElement!.tagName).toEqual('ARTICLE'); // see admin-panel-list-item.tsx
         expect(addedDescriptorTextField).toBeInTheDocument();
     });
 });
