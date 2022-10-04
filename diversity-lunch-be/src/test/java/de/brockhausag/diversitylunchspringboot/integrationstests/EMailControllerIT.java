@@ -17,6 +17,7 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.json.JSONObject;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -81,15 +82,20 @@ public class EMailControllerIT {
         mockMvc = MockMvcBuilders.webAppContextSetup(appContext).build();
 
         mockMvcSecurity = MockMvcBuilders.webAppContextSetup(appContext).apply(springSecurity()).build();
-        // Nach jedem Test soll die Test Mail geloescht werden
-        HttpUriRequest request = new HttpDelete( "http://localhost:8025/api/v1/messages");
-        HttpClientBuilder.create().build().execute( request );
 
         when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
         when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
         myProfileEntity = profileTestdataFactory.createNewMaxProfile();
         accountEntity = accountService.getOrCreateAccount(myProfileEntity.getEmail());
         myProfileEntity = profileService.createProfile(myProfileEntity, accountEntity.getId()).orElseThrow();
+    }
+
+    @SneakyThrows
+    @AfterEach
+    void cleanup(){
+        // Nach jedem Test soll die Test Mail geloescht werden
+        HttpUriRequest request = new HttpDelete( "http://localhost:8025/api/v1/messages");
+        HttpClientBuilder.create().build().execute( request );
     }
 
     @SneakyThrows
@@ -160,10 +166,30 @@ public class EMailControllerIT {
         performRequestWithToken(url, accountEntity).andExpect(status().isForbidden());
     }
 
+    @SneakyThrows
+    @Test
+    public void testAuthenticationSendTenTestMailsToUser_withValidId_expectedOkStatus() {
+        Long id = myProfileEntity.getId();
+        String url = "/api/mailing/sendTenTestMailsToUser?id=" + id;
+
+        performRequestWithToken(url, accountEntity).andExpect(status().isOk());
+    }
+
+    @SneakyThrows
+    @Test
+    public void testAuthenticationSendTenTestMailsToLoggedInUser_withInvalidId_expectedForbiddenStatus() {
+        Long id = myProfileEntity.getId() + 1;
+        String url = "/api/mailing/sendTenTestMailsToUser?id=" + id;
+
+        performRequestWithToken(url, accountEntity).andExpect(status().isForbidden());
+    }
+
     private ResultActions performRequestWithToken(String path, AccountEntity accountEntity) throws Exception {
         return mockMvcSecurity.perform(
                 post(path)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileTestdataFactory.getTokenStringFromId(accountEntity.getUniqueName()))
         );
     }
+
+
 }
