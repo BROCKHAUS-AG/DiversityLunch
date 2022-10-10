@@ -20,8 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -153,6 +152,16 @@ class AccountServiceTest {
         }catch (AccountService.IllegalRoleModificationException e){
             fail();
         }
+    }
+
+    @Test
+    void testAssignAdminRole_withWrongRole_throwsException(){
+
+        long existingIdWithWrongRole = 2L;
+        Optional<AccountEntity> input = Optional.of(accountTestDataFactory.buildAccountWithAzureAdminRole());
+        when(accountRepository.findById(existingIdWithWrongRole)).thenReturn(input);
+
+        assertThrows(AccountService.IllegalRoleModificationException.class,() -> accountService.assignAdminRole(existingIdWithWrongRole));
     }
 
 }

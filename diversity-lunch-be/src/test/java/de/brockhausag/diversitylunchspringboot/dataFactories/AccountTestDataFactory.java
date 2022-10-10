@@ -27,6 +27,9 @@ public class AccountTestDataFactory {
                 .role(role);
     }
 
+    public AccountEntity buildAccountWithAzureAdminRole() {
+        return entityBuilder().role(AccountRole.AZURE_ADMIN).build();
+    }
     public AccountEntity buildAccountWithoutProfile() {
         return entityBuilder().profile(null).build();
     }
