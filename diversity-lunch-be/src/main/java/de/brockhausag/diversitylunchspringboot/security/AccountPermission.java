@@ -9,7 +9,8 @@ public enum AccountPermission {
     PROFILE_OPTION_READ("profile_option:read"),
     PROFILE_OPTION_WRITE("profile_option:write"),
     ADMIN_ROLE_ASSIGN("admin_role:assign"),
-    ADMIN_ROLE_WITHDRAW("admin_role:with_draw");
+    ADMIN_ROLE_WITHDRAW("admin_role:with_draw"),
+    ACCOUNT_READ("account:read");
 
     private final String name;
 }
