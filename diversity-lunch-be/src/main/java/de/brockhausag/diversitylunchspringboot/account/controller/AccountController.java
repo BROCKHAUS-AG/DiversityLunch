@@ -76,4 +76,20 @@ public class AccountController {
         AccountDto accountDto = mapper.mapEntityToDto(optionalAccount.get());
         return ResponseEntity.ok().body(accountDto);
     }
+    @PutMapping("/revokeAdminRole/{id}")
+    @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).ADMIN_ROLE_ASSIGN)")
+    public ResponseEntity<?> revokeAdminRole(@PathVariable Long id) {
+        Optional<AccountEntity> optionalAccount;
+        try {
+            optionalAccount = service.revokeAdminRole(id);
+        } catch (AccountService.IllegalRoleModificationException e) {
+            log.warn(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        if (optionalAccount.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        AccountDto accountDto = mapper.mapEntityToDto(optionalAccount.get());
+        return ResponseEntity.ok().body(accountDto);
+    }
 }
