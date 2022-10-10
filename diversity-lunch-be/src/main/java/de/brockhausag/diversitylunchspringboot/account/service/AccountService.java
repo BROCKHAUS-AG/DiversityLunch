@@ -32,7 +32,7 @@ public class AccountService {
         Optional<AccountEntity> optionalAccount = repository.findById(id);
 
         return optionalAccount.map(accountEntity -> {
-            accountEntity.setRole(createRole());
+            accountEntity.setRole(determineRole());
             accountEntity.setProfile(profileEntity);
             return repository.save(accountEntity);
         });
@@ -40,7 +40,7 @@ public class AccountService {
 
     public AccountEntity getOrCreateAccount(String uniqueName) {
         Optional<AccountEntity> optionaleAccountEntity = getAccount(uniqueName);
-        AccountRole role = createRole();
+        AccountRole role = determineRole();
         return optionaleAccountEntity.orElseGet(
                 () -> repository.save(new AccountEntity(0L, null, uniqueName, role))
         );
@@ -60,8 +60,22 @@ public class AccountService {
         repository.save(account);
         return optionalAccount;
     }
+    public Optional<AccountEntity> revokeAdminRole(Long id) throws  IllegalRoleModificationException{
+        Optional<AccountEntity> optionalAccount = repository.findById(id);
+        if (optionalAccount.isEmpty()) {
+            return optionalAccount;
+        }
+        AccountEntity account =  optionalAccount.get();
+        if (account.getRole() == AccountRole.AZURE_ADMIN) {
+            throw new IllegalRoleModificationException("Tried to revoke Azure Admin Role");
+        }
 
-    private AccountRole createRole() {
+        account.setRole(determineRole());
+        repository.save(account);
+        return optionalAccount;
+    }
+
+    private AccountRole determineRole() {
         return isAccountInAdminGroup() ? AccountRole.AZURE_ADMIN : AccountRole.STANDARD;
     }
 
