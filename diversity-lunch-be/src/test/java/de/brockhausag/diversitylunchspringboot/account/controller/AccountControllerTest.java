@@ -62,7 +62,7 @@ class AccountControllerTest {
     }
 
     @Test
-    void testGetAccount_withInvalidPrincipal_expectBadRequest(){
+    void testGetAccount_withInvalidPrincipal_expectBadRequest() {
         when(principal.getAttribute("unique_name")).thenReturn(null);
 
         ResponseEntity<AccountDto> response = accountController.getAccount(principal);
@@ -80,13 +80,40 @@ class AccountControllerTest {
     void testAssignAdminRole_whenServiceReturnsEntity_expectIsOk() {
         AccountDto expectedAccountDto = accountTestDataFactory.buildAccountDto();
         AccountEntity accountEntity = accountTestDataFactory.buildAccountWithoutProfile();
-        try{
+        try {
             when(accountService.assignAdminRole(any())).thenReturn(Optional.of(accountEntity));
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         when(accountMapper.mapEntityToDto(accountEntity)).thenReturn(expectedAccountDto);
 
         ResponseEntity<?> response = accountController.assignAdminRole(expectedAccountDto.getId());
 
         assertEquals(response.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    void testAssignAdminRole_whenServiceReturnsEmpty_expectNotFound() {
+        try {
+            when(accountService.assignAdminRole(any())).thenReturn(Optional.empty());
+        } catch (Exception e) {
+        }
+        long nonExistingID = 1;
+
+        ResponseEntity<?> response = accountController.assignAdminRole(nonExistingID);
+
+        assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    void testAssignAdminRole_whenServiceThrowsException_expectBadRequest() {
+        try {
+            when(accountService.assignAdminRole(any())).thenThrow(AccountService.IllegalRoleModificationException.class);
+        } catch (Exception e) {
+        }
+        long existingIdWithWrongRole = 1;
+
+        ResponseEntity<?> response = accountController.assignAdminRole(existingIdWithWrongRole);
+
+        assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
     }
 }
