@@ -46,14 +46,19 @@ public class AccountService {
         );
     }
 
-    public Optional<AccountEntity> assignAdminRole(Long id) {
+    public Optional<AccountEntity> assignAdminRole(Long id) throws  IllegalRoleModificationException{
         Optional<AccountEntity> optionalAccount = repository.findById(id);
-        if (!optionalAccount.isPresent()) {
+        if (optionalAccount.isEmpty()) {
             return optionalAccount;
         }
-        if (optionalAccount.get().getRole() == AccountRole.AZURE_ADMIN) {
-
+        AccountEntity account =  optionalAccount.get();
+        if (account.getRole() == AccountRole.AZURE_ADMIN) {
+            throw new IllegalRoleModificationException("Tried to revoke Azure Admin Role by reassigning to Admin Role");
         }
+
+        account.setRole(AccountRole.ADMIN);
+        repository.save(account);
+        return optionalAccount;
     }
 
     private AccountRole createRole() {
@@ -71,6 +76,11 @@ public class AccountService {
         return  repository.findAll();
     }
 
-    public class  
+    public class  IllegalRoleModificationException extends Exception{
+
+        public IllegalRoleModificationException(String s) {
+            super(s);
+        }
+    }
 }
 
