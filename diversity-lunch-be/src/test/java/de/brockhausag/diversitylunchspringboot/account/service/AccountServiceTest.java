@@ -8,6 +8,7 @@ import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFact
 import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchGroupProperties;
+import de.brockhausag.diversitylunchspringboot.security.AccountRole;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,7 +48,7 @@ class AccountServiceTest {
     private List<Group> groupForAzureAdminAccount;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         this.profileFactory = new ProfileTestdataFactory();
         this.accountTestDataFactory = new AccountTestDataFactory();
 
@@ -112,7 +114,7 @@ class AccountServiceTest {
     }
 
     @Test
-    void testUpdateAccount_withExistentAccount_thenReturnUpdated(){
+    void testUpdateAccount_withExistentAccount_thenReturnUpdated() {
         AccountEntity account = accountTestDataFactory.buildAccountWithoutProfile();
         ProfileEntity existentProfile = profileFactory.buildEntity(1);
         AccountEntity accountWithProfile = accountTestDataFactory.buildAccountWithProfile();
@@ -130,7 +132,7 @@ class AccountServiceTest {
     }
 
     @Test
-    void testUpdateAccount_withNonExistentAccount_thenReturnEmpty(){
+    void testUpdateAccount_withNonExistentAccount_thenReturnEmpty() {
         ProfileEntity existentProfile = profileFactory.buildEntity(1);
 
         when(accountRepository.findById(1L)).thenReturn(Optional.empty());
@@ -141,27 +143,47 @@ class AccountServiceTest {
     }
 
     @Test
-    void testAssignAdminRole_withNonExistentId_thenReturnEmpty(){
+    void testAssignAdminRole_withNonExistingId_thenReturnEmpty() {
 
         long nonExistingId = 1;
         when(accountRepository.findById(nonExistingId)).thenReturn(Optional.empty());
 
-        try{
+        try {
             Optional<AccountEntity> empty = accountService.assignAdminRole(nonExistingId);
             assertTrue(empty.isEmpty());
-        }catch (AccountService.IllegalRoleModificationException e){
+        } catch (AccountService.IllegalRoleModificationException e) {
             fail();
         }
     }
 
     @Test
-    void testAssignAdminRole_withWrongRole_throwsException(){
+    void testAssignAdminRole_withWrongRole_throwsException() {
 
         long existingIdWithWrongRole = 2L;
         Optional<AccountEntity> input = Optional.of(accountTestDataFactory.buildAccountWithAzureAdminRole());
         when(accountRepository.findById(existingIdWithWrongRole)).thenReturn(input);
 
-        assertThrows(AccountService.IllegalRoleModificationException.class,() -> accountService.assignAdminRole(existingIdWithWrongRole));
+        assertThrows(AccountService.IllegalRoleModificationException.class, () -> accountService.assignAdminRole(existingIdWithWrongRole));
     }
 
+    @Test
+    void testAssignAdminRole_withExistingIdAndValidRole_thenReturnAccountsWithUpdatedRole() {
+        AccountEntity adminAccount = accountTestDataFactory.buildAccountWithAdminRole();
+        adminAccount.setId(1L);
+        AccountEntity standardAccount = accountTestDataFactory.buildAccountWithStandardRole();
+        standardAccount.setId(2L);
+        when(accountRepository.findById(adminAccount.getId())).thenReturn(Optional.of(adminAccount));
+        when(accountRepository.findById(standardAccount.getId())).thenReturn(Optional.of(standardAccount));
+        List<AccountEntity> accountEntityList = Arrays.asList(adminAccount, standardAccount);
+
+        try {
+            for (var accountEntity : accountEntityList) {
+                Optional<AccountEntity> optionalAccountEntity = accountService.assignAdminRole(accountEntity.getId());
+
+                optionalAccountEntity.ifPresentOrElse(a -> assertEquals(a.getRole(), AccountRole.ADMIN), Assertions::fail);
+            }
+        } catch (AccountService.IllegalRoleModificationException e) {
+            fail();
+        }
+    }
 }
