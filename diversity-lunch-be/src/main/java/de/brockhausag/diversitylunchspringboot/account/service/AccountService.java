@@ -46,6 +46,16 @@ public class AccountService {
         );
     }
 
+    public Optional<AccountEntity> assignAdminRole(Long id) {
+        Optional<AccountEntity> optionalAccount = repository.findById(id);
+        if (!optionalAccount.isPresent()) {
+            return optionalAccount;
+        }
+        if (optionalAccount.get().getRole() == AccountRole.AZURE_ADMIN) {
+
+        }
+    }
+
     private AccountRole createRole() {
         return isAccountInAdminGroup() ? AccountRole.AZURE_ADMIN : AccountRole.STANDARD;
     }
@@ -60,4 +70,7 @@ public class AccountService {
     public Iterable<AccountEntity> getAccounts() {
         return  repository.findAll();
     }
+
+    public class  
 }
+

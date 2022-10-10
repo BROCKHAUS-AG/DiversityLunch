@@ -11,9 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,5 +56,10 @@ public class AccountController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(accountDtos);
+    }
+
+    @PutMapping("/assignAdminRole/{id}")
+    public ResponseEntity<> assignAdminRole(@PathVariable Long id) {
+        
     }
 }
