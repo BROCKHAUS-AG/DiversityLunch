@@ -60,7 +60,7 @@ class AccountServiceTest {
 
         groupForAzureAdminAccount = new ArrayList<>();
         var azureAdminGroup = new Group();
-        // should be a azure admin account
+        // should be an azure admin account
         azureAdminGroup.displayName = "AdminGroup";
         groupForAzureAdminAccount.add(azureAdminGroup);
     }
@@ -181,6 +181,51 @@ class AccountServiceTest {
                 Optional<AccountEntity> optionalAccountEntity = accountService.assignAdminRole(accountEntity.getId());
 
                 optionalAccountEntity.ifPresentOrElse(a -> assertEquals(a.getRole(), AccountRole.ADMIN), Assertions::fail);
+            }
+        } catch (AccountService.IllegalRoleModificationException e) {
+            fail();
+        }
+    }
+
+    @Test
+    void testRevokeAdminRole_withNonExistingId_thenReturnEmpty() {
+
+        long nonExistingId = 1;
+        when(accountRepository.findById(nonExistingId)).thenReturn(Optional.empty());
+
+        try {
+            Optional<AccountEntity> empty = accountService.revokeAdminRole(nonExistingId);
+            assertTrue(empty.isEmpty());
+        } catch (AccountService.IllegalRoleModificationException e) {
+            fail();
+        }
+    }
+
+    @Test
+    void testRevokeAdminRole_withWrongRole_throwsException() {
+
+        long existingIdWithWrongRole = 2L;
+        Optional<AccountEntity> input = Optional.of(accountTestDataFactory.buildAccountWithAzureAdminRole());
+        when(accountRepository.findById(existingIdWithWrongRole)).thenReturn(input);
+
+        assertThrows(AccountService.IllegalRoleModificationException.class, () -> accountService.revokeAdminRole(existingIdWithWrongRole));
+    }
+
+    @Test
+    void testRevokeAdminRole_withExistingIdAndValidRole_thenReturnAccountsWithUpdatedRole() {
+        AccountEntity adminAccount = accountTestDataFactory.buildAccountWithAdminRole();
+        adminAccount.setId(1L);
+        AccountEntity standardAccount = accountTestDataFactory.buildAccountWithStandardRole();
+        standardAccount.setId(2L);
+        when(accountRepository.findById(adminAccount.getId())).thenReturn(Optional.of(adminAccount));
+        when(accountRepository.findById(standardAccount.getId())).thenReturn(Optional.of(standardAccount));
+        List<AccountEntity> accountEntityList = Arrays.asList(adminAccount, standardAccount);
+
+        try {
+            for (var accountEntity : accountEntityList) {
+                Optional<AccountEntity> optionalAccountEntity = accountService.revokeAdminRole(accountEntity.getId());
+
+                optionalAccountEntity.ifPresentOrElse(a -> assertEquals(a.getRole(), AccountRole.STANDARD), Assertions::fail);
             }
         } catch (AccountService.IllegalRoleModificationException e) {
             fail();
