@@ -14,8 +14,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
+
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -70,5 +74,19 @@ class AccountControllerTest {
     void testGetAccount_withNoPrincipal_expectInternalServerError() {
         ResponseEntity<AccountDto> response = accountController.getAccount(null);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
+
+    @Test
+    void testAssignAdminRole_whenServiceReturnsEntity_expectIsOk() {
+        AccountDto expectedAccountDto = accountTestDataFactory.buildAccountDto();
+        AccountEntity accountEntity = accountTestDataFactory.buildAccountWithoutProfile();
+        try{
+            when(accountService.assignAdminRole(any())).thenReturn(Optional.of(accountEntity));
+        } catch (Exception e) {}
+        when(accountMapper.mapEntityToDto(accountEntity)).thenReturn(expectedAccountDto);
+
+        ResponseEntity<?> response = accountController.assignAdminRole(expectedAccountDto.getId());
+
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
     }
 }
