@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 @RestController
 @RequestMapping("/api/account")
 @Slf4j
@@ -42,5 +46,16 @@ public class AccountController {
         AccountDto accountDto = mapper.mapEntityToDto(accountEntity);
 
         return ResponseEntity.ok(accountDto);
+    }
+
+    @GetMapping("/all")
+    public  ResponseEntity<List<AccountDto>> getAccounts(){
+
+        Iterable<AccountEntity> accounts =  service.getAccounts();
+        List<AccountDto> accountDtos = StreamSupport.stream(accounts.spliterator(), true)
+                .map(mapper::mapEntityToDto)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(accountDtos);
     }
 }

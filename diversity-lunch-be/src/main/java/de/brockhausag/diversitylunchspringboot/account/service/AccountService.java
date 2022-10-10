@@ -56,4 +56,8 @@ public class AccountService {
                 .anyMatch(group -> Objects.equals(group.displayName, diversityLunchGroupProperties.getAdminGroupName())))
                 .orElse(false);
     }
+
+    public Iterable<AccountEntity> getAccounts() {
+        return  repository.findAll();
+    }
 }
