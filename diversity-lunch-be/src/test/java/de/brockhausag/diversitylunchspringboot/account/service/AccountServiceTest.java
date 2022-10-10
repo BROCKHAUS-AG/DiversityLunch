@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -123,7 +125,7 @@ class AccountServiceTest {
 
         Optional<AccountEntity> updatedAccount = accountService.updateAccount(existentProfile, 1L);
 
-        Assertions.assertTrue(updatedAccount.isPresent());
+        assertTrue(updatedAccount.isPresent());
         Assertions.assertNotSame(account, updatedAccount.get());
         Assertions.assertEquals(accountWithProfile, updatedAccount.get());
     }
@@ -136,6 +138,21 @@ class AccountServiceTest {
 
         Optional<AccountEntity> empty = accountService.updateAccount(existentProfile, 1L);
 
-        Assertions.assertTrue(empty.isEmpty());
+        assertTrue(empty.isEmpty());
     }
+
+    @Test
+    void testAssignAdminRole_withNonExistentId_thenReturnEmpty(){
+
+        long nonExistingId = 1;
+        when(accountRepository.findById(nonExistingId)).thenReturn(Optional.empty());
+
+        try{
+            Optional<AccountEntity> empty = accountService.assignAdminRole(nonExistingId);
+            assertTrue(empty.isEmpty());
+        }catch (AccountService.IllegalRoleModificationException e){
+            fail();
+        }
+    }
+
 }
