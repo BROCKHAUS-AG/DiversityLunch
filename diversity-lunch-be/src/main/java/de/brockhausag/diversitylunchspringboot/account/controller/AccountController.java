@@ -61,6 +61,7 @@ public class AccountController {
     }
 
     @PutMapping("/assignAdminRole/{id}")
+    @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).ADMIN_ROLE_ASSIGN)")
     public ResponseEntity<?> assignAdminRole(@PathVariable Long id) {
         Optional<AccountEntity> optionalAccount;
         try {
