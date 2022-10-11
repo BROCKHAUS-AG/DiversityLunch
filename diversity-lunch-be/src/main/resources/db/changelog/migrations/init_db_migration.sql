@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS profile_entity (
     CONSTRAINT fk_hobby FOREIGN KEY (hobby_id) REFERENCES hobby_entity (id) ON UPDATE NO ACTION ON DELETE NO ACTION,
     CONSTRAINT fk_mother_tongue FOREIGN KEY (mother_tongue_id) REFERENCES language_entity (id) ON UPDATE NO ACTION ON DELETE NO ACTION,
     CONSTRAINT fk_origin_country FOREIGN KEY (origin_country_id) REFERENCES country_entity (id) ON UPDATE NO ACTION ON DELETE NO ACTION,
-    CONSTRAINT fk_project FOREIGN KEY (project_id) REFERENCES profile_entity (id) ON UPDATE NO ACTION ON DELETE NO ACTION,
+    CONSTRAINT fk_project FOREIGN KEY (project_id) REFERENCES project_entity (id) ON UPDATE NO ACTION ON DELETE NO ACTION,
     CONSTRAINT fk_religion FOREIGN KEY (religion_id) REFERENCES religion_entity (id) ON UPDATE NO ACTION ON DELETE NO ACTION,
     CONSTRAINT fk_work_experience FOREIGN KEY (work_experience_id) REFERENCES work_experience_entity (id) ON UPDATE NO ACTION ON DELETE NO ACTION
 );
