@@ -60,6 +60,7 @@ public class AccountService {
         repository.save(account);
         return optionalAccount;
     }
+
     public Optional<AccountEntity> revokeAdminRole(Long id) throws  IllegalRoleModificationException{
         Optional<AccountEntity> optionalAccount = repository.findById(id);
         if (optionalAccount.isEmpty()) {

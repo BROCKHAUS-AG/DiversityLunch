@@ -116,4 +116,19 @@ class AccountControllerTest {
 
         assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
     }
+
+    @Test
+    void testRevokeAdminRole_whenServiceReturnsEntity_expectIsOk() {
+        AccountDto expectedAccountDto = accountTestDataFactory.buildAccountDto();
+        AccountEntity accountEntity = accountTestDataFactory.buildAccountWithoutProfile();
+        try {
+            when(accountService.assignAdminRole(any())).thenReturn(Optional.of(accountEntity));
+        } catch (Exception e) {
+        }
+        when(accountMapper.mapEntityToDto(accountEntity)).thenReturn(expectedAccountDto);
+
+        ResponseEntity<?> response = accountController.revokeAdminRole(expectedAccountDto.getId());
+
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+    }
 }
