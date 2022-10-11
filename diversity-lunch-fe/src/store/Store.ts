@@ -5,6 +5,7 @@ import { authenticationReducer } from '../data/authentication/authentication.red
 import { meetingsReducer } from '../data/meeting/meetings.reducer';
 import { profileReducer } from '../data/profile/profile.reducer';
 import { accountReducer } from '../data/account/account.reducer';
+import { accountsReducer } from '../data/accounts/accounts-reducer';
 import experienceLevelReducer from '../data/experienceLevel/experience-level.reducer';
 import countryReducer from '../data/country/country-reducer';
 import dietReducer from '../data/diet/diet-reducer';
@@ -25,6 +26,7 @@ import workExperienceReducer from '../data/work-experience/work-experience-reduc
 
 const reducers = {
     account: accountReducer,
+    accounts: accountsReducer,
     activity: activityReducer,
     authentication: authenticationReducer,
     category: categoryReducer,
