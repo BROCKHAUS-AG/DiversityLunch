@@ -72,4 +72,25 @@ public class EMailController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @Operation(summary = "10 Test Mails werden an eingeloggten User versendet.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "10 Test Mails wurden versendet."),
+    })
+    @PostMapping("/sendTenTestMailsToUser")
+    @PreAuthorize("isProfileOwner(#id)")
+    public ResponseEntity<String> sendTenTestMailsToUser(Long id){
+        System.out.println("Beginning of sendTenTestMailsToUser");
+
+        try {
+            System.out.println("Beginning of try block of sendTenTestMailsToUser");
+            for (int i = 1;  i<= 10; i++) {
+                String body = i + " mal Hallo :)";
+                diversityLunchEMailService.sendMailToUser(id, body);
+            }
+        } catch (MessagingException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
