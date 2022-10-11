@@ -180,7 +180,7 @@ class AccountServiceTest {
             for (var accountEntity : accountEntityList) {
                 Optional<AccountEntity> optionalAccountEntity = accountService.assignAdminRole(accountEntity.getId());
 
-                optionalAccountEntity.ifPresentOrElse(a -> assertEquals(a.getRole(), AccountRole.ADMIN), Assertions::fail);
+                optionalAccountEntity.ifPresentOrElse(a -> assertEquals(AccountRole.ADMIN, a.getRole()), Assertions::fail);
             }
         } catch (AccountService.IllegalRoleModificationException e) {
             fail();
@@ -225,7 +225,7 @@ class AccountServiceTest {
             for (var accountEntity : accountEntityList) {
                 Optional<AccountEntity> optionalAccountEntity = accountService.revokeAdminRole(accountEntity.getId());
 
-                optionalAccountEntity.ifPresentOrElse(a -> assertEquals(a.getRole(), AccountRole.STANDARD), Assertions::fail);
+                optionalAccountEntity.ifPresentOrElse(a -> assertEquals(AccountRole.STANDARD, a.getRole()), Assertions::fail);
             }
         } catch (AccountService.IllegalRoleModificationException e) {
             fail();
