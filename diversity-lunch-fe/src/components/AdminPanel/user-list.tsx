@@ -6,7 +6,7 @@ import { getAllAccounts } from '../../data/accounts/accounts-fetch';
 
 export const UserList: FC = () => {
     const accountsState: AccountsState = useSelector((store: AppStoreState) => store.accounts);
-    // const profiles: ProfilesState = useSelector((store: AppStoreState) => store.profiles); TODO: get all Profiles and map to new user object
+    const profilesState: ProfilesState = useSelector((store: AppStoreState) => store.profiles);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getAllAccounts());

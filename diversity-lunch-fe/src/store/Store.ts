@@ -23,6 +23,7 @@ import religionReducer from '../data/religion/religion-reducer';
 import sexualityReducer from '../data/sexuality/sexuality-reducer';
 import socialBackgroundReducer from '../data/social-background/social-background-reducer';
 import workExperienceReducer from '../data/work-experience/work-experience-reducer';
+import {profilesReducer} from "../data/profiles/profiles-reducer";
 
 const reducers = {
     account: accountReducer,
@@ -41,6 +42,7 @@ const reducers = {
     language: languageReducer,
     meetings: meetingsReducer,
     profile: profileReducer,
+    profiles: profilesReducer,
     project: projectReducer,
     region: regionReducer,
     religion: religionReducer,
