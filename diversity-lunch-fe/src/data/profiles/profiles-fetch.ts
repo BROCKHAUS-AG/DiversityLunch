@@ -7,7 +7,7 @@ import { profilesAction } from './profiles-reducer';
 export function getAllProfiles() {
     return async (dispatch: Dispatch) => {
         try {
-            const response = await authenticatedFetchGet('api/account/revokeAdmin/all');
+            const response = await authenticatedFetchGet('api/profiles/all');
 
             if (!response.ok) {
                 dispatch(globalErrorSlice.httpError({ statusCode: response.status }));

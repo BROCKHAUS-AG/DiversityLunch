@@ -7,7 +7,7 @@ import { accountsAction } from './accounts-reducer';
 export function getAllAccounts() {
     return async (dispatch: Dispatch) => {
         try {
-            const response = await authenticatedFetchGet('api/account/revokeAdmin/all');
+            const response = await authenticatedFetchGet('api/account/all');
 
             if (!response.ok) {
                 dispatch(globalErrorSlice.httpError({ statusCode: response.status }));

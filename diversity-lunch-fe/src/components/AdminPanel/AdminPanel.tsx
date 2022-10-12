@@ -9,6 +9,7 @@ import { Role } from '../../model/Role';
 import { projectFetch } from '../../data/project/project-fetch';
 import { OptionsList } from './OptionsList';
 import { hobbyFetch } from '../../data/hobby/fetch-hobby';
+import { UserList } from './user-list';
 
 export const AdminPanel: FC = () => {
     const accountState = useSelector((store: AppStoreState) => store.account);
@@ -33,7 +34,7 @@ export const AdminPanel: FC = () => {
         <section className="view">
             <CloseSiteContainer />
             <DiversityIconContainer title="ADMIN PANEL" />
-
+            <UserList />
             <OptionsList state={projectState} fetch={projectFetch} title="Projektliste anpassen" addButtonLabel="Projekt hinzufügen" />
 
             <OptionsList state={hobbyState} fetch={hobbyFetch} title="Hobbyliste anpassen" addButtonLabel="Hobby hinzufügen" />
