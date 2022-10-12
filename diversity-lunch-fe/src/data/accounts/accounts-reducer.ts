@@ -43,6 +43,9 @@ export const accountsSlice = createSlice <AccountsState, SliceCaseReducers<Accou
         add: addFunction,
         update: updateFunction,
         remove: removeFunction,
+        initFetch: (state) => {
+            state.fetched = true;
+        },
     },
 });
 
