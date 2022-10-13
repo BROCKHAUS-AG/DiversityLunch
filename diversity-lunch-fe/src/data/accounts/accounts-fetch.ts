@@ -26,7 +26,7 @@ export function getAllAccounts() {
 export function revokeAdminRole(accountId: number) {
     return async (dispatch: Dispatch) => {
         try {
-            const response = await authenticatedFetchPut(`api/account/revokeAdmin/${accountId}`, '');
+            const response = await authenticatedFetchPut(`api/account/revokeAdminRole/${accountId}`, '');
 
             if (!response.ok) {
                 dispatch(globalErrorSlice.httpError({ statusCode: response.status }));
@@ -40,4 +40,20 @@ export function revokeAdminRole(accountId: number) {
     };
 }
 
+export function assignAdminRole(accountId: number) {
+    return async (dispatch: Dispatch) => {
+        try {
+            const response = await authenticatedFetchPut(`api/account/assignAdminRole/${accountId}`, '');
+
+            if (!response.ok) {
+                dispatch(globalErrorSlice.httpError({ statusCode: response.status }));
+            } else {
+                const result : Account = await response.json();
+                dispatch(accountsAction.update([result]));
+            }
+        } catch (error) {
+            dispatch(globalErrorSlice.error(undefined));
+        }
+    };
+}
 // TODO: Assign Admin
