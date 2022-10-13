@@ -8,22 +8,23 @@ import { getAllProfiles } from '../../data/profiles/profiles-fetch';
 import { User } from './userAdministration/User';
 import { Account } from '../../types/Account';
 import { Profile } from '../../model/Profile';
-import { authenticatedFetchPut } from '../../utils/fetch.utils';
+import { LoadingAnimation } from '../Shared/LoadingAnimation';
 
 export const UserList: FC = () => {
     const accountsState: AccountsState = useSelector((store: AppStoreState) => store.accounts);
     const profilesState: ProfilesState = useSelector((store: AppStoreState) => store.profiles);
     const dispatch = useDispatch();
     useEffect(() => {
-        mapAccountandProfileToUser();
-    }, []);
-
-    const mapAccountandProfileToUser = () => {
         dispatch(getAllAccounts());
         dispatch(getAllProfiles());
+    }, []);
+
+    if (!accountsState.fetched || !profilesState.fetched) {
+        return <LoadingAnimation />;
+    }
+    const mapAccountandProfileToUser = () => {
         const userList: User[] = [];
         const accountList : Account[] = accountsState.items;
-
         const profileList : Profile[] = profilesState.items;
 
         profileList.forEach((profile) => {
