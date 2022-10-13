@@ -8,6 +8,7 @@ import { getAllProfiles } from '../../data/profiles/profiles-fetch';
 import { User } from './userAdministration/User';
 import { Account } from '../../types/Account';
 import { Profile } from '../../model/Profile';
+import {authenticatedFetchPut} from "../../utils/fetch.utils";
 
 export const UserList: FC = () => {
     const accountsState: AccountsState = useSelector((store: AppStoreState) => store.accounts);
@@ -19,19 +20,23 @@ export const UserList: FC = () => {
     }, []);
 
     const mapAccountandProfileToUser = () => {
-        let userList : User[];
+        const userList: User[] = [];
         const accountList : Account[] = accountsState.items;
 
         const profileList : Profile[] = profilesState.items;
 
         profileList.forEach((profile) => {
-            // @ts-ignore
-            const account : Account = accountList.find((v) => v.profileId === profile.id);
+            const account : Account = accountList.filter((v) => v.profileId === profile.id)[0];
             userList.push({ profile, account });
         });
 
-        // @ts-ignore
         return userList;
+    };
+
+    const assignAdmin = (accountId: number) => {
+        dispatch(
+            authenticatedFetchPut('api/account/assignAdminRole/$(accountId)', null),
+        );
     };
 
     return (
@@ -41,7 +46,10 @@ export const UserList: FC = () => {
                 {mapAccountandProfileToUser().map((user) => (
                     <li key={user.account.profileId}>
                         {user.profile.name}
+                        &nbsp;
                         {user.account.role}
+
+                        <button onClick={() => assignAdmin(user.account.profileId)}>Speichern</button>
                     </li>
                 ))}
             </ul>
