@@ -5,6 +5,9 @@ import { AccountsState } from '../../data/accounts/accounts-reducer';
 import { getAllAccounts } from '../../data/accounts/accounts-fetch';
 import { ProfilesState } from '../../data/profiles/profiles-reducer';
 import { getAllProfiles } from '../../data/profiles/profiles-fetch';
+import { User } from './userAdministration/User';
+import { Account } from '../../types/Account';
+import { Profile } from '../../model/Profile';
 
 export const UserList: FC = () => {
     const accountsState: AccountsState = useSelector((store: AppStoreState) => store.accounts);
@@ -15,12 +18,32 @@ export const UserList: FC = () => {
         dispatch(getAllProfiles());
     }, []);
 
+    const mapAccountandProfileToUser = () => {
+        let userList : User[];
+        const accountList : Account[] = accountsState.items;
+
+        const profileList : Profile[] = profilesState.items;
+
+        profileList.forEach((profile) => {
+            // @ts-ignore
+            const account : Account = accountList.find((v) => v.profileId === profile.id);
+            userList.push({ profile, account });
+        });
+
+        // @ts-ignore
+        return userList;
+    };
+
     return (
-        <div className="UserContainer">
+        <div className="optionsListContainer">
             <p>Users</p>
             <ul>
-                {accountsState.items.map((accounts) => <li key={accounts.role}>{accounts.role}</li>)}
-                {profilesState.items.map((profiles) => <li key={profiles.id}>{profiles.name}</li>)}
+                {mapAccountandProfileToUser().map((user) => (
+                    <li key={user.account.profileId}>
+                        {user.profile.name}
+                        {user.account.role}
+                    </li>
+                ))}
             </ul>
         </div>
     );

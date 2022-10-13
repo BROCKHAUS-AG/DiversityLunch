@@ -1,7 +1,7 @@
 import { Profile } from '../../../model/Profile';
 import { Account } from '../../../types/Account';
 
-export interface User{
+export type User = {
     profile:Profile,
     account:Account
 }
