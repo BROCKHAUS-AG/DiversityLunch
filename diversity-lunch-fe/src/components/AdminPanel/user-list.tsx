@@ -15,11 +15,12 @@ export const UserList: FC = () => {
     const profilesState: ProfilesState = useSelector((store: AppStoreState) => store.profiles);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getAllAccounts());
-        dispatch(getAllProfiles());
+        mapAccountandProfileToUser();
     }, []);
 
     const mapAccountandProfileToUser = () => {
+        dispatch(getAllAccounts());
+        dispatch(getAllProfiles());
         const userList: User[] = [];
         const accountList : Account[] = accountsState.items;
 
