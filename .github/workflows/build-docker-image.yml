@@ -14,6 +14,13 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 17.0.2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.5.1
+        with:
+          node-version: 18.10.x
+      - name: Build frontend
+        run: npm i && npm run build-fe
+        working-directory: ./diversity-lunch-fe
       - name: Add execution privileges
         run: chmod +x ./mvnw
         working-directory: ./diversity-lunch-be
