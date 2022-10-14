@@ -43,19 +43,25 @@ export const UserList: FC = () => {
     };
     return (
         <div className="optionsListContainer">
-            <p>Users</p>
-            <ul>
-                {mapAccountandProfileToUser().map((user) => (
-                    <li key={user.account.profileId}>
-                        {user.profile.name}
-                        &nbsp;
-                        {user.account.role}
+            <p className="editListTitle">Users</p>
+            <div>
+                <ul>
+                    {mapAccountandProfileToUser().map((user) => (
 
-                        <button onClick={() => assignAdmin(user.account.profileId)}>Assign</button>
-                        <button onClick={() => revokeAdmin(user.account.profileId)}>Revoke</button>
-                    </li>
-                ))}
-            </ul>
+                        <li className="usersList" key={user.account.profileId}>
+                            <span>
+                                {user.profile.email}
+                            </span>
+                            <span>
+                                {user.account.role}
+                            </span>
+
+                            <button onClick={() => assignAdmin(user.account.profileId)}>Zu Admin</button>
+                            <button onClick={() => revokeAdmin(user.account.profileId)}>Zu User</button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 };

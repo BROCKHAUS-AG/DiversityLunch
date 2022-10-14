@@ -12,7 +12,10 @@ interface OptionsListProps<T extends Identifiable> {
     addButtonLabel: string,
 }
 
-export const OptionsList = <T extends Identifiable>({ state, fetch, title, addButtonLabel } : OptionsListProps<T>) => {
+export const OptionsList = <T extends Identifiable>(
+    {
+        state, fetch, title, addButtonLabel,
+    } : OptionsListProps<T>) => {
     const [inputText, setInputText] = useState('');
     const dispatch = useDispatch();
 
