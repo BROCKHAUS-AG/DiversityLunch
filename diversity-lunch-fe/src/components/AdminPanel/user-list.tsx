@@ -9,6 +9,7 @@ import { User } from './userAdministration/User';
 import { Account } from '../../types/Account';
 import { Profile } from '../../model/Profile';
 import { LoadingAnimation } from '../Shared/LoadingAnimation';
+import { Role } from '../../model/Role';
 
 export const UserList: FC = () => {
     const accountsState: AccountsState = useSelector((store: AppStoreState) => store.accounts);
@@ -41,26 +42,34 @@ export const UserList: FC = () => {
     const revokeAdmin = (accountId: number) => {
         dispatch(revokeAdminRole(accountId));
     };
+
+    const generateAdminListButton = (user : User) => {
+        if (user.account.role === Role.ADMIN) {
+            return <button onClick={() => revokeAdmin(user.account.profileId)}>-</button>;
+        } if (user.account.role === Role.STANDARD) {
+            return <button onClick={() => assignAdmin(user.account.profileId)}>+</button>;
+        }
+        return <button disabled>  </button>;
+    };
+
     return (
         <div className="optionsListContainer">
             <p className="editListTitle">Users</p>
             <div>
-                <ul>
+                <section >
                     {mapAccountandProfileToUser().map((user) => (
 
-                        <li className="usersList" key={user.account.profileId}>
+                        <section className="usersList"  key={user.account.profileId}>
                             <span>
                                 {user.profile.email}
                             </span>
                             <span>
                                 {user.account.role}
                             </span>
-
-                            <button onClick={() => assignAdmin(user.account.profileId)}>Zu Admin</button>
-                            <button onClick={() => revokeAdmin(user.account.profileId)}>Zu User</button>
-                        </li>
+                            {generateAdminListButton(user)}
+                        </section>
                     ))}
-                </ul>
+                </section>
             </div>
         </div>
     );

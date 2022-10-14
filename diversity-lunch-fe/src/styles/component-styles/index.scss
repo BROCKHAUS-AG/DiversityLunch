@@ -53,16 +53,10 @@ input:focus {
   font-size: 1.3rem;
 }
 
-.usersList {
+.usersList{
   display: grid;
-    grid-template-columns: 2.5fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr;
-    gap: 0px 0px;
-    grid-auto-flow: row;
-    grid-template-areas:
-    ". . ."
-    ". . ."
-    ". . .";
+    grid-template-columns: 65% 25% 10%;
+  gap: 0px 0px;
 
   letter-spacing: 0.015em;
   font-family: GilroyLight, sans-serif;
@@ -79,6 +73,7 @@ input:focus {
 }
 .usersList button{
   margin: 5px;
+  font-weight: bolder;
 }
 
 
