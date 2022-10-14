@@ -56,10 +56,10 @@ export const UserList: FC = () => {
         <div className="optionsListContainer">
             <p className="editListTitle">Users</p>
             <div>
-                <section >
+                <section>
                     {mapAccountandProfileToUser().map((user) => (
 
-                        <section className="usersList"  key={user.account.profileId}>
+                        <section className="usersList" key={user.account.profileId}>
                             <span>
                                 {user.profile.email}
                             </span>
