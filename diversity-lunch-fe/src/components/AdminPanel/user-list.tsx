@@ -63,32 +63,30 @@ export const UserList: FC = () => {
         );
     };
 
-    const collapseHtml = () => (
-        <div className="optionsListContainer">
-            <p className="editListTitle">Users</p>
-            <div>
-                <section>
-                    {mapAccountandProfileToUser()
-                        .map((user) => (
-
-                            <section className="usersList" key={user.account.profileId}>
-                                <span>
-                                    {user.profile.email}
-                                </span>
-                                <span>
-                                    {user.account.role}
-                                </span>
-                                {generateAdminListButton(user)}
-                            </section>
-                        ))}
-                </section>
-            </div>
-        </div>
-    );
-
     return (
-        <div>
-            {collapseHtml()}
+        <div className="optionsListContainer">
+            <div>
+                <details>
+                    <summary className="editListTitle">
+                        Userrechte vergeben
+                    </summary>
+                    <br />
+                    <section>
+                        {mapAccountandProfileToUser()
+                            .map((user) => (
+                                <section className="usersList" key={user.account.profileId}>
+                                    <span>
+                                        {user.profile.email}
+                                    </span>
+                                    <span>
+                                        {user.account.role}
+                                    </span>
+                                    {generateAdminListButton(user)}
+                                </section>
+                            ))}
+                    </section>
+                </details>
+            </div>
         </div>
     );
 };
