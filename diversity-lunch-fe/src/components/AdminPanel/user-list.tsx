@@ -1,5 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { render } from 'react-dom';
 import azureAdminLogo from '../../resources/icons/azure_modern.svg';
 import { AppStoreState } from '../../store/Store';
 import { AccountsState } from '../../data/accounts/accounts-reducer';
@@ -19,6 +20,7 @@ import { Role } from '../../model/Role';
 export const UserList: FC = () => {
     const accountsState: AccountsState = useSelector((store: AppStoreState) => store.accounts);
     const profilesState: ProfilesState = useSelector((store: AppStoreState) => store.profiles);
+    let searchTerm = '';
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getAllAccounts());
@@ -62,7 +64,22 @@ export const UserList: FC = () => {
             <button disabled><img alt="Tile Icon" src={azureAdminLogo} height="20em" /></button>
         );
     };
-
+    const editSearchTerm = (e: string) => {
+        searchTerm = e;
+        render(dynamicSearch(), document.getElementById('searchContainer'));
+    };
+    const dynamicSearch = () => (mapAccountandProfileToUser()
+        .filter(((user) => user.profile.email.toLowerCase().includes(searchTerm.toLowerCase()))).map((user) => (
+            <section className="usersList" key={user.account.profileId}>
+                <span>
+                    {user.profile.email}
+                </span>
+                <span>
+                    {user.account.role}
+                </span>
+                {generateAdminListButton(user)}
+            </section>
+        )));
     return (
         <div className="optionsListContainer">
             <div>
@@ -71,19 +88,9 @@ export const UserList: FC = () => {
                         Userrechte vergeben
                     </summary>
                     <br />
-                    <section>
-                        {mapAccountandProfileToUser()
-                            .map((user) => (
-                                <section className="usersList" key={user.account.profileId}>
-                                    <span>
-                                        {user.profile.email}
-                                    </span>
-                                    <span>
-                                        {user.account.role}
-                                    </span>
-                                    {generateAdminListButton(user)}
-                                </section>
-                            ))}
+                    <input defaultValue={searchTerm} onChange={(e) => editSearchTerm(e.target.value)} placeholder="SUCHEN" />
+                    <section id="searchContainer">
+                        {dynamicSearch()}
                     </section>
                 </details>
             </div>
