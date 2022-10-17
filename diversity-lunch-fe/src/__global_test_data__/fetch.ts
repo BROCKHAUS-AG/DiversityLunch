@@ -11,7 +11,7 @@ import {
     workExperienceData,
     accountStandardData,
     accountAdminData,
-    accountAzureAdminData,
+    accountAzureAdminData, accountList, profileList,
 } from './data';
 import { COUNTRY_ENDPOINT } from '../data/country/fetch-country';
 import { DIET_ENDPOINT } from '../data/diet/fetch-diet';
@@ -81,3 +81,5 @@ export const mockedFetchGetAccountByRole = async (role: Role) => {
     }
     return new Response('');
 };
+export const mockedFetchGetAccounts = async () => new Response(JSON.stringify(accountList));
+export const mockedFetchGetProfiles = async () => new Response(JSON.stringify(profileList));
