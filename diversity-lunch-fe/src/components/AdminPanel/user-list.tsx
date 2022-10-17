@@ -1,6 +1,5 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { render } from 'react-dom';
 import azureAdminLogo from '../../resources/icons/azure_modern.svg';
 import { AppStoreState } from '../../store/Store';
 import { AccountsState } from '../../data/accounts/accounts-reducer';
@@ -20,7 +19,7 @@ import { Role } from '../../model/Role';
 export const UserList: FC = () => {
     const accountsState: AccountsState = useSelector((store: AppStoreState) => store.accounts);
     const profilesState: ProfilesState = useSelector((store: AppStoreState) => store.profiles);
-    let searchTerm = '';
+    const [searchState, setSearchState] = useState('');
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getAllAccounts());
@@ -30,7 +29,7 @@ export const UserList: FC = () => {
     if (!accountsState.fetched || !profilesState.fetched) {
         return <LoadingAnimation />;
     }
-    const mapAccountandProfileToUser = () => {
+    const mapAccountAndProfileToUser = () => {
         const userList: User[] = [];
         const accountList: Account[] = accountsState.items;
         const profileList: Profile[] = profilesState.items;
@@ -65,11 +64,10 @@ export const UserList: FC = () => {
         );
     };
     const editSearchTerm = (e: string) => {
-        searchTerm = e;
-        render(dynamicSearch(), document.getElementById('searchContainer'));
+        setSearchState(e);
     };
-    const dynamicSearch = () => (mapAccountandProfileToUser()
-        .filter(((user) => user.profile.email.toLowerCase().includes(searchTerm.toLowerCase()))).map((user) => (
+    const dynamicSearch = () => (mapAccountAndProfileToUser()
+        .filter(((user) => user.profile.email.toLowerCase().includes(searchState.toLowerCase()))).map((user) => (
             <section className="usersList" key={user.account.profileId}>
                 <span>
                     {user.profile.email}
@@ -88,7 +86,7 @@ export const UserList: FC = () => {
                         Userrechte vergeben
                     </summary>
                     <br />
-                    <input defaultValue={searchTerm} onChange={(e) => editSearchTerm(e.target.value)} placeholder="SUCHEN" />
+                    <input defaultValue={searchState} onChange={(e) => editSearchTerm(e.target.value)} placeholder="SUCHEN" />
                     <section id="searchContainer">
                         {dynamicSearch()}
                     </section>
