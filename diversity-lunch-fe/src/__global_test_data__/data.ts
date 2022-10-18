@@ -1,6 +1,6 @@
 import { Role } from '../model/Role';
-import {Account} from "../types/Account";
-import {Profile} from "../model/Profile";
+import { Account } from '../types/Account';
+import { Profile } from '../model/Profile';
 
 export const categoryData = [{ id: 2, descriptor: 'Kreatives' }, { id: 1337, descriptor: 'Sport' }];
 export const countryData = [{ id: 9, descriptor: 'Bahamas' }, { id: 1337, descriptor: 'Deutschland' }];

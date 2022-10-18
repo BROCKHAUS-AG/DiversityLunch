@@ -24,7 +24,7 @@ export class GenericFetch<T extends Identifiable> {
         this.add = slice.actions.add;
         this.remove = slice.actions.remove;
         this.initFetch = slice.actions.initFetch;
-        this.endpoint = endpoint + '/';
+        this.endpoint = `${endpoint}/`;
     }
 
     public getAll() {

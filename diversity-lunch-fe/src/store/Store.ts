@@ -23,7 +23,7 @@ import religionReducer from '../data/religion/religion-reducer';
 import sexualityReducer from '../data/sexuality/sexuality-reducer';
 import socialBackgroundReducer from '../data/social-background/social-background-reducer';
 import workExperienceReducer from '../data/work-experience/work-experience-reducer';
-import {profilesReducer} from "../data/profiles/profiles-reducer";
+import { profilesReducer } from '../data/profiles/profiles-reducer';
 
 const reducers = {
     account: accountReducer,

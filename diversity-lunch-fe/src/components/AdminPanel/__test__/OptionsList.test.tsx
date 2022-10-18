@@ -4,6 +4,7 @@ import {
     fireEvent, render, screen,
 } from '@testing-library/react';
 import React, { FC } from 'react';
+import { act } from 'react-dom/test-utils';
 import { APP_STORE, AppStoreState } from '../../../store/Store';
 import { projectFetch } from '../../../data/project/project-fetch';
 import { OptionsList } from '../OptionsList';
@@ -29,20 +30,18 @@ const WrapperComponent: FC = () => {
 const mockAuthenticatedFetchDeleteImpl = async () => new Response(JSON.stringify({ id: 9, descriptor: 'intern' }));
 
 describe('OptionsList', () => {
-    let container : HTMLElement;
-
     beforeEach(() => {
         jest.spyOn(fetcher, 'authenticatedFetchGet')
             .mockImplementation(mockedFetchGetProfile);
         jest.spyOn(fetcher, 'authenticatedFetchDelete')
             .mockImplementation(mockAuthenticatedFetchDeleteImpl);
-        ({ container } = render(
+        render(
             <BrowserRouter>
                 <Provider store={APP_STORE}>
                     <WrapperComponent />
                 </Provider>
             </BrowserRouter>,
-        ));
+        );
     });
 
     it('should render the correct title', async () => {
@@ -77,15 +76,17 @@ describe('OptionsList', () => {
             .mockImplementation(mockAuthenticatedFetchPostImpl);
 
         const addButton = await screen.queryByText(addButtonLabel);
-        const addDescriptorTextField = (await screen.queryByText('Bezeichner:'))?.parentElement!.querySelector('input');
+        const addDescriptorTextField = (screen.queryByText('Bezeichner:'))?.parentElement!.querySelector('input');
         expect(addButton).not.toBeNull();
         expect(addDescriptorTextField).not.toBeNull();
 
         addDescriptorTextField!.value = newDescriptor;
-        addButton!.click();
+        act(() => {
+            addButton!.click();
+        });
 
-        const addedDescriptorTextField = await screen.findByText(addButtonLabel);
-        expect(addedDescriptorTextField.parentElement!.tagName).toEqual('ARTICLE'); // see admin-panel-list-item.tsx
+        const addedDescriptorTextField = await screen.queryByText(addButtonLabel);
+        expect(addedDescriptorTextField!.parentElement!.tagName).toEqual('ARTICLE'); // see admin-panel-list-item.tsx
         expect(addedDescriptorTextField).toBeInTheDocument();
     });
 });

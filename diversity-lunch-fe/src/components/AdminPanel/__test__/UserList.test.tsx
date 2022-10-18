@@ -18,8 +18,6 @@ const WrapperComponent: FC = () => (
     <UserList />
 );
 describe('UserList', () => {
-    let container : HTMLElement;
-
     beforeEach(() => {
         jest.spyOn(accounts, 'getAllAccounts')
             .mockImplementation(mockedFetchGetAccounts);
@@ -30,13 +28,13 @@ describe('UserList', () => {
         jest.spyOn(accounts, 'revokeAdminRole')
             .mockImplementation(mockedRevokeAdminRole);
 
-        ({ container } = render(
+        render(
             <BrowserRouter>
                 <Provider store={APP_STORE}>
                     <WrapperComponent />
                 </Provider>
             </BrowserRouter>,
-        ));
+        );
     });
 
     it('Does let an Admin promote a STANDARD_ROLE to ADMIN_Role', async () => {
