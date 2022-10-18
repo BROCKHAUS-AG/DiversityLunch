@@ -1,18 +1,22 @@
-import { AnyAction, Dispatch } from '@reduxjs/toolkit';
+import { Dispatch } from '@reduxjs/toolkit';
 import { CATEGORY_ENDPOINT } from '../data/category/fetch-category';
 import {
+    accountAdminData,
+    accountAzureAdminData,
+    accountList,
+    accountStandardData,
     categoryData,
     countryData,
     dietData,
     educationData,
-    genderData, hobbyData,
-    languageData, profileData,
+    genderData,
+    hobbyData,
+    languageData,
+    profileData,
+    profileList,
     projectData,
     religionData,
     workExperienceData,
-    accountStandardData,
-    accountAdminData,
-    accountAzureAdminData, accountList, profileList,
 } from './data';
 import { COUNTRY_ENDPOINT } from '../data/country/fetch-country';
 import { DIET_ENDPOINT } from '../data/diet/fetch-diet';
@@ -25,7 +29,6 @@ import { WORK_EXPERIENCE_ENDPOINT } from '../data/work-experience/work-experienc
 import { HOBBY_ENDPOINT } from '../data/hobby/fetch-hobby';
 import { PROFILE_ENDPOINT } from '../data/profile/profile.actions';
 import { Role } from '../model/Role';
-import { authenticatedFetchGet } from '../utils/fetch.utils';
 import { globalErrorSlice } from '../data/error/global-error-slice';
 import { Account } from '../types/Account';
 import { accountsAction } from '../data/accounts/accounts-reducer';
@@ -115,6 +118,40 @@ export const mockedFetchGetProfiles = () => async (dispatch: Dispatch) => {
 
             dispatch(profilesAction.update(result));
             dispatch(profilesAction.initFetch(undefined));
+        }
+    } catch (error) {
+        dispatch(globalErrorSlice.error(undefined));
+    }
+};
+export const mockedRevokeAdminRole = (accountId: number) => async (dispatch: Dispatch) => {
+    try {
+        const tempAccount = accountList.find((account) => account.id === accountId);
+        if (tempAccount !== undefined) {
+            tempAccount.role = Role.STANDARD;
+        }
+        const response = new Response(JSON.stringify(tempAccount), { status: 200, statusText: 'ok' });
+        if (!response.ok) {
+            dispatch(globalErrorSlice.httpError({ statusCode: response.status }));
+        } else {
+            const result : Account = await response.json();
+            dispatch(accountsAction.update([result]));
+        }
+    } catch (error) {
+        dispatch(globalErrorSlice.error(undefined));
+    }
+};
+export const mockedAssignAdminRole = (accountId: number) => async (dispatch: Dispatch) => {
+    try {
+        const tempAccount = accountList.find((account) => account.id === accountId);
+        if (tempAccount !== undefined) {
+            tempAccount.role = Role.ADMIN;
+        }
+        const response = new Response(JSON.stringify(tempAccount), { status: 200, statusText: 'ok' });
+        if (!response.ok) {
+            dispatch(globalErrorSlice.httpError({ statusCode: response.status }));
+        } else {
+            const result : Account = await response.json();
+            dispatch(accountsAction.update([result]));
         }
     } catch (error) {
         dispatch(globalErrorSlice.error(undefined));

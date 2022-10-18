@@ -1,4 +1,6 @@
 import { Role } from '../model/Role';
+import {Account} from "../types/Account";
+import {Profile} from "../model/Profile";
 
 export const categoryData = [{ id: 2, descriptor: 'Kreatives' }, { id: 1337, descriptor: 'Sport' }];
 export const countryData = [{ id: 9, descriptor: 'Bahamas' }, { id: 1337, descriptor: 'Deutschland' }];
@@ -44,12 +46,18 @@ export const accountAzureAdminData = {
     email: 'hans@brockhaus-ag.de',
     role: Role.AZURE_ADMIN,
 };
-export const accountList = [
-    { profileId: 1, email: 'bernd@brockhaus-ag.de', role: Role.STANDARD },
-    { profileId: 2, email: 'gunni@brockhaus-ag.de', role: Role.AZURE_ADMIN },
-    { profileId: 3, email: 'chlodhilde@brockhaus-ag.de', role: Role.AZURE_ADMIN },
+export const accountList : Account[] = [
+    {
+        id: 1, profileId: 1, role: Role.STANDARD,
+    },
+    {
+        id: 2, profileId: 2, role: Role.ADMIN,
+    },
+    {
+        id: 3, profileId: 3, role: Role.AZURE_ADMIN,
+    },
 ];
-export const profileList = [
+export const profileList: Profile[] = [
     {
         id: 1,
         name: 'Bernd',
