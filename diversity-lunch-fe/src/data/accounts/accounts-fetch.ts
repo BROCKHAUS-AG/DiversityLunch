@@ -56,4 +56,3 @@ export function assignAdminRole(accountId: number) {
         }
     };
 }
-// TODO: Assign Admin

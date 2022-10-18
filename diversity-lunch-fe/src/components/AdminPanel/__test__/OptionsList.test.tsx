@@ -1,9 +1,9 @@
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import {
-    fireEvent, getByDisplayValue, render, screen,
+    fireEvent, render, screen,
 } from '@testing-library/react';
-import React, { ChangeEvent, FC } from 'react';
+import React, { FC } from 'react';
 import { APP_STORE, AppStoreState } from '../../../store/Store';
 import { projectFetch } from '../../../data/project/project-fetch';
 import { OptionsList } from '../OptionsList';

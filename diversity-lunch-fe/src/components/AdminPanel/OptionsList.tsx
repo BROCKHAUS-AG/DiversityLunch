@@ -21,7 +21,6 @@ export const OptionsList = <T extends Identifiable>(
 
     const removeProject = (object: T) => {
         dispatch(fetch.removeById(object.id));
-        console.log(state.items);
     };
     const updateProject = (object: T) => {
         dispatch(fetch.put(object));
@@ -29,7 +28,7 @@ export const OptionsList = <T extends Identifiable>(
 
     const addProject = (descriptor: string) => {
         dispatch(fetch.post({
-            id: 21,
+            // id: 21,
             descriptor,
         } as T));
         setInputText('');

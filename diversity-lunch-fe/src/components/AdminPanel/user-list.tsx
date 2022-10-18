@@ -63,9 +63,7 @@ export const UserList: FC = () => {
             <button disabled><img alt="Tile Icon" src={azureAdminLogo} height="20em" /></button>
         );
     };
-    const editSearchTerm = (e: string) => {
-        setSearchState(e);
-    };
+
     const dynamicSearch = () => (mapAccountAndProfileToUser()
         .filter(((user) => user.profile.email.toLowerCase().includes(searchState.toLowerCase()))).map((user) => (
             <section className="usersList" key={user.account.profileId}>
@@ -86,7 +84,7 @@ export const UserList: FC = () => {
                         Userrechte vergeben
                     </summary>
                     <br />
-                    <input defaultValue={searchState} onChange={(e) => editSearchTerm(e.target.value)} placeholder="SUCHEN" />
+                    <input defaultValue={searchState} onChange={(e) => setSearchState(e.target.value)} placeholder="SUCHEN" />
                     <section id="searchContainer">
                         {dynamicSearch()}
                     </section>
