@@ -44,14 +44,13 @@ export const accountAzureAdminData = {
     email: 'hans@brockhaus-ag.de',
     role: Role.AZURE_ADMIN,
 };
-export const accountList = {
-    Accounts: [{ id: 1, email: 'bernd@brockhaus-ag.de', role: Role.STANDARD },
-        { id: 2, email: 'gunni@brockhaus-ag.de', role: Role.ADMIN },
-        { id: 3, email: 'chlodhilde@brockhaus-ag.de', role: Role.AZURE_ADMIN },
-    ],
-};
-export const profileList = {
-    Profiles: [{
+export const accountList = [
+    { profileId: 1, email: 'bernd@brockhaus-ag.de', role: Role.STANDARD },
+    { profileId: 2, email: 'gunni@brockhaus-ag.de', role: Role.AZURE_ADMIN },
+    { profileId: 3, email: 'chlodhilde@brockhaus-ag.de', role: Role.AZURE_ADMIN },
+];
+export const profileList = [
+    {
         id: 1,
         name: 'Bernd',
         email: 'bernd@brockhaus-ag.de',
@@ -96,5 +95,4 @@ export const profileList = {
         workExperience: workExperienceData[0],
         hobby: hobbyData[0],
     },
-    ],
-};
+];
