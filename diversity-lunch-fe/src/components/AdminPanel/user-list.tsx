@@ -76,6 +76,7 @@ export const UserList: FC = () => {
                 {generateAdminListButton(user)}
             </section>
         )));
+    const UserListContainer = dynamicSearch();
     return (
         <div className="optionsListContainer">
             <div>
@@ -86,7 +87,7 @@ export const UserList: FC = () => {
                     <br />
                     <input defaultValue={searchState} onChange={(e) => setSearchState(e.target.value)} placeholder="SUCHEN" />
                     <section id="searchContainer">
-                        {dynamicSearch()}
+                        {UserListContainer}
                     </section>
                 </details>
             </div>

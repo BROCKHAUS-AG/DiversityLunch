@@ -2,6 +2,7 @@ import React, {
     FC, useEffect,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import { AppStoreState } from '../../store/Store';
@@ -24,10 +25,20 @@ export const AdminPanel: FC = () => {
 
     if (accountState.status === 'OK') {
         if (accountState.accountData.role !== Role.ADMIN && accountState.accountData.role !== Role.AZURE_ADMIN) {
-            return (<p>You are not an admin!</p>);
+            return (
+                <section>
+                    <p>Du bist kein Admin</p>
+                    <Link to="/dashboard">Zurück zum Dashboard</Link>
+                </section>
+            );
         }
     } else {
-        return (<p>Error</p>);
+        return (
+            <section>
+                <p>Dein Account konnte nicht abgerufen werden</p>
+                <Link to="/dashboard">Zurück zum Dashboard</Link>
+            </section>
+        );
     }
 
     return (
