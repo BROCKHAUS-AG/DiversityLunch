@@ -2,7 +2,9 @@ version: "3.8"
 
 services:
   frontend:
-    image: ghcr.io/brockhaus-ag/frontend-image-dev:latest
+    #image: ghcr.io/brockhaus-ag/frontend-image-dev:latest
+    build:
+      context: .
     env_file:
       - ./public/config/fe.env
       - ./.env.production
