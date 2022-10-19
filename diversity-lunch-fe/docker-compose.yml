@@ -6,8 +6,7 @@ services:
     build:
       context: .
     env_file:
-      - ./public/config/fe.env
-      - ./.env.production
+      - ./.env
     container_name: "diversity-lunch-frontend"
     ports:
       - "4000:4000"
