@@ -1,4 +1,4 @@
-name: Build Docker-Image
+name: Build Docker-Images
 
 on:
   push:
@@ -14,13 +14,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 17.0.2
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3.5.1
-        with:
-          node-version: 18.10.x
-      - name: Build frontend
-        run: npm i && npm run build-fe
-        working-directory: ./diversity-lunch-fe
       - name: Add execution privileges
         run: chmod +x ./mvnw
         working-directory: ./diversity-lunch-be
@@ -49,3 +42,29 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: ghcr.io/brockhaus-ag/backend-image-dev:latest
+
+  build-frontend-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@master
+        with:
+          platforms: all
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@master
+      - name: Authenticate To ghcr
+        uses: docker/login-action@v1.10.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build
+        uses: docker/build-push-action@v2
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          context: ./diversity-lunch-fe
+          file: ./diversity-lunch-fe/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: ghcr.io/brockhaus-ag/frontend-image-dev:latest
