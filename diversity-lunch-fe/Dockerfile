@@ -13,12 +13,14 @@ COPY ./.eslintrc.json /app/
 RUN npm run build
 
 ### STAGE 2: Run ###
-FROM nginx:1.17.1-alpine
+#FROM nginx:1.17.1-alpine
 
-COPY --from=build /app/build /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/nginx.conf
+#COPY --from=build /app/build /usr/share/nginx/html
+#COPY nginx.conf /etc/nginx/nginx.conf
 
-CMD /usr/share/nginx/html/config/app_config_generator.sh && nginx -g "daemon off;"
+#CMD /usr/share/nginx/html/config/app_config_generator.sh && nginx -g "daemon off;"
+CMD /app/public/config/app_config_generator.sh && npm start
+
 
 
 
