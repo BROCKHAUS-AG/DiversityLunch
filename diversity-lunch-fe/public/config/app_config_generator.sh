@@ -1,5 +1,5 @@
 #!/bin/sh
-FILE_PATH="./app-config.js"
+FILE_PATH="./usr/share/nginx/html/config/app-config.js"
 rm -f $FILE_PATH
 touch $FILE_PATH
 echo "STARTING"
