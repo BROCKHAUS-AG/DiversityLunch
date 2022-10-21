@@ -4,7 +4,6 @@ networks:
   diversity-lunch:
 
 services:
-
   frontend:
     #image: ghcr.io/brockhaus-ag/frontend-image-dev:latest
     build:
@@ -42,11 +41,11 @@ services:
       - db
       - mailhog
     environment:
-      DB_HOST: db
+      DB_HOST: diversity-lunch-db
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       POSTGRES_DB: "${POSTGRES_DB}"
-      MAIL_HOST: mailhog
+      MAIL_HOST: diversity-lunch-mailhog
       MAIL_PORT: 1025
       MAIL_USERNAME: "${MAIL_USERNAME}"
       MAIL_PASSWORD: "${MAIL_PASSWORD}"
