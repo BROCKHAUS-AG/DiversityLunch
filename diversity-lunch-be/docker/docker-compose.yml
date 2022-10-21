@@ -4,6 +4,24 @@ networks:
   diversity-lunch:
 
 services:
+
+  frontend:
+    #image: ghcr.io/brockhaus-ag/frontend-image-dev:latest
+    build:
+      context: ../../diversity-lunch-fe
+    env_file:
+      - ../../diversity-lunch-fe/public/config/fe.env
+      - ../../diversity-lunch-fe/.env
+    container_name: "diversity-lunch-frontend"
+    ports:
+      - "4000:4000"
+    environment:
+      BACKEND_HOST: "backend:8080"
+    depends_on:
+      - backend
+    networks:
+      - diversity-lunch
+
   db:
     image: postgres
     container_name: diversity-lunch-db
