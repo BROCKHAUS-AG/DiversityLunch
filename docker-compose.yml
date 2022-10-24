@@ -5,9 +5,7 @@ networks:
 
 services:
   frontend:
-    #image: ghcr.io/brockhaus-ag/frontend-image-dev:latest
-    build:
-      context: ./diversity-lunch-fe
+    image: ghcr.io/brockhaus-ag/frontend-image-dev:latest
     env_file:
       - ./diversity-lunch-fe/public/config/fe.env
       - ./diversity-lunch-fe/.env
