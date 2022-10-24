@@ -2,12 +2,8 @@ version: "3.8"
 
 services:
   frontend:
-    #image: ghcr.io/brockhaus-ag/frontend-image-dev:latest
     build:
-      context: .
-    env_file:
-      - ./public/config/fe.env
-      - ./.env
+      context: "."
     container_name: "diversity-lunch-frontend"
     ports:
       - "4000:4000"

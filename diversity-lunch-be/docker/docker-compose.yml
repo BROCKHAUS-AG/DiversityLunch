@@ -1,26 +1,10 @@
 version: "3.8"
 
+
 networks:
   diversity-lunch:
 
 services:
-  frontend:
-    #image: ghcr.io/brockhaus-ag/frontend-image-dev:latest
-    build:
-      context: ../../diversity-lunch-fe
-    env_file:
-      - ../../diversity-lunch-fe/public/config/fe.env
-      - ../../diversity-lunch-fe/.env
-    container_name: "diversity-lunch-frontend"
-    ports:
-      - "4000:4000"
-    environment:
-      BACKEND_HOST: "backend:8080"
-    depends_on:
-      - backend
-    networks:
-      - diversity-lunch
-
   db:
     image: postgres
     container_name: diversity-lunch-db
@@ -35,26 +19,20 @@ services:
 
   backend:
     build:
-      context: ..
+      context: ".."
     container_name: diversity-lunch-backend
     depends_on:
       - db
-      - mailhog
     environment:
-      DB_HOST: diversity-lunch-db
+      DB_HOST: db
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       POSTGRES_DB: "${POSTGRES_DB}"
-      MAIL_HOST: diversity-lunch-mailhog
+      MAIL_HOST: mailhog
       MAIL_PORT: 1025
       MAIL_USERNAME: "${MAIL_USERNAME}"
       MAIL_PASSWORD: "${MAIL_PASSWORD}"
       MAIL_ADDRESS: "${MAIL_ADDRESS}"
-      ISSUER_URI: "${ISSUER_URI}"
-      TENANT_ID: "${TENANT_ID}"
-      CLIENT_ID: "${CLIENT_ID}"
-      DIVERSITY_LUNCH_USER_ID: "${DIVERSITY_LUNCH_USER_ID}"
-      CLIENT_SECRET: "${CLIENT_SECRET}"
     ports:
       - "8080:8080"
     networks:
