@@ -9,7 +9,7 @@ import '../../styles/component-styles/questions/dropdownQuestion.scss';
 import { ProfileForm } from '../Shared/ProfileForm/profile-form';
 import { useGetUserInformation } from '../../hooks/authentication/get-userInfo.hook';
 import { Profile } from '../../model/Profile';
-import { createProfile } from '../../data/profile/profile.actions';
+import { createProfile, loadProfile } from '../../data/profile/profile.actions';
 import { AccountStateOk } from '../../data/account/account-state.type';
 import { isValidProfile } from '../../utils/validators/profile-validator';
 import { LoadingAnimation } from '../Shared/LoadingAnimation';
@@ -41,6 +41,7 @@ export const QuestionSite = () => {
 
     const submit = (p: Partial<Profile>) => {
         dispatch(createProfile(p as Profile, (accountState as AccountStateOk).accountData.id));
+        dispatch(loadProfile((accountState as AccountStateOk).accountData.id));
     };
     return (
         <div className="QuestionSite">
