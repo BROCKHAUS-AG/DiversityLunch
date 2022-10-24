@@ -68,7 +68,12 @@ export const ProfileForm: FC<ProfileFormProps> = ({
         };
         setProfile(updatedProfile);
 
-        setIsValid(checkValidity(updatedProfile));
+        // eslint-disable-next-line eqeqeq
+        if (key == 'birthYear') {
+            setIsValid(true);
+        } else {
+            setIsValid(checkValidity(updatedProfile));
+        }
 
         if (onChange) onChange(updatedProfile);
     }
