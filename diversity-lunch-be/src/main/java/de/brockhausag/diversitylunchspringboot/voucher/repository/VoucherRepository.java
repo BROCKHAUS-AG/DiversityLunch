@@ -8,5 +8,6 @@ import java.util.UUID;
 
 public interface VoucherRepository extends CrudRepository<VoucherEntity, UUID> {
     Optional<VoucherEntity> getFirstByProfileIsNullAndMeetingIsNull();
-    Iterable<VoucherEntity> getAllByProfileId(long profileId);
+    Iterable<VoucherEntity> getAllByProfile(long profileId);
+    Boolean existsByProfileAndMeeting(long profileId, long meetingId);
 }
