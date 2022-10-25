@@ -12,11 +12,13 @@ public enum AccountRole {
     STANDARD(Sets.newHashSet(AccountPermission.PROFILE_OPTION_READ)),
     ADMIN(Sets.newHashSet(AccountPermission.PROFILE_OPTION_READ,
                           AccountPermission.PROFILE_OPTION_WRITE,
-                          AccountPermission.ADMIN_ROLE_ASSIGN)),
+                          AccountPermission.ADMIN_ROLE_ASSIGN,
+                          AccountPermission.ACCOUNT_READ)),
     AZURE_ADMIN(Sets.newHashSet(AccountPermission.PROFILE_OPTION_READ,
                                 AccountPermission.PROFILE_OPTION_WRITE,
                                 AccountPermission.ADMIN_ROLE_ASSIGN,
-                                AccountPermission.ADMIN_ROLE_WITHDRAW));
+                                AccountPermission.ADMIN_ROLE_WITHDRAW,
+                                AccountPermission.ACCOUNT_READ));
 
     private final Set<AccountPermission> permissions;
 }

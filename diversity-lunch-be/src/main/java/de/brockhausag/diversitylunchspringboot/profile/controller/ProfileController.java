@@ -1,5 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.controller;
 
+import de.brockhausag.diversitylunchspringboot.account.model.AccountDto;
+import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.ProfileMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
@@ -18,7 +20,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/api/profiles")
@@ -54,7 +59,16 @@ public class ProfileController {
         log.info("PROFILE FOUND " + entity);
         return new ResponseEntity<>(this.profileMapper.entityToDto(entityOptional.get()), HttpStatus.OK);
     }
+    @GetMapping("/all")
+    @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).ACCOUNT_READ)")
+    public ResponseEntity<List<ProfileDto>> getProfiles() {
+        Iterable<ProfileEntity> profiles = profileService.getAllProfiles();
+        List<ProfileDto> profileDtos = StreamSupport.stream(profiles.spliterator(), true)
+                .map(profileMapper::entityToDto)
+                .collect(Collectors.toList());
 
+        return ResponseEntity.ok(profileDtos);
+    }
     @Operation(summary = "die Angaben zur Registrierung eines Benutzers werden gespeichert")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Angaben eines Benutzers wurden erfolgreich in der Datenbank gespeichert"),

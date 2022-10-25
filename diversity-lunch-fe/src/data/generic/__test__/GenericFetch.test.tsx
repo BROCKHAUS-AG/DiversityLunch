@@ -112,8 +112,8 @@ describe('GenericFetch Integrationtests', () => {
 
         expect(result).toBeInTheDocument();
     });
-
-    it('should render the deleted data', async () => {
+    // todo: überprüfen ob der test sinn ergibt
+    it('should not render the deleted data', async () => {
         jest.spyOn(fetcher, 'authenticatedFetchDelete').mockReturnValue(fetchInitialData());
 
         render(
@@ -124,6 +124,6 @@ describe('GenericFetch Integrationtests', () => {
 
         const result = await screen.findByText(initialData.descriptor);
 
-        expect(result).toBeInTheDocument();
+        expect(result).not.toBeInTheDocument();
     });
 });

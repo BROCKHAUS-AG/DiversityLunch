@@ -1,18 +1,38 @@
-import React, { FC } from 'react';
-import { IconButton } from '../Shared/Controlls/IconButton';
-import iconMeeting from '../../resources/icons/icon-anstehende-termine.svg';
-import { Project } from './Project';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { Identifiable } from '../../data/generic/Identifiable';
 
-interface AdminPanelListItemProp {
-  item: Project,
-  onEditClicked: (_: Project)=>void,
-  onRemoveClicked: (_: Project)=>void
+interface AdminPanelListItemProp<T extends Identifiable> {
+  item: T,
+  onEditClicked: (_: T)=>void,
+  onRemoveClicked: (_: T)=>void
 }
 
-export const AdminPanelListItem: FC<AdminPanelListItemProp> = ({ item: project, onEditClicked, onRemoveClicked }: AdminPanelListItemProp) => (
-    <article>
-        <span>{project.descriptor}</span>
-        <IconButton iconPath={iconMeeting} altText="Projekt bearbeiten" onClick={() => onEditClicked(project)} text="bearbeiten" />
-        <IconButton iconPath={iconMeeting} altText="Projekt löschen" onClick={() => onRemoveClicked(project)} text="löschen" />
-    </article>
-);
+export const AdminPanelListItem = <T extends Identifiable>({ item, onEditClicked, onRemoveClicked }: AdminPanelListItemProp<T>) => {
+    const [input, setInput] = useState(item.descriptor);
+    const [saveButtonActive, setSaveButtonActive] = useState(false);
+
+    useEffect(() => {
+        setSaveButtonActive(false);
+        setInput(item.descriptor);
+    }, [item.descriptor]);
+
+    const inputChangedHandler = (e : ChangeEvent<HTMLInputElement>) => {
+        setSaveButtonActive(e.target.value !== item.descriptor);
+        setInput(e.target.value);
+    };
+
+    const updateClickHandler = () => {
+        onEditClicked({ id: item.id, descriptor: input } as T);
+    };
+
+    return (
+        <article>
+            <input type="text" value={input} onChange={inputChangedHandler} data-testid={`${item.id}`} />
+            {saveButtonActive && (
+                <button type="button" onClick={updateClickHandler}>Speichern</button>
+            )}
+
+            <button type="button" onClick={() => onRemoveClicked(item)}>Löschen</button>
+        </article>
+    );
+};

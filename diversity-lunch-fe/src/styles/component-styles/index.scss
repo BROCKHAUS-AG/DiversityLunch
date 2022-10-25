@@ -29,3 +29,57 @@
   display: flex;
   flex-direction: column;
 }
+
+input {
+  background-color: #ffffff;
+  white-space: nowrap;
+  padding: 14px;
+  border: 1px solid #F8E9EC;
+  color: gray;
+
+  letter-spacing: 0.015em;
+  font-family: GilroyLight, sans-serif;
+  font-style: normal;
+  font-size: 16px;
+  margin: 5px;
+}
+
+input:focus {
+  outline: none;
+}
+
+.editListTitle {
+  font-weight: 500;
+  font-size: 1.3rem;
+}
+
+.usersList{
+  display: grid;
+    grid-template-columns: 65% 25% 10%;
+  gap: 0px 0px;
+
+  letter-spacing: 0.015em;
+  font-family: GilroyLight, sans-serif;
+  font-style: normal;
+  font-size: 16px;
+}
+
+.usersList span{
+  background-color: #ffffff;
+  padding: 14px;
+  min-width: 110px;
+  margin: 5px;
+  border: 1px solid #F8E9EC;
+}
+.usersList button{
+  margin: 5px;
+  font-weight: bolder;
+}
+
+.optionsListContainer {
+  padding: 20px;
+}
+
+.optionsListContainer div {
+  margin: 20px;
+}

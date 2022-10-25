@@ -5,6 +5,7 @@ import { authenticationReducer } from '../data/authentication/authentication.red
 import { meetingsReducer } from '../data/meeting/meetings.reducer';
 import { profileReducer } from '../data/profile/profile.reducer';
 import { accountReducer } from '../data/account/account.reducer';
+import { accountsReducer } from '../data/accounts/accounts-reducer';
 import experienceLevelReducer from '../data/experienceLevel/experience-level.reducer';
 import countryReducer from '../data/country/country-reducer';
 import dietReducer from '../data/diet/diet-reducer';
@@ -22,9 +23,11 @@ import religionReducer from '../data/religion/religion-reducer';
 import sexualityReducer from '../data/sexuality/sexuality-reducer';
 import socialBackgroundReducer from '../data/social-background/social-background-reducer';
 import workExperienceReducer from '../data/work-experience/work-experience-reducer';
+import { profilesReducer } from '../data/profiles/profiles-reducer';
 
 const reducers = {
     account: accountReducer,
+    accounts: accountsReducer,
     activity: activityReducer,
     authentication: authenticationReducer,
     category: categoryReducer,
@@ -39,6 +42,7 @@ const reducers = {
     language: languageReducer,
     meetings: meetingsReducer,
     profile: profileReducer,
+    profiles: profilesReducer,
     project: projectReducer,
     region: regionReducer,
     religion: religionReducer,

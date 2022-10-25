@@ -86,6 +86,11 @@ p {
   font-family: SourceSansProRegular, sans-serif;
 }
 
+summary {
+  color: #575756;
+  font-family: SourceSansProRegular, sans-serif;
+}
+
 text {
   color: #575756;
 }
@@ -111,7 +116,6 @@ Button {
   white-space: nowrap;
   padding: 14px;
   border: 1px solid #F8E9EC;
-
   color: #B81F40;
   letter-spacing: 0.015em;
   text-transform: uppercase;
@@ -119,15 +123,16 @@ Button {
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
-
 }
 
-Button:hover{
+Button:hover:enabled{
+  background-color: whitesmoke;
   border: 1px solid #F1D2D9;
   color: #931933;
 }
 
-Button:focus{
+Button:active:enabled{
+  background-color: darkgray;
   border: 1px solid #E3A4B3;
   color: #6E1326;
 }
