@@ -37,6 +37,7 @@ export function partialProfileToProfile(profile: Partial<Profile>): Profile | un
 
 export function isUpdatedProfile(profile: Profile, updatedProfile: Profile): boolean {
     return (profile.diet.id !== updatedProfile.diet.id
+        || profile.birthYear !== updatedProfile.birthYear
         || profile.education.id !== updatedProfile.education.id
         || profile.gender.id !== updatedProfile.gender.id
         || profile.hobby.id !== updatedProfile.hobby.id
