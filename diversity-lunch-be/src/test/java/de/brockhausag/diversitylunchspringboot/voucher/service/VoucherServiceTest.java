@@ -31,7 +31,7 @@ public class VoucherServiceTest {
     //unclaimed is frei und mensch hat meeting -> kriegt einen voucher
     //unclaimed keine vouchers mehr -> Mensch kann keine vouchers bekommen
     //Mensch versucht zwei mal voucher für gleihces Meeting zu erhalten -> böse kein Voucher
-
+    //Mensch versucht gutschein anzufordern ist aber gar kein teilnehmer -> böse kein Voucher
 
     //alle vouhcer anzeigen lassen -> du hast keine
     // alle vouhcer anzeigen lassen -> du warst fleißig
@@ -39,6 +39,33 @@ public class VoucherServiceTest {
 
     @Test
     void testGetVoucherBasedOnMeetingWithoutClaimedVoucher() {
+        VoucherEntity expected = new VoucherEntity("code");
+
+        when(voucherRepository.getFirstByProfileIsNullAndMeetingIsNull()).thenReturn(Optional.of(expected));
+        when(voucherRepository.existsByProfileAndMeeting(1L, 1L)).thenReturn(false);
+
+        ProfileEntity proposer = new ProfileEntity();
+        proposer.setId(1L);
+
+        ProfileEntity partner = new ProfileEntity();
+        partner.setId(2L);
+
+        MeetingEntity meeting = new MeetingEntity();
+        meeting.setId(1L);
+        meeting.setPartner(partner);
+        meeting.setProposer(proposer);
+        when(meetingRepository.existsById(1L)).thenReturn(meeting);
+
+        try {
+            Optional<VoucherEntity> voucherEntity = voucherService.getUnclaimedVoucherForMeeting(1L, 1L);
+            Assertions.assertNotNull(voucherEntity);
+            Assertions.assertEquals( expected.getVoucherCode(), voucherEntity.get().getVoucherCode());
+        }catch (VoucherService.IllegalVoucherClaim e){
+            Assertions.fail();
+        }
+    }
+    @Test
+    void input_ProfileWithoutMeetingParticipation_expectsExceptionThrown() {
         VoucherEntity expected = new VoucherEntity("code");
         when(voucherRepository.getFirstByProfileIsNullAndMeetingIsNull()).thenReturn(Optional.of(expected));
 
@@ -54,14 +81,12 @@ public class VoucherServiceTest {
         meeting.setProposer(proposer);
         when(meetingRepository.getById(1L)).thenReturn(meeting);
 
-        Optional<VoucherEntity> voucherEntity = voucherService.getUnclaimedVoucherForMeeting(1,1);
+            Assertions.assertThrows(VoucherService.IllegalVoucherClaim.class,() -> voucherService.getUnclaimedVoucherForMeeting(3L, 1L));
 
-        Assertions.assertNotNull(voucherEntity);
-        Assertions.assertEquals( expected.getVoucherCode(), voucherEntity.get().getVoucherCode());
     }
-
     @Test
-    void testGetVoucherBasedOnMeetingAllVouchersAreClaimed() {
+    void input_ProfileEligibleForVoucher_expects_EmptyReturn() {
+        when(voucherRepository.existsByProfileAndMeeting(1L, 1L)).thenReturn(false);
         when(voucherRepository.getFirstByProfileIsNullAndMeetingIsNull()).thenReturn(Optional.empty());
 
         ProfileEntity proposer = new ProfileEntity();
@@ -71,14 +96,18 @@ public class VoucherServiceTest {
         partner.setId(2L);
 
         MeetingEntity meeting = new MeetingEntity();
-        meeting.setId(1);
+        meeting.setId(1L);
         meeting.setPartner(partner);
         meeting.setProposer(proposer);
         when(meetingRepository.getById(1L)).thenReturn(meeting);
+        try{
+            Optional<VoucherEntity> voucherEntity = voucherService.getUnclaimedVoucherForMeeting(1L,1L);
 
-        Optional<VoucherEntity> voucherEntity = voucherService.getUnclaimedVoucherForMeeting(1,1);
+            Assertions.assertTrue(voucherEntity.isEmpty());
+        }catch (VoucherService.IllegalVoucherClaim e){
+            Assertions.fail();
+        }
 
-        Assertions.assertTrue(voucherEntity.isEmpty());
     }
 
     @Test
@@ -100,7 +129,7 @@ public class VoucherServiceTest {
         meeting.setProposer(proposer);
         when(meetingRepository.getById(1L)).thenReturn(meeting);
 
-        Assertions.assertThrows(VoucherService.IllegalDoubleVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(1,1));
+        Assertions.assertThrows(VoucherService.IllegalVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(1,1));
 
 
     }
