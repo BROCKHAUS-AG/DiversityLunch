@@ -9,7 +9,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @Builder
-public class VoucherDTO {
+public class VoucherDto {
     private UUID uuid;
     private String voucherCode;
     private long profileId;
