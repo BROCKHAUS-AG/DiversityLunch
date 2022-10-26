@@ -28,15 +28,6 @@ public class VoucherServiceTest {
     @Mock
     private MeetingRepository meetingRepository;
 
-    //DOne  unclaimed is frei und mensch hat meeting -> kriegt einen voucher
-    //Done unclaimed keine vouchers mehr -> Mensch kann keine vouchers bekommen
-    //Done Mensch versucht zwei mal voucher für gleihces Meeting zu erhalten -> böse kein Voucher
-    //Done Mensch versucht gutschein anzufordern ist aber gar kein teilnehmer -> böse kein Voucher
-
-    //alle vouhcer anzeigen lassen -> du hast keine
-    // alle vouhcer anzeigen lassen -> du warst fleißig
-
-
     @Test
     void getVoucherBasedOnMeetingWithoutClaimedVoucher_expectsVoucherInReturn() {
         VoucherEntity expected = new VoucherEntity("code");
@@ -83,11 +74,34 @@ public class VoucherServiceTest {
         meeting.setId(meetingId);
         meeting.setPartner(partner);
         meeting.setProposer(proposer);
-        when(meetingRepository.getById(meetingId)).thenReturn(meeting);
+        when(meetingRepository.getById(meetingId)).thenReturn(null);
 
             Assertions.assertThrows(VoucherService.IllegalVoucherClaim.class,() -> voucherService.getUnclaimedVoucherForMeeting(3L, meetingId));
 
     }
+
+    @Test
+    void meetingDoesNotExists_expectsExceptionThrown() {
+        long proposerId = 1L;
+        long partnerId = 2L;
+        long meetingId = 1L;
+
+        ProfileEntity proposer = new ProfileEntity();
+        proposer.setId(proposerId);
+
+        ProfileEntity partner = new ProfileEntity();
+        partner.setId(partnerId);
+
+        MeetingEntity meeting = new MeetingEntity();
+        meeting.setId(meetingId);
+        meeting.setPartner(partner);
+        meeting.setProposer(proposer);
+        when(meetingRepository.getById(meetingId)).thenReturn(meeting);
+
+        Assertions.assertThrows(VoucherService.IllegalVoucherClaim.class,() -> voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId + 1));
+
+    }
+
     @Test
     void UserIsEligible_butThereAreNoMoreClaimableVouchers_expects_EmptyReturn() {
         long proposerId = 1L;
@@ -139,8 +153,6 @@ public class VoucherServiceTest {
         when(meetingRepository.getById(meetingId)).thenReturn(meeting);
 
         Assertions.assertThrows(VoucherService.IllegalVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(proposerId,meetingId));
-
-
     }
 
 }

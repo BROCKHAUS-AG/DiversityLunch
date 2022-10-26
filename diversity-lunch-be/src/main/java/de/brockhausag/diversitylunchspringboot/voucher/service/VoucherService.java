@@ -26,7 +26,6 @@ public class VoucherService {
         if (voucherRepository.existsByProfileAndMeeting(profileId, meetingId)) {
             throw new IllegalVoucherClaim("Der Gutschein wurde bereits angefordert.");
         }
-
         return voucherRepository.getFirstByProfileIsNullAndMeetingIsNull();
     }
 
@@ -34,7 +33,7 @@ public class VoucherService {
         return voucherRepository.getAllByProfile(profileId);
     }
 
-    public class IllegalVoucherClaim extends Exception {
+    public static class IllegalVoucherClaim extends Exception {
 
         public IllegalVoucherClaim(String s) {
             super(s);
