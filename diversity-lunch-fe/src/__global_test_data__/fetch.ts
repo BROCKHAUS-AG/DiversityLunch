@@ -1,17 +1,22 @@
+import { Dispatch } from '@reduxjs/toolkit';
 import { CATEGORY_ENDPOINT } from '../data/category/fetch-category';
 import {
+    accountAdminData,
+    accountAzureAdminData,
+    accountList,
+    accountStandardData,
     categoryData,
     countryData,
     dietData,
     educationData,
-    genderData, hobbyData,
-    languageData, profileData,
+    genderData,
+    hobbyData,
+    languageData,
+    profileData,
+    profileList,
     projectData,
     religionData,
     workExperienceData,
-    accountStandardData,
-    accountAdminData,
-    accountAzureAdminData,
 } from './data';
 import { COUNTRY_ENDPOINT } from '../data/country/fetch-country';
 import { DIET_ENDPOINT } from '../data/diet/fetch-diet';
@@ -24,6 +29,11 @@ import { WORK_EXPERIENCE_ENDPOINT } from '../data/work-experience/work-experienc
 import { HOBBY_ENDPOINT } from '../data/hobby/fetch-hobby';
 import { PROFILE_ENDPOINT } from '../data/profile/profile.actions';
 import { Role } from '../model/Role';
+import { globalErrorSlice } from '../data/error/global-error-slice';
+import { Account } from '../types/Account';
+import { accountsAction } from '../data/accounts/accounts-reducer';
+import { Profile } from '../types/Profile';
+import { profilesAction } from '../data/profiles/profiles-reducer';
 
 export const mockedFetchGetProfile = async (url: string) => {
     if (url.includes(CATEGORY_ENDPOINT)) {
@@ -80,4 +90,70 @@ export const mockedFetchGetAccountByRole = async (role: Role) => {
         return new Response(JSON.stringify(accountAzureAdminData));
     }
     return new Response('');
+};
+export const mockedFetchGetAccounts = () => async (dispatch: Dispatch) => {
+    try {
+        const response = new Response(JSON.stringify(accountList), { status: 200, statusText: 'ok' });
+
+        if (!response.ok) {
+            dispatch(globalErrorSlice.httpError({ statusCode: response.status }));
+        } else {
+            const result: Account[] = await response.json();
+
+            dispatch(accountsAction.update(result));
+            dispatch(accountsAction.initFetch(undefined));
+        }
+    } catch (error) {
+        dispatch(globalErrorSlice.error(undefined));
+    }
+};
+export const mockedFetchGetProfiles = () => async (dispatch: Dispatch) => {
+    try {
+        const response = new Response(JSON.stringify(profileList), { status: 200, statusText: 'ok' });
+
+        if (!response.ok) {
+            dispatch(globalErrorSlice.httpError({ statusCode: response.status }));
+        } else {
+            const result : Profile[] = await response.json();
+
+            dispatch(profilesAction.update(result));
+            dispatch(profilesAction.initFetch(undefined));
+        }
+    } catch (error) {
+        dispatch(globalErrorSlice.error(undefined));
+    }
+};
+export const mockedRevokeAdminRole = (accountId: number) => async (dispatch: Dispatch) => {
+    try {
+        const tempAccount = accountList.find((account) => account.id === accountId);
+        if (tempAccount !== undefined) {
+            tempAccount.role = Role.STANDARD;
+        }
+        const response = new Response(JSON.stringify(tempAccount), { status: 200, statusText: 'ok' });
+        if (!response.ok) {
+            dispatch(globalErrorSlice.httpError({ statusCode: response.status }));
+        } else {
+            const result : Account = await response.json();
+            dispatch(accountsAction.update([result]));
+        }
+    } catch (error) {
+        dispatch(globalErrorSlice.error(undefined));
+    }
+};
+export const mockedAssignAdminRole = (accountId: number) => async (dispatch: Dispatch) => {
+    try {
+        const tempAccount = accountList.find((account) => account.id === accountId);
+        if (tempAccount !== undefined) {
+            tempAccount.role = Role.ADMIN;
+        }
+        const response = new Response(JSON.stringify(tempAccount), { status: 200, statusText: 'ok' });
+        if (!response.ok) {
+            dispatch(globalErrorSlice.httpError({ statusCode: response.status }));
+        } else {
+            const result : Account = await response.json();
+            dispatch(accountsAction.update([result]));
+        }
+    } catch (error) {
+        dispatch(globalErrorSlice.error(undefined));
+    }
 };

@@ -32,19 +32,19 @@ const renderContainer = (role: Role) => {
 describe('Admin Panel', () => {
     it('should display an error message when the user is not an admin', async () => {
         renderContainer(Role.STANDARD);
-        const errorMessage = await screen.findByText('You are not an admin!');
+        const errorMessage = await screen.findByText('Du bist kein Admin');
         expect(errorMessage).toBeInTheDocument();
     });
 
     it('should not display an error message when the user is an admin', async () => {
         renderContainer(Role.ADMIN);
-        const errorMessage = await screen.queryByText('You are not an admin!');
+        const errorMessage = await screen.queryByText('Du bist kein Admin');
         expect(errorMessage).toBeNull();
     });
 
     it('should not display an error message when the user is an azure admin', async () => {
         renderContainer(Role.AZURE_ADMIN);
-        const errorMessage = await screen.queryByText('You are not an admin!');
+        const errorMessage = await screen.queryByText('Du bist kein Admin');
         expect(errorMessage).toBeNull();
     });
 });

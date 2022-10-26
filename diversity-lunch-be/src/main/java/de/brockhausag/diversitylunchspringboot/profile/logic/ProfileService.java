@@ -20,6 +20,7 @@ public class ProfileService {
     public Optional<ProfileEntity> getProfile(Long id) {
         return this.repository.findById(id);
     }
+    public Iterable<ProfileEntity> getAllProfiles(){return this.repository.findAll();}
 
     public Optional<ProfileEntity> createProfile(ProfileEntity profileEntity, Long accountId) {
 

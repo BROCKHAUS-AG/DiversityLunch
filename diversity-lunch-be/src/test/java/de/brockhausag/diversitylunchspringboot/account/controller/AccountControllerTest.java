@@ -14,8 +14,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
+
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -58,7 +62,7 @@ class AccountControllerTest {
     }
 
     @Test
-    void testGetAccount_withInvalidPrincipal_expectBadRequest(){
+    void testGetAccount_withInvalidPrincipal_expectBadRequest() {
         when(principal.getAttribute("unique_name")).thenReturn(null);
 
         ResponseEntity<AccountDto> response = accountController.getAccount(principal);
@@ -70,5 +74,87 @@ class AccountControllerTest {
     void testGetAccount_withNoPrincipal_expectInternalServerError() {
         ResponseEntity<AccountDto> response = accountController.getAccount(null);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
+
+    @Test
+    void testAssignAdminRole_whenServiceReturnsEntity_expectIsOk() {
+        AccountDto expectedAccountDto = accountTestDataFactory.buildAccountDto();
+        AccountEntity accountEntity = accountTestDataFactory.buildAccountWithoutProfile();
+        try {
+            when(accountService.assignAdminRole(any())).thenReturn(Optional.of(accountEntity));
+        } catch (Exception e) {
+        }
+        when(accountMapper.mapEntityToDto(accountEntity)).thenReturn(expectedAccountDto);
+
+        ResponseEntity<?> response = accountController.assignAdminRole(expectedAccountDto.getId());
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    void testAssignAdminRole_whenServiceReturnsEmpty_expectNotFound() {
+        try {
+            when(accountService.assignAdminRole(any())).thenReturn(Optional.empty());
+        } catch (Exception e) {
+        }
+        long nonExistingID = 1;
+
+        ResponseEntity<?> response = accountController.assignAdminRole(nonExistingID);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    void testAssignAdminRole_whenServiceThrowsException_expectBadRequest() {
+        try {
+            when(accountService.assignAdminRole(any())).thenThrow(AccountService.IllegalRoleModificationException.class);
+        } catch (Exception e) {
+        }
+        long existingIdWithWrongRole = 1;
+
+        ResponseEntity<?> response = accountController.assignAdminRole(existingIdWithWrongRole);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
+
+    @Test
+    void testRevokeAdminRole_whenServiceReturnsEntity_expectIsOk() {
+        AccountDto expectedAccountDto = accountTestDataFactory.buildAccountDto();
+        AccountEntity accountEntity = accountTestDataFactory.buildAccountWithoutProfile();
+        try {
+            when(accountService.revokeAdminRole(any())).thenReturn(Optional.of(accountEntity));
+        } catch (Exception e) {
+        }
+        when(accountMapper.mapEntityToDto(accountEntity)).thenReturn(expectedAccountDto);
+
+        ResponseEntity<?> response = accountController.revokeAdminRole(expectedAccountDto.getId());
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    void testRevokeAdminRole_whenServiceReturnsEmpty_expectNotFound() {
+        try {
+            when(accountService.revokeAdminRole(any())).thenReturn(Optional.empty());
+        } catch (Exception e) {
+        }
+        long nonExistingID = 1;
+
+        ResponseEntity<?> response = accountController.revokeAdminRole(nonExistingID);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    void testRevokeAdminRole_whenServiceThrowsException_expectBadRequest() {
+        try {
+            when(accountService.revokeAdminRole(any())).thenThrow(AccountService.IllegalRoleModificationException.class);
+        } catch (Exception e) {
+        }
+        long existingIdWithWrongRole = 1;
+
+        ResponseEntity<?> response = accountController.revokeAdminRole(existingIdWithWrongRole);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 }
