@@ -36,7 +36,7 @@ public class VoucherServiceTest {
         long meetingId = 1L;
 
         when(voucherRepository.getFirstByProfileIsNullAndMeetingIsNull()).thenReturn(Optional.of(expected));
-        when(voucherRepository.existsByProfileAndMeeting(proposerId, meetingId)).thenReturn(false);
+        when(voucherRepository.existsByProfileIdAndMeetingId(proposerId, meetingId)).thenReturn(false);
 
         ProfileEntity proposer = new ProfileEntity();
         proposer.setId(proposerId);
@@ -53,7 +53,7 @@ public class VoucherServiceTest {
         try {
             Optional<VoucherEntity> voucherEntity = voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId);
             Assertions.assertNotNull(voucherEntity);
-            Assertions.assertEquals( expected.getVoucherCode(), voucherEntity.get().getVoucherCode());
+            Assertions.assertEquals( expected.getVoucher(), voucherEntity.get().getVoucher());
         }catch (VoucherService.IllegalVoucherClaim e){
             Assertions.fail();
         }
@@ -108,7 +108,7 @@ public class VoucherServiceTest {
         long partnerId = 2L;
         long meetingId = 1L;
 
-        when(voucherRepository.existsByProfileAndMeeting(proposerId, meetingId)).thenReturn(false);
+        when(voucherRepository.existsByProfileIdAndMeetingId(proposerId, meetingId)).thenReturn(false);
         when(voucherRepository.getFirstByProfileIsNullAndMeetingIsNull()).thenReturn(Optional.empty());
 
         ProfileEntity proposer = new ProfileEntity();
@@ -133,12 +133,12 @@ public class VoucherServiceTest {
     }
 
     @Test
-    void UserAlreadyClaimedVourcherForThisMeeting_expectsIllegalClaimException() {
+    void UserAlreadyClaimedVoucherForThisMeeting_expectsIllegalClaimException() {
         long proposerId = 1L;
         long partnerId = 2L;
         long meetingId = 1L;
 
-        when(voucherRepository.existsByProfileAndMeeting(proposerId, meetingId)).thenReturn(true);
+        when(voucherRepository.existsByProfileIdAndMeetingId(proposerId, meetingId)).thenReturn(true);
 
         ProfileEntity proposer = new ProfileEntity();
         proposer.setId(proposerId);
