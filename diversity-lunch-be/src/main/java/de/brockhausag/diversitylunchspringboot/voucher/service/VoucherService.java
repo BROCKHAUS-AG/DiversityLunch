@@ -16,16 +16,13 @@ public class VoucherService {
     private final MeetingRepository meetingRepository;
 
     public Optional<VoucherEntity> getUnclaimedVoucherForMeeting(long profileId, long meetingId) throws IllegalVoucherClaim {
-
-
-        if (meetingRepository.existsById(meetingId)) {
-            MeetingEntity meetingEntity = meetingRepository.getById(meetingId);
-            if(meetingEntity.getPartner().getId() != profileId && meetingEntity.getProposer().getId() != profileId){
-                throw new IllegalVoucherClaim("Du ist nicht berechtigt diesen Gutschein zu bekommen");
-            }
+        MeetingEntity meeting = meetingRepository.getById(meetingId);
+        if (meeting == null) {
+            throw new IllegalVoucherClaim("Du bist nicht berechtigt diesen Gutschein zu bekommen");
         }
-
-
+        if(!(meeting.getPartner().getId() == profileId || meeting.getProposer().getId() == profileId)){
+            throw new IllegalVoucherClaim("Du bist nicht berechtigt diesen Gutschein zu bekommen");
+        }
         if (voucherRepository.existsByProfileAndMeeting(profileId, meetingId)) {
             throw new IllegalVoucherClaim("Der Gutschein wurde bereits angefordert.");
         }
