@@ -1,5 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.voucher.controller;
 
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
 import de.brockhausag.diversitylunchspringboot.voucher.mapper.VoucherMapper;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -38,8 +40,24 @@ public class VoucherController {
         }
     }
     @PreAuthorize("isProfileOwner(#profileId)")
-    @GetMapping("/getVouchers/{profileId}")
+    @GetMapping("/get/{profileId}")
     public ResponseEntity<List<VoucherDto>> getVouchers(@PathVariable Long profileId){
+        List<VoucherEntity> voucherEntities = voucherService.getVoucherByProfileId(profileId);
+        List<VoucherDto> voucherDtos = new ArrayList<VoucherDto>();
+        for (VoucherEntity voucher: voucherEntities) {
+            voucherDtos.add(voucherMapper.mapEntityToDto(voucher));
+        }
+        return ResponseEntity.ok().body(voucherDtos);
+    }
+
+    @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).ADMIN_ROLE_ASSIGN)")
+    @PostMapping("")
+    public ResponseEntity<?> postVouchers(
+            @Valid
+            @RequestBody
+            List<VoucherDto>voucherDtos){
+
+
         List<VoucherEntity> voucherEntities = voucherService.getVoucherByProfileId(profileId);
         List<VoucherDto> voucherDtos = new ArrayList<VoucherDto>();
         for (VoucherEntity voucher: voucherEntities) {
