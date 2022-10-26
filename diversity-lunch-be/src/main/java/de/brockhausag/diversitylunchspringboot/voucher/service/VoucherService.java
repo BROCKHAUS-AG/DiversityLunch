@@ -1,5 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.voucher.service;
 
+import com.tngtech.archunit.lang.ArchRule;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
@@ -9,7 +10,11 @@ import de.brockhausag.diversitylunchspringboot.voucher.repository.VoucherReposit
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -48,7 +53,7 @@ public class VoucherService {
         return voucherEntity;
     }
 
-    public Iterable<VoucherEntity> getVoucherByProfileId(long profileId) {
+    public List<VoucherEntity> getVoucherByProfileId(long profileId) {
         return voucherRepository.getAllByProfileId(profileId);
     }
 
