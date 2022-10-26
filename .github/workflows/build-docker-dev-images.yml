@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-backend-image:
+  build-backend-image-dev:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -43,7 +43,7 @@ jobs:
           push: true
           tags: ghcr.io/brockhaus-ag/backend-image-dev:latest
 
-  build-frontend-image:
+  build-frontend-image-dev:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
