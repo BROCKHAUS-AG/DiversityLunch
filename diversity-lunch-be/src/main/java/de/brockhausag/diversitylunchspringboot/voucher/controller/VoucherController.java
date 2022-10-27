@@ -5,14 +5,17 @@ import de.brockhausag.diversitylunchspringboot.voucher.mapper.VoucherMapper;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;
 import de.brockhausag.diversitylunchspringboot.voucher.service.VoucherService;
+import de.brockhausag.diversitylunchspringboot.voucher.utils.VoucherCSVHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -51,19 +54,16 @@ public class VoucherController {
     }
 
     @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).ADMIN_ROLE_ASSIGN)")
-    @PostMapping("")
-    public ResponseEntity<?> postVouchers(
-            @Valid
-            @RequestBody
-            List<VoucherDto>voucherDtos){
-
-
-        List<VoucherEntity> voucherEntities = voucherService.getVoucherByProfileId(profileId);
-        List<VoucherDto> voucherDtos = new ArrayList<VoucherDto>();
-        for (VoucherEntity voucher: voucherEntities) {
-            voucherDtos.add(voucherMapper.mapEntityToDto(voucher));
+    @PostMapping("/post/csv")
+    public ResponseEntity<?> postVouchers(@RequestParam("file") MultipartFile file){
+        try{
+            List<VoucherEntity> voucherEntities = VoucherCSVHelper.csvToVoucherEntities(file.getInputStream());
+            //if gud
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (IOException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return ResponseEntity.ok().body(voucherDtos);
+
     }
 
 }

@@ -2,20 +2,17 @@ package de.brockhausag.diversitylunchspringboot.voucher.utils;
 
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;
-import liquibase.util.csv.opencsv.CSVParser;
 import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.csv.CSVParser;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class VoucherCSVHelper {
     public static String TYPE = "text/csv";
-    static String[] HEADERs = { "voucherCode" };
+    static String[] HEADERs = {"voucherCode"};
 
     public static boolean hasCSVFormat(MultipartFile file) {
 
@@ -27,25 +24,21 @@ public class VoucherCSVHelper {
     }
 
     public static List<VoucherEntity> csvToVoucherEntities(InputStream is) {
-        try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-             CSVParser csvParser = new CSVParser(fileReader,
-                     CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
-
+        try {
             List<VoucherEntity> voucherEntities = new ArrayList<VoucherEntity>();
+            CSVParser csvParser = CSVParser.parse(is.toString(), CSVFormat.RFC4180);
 
-            Iterable<CSVRecord> csvRecords = csvParser.getRecords();
+
+            Iterable<CSVRecord> csvRecords = csvParser
 
             for (CSVRecord csvRecord : csvRecords) {
-                VoucherEntity voucherEntity = new VoucherEntity(
-                        csvRecord.get("voucherCode"),
-                );
-
+                VoucherEntity voucherEntity = new VoucherEntity(csvRecord.get("voucherCode"));
                 voucherEntities.add(voucherEntity);
             }
 
             return voucherEntities;
-        } catch (IOException e) {
-            throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
+        } catch (IOException ex) {
+            throw new RuntimeException("fail to parse CSV file: " + ex.getMessage());
         }
     }
 }
