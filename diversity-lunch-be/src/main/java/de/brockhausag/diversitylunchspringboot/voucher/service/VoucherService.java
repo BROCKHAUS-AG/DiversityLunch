@@ -1,5 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.voucher.service;
 
+import com.google.common.collect.Iterables;
 import com.tngtech.archunit.lang.ArchRule;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,7 +56,10 @@ public class VoucherService {
     public List<VoucherEntity> getVoucherByProfileId(long profileId) {
         return voucherRepository.getAllByProfileId(profileId);
     }
-
+    public boolean saveVouchers(Iterable<VoucherEntity> voucherEntities){
+        Iterable<VoucherEntity> savedVouchers = voucherRepository.saveAll(voucherEntities);
+        return Iterables.size(savedVouchers) == Iterables.size(voucherEntities);
+    }
     public static class IllegalVoucherClaim extends Exception {
 
         public IllegalVoucherClaim(String s) {

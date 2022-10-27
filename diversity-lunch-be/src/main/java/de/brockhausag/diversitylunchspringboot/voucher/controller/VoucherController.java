@@ -54,12 +54,17 @@ public class VoucherController {
     }
 
     @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).ADMIN_ROLE_ASSIGN)")
-    @PostMapping("/post/csv")
-    public ResponseEntity<?> postVouchers(@RequestParam("file") MultipartFile file){
+    @PostMapping(value = "/upload",consumes = "text/csv")
+    public ResponseEntity<?> postVouchers(@RequestBody MultipartFile file){
         try{
             List<VoucherEntity> voucherEntities = VoucherCSVHelper.csvToVoucherEntities(file.getInputStream());
-            //if gud
-            return new ResponseEntity<>(HttpStatus.OK);
+            boolean success = voucherService.saveVouchers(voucherEntities);
+            if(success){
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+            else {
+                return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            }
         }catch (IOException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

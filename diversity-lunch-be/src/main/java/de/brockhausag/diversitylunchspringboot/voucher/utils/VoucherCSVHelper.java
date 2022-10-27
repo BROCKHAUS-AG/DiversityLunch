@@ -4,6 +4,7 @@ import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -25,14 +26,14 @@ public class VoucherCSVHelper {
 
     public static List<VoucherEntity> csvToVoucherEntities(InputStream is) {
         try {
-            List<VoucherEntity> voucherEntities = new ArrayList<VoucherEntity>();
+            List<VoucherEntity> voucherEntities = new ArrayList<>();
             CSVParser csvParser = CSVParser.parse(is.toString(), CSVFormat.RFC4180);
 
 
-            Iterable<CSVRecord> csvRecords = csvParser
+            Iterable<CSVRecord> csvRecords = csvParser.getRecords();
 
             for (CSVRecord csvRecord : csvRecords) {
-                VoucherEntity voucherEntity = new VoucherEntity(csvRecord.get("voucherCode"));
+                VoucherEntity voucherEntity = new VoucherEntity(csvRecord.get(0));
                 voucherEntities.add(voucherEntity);
             }
 
