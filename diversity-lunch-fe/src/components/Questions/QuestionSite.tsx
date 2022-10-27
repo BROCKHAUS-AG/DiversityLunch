@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
@@ -9,29 +9,20 @@ import '../../styles/component-styles/questions/dropdownQuestion.scss';
 import { ProfileForm } from '../Shared/ProfileForm/profile-form';
 import { useGetUserInformation } from '../../hooks/authentication/get-userInfo.hook';
 import { Profile } from '../../model/Profile';
-import { createProfile, loadProfile } from '../../data/profile/profile.actions';
+import { createProfile } from '../../data/profile/profile.actions';
 import { AccountStateOk } from '../../data/account/account-state.type';
 import { isValidProfile } from '../../utils/validators/profile-validator';
 import { LoadingAnimation } from '../Shared/LoadingAnimation';
-import { loadAccount } from '../../data/account/account.actions';
 
 export const QuestionSite = () => {
     const dispatch = useDispatch();
     const profileState = useSelector((state: AppStoreState) => state.profile);
     const accountState = useSelector((state: AppStoreState) => state.account);
-    const [creationState, setCreationState] = useState('');
     const {
         firstName,
         email,
     } = useGetUserInformation();
-    useEffect(() => {
-        if (creationState === 'created') {
-            if (profileState.status === 'OK') {
-                dispatch(loadProfile(profileState.profileData.id));
-                dispatch(loadAccount);
-            }
-        }
-    }, [creationState, profileState]);
+
     if (profileState.status === 'OK' && accountState.status === 'OK') return <Redirect to="/dashboard" />;
     if (profileState.status === 'ERROR' || accountState.status === 'ERROR') return <p><strong>error</strong></p>;
     if (profileState.status === 'PENDING'
@@ -50,7 +41,6 @@ export const QuestionSite = () => {
 
     const submit = (p: Partial<Profile>) => {
         dispatch(createProfile(p as Profile, (accountState as AccountStateOk).accountData.id));
-        setCreationState('created');
     };
     return (
         <div className="QuestionSite">
