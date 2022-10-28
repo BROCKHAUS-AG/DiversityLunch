@@ -28,7 +28,7 @@ export const OptionsList = <T extends Identifiable>(
 
     const addProject = (descriptor: string) => {
         dispatch(fetch.post({
-            id: 21,
+            id: 0,
             descriptor,
         } as T));
         setInputText('');

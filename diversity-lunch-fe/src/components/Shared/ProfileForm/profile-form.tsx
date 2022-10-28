@@ -67,7 +67,6 @@ export const ProfileForm: FC<ProfileFormProps> = ({
             [key]: value,
         };
         setProfile(updatedProfile);
-
         setIsValid(checkValidity(updatedProfile));
 
         if (onChange) onChange(updatedProfile);
