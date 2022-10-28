@@ -48,10 +48,10 @@ export const authenticatedFetchPostCsv = (url: string, data: any) => {
 
     return fetch(url, {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: data,
         headers: {
             Authorization: bearerToken,
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
         },
     });
 };
