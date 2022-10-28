@@ -5,7 +5,6 @@ import de.brockhausag.diversitylunchspringboot.meeting.model.CreateMeetingPropos
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingDto;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MeetingService;
-import de.brockhausag.diversitylunchspringboot.meeting.utils.MeetingProposalValidation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -76,11 +75,15 @@ public class MeetingController {
     @Operation(summary = "die Meetings eines registrierten Benutzers werden gelöscht")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "ein Meeting des Benutzers wurde aus der Datenbank gelöscht"),
+            @ApiResponse(responseCode = "403", description = "ein Meeting wurde bereits gematched und kann nicht gelöscht werden"),
     })
     @PreAuthorize("isProposalOwner(#id)")
     @DeleteMapping("/{id}")
     public @ResponseBody
     ResponseEntity<String> deleteMeetingProposal(@PathVariable Long id) {
+
+        if(this.meetingService.checkIfMeetingProposalIsMatched(id))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         this.meetingService.deleteMeetingProposal(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

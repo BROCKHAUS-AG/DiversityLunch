@@ -75,4 +75,9 @@ public class MeetingService {
                 .stream()
                 .anyMatch(meeting -> meeting.getProposedDateTime().isEqual(newMeetingTime));
     }
+
+    public boolean checkIfMeetingProposalIsMatched(Long id) {
+        Optional<MeetingProposalEntity> meetingProposal = this.getMeetingProposal(id);
+        return meetingProposal.map(MeetingProposalEntity::isMatched).orElse(false);
+    }
 }

@@ -36,7 +36,7 @@ class MeetingControllerTest {
     @InjectMocks
     private MeetingController meetingController;
 
-    private MeetingTestdataFactory meetingTestdataFactory; ;
+    private MeetingTestdataFactory meetingTestdataFactory;
     private ProfileTestdataFactory profileTestdataFactory;
 
     @BeforeEach
@@ -99,6 +99,19 @@ class MeetingControllerTest {
         ResponseEntity<String> response = this.meetingController.deleteMeetingProposal(id);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    void testDeleteMeeting_isNotDeleted_If_meetingProposalIsMatched() {
+        long id = 1L;
+        MeetingProposalEntity meetingProposalEntity1 = meetingTestdataFactory.entity();
+        meetingProposalEntity1.setMatched(true);
+
+        when(this.meetingService.getMeetingProposal(id)).thenReturn(Optional.of(meetingProposalEntity1));
+
+        ResponseEntity<String> response = this.meetingController.deleteMeetingProposal(id);
+
+        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     }
 
     @Test
