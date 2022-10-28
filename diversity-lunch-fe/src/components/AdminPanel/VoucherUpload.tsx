@@ -10,7 +10,7 @@ import { globalErrorSlice } from '../../data/error/global-error-slice';
 export const UserList: FC = () => {
     const accountsState: AccountsState = useSelector((store: AppStoreState) => store.accounts);
     const profilesState: ProfilesState = useSelector((store: AppStoreState) => store.profiles);
-    const [uploadState, setUploadState] = useState(new FormData());
+    const [uploadState, setUploadState] = useState(null);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -19,6 +19,9 @@ export const UserList: FC = () => {
 
     if (!accountsState.fetched || !profilesState.fetched) {
         return <LoadingAnimation />;
+    }
+    const onFileChange = event => {
+        setUploadState()
     }
     const uploadCSV = (data: FormData) => {
         dispatch(async () => {
@@ -41,7 +44,8 @@ export const UserList: FC = () => {
         <div className="CSVupload">
             <h3>Upload</h3>
             <p>Zum Uploaden ziehe .csv Files im Standardformat in das Upload Fenster</p>
-            <button onClick={uploadCSV()}>Upload</button>
+            <input className="fileUpload" type="file" />
+            <button onClick={uploadCSV(file)}>Upload</button>
         </div>
 
     );
