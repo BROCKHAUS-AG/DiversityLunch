@@ -77,7 +77,7 @@ public class MeetingService {
     }
 
     public boolean checkIfMeetingProposalIsMatched(Long id) {
-        Optional<MeetingProposalEntity> meetingProposal = this.getMeetingProposal(id);
-        return meetingProposal.map(MeetingProposalEntity::isMatched).orElse(false);
+        MeetingProposalEntity meetingProposal = meetingProposalRepository.getById(id);
+        return meetingProposal.isMatched();
     }
 }
