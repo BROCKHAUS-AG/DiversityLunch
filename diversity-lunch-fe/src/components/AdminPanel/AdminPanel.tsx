@@ -11,6 +11,7 @@ import { projectFetch } from '../../data/project/project-fetch';
 import { OptionsList } from './OptionsList';
 import { hobbyFetch } from '../../data/hobby/fetch-hobby';
 import { UserList } from './user-list';
+import { VoucherUpload } from './VoucherUpload';
 
 export const AdminPanel: FC = () => {
     const accountState = useSelector((store: AppStoreState) => store.account);
@@ -49,6 +50,8 @@ export const AdminPanel: FC = () => {
             <OptionsList state={projectState} fetch={projectFetch} title="Projektliste anpassen" addButtonLabel="Projekt hinzufügen" />
 
             <OptionsList state={hobbyState} fetch={hobbyFetch} title="Hobbyliste anpassen" addButtonLabel="Hobby hinzufügen" />
+            <VoucherUpload />
+
         </section>
 
     );
