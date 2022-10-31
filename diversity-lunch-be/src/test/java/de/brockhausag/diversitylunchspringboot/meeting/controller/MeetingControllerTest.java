@@ -107,11 +107,24 @@ class MeetingControllerTest {
         MeetingProposalEntity meetingProposalEntity1 = meetingTestdataFactory.entity();
         meetingProposalEntity1.setMatched(true);
 
-        when(this.meetingService.getMeetingProposal(id)).thenReturn(Optional.of(meetingProposalEntity1));
+        when(this.meetingService.checkIfMeetingProposalIsMatched(id)).thenReturn(true);
 
         ResponseEntity<String> response = this.meetingController.deleteMeetingProposal(id);
 
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    }
+
+    @Test
+    void testDeleteMeeting_isDeleted_If_meetingProposalIsNotMatched() {
+        long id = 1L;
+        MeetingProposalEntity meetingProposalEntity1 = meetingTestdataFactory.entity();
+        meetingProposalEntity1.setMatched(true);
+
+        when(this.meetingService.checkIfMeetingProposalIsMatched(id)).thenReturn(false);
+
+        ResponseEntity<String> response = this.meetingController.deleteMeetingProposal(id);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
