@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class MeetingTestdataFactory {
     private final MeetingProposalRepository meetingProposalRepository;
-    private final LocalDateTime localDateTime = LocalDateTime.of(2022, 2, 14, 10, 30, 0, 0);
-    private final LocalDateTime createdAt = LocalDateTime.of(2022, 2, 14, 16, 1, 0, 0);
+    private final LocalDateTime localDateTime = LocalDateTime.of(2022, 6, 14, 10, 30, 0, 0);
+    private final LocalDateTime createdAt = LocalDateTime.of(2022, 6, 14, 16, 1, 0, 0);
 
 
     public void create(ProfileEntity profileEntity) {
