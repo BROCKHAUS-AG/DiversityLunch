@@ -23,15 +23,15 @@ export const PopUp = ({
     }, []);
 
     return (
-        <div className="UploadSuccessPopUp">
-            <div className="UploadSuccessPopUp-container">
-                <h6 className="UploadSuccessPopUp-text">
+        <div className="PopUp">
+            <div className="PopUp-container">
+                <h6 className="PopUp-text">
                     Der Upload war erfolgreich!
                 </h6>
-                <div className="UploadSuccessPopUp-button-container">
+                <div className="PopUp-button-container">
                     <button
                         type="button"
-                        className="UploadSuccessPopUp-okay-button"
+                        className="PopUp-okay-button"
                         onClick={() => onOkay()}
                     >
                         Okay

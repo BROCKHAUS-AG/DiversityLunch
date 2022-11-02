@@ -1,11 +1,6 @@
 import React, { FC, useState } from 'react';
 import { authenticatedFetchPostCsv } from '../../utils/fetch.utils';
-import { GeneralPopup } from '../Shared/GeneralPopup';
-import { DeleteMeetingPopUp } from '../UpcommingMeetings/DeleteMeetingPopUp';
-import { dateToString, getMeetingEndTime, substringLocalTime } from '../../utils/date.utils';
-import { Button } from '../General/Button/Button';
-import { deleteMeetingProposal } from '../../data/meeting/meetings.actions';
-import { VoucherSuccessPopUp } from './userAdministration/PopUp';
+import { PopUp } from './userAdministration/PopUp';
 
 export const VoucherUpload: FC = () => {
     const [selectedCsvFile, setSelectedCsvFile] = useState();
@@ -43,7 +38,7 @@ export const VoucherUpload: FC = () => {
             {
                 uploadSuccess
                 && (
-                    <VoucherSuccessPopUp
+                    <PopUp
                         onOkay={() => setUploadSuccess(false)}
                     />
                 )
