@@ -11,4 +11,6 @@ möchten wir euch ein paar Diskussionsfragen zu dem Thema %s mitgeben.
 Diese Fragen sollen nur als Einstieg in das Gespräch dienen.
 Unterhaltet euch gerne über unterschiedliche Themen, identifiziert Gemeinsamkeiten und erläutert Unterschiede.
 
+Hier kannst du deinen Lieferando Gutschein anfordern: %s
+
 Viel Spaß und gute Gespräche bei eurem gemeinsamen Mittagessen wünscht das Diversity-Lunch-Team.
