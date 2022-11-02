@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.reactive.result.view.RedirectView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,17 +27,21 @@ public class VoucherController {
     private final VoucherService voucherService;
     private final VoucherMapper voucherMapper;
 
-    @PreAuthorize("isProfileOwner(#profileId)")
-    @PutMapping("/claim/{profileId}/{meetingId}")
+
+    /*This should be a PUT however it will be called from within an email so this is only possible via GET*/
+    @GetMapping("/claim/{profileId}/{meetingId}")
     public ResponseEntity<?> claimVoucher(@PathVariable Long profileId, @PathVariable Long meetingId) {
         try {
             Optional<VoucherEntity> voucherEntity = voucherService.getUnclaimedVoucherForMeeting(profileId, meetingId);
             if (voucherEntity.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return ResponseEntity.ok().body(voucherMapper.mapEntityToDto(voucherEntity.get()));
+
+            String html = "<html> <body> <h5>Du hast deinen Gutschein erfolgreich angefordert! <br> Vielen dank für deine Teilnahme am Diversity Lunch </h5> </body> <html>";
+            return ResponseEntity.ok().body(html);
         } catch (VoucherService.IllegalVoucherClaim e) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            String errorHtml = "<html> <body> <h5>UPSI! Leider ist etwas schief gelaufen. <br> Vielen dank für deine Teilnahme am Diversity Lunch.</h5> </body> <html>";
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorHtml);
         }
     }
 
