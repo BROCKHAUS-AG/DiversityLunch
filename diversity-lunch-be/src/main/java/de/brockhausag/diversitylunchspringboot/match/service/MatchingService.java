@@ -15,7 +15,6 @@ import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEnt
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -100,6 +99,8 @@ public class MatchingService {
     }
 
     public void sendQuestions(LocalDateTime now) {
+        String BASE_URL="https://diversitylunch.brockhaus-ag.de";
+        String link = BASE_URL + "/api/vouchers/%d/%d";
         log.debug("Sending Emails...");
         LocalDateTime modified = now.truncatedTo(ChronoUnit.MINUTES).with(roundMinutesDownToHalfAndFull()).plusHours(1);
         List<MeetingEntity> meetingEntities = meetingRepository.findByFromDateTime(modified);
@@ -109,12 +110,12 @@ public class MatchingService {
                 ProfileEntity[] partner = {meetingEntity.getPartner(), meetingEntity.getProposer()};
                 eMailService.sendEmail(partner[0].getEmail(),
                         "Dein Diversity-Mittagessen", eMailService.createEmailTemplateHTML(partner[0].getName(), partner[1].getName(),
-                                meetingEntity.getQuestion()), eMailService.createEmailTemplatePlain(partner[0].getName(), partner[1].getName(),
-                                meetingEntity.getQuestion())  );
+                                meetingEntity.getQuestion(),String.format(link,partner[0].getId(),meetingEntity.getId())), eMailService.createEmailTemplatePlain(partner[0].getName(), partner[1].getName(),
+                                meetingEntity.getQuestion(),String.format(link,partner[0].getId(),meetingEntity.getId())));
                 eMailService.sendEmail(partner[1].getEmail(),
                         "Dein Diversity-Mittagessen", eMailService.createEmailTemplateHTML(partner[1].getName(), partner[0].getName(),
-                                meetingEntity.getQuestion()), eMailService.createEmailTemplatePlain(partner[1].getName(), partner[0].getName(),
-                                meetingEntity.getQuestion()) );
+                                meetingEntity.getQuestion(),String.format(link,partner[1].getId(),meetingEntity.getId())), eMailService.createEmailTemplatePlain(partner[1].getName(), partner[0].getName(),
+                                meetingEntity.getQuestion(),String.format(link,partner[1].getId(),meetingEntity.getId())));
             } catch (Exception e) {
                 log.error("Something went Wrong while Sending Emails", e);
             }

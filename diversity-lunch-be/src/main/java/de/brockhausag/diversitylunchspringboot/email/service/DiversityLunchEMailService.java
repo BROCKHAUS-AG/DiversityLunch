@@ -38,11 +38,12 @@ public class DiversityLunchEMailService {
         System.out.println("Sent mail");
     }
 
-    public String createEmailTemplateHTML(String recipient, String partner, Question question) {
+    public String createEmailTemplateHTML(String recipient, String partner, Question question, String voucherLink) {
+
         try {
             ClassPathResource resource = new ClassPathResource("email.html");
             String emailText = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), StandardCharset.UTF_8);
-            return String.format(emailText, recipient, partner, question.getCategory().getKind(), question.getKind());
+            return String.format(emailText, recipient, partner, question.getCategory().getKind(), question.getKind(), voucherLink);
         } catch (Exception e) {
             log.error("Failed to read Resource: email.html", e);
         }
@@ -60,11 +61,11 @@ public class DiversityLunchEMailService {
         return "";
     }
 
-    public String createEmailTemplatePlain(String recipient, String partner, Question question) {
+    public String createEmailTemplatePlain(String recipient, String partner, Question question,String voucherLink) {
         try {
             ClassPathResource resource = new ClassPathResource("email.txt");
             String emailText = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), StandardCharset.UTF_8);
-            return String.format(emailText, recipient, partner, question.getCategory().getKind(), question.getKind());
+            return String.format(emailText, recipient, partner, question.getCategory().getKind(), question.getKind(),voucherLink);
         } catch (Exception e) {
             log.error("Failed to read Resource: email.txt", e);
         }
