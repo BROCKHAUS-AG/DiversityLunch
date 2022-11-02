@@ -1,9 +1,10 @@
 import React, { FC, useState } from 'react';
 import { authenticatedFetchPostCsv } from '../../utils/fetch.utils';
+import {GeneralPopup} from "../Shared/GeneralPopup";
 
 export const VoucherUpload: FC = () => {
     const [selectedCsvFile, setSelectedCsvFile] = useState();
-    // const [isCsvFilePicked, setIsCsvFilePicked] = useState(false);
+    const [uploadSuccess, setUploadSuccess] = useState(false);
 
     const uploadCSVToFrontend = (event: any) => {
         setSelectedCsvFile(event.target.files[0]);
@@ -15,6 +16,12 @@ export const VoucherUpload: FC = () => {
         // @ts-ignore
         formData.append('file', selectedCsvFile);
         const result: Response = await authenticatedFetchPostCsv('/api/voucher/upload', formData);
+        if (result.status === 200) {
+            setUploadSuccess(true);
+            window.alert("Yeeey");
+        } else {
+            setUploadSuccess(false);
+        }
     };
 
     return (
