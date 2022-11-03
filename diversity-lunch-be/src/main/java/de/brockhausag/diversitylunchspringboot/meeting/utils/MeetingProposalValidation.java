@@ -5,6 +5,7 @@ import de.brockhausag.diversitylunchspringboot.meeting.CustomValidators.Proposed
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Date;
@@ -18,8 +19,8 @@ import java.util.TimeZone;
  * leading to two different valid GMT+0 time arrays.
  */
 public class MeetingProposalValidation implements ConstraintValidator<ProposedDateTimeValidator,LocalDateTime> {
-    private static final String[] validSummerTimes = {"10:30","11:00","11:30"};
-    private static final String[] validWinterTimes = {"11:30","12:00","12:30"};
+    private static final LocalTime[] validSummerTimes = {LocalTime.of(10,30), LocalTime.of(11, 0),LocalTime.of(11, 30)};
+    private static final LocalTime[] validWinterTimes = {LocalTime.of(11,30), LocalTime.of(12, 0),LocalTime.of(12, 30)};
 
     @Override
     public void initialize(ProposedDateTimeValidator proposedDateTimeValidator) {
@@ -27,8 +28,8 @@ public class MeetingProposalValidation implements ConstraintValidator<ProposedDa
 
     @Override
     public boolean isValid(LocalDateTime proposedDateTime, ConstraintValidatorContext cxt) {
-        final String[] validTimes = isSummerTime(proposedDateTime) ? validSummerTimes : validWinterTimes;
-        return  Arrays.stream(validTimes).toList().contains(proposedDateTime.toLocalTime().toString());
+        final LocalTime[] validTimes = isSummerTime(proposedDateTime) ? validSummerTimes : validWinterTimes;
+        return Arrays.stream(validTimes).anyMatch(t -> t.equals(proposedDateTime.toLocalTime()));
     }
 
     private static boolean isSummerTime(LocalDateTime proposedDateTime) {
