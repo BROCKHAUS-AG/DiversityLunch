@@ -39,6 +39,10 @@ export const VoucherUpload: FC = () => {
                 uploadSuccess
                 && (
                     <PopUp
+                        millisecondsToAutoClose={3000}
+                        visible
+                        message="Der Upload war erfolgreich!"
+                        buttonText="Okay"
                         onOkay={() => setUploadSuccess(false)}
                     />
                 )

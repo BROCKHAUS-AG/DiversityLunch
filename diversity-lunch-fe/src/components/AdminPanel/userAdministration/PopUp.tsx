@@ -26,7 +26,7 @@ export const PopUp = ({
         <div className="PopUp">
             <div className="PopUp-container">
                 <h6 className="PopUp-text">
-                    Der Upload war erfolgreich!
+                    {message}
                 </h6>
                 <div className="PopUp-button-container">
                     <button
@@ -34,7 +34,7 @@ export const PopUp = ({
                         className="PopUp-okay-button"
                         onClick={() => onOkay()}
                     >
-                        Okay
+                        {buttonText}
                     </button>
                 </div>
             </div>
