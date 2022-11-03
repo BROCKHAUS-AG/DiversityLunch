@@ -33,8 +33,8 @@ public class MeetingProposalValidation implements ConstraintValidator<ProposedDa
     }
 
     private static boolean isSummerTime(LocalDateTime proposedDateTime) {
-        final TimeZone timeZone = TimeZone.getTimeZone(ZoneId.of("Europe/Berlin"));
-        final Date date = Date.from(proposedDateTime.atZone(timeZone.toZoneId()).toInstant());
-        return timeZone.inDaylightTime(date);
+        final TimeZone europeBerlinTimeZone = TimeZone.getTimeZone(ZoneId.of("Europe/Berlin"));
+        final Date date = Date.from(proposedDateTime.atZone(europeBerlinTimeZone.toZoneId()).toInstant());
+        return europeBerlinTimeZone.inDaylightTime(date);
     }
 }
