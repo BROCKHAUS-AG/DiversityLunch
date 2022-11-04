@@ -53,6 +53,9 @@ public class MatchingService {
 
         for (int i = 0; i < meetingProposals.size(); i++) {
 
+            if(meetingProposals.get(i).isMatched()){
+                continue;
+            }
 
             List<Match> matchList = new LinkedList<>();
 
@@ -69,7 +72,7 @@ public class MatchingService {
                 Match bestMatch = Collections.max(matchList, Comparator.comparingInt(Match::score));
                 String onlineMeetingId = msTeamsService.createMsTeamsMeeting(bestMatch);
                 arrangeMeeting(bestMatch, onlineMeetingId);
-                meetingProposals.remove(bestMatch.proposalTwo());
+
             }
         }
     }
