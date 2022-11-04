@@ -53,7 +53,7 @@ class AccountControllerTest {
         when(accountService.getOrCreateAccount("irgendwas")).thenReturn(accountEntity);
         when(accountMapper.mapEntityToDto(accountEntity)).thenReturn(expectedAccountDto);
 
-        when(principal.getAttribute("unique_name")).thenReturn("irgendwas");
+        when(principal.getAttribute("oid")).thenReturn("irgendwas");
 
         ResponseEntity<AccountDto> response = accountController.getAccount(principal);
 
@@ -63,7 +63,7 @@ class AccountControllerTest {
 
     @Test
     void testGetAccount_withInvalidPrincipal_expectBadRequest() {
-        when(principal.getAttribute("unique_name")).thenReturn(null);
+        when(principal.getAttribute("oid")).thenReturn(null);
 
         ResponseEntity<AccountDto> response = accountController.getAccount(principal);
 

@@ -26,7 +26,7 @@ public class AccountEntity {
     @OneToOne
     private ProfileEntity profile;
 
-    private String uniqueName;
+    private String oid;
 
     private AccountRole role;
 }

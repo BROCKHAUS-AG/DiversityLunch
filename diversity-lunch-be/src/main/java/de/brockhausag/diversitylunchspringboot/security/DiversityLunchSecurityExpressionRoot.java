@@ -63,14 +63,18 @@ public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot
     }
 
     public boolean hasAccountRole(AccountRole role) {
-        String uniqueName = getUniqueName();
-        Optional<AccountEntity> account = accountService.getAccount(uniqueName);
+        Optional<String> oid = getOID();
+        if(oid.isEmpty())
+            return false;
+        Optional<AccountEntity> account = accountService.getAccount(oid.get());
         return account.isPresent() && account.get().getRole().equals(role);
     }
 
     public boolean hasAccountPermission(AccountPermission permission) {
-        String uniqueName = getUniqueName();
-        Optional<AccountEntity> account = accountService.getAccount(uniqueName);
+        Optional<String> oid = getOID();
+        if(oid.isEmpty())
+            return false;
+        Optional<AccountEntity> account = accountService.getAccount(oid.get());
         return account.isPresent() && account.get().getRole().getPermissions().contains(permission);
     }
 
@@ -84,28 +88,33 @@ public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot
         return oAuth2Authentication;
     }
 
-    private String getUniqueName(){
+    public Optional<String> getOID(){
         OAuth2AuthenticatedPrincipal oAuth2Authentication = getOAuth2AuthenticatedPrincipal();
         if(oAuth2Authentication == null){
             return null;
         }
-        Object claimValue = oAuth2Authentication.getAttribute("unique_name");
+        Object claimValue = oAuth2Authentication.getAttribute("oid");
         if(claimValue == null){
-            log.debug("No Claim with unique_name");
+            log.debug("No Claim with oid");
             return null;
         }
-        return claimValue.toString();
+        return Optional.of(claimValue.toString());
     }
 
     private Optional<Long> getAccountId() {
-        String uniqueName = getUniqueName();
-        Optional<AccountEntity> optionalAccount = accountService.getAccount(uniqueName);
-        return optionalAccount.map(AccountEntity::getId);
+        return getAccount().map(AccountEntity::getId);
+
     }
 
     private Optional<Long> getProfileId(){
-        String uniqueName = getUniqueName();
-        Optional<AccountEntity> optionalAccount = accountService.getAccount(uniqueName);
-        return optionalAccount.map(account -> account.getProfile().getId());
+        return getAccount().map(account -> account.getProfile().getId());
+    }
+
+    private Optional<AccountEntity> getAccount() {
+        Optional<String> oidOptional = getOID();
+        if(oidOptional.isEmpty())
+            return Optional.empty();
+
+        return accountService.getAccount(oidOptional.get());
     }
 }

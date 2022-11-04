@@ -35,7 +35,7 @@ public class AccountController {
             return ResponseEntity.internalServerError().body(null);
         }
 
-        Object claimValue = principal.getAttribute("unique_name");
+        Object claimValue = principal.getAttribute("oid");
 
         if (claimValue == null) {
             log.error("claimValue/body is null");
