@@ -6,8 +6,21 @@ on:
   workflow_dispatch:
 
 jobs:
+  parse-version-number:
+    runs-on: ubuntu-latest
+    outputs:
+      version-no: ${{ steps.parse_version_number.outputs.version_no }}
+    steps:
+    - id: parse_version_number
+      run: |
+        echo parsing ${{ github.event.head_commit.message }}...
+        VERSION_NUMBER=`echo "${{ github.event.head_commit.message }}" | grep -o -E "[0-9]+\.[0-9]+\.[0-9]+"`
+	echo found $VERSION_NUMBER
+        echo echo "version_no=$VERSION_NUMBER" >> $GITHUB_OUTPUT
+
   build-backend-image-dev:
     runs-on: ubuntu-latest
+    needs: parse-version-number
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 17.0.2
@@ -41,10 +54,13 @@ jobs:
           file: ./diversity-lunch-be/Dockerfile
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/brockhaus-ag/backend-image-dev:latest
+          tags: |
+            ghcr.io/brockhaus-ag/backend-image-dev:latest
+            ghcr.io/brockhaus-ag/backend-image-dev:${{needs.parse-version-number.outputs.version-no}}
 
   build-frontend-image-dev:
     runs-on: ubuntu-latest
+    needs: parse-version-number
     steps:
       - uses: actions/checkout@v2
       - name: Set up QEMU
@@ -68,4 +84,6 @@ jobs:
           file: ./diversity-lunch-fe/Dockerfile
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/brockhaus-ag/frontend-image-dev:latest
+          tags: |
+            ghcr.io/brockhaus-ag/frontend-image-dev:latest
+            ghcr.io/brockhaus-ag/frontend-image-dev:${{needs.parse-version-number.outputs.version-no}}
