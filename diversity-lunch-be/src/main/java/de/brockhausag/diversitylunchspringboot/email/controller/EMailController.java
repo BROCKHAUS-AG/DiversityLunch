@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
+import java.sql.Date;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/mailing")
@@ -62,8 +64,7 @@ public class EMailController {
     @PostMapping("/sendTestMailToUser/{id}")
     @PreAuthorize("isProfileOwner(#id)")
     public ResponseEntity<String> sendTestMailToUserPathVariable(@PathVariable long id){
-        System.out.println("Beginning of sendTestMailToUser");
-        String body = "Hallo :)";
+        String body = "Datum: " + LocalDateTime.now().toString();
         try {
             System.out.println("Beginning of try block of sendTestMailToUser");
             diversityLunchEMailService.sendMailToUser(id, body);
