@@ -6,6 +6,18 @@ on:
   workflow_dispatch:
 
 jobs:
+  parse-version-number:
+    runs-on: ubuntu-latest
+    outputs:
+      version-no: ${{ steps.parse_version_number.outputs.version_no }}
+    steps:
+    - id: parse_version_number
+      run: |
+        echo "parsing message '${{ github.event.head_commit.message }}'..."
+        VERSION_NUMBER=`echo "${{ github.event.head_commit.message }}" | grep -o -E "[0-9]+\.[0-9]+\.[0-9]+"`
+        echo found $VERSION_NUMBER
+        echo "version_no=$VERSION_NUMBER" >> $GITHUB_OUTPUT
+
   build-backend-image:
     runs-on: ubuntu-latest
     steps:
@@ -41,7 +53,9 @@ jobs:
           file: ./diversity-lunch-be/Dockerfile
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/brockhaus-ag/backend-image:latest
+          tags: |
+            ghcr.io/brockhaus-ag/backend-image:latest
+            ghcr.io/brockhaus-ag/backend-image:${{needs.parse-version-number.outputs.version-no}}
 
   build-frontend-image:
     runs-on: ubuntu-latest
@@ -68,4 +82,6 @@ jobs:
           file: ./diversity-lunch-fe/Dockerfile
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/brockhaus-ag/frontend-image:latest
+          tags: |
+            ghcr.io/brockhaus-ag/frontend-image:latest
+            ghcr.io/brockhaus-ag/frontend-image:${{needs.parse-version-number.outputs.version-no}}
