@@ -48,7 +48,6 @@
     "ci:test": "CI=true && npm run test -- --coverage --watchAll=false",
     "ci:test-win": "set CI=true && npm run test -- --coverage --watchAll=false",
     "build": "react-scripts build",
-    "build-fe": "react-scripts build && mkdir ../diversity-lunch-be/src/main/resources/static && mv ./build/* ../diversity-lunch-be/src/main/resources/static/",
     "build-fe-win": "react-scripts build && Rename build static && move \"static\" \"../diversity-lunch-be/src/main/resources/static\"",
     "test": "react-scripts test",
     "test-html": "npm run test -- --coverage --watchAll=false --coverageReporters=cobertura --coverageReporters=html",
