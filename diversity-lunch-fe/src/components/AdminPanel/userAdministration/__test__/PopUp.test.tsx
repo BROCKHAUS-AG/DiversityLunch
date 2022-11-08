@@ -1,38 +1,33 @@
-import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { APP_STORE } from '../../../../store/Store';
-import { mockedFetchGetProfile } from '../../../../__global_test_data__/fetch';
-import * as fetcher from '../../../../utils/fetch.utils';
+import { act } from 'react-dom/test-utils';
 import { PopUp } from '../PopUp';
 
 describe('Pop Up', () => {
-    let popUpContainer;
+    let buttonFunction: jest.Mock<any, any>;
+    const buttonText = 'Okay';
+    const popUpMessage = 'test';
     beforeEach(() => {
-        popUpContainer = render(
-            <BrowserRouter>
-                <Provider store={APP_STORE}>
-                    <PopUp />
-                </Provider>
-            </BrowserRouter>,
+        buttonFunction = jest.fn();
+        render(
+            <PopUp onButtonClick={buttonFunction} buttonText={buttonText} message={popUpMessage} />,
         );
     });
-    it('should display a popup', async () => {
-        renderContainer(Role.STANDARD);
-        const errorMessage = await screen.findByText('Du bist kein Admin');
-        expect(errorMessage).toBeInTheDocument();
+    it('should display the button', () => {
+        const button = screen.getByText(buttonText);
+        expect(button).toBeInTheDocument();
     });
 
-    it('should not display an error message when the user is an admin', async () => {
-        renderContainer(Role.ADMIN);
-        const errorMessage = await screen.queryByText('Du bist kein Admin');
-        expect(errorMessage).toBeNull();
+    it('should execute Function when its button is clicked', () => {
+        const button = screen.getByText(buttonText);
+        act(() => {
+            button.click();
+        });
+        expect(buttonFunction).toBeCalledTimes(1);
     });
 
-    it('should not display an error message when the user is an azure admin', async () => {
-        renderContainer(Role.AZURE_ADMIN);
-        const errorMessage = await screen.queryByText('Du bist kein Admin');
-        expect(errorMessage).toBeNull();
+    it('should display a message', () => {
+        const message = screen.getByText(popUpMessage);
+        expect(message).toBeInTheDocument();
     });
 });
