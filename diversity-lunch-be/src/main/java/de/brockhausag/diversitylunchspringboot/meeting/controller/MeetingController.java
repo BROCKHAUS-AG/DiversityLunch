@@ -72,10 +72,10 @@ public class MeetingController {
                 .orElse(ResponseEntity.badRequest().build());
     }
 
-    @Operation(summary = "die Meetings eines registrierten Benutzers werden gelöscht")
+    @Operation(summary = "die Terminvorschläge für ein Meeting eines registrierten Benutzers werden gelöscht")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "ein Meeting des Benutzers wurde aus der Datenbank gelöscht"),
-            @ApiResponse(responseCode = "403", description = "ein Meeting wurde bereits gematched und kann nicht gelöscht werden"),
+            @ApiResponse(responseCode = "200", description = "ein Terminvorschlag für ein Meeting wurde aus der Datenbank gelöscht"),
+            @ApiResponse(responseCode = "403", description = "für diesen Terminvorschlag existiert bereits ein aktives Meeting, deshalb kann es nicht gelöscht werden"),
     })
     @PreAuthorize("isProposalOwner(#id)")
     @DeleteMapping("/{id}")

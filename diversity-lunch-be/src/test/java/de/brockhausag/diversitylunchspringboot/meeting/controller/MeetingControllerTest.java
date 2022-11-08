@@ -104,8 +104,6 @@ class MeetingControllerTest {
     @Test
     void testDeleteMeeting_isNotDeleted_If_meetingProposalIsMatched() {
         long id = 1L;
-        MeetingProposalEntity meetingProposalEntity1 = meetingTestdataFactory.entity();
-        meetingProposalEntity1.setMatched(true);
 
         when(this.meetingService.checkIfMeetingProposalIsMatched(id)).thenReturn(true);
 
@@ -117,8 +115,6 @@ class MeetingControllerTest {
     @Test
     void testDeleteMeeting_isDeleted_If_meetingProposalIsNotMatched() {
         long id = 1L;
-        MeetingProposalEntity meetingProposalEntity1 = meetingTestdataFactory.entity();
-        meetingProposalEntity1.setMatched(true);
 
         when(this.meetingService.checkIfMeetingProposalIsMatched(id)).thenReturn(false);
 
