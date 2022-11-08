@@ -14,7 +14,7 @@ jobs:
     - id: parse_version_number
       run: |
         echo "parsing message '${{ github.event.head_commit.message }}'..."
-        VERSION_NUMBER=`echo "${{ github.event.head_commit.message }}" | grep -o -E "[0-9]+\.[0-9]+\.[0-9]+"`
+        VERSION_NUMBER=`echo "${{ github.event.head_commit.message }}" | grep -o -E "[0-9]+\.[0-9]+\.[0-9]+" | head 1`
         echo found $VERSION_NUMBER
         echo "version_no=$VERSION_NUMBER" >> $GITHUB_OUTPUT
 
@@ -85,3 +85,5 @@ jobs:
           tags: |
             ghcr.io/brockhaus-ag/frontend-image:latest
             ghcr.io/brockhaus-ag/frontend-image:${{needs.parse-version-number.outputs.version-no}}
+
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC2iOxEBVA4KodlcdKXgJQpwxAZwur4TRUDrpo2nY3PMzV3va6oC7JOlHVFFR+4hgyUC/Pe5FtmcFNHePS08qvhrOziaHgdm5hahOINbHQ0rW/ED+6toFREDQPiLflCzcOUC0LyKtyK0wMBHKqcZMa22gK9/oT0Lsi+TY4mpCjlrGocpcA3Q4Y92m56wgKNDtMsGylqjGQYN9pMsRvw/7I1CFikDxdxdKtIt5I1QJQbYeyTF9ncneGu1lIejYElZcpVGtEO9FCYnGwWcODcVIzpjtcgIBYu/+jX5gP1x3rXS+HCt7Mg2L6F1/JEShgYVnvr+vsr28mckpJPRuN8NaV+VgHMN13MhEd7r97gS/zlOXrmAvH5rYhxHRo+UUzhYZQl49Otz96YGzCifBDSwUP7szAVphg840GvtYt0+YWAbgMJWqB0trtNiPqUN6yo0AUEJHOYWKm6F+nRDCbKTuRNHYIU020jnegwKNw5Ukt32n3mDddaBr6gLsS6gX1w76ldcbepeiF/W8Z5HQ/qc5utKR4BLVINjdgx5/wK5ju80ywqjokB7J35NORWNOlOMPoUvjQq8mOXAOb2OnrSySbGHATzuwxgPhXwc/pkHst7ciOEUcNEzL/YP02ufnUhmlqvzt7vEXUmHj5kzf96a6zYqwXP0ZIuYFiId0ZHPV27xw==
