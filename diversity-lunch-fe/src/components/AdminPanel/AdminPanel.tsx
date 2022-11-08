@@ -12,22 +12,18 @@ import { OptionsList } from './OptionsList';
 import { hobbyFetch } from '../../data/hobby/fetch-hobby';
 import { UserList } from './user-list';
 import { authenticatedFetchPost } from '../../utils/fetch.utils';
+import { PopUp } from './userAdministration/PopUp';
 
 export const AdminPanel: FC = () => {
     const accountState = useSelector((store: AppStoreState) => store.account);
     const projectState = useSelector((store: AppStoreState) => store.project);
     const hobbyState = useSelector((store: AppStoreState) => store.hobby);
-    const [emailState, setEmailSuccess] = useState(false);
+    const [emailSuccess, setEmailSuccess] = useState(false);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(projectFetch.getAll());
         dispatch(hobbyFetch.getAll());
     }, []);
-    useEffect(() => {
-        if (emailState) {
-            // todo: execute PopUp
-        }
-    }, [emailState]);
 
     if (accountState.status === 'OK') {
         if (accountState.accountData.role !== Role.ADMIN && accountState.accountData.role !== Role.AZURE_ADMIN) {
@@ -59,6 +55,7 @@ export const AdminPanel: FC = () => {
 
             <OptionsList state={hobbyState} fetch={hobbyFetch} title="Hobbyliste anpassen" addButtonLabel="Hobby hinzufügen" />
             <button onClick={sendTestmail}>Testmail verschicken</button>
+            {emailSuccess && <PopUp onButtonClick={() => { setEmailSuccess(false); }} message="Testmail gesendet" buttonText="Okay" />}
         </section>
 
     );
