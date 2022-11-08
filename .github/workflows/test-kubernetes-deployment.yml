@@ -76,3 +76,5 @@ jobs:
       - name: Setup kubectl
         id: install-kubectl
         uses: azure/setup-kubectl@v3
+      - name: Test Kubectl
+        run: kubectl config current-context
