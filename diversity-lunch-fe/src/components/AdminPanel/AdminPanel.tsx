@@ -25,7 +25,7 @@ export const AdminPanel: FC = () => {
     }, []);
     useEffect(() => {
         if (emailState) {
-            window.alert('Erfolgreich gesendet');
+            // todo: execute PopUp
         }
     }, [emailState]);
 
