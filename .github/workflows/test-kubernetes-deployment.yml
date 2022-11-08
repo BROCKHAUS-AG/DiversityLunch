@@ -17,4 +17,4 @@ jobs:
         run: git clone git@ssh.dev.azure.com:v3/brockhaus-ag/Diversity-Lunch/Kubernetes
 
       - name: Debug
-        cat Kubernetes/README.md
+        run: cat Kubernetes/README.md
