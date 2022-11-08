@@ -41,13 +41,13 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: backend_deployment
-          path: frontend.yaml
+          path: .
 
       - name: Download Backend-Deployment
         uses: actions/download-artifact@master
         with:
           name: backend_deployment
-          path: backend.yaml
+          path: .
 
       - name: backend-debug
         run: cat backend.yaml
