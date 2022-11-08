@@ -2,6 +2,8 @@ name: Test-Workflow
 
 on:
     workflow_dispatch:
+    push:
+      branches: [ feat/17753-testing-pipeline ]
 
 jobs:
     clone-repository:
