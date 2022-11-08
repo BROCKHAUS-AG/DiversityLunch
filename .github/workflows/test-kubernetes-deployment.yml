@@ -12,8 +12,8 @@ jobs:
           - name: Setup SSH
             uses: MrSquaare/ssh-setup-action@v1
             with:
-            host: ssh.dev.azure.com
-            private-key: ${{ secrets.AZURE_PRIVATE_KEY }}
+              host: ssh.dev.azure.com
+              private-key: ${{ secrets.AZURE_PRIVATE_KEY }}
 
           - name: Clone repository
             run: git clone git@ssh.dev.azure.com:v3/brockhaus-ag/Diversity-Lunch/Kubernetes
