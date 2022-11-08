@@ -8,9 +8,6 @@ on:
 jobs:
   get-deployments:
     runs-on: ubuntu-latest
-    outputs:
-      frontend_deployment: ${{ steps.get-deployments.outputs.frontend }}
-      backend_deployment: ${{ steps.get-deployments.outputs.backend }}
     steps:
       - name: Setup SSH
         uses: MrSquaare/ssh-setup-action@v1
@@ -21,13 +18,17 @@ jobs:
       - name: Clone repository
         run: git clone git@ssh.dev.azure.com:v3/brockhaus-ag/Diversity-Lunch/Kubernetes
 
-      - name: Get Deployments
-        id: get-deployments
-        run: |
-          BACKEND=`cat Kubernetes/azure_dev/backend.yaml`
-          FRONTEND=`cat Kubernetes/azure_dev/frontend.yaml`
-          echo "backend=$BACKEND" >> $GITHUB_OUTPUT
-          echo "frontend=$FRONTEND" >> $GITHUB_OUTPUT
+      - name: Upload Backend-Deployment
+        uses: actions/upload-artifact@master
+        with:
+          name: backend_deployment
+          path: Kubernetes/azure_dev/backend.yaml
+
+      - name: Upload Frontend-Deployment
+        uses: actions/upload-artifact@master
+        with:
+          name: backend_deployment
+          path: Kubernetes/azure_dev/frontend.yaml
 
       - name: Delete Repository
         run: rm -rf Kubernetes
@@ -36,7 +37,19 @@ jobs:
     runs-on: ubuntu-latest
     needs: get-deployments
     steps:
+      - name: Download Fronend-Deployment
+        uses: actions/download-artifact@master
+        with:
+          name: backend_deployment
+          path: frontend.yaml
+
+      - name: Download Backend-Deployment
+        uses: actions/download-artifact@master
+        with:
+          name: backend_deployment
+          path: backend.yaml
+
       - name: backend-debug
-        run: echo ${{needs.get-deployments.outputs.backend_deployment}}
+        run: cat backend.yaml
       - name: frontend-debug
-        run: echo ${{needs.get-deployments.outputs.backend_deployment}}
+        run: cat frontend.yaml
