@@ -14,7 +14,7 @@ jobs:
     - id: parse_version_number
       run: |
         echo "parsing message '${{ github.event.head_commit.message }}'..."
-        VERSION_NUMBER=`echo "${{ github.event.head_commit.message }}" | grep -o -E "[0-9]+\.[0-9]+\.[0-9]+" | head 1`
+        VERSION_NUMBER=`echo "${{ github.event.head_commit.message }}" | grep -o -E "[0-9]+\.[0-9]+\.[0-9]+" | head -n 1`
         echo found $VERSION_NUMBER
         echo "version_no=$VERSION_NUMBER" >> $GITHUB_OUTPUT
 
