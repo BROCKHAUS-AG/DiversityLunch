@@ -27,7 +27,7 @@ jobs:
       - name: Upload Frontend-Deployment
         uses: actions/upload-artifact@master
         with:
-          name: backend_deployment
+          name: frontend_deployment
           path: Kubernetes/azure_dev/frontend.yaml
 
       - name: Delete Repository
