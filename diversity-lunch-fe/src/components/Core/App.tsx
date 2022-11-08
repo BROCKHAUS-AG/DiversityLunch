@@ -14,6 +14,7 @@ import { ProfileOverviewLoader } from '../Profile/ProfileOverviewLoader';
 import { MeetingAlreadyBooked } from '../MeetingAlreadyBooked/MeetingAlreadyBooked';
 import { BookingError } from '../BookingError/BookingError';
 import { AdminPanel } from '../AdminPanel/AdminPanel';
+import { VoucherPanel } from '../VoucherPanel/VoucherPanel';
 
 export const App = () => (
     <div className="App">
@@ -63,6 +64,11 @@ export const App = () => (
                     <Route path="/bookingError">
                         <BookingError />
                     </Route>
+
+                    <Route path="/voucherClaim">
+                        <VoucherPanel />
+                    </Route>
+
                     <Route path="/" render={() => <GenericErrorPage errorMessage="ERROR 404 - THIS SITE DOES NOT EXIST" />} />
                 </Switch>
             </BrowserRouter>
