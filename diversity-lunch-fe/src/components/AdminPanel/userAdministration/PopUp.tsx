@@ -1,43 +1,32 @@
 import React, { useEffect, useState } from 'react';
 
+import '../../../styles/component-styles/popup/PopUp.scss';
+
 interface PopUpProps {
-    onOkay: () => void;
+    onButtonClick: () => void;
     message: string;
     buttonText: string;
-    millisecondsToAutoClose: number|undefined;
-    visible: boolean;
 }
 
 export const PopUp = ({
-    onOkay,
+    onButtonClick,
     message,
     buttonText,
-    millisecondsToAutoClose,
-    visible,
-}: PopUpProps) => {
-    const [isVisible, setIsVisible] = useState(visible);
-    useEffect(() => {
-        if (millisecondsToAutoClose === undefined) {
-            setInterval(() => { setIsVisible(false); }, millisecondsToAutoClose);
-        }
-    }, []);
-
-    return (
-        <div className="PopUp">
-            <div className="PopUp-container">
-                <h6 className="PopUp-text">
-                    {message}
-                </h6>
-                <div className="PopUp-button-container">
-                    <button
-                        type="button"
-                        className="PopUp-okay-button"
-                        onClick={() => onOkay()}
-                    >
-                        {buttonText}
-                    </button>
-                </div>
+}: PopUpProps) => (
+    <div className="PopUp">
+        <div className="PopUp-container">
+            <span className="PopUp-text">
+                {message}
+            </span>
+            <div className="PopUp-button-container">
+                <button
+                    type="button"
+                    className="PopUp-okay-button"
+                    onClick={() => onButtonClick()}
+                >
+                    {buttonText}
+                </button>
             </div>
         </div>
-    );
-};
+    </div>
+);
