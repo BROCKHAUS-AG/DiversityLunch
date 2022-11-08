@@ -6,7 +6,7 @@ networks:
 
 services:
   db:
-    image: postgress
+    image: postgres
     container_name: diversity-lunch-db
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
