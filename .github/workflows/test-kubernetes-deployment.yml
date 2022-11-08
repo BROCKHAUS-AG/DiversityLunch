@@ -33,7 +33,7 @@ jobs:
       - name: Delete Repository
         run: rm -rf Kubernetes
 
-  debug-deployments:
+  modify-deployments:
     runs-on: ubuntu-latest
     needs: get-deployments
     steps:
@@ -41,13 +41,16 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: backend_deployment
-          path: .
 
       - name: Download Backend-Deployment
         uses: actions/download-artifact@master
         with:
-          name: backend_deployment
-          path: .
+          name: frontend_deployment
+
+      - name: Set Container Version Tag
+        run: |
+          VERSION_NO=1.1.1
+          sed -i -- "s%__VERSION_NUMBER__%$VERSION_NO%g" frontend.yaml backend.yaml
 
       - name: backend-debug
         run: cat backend.yaml
