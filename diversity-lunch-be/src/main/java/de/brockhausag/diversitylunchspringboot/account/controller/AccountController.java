@@ -28,7 +28,7 @@ public class AccountController {
     private final AccountService service;
 
     @GetMapping(produces = {"application/json"})
-    public ResponseEntity<AccountDto> getAccount(@Parameter(hidden = true) @AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal) {
+    public ResponseEntity<AccountDto> getOrCreateAccount(@Parameter(hidden = true) @AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal) {
 
         if (principal == null) {
             log.error("principal null");
