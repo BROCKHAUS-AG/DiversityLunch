@@ -2,30 +2,21 @@ name: Build Docker-Dev-Images
 
 on:
   push:
-    branches: [development]
+    branches: [feat/17753-testing-pipeline]
   workflow_dispatch:
 
+env:
+  VERSION_NUMBER: ${{ github.run_id }}.${{ github.run_number }}
+
 jobs:
-  parse-version-number:
+  get-version-number:
     runs-on: ubuntu-latest
-    outputs:
-      version-no: ${{ steps.parse_version_number.outputs.version_no }}
     steps:
-    - id: parse_version_number
-      run: |
-        echo "parsing message '${{ github.event.head_commit.message }}'..."
-        VERSION_NUMBER=`echo "${{ github.event.head_commit.message }}" | grep -o -E "[0-9]+\.[0-9]+\.[0-9]+" | head -n 1`
-        echo found $VERSION_NUMBER
-        echo "version_no=$VERSION_NUMBER" >> $GITHUB_OUTPUT
-    - name: Verify Version Number
-      if: ${{ steps.parse_version_number.outputs.version_no == '' }}
-      run: |
-        echo No Version-Number found, exiting...
-        exit 1
+    - id: get_version_number
+      run: echo $VERSION_NUMBER
 
   build-backend-image-dev:
     runs-on: ubuntu-latest
-    needs: parse-version-number
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 17.0.2
@@ -61,11 +52,10 @@ jobs:
           push: true
           tags: |
             ghcr.io/brockhaus-ag/backend-image-dev:latest
-            ghcr.io/brockhaus-ag/backend-image-dev:${{needs.parse-version-number.outputs.version-no}}
+            ghcr.io/brockhaus-ag/backend-image-dev:$VERSION_NUMBER
 
   build-frontend-image-dev:
     runs-on: ubuntu-latest
-    needs: parse-version-number
     steps:
       - uses: actions/checkout@v2
       - name: Set up QEMU
@@ -91,7 +81,7 @@ jobs:
           push: true
           tags: |
             ghcr.io/brockhaus-ag/frontend-image-dev:latest
-            ghcr.io/brockhaus-ag/frontend-image-dev:${{needs.parse-version-number.outputs.version-no}}
+            ghcr.io/brockhaus-ag/frontend-image-dev:$VERSION_NUMBER
 
   get-deployments:
     runs-on: ubuntu-latest
@@ -123,9 +113,9 @@ jobs:
 
   modify-deployments:
     runs-on: ubuntu-latest
-    needs: [get-deployments, parse-version-number]
+    needs: [get-deployments]
     steps:
-      - name: Download Fronend-Deployment
+      - name: Download Frontend-Deployment
         uses: actions/download-artifact@master
         with:
           name: frontend_deployment
@@ -136,7 +126,7 @@ jobs:
           name: backend_deployment
 
       - name: Set Container Version Tag
-        run: sed -i -- "s%__VERSION_NUMBER__%${{needs.parse-version-number.outputs.version-no}}%g" frontend.yaml backend.yaml
+        run: sed -i -- "s%__VERSION_NUMBER__%$VERSION_NUMBER%g" frontend.yaml backend.yaml
 
       - name: backend-debug
         run: cat backend.yaml
@@ -161,7 +151,7 @@ jobs:
     needs: modify-deployments
     environment: development
     steps:
-      - name: Download Fronend-Deployment
+      - name: Download Frontend-Deployment
         uses: actions/download-artifact@master
         with:
           name: frontend_deployment
