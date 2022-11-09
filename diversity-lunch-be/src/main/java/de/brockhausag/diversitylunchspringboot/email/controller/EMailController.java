@@ -86,8 +86,8 @@ public class EMailController {
             for (int i = 1;  i<= 10; i++) {
                 String body = "Datum: " + LocalDateTime.now() + "\n" + "Mailnr.: " + i;
                 diversityLunchEMailService.sendMailToUser(id, body);
-                log.info("requested on /api/mailing/sendTenTestMailsToUser successful");
             }
+            log.info("requested on /api/mailing/sendTenTestMailsToUser successful");
         } catch (MessagingException e) {
             log.error("requested on /api/mailing/sendTenTestMailsToUser failed");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
