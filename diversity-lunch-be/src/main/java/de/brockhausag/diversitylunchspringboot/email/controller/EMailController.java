@@ -64,16 +64,15 @@ public class EMailController {
     @PostMapping("/sendTestMailToUser/{id}")
     @PreAuthorize("isProfileOwner(#id)")
     public ResponseEntity<String> sendTestMailToUserPathVariable(@PathVariable long id){
-        String body = "Datum: " + LocalDateTime.now().toString();
+        String body = "Datum: " + LocalDateTime.now();
         try {
-            System.out.println("Beginning of try block of sendTestMailToUser");
+            log.debug("Beginning of try block of sendTestMailToUser");
             diversityLunchEMailService.sendMailToUser(id, body);
         } catch (MessagingException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
     @Operation(summary = "10 Test Mails werden an eingeloggten User versendet.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "10 Test Mails wurden versendet."),

@@ -1,4 +1,4 @@
-import {fireEvent, render, screen} from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { FC, useEffect } from 'react';
 import { Provider, useDispatch } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';

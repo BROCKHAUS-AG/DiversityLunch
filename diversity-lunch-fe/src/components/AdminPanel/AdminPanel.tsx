@@ -13,6 +13,7 @@ import { hobbyFetch } from '../../data/hobby/fetch-hobby';
 import { UserList } from './user-list';
 import { authenticatedFetchPost } from '../../utils/fetch.utils';
 import { PopUp } from './userAdministration/PopUp';
+import '../../styles/component-styles/adminPanel/adminPanel.scss';
 
 export const AdminPanel: FC = () => {
     const accountState = useSelector((store: AppStoreState) => store.account);
@@ -54,7 +55,9 @@ export const AdminPanel: FC = () => {
             <OptionsList state={projectState} fetch={projectFetch} title="Projektliste anpassen" addButtonLabel="Projekt hinzufügen" />
 
             <OptionsList state={hobbyState} fetch={hobbyFetch} title="Hobbyliste anpassen" addButtonLabel="Hobby hinzufügen" />
-            <button onClick={sendTestmail}>Testmail verschicken</button>
+            <div className="customContainer">
+                <button className="testmailButton" onClick={sendTestmail}>Testmail verschicken</button>
+            </div>
             {emailSuccess && <PopUp onButtonClick={() => { setEmailSuccess(false); }} message="Testmail gesendet" buttonText="Okay" />}
         </section>
 
