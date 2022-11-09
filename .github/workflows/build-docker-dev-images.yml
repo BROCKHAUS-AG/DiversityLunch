@@ -6,11 +6,10 @@ on:
   workflow_dispatch:
 
 jobs:
-
   parse-version-number:
     runs-on: ubuntu-latest
     outputs:
-      version-no: ${{ steps.parse-version-number.outputs.version-no }}
+      version-no: ${{ steps.parse_version_number.outputs.version_no }}
     steps:
     - id: parse_version_number
       run: |
@@ -121,7 +120,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [get-deployments, parse-version-number]
     steps:
-      - name: Download Frontend-Deployment
+      - name: Download Fronend-Deployment
         uses: actions/download-artifact@master
         with:
           name: frontend_deployment
@@ -157,7 +156,7 @@ jobs:
     needs: modify-deployments
     environment: development
     steps:
-      - name: Download Frontend-Deployment
+      - name: Download Fronend-Deployment
         uses: actions/download-artifact@master
         with:
           name: frontend_deployment
