@@ -93,3 +93,95 @@ jobs:
           tags: |
             ghcr.io/brockhaus-ag/frontend-image:latest
             ghcr.io/brockhaus-ag/frontend-image:${{needs.parse-version-number.outputs.version-no}}
+
+  get-deployments:
+    runs-on: ubuntu-latest
+    needs: [build-frontend-image, build-backend-image]
+    steps:
+      - name: Setup SSH
+        uses: MrSquaare/ssh-setup-action@v1
+        with:
+          host: ssh.dev.azure.com
+          private-key: ${{ secrets.AZURE_PRIVATE_KEY }}
+
+      - name: Clone repository
+        run: git clone git@ssh.dev.azure.com:v3/brockhaus-ag/Diversity-Lunch/Kubernetes
+
+      - name: Upload Backend-Deployment
+        uses: actions/upload-artifact@master
+        with:
+          name: backend_deployment
+          path: Kubernetes/azure_prod/backend.yaml
+
+      - name: Upload Frontend-Deployment
+        uses: actions/upload-artifact@master
+        with:
+          name: frontend_deployment
+          path: Kubernetes/azure_prod/frontend.yaml
+
+      - name: Delete Repository
+        run: rm -rf Kubernetes
+
+  modify-deployments:
+    runs-on: ubuntu-latest
+    needs: [get-deployments, parse-version-number]
+    steps:
+      - name: Download Frontend-Deployment
+        uses: actions/download-artifact@master
+        with:
+          name: frontend_deployment
+
+      - name: Download Backend-Deployment
+        uses: actions/download-artifact@master
+        with:
+          name: backend_deployment
+
+      - name: Set Container Version Tag
+        run: sed -i -- "s%__VERSION_NUMBER__%${{needs.parse-version-number.outputs.version-no}}%g" frontend.yaml backend.yaml
+
+      - name: Upload Backend-Deployment
+        uses: actions/upload-artifact@master
+        with:
+          name: backend_deployment
+          path: backend.yaml
+
+      - name: Upload Frontend-Deployment
+        uses: actions/upload-artifact@master
+        with:
+          name: frontend_deployment
+          path: frontend.yaml
+
+  apply-deployments:
+    name: Apply Deployments in Azure
+    runs-on: ubuntu-latest
+    needs: modify-deployments
+    environment: production
+    steps:
+      - name: Download Frontend-Deployment
+        uses: actions/download-artifact@master
+        with:
+          name: frontend_deployment
+
+      - name: Download Backend-Deployment
+        uses: actions/download-artifact@master
+        with:
+          name: backend_deployment
+
+      - name: Azure login
+        id: login
+        uses: azure/login@v1.4.3
+        with:
+          creds: #TODO ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Set AKS context
+        id: set-context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: #TODO '${{ secrets.resource_group }}'
+          cluster-name: #TODO '${{ secrets.cluster_name }}'
+      - name: Setup kubectl
+        id: install-kubectl
+        uses: azure/setup-kubectl@v3
+      - name: Apply Deployments
+        run: |
+          kubectl apply -f frontend.yaml
+          kubectl apply -f backend.yaml
