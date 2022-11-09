@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class SexualityDto implements BaseDto {
+public class SexualOrientationDto implements BaseDto {
     private Long id;
     @Schema(description = "The sexuality of a Person", example = "Asexual")
     @Size(min=2, max=100, message = "Sexuality (descriptor) must be between 2 and 100 chars long")

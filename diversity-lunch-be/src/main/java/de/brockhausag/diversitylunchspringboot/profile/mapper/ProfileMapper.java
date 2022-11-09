@@ -3,9 +3,7 @@ package de.brockhausag.diversitylunchspringboot.profile.mapper;
 import de.brockhausag.diversitylunchspringboot.profile.logic.*;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.*;
-import de.brockhausag.diversitylunchspringboot.profile.utils.Mapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -26,6 +24,8 @@ public class ProfileMapper {
     private final WorkExperienceMapper workExperienceMapper;
     private final HobbyMapper hobbyMapper;
 
+    private  final SexualOrientationMapper sexualOrientationMapper;
+
 
     private final CountryService countryService;
     private final DietService dietService;
@@ -36,6 +36,8 @@ public class ProfileMapper {
     private final ProjectService projectService;
     private final ReligionService religionService;
     private final WorkExperienceService workExperienceService;
+
+    private final SexualOrientationService  sexualOrientationService;
 
 
 
@@ -54,7 +56,7 @@ public class ProfileMapper {
         dto.setProject(projectMapper.entityToDto(entity.getProject()));
         dto.setReligion(religionMapper.entityToDto(entity.getReligion()));
         dto.setWorkExperience(workExperienceMapper.entityToDto(entity.getWorkExperience()));
-
+        dto.setSexualOrientation(sexualOrientationMapper.entityToDto(entity.getSexualOrientation()));
         dto.setHobby(hobbyMapper.entityToDto(entity.getHobby()));
 
         return dto;
@@ -71,7 +73,7 @@ public class ProfileMapper {
         Optional<ProjectEntity> projectEntityOptional = this.projectService.getEntityById(dto.getProject().getId());
         Optional<ReligionEntity> religionEntityOptional = this.religionService.getEntityById(dto.getReligion().getId());
         Optional<WorkExperienceEntity> workExperienceEntityOptional = this.workExperienceService.getEntityById(dto.getWorkExperience().getId());
-
+        Optional<SexualOrientationEntity> sexualOrientationEntityOptional = this.sexualOrientationService.getEntityById(dto.getSexualOrientation().getId());
 
         if (this.allObjectWithIdsArePresent(countryEntityOptional, dietEntityOptional, educationEntityOptional,
                 genderEntityOptional, hobbyEntityOptional, languageEntityOptional, projectEntityOptional,
@@ -91,7 +93,7 @@ public class ProfileMapper {
             entity.setProject(projectEntityOptional.get());
             entity.setReligion(religionEntityOptional.get());
             entity.setWorkExperience(workExperienceEntityOptional.get());
-
+            entity.setSexualOrientation(sexualOrientationEntityOptional.get());
             return Optional.of(entity);
         }
         return Optional.empty();

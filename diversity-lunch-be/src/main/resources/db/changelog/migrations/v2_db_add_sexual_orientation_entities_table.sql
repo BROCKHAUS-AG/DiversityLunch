@@ -16,4 +16,5 @@ INSERT INTO sexual_orientation_entity(descriptor) VALUES
         ('keine Angabe');
 
 -- changeset dfuerst:v2-3
-ALTER TABLE profile_entity ADD COLUMN sexual_orientation_id BIGINT NOT NULL DEFAULT 7 CONSTRAINT fk_sexual_orientation REFERENCES sexual_orientation_entity (id) ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE profile_entity ADD COLUMN sexual_orientation_id BIGINT NOT NULL DEFAULT 7 CONSTRAINT fk_sexual_orientation
+    REFERENCES sexual_orientation_entity (id) ON UPDATE NO ACTION ON DELETE NO ACTION;

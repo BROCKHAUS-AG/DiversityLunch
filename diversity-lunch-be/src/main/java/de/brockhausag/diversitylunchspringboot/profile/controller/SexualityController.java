@@ -1,10 +1,10 @@
 package de.brockhausag.diversitylunchspringboot.profile.controller;
 
 import de.brockhausag.diversitylunchspringboot.profile.data.SexualityRepository;
-import de.brockhausag.diversitylunchspringboot.profile.logic.SexualityService;
-import de.brockhausag.diversitylunchspringboot.profile.mapper.SexualityMapper;
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.SexualityDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.SexualityEntity;
+import de.brockhausag.diversitylunchspringboot.profile.logic.SexualOrientationService;
+import de.brockhausag.diversitylunchspringboot.profile.mapper.SexualOrientationMapper;
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.SexualOrientationDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.SexualOrientationEntity;
 import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericBaseModelController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/sexuality")
 @RestController
 public class SexualityController extends GenericBaseModelController<
-        SexualityDto, SexualityEntity, SexualityRepository, SexualityService, SexualityMapper> {
-    public SexualityController(SexualityMapper mapper, SexualityService service) {
+        SexualOrientationDto, SexualOrientationEntity, SexualityRepository, SexualOrientationService, SexualOrientationMapper> {
+    public SexualityController(SexualOrientationMapper mapper, SexualOrientationService service) {
         super(mapper, service);
     }
 }

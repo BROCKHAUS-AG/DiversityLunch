@@ -16,7 +16,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Getter
 @Setter
-public class SexualityEntity implements BaseEntity {
+public class SexualOrientationEntity implements BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,7 +34,7 @@ public class SexualityEntity implements BaseEntity {
         if ((obj == null) || (obj.getClass() != this.getClass())) {
             return false;
         }
-        final SexualityEntity other = (SexualityEntity) obj;
+        final SexualOrientationEntity other = (SexualOrientationEntity) obj;
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
     }
 }

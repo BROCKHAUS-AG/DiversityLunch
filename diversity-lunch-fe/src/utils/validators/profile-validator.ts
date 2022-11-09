@@ -13,7 +13,8 @@ export function isValidProfile(profile: Partial<Profile>): boolean {
         && profile.originCountry
         && profile.project
         && profile.religion
-        && profile.workExperience);
+        && profile.workExperience
+        && profile.sexualOrientation);
 }
 
 export function partialProfileToProfile(profile: Partial<Profile>): Profile | undefined {
