@@ -27,11 +27,8 @@ public class VoucherController {
     private final VoucherService voucherService;
     private final VoucherMapper voucherMapper;
 
-
-    /*This should be a PUT however it will be called from within an email so this is only possible via GET*/
-
-    /*TODO make route publicly accessible*/
-    @GetMapping("/claim/{profileId}/{meetingId}")
+    @PreAuthorize("isProfileOwner(#profileId)")
+    @PutMapping("/claim/{profileId}/{meetingId}")
     public ResponseEntity<?> claimVoucher(@PathVariable Long profileId, @PathVariable Long meetingId) {
         try {
             Optional<VoucherEntity> voucherEntity = voucherService.getUnclaimedVoucherForMeeting(profileId, meetingId);
