@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS sexual_orientation_entity (
 -- changeset dfuerst:v1-2
 INSERT INTO sexual_orientation_entity(descriptor) VALUES
         ('Heterosexuell'),
-        ('Homesexuell'),
+        ('Homosexuell'),
         ('Bisexuell'),
         ('Asexuell'),
         ('Pansexuell'),
