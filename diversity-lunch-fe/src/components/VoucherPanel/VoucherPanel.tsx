@@ -5,30 +5,28 @@ import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconC
 import { Button } from '../General/Button/Button';
 import { AppStoreState } from '../../store/Store';
 import { authenticatedFetchGet, authenticatedFetchPut } from '../../utils/fetch.utils';
-import { AccountState } from '../../data/account/account-state.type';
+import { AccountState, AccountStateOk } from '../../data/account/account-state.type';
+import { Account } from '../../types/Account';
 
 export const VoucherPanel = () => {
     const [revealed, setRevealed] = useState(false);
     const [voucherCode, setVoucherCode] = useState('empty');
-
     const accountState: AccountState = useSelector((store: AppStoreState) => store.account);
+    const account: Account = (accountState as AccountStateOk).accountData;
 
     const extractMeetingIdFromURL = () => {
         const url = String(window.location.pathname);
-        return Number(url.substring(14, 100));
+        return Number(url.split('/').pop());
     };
 
     const claimVoucher = (profileId: number, meetingId: number) => async () => {
         try {
             const response = await authenticatedFetchPut(`/api/voucher/claim/${profileId}/${meetingId}`, '');
-
-            if (response.ok) {
-                return true;
-            }
-            return false;
+            return response.ok === true;
         } catch (error) {
-            //
+            // error
         }
+        return false;
     };
 
     const getVoucher = async (profileId: number, meetingId: number) => {
@@ -38,20 +36,23 @@ export const VoucherPanel = () => {
                 return response.json().then((jsonRes) => jsonRes.filter((data: { meetingId: number; }) => data.meetingId === meetingId));
             }
         } catch (error) {
-            return false;
+            // error
         }
+        return false;
     };
 
     const retrieveVoucherCode = () => {
         const meetingId = extractMeetingIdFromURL();
-        const profileId = 0;
-        // TODO: Replace profileId with actual profileID
-        if (claimVoucher(1, meetingId)) {
-            getVoucher(1, 3).then((voucher) => {
+        const { profileId } = account;
+        if (meetingId > -1 && claimVoucher(profileId, meetingId)) {
+            getVoucher(profileId, meetingId).then((voucher) => {
                 setVoucherCode(voucher[0].voucherCode);
                 setRevealed(true);
             });
+            return;
         }
+        // TBD: Hier sollte eine vernünftige Fehlermeldung hin
+        console.log('Fehlermeldung');
     };
 
     return (
