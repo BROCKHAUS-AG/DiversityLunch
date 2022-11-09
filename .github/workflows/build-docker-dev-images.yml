@@ -11,12 +11,15 @@ env:
 jobs:
   get-version-number:
     runs-on: ubuntu-latest
+    outputs:
+      version-no: ${{ steps.get_version_number.outputs.version_no }}
     steps:
     - id: get_version_number
-      run: echo $VERSION_NUMBER
+      run: echo "version_no=$VERSION_NUMBER" >> $GITHUB_OUTPUT
 
   build-backend-image-dev:
     runs-on: ubuntu-latest
+    needs: get-version-number
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 17.0.2
@@ -52,10 +55,11 @@ jobs:
           push: true
           tags: |
             ghcr.io/brockhaus-ag/backend-image-dev:latest
-            ghcr.io/brockhaus-ag/backend-image-dev:$VERSION_NUMBER
+            ghcr.io/brockhaus-ag/backend-image-dev:${{needs.get-version-number.outputs.version-no}}
 
   build-frontend-image-dev:
     runs-on: ubuntu-latest
+    needs: get-version-number
     steps:
       - uses: actions/checkout@v2
       - name: Set up QEMU
@@ -81,7 +85,7 @@ jobs:
           push: true
           tags: |
             ghcr.io/brockhaus-ag/frontend-image-dev:latest
-            ghcr.io/brockhaus-ag/frontend-image-dev:$VERSION_NUMBER
+            ghcr.io/brockhaus-ag/frontend-image-dev:${{needs.get-version-number.outputs.version-no}}
 
   get-deployments:
     runs-on: ubuntu-latest
@@ -113,7 +117,7 @@ jobs:
 
   modify-deployments:
     runs-on: ubuntu-latest
-    needs: [get-deployments]
+    needs: [get-deployments, get-version-number]
     steps:
       - name: Download Frontend-Deployment
         uses: actions/download-artifact@master
@@ -126,7 +130,7 @@ jobs:
           name: backend_deployment
 
       - name: Set Container Version Tag
-        run: sed -i -- "s%__VERSION_NUMBER__%$VERSION_NUMBER%g" frontend.yaml backend.yaml
+        run: sed -i -- "s%__VERSION_NUMBER__%${{needs.get-version-number.outputs.version-no}}%g" frontend.yaml backend.yaml
 
       - name: backend-debug
         run: cat backend.yaml
