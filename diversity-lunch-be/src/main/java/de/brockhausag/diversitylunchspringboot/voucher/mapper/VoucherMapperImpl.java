@@ -13,7 +13,8 @@ public class VoucherMapperImpl implements VoucherMapper{
     public VoucherDto mapEntityToDto(VoucherEntity voucherEntity) {
         return new VoucherDto(voucherEntity.getId(),
                 voucherEntity.getVoucher(),
-                voucherEntity.getMeeting().getId(),
-                voucherEntity.getProfile().getId());
+                voucherEntity.getProfile().getId(),
+                voucherEntity.getMeeting().getId());
+
     }
 }
