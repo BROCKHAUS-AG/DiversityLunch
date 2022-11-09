@@ -7,7 +7,6 @@ import de.brockhausag.diversitylunchspringboot.profile.mapper.ReligionMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ReligionDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ReligionEntity;
 import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericBaseModelController;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

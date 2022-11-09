@@ -3,10 +3,12 @@ package de.brockhausag.diversitylunchspringboot.profile.mapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.SexualityDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.SexualityEntity;
 import de.brockhausag.diversitylunchspringboot.profile.utils.Mapper;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class SexualityMapper implements Mapper<SexualityDto, SexualityEntity> {
     @Override
     public SexualityDto entityToDto(SexualityEntity entity) {
