@@ -23,9 +23,9 @@ public class AccountService {
 
     private final DiversityLunchGroupProperties diversityLunchGroupProperties;
 
-    public Optional<AccountEntity> getAccount(String uniqueName){
+    public Optional<AccountEntity> getAccount(String oid){
 
-        return repository.getAccountEntityByUniqueName(uniqueName);
+        return repository.getAccountEntityByOid(oid);
     }
 
     public Optional<AccountEntity> updateAccount(ProfileEntity profileEntity, Long id) {
@@ -38,11 +38,11 @@ public class AccountService {
         });
     }
 
-    public AccountEntity getOrCreateAccount(String uniqueName) {
-        Optional<AccountEntity> optionaleAccountEntity = getAccount(uniqueName);
+    public AccountEntity getOrCreateAccount(String oid) {
+        Optional<AccountEntity> accountEntity = getAccount(oid);
         AccountRole role = determineRole();
-        return optionaleAccountEntity.orElseGet(
-                () -> repository.save(new AccountEntity(0L, null, uniqueName, role))
+        return accountEntity.orElseGet(
+                () -> repository.save(new AccountEntity(0L, null, oid, role))
         );
     }
 

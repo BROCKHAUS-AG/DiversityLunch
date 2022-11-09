@@ -28,14 +28,14 @@ public class AccountController {
     private final AccountService service;
 
     @GetMapping(produces = {"application/json"})
-    public ResponseEntity<AccountDto> getAccount(@Parameter(hidden = true) @AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal) {
+    public ResponseEntity<AccountDto> getOrCreateAccount(@Parameter(hidden = true) @AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal) {
 
         if (principal == null) {
             log.error("principal null");
             return ResponseEntity.internalServerError().body(null);
         }
 
-        Object claimValue = principal.getAttribute("unique_name");
+        Object claimValue = principal.getAttribute("oid");
 
         if (claimValue == null) {
             log.error("claimValue/body is null");

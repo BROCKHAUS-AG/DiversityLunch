@@ -24,7 +24,7 @@ export const useGetUserInformation = () => {
                 accessTokenPayload: {
                     given_name,
                     family_name,
-                    unique_name,
+                    oid,
                 },
             } = authentication;
             const name = `${given_name} ${family_name}`;
@@ -32,7 +32,7 @@ export const useGetUserInformation = () => {
                 firstName: given_name,
                 lastName: family_name,
                 fullName: name,
-                email: unique_name,
+                email: oid,
             };
         }
         return {
