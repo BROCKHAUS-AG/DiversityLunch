@@ -4,15 +4,19 @@ import { useSelector } from 'react-redux';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import { Button } from '../General/Button/Button';
 import { AppStoreState } from '../../store/Store';
-import { ProfileState } from '../../data/profile/profile-state.type';
 import { authenticatedFetchGet, authenticatedFetchPut } from '../../utils/fetch.utils';
+import { AccountState } from '../../data/account/account-state.type';
 
 export const VoucherPanel = () => {
     const [revealed, setRevealed] = useState(false);
-    const profileState: ProfileState = useSelector((store: AppStoreState) => store.profile);
+    const [voucherCode, setVoucherCode] = useState('empty');
 
-    let abc = String(window.location.pathname);
-    abc = abc.substring(14, 100);
+    const accountState: AccountState = useSelector((store: AppStoreState) => store.account);
+
+    const extractMeetingIdFromURL = () => {
+        const url = String(window.location.pathname);
+        return Number(url.substring(14, 100));
+    };
 
     const claimVoucher = (profileId: number, meetingId: number) => async () => {
         try {
@@ -30,22 +34,23 @@ export const VoucherPanel = () => {
     const getVoucher = async (profileId: number, meetingId: number) => {
         try {
             const response = await authenticatedFetchGet(`/api/voucher/get/${profileId}`);
-
             if (response.ok) {
                 return response.json().then((jsonRes) => jsonRes.filter((data: { meetingId: number; }) => data.meetingId === meetingId));
             }
-            console.log('Fehler!!!!!');
         } catch (error) {
             return false;
         }
     };
 
-    const claim = () => {
-        if (claimVoucher(1, 3)) {
-            getVoucher(1, 3).then((key) => {
-                console.log(key);
+    const retrieveVoucherCode = () => {
+        const meetingId = extractMeetingIdFromURL();
+        const profileId = 0;
+        // TODO: Replace profileId with actual profileID
+        if (claimVoucher(1, meetingId)) {
+            getVoucher(1, 3).then((voucher) => {
+                setVoucherCode(voucher[0].voucherCode);
+                setRevealed(true);
             });
-            setRevealed(true);
         }
     };
 
@@ -58,11 +63,11 @@ export const VoucherPanel = () => {
                     ? (
                         <div className="ShowVoucher-code">
                             <span className="ShowVoucher-code-text">
-                                { abc }
+                                { voucherCode }
                             </span>
                         </div>
                     )
-                    : <Button label="FREISCHALTEN" onClick={() => claim()} />
+                    : <Button label="FREISCHALTEN" onClick={() => retrieveVoucherCode()} />
             }
         </div>
     );
