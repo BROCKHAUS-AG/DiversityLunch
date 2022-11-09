@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 @RestController
@@ -30,10 +29,12 @@ public class EMailController {
     })
     @PostMapping("/sendTestMail")
     public ResponseEntity<String> sendTestMail(){
-        String body = "Hallo :)";
+        String body = "Datum: " + LocalDateTime.now();
         try {
             this.diversityLunchEMailService.sendEmail("test@test.de", "Testsubject", body, body);
+            log.info("requested on /api/mailing/sendTestMail successful");
         } catch (MessagingException e) {
+            log.error("requested on /api/mailing/sendTestMail failed");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
@@ -46,12 +47,12 @@ public class EMailController {
     @PostMapping("/sendTestMailToUser")
     @PreAuthorize("isProfileOwner(#id)")
     public ResponseEntity<String> sendTestMailToUser(Long id){
-        System.out.println("Beginning of sendTestMailToUser");
-        String body = "Hallo :)";
+        String body = "Datum: " + LocalDateTime.now();
         try {
-            System.out.println("Beginning of try block of sendTestMailToUser");
             diversityLunchEMailService.sendMailToUser(id, body);
+            log.info("requested on /api/mailing/sendTestMailToUser successful");
         } catch (MessagingException e) {
+            log.error("requested on /api/mailing/sendTestMailToUser failed");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
@@ -66,9 +67,10 @@ public class EMailController {
     public ResponseEntity<String> sendTestMailToUserPathVariable(@PathVariable long id){
         String body = "Datum: " + LocalDateTime.now();
         try {
-            log.debug("Beginning of try block of sendTestMailToUser");
             diversityLunchEMailService.sendMailToUser(id, body);
+            log.info("requested on /api/mailing/sendTestMailToUser/{id} successful");
         } catch (MessagingException e) {
+            log.error("requested on /api/mailing/sendTestMailToUser/{id} failed");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
@@ -80,15 +82,14 @@ public class EMailController {
     @PostMapping("/sendTenTestMailsToUser")
     @PreAuthorize("isProfileOwner(#id)")
     public ResponseEntity<String> sendTenTestMailsToUser(Long id){
-        System.out.println("Beginning of sendTenTestMailsToUser");
-
         try {
-            System.out.println("Beginning of try block of sendTenTestMailsToUser");
             for (int i = 1;  i<= 10; i++) {
-                String body = i + " mal Hallo :)";
+                String body = "Datum: " + LocalDateTime.now() + "\n" + "Mailnr.: " + i;
                 diversityLunchEMailService.sendMailToUser(id, body);
+                log.info("requested on /api/mailing/sendTenTestMailsToUser successful");
             }
         } catch (MessagingException e) {
+            log.error("requested on /api/mailing/sendTenTestMailsToUser failed");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);

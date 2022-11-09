@@ -33,9 +33,9 @@ public class DiversityLunchEMailService {
         messageHelper.setTo(to);
         messageHelper.setSubject(subject);
         messageHelper.setText(textPlain, textHTML);
-        System.out.println("Finished mail construction, trying to send mail now");
+        log.info("Finished mail construction, trying to send mail now");
         emailSender.send(message);
-        System.out.println("Sent mail");
+        log.info("Sent mail");
     }
 
     public String createEmailTemplateHTML(String recipient, String partner, Question question) {
