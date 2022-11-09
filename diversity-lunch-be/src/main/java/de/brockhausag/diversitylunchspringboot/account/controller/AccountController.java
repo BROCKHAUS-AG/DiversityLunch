@@ -29,7 +29,7 @@ public class AccountController {
     private final AccountService service;
 
     @GetMapping(produces = {"application/json"})
-    public ResponseEntity<?> getAccount(@Parameter(hidden = true) @AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal) {
+    public ResponseEntity<?> getOrCreateAccount(@Parameter(hidden = true) @AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal) {
         Optional<String> oid = DiversityLunchSecurityExpressionRoot.extractOID(principal);
 
         if (oid.isEmpty()) {
