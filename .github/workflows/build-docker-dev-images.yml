@@ -2,7 +2,7 @@ name: Build Docker-Dev-Images
 
 on:
   push:
-    branches: [feat/17753-testing-pipeline]
+    branches: [development]
   workflow_dispatch:
 
 env:
@@ -131,11 +131,6 @@ jobs:
 
       - name: Set Container Version Tag
         run: sed -i -- "s%__VERSION_NUMBER__%${{needs.get-version-number.outputs.version-no}}%g" frontend.yaml backend.yaml
-
-      - name: backend-debug
-        run: cat backend.yaml
-      - name: frontend-debug
-        run: cat frontend.yaml
 
       - name: Upload Backend-Deployment
         uses: actions/upload-artifact@master
