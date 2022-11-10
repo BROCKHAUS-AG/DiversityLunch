@@ -2,7 +2,7 @@ name: Build Docker-Dev-Images
 
 on:
   push:
-    branches: [feat/17753-testing-pipeline]
+    branches: [development]
   workflow_dispatch:
 
 env:

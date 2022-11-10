@@ -2,7 +2,7 @@ name: Build and Test
 
 on:
   push:
-    branches: [ feat/17753-testing-pipeline]
+    branches: [development]
   pull_request:
     branches: [ development, main ]
   workflow_dispatch:
