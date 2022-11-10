@@ -75,6 +75,10 @@ public class DiversityLunchEMailService {
         Optional<ProfileEntity> pe = this.profileService.getProfile(id);
         if (pe.isPresent()) {
             this.sendEmail(pe.get().getEmail(), "Testsubject", body, body);
+            log.info("Successfully sent mail to " + pe.get().getEmail());
+        }
+        else {
+            log.info("Profile with ID:" + id + " not found");
         }
     }
 }

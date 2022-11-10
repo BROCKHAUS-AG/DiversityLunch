@@ -108,7 +108,7 @@ public class ProfileTestdataFactory {
                 .getBytes();
         byte[] payload = """
                 {
-                    "unique_name": "%s",
+                    "oid": "%s",
                     "given_name": "%s",
                     "family_name": "%s",
                     "exp": %s
@@ -147,7 +147,7 @@ public class ProfileTestdataFactory {
                 .getBytes();
         byte[] payload = """
                 {
-                    "unique_name": "%s",
+                    "oid": "%s",
                     "given_name": "%s",
                     "family_name": "%s",
                     "exp": %s
@@ -174,7 +174,7 @@ public class ProfileTestdataFactory {
     }
 
     @SneakyThrows
-    public String getTokenStringFromIdChangedUniqueName(String id) {
+    public String getTokenStringFromIdChangedOid(String id) {
 
         byte[] key = "SomeSecretWeDontCheckItAnywayToS".getBytes();
         byte[] header = """
@@ -186,7 +186,7 @@ public class ProfileTestdataFactory {
                 .getBytes();
         byte[] payload = """
                 {
-                    "unique_name": "%s",
+                    "oid": "%s",
                     "given_name": "%s",
                     "family_name": "%s",
                     "exp": %s
@@ -197,7 +197,7 @@ public class ProfileTestdataFactory {
 
         byte[] payloadManipulate = """
                 {
-                    "unique_name": "%s",
+                    "oid": "%s",
                     "given_name": "%s",
                     "family_name": "%s",
                     "exp": %s

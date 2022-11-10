@@ -95,7 +95,7 @@ class ProfileControllerIT {
         this.mockMvc
                 .perform(
                         get("/api/profiles/" + myProfileEntity.getId())
-                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(myAccountEntity.getUniqueName()))
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(myAccountEntity.getOid()))
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value(myProfileEntity.getName()))
@@ -119,7 +119,7 @@ class ProfileControllerIT {
         this.mockMvc
                 .perform(
                         post("/api/profiles/byAccount/" + myAccountEntity.getId())
-                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(myAccountEntity.getUniqueName()))
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(myAccountEntity.getOid()))
                                 .contentType(MediaType.APPLICATION_JSON).content("{\"name\":\"Test\"}")
                 )
                 .andExpect(status().isBadRequest());
@@ -130,7 +130,7 @@ class ProfileControllerIT {
         this.mockMvc
                 .perform(
                         get("/api/profiles/" + myProfileEntity.getId())
-                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(otherAccountEntity.getUniqueName()))
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(otherAccountEntity.getOid()))
                 ).andExpect(status().isForbidden());
     }
 
@@ -139,7 +139,7 @@ class ProfileControllerIT {
         this.mockMvc
                 .perform(
                         get("/api/profiles/" + myProfileEntity.getId())
-                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromIdWrongKey(myAccountEntity.getUniqueName()))
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromIdWrongKey(myAccountEntity.getOid()))
                 ).andExpect(status().isUnauthorized());
     }
 
@@ -152,7 +152,7 @@ class ProfileControllerIT {
 
         mockMvc.perform(
                 post("/api/profiles/byAccount/" + (account.getId() + 1))
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(account.getUniqueName()))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(account.getOid()))
                         .contentType(MediaType.APPLICATION_JSON).content(profileJSON)
         ).andExpect(status().isForbidden());
     }
@@ -166,7 +166,7 @@ class ProfileControllerIT {
         mockMvc
                 .perform(
                         put("/api/profiles/" + myProfileEntity.getId())
-                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(otherAccountEntity.getUniqueName()))
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileFactory.getTokenStringFromId(otherAccountEntity.getOid()))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(profileJSON)
                 ).andExpect(status().isForbidden());

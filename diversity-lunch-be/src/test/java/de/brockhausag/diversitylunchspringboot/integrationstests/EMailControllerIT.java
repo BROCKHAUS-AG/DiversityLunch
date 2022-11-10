@@ -190,7 +190,7 @@ public class EMailControllerIT {
     private ResultActions performRequestWithToken(String path, AccountEntity accountEntity) throws Exception {
         return mockMvcSecurity.perform(
                 post(path)
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileTestdataFactory.getTokenStringFromId(accountEntity.getUniqueName()))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileTestdataFactory.getTokenStringFromId(accountEntity.getOid()))
         );
     }
 
