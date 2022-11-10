@@ -2,7 +2,7 @@ name: Build and Test
 
 on:
   push:
-    branches: [ development ]
+    branches: [ feat/17753-testing-pipeline]
   pull_request:
     branches: [ development, main ]
   workflow_dispatch:
@@ -17,6 +17,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 17.0.2
+          distribution: corretto
       - name: Pull mailhog image
         run: docker pull mailhog/mailhog:latest
       - name: Build container
@@ -36,6 +37,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 17.0.2
+          distribution: corretto
       - name: Add execution privileges
         run: chmod +x ./mvnw
         working-directory: ./diversity-lunch-be

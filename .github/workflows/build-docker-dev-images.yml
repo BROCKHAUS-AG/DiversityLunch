@@ -2,7 +2,7 @@ name: Build Docker-Dev-Images
 
 on:
   push:
-    branches: [development]
+    branches: [feat/17753-testing-pipeline]
   workflow_dispatch:
 
 env:
@@ -26,6 +26,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 17.0.2
+          distribution: corretto
       - name: Add execution privileges
         run: chmod +x ./mvnw
         working-directory: ./diversity-lunch-be
