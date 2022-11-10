@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  VERSION_NUMBER: ${{ github.run_id }}.${{ github.run_number }}
+  VERSION_NUMBER: 0.${{ github.run_id }}.${{ github.run_number }}
 
 jobs:
   get-version-number:
