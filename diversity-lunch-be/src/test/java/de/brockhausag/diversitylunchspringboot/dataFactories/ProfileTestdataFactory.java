@@ -22,6 +22,7 @@ public class ProfileTestdataFactory {
     private final WorkExperienceTestDataFactory workExperienceFactory = new WorkExperienceTestDataFactory();
     private final HobbyTestDataFactory hobbyFactory = new HobbyTestDataFactory();
 
+    private final SexualOrientationTestDataFactory sexualFactory = new SexualOrientationTestDataFactory();
     public ProfileEntity buildEntity(int setNumber) {
         if ((setNumber >= 1) && (setNumber <= numberOfCompleteSets)){
             return new ProfileEntity(
@@ -34,7 +35,8 @@ public class ProfileTestdataFactory {
                     projectFactory.buildEntity(setNumber),
                     religionFactory.buildEntity(setNumber),
                     workExperienceFactory.buildEntity(setNumber),
-                    hobbyFactory.buildEntity(setNumber));
+                    hobbyFactory.buildEntity(setNumber),
+                    sexualFactory.buildEntity(setNumber));
         }
         return new ProfileEntity(
                 ids[1], names[1], emails[1], birthYears[1],
@@ -46,7 +48,8 @@ public class ProfileTestdataFactory {
                 projectFactory.buildEntity(1),
                 religionFactory.buildEntity(1),
                 workExperienceFactory.buildEntity(1),
-                hobbyFactory.buildEntity(1));
+                hobbyFactory.buildEntity(1),
+                sexualFactory.buildEntity(1));
     }
 
     public ProfileDto buildDto(int setNumber) {
@@ -61,8 +64,8 @@ public class ProfileTestdataFactory {
                     projectFactory.buildDto(setNumber),
                     religionFactory.buildDto(setNumber),
                     workExperienceFactory.buildDto(setNumber),
-                    hobbyFactory.buildDto(setNumber)
-            );
+                    hobbyFactory.buildDto(setNumber),
+                    sexualFactory.buildDto(setNumber));
         }
         return new ProfileDto(
                 ids[1], names[1], emails[1], birthYears[1],
@@ -74,6 +77,7 @@ public class ProfileTestdataFactory {
                 projectFactory.buildDto(1),
                 religionFactory.buildDto(1),
                 workExperienceFactory.buildDto(1),
-                hobbyFactory.buildDto(1));
+                hobbyFactory.buildDto(1),
+                sexualFactory.buildDto(1));
     }
 }

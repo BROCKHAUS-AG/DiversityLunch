@@ -21,6 +21,8 @@ public class ProfileTestdataFactory {
     private final DietService dietService;
     
     private final EducationService educationService;
+
+    private final SexualOrientationService sexualOrientationService;
     
     private final GenderService genderService;
     
@@ -48,7 +50,7 @@ public class ProfileTestdataFactory {
         final ReligionEntity religion = religionService.getAllEntities().get(0);
         final WorkExperienceEntity workExperience = workExperienceService.getAllEntities().get(0);
         final HobbyEntity hobby = hobbyService.getAllEntities().get(0);
-
+        final SexualOrientationEntity sexualOrientationEntity = sexualOrientationService.getAllEntities().get(0);
 
         return new ProfileEntity(id,
                 name,
@@ -62,7 +64,8 @@ public class ProfileTestdataFactory {
                 project,
                 religion,
                 workExperience,
-                hobby);
+                hobby,
+                sexualOrientationEntity);
     }
 
     public ProfileEntity createNewErikaProfile() {
@@ -79,6 +82,7 @@ public class ProfileTestdataFactory {
         final ReligionEntity religion = religionService.getAllEntities().get(1);
         final WorkExperienceEntity workExperience = workExperienceService.getAllEntities().get(1);
         final HobbyEntity hobby = hobbyService.getAllEntities().get(1);
+        final SexualOrientationEntity sexualOrientationEntity = sexualOrientationService.getAllEntities().get(1);
 
         return new ProfileEntity(id,
                 name,
@@ -92,7 +96,8 @@ public class ProfileTestdataFactory {
                 project,
                 religion,
                 workExperience,
-                hobby);
+                hobby,
+                sexualOrientationEntity);
     }
 
     @SneakyThrows
