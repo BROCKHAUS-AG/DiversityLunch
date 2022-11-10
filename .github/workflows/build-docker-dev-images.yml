@@ -62,6 +62,8 @@ jobs:
     needs: get-version-number
     steps:
       - uses: actions/checkout@v3
+      - name: Update version number in package.json
+        run: npm version ${{needs.get-version-number.outputs.version-no}}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@master
         with:
