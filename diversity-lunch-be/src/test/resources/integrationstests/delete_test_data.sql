@@ -12,3 +12,4 @@ DELETE FROM language_entity;
 DELETE FROM project_entity;
 DELETE FROM religion_entity;
 DELETE FROM work_experience_entity;
+DELETE FROM sexual_orientation_entity;
