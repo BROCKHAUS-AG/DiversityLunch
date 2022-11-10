@@ -65,6 +65,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Update version number in package.json
         run: npm version ${{needs.get-version-number.outputs.version-no}}
+        working-directory: ./diversity-lunch-fe
       - name: Set up QEMU
         uses: docker/setup-qemu-action@master
         with:
