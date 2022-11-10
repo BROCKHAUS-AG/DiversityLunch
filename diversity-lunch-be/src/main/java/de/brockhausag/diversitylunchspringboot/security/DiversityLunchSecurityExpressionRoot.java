@@ -91,12 +91,12 @@ public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot
     public Optional<String> getOID(){
         OAuth2AuthenticatedPrincipal oAuth2Authentication = getOAuth2AuthenticatedPrincipal();
         if(oAuth2Authentication == null){
-            return null;
+            return Optional.empty();
         }
         Object claimValue = oAuth2Authentication.getAttribute("oid");
         if(claimValue == null){
             log.debug("No Claim with oid");
-            return null;
+            return Optional.empty();
         }
         return Optional.of(claimValue.toString());
     }
@@ -107,6 +107,9 @@ public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot
     }
 
     private Optional<Long> getProfileId(){
+        if(getAccount().isEmpty()){
+            return Optional.empty();
+        }
         return getAccount().map(account -> account.getProfile().getId());
     }
 
