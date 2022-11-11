@@ -15,8 +15,8 @@ WITH algerien AS (SELECT id FROM  country_entity WHERE country_entity.descriptor
     lowExperience AS (SELECT id FROM  work_experience_entity WHERE work_experience_entity.descriptor='0-3 Jahre' LIMIT 1),
     cooking AS (SELECT id FROM  hobby_entity WHERE hobby_entity.descriptor='Kochen' LIMIT 1),
     gaming AS (SELECT id FROM  hobby_entity WHERE hobby_entity.descriptor='Gaming' LIMIT 1),
-    keine_Angabe AS (SELECT id FROM sexual_orientation_entity WHERE sexual_orientation_entity.descriptor='keine Angabe' LIMIT 1)
-INSERT INTO profile_entity VALUES
+    keine_Angabe AS (SELECT id FROM sexual_orientation_entity WHERE sexual_orientation_entity.descriptor='Heterosexuell' LIMIT 1)
+INSERT INTO profile_entity(id, birth_year, email, name, diet_id, education_id, gender_id, hobby_id,mother_tongue_id, origin_country_id, project_id, religion_id, work_experience_id, sexual_orientation_id ) VALUES
     (1, 1998, 'first.profile@some.tdl', 'first', (SELECT * FROM meat), (SELECT * FROM study), (SELECT * FROM male), (SELECT * FROM cooking), (SELECT * FROM german), (SELECT * FROM algerien), (SELECT * FROM internProject), (SELECT * FROM jewish),(SELECT * FROM lowExperience),(SELECT * FROM keine_Angabe) ),
     (2, 1999, 'second.profile@some.tdl', 'second', (SELECT * FROM vegan), (SELECT * FROM study), (SELECT * FROM male), (SELECT * FROM cooking), (SELECT * FROM german), (SELECT * FROM algerien), (SELECT * FROM internProject), (SELECT * FROM jewish),(SELECT * FROM lowExperience),(SELECT * FROM keine_Angabe) ),
     (3, 1990, 'third.profile@some.tdl', 'third', (SELECT * FROM vegan), (SELECT * FROM training), (SELECT * FROM female), (SELECT * FROM cooking), (SELECT * FROM german), (SELECT * FROM algerien), (SELECT * FROM internProject), (SELECT * FROM jewish),(SELECT * FROM lowExperience),(SELECT * FROM keine_Angabe) ),
