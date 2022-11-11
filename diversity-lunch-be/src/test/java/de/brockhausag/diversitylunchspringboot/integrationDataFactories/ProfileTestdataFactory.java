@@ -50,7 +50,7 @@ public class ProfileTestdataFactory {
         final ReligionEntity religion = religionService.getAllEntities().get(0);
         final WorkExperienceEntity workExperience = workExperienceService.getAllEntities().get(0);
         final HobbyEntity hobby = hobbyService.getAllEntities().get(0);
-        final SexualOrientationEntity sexualOrientationEntity = sexualOrientationService.getAllEntities().get(0);
+        final SexualOrientationEntity sexualOrientation = sexualOrientationService.getAllEntities().get(0);
 
         return new ProfileEntity(id,
                 name,
@@ -65,7 +65,7 @@ public class ProfileTestdataFactory {
                 religion,
                 workExperience,
                 hobby,
-                sexualOrientationEntity);
+                sexualOrientation);
     }
 
     public ProfileEntity createNewErikaProfile() {

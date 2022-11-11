@@ -13,7 +13,7 @@ export const religionData = [{ id: 9, descriptor: 'katholisch' }, { id: 1337, de
 export const workExperienceData = [{ id: 9, descriptor: '0-4 Jahre' }, { id: 1337, descriptor: '4-10 Jahre' }];
 export const hobbyData = [{ id: 6, descriptor: 'DIY', category: { id: 2, descriptor: 'Kreatives' } },
     { id: 7, descriptor: 'Fußball', category: { id: 1, descriptor: 'Sport' } }];
-export const sexualityData = [{ id: 9, descriptor: 'Asexuell' }, { id: 1337, descriptor: 'Pansexuell' }];
+export const sexualOrientationData = [{ id: 9, descriptor: 'Asexuell' }, { id: 1337, descriptor: 'Pansexuell' }];
 
 export const profileData = [{
     id: 4,
@@ -29,7 +29,7 @@ export const profileData = [{
     religion: religionData[0],
     workExperience: workExperienceData[0],
     hobby: hobbyData[0],
-    sexualOrientation: sexualityData[0],
+    sexualOrientation: sexualOrientationData[0],
 }];
 
 export const accountStandardData = {
@@ -74,7 +74,7 @@ export const profileList: Profile[] = [
         religion: religionData[0],
         workExperience: workExperienceData[0],
         hobby: hobbyData[0],
-        sexualOrientation: sexualityData[0],
+        sexualOrientation: sexualOrientationData[0],
 
     },
     {
@@ -91,7 +91,7 @@ export const profileList: Profile[] = [
         religion: religionData[0],
         workExperience: workExperienceData[0],
         hobby: hobbyData[0],
-        sexualOrientation: sexualityData[0],
+        sexualOrientation: sexualOrientationData[0],
 
     },
     {
@@ -108,7 +108,7 @@ export const profileList: Profile[] = [
         religion: religionData[0],
         workExperience: workExperienceData[0],
         hobby: hobbyData[0],
-        sexualOrientation: sexualityData[0],
+        sexualOrientation: sexualOrientationData[0],
 
     },
 ];
