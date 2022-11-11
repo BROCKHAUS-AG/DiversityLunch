@@ -103,14 +103,16 @@ public class MatchingService {
 
     public void sendQuestions(LocalDateTime now) {
         String BASE_URL="https://diversitylunch.brockhaus-ag.de";
-        String link = BASE_URL + "/api/voucher/claim/%d/%d";
+
         log.debug("Sending Emails...");
         LocalDateTime modified = now.truncatedTo(ChronoUnit.MINUTES).with(roundMinutesDownToHalfAndFull()).plusHours(1);
         List<MeetingEntity> meetingEntities = meetingRepository.findByFromDateTime(modified);
+
         meetingEntities.forEach(meetingEntity -> {
             log.debug("Sending Email for Meeting: {} - Time: {}", meetingEntity.getId(), modified);
             try {
                 ProfileEntity[] partner = {meetingEntity.getPartner(), meetingEntity.getProposer()};
+                String link = BASE_URL + "/voucherClaim/" + meetingEntity.getId();
                 eMailService.sendEmail(partner[0].getEmail(),
                         "Dein Diversity-Mittagessen", eMailService.createEmailTemplateHTML(partner[0].getName(), partner[1].getName(),
                                 meetingEntity.getQuestion(),String.format(link,partner[0].getId(),meetingEntity.getId())), eMailService.createEmailTemplatePlain(partner[0].getName(), partner[1].getName(),
