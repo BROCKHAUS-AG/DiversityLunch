@@ -24,7 +24,9 @@ export const useGetUserInformation = () => {
                 accessTokenPayload: {
                     given_name,
                     family_name,
-                    oid,
+                    unique_name, // WARNING: the unique_name field is not guaranteed to be the email address of the user.
+                    // If this is the case, you have permission to the email payload claim to be read from the id token
+                    // https://learn.microsoft.com/en-us/azure/active-directory/develop/id-tokens
                 },
             } = authentication;
             const name = `${given_name} ${family_name}`;
@@ -32,7 +34,7 @@ export const useGetUserInformation = () => {
                 firstName: given_name,
                 lastName: family_name,
                 fullName: name,
-                email: oid,
+                email: unique_name,
             };
         }
         return {

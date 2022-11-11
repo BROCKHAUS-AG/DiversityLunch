@@ -55,7 +55,7 @@ class AccountControllerTest {
 
         when(principal.getAttribute("oid")).thenReturn("irgendwas");
 
-        ResponseEntity<AccountDto> response = accountController.getOrCreateAccount(principal);
+        ResponseEntity<?> response = accountController.getOrCreateAccount(principal);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(expectedAccountDto, response.getBody());
@@ -65,15 +65,15 @@ class AccountControllerTest {
     void testGetAccount_withInvalidPrincipal_expectBadRequest() {
         when(principal.getAttribute("oid")).thenReturn(null);
 
-        ResponseEntity<AccountDto> response = accountController.getOrCreateAccount(principal);
+        ResponseEntity<?> response = accountController.getOrCreateAccount(principal);
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
     @Test
     void testGetAccount_withNoPrincipal_expectInternalServerError() {
-        ResponseEntity<AccountDto> response = accountController.getOrCreateAccount(null);
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        ResponseEntity<?> response = accountController.getOrCreateAccount(null);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
     @Test

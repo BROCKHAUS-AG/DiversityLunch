@@ -4,6 +4,7 @@ import de.brockhausag.diversitylunchspringboot.account.mapper.AccountMapper;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountDto;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
+import de.brockhausag.diversitylunchspringboot.security.DiversityLunchSecurityExpressionRoot;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,22 +29,14 @@ public class AccountController {
     private final AccountService service;
 
     @GetMapping(produces = {"application/json"})
-    public ResponseEntity<AccountDto> getOrCreateAccount(@Parameter(hidden = true) @AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal) {
+    public ResponseEntity<?> getOrCreateAccount(@Parameter(hidden = true) @AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal) {
+        Optional<String> oid = DiversityLunchSecurityExpressionRoot.extractOID(principal);
 
-        if (principal == null) {
-            log.error("principal null");
-            return ResponseEntity.internalServerError().body(null);
+        if (oid.isEmpty()) {
+            return ResponseEntity.badRequest().body("oid claim wasn't present in the provided access token.");
         }
 
-        Object claimValue = principal.getAttribute("oid");
-
-        if (claimValue == null) {
-            log.error("claimValue/body is null");
-            return ResponseEntity.badRequest().body(null);
-        }
-
-        AccountEntity accountEntity = service.getOrCreateAccount(claimValue.toString());
-
+        AccountEntity accountEntity = service.getOrCreateAccount(oid.get());
         AccountDto accountDto = mapper.mapEntityToDto(accountEntity);
 
         return ResponseEntity.ok(accountDto);

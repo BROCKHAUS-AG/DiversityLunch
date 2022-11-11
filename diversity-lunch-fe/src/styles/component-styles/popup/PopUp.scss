@@ -1,0 +1,52 @@
+.PopUp {
+  margin: 0 auto;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5)
+}
+
+.PopUp-container {
+  width: 80%;
+  height: 50%;
+  max-width: 450px;
+  max-height: 400px;
+  opacity: 100%;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-y:auto;
+}
+
+.PopUp-text{
+  max-width: 380px;
+}
+
+.PopUp-meeting-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size:  1.2em;
+  margin: 10%;
+}
+
+.PopUp-button-container{
+  width: 100%;
+}
+
+.PopUp-okay-button{
+  margin-top: 7%;
+}

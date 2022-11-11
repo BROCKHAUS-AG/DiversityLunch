@@ -89,16 +89,7 @@ public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot
     }
 
     public Optional<String> getOID(){
-        OAuth2AuthenticatedPrincipal oAuth2Authentication = getOAuth2AuthenticatedPrincipal();
-        if(oAuth2Authentication == null){
-            return Optional.empty();
-        }
-        Object claimValue = oAuth2Authentication.getAttribute("oid");
-        if(claimValue == null){
-            log.debug("No Claim with oid");
-            return Optional.empty();
-        }
-        return Optional.of(claimValue.toString());
+        return DiversityLunchSecurityExpressionRoot.extractOID(getOAuth2AuthenticatedPrincipal());
     }
 
     private Optional<Long> getAccountId() {
@@ -107,9 +98,6 @@ public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot
     }
 
     private Optional<Long> getProfileId(){
-        if(getAccount().isEmpty()){
-            return Optional.empty();
-        }
         return getAccount().map(account -> account.getProfile().getId());
     }
 
@@ -119,5 +107,18 @@ public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot
             return Optional.empty();
 
         return accountService.getAccount(oidOptional.get());
+    }
+
+    public static Optional<String> extractOID(OAuth2AuthenticatedPrincipal principal) {
+        if(principal == null){
+            log.debug("No principal");
+            return Optional.empty();
+        }
+        Object claimValue = principal.getAttribute("oid");
+        if(claimValue == null){
+            log.debug("No Claim with oid");
+            return Optional.empty();
+        }
+        return Optional.of(claimValue.toString());
     }
 }
