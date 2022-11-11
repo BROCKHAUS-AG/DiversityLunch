@@ -25,6 +25,7 @@ describe('isValidProfile', () => {
             project: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             religion: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             workExperience: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
+            sexualOrientation: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
         };
 
         const result: boolean = isValidProfile(profile);
@@ -53,6 +54,8 @@ describe('isUpdatedProfile', () => {
             project: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             religion: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             workExperience: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
+            sexualOrientation: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
+
         };
 
         const updatedProfile: Profile = {
@@ -69,6 +72,8 @@ describe('isUpdatedProfile', () => {
             project: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             religion: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             workExperience: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
+            sexualOrientation: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
+
         };
 
         const result : boolean = isUpdatedProfile(currentProfile, updatedProfile);
@@ -90,6 +95,8 @@ describe('isUpdatedProfile', () => {
             project: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             religion: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             workExperience: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
+            sexualOrientation: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
+
         };
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars

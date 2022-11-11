@@ -145,7 +145,7 @@ class DiversityLunchSecurityExpressionRootTest {
     @Test
     void isProfileOwner_noClaimProvided_returnFalse() {
         when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
-        when(oAuth2AuthenticatedPrincipal.getAttribute("oid")).thenReturn(null);
+        when(oAuth2AuthenticatedPrincipal.getAttribute("oid")).thenReturn(2); //null is not valid just use a wrong number
 
         assertFalse(diversityLunchSecurityExpressionRoot.isProfileOwner(1L));
     }

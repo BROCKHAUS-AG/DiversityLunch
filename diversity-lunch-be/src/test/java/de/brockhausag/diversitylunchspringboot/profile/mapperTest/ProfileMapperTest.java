@@ -48,6 +48,8 @@ class ProfileMapperTest {
     @Mock
     private ReligionService religionService;
     @Mock
+    private SexualOrientationService sexualOrientationService;
+    @Mock
     private WorkExperienceService workExperienceService;
 
     @Mock
@@ -66,6 +68,8 @@ class ProfileMapperTest {
     private ProjectMapper projectMapper;
     @Mock
     private ReligionMapper religionMapper;
+    @Mock
+    private SexualOrientationMapper sexualOrientationMapper;
     @Mock
     private WorkExperienceMapper workExperienceMapper;
 
@@ -92,7 +96,7 @@ class ProfileMapperTest {
         when(genderService.getEntityById(inputDto.getGender().getId())).thenReturn(Optional.of(expectedEntity.getGender()));
         when(educationService.getEntityById(inputDto.getEducation().getId())).thenReturn(Optional.of(expectedEntity.getEducation()));
         when(dietService.getEntityById(inputDto.getDiet().getId())).thenReturn(Optional.of(expectedEntity.getDiet()));
-
+        when(sexualOrientationService.getEntityById(inputDto.getSexualOrientation().getId())).thenReturn(Optional.of(expectedEntity.getSexualOrientation()));
         //Act
         Optional<ProfileEntity> profileEntityOptional = profileMapper.dtoToEntity(inputDto);
 
@@ -126,6 +130,7 @@ class ProfileMapperTest {
         when(this.languageMapper.entityToDto(any(LanguageEntity.class))).thenReturn(expectedDto.getMotherTongue());
         when(this.projectMapper.entityToDto(any(ProjectEntity.class))).thenReturn(expectedDto.getProject());
         when(this.religionMapper.entityToDto(any(ReligionEntity.class))).thenReturn(expectedDto.getReligion());
+        when(this.sexualOrientationMapper.entityToDto(any(SexualOrientationEntity.class))).thenReturn(expectedDto.getSexualOrientation());
         when(this.workExperienceMapper.entityToDto(any(WorkExperienceEntity.class))).thenReturn(expectedDto.getWorkExperience());
 
         //Act
@@ -149,6 +154,7 @@ class ProfileMapperTest {
             when(this.languageMapper.entityToDto(entity.getMotherTongue())).thenReturn(dto.getMotherTongue());
             when(this.projectMapper.entityToDto(entity.getProject())).thenReturn(dto.getProject());
             when(this.religionMapper.entityToDto(entity.getReligion())).thenReturn(dto.getReligion());
+            when(this.sexualOrientationMapper.entityToDto(entity.getSexualOrientation())).thenReturn(dto.getSexualOrientation());
             when(this.workExperienceMapper.entityToDto(entity.getWorkExperience())).thenReturn(dto.getWorkExperience());
             return null;
         }).forEach(unused->{});
