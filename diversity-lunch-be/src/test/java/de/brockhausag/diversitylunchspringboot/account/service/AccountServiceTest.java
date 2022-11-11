@@ -71,14 +71,14 @@ class AccountServiceTest {
 
         when(diversityLunchGroupProperties.getAdminGroupName()).thenReturn("AdminGroup");
         when(accountRepository.save(accountTestDataFactory.buildNewAccount())).thenReturn(expected);
-        when(accountRepository.getAccountEntityByUniqueName("Account")).thenReturn(Optional.empty());
+        when(accountRepository.getAccountEntityByOid("Account")).thenReturn(Optional.empty());
         when(microsoftGraphService.getGroups()).thenReturn(Optional.of(groupForStandardAccount));
 
         AccountEntity accountEntity = this.accountService.getOrCreateAccount("Account");
 
         Assertions.assertNotNull(accountEntity);
         Assertions.assertEquals(expected.getId(), accountEntity.getId());
-        Assertions.assertEquals(expected.getUniqueName(), accountEntity.getUniqueName());
+        Assertions.assertEquals(expected.getOid(), accountEntity.getOid());
         Assertions.assertNull(accountEntity.getProfile());
         Assertions.assertEquals(expected.getRole(), accountEntity.getRole());
     }
@@ -87,14 +87,14 @@ class AccountServiceTest {
     void testGetOrCreateAccount_withExistentAccount_thenReturnAccountWithStandardRole() {
         AccountEntity expected = accountTestDataFactory.buildAccountWithoutProfile();
         when(diversityLunchGroupProperties.getAdminGroupName()).thenReturn("AdminGroup");
-        when(accountRepository.getAccountEntityByUniqueName("Account")).thenReturn(Optional.of(expected));
+        when(accountRepository.getAccountEntityByOid("Account")).thenReturn(Optional.of(expected));
         when(microsoftGraphService.getGroups()).thenReturn(Optional.of(groupForStandardAccount));
 
         AccountEntity accountEntity = this.accountService.getOrCreateAccount("Account");
 
         Assertions.assertNotNull(accountEntity);
         Assertions.assertEquals(expected.getId(), accountEntity.getId());
-        Assertions.assertEquals(expected.getUniqueName(), accountEntity.getUniqueName());
+        Assertions.assertEquals(expected.getOid(), accountEntity.getOid());
         Assertions.assertEquals(expected.getRole(), accountEntity.getRole());
     }
 
@@ -102,14 +102,14 @@ class AccountServiceTest {
     void testGetOrCreateAccount_withExistentAccount_thenReturnAccountWithAzureAdminRole() {
         AccountEntity expected = accountTestDataFactory.buildAccountWithoutProfile();
         when(diversityLunchGroupProperties.getAdminGroupName()).thenReturn("AdminGroup");
-        when(accountRepository.getAccountEntityByUniqueName("Account")).thenReturn(Optional.of(expected));
+        when(accountRepository.getAccountEntityByOid("Account")).thenReturn(Optional.of(expected));
         when(microsoftGraphService.getGroups()).thenReturn(Optional.of(groupForAzureAdminAccount));
 
         AccountEntity accountEntity = this.accountService.getOrCreateAccount("Account");
 
         Assertions.assertNotNull(accountEntity);
         Assertions.assertEquals(expected.getId(), accountEntity.getId());
-        Assertions.assertEquals(expected.getUniqueName(), accountEntity.getUniqueName());
+        Assertions.assertEquals(expected.getOid(), accountEntity.getOid());
         Assertions.assertEquals(expected.getRole(), accountEntity.getRole());
     }
 

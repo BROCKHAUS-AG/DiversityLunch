@@ -6,7 +6,7 @@ import categoryReducer from '../../../data/category/category-reducer';
 import { authenticationReducer } from '../../../data/authentication/authentication.reducer';
 import experienceLevelReducer from '../../../data/experienceLevel/experience-level.reducer';
 import religionReducer from '../../../data/religion/religion-reducer';
-import sexualityReducer from '../../../data/sexuality/sexuality-reducer';
+import sexualOrientationReducer from '../../../data/sexual-orientation/sexual-orientation-reducer';
 import regionReducer from '../../../data/region/region-reducer';
 import industryReducer from '../../../data/industry/industry-reducer';
 import { meetingsReducer } from '../../../data/meeting/meetings.reducer';
@@ -42,7 +42,7 @@ const reducers = {
     project: projectReducer,
     region: regionReducer,
     religion: religionReducer,
-    sexuality: sexualityReducer,
+    sexualOrientation: sexualOrientationReducer,
     socialBackground: socialBackgroundReducer,
     workExperience: workExperienceReducer,
 };

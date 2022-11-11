@@ -16,6 +16,7 @@ import { languageFetch } from '../../../data/language/language-fetch';
 import { projectFetch } from '../../../data/project/project-fetch';
 import { religionFetch } from '../../../data/religion/religion-fetch';
 import { workExperienceFetch } from '../../../data/work-experience/work-experience-fetch';
+import { sexualOrientationFetch } from '../../../data/sexual-orientation/sexual-orientation-fetch';
 
 export type ProfileFormCallback = (formData: Partial<Profile>) => void;
 export type ProfileFormIsValidCallback = (formData: Partial<Profile>)=>boolean;
@@ -46,6 +47,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
     const project = useSelector((store: AppStoreState) => store.project);
     const religions = useSelector((store: AppStoreState) => store.religion);
     const workExperience = useSelector((store: AppStoreState) => store.workExperience);
+    const sexualOrientation = useSelector((store: AppStoreState) => store.sexualOrientation);
 
     useEffect(() => {
         dispatch(countryFetch.getAll());
@@ -59,6 +61,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
         dispatch(projectFetch.getAll());
         dispatch(religionFetch.getAll());
         dispatch(workExperienceFetch.getAll());
+        dispatch(sexualOrientationFetch.getAll());
     }, []);
 
     function updateProfile<KEY extends keyof Profile>(key: KEY, value?: Profile[KEY]) {
@@ -155,6 +158,13 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 onChange={(value) => updateProfile('diet', value)}
                 label="Ernährung"
                 currentValue={profile.diet || undefined}
+            />
+            <Dropdown
+                options={sexualOrientation.items}
+                placeholder="Was ist deine sexuelle Orientierung?"
+                onChange={(value) => updateProfile('sexualOrientation', value)}
+                label="Sexualität"
+                currentValue={profile.sexualOrientation || undefined}
             />
             <Button
                 disabled={!isValid}

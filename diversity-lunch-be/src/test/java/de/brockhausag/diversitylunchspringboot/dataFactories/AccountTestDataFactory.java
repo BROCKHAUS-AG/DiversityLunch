@@ -8,14 +8,14 @@ import de.brockhausag.diversitylunchspringboot.security.AccountRole;
 public class AccountTestDataFactory {
 
     private static final Long id = 8L;
-    private static final String uniqueName = "Account";
+    private static final String oid = "Account";
     private static final ProfileEntity profile = new ProfileTestdataFactory().buildEntity(1);
     private static final AccountRole role = AccountRole.STANDARD;
 
     public AccountEntity.AccountEntityBuilder entityBuilder() {
         return AccountEntity.builder()
                 .id(id)
-                .uniqueName(uniqueName)
+                .oid(oid)
                 .profile(profile)
                 .role(role);
     }

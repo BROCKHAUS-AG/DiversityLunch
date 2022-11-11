@@ -1,4 +1,4 @@
 import { Identifiable } from '../data/generic/Identifiable';
 
-export interface Sexuality extends Identifiable {
+export interface SexualOrientation extends Identifiable {
 }

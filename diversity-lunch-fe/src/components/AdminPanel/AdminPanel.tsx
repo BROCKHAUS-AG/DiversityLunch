@@ -12,12 +12,15 @@ import { OptionsList } from './OptionsList';
 import { hobbyFetch } from '../../data/hobby/fetch-hobby';
 import { UserList } from './user-list';
 import { VoucherUpload } from './VoucherUpload';
+import { authenticatedFetchPost } from '../../utils/fetch.utils';
+import { PopUp } from './userAdministration/PopUp';
+import '../../styles/component-styles/adminPanel/adminPanel.scss';
 
 export const AdminPanel: FC = () => {
     const accountState = useSelector((store: AppStoreState) => store.account);
     const projectState = useSelector((store: AppStoreState) => store.project);
     const hobbyState = useSelector((store: AppStoreState) => store.hobby);
-
+    const [emailSuccess, setEmailSuccess] = useState(false);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(projectFetch.getAll());
@@ -41,7 +44,10 @@ export const AdminPanel: FC = () => {
             </section>
         );
     }
-
+    const sendTestmail = async () => {
+        const result: Response = await authenticatedFetchPost(`/api/mailing/sendTestMailToUser/${accountState.accountData.profileId}`, '');
+        setEmailSuccess(result.status === 200);
+    };
     return (
         <section className="view">
             <CloseSiteContainer />
@@ -52,6 +58,10 @@ export const AdminPanel: FC = () => {
             <OptionsList state={hobbyState} fetch={hobbyFetch} title="Hobbyliste anpassen" addButtonLabel="Hobby hinzufügen" />
             <VoucherUpload />
 
+            <div className="customContainer">
+                <button className="testmailButton" onClick={sendTestmail}>Testmail verschicken</button>
+            </div>
+            {emailSuccess && <PopUp onButtonClick={() => { setEmailSuccess(false); }} message="Testmail gesendet" buttonText="Okay" />}
         </section>
 
     );

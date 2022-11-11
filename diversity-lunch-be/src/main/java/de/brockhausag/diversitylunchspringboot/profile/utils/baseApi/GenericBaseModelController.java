@@ -29,9 +29,9 @@ public class GenericBaseModelController<
 
     @GetMapping("/all")
     public ResponseEntity<List<DtoType>> getAll(){
-        List<EntityType> countryEntityList = service.getAllEntities();
+        List<EntityType> genericEntityList = service.getAllEntities();
         return new ResponseEntity<>(
-                mapper.entityToDto(countryEntityList),
+                mapper.entityToDto(genericEntityList),
                 HttpStatus.OK
         );
     }

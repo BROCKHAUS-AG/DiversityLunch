@@ -35,6 +35,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -144,7 +145,9 @@ public class EMailControllerIT {
         Assertions.assertEquals("test@test.de",to);
         Assertions.assertEquals("diversitylunchtest@brockhaus-ag.de", from);
         Assertions.assertEquals("Testsubject",subject);
-        Assertions.assertEquals("Hallo :)", body);
+        Assertions.assertNotEquals("", body);
+        Assertions.assertNotEquals(null, body);
+        Assertions.assertEquals("Datum: " + LocalDate.now(), body.substring(0,17));
         Assertions.assertEquals(1, amount);
     }
 
@@ -187,7 +190,7 @@ public class EMailControllerIT {
     private ResultActions performRequestWithToken(String path, AccountEntity accountEntity) throws Exception {
         return mockMvcSecurity.perform(
                 post(path)
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileTestdataFactory.getTokenStringFromId(accountEntity.getUniqueName()))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileTestdataFactory.getTokenStringFromId(accountEntity.getOid()))
         );
     }
 

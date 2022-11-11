@@ -18,4 +18,9 @@ FROM nginx:1.17.1-alpine
 COPY --from=build /app/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 
-#COPY build /usr/share/nginx/html
+CMD sh /usr/share/nginx/html/config/app_config_generator.sh && nginx -g "daemon off;"
+
+
+
+
+

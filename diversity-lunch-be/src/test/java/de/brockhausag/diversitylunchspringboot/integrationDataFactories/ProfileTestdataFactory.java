@@ -21,6 +21,8 @@ public class ProfileTestdataFactory {
     private final DietService dietService;
     
     private final EducationService educationService;
+
+    private final SexualOrientationService sexualOrientationService;
     
     private final GenderService genderService;
     
@@ -48,7 +50,7 @@ public class ProfileTestdataFactory {
         final ReligionEntity religion = religionService.getAllEntities().get(0);
         final WorkExperienceEntity workExperience = workExperienceService.getAllEntities().get(0);
         final HobbyEntity hobby = hobbyService.getAllEntities().get(0);
-
+        final SexualOrientationEntity sexualOrientation = sexualOrientationService.getAllEntities().get(0);
 
         return new ProfileEntity(id,
                 name,
@@ -62,7 +64,8 @@ public class ProfileTestdataFactory {
                 project,
                 religion,
                 workExperience,
-                hobby);
+                hobby,
+                sexualOrientation);
     }
 
     public ProfileEntity createNewErikaProfile() {
@@ -79,6 +82,7 @@ public class ProfileTestdataFactory {
         final ReligionEntity religion = religionService.getAllEntities().get(1);
         final WorkExperienceEntity workExperience = workExperienceService.getAllEntities().get(1);
         final HobbyEntity hobby = hobbyService.getAllEntities().get(1);
+        final SexualOrientationEntity sexualOrientationEntity = sexualOrientationService.getAllEntities().get(1);
 
         return new ProfileEntity(id,
                 name,
@@ -92,7 +96,8 @@ public class ProfileTestdataFactory {
                 project,
                 religion,
                 workExperience,
-                hobby);
+                hobby,
+                sexualOrientationEntity);
     }
 
     @SneakyThrows
@@ -108,7 +113,7 @@ public class ProfileTestdataFactory {
                 .getBytes();
         byte[] payload = """
                 {
-                    "unique_name": "%s",
+                    "oid": "%s",
                     "given_name": "%s",
                     "family_name": "%s",
                     "exp": %s
@@ -147,7 +152,7 @@ public class ProfileTestdataFactory {
                 .getBytes();
         byte[] payload = """
                 {
-                    "unique_name": "%s",
+                    "oid": "%s",
                     "given_name": "%s",
                     "family_name": "%s",
                     "exp": %s
@@ -174,7 +179,7 @@ public class ProfileTestdataFactory {
     }
 
     @SneakyThrows
-    public String getTokenStringFromIdChangedUniqueName(String id) {
+    public String getTokenStringFromIdChangedOid(String id) {
 
         byte[] key = "SomeSecretWeDontCheckItAnywayToS".getBytes();
         byte[] header = """
@@ -186,7 +191,7 @@ public class ProfileTestdataFactory {
                 .getBytes();
         byte[] payload = """
                 {
-                    "unique_name": "%s",
+                    "oid": "%s",
                     "given_name": "%s",
                     "family_name": "%s",
                     "exp": %s
@@ -197,7 +202,7 @@ public class ProfileTestdataFactory {
 
         byte[] payloadManipulate = """
                 {
-                    "unique_name": "%s",
+                    "oid": "%s",
                     "given_name": "%s",
                     "family_name": "%s",
                     "exp": %s

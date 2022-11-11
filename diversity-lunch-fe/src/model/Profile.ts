@@ -7,6 +7,7 @@ import { Project } from './Project';
 import { Language } from './Language';
 import { WorkExperience } from './WorkExperience';
 import { Religion } from './Religion';
+import { SexualOrientation } from './SexualOrientation';
 
 export interface Profile {
     id: number,
@@ -23,5 +24,6 @@ export interface Profile {
     // industry: Industry,
     motherTongue: Language,
     religion: Religion,
-    workExperience: WorkExperience
+    workExperience: WorkExperience,
+    sexualOrientation: SexualOrientation
 }

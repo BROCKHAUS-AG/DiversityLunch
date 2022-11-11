@@ -1,7 +1,5 @@
 package de.brockhausag.diversitylunchspringboot.profile.controller;
 
-import de.brockhausag.diversitylunchspringboot.account.model.AccountDto;
-import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.ProfileMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
@@ -31,11 +29,9 @@ import java.util.stream.StreamSupport;
 @RequiredArgsConstructor
 public class ProfileController {
 
-    private static final String UNIQUE_NAME = "unique_name";
     private final ProfileService profileService;
     private final ProfileMapper profileMapper;
 
-    private final AccountService accountService;
 
     @Operation(summary = "gibt das Profil des Users zurück")
     @ApiResponses(value = {

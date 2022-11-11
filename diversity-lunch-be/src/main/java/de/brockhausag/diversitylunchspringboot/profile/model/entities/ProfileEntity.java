@@ -40,6 +40,8 @@ public class ProfileEntity {
     private WorkExperienceEntity workExperience;
     @ManyToOne
     private HobbyEntity hobby;
+    @ManyToOne
+    private SexualOrientationEntity sexualOrientation;
 
 
 
