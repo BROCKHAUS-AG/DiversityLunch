@@ -10,6 +10,6 @@ import java.util.UUID;
 public interface VoucherRepository extends JpaRepository<VoucherEntity, UUID> {
     Optional<VoucherEntity> getFirstByProfileIsNullAndMeetingIsNull();
     List<VoucherEntity> getAllByProfileId(long profileId);
-
     boolean existsByProfileIdAndMeetingId(long profile_Id, long meeting_Id);
+
 }

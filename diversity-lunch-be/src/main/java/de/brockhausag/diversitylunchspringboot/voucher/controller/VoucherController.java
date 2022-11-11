@@ -27,6 +27,12 @@ public class VoucherController {
     private final VoucherService voucherService;
     private final VoucherMapper voucherMapper;
 
+
+    @GetMapping("/amount")
+    @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).ADMIN_ROLE_ASSIGN)")
+    public ResponseEntity<Integer> getAmountOfVouchersStored() {
+        return ResponseEntity.ok( voucherService.getAmountOfVouchersStored());
+    }
     @PreAuthorize("isProfileOwner(#profileId)")
     @PutMapping("/claim/{profileId}/{meetingId}")
     public ResponseEntity<?> claimVoucher(@PathVariable Long profileId, @PathVariable Long meetingId) {

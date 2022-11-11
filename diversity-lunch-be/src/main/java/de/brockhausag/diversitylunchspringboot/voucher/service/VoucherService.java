@@ -60,6 +60,11 @@ public class VoucherService {
         Iterable<VoucherEntity> savedVouchers = voucherRepository.saveAll(voucherEntities);
         return Iterables.size(savedVouchers) == Iterables.size(voucherEntities);
     }
+
+    public int getAmountOfVouchersStored(){
+        return voucherRepository.findAll().size();
+    }
+
     public static class IllegalVoucherClaim extends Exception {
 
         public IllegalVoucherClaim(String s) {
