@@ -30,7 +30,7 @@ export const VoucherUpload: FC = () => {
     const UpdateVoucherAmount = async () => {
         const amountResp : Response = await authenticatedFetchGet('api/voucher/amount');
         if (amountResp.status === 200) {
-            setVoucherstate(JSON.stringify(amountResp.json()));
+            setVoucherstate(JSON.stringify(await amountResp.json()));
         } else {
             setVoucherstate('FEHLER');
         }
@@ -43,7 +43,11 @@ export const VoucherUpload: FC = () => {
 
                 <div>
                     <p>
-                        Es sind {voucherState} Gutscheine vorhanden.
+                        Es sind
+                        {' '}
+                        {voucherState}
+                        {' '}
+                        Gutscheine vorhanden.
                     </p>
                 </div>
 
