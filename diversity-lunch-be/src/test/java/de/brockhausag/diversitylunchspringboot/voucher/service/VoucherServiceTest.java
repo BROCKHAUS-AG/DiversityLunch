@@ -2,6 +2,7 @@ package de.brockhausag.diversitylunchspringboot.voucher.service;
 
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
+import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;
 import de.brockhausag.diversitylunchspringboot.voucher.repository.VoucherRepository;
@@ -30,6 +31,8 @@ public class VoucherServiceTest {
     @Mock
     private MeetingRepository meetingRepository;
 
+    @Mock
+    private ProfileRepository profileRepository;
     @Test
     void getVoucherBasedOnMeetingWithoutClaimedVoucher_expectsVoucherInReturn() {
         VoucherEntity expected = new VoucherEntity("code");
@@ -42,9 +45,11 @@ public class VoucherServiceTest {
 
         ProfileEntity proposer = new ProfileEntity();
         proposer.setId(proposerId);
+        when(profileRepository.findById(proposerId)).thenReturn(Optional.of(proposer));
 
         ProfileEntity partner = new ProfileEntity();
         partner.setId(partnerId);
+        when(profileRepository.findById(partnerId)).thenReturn(Optional.of(partner));
 
         MeetingEntity meeting = new MeetingEntity();
         meeting.setId(meetingId);
@@ -68,6 +73,7 @@ public class VoucherServiceTest {
 
         ProfileEntity proposer = new ProfileEntity();
         proposer.setId(proposerId);
+        when(profileRepository.findById(proposerId)).thenReturn(Optional.of(proposer));
 
         ProfileEntity partner = new ProfileEntity();
         partner.setId(partnerId);
@@ -90,9 +96,11 @@ public class VoucherServiceTest {
 
         ProfileEntity proposer = new ProfileEntity();
         proposer.setId(proposerId);
+        when(profileRepository.findById(proposerId)).thenReturn(Optional.of(proposer));
 
         ProfileEntity partner = new ProfileEntity();
         partner.setId(partnerId);
+        when(profileRepository.findById(partnerId)).thenReturn(Optional.of(partner));
 
         MeetingEntity meeting = new MeetingEntity();
         meeting.setId(meetingId);
@@ -115,9 +123,11 @@ public class VoucherServiceTest {
 
         ProfileEntity proposer = new ProfileEntity();
         proposer.setId(proposerId);
+        when(profileRepository.findById(proposerId)).thenReturn(Optional.of(proposer));
 
         ProfileEntity partner = new ProfileEntity();
         partner.setId(partnerId);
+        when(profileRepository.findById(partnerId)).thenReturn(Optional.of(partner));
 
         MeetingEntity meeting = new MeetingEntity();
         meeting.setId(meetingId);
@@ -144,9 +154,11 @@ public class VoucherServiceTest {
 
         ProfileEntity proposer = new ProfileEntity();
         proposer.setId(proposerId);
+        when(profileRepository.findById(proposerId)).thenReturn(Optional.of(proposer));
 
         ProfileEntity partner = new ProfileEntity();
         partner.setId(partnerId);
+        when(profileRepository.findById(partnerId)).thenReturn(Optional.of(partner));
 
         MeetingEntity meeting = new MeetingEntity();
         meeting.setId(meetingId);

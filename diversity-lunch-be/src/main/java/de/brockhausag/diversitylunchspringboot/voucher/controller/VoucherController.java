@@ -36,13 +36,13 @@ public class VoucherController {
     @PreAuthorize("isProfileOwner(#profileId)")
     @PutMapping("/claim/{profileId}/{meetingId}")
     public ResponseEntity<?> claimVoucher(@PathVariable Long profileId, @PathVariable Long meetingId) {
+        //todo: Call new service method to get Voucher by meetingId and profileId
         try {
             Optional<VoucherEntity> voucherEntity = voucherService.getUnclaimedVoucherForMeeting(profileId, meetingId);
             if (voucherEntity.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-
-            String html = "<html> <body> <h5>Du hast deinen Gutschein erfolgreich angefordert! <br> Vielen dank für deine Teilnahme am Diversity Lunch </h5> </body> <html>";
+            String html = voucherEntity.get().getVoucher();
             return ResponseEntity.ok().body(html);
         } catch (VoucherService.IllegalVoucherClaim e) {
             String errorHtml = "<html> <body> <h5>UPSI! Leider ist etwas schief gelaufen. <br> Vielen dank für deine Teilnahme am Diversity Lunch.</h5> </body> <html>";
@@ -51,7 +51,7 @@ public class VoucherController {
     }
 
     @PreAuthorize("isProfileOwner(#profileId)")
-    @GetMapping("/get/{profileId}")
+    @GetMapping("/all/{profileId}")
     public ResponseEntity<List<VoucherDto>> getVouchers(@PathVariable Long profileId) {
         List<VoucherEntity> voucherEntities = voucherService.getVoucherByProfileId(profileId);
         List<VoucherDto> voucherDtos = new ArrayList<>();

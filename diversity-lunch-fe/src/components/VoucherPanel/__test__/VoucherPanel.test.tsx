@@ -1,15 +1,14 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 
-import * as fetcher from '../../../utils/fetch.utils';
-import { VoucherPanel } from '../VoucherPanel';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider, useDispatch } from 'react-redux';
+import * as fetcher from '../../../utils/fetch.utils';
+import { VoucherPanel } from '../VoucherPanel';
 import { APP_STORE } from '../../../store/Store';
 import { loadAccount } from '../../../data/account/account.actions';
-import { mockedFetchGetAccount } from '../../../__global_test_data__/fetch';
-import { Role } from '../../../model/Role';
+import { mockedFetchGetUsableAccount } from '../../../__global_test_data__/fetch';
 
 describe('VoucherPanel', () => {
     const AccountLoader : FC = () => {
@@ -20,12 +19,8 @@ describe('VoucherPanel', () => {
         );
     };
     const renderContainer = () => {
-        /*const setState = jest.fn();
-        const mockState : any = (initState : any) => [initState, setState];
-        jest.spyOn(React, 'useState')
-            .mockImplementation(mockState);*/
         jest.spyOn(fetcher, 'authenticatedFetchGet')
-            .mockImplementation(mockedFetchGetAccount(Role.STANDARD));
+            .mockImplementation(mockedFetchGetUsableAccount());
 
         render(
             <BrowserRouter>
@@ -55,23 +50,12 @@ describe('VoucherPanel', () => {
 
     it('Should display voucher code when rightfully claimed', async () => {
         jest.spyOn(fetcher, 'authenticatedFetchPut')
-            .mockImplementation(async () => new Response('irgendwann mal code', {status: 200, statusText: 'OK' }));
+            .mockImplementation(async () => new Response('1234', { status: 200, statusText: 'OK' }));
         const accessCodeButton = await screen.findByText('FREISCHALTEN');
         act(() => {
             fireEvent.click(accessCodeButton);
         });
-        const voucherCode = await screen.findByText('irgendwann mal code');
+        const voucherCode = await screen.findByText('1234');
         expect(voucherCode).toBeInTheDocument();
     });
-
-    /*
-    it('Should display already claimed voucher code', async () => {
-        const demoteButtons = await screen.findAllByText('-');
-        act(() => {
-            fireEvent.click(demoteButtons[0]);
-        });
-        const standardUser = await screen.findAllByText('STANDARD');
-        expect(standardUser.length === 1);
-    });
- */
 });
