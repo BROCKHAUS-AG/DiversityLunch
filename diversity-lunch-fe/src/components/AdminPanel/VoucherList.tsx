@@ -1,13 +1,17 @@
-import React, { FC, useEffect, useState } from 'react';
+import React from 'react';
 
 interface voucherListProps {
     vouchers: []
 }
 
+
 export const VoucherList: ({ vouchers }: voucherListProps) => any = ({ vouchers }:voucherListProps) => {
-    return vouchers.map((val) => {
-        console.log(val);
-        return <div>{val.uuid}</div>;
+    console.log(vouchers);
+    return vouchers.map((key:any, val:any) => {
+        return (
+            <div>{key.voucherCode}</div>
+
+        );
     });
 };
 
