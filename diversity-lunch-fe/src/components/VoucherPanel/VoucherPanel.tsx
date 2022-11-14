@@ -22,14 +22,12 @@ export const VoucherPanel = () => {
         return Number(url.split('/').pop());
     };
 
-    const claimVoucher = async (profileId: number, meetingId: number) => {
+    const claimVoucher = async (profileId: number, meetingId?: number) => {
         try {
-            const response = await authenticatedFetchPut(`/api/voucher/claim/${profileId}/${meetingId}`, '');
-            return response.ok;
+            return await authenticatedFetchPut(`/api/voucher/claim/${profileId}/${meetingId}`, '');
         } catch (error) {
-            // error
+            return new Response('', { status: 403, statusText: 'Bad Request' });
         }
-        return false;
     };
 
     const getVoucher = async (profileId: number, meetingId: number) => {
@@ -42,16 +40,14 @@ export const VoucherPanel = () => {
     const retrieveVoucherCode = async () => {
         const meetingId = extractMeetingIdFromURL();
         const { profileId } = account;
-        if (meetingId > -1) {
-            await claimVoucher(profileId, meetingId);
-            try {
-                const voucher = await getVoucher(profileId, meetingId);
-                setVoucherCode(voucher[0].voucherCode);
-                setRevealed(true);
-            } catch (error) {
-                setError(true);
-            }
-        } else setError(true);
+        await claimVoucher(profileId, meetingId);
+        try {
+            const voucher = await getVoucher(profileId, meetingId);
+            setVoucherCode(voucher[0].voucherCode);
+            setRevealed(true);
+        } catch (error) {
+            setError(true);
+        }
     };
     const copyToClipboard = () => {
         navigator.clipboard.writeText(voucherCode);
