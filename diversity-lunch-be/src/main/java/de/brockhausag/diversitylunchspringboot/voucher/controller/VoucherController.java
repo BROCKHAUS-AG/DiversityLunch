@@ -33,6 +33,18 @@ public class VoucherController {
     public ResponseEntity<Integer> getAmountOfVouchersStored() {
         return ResponseEntity.ok( voucherService.getAmountOfVouchersStored());
     }
+
+    @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).ADMIN_ROLE_ASSIGN)")
+    @GetMapping("/all")
+    public ResponseEntity<List<VoucherDto>> getVouchers() {
+        List<VoucherEntity> voucherEntities = voucherService.getAllVouchersStored();
+        List<VoucherDto> voucherDtos = new ArrayList<>();
+        for (VoucherEntity voucher : voucherEntities) {
+            voucherDtos.add(voucherMapper.mapEntityToDto(voucher));
+        }
+        return ResponseEntity.ok().body(voucherDtos);
+    }
+
     @PreAuthorize("isProfileOwner(#profileId)")
     @PutMapping("/claim/{profileId}/{meetingId}")
     public ResponseEntity<?> claimVoucher(@PathVariable Long profileId, @PathVariable Long meetingId) {

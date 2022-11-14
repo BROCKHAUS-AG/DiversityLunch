@@ -11,10 +11,17 @@ public class VoucherMapperImpl implements VoucherMapper{
 
     @Override
     public VoucherDto mapEntityToDto(VoucherEntity voucherEntity) {
-        return new VoucherDto(voucherEntity.getId(),
-                voucherEntity.getVoucher(),
-                voucherEntity.getProfile().getId(),
-                voucherEntity.getMeeting().getId());
-
+        if(voucherEntity.getProfile() != null && voucherEntity.getMeeting() != null) {
+            return new VoucherDto(voucherEntity.getId(),
+                    voucherEntity.getVoucher(),
+                    voucherEntity.getProfile().getId(),
+                    voucherEntity.getMeeting().getId());
+        }
+        else {
+            return new VoucherDto(voucherEntity.getId(),
+                    voucherEntity.getVoucher(),
+                    -1,
+                    -1);
+        }
     }
 }

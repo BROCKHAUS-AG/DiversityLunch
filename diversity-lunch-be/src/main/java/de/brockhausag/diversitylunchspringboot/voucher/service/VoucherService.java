@@ -65,6 +65,10 @@ public class VoucherService {
         return voucherRepository.findAll().size();
     }
 
+    public List<VoucherEntity> getAllVouchersStored(){
+        return voucherRepository.findAll();
+    }
+
     public static class IllegalVoucherClaim extends Exception {
 
         public IllegalVoucherClaim(String s) {

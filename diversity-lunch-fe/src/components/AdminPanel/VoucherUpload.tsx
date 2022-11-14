@@ -1,14 +1,18 @@
 import React, { FC, useEffect, useState } from 'react';
 import { authenticatedFetchGet, authenticatedFetchPostCsv } from '../../utils/fetch.utils';
 import { PopUp } from './userAdministration/PopUp';
+import { VoucherList } from './VoucherList';
 
 export const VoucherUpload: FC = () => {
     const [selectedCsvFile, setSelectedCsvFile] = useState();
     const [uploadSuccess, setUploadSuccess] = useState(false);
-    const [voucherState, setVoucherstate] = useState('');
+    const [voucherCountState, setVoucherCountState] = useState('');
+    const [showVoucherList, setShowVoucherList] = useState(false);
+    const [voucherList, setVoucherList] = useState<[]>([]);
+
     useEffect(() => {
         UpdateVoucherAmount();
-    });
+    }, [voucherCountState]);
 
     const uploadCSVToFrontend = (event: any) => {
         setSelectedCsvFile(event.target.files[0]);
@@ -30,10 +34,24 @@ export const VoucherUpload: FC = () => {
     const UpdateVoucherAmount = async () => {
         const amountResp : Response = await authenticatedFetchGet('api/voucher/amount');
         if (amountResp.status === 200) {
-            setVoucherstate(JSON.stringify(await amountResp.json()));
+            setVoucherCountState(JSON.stringify(await amountResp.json()));
         } else {
-            setVoucherstate('FEHLER');
+            setVoucherCountState('FEHLER');
         }
+    };
+
+    const getAllVouchers = async () => {
+        const response : Response = await authenticatedFetchGet('api/voucher/all');
+        if (response.status === 200) {
+            setVoucherList(await response.json());
+        } else {
+            // pass
+        }
+    };
+
+    const toggleVoucherList = async () => {
+        await getAllVouchers();
+        setShowVoucherList(true);
     };
 
     return (
@@ -45,10 +63,15 @@ export const VoucherUpload: FC = () => {
                     <p>
                         Es sind
                         {' '}
-                        {voucherState}
+                        {voucherCountState}
                         {' '}
                         Gutscheine vorhanden.
                     </p>
+                </div>
+                <div>
+                    <button onClick={toggleVoucherList}>Gutscheinliste</button>
+                    {showVoucherList
+                        && <VoucherList vouchers={voucherList} />}
                 </div>
 
                 <div>
