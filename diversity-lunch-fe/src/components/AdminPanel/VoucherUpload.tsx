@@ -8,7 +8,7 @@ export const VoucherUpload: FC = () => {
     const [voucherState, setVoucherstate] = useState('');
     useEffect(() => {
         UpdateVoucherAmount();
-    }, []);
+    });
 
     const uploadCSVToFrontend = (event: any) => {
         setSelectedCsvFile(event.target.files[0]);
