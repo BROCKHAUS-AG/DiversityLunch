@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.voucher.controller;
 
 import de.brockhausag.diversitylunchspringboot.voucher.mapper.VoucherMapper;
+import de.brockhausag.diversitylunchspringboot.voucher.model.AdminVoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;
 import de.brockhausag.diversitylunchspringboot.voucher.service.VoucherService;
@@ -35,12 +36,12 @@ public class VoucherController {
     }
 
     @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).ADMIN_ROLE_ASSIGN)")
-    @GetMapping("/all")
-    public ResponseEntity<List<VoucherDto>> getVouchers() {
+    @GetMapping("/admin/all")
+    public ResponseEntity<List<AdminVoucherDto>> getVouchersWithEmail() {
         List<VoucherEntity> voucherEntities = voucherService.getAllVouchersStored();
-        List<VoucherDto> voucherDtos = new ArrayList<>();
+        List<AdminVoucherDto> voucherDtos = new ArrayList<>();
         for (VoucherEntity voucher : voucherEntities) {
-            voucherDtos.add(voucherMapper.mapEntityToDto(voucher));
+            voucherDtos.add(voucherMapper.mapEntityToAdminVoucherDto(voucher));
         }
         return ResponseEntity.ok().body(voucherDtos);
     }

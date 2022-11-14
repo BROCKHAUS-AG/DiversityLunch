@@ -41,7 +41,7 @@ export const VoucherUpload: FC = () => {
     };
 
     const getAllVouchers = async () => {
-        const response : Response = await authenticatedFetchGet('api/voucher/all');
+        const response : Response = await authenticatedFetchGet('api/voucher/admin/all');
         if (response.status === 200) {
             setVoucherList(await response.json());
         } else {

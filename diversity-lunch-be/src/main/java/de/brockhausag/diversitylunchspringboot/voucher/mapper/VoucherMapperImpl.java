@@ -1,5 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.voucher.mapper;
 
+import de.brockhausag.diversitylunchspringboot.voucher.model.AdminVoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;
 import lombok.RequiredArgsConstructor;
@@ -11,17 +12,34 @@ public class VoucherMapperImpl implements VoucherMapper{
 
     @Override
     public VoucherDto mapEntityToDto(VoucherEntity voucherEntity) {
-        if(voucherEntity.getProfile() != null && voucherEntity.getMeeting() != null) {
             return new VoucherDto(voucherEntity.getId(),
                     voucherEntity.getVoucher(),
                     voucherEntity.getProfile().getId(),
                     voucherEntity.getMeeting().getId());
-        }
-        else {
-            return new VoucherDto(voucherEntity.getId(),
-                    voucherEntity.getVoucher(),
-                    -1,
-                    -1);
-        }
+
     }
+
+    @Override
+    public AdminVoucherDto mapEntityToAdminVoucherDto(VoucherEntity voucherEntity)
+    {
+        if(voucherEntity.getProfile() != null)
+        {
+            return new AdminVoucherDto(
+                    voucherEntity.getVoucher(),
+                    voucherEntity.getProfile().getEmail()
+            );
+        }
+        else
+        {
+            return new AdminVoucherDto(
+                    voucherEntity.getVoucher(),
+                    "Nicht beansprucht"
+            );
+        }
+
+    }
+
+
+
+
 }

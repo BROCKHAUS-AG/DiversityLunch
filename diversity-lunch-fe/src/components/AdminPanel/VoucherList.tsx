@@ -1,19 +1,31 @@
 import React from 'react';
+import '../../styles/component-styles/voucherList/voucherList.scss';
 
 interface voucherListProps {
     vouchers: []
 }
 
-
 export const VoucherList: ({ vouchers }: voucherListProps) => any = ({ vouchers }:voucherListProps) => {
-    console.log(vouchers);
-    return vouchers.map((key:any, val:any) => {
-        return (
-            <div>{key.voucherCode}</div>
-
-        );
-    });
+    let counter: number;
+    counter = 1;
+    return (
+        <table className="voucherListTable">
+            <thead>
+                <tr>
+                    <th> </th>
+                    <th>Gutscheincode</th>
+                    <th>E-Mail</th>
+                </tr>
+            </thead>
+            <tbody>
+                {vouchers.map((key:any) => (
+                    <tr key={counter}>
+                        <td>{counter++}</td>
+                        <td>{key.voucherCode}</td>
+                        <td>{key.email}</td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    );
 };
-
-
-
