@@ -8,6 +8,7 @@ import { authenticatedFetchGet, authenticatedFetchPut } from '../../utils/fetch.
 import { AccountState, AccountStateOk } from '../../data/account/account-state.type';
 import { Account } from '../../types/Account';
 import { PopUp } from '../AdminPanel/userAdministration/PopUp';
+import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
 
 export const VoucherPanel = () => {
     const [revealed, setRevealed] = useState(false);
@@ -52,38 +53,45 @@ export const VoucherPanel = () => {
             }
         } else setError(true);
     };
-
+    const copyToClipboard = () => {
+        navigator.clipboard.writeText(voucherCode);
+    };
     return (
-        <div className="ShowVoucher">
-            <DiversityIconContainer title="GUTSCHEIN" />
-            {
-                revealed
-                    ? (
-                        <>
-                            <p className="ShowVoucher-text">Dein persönlicher Gutschein-Code</p>
-                            <div className="ShowVoucher-code">
-                                <span className="ShowVoucher-code-text">
-                                    {voucherCode}
-                                </span>
-                            </div>
-                        </>
+        <section className="view">
+            <CloseSiteContainer />
+            <div className="ShowVoucher">
+                <DiversityIconContainer title="GUTSCHEIN" />
+                {
+                    revealed
+                        ? (
+                            <>
+                                <p className="ShowVoucher-text">Dein persönlicher Gutschein-Code</p>
+                                <div className="ShowVoucher-code">
+                                    <span className="ShowVoucher-code-text">
+                                        {voucherCode}
+                                    </span>
+                                </div>
+                                <button className="copyButton" onClick={copyToClipboard}>Kopieren</button>
+                            </>
+                        )
+                        : (
+                            <>
+                                <p className="ShowVoucher-text">Hier kannst du deinen Gutschein bekommen</p>
+                                <Button label="FREISCHALTEN" onClick={() => retrieveVoucherCode()} />
+                            </>
+                        )
+                }
+                {
+                    isError && (
+                        <PopUp
+                            onButtonClick={() => setError(false)}
+                            message="Bei der Abfrage ist ein Fehler aufgetreten"
+                            buttonText="Okay"
+                        />
                     )
-                    : (
-                        <>
-                            <p className="ShowVoucher-text">Hier kannst du deinen Gutschein bekommen</p>
-                            <Button label="FREISCHALTEN" onClick={() => retrieveVoucherCode()} />
-                        </>
-                    )
-            }
-            {
-                isError && (
-                    <PopUp
-                        onButtonClick={() => setError(false)}
-                        message="Bei der Abfrage ist ein Fehler aufgetreten"
-                        buttonText="Okay"
-                    />
-                )
-            }
-        </div>
+                }
+            </div>
+        </section>
+
     );
 };
