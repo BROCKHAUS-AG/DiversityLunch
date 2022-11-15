@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../../styles/component-styles/general/headerTemplate/iconContaier.scss';
+import '../../../styles/component-styles/general/headerTemplate/iconContainer.scss';
 import { Link } from 'react-router-dom';
 import iconAdmin from '../../../resources/icons/icon-admin.svg';
 
