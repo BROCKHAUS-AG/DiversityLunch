@@ -58,11 +58,11 @@ public class VoucherServiceTest {
         meeting.setId(meetingId);
         meeting.setPartner(partner);
         meeting.setProposer(proposer);
-        when(meetingRepository.getById(meetingId)).thenReturn(meeting);
+        when(meetingRepository.findById(meetingId)).thenReturn(Optional.of(meeting));
 
         try {
             Optional<VoucherEntity> voucherEntity = voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId);
-            Assertions.assertNotNull(voucherEntity);
+            Assertions.assertNotNull(voucherEntity.get());
             Assertions.assertEquals(expected.getVoucher(), voucherEntity.get().getVoucher());
         } catch (IllegalVoucherClaim e) {
             Assertions.fail();
@@ -82,7 +82,7 @@ public class VoucherServiceTest {
         ProfileEntity partner = new ProfileEntity();
         partner.setId(partnerId);
 
-        when(meetingRepository.getById(meetingId)).thenReturn(null);
+        when(meetingRepository.findById(meetingId)).thenReturn(Optional.empty());
 
         Assertions.assertThrows(IllegalVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(3L, meetingId));
 
@@ -121,7 +121,7 @@ public class VoucherServiceTest {
         meeting.setId(meetingId);
         meeting.setPartner(partner);
         meeting.setProposer(proposer);
-        when(meetingRepository.getById(meetingId)).thenReturn(meeting);
+        when(meetingRepository.findById(meetingId)).thenReturn(Optional.of(meeting));
 
         Assertions.assertThrows(IllegalVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId));
     }
@@ -145,7 +145,7 @@ public class VoucherServiceTest {
         meeting.setId(meetingId);
         meeting.setPartner(partner);
         meeting.setProposer(proposer);
-        when(meetingRepository.getById(meetingId)).thenReturn(meeting);
+        when(meetingRepository.findById(meetingId)).thenReturn(Optional.of(meeting));
 
         Assertions.assertThrows(IllegalVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId));
     }
@@ -177,7 +177,7 @@ public class VoucherServiceTest {
     }
 
     @Test
-    void userHasNoVoucher_IllegalVoucherClaim() {
+    void userHasNoVoucher_expectsEmptyOptional() {
         long proposerId = 1L;
         long partnerId = 2L;
         long meetingId = 1L;
@@ -193,7 +193,7 @@ public class VoucherServiceTest {
 
         when(voucherRepository.getVoucherEntityByProfileIdAndMeetingId(proposerId, meetingId)).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(IllegalVoucherClaim.class, () -> voucherService.getVoucherByProfileIdAndMeetingId(proposerId, meetingId));
+        Assertions.assertEquals(Optional.empty(),voucherService.getVoucherByProfileIdAndMeetingId(proposerId, meetingId));
 
     }
 }
