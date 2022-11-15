@@ -28,7 +28,7 @@ public class VoucherCSVHelper {
 
             return voucherEntities;
         } catch (IOException ex) {
-            throw new RuntimeException("fail to parse CSV file: " + ex.getMessage());
+            return List.of();
         }
     }
 }

@@ -38,7 +38,7 @@ public class VoucherControllerTest {
     private VoucherController voucherController;
 
     @Test
-    void testServiceRespondsVoucherOptional_expectHTTPOkAndVoucherDto(){
+    void testServiceRespondsVoucherOptional_expectHTTPOkAndVoucherCode(){
         long proposerId = 1L;
         long meetingId = 1L;
         UUID uuid = UUID.randomUUID();
@@ -51,17 +51,17 @@ public class VoucherControllerTest {
         VoucherEntity voucherEntity = new VoucherEntity(uuid,profile,"code",meeting);
         VoucherDto expectedDto = new VoucherDto(uuid,"code",1L,1L);
 
-        when(voucherMapper.mapEntityToDto(voucherEntity)).thenReturn(expectedDto);
+
 
         try {
             when(voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId)).thenReturn(Optional.of(voucherEntity));
         } catch (VoucherService.IllegalVoucherClaim e) {
-            throw new RuntimeException(e);
+           Assertions.fail();
         }
 
         ResponseEntity<?> resp =  voucherController.claimVoucher(proposerId,meetingId);
         assertEquals(HttpStatus.OK, resp.getStatusCode());
-        assertEquals(expectedDto, resp.getBody());
+        assertEquals(expectedDto.getVoucherCode(), resp.getBody());
     }
 
     @Test
@@ -71,7 +71,7 @@ public class VoucherControllerTest {
         try {
             when(voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId)).thenReturn(Optional.empty());
         } catch (VoucherService.IllegalVoucherClaim e) {
-            throw new RuntimeException(e);
+            Assertions.fail();
         }
 
         assertEquals(new ResponseEntity<>(HttpStatus.NOT_FOUND), voucherController.claimVoucher(proposerId,meetingId));
@@ -84,7 +84,7 @@ public class VoucherControllerTest {
         try {
             when(voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId)).thenThrow(VoucherService.IllegalVoucherClaim.class);
         } catch (VoucherService.IllegalVoucherClaim e) {
-            throw new RuntimeException(e);
+            Assertions.fail();
         }
 
         assertEquals(new ResponseEntity<>(HttpStatus.FORBIDDEN), voucherController.claimVoucher(proposerId,meetingId));

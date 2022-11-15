@@ -49,8 +49,7 @@ public class VoucherController {
             String html = voucherEntity.get().getVoucher();
             return ResponseEntity.ok().body(html);
         } catch (VoucherService.IllegalVoucherClaim e) {
-            String errorHtml = "<html> <body> <h5>UPSI! Leider ist etwas schief gelaufen. <br> Vielen dank für deine Teilnahme am Diversity Lunch.</h5> </body> <html>";
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorHtml);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
