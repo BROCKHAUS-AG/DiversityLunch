@@ -5,10 +5,10 @@ import { PopUp } from './userAdministration/PopUp';
 export const VoucherUpload: FC = () => {
     const [selectedCsvFile, setSelectedCsvFile] = useState();
     const [uploadSuccess, setUploadSuccess] = useState(false);
-    const [voucherState, setVoucherstate] = useState('');
+    const [voucherState, setVoucherState] = useState('');
     useEffect(() => {
         UpdateVoucherAmount();
-    });
+    }, []);
 
     const uploadCSVToFrontend = (event: any) => {
         setSelectedCsvFile(event.target.files[0]);
@@ -30,9 +30,9 @@ export const VoucherUpload: FC = () => {
     const UpdateVoucherAmount = async () => {
         const amountResp : Response = await authenticatedFetchGet('api/voucher/amount');
         if (amountResp.status === 200) {
-            setVoucherstate(JSON.stringify(await amountResp.json()));
+            setVoucherState(JSON.stringify(amountResp.json()));
         } else {
-            setVoucherstate('FEHLER');
+            setVoucherState('FEHLER');
         }
     };
 
