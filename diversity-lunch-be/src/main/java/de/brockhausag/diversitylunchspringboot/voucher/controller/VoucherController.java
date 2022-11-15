@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.reactive.result.view.RedirectView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,9 +35,14 @@ public class VoucherController {
     @PreAuthorize("isProfileOwner(#profileId)")
     @PutMapping("/claim/{profileId}/{meetingId}")
     public ResponseEntity<?> claimVoucher(@PathVariable Long profileId, @PathVariable Long meetingId) {
-        //todo: Call new service method to get Voucher by meetingId and profileId
         try {
-            Optional<VoucherEntity> voucherEntity = voucherService.getUnclaimedVoucherForMeeting(profileId, meetingId);
+            Optional<VoucherEntity> voucherEntity;
+            if(voucherService.checkForClaimedVoucher(profileId,meetingId)){
+                voucherEntity = voucherService.getVoucherByProfileIdAndMeetingId(profileId,meetingId);
+            }else{
+                voucherEntity = voucherService.getUnclaimedVoucherForMeeting(profileId, meetingId);
+            }
+
             if (voucherEntity.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
