@@ -18,6 +18,7 @@ import static org.mockito.Mockito.when;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
 public class VoucherServiceTest {
@@ -159,5 +160,33 @@ public class VoucherServiceTest {
         when(meetingRepository.getById(meetingId)).thenReturn(meeting);
 
         Assertions.assertThrows(VoucherService.IllegalVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(proposerId,meetingId));
+    }
+    @Test
+    void UserAlreadyClaimedVoucherForThisMeeting_expectsAlreadyClaimedUser() {
+        long proposerId = 1L;
+        long partnerId = 2L;
+        long meetingId = 1L;
+
+
+        ProfileEntity proposer = new ProfileEntity();
+        proposer.setId(proposerId);
+
+        ProfileEntity partner = new ProfileEntity();
+        partner.setId(partnerId);
+
+        MeetingEntity meeting = new MeetingEntity();
+        meeting.setId(meetingId);
+        meeting.setPartner(partner);
+        meeting.setProposer(proposer);
+
+        VoucherEntity voucherEntity = new VoucherEntity(UUID.randomUUID(),proposer,"1234",meeting);
+        when(voucherRepository.getVoucherEntityByProfileIdAndMeetingId(proposerId, meetingId)).thenReturn(Optional.of(voucherEntity));
+        try {
+            VoucherEntity voucherActual = voucherService.getVoucherByProfileIdAndMeetingId(proposerId,meetingId).get();
+            Assertions.assertEquals(voucherEntity, voucherActual);
+        } catch (VoucherService.IllegalVoucherClaim e) {
+            Assertions.fail();
+        }
+
     }
 }
