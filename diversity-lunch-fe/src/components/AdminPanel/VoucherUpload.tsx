@@ -30,7 +30,7 @@ export const VoucherUpload: FC = () => {
     const UpdateVoucherAmount = async () => {
         const amountResp : Response = await authenticatedFetchGet('api/voucher/amount');
         if (amountResp.status === 200) {
-            setVoucherState(JSON.stringify(amountResp.json()));
+            setVoucherState(await amountResp.text());
         } else {
             setVoucherState('FEHLER');
         }

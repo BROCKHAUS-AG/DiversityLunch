@@ -59,10 +59,4 @@ describe('Admin Panel', () => {
         const message = await screen.findByText('Testmail gesendet');
         expect(message).toBeInTheDocument();
     });
-    it('should display a message when clicking the Send Testmail button', async () => {
-        renderContainer(Role.ADMIN);
-        jest.spyOn(fetcher, 'authenticatedFetchGet').mockImplementation(async () => new Response('2', { status: 200, statusText: 'ok' }));
-        const message = await screen.findByText('Es sind 2 Gutscheine vorhanden');
-        expect(message).toBeInTheDocument();
-    });
 });
