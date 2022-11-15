@@ -1,6 +1,6 @@
 @import "src/styles/core/reset";
 
-.ShowVoucher{
+.ShowVouchers{
   background-color: #f0f0f0;
   width: 100%;
   max-width: 700px;
@@ -18,18 +18,7 @@
   text-align: center;
 }
 
-.ShowVoucher-code{
-  height: 10%;
-  width: 70%;
-  border-style: dashed;
-  border-width: 3px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-}
-
-.ShowVoucher-code-text{
+.ShowVoucherList{
   margin: 10%;
   margin-bottom: 3%;
   font-size: 2.2em;

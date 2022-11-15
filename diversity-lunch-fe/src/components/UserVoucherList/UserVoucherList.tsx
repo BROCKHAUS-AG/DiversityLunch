@@ -1,27 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { AccountState, AccountStateOk } from '../../data/account/account-state.type';
 import { AppStoreState } from '../../store/Store';
 import { Account } from '../../types/Account';
 import { authenticatedFetchGet } from '../../utils/fetch.utils';
+import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 
 export const UserVoucherList = () => {
     const accountState: AccountState = useSelector((store: AppStoreState) => store.account);
     const account: Account = (accountState as AccountStateOk).accountData;
-    const voucherList:string[] = [];
+    const [voucherList, setVoucherList] = useState([]);
 
-    const FillVoucherList = async (profileId: number) => {
+    const getVoucherList = async (profileId: number) => {
         const response = await authenticatedFetchGet(`/api/voucher/get/${profileId}`);
         if (response.ok) {
-            response.json().then(((jsonRes) => jsonRes.forEach((element: any, i: any) => voucherList.push(element[i].voucherCode))));
-        } throw Error();
+            setVoucherList(await response.json());
+        }
     };
 
-    useEffect(() => { FillVoucherList(account.profileId); }, []);
+    useEffect(() => { getVoucherList(account.profileId); }, []);
 
     return (
-        <ul>
-            {voucherList.map((voucher) => (<li>{voucher}</li>))}
-        </ul>
+        <div className="ShowVouchers">
+            <DiversityIconContainer title="GUTSCHEIN-ÜBERSICHT" />
+            <p className="ShowVoucher-text">Hier findest du deine persönlichen Gutscheine</p>
+            <ul className="ShowVoucherList">
+                {voucherList.map((voucher: any) => (<li key={voucher.uuid}>{voucher.voucherCode}</li>))}
+            </ul>
+        </div>
     );
 };
