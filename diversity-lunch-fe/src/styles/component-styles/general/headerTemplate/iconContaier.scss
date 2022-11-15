@@ -6,6 +6,12 @@
   width: 100%;
 }
 
+.icon-container{
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end;
+}
+
 .IconHeader-admin-icon{
   width: 35px;
   float: right;

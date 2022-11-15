@@ -27,8 +27,11 @@ export const Dashboard = () => {
 
     return (
         <div className="Dashboard">
-            {isAdmin && <AdminPanelIconContainer />}
-            <UserVoucherIconContainer />
+            <div className="icon-container">
+                {isAdmin && <AdminPanelIconContainer />}
+                <UserVoucherIconContainer />
+            </div>
+
             <DiversityIconContainer title="DIVERSITY LUNCH" poweredBy />
 
             <div className="Dashboard-tiles-container">
