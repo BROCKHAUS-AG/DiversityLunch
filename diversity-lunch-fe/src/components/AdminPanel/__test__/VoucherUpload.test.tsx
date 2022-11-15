@@ -6,6 +6,7 @@ import React, { FC, useEffect } from 'react';
 
 import { BrowserRouter } from 'react-router-dom';
 import { Provider, useDispatch } from 'react-redux';
+import * as redux from 'react-redux';
 import * as fetcher from '../../../utils/fetch.utils';
 import { APP_STORE } from '../../../store/Store';
 import { loadAccount } from '../../../data/account/account.actions';
@@ -47,13 +48,28 @@ describe('VoucherUpload', () => {
         const voucherCode = await screen.findByText('Der Upload war erfolgreich!');
         expect(voucherCode).toBeInTheDocument();
     });
+    it('Should dispatch Error', async () => {
+        jest.spyOn(fetcher, 'authenticatedFetchGet')
+            .mockImplementation(mockedFetchGetUsableAccount());
+        jest.spyOn(fetcher, 'authenticatedFetchGet')
+            .mockImplementation(async () => new Response('', { status: 403, statusText: 'NOT_FOUND' }));
+        renderContainer();
+        const mockDispatch = jest.fn();
+        jest.spyOn(redux, 'useDispatch').mockImplementation(() => mockDispatch);
+
+        const uploadButton = await screen.findByText('Upload');
+        act(() => {
+            fireEvent.click(uploadButton);
+        });
+        expect(mockDispatch).toBeCalledTimes(1);
+    });
     it('should display the correct amount of vouchers', async () => {
         jest.spyOn(fetcher, 'authenticatedFetchGet')
             .mockImplementation(mockedFetchGetUsableAccount());
         jest.spyOn(fetcher, 'authenticatedFetchGet')
             .mockImplementation(async () => new Response('2', { status: 200, statusText: 'ok' }));
         renderContainer();
-        const message = await screen.findByText('Es sind 2 Gutscheine vorhanden.');
+        const message = await screen.findByText('2 Gutschein(e) vorhanden.');
         expect(message).toBeInTheDocument();
     });
 });

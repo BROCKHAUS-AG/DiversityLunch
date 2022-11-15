@@ -4,6 +4,7 @@ import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.voucher.exception.IllegalVoucherClaim;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;
 import de.brockhausag.diversitylunchspringboot.voucher.repository.VoucherRepository;
 import org.junit.jupiter.api.Assertions;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import static org.mockito.Mockito.when;
 
 
@@ -34,6 +36,7 @@ public class VoucherServiceTest {
 
     @Mock
     private ProfileRepository profileRepository;
+
     @Test
     void getVoucherBasedOnMeetingWithoutClaimedVoucher_expectsVoucherInReturn() {
         VoucherEntity expected = new VoucherEntity("code");
@@ -60,11 +63,12 @@ public class VoucherServiceTest {
         try {
             Optional<VoucherEntity> voucherEntity = voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId);
             Assertions.assertNotNull(voucherEntity);
-            Assertions.assertEquals( expected.getVoucher(), voucherEntity.get().getVoucher());
-        }catch (VoucherService.IllegalVoucherClaim e){
+            Assertions.assertEquals(expected.getVoucher(), voucherEntity.get().getVoucher());
+        } catch (IllegalVoucherClaim e) {
             Assertions.fail();
         }
     }
+
     @Test
     void meetingExists_butUserWasNotAParticipant_expectsExceptionThrown() {
         long proposerId = 1L;
@@ -78,41 +82,27 @@ public class VoucherServiceTest {
         ProfileEntity partner = new ProfileEntity();
         partner.setId(partnerId);
 
-        MeetingEntity meeting = new MeetingEntity();
-        meeting.setId(meetingId);
-        meeting.setPartner(partner);
-        meeting.setProposer(proposer);
         when(meetingRepository.getById(meetingId)).thenReturn(null);
 
-            Assertions.assertThrows(VoucherService.IllegalVoucherClaim.class,() -> voucherService.getUnclaimedVoucherForMeeting(3L, meetingId));
+        Assertions.assertThrows(IllegalVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(3L, meetingId));
 
     }
 
     @Test
     void meetingDoesNotExists_expectsExceptionThrown() {
         long proposerId = 1L;
-        long partnerId = 2L;
         long meetingId = 1L;
 
         ProfileEntity proposer = new ProfileEntity();
         proposer.setId(proposerId);
         when(profileRepository.findById(proposerId)).thenReturn(Optional.of(proposer));
-
-        ProfileEntity partner = new ProfileEntity();
-        partner.setId(partnerId);
-
-        MeetingEntity meeting = new MeetingEntity();
-        meeting.setId(meetingId);
-        meeting.setPartner(partner);
-        meeting.setProposer(proposer);
-
-
-        Assertions.assertThrows(VoucherService.IllegalVoucherClaim.class,() -> voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId + 1));
+        when(meetingRepository.findById(2L)).thenReturn(Optional.empty());
+        Assertions.assertThrows(IllegalVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId + 1));
 
     }
 
     @Test
-    void UserIsEligible_butThereAreNoMoreClaimableVouchers_expects_NOT_FOUND() {
+    void userIsEligible_butThereAreNoMoreClaimableVouchers_expects_ExceptionThrown() {
         long proposerId = 1L;
         long partnerId = 2L;
         long meetingId = 1L;
@@ -133,13 +123,11 @@ public class VoucherServiceTest {
         meeting.setProposer(proposer);
         when(meetingRepository.getById(meetingId)).thenReturn(meeting);
 
-        Assertions.assertThrows(VoucherService.IllegalVoucherClaim.class,() -> voucherService.getUnclaimedVoucherForMeeting(proposerId,meetingId));
-
-
+        Assertions.assertThrows(IllegalVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId));
     }
 
     @Test
-    void UserAlreadyClaimedVoucherForThisMeeting_expectsIllegalClaimException() {
+    void userAlreadyClaimedVoucherForThisMeeting_expectsIllegalClaimException() {
         long proposerId = 1L;
         long partnerId = 2L;
         long meetingId = 1L;
@@ -159,10 +147,11 @@ public class VoucherServiceTest {
         meeting.setProposer(proposer);
         when(meetingRepository.getById(meetingId)).thenReturn(meeting);
 
-        Assertions.assertThrows(VoucherService.IllegalVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(proposerId,meetingId));
+        Assertions.assertThrows(IllegalVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId));
     }
+
     @Test
-    void UserAlreadyClaimedVoucherForThisMeeting_expectsAlreadyClaimedUser() {
+    void userAlreadyClaimedVoucherForThisMeeting_expectsAlreadyClaimedUser() {
         long proposerId = 1L;
         long partnerId = 2L;
         long meetingId = 1L;
@@ -179,17 +168,16 @@ public class VoucherServiceTest {
         meeting.setPartner(partner);
         meeting.setProposer(proposer);
 
-        VoucherEntity voucherEntity = new VoucherEntity(UUID.randomUUID(),proposer,"1234",meeting);
+        VoucherEntity voucherEntity = new VoucherEntity(UUID.randomUUID(), proposer, "1234", meeting);
         when(voucherRepository.getVoucherEntityByProfileIdAndMeetingId(proposerId, meetingId)).thenReturn(Optional.of(voucherEntity));
-        try {
-            VoucherEntity voucherActual = voucherService.getVoucherByProfileIdAndMeetingId(proposerId,meetingId).get();
-            Assertions.assertEquals(voucherEntity, voucherActual);
-        } catch (VoucherService.IllegalVoucherClaim e) {
-            Assertions.fail();
-        }
+
+        VoucherEntity voucherActual = voucherService.getVoucherByProfileIdAndMeetingId(proposerId, meetingId).get();
+        Assertions.assertEquals(voucherEntity, voucherActual);
+
     }
+
     @Test
-    void UserHasNotVoucher_IllegalVoucherClaim() {
+    void userHasNoVoucher_IllegalVoucherClaim() {
         long proposerId = 1L;
         long partnerId = 2L;
         long meetingId = 1L;
@@ -201,15 +189,11 @@ public class VoucherServiceTest {
         ProfileEntity partner = new ProfileEntity();
         partner.setId(partnerId);
 
-        MeetingEntity meeting = new MeetingEntity();
-        meeting.setId(meetingId);
-        meeting.setPartner(partner);
-        meeting.setProposer(proposer);
 
 
         when(voucherRepository.getVoucherEntityByProfileIdAndMeetingId(proposerId, meetingId)).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(VoucherService.IllegalVoucherClaim.class,() -> voucherService.getVoucherByProfileIdAndMeetingId(proposerId,meetingId));
+        Assertions.assertThrows(IllegalVoucherClaim.class, () -> voucherService.getVoucherByProfileIdAndMeetingId(proposerId, meetingId));
 
     }
 }

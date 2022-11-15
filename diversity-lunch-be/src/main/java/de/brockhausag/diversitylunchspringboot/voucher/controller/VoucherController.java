@@ -1,5 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.voucher.controller;
 
+import de.brockhausag.diversitylunchspringboot.voucher.exception.IllegalVoucherClaim;
 import de.brockhausag.diversitylunchspringboot.voucher.mapper.VoucherMapper;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;
@@ -30,16 +31,17 @@ public class VoucherController {
     @GetMapping("/amount")
     @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).ADMIN_ROLE_ASSIGN)")
     public ResponseEntity<Integer> getAmountOfVouchersStored() {
-        return ResponseEntity.ok( voucherService.getAmountOfVouchersStored());
+        return ResponseEntity.ok(voucherService.getAmountOfVouchersStored());
     }
+
     @PreAuthorize("isProfileOwner(#profileId)")
     @PutMapping("/claim/{profileId}/{meetingId}")
     public ResponseEntity<?> claimVoucher(@PathVariable Long profileId, @PathVariable Long meetingId) {
         try {
             Optional<VoucherEntity> voucherEntity;
-            if(voucherService.checkForClaimedVoucher(profileId,meetingId)){
-                voucherEntity = voucherService.getVoucherByProfileIdAndMeetingId(profileId,meetingId);
-            }else{
+            if (voucherService.checkForClaimedVoucher(profileId, meetingId)) {
+                voucherEntity = voucherService.getVoucherByProfileIdAndMeetingId(profileId, meetingId);
+            } else {
                 voucherEntity = voucherService.getUnclaimedVoucherForMeeting(profileId, meetingId);
             }
 
@@ -48,7 +50,7 @@ public class VoucherController {
             }
             String html = voucherEntity.get().getVoucher();
             return ResponseEntity.ok().body(html);
-        } catch (VoucherService.IllegalVoucherClaim e) {
+        } catch (IllegalVoucherClaim e) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
@@ -69,12 +71,10 @@ public class VoucherController {
     public ResponseEntity<?> postVouchers(@RequestParam("file") MultipartFile file) {
         try {
             List<VoucherEntity> voucherEntities = VoucherCSVHelper.csvToVoucherEntities(file.getInputStream());
-            boolean success = voucherService.saveVouchers(voucherEntities);
-            if (success) {
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
-            }
+            voucherService.saveVouchers(voucherEntities);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
