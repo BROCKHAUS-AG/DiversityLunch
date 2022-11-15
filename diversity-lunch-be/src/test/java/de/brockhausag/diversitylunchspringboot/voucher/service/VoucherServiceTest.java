@@ -187,6 +187,29 @@ public class VoucherServiceTest {
         } catch (VoucherService.IllegalVoucherClaim e) {
             Assertions.fail();
         }
+    }
+    @Test
+    void UserHasNotVoucher_IllegalVoucherClaim() {
+        long proposerId = 1L;
+        long partnerId = 2L;
+        long meetingId = 1L;
+
+
+        ProfileEntity proposer = new ProfileEntity();
+        proposer.setId(proposerId);
+
+        ProfileEntity partner = new ProfileEntity();
+        partner.setId(partnerId);
+
+        MeetingEntity meeting = new MeetingEntity();
+        meeting.setId(meetingId);
+        meeting.setPartner(partner);
+        meeting.setProposer(proposer);
+
+
+        when(voucherRepository.getVoucherEntityByProfileIdAndMeetingId(proposerId, meetingId)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(VoucherService.IllegalVoucherClaim.class,() -> voucherService.getVoucherByProfileIdAndMeetingId(proposerId,meetingId));
 
     }
 }
