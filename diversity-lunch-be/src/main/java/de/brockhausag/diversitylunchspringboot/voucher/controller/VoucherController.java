@@ -48,8 +48,7 @@ public class VoucherController {
             if (voucherEntity.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            String html = voucherEntity.get().getVoucher();
-            return ResponseEntity.ok().body(html);
+            return ResponseEntity.ok().body(voucherEntity.get().getVoucher());
         } catch (IllegalVoucherClaim e) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
