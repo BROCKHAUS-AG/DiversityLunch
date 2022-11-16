@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import '../../styles/component-styles/voucherpanel/voucherPanel.scss';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import { Button } from '../General/Button/Button';
 import { AppStoreState } from '../../store/Store';
 import { authenticatedFetchPut } from '../../utils/fetch.utils';
-import { AccountState, AccountStateOk } from '../../data/account/account-state.type';
+import { AccountState } from '../../data/account/account-state.type';
 import { Account } from '../../types/Account';
 import { PopUp } from '../AdminPanel/userAdministration/PopUp';
 import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
@@ -15,18 +16,19 @@ export const VoucherPanel = () => {
     const [voucherCode, setVoucherCode] = useState('empty');
     const [isError, setError] = useState(false);
     const accountState: AccountState = useSelector((store: AppStoreState) => store.account);
-    const account: Account = (accountState as AccountStateOk).accountData;
-
-    const extractMeetingIdFromURL = () => {
-        const url = String(window.location.pathname);
-        return Number(url.split('/').pop());
+    type MeetingParams = {
+        id: string;
     };
+    const { id } = useParams<MeetingParams>();
+    let account: Account;
+    if (accountState.status === 'OK') {
+        account = accountState.accountData;
+    }
 
     const retrieveVoucherCode = async () => {
-        const meetingId = extractMeetingIdFromURL();
         const { profileId } = account;
 
-        const response = await authenticatedFetchPut(`/api/voucher/claim/${profileId}/${meetingId}`, '');
+        const response = await authenticatedFetchPut(`/api/voucher/claim/${profileId}/${id}`, '');
         if (response.ok) {
             const voucher = await response.json();
             setVoucherCode(voucher);
@@ -35,8 +37,8 @@ export const VoucherPanel = () => {
             setError(true);
         }
     };
-    const copyToClipboard = () => {
-        navigator.clipboard.writeText(voucherCode);
+    const copyToClipboard = async () => {
+        await navigator.clipboard.writeText(voucherCode);
     };
     return (
         <section className="view">

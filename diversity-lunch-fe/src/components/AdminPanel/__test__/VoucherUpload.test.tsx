@@ -6,7 +6,6 @@ import React, { FC, useEffect } from 'react';
 
 import { BrowserRouter } from 'react-router-dom';
 import { Provider, useDispatch } from 'react-redux';
-import * as redux from 'react-redux';
 import * as fetcher from '../../../utils/fetch.utils';
 import { APP_STORE } from '../../../store/Store';
 import { loadAccount } from '../../../data/account/account.actions';
@@ -54,14 +53,13 @@ describe('VoucherUpload', () => {
         jest.spyOn(fetcher, 'authenticatedFetchGet')
             .mockImplementation(async () => new Response('', { status: 403, statusText: 'NOT_FOUND' }));
         renderContainer();
-        const mockDispatch = jest.fn();
-        jest.spyOn(redux, 'useDispatch').mockImplementation(() => mockDispatch);
 
         const uploadButton = await screen.findByText('Upload');
         act(() => {
             fireEvent.click(uploadButton);
         });
-        expect(mockDispatch).toBeCalledTimes(1);
+        const message = await screen.findByText('Ein Fehler ist aufgetreten');
+        expect(message).toBeInTheDocument();
     });
     it('should display the correct amount of vouchers', async () => {
         jest.spyOn(fetcher, 'authenticatedFetchGet')

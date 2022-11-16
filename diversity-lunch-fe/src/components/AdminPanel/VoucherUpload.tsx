@@ -1,16 +1,14 @@
 import React, {
     ChangeEvent, FC, useEffect, useState,
 } from 'react';
-import { useDispatch } from 'react-redux';
 import { authenticatedFetchGet, authenticatedFetchPostCsv } from '../../utils/fetch.utils';
 import { PopUp } from './userAdministration/PopUp';
-import { globalErrorSlice } from '../../data/error/global-error-slice';
 
 export const VoucherUpload: FC = () => {
     const [selectedCsvFileState, setSelectedCsvFileState] = useState<File | undefined>(undefined);
     const [uploadState, setUploadState] = useState(false);
+    const [isError, setError] = useState(false);
     const [voucherState, setVoucherState] = useState('');
-    const dispatch = useDispatch();
     useEffect(() => {
         updateVoucherAmount();
     }, []);
@@ -38,7 +36,7 @@ export const VoucherUpload: FC = () => {
         if (amountResp.status === 200) {
             setVoucherState(await amountResp.text());
         } else {
-            dispatch(globalErrorSlice.httpError({ statusCode: amountResp.status }));
+            setError(true);
         }
     };
 
@@ -64,12 +62,22 @@ export const VoucherUpload: FC = () => {
                 </div>
             </div>
             {
-                uploadState
+                (uploadState)
                 && (
                     <PopUp
                         message="Der Upload war erfolgreich!"
                         buttonText="Okay"
                         onButtonClick={() => setUploadState(false)}
+                    />
+                )
+            }
+            {
+                (isError)
+                && (
+                    <PopUp
+                        message="Ein Fehler ist aufgetreten"
+                        buttonText="Okay"
+                        onButtonClick={() => setError(false)}
                     />
                 )
             }

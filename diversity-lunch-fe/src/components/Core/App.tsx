@@ -65,7 +65,7 @@ export const App = () => (
                         <BookingError />
                     </Route>
 
-                    <Route path="/voucherClaim">
+                    <Route path="/voucherClaim/:id">
                         <VoucherPanel />
                     </Route>
 

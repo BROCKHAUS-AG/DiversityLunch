@@ -1,4 +1,4 @@
-.DeleteMeetingPopUp {
+.GeneralPopUp {
   margin: 0 auto;
   text-align: center;
   position: fixed;
@@ -15,7 +15,7 @@
   background: rgba(0, 0, 0, 0.5)
 }
 
-.DeleteMeetingPopUp-container {
+.GeneralPopUp-container {
   width: 80%;
   height: 50%;
   max-width: 450px;
@@ -29,7 +29,7 @@
   align-items: center;
 }
 
-.DeleteMeetingPopUp-text{
+.GeneralPopUp-text{
   max-width: 380px;
 }
 
