@@ -51,7 +51,6 @@ export const authenticatedFetchPostCsv = (url: string, data: any) => {
         body: data,
         headers: {
             Authorization: bearerToken,
-            // 'Content-Type': 'multipart/form-data',
         },
     });
 };
