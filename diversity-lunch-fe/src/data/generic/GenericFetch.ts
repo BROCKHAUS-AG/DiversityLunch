@@ -1,4 +1,3 @@
-// import {add, initFetch, remove, update} from "./category-reducer";
 import { Dispatch } from '@reduxjs/toolkit';
 import { Identifiable } from './Identifiable';
 import { GenericSlice } from './GenericSlice';
