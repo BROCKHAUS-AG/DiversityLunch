@@ -1,0 +1,25 @@
+.IconHeader{
+  width: 100%;
+}
+
+.IconHeader-header-container{
+  width: 100%;
+}
+
+.icon-container{
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end;
+}
+
+.IconHeader-admin-icon{
+  width: 35px;
+  float: right;
+  margin: 20px;
+}
+
+.IconHeader-user-voucher-icon{
+  width: 35px;
+  float: right;
+  margin: 20px;
+}
