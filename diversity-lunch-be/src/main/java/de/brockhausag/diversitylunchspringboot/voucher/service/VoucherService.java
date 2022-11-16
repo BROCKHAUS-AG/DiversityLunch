@@ -1,5 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.voucher.service;
 
+import com.google.common.collect.Iterables;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
@@ -32,7 +33,7 @@ public class VoucherService {
         Optional<VoucherEntity> voucherEntity = voucherRepository.getFirstByProfileIsNullAndMeetingIsNull();
 
         if (meeting.isEmpty()|| profileEntity.isEmpty() || !(meeting.get().getPartner().getId() == profileId || meeting.get().getProposer().getId() == profileId)) {
-            throw new IllegalVoucherClaim(NOT_ALLOWED);
+            throw new IllegalVoucherClaim(NOT_ALLOWED); // TODO: Different kinds of exceptions classes should be use instead of differentiating them by some string like NOT_ALLOWED, ALREADE_CLAIMED,  or NOT_FOUND. These exceptions should inherit from IllegalVoucherClaim exception. ~tgohlisch 16.11.2022
         }
         if (voucherRepository.existsByProfileIdAndMeetingId(profileId, meetingId)) {
             throw new IllegalVoucherClaim(ALREADY_CLAIMED);
@@ -62,7 +63,7 @@ public class VoucherService {
     }
 
     public void saveVouchers(Iterable<VoucherEntity> voucherEntities) {
-        voucherRepository.saveAll(voucherEntities);
+        Iterable<VoucherEntity> savedVouchers = voucherRepository.saveAll(voucherEntities);
     }
 
     public int getAmountOfVouchersStored() {
