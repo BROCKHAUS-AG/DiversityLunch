@@ -11,14 +11,16 @@ import { Account } from '../../types/Account';
 import { PopUp } from '../AdminPanel/userAdministration/PopUp';
 import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
 
+export type MeetingParams = {
+    id: string;
+};
+
 export const VoucherPanel = () => {
     const [revealed, setRevealed] = useState(false);
     const [voucherCode, setVoucherCode] = useState('empty');
     const [isError, setError] = useState(false);
     const accountState: AccountState = useSelector((store: AppStoreState) => store.account);
-    type MeetingParams = {
-        id: string;
-    };
+
     const { id } = useParams<MeetingParams>();
     let account: Account;
     if (accountState.status === 'OK') {
