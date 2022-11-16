@@ -14,6 +14,7 @@ import de.brockhausag.diversitylunchspringboot.meeting.service.MsTeamsService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -31,6 +32,8 @@ public class MatchingService {
     private final DiversityLunchEMailService eMailService;
     private final MsTeamsService msTeamsService;
     private static final Random random = new Random();
+    @Value("${diversity.url.baseUrl}")
+    private String BASE_URL;
 
     public void matching(LocalDateTime proposedDateTime, LocalDateTime today){
         if(proposedDateTime == null || today == null ){
@@ -100,9 +103,8 @@ public class MatchingService {
         int randomIndex = random.nextInt(questions.size());
         return questions.get(randomIndex);
     }
-
     public void sendQuestions(LocalDateTime now) {
-        String BASE_URL="https://diversitylunch.brockhaus-ag.de";
+
 
         log.debug("Sending Emails...");
         LocalDateTime modified = now.truncatedTo(ChronoUnit.MINUTES).with(roundMinutesDownToHalfAndFull()).plusHours(1);

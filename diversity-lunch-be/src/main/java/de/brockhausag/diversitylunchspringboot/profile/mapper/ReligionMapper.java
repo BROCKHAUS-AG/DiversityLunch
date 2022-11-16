@@ -2,7 +2,7 @@ package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ReligionDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ReligionEntity;
-import de.brockhausag.diversitylunchspringboot.profile.utils.Mapper;
+import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

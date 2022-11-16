@@ -1,22 +1,17 @@
 package de.brockhausag.diversitylunchspringboot.voucher.controller;
 
-import de.brockhausag.diversitylunchspringboot.account.mapper.AccountMapperImpl;
-import de.brockhausag.diversitylunchspringboot.dataFactories.AccountTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.voucher.exception.IllegalVoucherClaim;
-import de.brockhausag.diversitylunchspringboot.voucher.mapper.VoucherMapper;
 import de.brockhausag.diversitylunchspringboot.voucher.mapper.VoucherMapperImpl;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;
 import de.brockhausag.diversitylunchspringboot.voucher.service.VoucherService;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +28,7 @@ public class VoucherControllerTest {
     private VoucherService voucherService;
 
     @Mock
-    private VoucherMapper voucherMapper;
+    private VoucherMapperImpl voucherMapper;
 
     @InjectMocks
     private VoucherController voucherController;

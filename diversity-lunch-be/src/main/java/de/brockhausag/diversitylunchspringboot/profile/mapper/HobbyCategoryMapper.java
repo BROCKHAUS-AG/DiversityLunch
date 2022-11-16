@@ -2,7 +2,7 @@ package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyCategoryDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyCategoryEntity;
-import de.brockhausag.diversitylunchspringboot.profile.utils.Mapper;
+import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

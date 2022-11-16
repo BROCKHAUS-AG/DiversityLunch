@@ -56,7 +56,7 @@ export const VoucherUpload: FC = () => {
                 <div>
                     <label>
                         <p>Zum Hochladen ziehe .csv Files im CSV-Format RFC4180 in das Upload Fenster</p>
-                        <input type="file" accept=".csv" onChange={uploadCSVToFrontend} />
+                        <input placeholder="Datei hier reinziehen" type="file" accept=".csv" onChange={uploadCSVToFrontend} />
                         <button disabled={!selectedCsvFileState} onClick={uploadCSVFile}>Upload</button>
                     </label>
                 </div>
