@@ -7,12 +7,12 @@ export const VoucherUpload: FC = () => {
     const [selectedCsvFile, setSelectedCsvFile] = useState();
     const [uploadSuccess, setUploadSuccess] = useState(false);
     const [voucherCountState, setVoucherCountState] = useState('');
-    const [showVoucherList, setShowVoucherList] = useState(false);
     const [voucherList, setVoucherList] = useState<[]>([]);
 
     useEffect(() => {
         UpdateVoucherAmount();
-    }, [voucherCountState]);
+        toggleVoucherList();
+    }, [uploadSuccess]);
 
     const uploadCSVToFrontend = (event: any) => {
         setSelectedCsvFile(event.target.files[0]);
@@ -51,11 +51,10 @@ export const VoucherUpload: FC = () => {
 
     const toggleVoucherList = async () => {
         await getAllVouchers();
-        setShowVoucherList(true);
     };
 
     return (
-        <div className="test">
+        <div>
             <div className="CSVUploadContainer">
                 <p className="CSVUploadTitle">Gutschein Upload</p>
 
@@ -67,11 +66,12 @@ export const VoucherUpload: FC = () => {
                         {' '}
                         Gutscheine vorhanden.
                     </p>
-                </div>
-                <div>
-                    <button onClick={toggleVoucherList}>Gutscheinliste</button>
-                    {showVoucherList
-                        && <VoucherList vouchers={voucherList} />}
+                    <details>
+                        <summary className="editListTitle">
+                            Gutscheincodes anzeigen
+                        </summary>
+                        <VoucherList vouchers={voucherList} />
+                    </details>
                 </div>
 
                 <div>
