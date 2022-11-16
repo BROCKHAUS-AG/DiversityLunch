@@ -58,3 +58,5 @@ diversity:
 
   groups:
     admin-group-name: "${ADMIN_GROUP_NAME}"
+  url:
+    baseUrl: "${BASE_URL}"

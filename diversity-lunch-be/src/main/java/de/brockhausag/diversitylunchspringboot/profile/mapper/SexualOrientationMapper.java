@@ -2,7 +2,7 @@ package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.SexualOrientationDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.SexualOrientationEntity;
-import de.brockhausag.diversitylunchspringboot.profile.utils.Mapper;
+import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;

@@ -55,7 +55,7 @@ input:focus {
 
 .usersList{
   display: grid;
-    grid-template-columns: 65% 25% 10%;
+  grid-template-columns: 65% 25% 10%;
   gap: 0px 0px;
 
   letter-spacing: 0.015em;
@@ -74,6 +74,19 @@ input:focus {
 .usersList button{
   margin: 5px;
   font-weight: bolder;
+}
+
+.CSVUploadTitle{
+  font-weight: 500;
+  font-size: 1.3rem;
+}
+
+.CSVUploadContainer {
+  padding: 20px;
+}
+
+.CSVUploadContainer div{
+  margin: 20px;
 }
 
 .optionsListContainer {

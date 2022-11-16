@@ -11,6 +11,7 @@ import { projectFetch } from '../../data/project/project-fetch';
 import { OptionsList } from './OptionsList';
 import { hobbyFetch } from '../../data/hobby/fetch-hobby';
 import { UserList } from './user-list';
+import { VoucherUpload } from './VoucherUpload';
 import { authenticatedFetchPost } from '../../utils/fetch.utils';
 import { PopUp } from './userAdministration/PopUp';
 import '../../styles/component-styles/adminPanel/adminPanel.scss';
@@ -55,6 +56,8 @@ export const AdminPanel: FC = () => {
             <OptionsList state={projectState} fetch={projectFetch} title="Projektliste anpassen" addButtonLabel="Projekt hinzufügen" />
 
             <OptionsList state={hobbyState} fetch={hobbyFetch} title="Hobbyliste anpassen" addButtonLabel="Hobby hinzufügen" />
+            <VoucherUpload />
+
             <div className="customContainer">
                 <button className="testmailButton" onClick={sendTestmail}>Testmail verschicken</button>
             </div>

@@ -1,0 +1,48 @@
+@import "src/styles/core/reset";
+
+.ShowVoucher{
+  background-color: #f0f0f0;
+  width: 100%;
+  max-width: 700px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 75px;
+}
+
+.ShowVoucher-container{
+  width: 100%;
+  align-items: center;
+}
+
+.ShowVoucher-text{
+  margin: 10%;
+  margin-bottom: 3%;
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.ShowVoucher-code{
+  height: 10%;
+  width: 70%;
+  border-style: dashed;
+  border-width: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.ShowVoucher-code-text{
+  margin: 10%;
+  margin-bottom: 3%;
+  font-size: 2.2em;
+  height: 60%;
+}
+.copyButton{
+  margin-top: 2em;
+  margin-bottom: 2em;
+  padding: 1em;
+}
+

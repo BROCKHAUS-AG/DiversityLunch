@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.utils.baseApi;
 
-import de.brockhausag.diversitylunchspringboot.profile.utils.Mapper;
+import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
 
 import java.util.List;
 import java.util.function.Supplier;

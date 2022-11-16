@@ -1,5 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.match.service;
 
+import com.nimbusds.jose.util.StandardCharset;
+import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.dataFactories.MeetingTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
@@ -9,13 +11,21 @@ import de.brockhausag.diversitylunchspringboot.meeting.model.Question;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MsTeamsService;
+import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMailProperties;
+import liquibase.pro.packaged.E;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.FileCopyUtils;
 
 import javax.mail.MessagingException;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -39,7 +49,7 @@ class MatchingServiceTest {
     private MatchingService matchingServiceMock;
 
     @Mock
-    DiversityLunchEMailService eMailService;
+    DiversityLunchEMailService mockedEMailService;
 
     @Mock
     MsTeamsService msTeamsService;
@@ -126,8 +136,9 @@ class MatchingServiceTest {
 
         matchingService.sendQuestions(LocalDateTime.now());
 
-        verify(eMailService, times(2))
+        verify(mockedEMailService, times(2))
                 .sendEmail(any(), any(), any(),any());
 
     }
+
 }
