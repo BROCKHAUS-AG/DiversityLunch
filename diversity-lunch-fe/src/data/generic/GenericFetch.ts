@@ -7,9 +7,8 @@ import {
     authenticatedFetchPost,
     authenticatedFetchPut,
 } from '../../utils/fetch.utils';
-import { globalErrorSlice } from '../error/global-error-slice';
-import { StatusCodeMap } from './StatusCodeMap';
 import { StatusCode } from './StatusCode';
+import { FetchCallbacks } from './FetchCallbacks';
 
 export class GenericFetch<T extends Identifiable> {
     private readonly update;
@@ -20,7 +19,7 @@ export class GenericFetch<T extends Identifiable> {
 
     private url : string = '/api/';
 
-    constructor(slice: GenericSlice<T>, endpoint : string, private readonly _errorSlice = globalErrorSlice) {
+    constructor(slice: GenericSlice<T>, endpoint : string) {
         this.update = slice.actions.update;
         this.add = slice.actions.add;
         this.remove = slice.actions.remove;
@@ -28,105 +27,96 @@ export class GenericFetch<T extends Identifiable> {
         this.endpoint = `${endpoint}/`;
     }
 
-    public getAll(statusCodeHandlerMap?: StatusCodeMap, onNetworkError?: (networkError: Error)=>void) {
+    public getAll(callbacks: FetchCallbacks) {
         return async (dispatch: Dispatch) => {
             try {
                 const response = await authenticatedFetchGet(`${this.url}${this.endpoint}all`);
                 const statusCode: StatusCode = response.status.toString() as StatusCode;
 
                 if (response.ok) {
-                    const result : T = await response.json();
-
-                    dispatch(this.update(result));
-                    dispatch(this.initFetch(true));
-                } else if (statusCodeHandlerMap && statusCodeHandlerMap[statusCode]) {
-                    statusCodeHandlerMap[statusCode](response);
-                } else {
-                    dispatch(this._errorSlice.httpError({ statusCode: response.status }));
+                    try {
+                        const result: T = await response.json();
+                        dispatch(this.update(result));
+                        dispatch(this.initFetch(true));
+                    } catch {
+                        callbacks.onNetworkError(new Error("Couldn't parse response body to json."));
+                    }
+                } else if (callbacks.statusCodeHandlers[statusCode]) {
+                    callbacks.statusCodeHandlers[statusCode]!(response);
                 }
             } catch (error) {
-                if (onNetworkError) {
-                    onNetworkError(error as Error);
-                } else {
-                    dispatch(this._errorSlice.error(undefined));
-                }
+                callbacks.onNetworkError(error as Error);
             }
         };
     }
 
-    public getById(id: number, statusCodeHandlerMap?: StatusCodeMap, onNetworkError?: (networkError: Error)=>void) {
+    public getById(id: number, callbacks: FetchCallbacks) {
         return async (dispatch: Dispatch) => {
             try {
                 const response = await authenticatedFetchGet(this.url + this.endpoint + id);
                 const statusCode: StatusCode = response.status.toString() as StatusCode;
 
                 if (response.ok) {
-                    const result : T[] = await response.json();
-                    dispatch(this.update(result));
-                } else if (statusCodeHandlerMap && statusCodeHandlerMap[statusCode]) {
-                    statusCodeHandlerMap[statusCode](response);
-                } else {
-                    dispatch(this._errorSlice.httpError({ statusCode: response.status }));
+                    try {
+                        const result : T[] = await response.json();
+                        dispatch(this.update(result));
+                    } catch {
+                        callbacks.onNetworkError(new Error("Couldn't parse response body to json."));
+                    }
+                } else if (callbacks.statusCodeHandlers[statusCode]) {
+                    callbacks.statusCodeHandlers[statusCode]!(response);
                 }
             } catch (error) {
-                if (onNetworkError) {
-                    onNetworkError(error as Error);
-                } else {
-                    dispatch(this._errorSlice.error(undefined));
-                }
+                callbacks.onNetworkError(error as Error);
             }
         };
     }
 
-    public post(item : T, statusCodeHandlerMap?: StatusCodeMap, onNetworkError?: (networkError: Error)=>void) {
+    public post(item : T, callbacks: FetchCallbacks) {
         return async (dispatch: Dispatch) => {
             try {
                 const response = await authenticatedFetchPost(this.url + this.endpoint, item);
                 const statusCode: StatusCode = response.status.toString() as StatusCode;
 
                 if (response.ok) {
-                    const result : T = await response.json();
-                    dispatch(this.add([result]));
-                } else if (statusCodeHandlerMap && statusCodeHandlerMap[statusCode]) {
-                    statusCodeHandlerMap[statusCode](response);
-                } else {
-                    dispatch(this._errorSlice.httpError({ statusCode: response.status }));
+                    try {
+                        const result: T = await response.json();
+                        dispatch(this.add([result]));
+                    } catch {
+                        callbacks.onNetworkError(new Error("Couldn't parse response body to json."));
+                    }
+                } else if (callbacks.statusCodeHandlers[statusCode]) {
+                    callbacks.statusCodeHandlers[statusCode]!(response);
                 }
             } catch (error) {
-                if (onNetworkError) {
-                    onNetworkError(error as Error);
-                } else {
-                    dispatch(this._errorSlice.error(undefined));
-                }
+                callbacks.onNetworkError(error as Error);
             }
         };
     }
 
-    public put(item : T, statusCodeHandlerMap?: StatusCodeMap, onNetworkError?: (networkError: Error)=>void) {
+    public put(item : T, callbacks: FetchCallbacks) {
         return async (dispatch: Dispatch) => {
             try {
                 const response = await authenticatedFetchPut(this.url + this.endpoint, item);
                 const statusCode: StatusCode = response.status.toString() as StatusCode;
 
                 if (response.ok) {
-                    const result : T = await response.json();
-                    dispatch(this.update([result]));
-                } else if (statusCodeHandlerMap && statusCodeHandlerMap[statusCode]) {
-                    statusCodeHandlerMap[statusCode](response);
-                } else {
-                    dispatch(this._errorSlice.httpError({ statusCode: response.status }));
+                    try {
+                        const result: T = await response.json();
+                        dispatch(this.update([result]));
+                    } catch {
+                        callbacks.onNetworkError(new Error("Couldn't parse response body to json."));
+                    }
+                } else if (callbacks.statusCodeHandlers[statusCode]) {
+                    callbacks.statusCodeHandlers[statusCode]!(response);
                 }
             } catch (error) {
-                if (onNetworkError) {
-                    onNetworkError(error as Error);
-                } else {
-                    dispatch(this._errorSlice.error(undefined));
-                }
+                callbacks.onNetworkError(error as Error);
             }
         };
     }
 
-    public removeById(id : number, statusCodeHandlerMap?: StatusCodeMap, onNetworkError?: (networkError: Error)=>void) {
+    public removeById(id : number, callbacks: FetchCallbacks) {
         return async (dispatch: Dispatch) => {
             try {
                 const response = await authenticatedFetchDelete(this.url + this.endpoint + id);
@@ -134,17 +124,11 @@ export class GenericFetch<T extends Identifiable> {
 
                 if (response.ok) {
                     dispatch(this.remove([id]));
-                } else if (statusCodeHandlerMap && statusCodeHandlerMap[statusCode]) {
-                    statusCodeHandlerMap[statusCode](response);
-                } else {
-                    dispatch(this._errorSlice.httpError({ statusCode: response.status }));
+                } else if (callbacks.statusCodeHandlers[statusCode]) {
+                    callbacks.statusCodeHandlers[statusCode]!(response);
                 }
             } catch (error) {
-                if (onNetworkError) {
-                    onNetworkError(error as Error);
-                } else {
-                    dispatch(this._errorSlice.error(undefined));
-                }
+                callbacks.onNetworkError(error as Error);
             }
         };
     }
