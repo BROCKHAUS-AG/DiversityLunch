@@ -23,8 +23,8 @@ public class VoucherService {
     private final MeetingRepository meetingRepository;
     private final ProfileRepository profileRepository;
     public static final String NOT_ALLOWED = "Du bist nicht berechtigt diesen Gutschein zu bekommen";
-    public static String ALREADY_CLAIMED = "Der Gutschein wurde bereits angefordert.";
-    public static String NOT_FOUND = "Keine Vouchers mehr da";
+    public static final String ALREADY_CLAIMED = "Der Gutschein wurde bereits angefordert.";
+    public static final String NOT_FOUND = "Keine Vouchers mehr da";
 
     public Optional<VoucherEntity> getUnclaimedVoucherForMeeting(long profileId, long meetingId) throws IllegalVoucherClaim {
 
@@ -33,7 +33,7 @@ public class VoucherService {
         Optional<VoucherEntity> voucherEntity = voucherRepository.getFirstByProfileIsNullAndMeetingIsNull();
 
         if (meeting.isEmpty()|| profileEntity.isEmpty() || !(meeting.get().getPartner().getId() == profileId || meeting.get().getProposer().getId() == profileId)) {
-            throw new IllegalVoucherClaim(NOT_ALLOWED);
+            throw new IllegalVoucherClaim(NOT_ALLOWED); // ODO: Different kinds of exceptions classes should be use instead of differentiating them by some string like NOT_ALLOWED, ALREADE_CLAIMED,  or NOT_FOUND. These exceptions should inherit from IllegalVoucherClaim exception. ~tgohlisch 16.11.2022
         }
         if (voucherRepository.existsByProfileIdAndMeetingId(profileId, meetingId)) {
             throw new IllegalVoucherClaim(ALREADY_CLAIMED);
