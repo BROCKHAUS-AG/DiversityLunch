@@ -33,7 +33,7 @@ public class VoucherService {
         Optional<VoucherEntity> voucherEntity = voucherRepository.getFirstByProfileIsNullAndMeetingIsNull();
 
         if (meeting.isEmpty()|| profileEntity.isEmpty() || !(meeting.get().getPartner().getId() == profileId || meeting.get().getProposer().getId() == profileId)) {
-            throw new IllegalVoucherClaim(NOT_ALLOWED); // TODO: Different kinds of exceptions classes should be use instead of differentiating them by some string like NOT_ALLOWED, ALREADE_CLAIMED,  or NOT_FOUND. These exceptions should inherit from IllegalVoucherClaim exception. ~tgohlisch 16.11.2022
+            throw new IllegalVoucherClaim(NOT_ALLOWED);
         }
         if (voucherRepository.existsByProfileIdAndMeetingId(profileId, meetingId)) {
             throw new IllegalVoucherClaim(ALREADY_CLAIMED);
