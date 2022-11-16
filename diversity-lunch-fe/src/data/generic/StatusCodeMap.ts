@@ -1,5 +1,5 @@
 import { StatusCode } from './StatusCode';
 
-export type StatusCodeHandler = {
+export type StatusCodeMap = {
     [key in StatusCode]: (_: Response) => void;
 };

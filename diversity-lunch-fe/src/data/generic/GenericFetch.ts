@@ -8,6 +8,8 @@ import {
     authenticatedFetchPut,
 } from '../../utils/fetch.utils';
 import { globalErrorSlice } from '../error/global-error-slice';
+import { StatusCodeMap } from './StatusCodeMap';
+import { StatusCode } from './StatusCode';
 
 export class GenericFetch<T extends Identifiable> {
     private readonly update;
@@ -26,90 +28,138 @@ export class GenericFetch<T extends Identifiable> {
         this.endpoint = `${endpoint}/`;
     }
 
-    public getAll() {
+    public getAll(statusCodeHandlerMap?: StatusCodeMap, onNetworkError?: (networkError: Error)=>void) {
         return async (dispatch: Dispatch) => {
             try {
                 const response = await authenticatedFetchGet(`${this.url}${this.endpoint}all`);
 
-                if (!response.ok) {
-                    dispatch(this._errorSlice.httpError({ statusCode: response.status }));
-                } else {
+                if (response.ok) {
                     const result : T = await response.json();
 
                     dispatch(this.update(result));
                     dispatch(this.initFetch(true));
+                } else if (statusCodeHandlerMap) {
+                    const statusCode = response.status.toString();
+                    if (statusCodeHandlerMap) {
+                        const handler = statusCodeHandlerMap[statusCode as StatusCode];
+                        if (handler) handler(response);
+                    }
+                } else {
+                    dispatch(this._errorSlice.httpError({ statusCode: response.status }));
                 }
             } catch (error) {
-                dispatch(this._errorSlice.error(undefined));
+                if (onNetworkError) {
+                    onNetworkError(error as Error);
+                } else {
+                    dispatch(this._errorSlice.error(undefined));
+                }
             }
         };
     }
 
-    public getById(id: number) {
+    public getById(id: number, statusCodeHandlerMap?: StatusCodeMap, onNetworkError?: (networkError: Error)=>void) {
         return async (dispatch: Dispatch) => {
             try {
                 const response = await authenticatedFetchGet(this.url + this.endpoint + id);
 
-                if (!response.ok) {
-                    dispatch(this._errorSlice.httpError({ statusCode: response.status }));
-                } else {
+                if (response.ok) {
                     const result : T[] = await response.json();
                     dispatch(this.update(result));
-                    dispatch(this.initFetch(undefined));
+                } else if (statusCodeHandlerMap) {
+                    const statusCode = response.status.toString();
+                    if (statusCodeHandlerMap) {
+                        const handler = statusCodeHandlerMap[statusCode as StatusCode];
+                        if (handler) handler(response);
+                    }
+                } else {
+                    dispatch(this._errorSlice.httpError({ statusCode: response.status }));
                 }
             } catch (error) {
-                dispatch(this._errorSlice.error(undefined));
+                if (onNetworkError) {
+                    onNetworkError(error as Error);
+                } else {
+                    dispatch(this._errorSlice.error(undefined));
+                }
             }
         };
     }
 
-    public post(item : T) {
+    public post(item : T, statusCodeHandlerMap?: StatusCodeMap, onNetworkError?: (networkError: Error)=>void) {
         return async (dispatch: Dispatch) => {
             try {
                 const response = await authenticatedFetchPost(this.url + this.endpoint, item);
 
-                if (!response.ok) {
-                    dispatch(this._errorSlice.httpError({ statusCode: response.status }));
-                } else {
+                if (response.ok) {
                     const result : T = await response.json();
                     dispatch(this.add([result]));
+                } else if (statusCodeHandlerMap) {
+                    const statusCode = response.status.toString();
+                    if (statusCodeHandlerMap) {
+                        const handler = statusCodeHandlerMap[statusCode as StatusCode];
+                        if (handler) handler(response);
+                    }
+                } else {
+                    dispatch(this._errorSlice.httpError({ statusCode: response.status }));
                 }
             } catch (error) {
-                dispatch(this._errorSlice.error(undefined));
+                if (onNetworkError) {
+                    onNetworkError(error as Error);
+                } else {
+                    dispatch(this._errorSlice.error(undefined));
+                }
             }
         };
     }
 
-    public put(item : T) {
+    public put(item : T, statusCodeHandlerMap?: StatusCodeMap, onNetworkError?: (networkError: Error)=>void) {
         return async (dispatch: Dispatch) => {
             try {
                 const response = await authenticatedFetchPut(this.url + this.endpoint, item);
 
-                if (!response.ok) {
-                    dispatch(this._errorSlice.httpError({ statusCode: response.status }));
-                } else {
+                if (response.ok) {
                     const result : T = await response.json();
                     dispatch(this.update([result]));
+                } else if (statusCodeHandlerMap) {
+                    const statusCode = response.status.toString();
+                    if (statusCodeHandlerMap) {
+                        const handler = statusCodeHandlerMap[statusCode as StatusCode];
+                        if (handler) handler(response);
+                    }
+                } else {
+                    dispatch(this._errorSlice.httpError({ statusCode: response.status }));
                 }
             } catch (error) {
-                dispatch(this._errorSlice.error(undefined));
+                if (onNetworkError) {
+                    onNetworkError(error as Error);
+                } else {
+                    dispatch(this._errorSlice.error(undefined));
+                }
             }
         };
     }
 
-    public removeById(id : number) {
+    public removeById(id : number, statusCodeHandlerMap?: StatusCodeMap, onNetworkError?: (networkError: Error)=>void) {
         return async (dispatch: Dispatch) => {
             try {
                 const response = await authenticatedFetchDelete(this.url + this.endpoint + id);
 
-                if (!response.ok) {
-                    dispatch(this._errorSlice.httpError({ statusCode: response.status }));
-                } else {
-                    // const result : T[] = await response.json();
+                if (response.ok) {
                     dispatch(this.remove([id]));
+                } else if (statusCodeHandlerMap) {
+                    const statusCode = response.status.toString();
+                    if (statusCodeHandlerMap) {
+                        const handler = statusCodeHandlerMap[statusCode as StatusCode];
+                        if (handler) handler(response);
+                    }
+                } else {
+                    dispatch(this._errorSlice.httpError({ statusCode: response.status }));
                 }
             } catch (error) {
-                dispatch(this._errorSlice.error(undefined));
+                if (onNetworkError) {
+                    onNetworkError(error as Error);
+                } else {
+                    dispatch(this._errorSlice.error(undefined));
+                }
             }
         };
     }
