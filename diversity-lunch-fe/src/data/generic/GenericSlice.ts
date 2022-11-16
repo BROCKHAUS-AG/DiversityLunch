@@ -49,7 +49,7 @@ export class GenericSlice<T extends Identifiable> {
     }
 
     private addFunction: CaseReducer<IdentifiableState<T>, PayloadAction<T[]>> = (state, action) => {
-        state.items = [...state.items, ...action.payload as Draft<T>[]];
+        state.items.push(...action.payload as Draft<T>[]);
     }
 
     private updateFunction: CaseReducer<IdentifiableState<T>, PayloadAction<T[]>> = (state, action) => {
