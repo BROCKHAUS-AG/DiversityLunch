@@ -11,11 +11,11 @@ import {
 import { globalErrorSlice } from '../error/global-error-slice';
 
 export class GenericFetch<T extends Identifiable> {
-    private update;
-    private add;
-    private remove;
-    private initFetch;
-    private endpoint : string;
+    private readonly update;
+    private readonly add;
+    private readonly remove;
+    private readonly initFetch;
+    private readonly endpoint : string;
 
     private url : string = '/api/';
 
