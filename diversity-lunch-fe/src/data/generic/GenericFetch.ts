@@ -32,18 +32,15 @@ export class GenericFetch<T extends Identifiable> {
         return async (dispatch: Dispatch) => {
             try {
                 const response = await authenticatedFetchGet(`${this.url}${this.endpoint}all`);
+                const statusCode: StatusCode = response.status.toString() as StatusCode;
 
                 if (response.ok) {
                     const result : T = await response.json();
 
                     dispatch(this.update(result));
                     dispatch(this.initFetch(true));
-                } else if (statusCodeHandlerMap) {
-                    const statusCode = response.status.toString();
-                    if (statusCodeHandlerMap) {
-                        const handler = statusCodeHandlerMap[statusCode as StatusCode];
-                        if (handler) handler(response);
-                    }
+                } else if (statusCodeHandlerMap && statusCodeHandlerMap[statusCode]) {
+                    statusCodeHandlerMap[statusCode](response);
                 } else {
                     dispatch(this._errorSlice.httpError({ statusCode: response.status }));
                 }
@@ -61,16 +58,13 @@ export class GenericFetch<T extends Identifiable> {
         return async (dispatch: Dispatch) => {
             try {
                 const response = await authenticatedFetchGet(this.url + this.endpoint + id);
+                const statusCode: StatusCode = response.status.toString() as StatusCode;
 
                 if (response.ok) {
                     const result : T[] = await response.json();
                     dispatch(this.update(result));
-                } else if (statusCodeHandlerMap) {
-                    const statusCode = response.status.toString();
-                    if (statusCodeHandlerMap) {
-                        const handler = statusCodeHandlerMap[statusCode as StatusCode];
-                        if (handler) handler(response);
-                    }
+                } else if (statusCodeHandlerMap && statusCodeHandlerMap[statusCode]) {
+                    statusCodeHandlerMap[statusCode](response);
                 } else {
                     dispatch(this._errorSlice.httpError({ statusCode: response.status }));
                 }
@@ -88,16 +82,13 @@ export class GenericFetch<T extends Identifiable> {
         return async (dispatch: Dispatch) => {
             try {
                 const response = await authenticatedFetchPost(this.url + this.endpoint, item);
+                const statusCode: StatusCode = response.status.toString() as StatusCode;
 
                 if (response.ok) {
                     const result : T = await response.json();
                     dispatch(this.add([result]));
-                } else if (statusCodeHandlerMap) {
-                    const statusCode = response.status.toString();
-                    if (statusCodeHandlerMap) {
-                        const handler = statusCodeHandlerMap[statusCode as StatusCode];
-                        if (handler) handler(response);
-                    }
+                } else if (statusCodeHandlerMap && statusCodeHandlerMap[statusCode]) {
+                    statusCodeHandlerMap[statusCode](response);
                 } else {
                     dispatch(this._errorSlice.httpError({ statusCode: response.status }));
                 }
@@ -115,16 +106,13 @@ export class GenericFetch<T extends Identifiable> {
         return async (dispatch: Dispatch) => {
             try {
                 const response = await authenticatedFetchPut(this.url + this.endpoint, item);
+                const statusCode: StatusCode = response.status.toString() as StatusCode;
 
                 if (response.ok) {
                     const result : T = await response.json();
                     dispatch(this.update([result]));
-                } else if (statusCodeHandlerMap) {
-                    const statusCode = response.status.toString();
-                    if (statusCodeHandlerMap) {
-                        const handler = statusCodeHandlerMap[statusCode as StatusCode];
-                        if (handler) handler(response);
-                    }
+                } else if (statusCodeHandlerMap && statusCodeHandlerMap[statusCode]) {
+                    statusCodeHandlerMap[statusCode](response);
                 } else {
                     dispatch(this._errorSlice.httpError({ statusCode: response.status }));
                 }
@@ -142,15 +130,12 @@ export class GenericFetch<T extends Identifiable> {
         return async (dispatch: Dispatch) => {
             try {
                 const response = await authenticatedFetchDelete(this.url + this.endpoint + id);
+                const statusCode: StatusCode = response.status.toString() as StatusCode;
 
                 if (response.ok) {
                     dispatch(this.remove([id]));
-                } else if (statusCodeHandlerMap) {
-                    const statusCode = response.status.toString();
-                    if (statusCodeHandlerMap) {
-                        const handler = statusCodeHandlerMap[statusCode as StatusCode];
-                        if (handler) handler(response);
-                    }
+                } else if (statusCodeHandlerMap && statusCodeHandlerMap[statusCode]) {
+                    statusCodeHandlerMap[statusCode](response);
                 } else {
                     dispatch(this._errorSlice.httpError({ statusCode: response.status }));
                 }
