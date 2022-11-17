@@ -19,6 +19,7 @@ export const VoucherPanel = () => {
     const [revealed, setRevealed] = useState(false);
     const [voucherCode, setVoucherCode] = useState('empty');
     const [isError, setError] = useState(false);
+    const [vouchersEmpty, setVouchersEmpty] = useState(false);
     const accountState: AccountState = useSelector((store: AppStoreState) => store.account);
 
     const { id } = useParams<MeetingParams>();
@@ -35,6 +36,7 @@ export const VoucherPanel = () => {
             const voucher = await response.json();
             setVoucherCode(voucher);
             setRevealed(true);
+        // else if () { setVouchersEmpty(true); }
         } else {
             setError(true);
         }
@@ -72,6 +74,15 @@ export const VoucherPanel = () => {
                         <PopUp
                             onButtonClick={() => setError(false)}
                             message="Bei der Abfrage ist ein Fehler aufgetreten"
+                            buttonText="Okay"
+                        />
+                    )
+                }
+                {
+                    vouchersEmpty && (
+                        <PopUp
+                            onButtonClick={() => setVouchersEmpty(false)}
+                            message="Die Gutscheinaktion ist ausgelaufen"
                             buttonText="Okay"
                         />
                     )
