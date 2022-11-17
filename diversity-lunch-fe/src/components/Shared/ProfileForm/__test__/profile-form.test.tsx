@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { APP_STORE } from '../../../../store/Store';
@@ -36,7 +36,7 @@ describe('Profile form', () => {
 
         const result = await screen.findByText('Speichern');
 
-        expect(result).toBeDisabled();
+        await waitFor(() => expect(result).toBeDisabled());
     });
 
     it('should enable the button if checkValidity returns true', async () => {
