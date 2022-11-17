@@ -23,8 +23,10 @@ export const AdminPanel: FC = () => {
     const [emailSuccess, setEmailSuccess] = useState(false);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(projectFetch.getAll());
-        dispatch(hobbyFetch.getAll());
+        dispatch(projectFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        // TODO: Handle network and http errors properly tgohlisch 17.11.2022
+        dispatch(hobbyFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        // TODO: Handle network and http errors properly tgohlisch 17.11.2022
     }, []);
 
     if (accountState.status === 'OK') {
