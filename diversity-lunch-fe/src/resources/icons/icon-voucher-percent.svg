@@ -1,0 +1,8 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+<g id="Frame_-_24px">
+	<rect fill="none" width="24" height="24"/>
+</g>
+<g id="Filled_Icons">
+	<path fill="#b81f40" d="M23,10h1V3H0v7h1c1.103,0,2,0.898,2,2c0,1.102-0.897,2-2,2H0v7h24v-7h-1c-1.104,0-2-0.898-2-2   C21,10.898,21.896,10,23,10z M6,6c1.104,0,2,0.896,2,2c0,1.106-0.896,2-2,2S4,9.106,4,8C4,6.896,4.896,6,6,6z M4.293,15.293l9-9   l1.414,1.413l-9,9L4.293,15.293z M13,17c-1.104,0-2-0.894-2-2c0-1.104,0.896-2,2-2s2,0.896,2,2C15,16.106,14.104,17,13,17z M18,19   h-2v-2h2V19z M18,15h-2v-2h2V15z M18,11h-2V9h2V11z M18,7h-2V5h2V7z"/>
+</g>
+</svg>

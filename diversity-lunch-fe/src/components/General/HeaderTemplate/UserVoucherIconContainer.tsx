@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
-import iconAdmin from '../../../resources/icons/user_voucher_icon.svg';
+import iconVoucher from '../../../resources/icons/icon-voucher-percent.svg';
 
 export const UserVoucherIconContainer = () => (
     <div className="IconHeader">
         <Link to="/myVouchers">
-            <img alt="user voucher icon" className="IconHeader-user-voucher-icon" src={iconAdmin} />
+            <img alt="icon voucher percent" className="IconHeader-icon-voucher-percent" src={iconVoucher} />
         </Link>
     </div>
 );
