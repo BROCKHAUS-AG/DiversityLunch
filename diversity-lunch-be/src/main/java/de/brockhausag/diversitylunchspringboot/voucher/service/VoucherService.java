@@ -58,8 +58,14 @@ public class VoucherService {
         voucherRepository.saveAll(voucherEntities);
     }
 
-    public int getAmountOfVouchersStored() {
+    public int getAmountOfStoredVouchers() {
         return voucherRepository.findAll().size();
     }
 
+    public int getAmountOfUnclaimedVouchers() {
+        return voucherRepository.countAllByProfileIsNullAndMeetingIsNull();
+    }
+    public int getAmountOfClaimedVouchers() {
+        return voucherRepository.countAllByProfileIsNotNullAndMeetingIsNotNull();
+    }
 }

@@ -31,8 +31,17 @@ public class VoucherController {
 
     @GetMapping("/amount")
     @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).ADMIN_ROLE_ASSIGN)")
-    public ResponseEntity<Integer> getAmountOfVouchersStored() {
-        return ResponseEntity.ok(voucherService.getAmountOfVouchersStored());
+    public ResponseEntity<Integer> getAmountOfVouchersStored(@RequestParam(value = "claimed", required = false) Boolean isVoucherClaimed) {
+        int amountOfVouchers;
+        if (isVoucherClaimed == null) {
+            amountOfVouchers = voucherService.getAmountOfStoredVouchers();
+        } else if (isVoucherClaimed) {
+            amountOfVouchers = voucherService.getAmountOfClaimedVouchers();
+        } else {
+            amountOfVouchers = voucherService.getAmountOfUnclaimedVouchers();
+        }
+
+        return ResponseEntity.ok(amountOfVouchers);
     }
 
     @PreAuthorize("isProfileOwner(#profileId)")
