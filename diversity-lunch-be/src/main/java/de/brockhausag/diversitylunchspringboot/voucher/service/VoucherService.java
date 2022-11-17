@@ -10,7 +10,6 @@ import de.brockhausag.diversitylunchspringboot.voucher.repository.VoucherReposit
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +21,8 @@ public class VoucherService {
     private final ProfileRepository profileRepository;
 
     public Optional<VoucherEntity> getUnclaimedVoucherForMeeting(long profileId, long meetingId) throws ForbiddenVoucherClaim {
-        Optional<MeetingEntity> meeting = meetingRepository.findById(meetingId);
         Optional<ProfileEntity> profileEntity = profileRepository.findById(profileId);
+        Optional<MeetingEntity> meeting = meetingRepository.findById(meetingId);
         Optional<VoucherEntity> voucherEntity = voucherRepository.getFirstByProfileIsNullAndMeetingIsNull();
 
         if (meeting.isEmpty()|| profileEntity.isEmpty() || !(meeting.get().getPartner().getId() == profileId || meeting.get().getProposer().getId() == profileId)) {
@@ -56,7 +55,7 @@ public class VoucherService {
     }
 
     public void saveVouchers(Iterable<VoucherEntity> voucherEntities) {
-        Iterable<VoucherEntity> savedVouchers = voucherRepository.saveAll(voucherEntities);
+        voucherRepository.saveAll(voucherEntities);
     }
 
     public int getAmountOfVouchersStored() {

@@ -5,9 +5,6 @@ import de.brockhausag.diversitylunchspringboot.profile.model.entities.GenderEnti
 import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Component
 public class GenderMapper implements Mapper<GenderDto, GenderEntity> {
 
@@ -25,15 +22,5 @@ public class GenderMapper implements Mapper<GenderDto, GenderEntity> {
         genderEntity.setId(dto.getId());
         genderEntity.setDescriptor(dto.getDescriptor());
         return genderEntity;
-    }
-
-    @Override
-    public List<GenderDto> entityToDto(List<GenderEntity> entities) {
-        return entities.stream().map(this::entityToDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<GenderEntity> dtoToEntity(List<GenderDto> dtos) {
-        return dtos.stream().map(this::dtoToEntity).collect(Collectors.toList());
     }
 }

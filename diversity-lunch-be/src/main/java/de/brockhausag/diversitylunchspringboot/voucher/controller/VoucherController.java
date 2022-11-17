@@ -54,7 +54,7 @@ public class VoucherController {
             } else {
                 voucherClaimDto.setVoucherCode(voucherEntity.get().getVoucher());
             }
-            
+
             return ResponseEntity.ok().body(voucherClaimDto);
         } catch (ForbiddenVoucherClaim e) {
             log.error(e.getMessage());
@@ -68,7 +68,7 @@ public class VoucherController {
         List<VoucherEntity> voucherEntities = voucherService.getVoucherByProfileId(profileId);
         List<VoucherDto> voucherDtos = new ArrayList<>();
         for (VoucherEntity voucher : voucherEntities) {
-            voucherDtos.add(voucherMapper.mapEntityToDto(voucher));
+            voucherDtos.add(voucherMapper.entityToDto(voucher));
         }
         return ResponseEntity.ok().body(voucherDtos);
     }
