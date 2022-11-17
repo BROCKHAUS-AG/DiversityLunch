@@ -7,8 +7,8 @@ import {
     authenticatedFetchPost,
     authenticatedFetchPut,
 } from '../../utils/fetch.utils';
-import { StatusCode } from './StatusCode';
 import { FetchCallbacks } from './FetchCallbacks';
+import { handleFetchResponse } from '../handleFetchResponse';
 
 export class GenericFetch<T extends Identifiable> {
     private readonly update;
@@ -39,7 +39,7 @@ export class GenericFetch<T extends Identifiable> {
                     callbacks.onNetworkError(new Error("Couldn't parse response body to json."));
                 }
             };
-            GenericFetch.handleFetchResponse(onGoindFetch, onSuccess, callbacks);
+            handleFetchResponse(onGoindFetch, onSuccess, callbacks);
         };
     }
 
@@ -54,7 +54,7 @@ export class GenericFetch<T extends Identifiable> {
                     callbacks.onNetworkError(new Error("Couldn't parse response body to json."));
                 }
             };
-            GenericFetch.handleFetchResponse(onGoindFetch, onSuccess, callbacks);
+            handleFetchResponse(onGoindFetch, onSuccess, callbacks);
         };
     }
 
@@ -69,7 +69,7 @@ export class GenericFetch<T extends Identifiable> {
                     callbacks.onNetworkError(new Error('Couldn\'t parse response body to json.'));
                 }
             };
-            GenericFetch.handleFetchResponse(onGoindFetch, onSuccess, callbacks);
+            handleFetchResponse(onGoindFetch, onSuccess, callbacks);
         };
     }
 
@@ -84,7 +84,7 @@ export class GenericFetch<T extends Identifiable> {
                     callbacks.onNetworkError(new Error("Couldn't parse response body to json."));
                 }
             };
-            GenericFetch.handleFetchResponse(onGoindFetch, onSuccess, callbacks);
+            handleFetchResponse(onGoindFetch, onSuccess, callbacks);
         };
     }
 
@@ -92,22 +92,7 @@ export class GenericFetch<T extends Identifiable> {
         return async (dispatch: Dispatch) => {
             const onGoindFetch = authenticatedFetchDelete(this.url + this.endpoint + id);
             const onSuccess = () => dispatch(this.remove([id]));
-            GenericFetch.handleFetchResponse(onGoindFetch, onSuccess, callbacks);
+            handleFetchResponse(onGoindFetch, onSuccess, callbacks);
         };
-    }
-
-    private static async handleFetchResponse(onGoingFetch: Promise<Response>, onSuccess: (_:Response)=>void, callbacks: FetchCallbacks) {
-        try {
-            const response = await onGoingFetch;
-            const statusCode: StatusCode = response.status.toString() as StatusCode;
-
-            if (response.ok) {
-                onSuccess(response);
-            } else if (callbacks.statusCodeHandlers[statusCode]) {
-                callbacks.statusCodeHandlers[statusCode]!(response);
-            }
-        } catch (error) {
-            callbacks.onNetworkError(error as Error);
-        }
     }
 }

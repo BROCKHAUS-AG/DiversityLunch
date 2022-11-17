@@ -22,8 +22,9 @@ export const UserList: FC = () => {
     const [searchState, setSearchState] = useState('');
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getAllAccounts());
-        dispatch(getAllProfiles());
+        // TODO: Handle network and http errors properly tgohlisch 17.11.2022
+        dispatch(getAllAccounts({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(getAllProfiles({ onNetworkError: console.error, statusCodeHandlers: {} }));
     }, []);
 
     if (!accountsState.fetched || !profilesState.fetched) {
@@ -45,11 +46,14 @@ export const UserList: FC = () => {
         return userList;
     };
 
+    // TODO: Handle network and http errors properly tgohlisch 17.11.2022
     const assignAdmin = (accountId: number) => {
-        dispatch(assignAdminRole(accountId));
+        dispatch(assignAdminRole(accountId, { onNetworkError: console.error, statusCodeHandlers: {} }));
     };
+
+    // TODO: Handle network and http errors properly tgohlisch 17.11.2022
     const revokeAdmin = (accountId: number) => {
-        dispatch(revokeAdminRole(accountId));
+        dispatch(revokeAdminRole(accountId, { onNetworkError: console.error, statusCodeHandlers: {} }));
     };
 
     const generateAdminListButton = (user: User) => {
