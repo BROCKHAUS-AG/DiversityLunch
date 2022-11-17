@@ -28,7 +28,7 @@ describe('Profile form', () => {
     beforeEach(() => {
 
     });
-
+    // TODO: This test fails sometimes, it should at least fail all the time! tgohlisch 17.11.2022
     it('should disable the button if checkValidity returns false', async () => {
         jest.spyOn(fetcher, 'authenticatedFetchGet')
             .mockImplementation(mockedFetchGetProfile);

@@ -1,8 +1,8 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { authenticatedFetchGet } from '../../utils/fetch.utils';
 import { globalErrorSlice } from '../error/global-error-slice';
-import { Profile } from '../../types/Profile';
 import { profilesAction } from './profiles-reducer';
+import { Profile } from '../../model/Profile';
 
 export function getAllProfiles() {
     return async (dispatch: Dispatch) => {

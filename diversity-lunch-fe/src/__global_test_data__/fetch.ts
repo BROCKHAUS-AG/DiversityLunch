@@ -32,8 +32,8 @@ import { Role } from '../model/Role';
 import { globalErrorSlice } from '../data/error/global-error-slice';
 import { Account } from '../types/Account';
 import { accountsAction } from '../data/accounts/accounts-reducer';
-import { Profile } from '../types/Profile';
 import { profilesAction } from '../data/profiles/profiles-reducer';
+import { Profile } from '../model/Profile';
 
 export const mockedFetchGetProfile = async (url: string) => {
     if (url.includes(CATEGORY_ENDPOINT)) {
