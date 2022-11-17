@@ -14,13 +14,12 @@ import { Country } from '../../../model/Country';
 import { GenericSlice } from '../GenericSlice';
 import { GenericFetch } from '../GenericFetch';
 
-let rootReducer : Reducer;
-
 interface FetchingTestComponentProps {
-    actionThunk: (dispatch: Dispatch<any>) => Promise<void>,
+  actionThunk: (dispatch: Dispatch<any>) => Promise<void>,
 }
+
 const FetchingTestComponent = ({ actionThunk }: FetchingTestComponentProps) => {
-    const countries = useSelector((store: ReturnType<typeof rootReducer>) => store.country);
+    const countries = useSelector((store: ReturnType<Reducer>) => store.country);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(actionThunk);
@@ -43,19 +42,19 @@ const initialData = {
     descriptor: 'Frankreich',
 };
 
-const countryResponse = Promise.resolve(new Response(JSON.stringify(data)));
-const initialDataResponse = Promise.resolve(new Response(JSON.stringify(initialData)));
-const dataAsArrayResponse = Promise.resolve(new Response(JSON.stringify([data])));
-const notFoundResponse = Promise.resolve(new Response(null, {
+const countryResponseThunk = async () => (new Response(JSON.stringify(data)));
+const initialDataResponseThunk = async () => (new Response(JSON.stringify(initialData)));
+const dataAsArrayResponseThunk = async () => (new Response(JSON.stringify([initialData, data])));
+const notFoundResponseThunk = async () => (new Response(null, {
     status: 404,
-    statusText: 'Object was not found!',
 }));
-const nonJsonResponse = Promise.resolve(new Response('I am no JSON'));
-const networkingError = Promise.reject();
+const nonJsonResponseThunk = async () => (new Response('I am no JSON'));
+const networkingErrorThunk = async () => (Promise.reject);
 
 describe('GenericFetch Integrationtests', () => {
-    let appStore : any;
-    let countryFetchTest : GenericFetch<Country>;
+    let appStore: any;
+    let countryFetchTest: GenericFetch<Country>;
+    let rootReducer: Reducer;
 
     beforeEach(() => {
         const countrySlice = new GenericSlice<Country>('countryReducerTest', [initialData]);
@@ -71,30 +70,32 @@ describe('GenericFetch Integrationtests', () => {
     });
 
     afterEach(cleanup);
-// TODO: Find out why only the first test, which renders the appStore, fails.
+
     it('should render fetched data', async () => {
-        jest.spyOn(fetcher, 'authenticatedFetchGet').mockReturnValue(dataAsArrayResponse);
+        jest.spyOn(fetcher, 'authenticatedFetchGet').mockReturnValue(dataAsArrayResponseThunk());
         render(
             <Provider store={appStore}>
                 <FetchingTestComponent actionThunk={countryFetchTest.getAll({
-                    onNetworkError: () => fail("Shouldn't call network error callback"),
-                    statusCodeHandlers: { 404: () => fail("Shouldn't call 404 callback") },
+                    onNetworkError: () => fail('Shouldn\'t call network error callback'),
+                    statusCodeHandlers: { 404: () => fail('Shouldn\'t call 404 callback') },
                 })}
                 />
             </Provider>,
         );
         const result = await screen.findByText(data.descriptor);
 
-        expect(result).toBeInTheDocument();
+        expect(result)
+            .toBeInTheDocument();
     });
 
     it('should render posted data', async () => {
-        jest.spyOn(fetcher, 'authenticatedFetchPost').mockReturnValue(countryResponse);
+        jest.spyOn(fetcher, 'authenticatedFetchPost')
+            .mockReturnValue(countryResponseThunk());
         render(
             <Provider store={appStore}>
                 <FetchingTestComponent actionThunk={countryFetchTest.post(data, {
-                    onNetworkError: () => fail("Shouldn't call network error callback"),
-                    statusCodeHandlers: { 404: () => fail("Shouldn't call 404 callback") },
+                    onNetworkError: () => fail('Shouldn\'t call network error callback'),
+                    statusCodeHandlers: { 404: () => fail('Shouldn\'t call 404 callback') },
                 })}
                 />
             </Provider>,
@@ -102,7 +103,8 @@ describe('GenericFetch Integrationtests', () => {
 
         const result = await screen.findByText(data.descriptor);
 
-        expect(result).toBeInTheDocument();
+        expect(result)
+            .toBeInTheDocument();
     });
 
     it('should render updated data', async () => {
@@ -111,14 +113,13 @@ describe('GenericFetch Integrationtests', () => {
             descriptor: 'Ungarn',
         };
         const updateCountryResponse = async () => new Response(JSON.stringify(updatedData));
-
         jest.spyOn(fetcher, 'authenticatedFetchPut').mockReturnValue(updateCountryResponse());
 
         render(
             <Provider store={appStore}>
                 <FetchingTestComponent actionThunk={countryFetchTest.put(updatedData, {
-                    onNetworkError: () => fail("Shouldn't call network error callback"),
-                    statusCodeHandlers: { 404: () => fail("Shouldn't call 404 callback") },
+                    onNetworkError: () => fail('Shouldn\'t call network error callback'),
+                    statusCodeHandlers: { 404: () => fail('Shouldn\'t call 404 callback') },
                 })}
                 />
             </Provider>,
@@ -130,13 +131,13 @@ describe('GenericFetch Integrationtests', () => {
     });
 
     it('should not render the deleted data', async () => {
-        jest.spyOn(fetcher, 'authenticatedFetchDelete').mockReturnValue(initialDataResponse);
+        jest.spyOn(fetcher, 'authenticatedFetchDelete').mockReturnValue(initialDataResponseThunk());
 
         render(
             <Provider store={appStore}>
                 <FetchingTestComponent actionThunk={countryFetchTest.removeById(initialData.id, {
-                    onNetworkError: () => fail("Shouldn't call network error callback"),
-                    statusCodeHandlers: { 404: () => fail("Shouldn't call 404 callback") },
+                    onNetworkError: () => fail('Shouldn\'t call network error callback'),
+                    statusCodeHandlers: { 404: () => fail('Shouldn\'t call 404 callback') },
                 })}
                 />
             </Provider>,
@@ -148,13 +149,13 @@ describe('GenericFetch Integrationtests', () => {
     });
 
     it('should call given status code callbacks', async () => {
-        jest.spyOn(fetcher, 'authenticatedFetchDelete').mockReturnValue(notFoundResponse);
+        jest.spyOn(fetcher, 'authenticatedFetchDelete').mockReturnValue(notFoundResponseThunk());
         const notFoundCallback = jest.fn();
 
         render(
             <Provider store={appStore}>
                 <FetchingTestComponent actionThunk={countryFetchTest.removeById(initialData.id, {
-                    onNetworkError: () => fail("Shouldn't call network error callback"),
+                    onNetworkError: () => fail('Shouldn\'t call network error callback'),
                     statusCodeHandlers: { 404: notFoundCallback },
                 })}
                 />
@@ -165,24 +166,26 @@ describe('GenericFetch Integrationtests', () => {
     });
 
     it('should call given network error callbacks', async () => {
-        jest.spyOn(fetcher, 'authenticatedFetchDelete').mockReturnValue(networkingError);
+        // @ts-ignore It ain't stupid if it works ¯\_(ツ)_/¯
+        jest.spyOn(fetcher, 'authenticatedFetchDelete').mockReturnValue(networkingErrorThunk());
         const networkErrorCallback = jest.fn();
 
         render(
             <Provider store={appStore}>
                 <FetchingTestComponent actionThunk={countryFetchTest.removeById(initialData.id, {
                     onNetworkError: networkErrorCallback,
-                    statusCodeHandlers: { },
+                    statusCodeHandlers: {},
                 })}
                 />
             </Provider>,
         );
 
-        await waitFor(() => expect(networkErrorCallback).toHaveBeenCalledTimes(1));
+        await waitFor(() => expect(networkErrorCallback)
+            .toHaveBeenCalledTimes(1));
     });
 
     it('should call network error when json parse errors happen', async () => {
-        jest.spyOn(fetcher, 'authenticatedFetchGet').mockReturnValue(nonJsonResponse);
+        jest.spyOn(fetcher, 'authenticatedFetchGet').mockReturnValue(nonJsonResponseThunk());
         const networkErrorCallback = jest.fn();
 
         render(
