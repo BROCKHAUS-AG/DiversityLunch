@@ -1,5 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.voucher.service;
 
+import de.brockhausag.diversitylunchspringboot.dataFactories.MeetingTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
@@ -8,17 +10,17 @@ import de.brockhausag.diversitylunchspringboot.voucher.exception.ForbiddenVouche
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;
 import de.brockhausag.diversitylunchspringboot.voucher.repository.VoucherRepository;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.Mockito.when;
-
-
 import java.util.Optional;
 import java.util.UUID;
+
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class VoucherServiceTest {
@@ -27,7 +29,7 @@ public class VoucherServiceTest {
     private VoucherService voucherService;
 
     @Mock
-    private VoucherRepository voucherRepository;
+    private static VoucherRepository voucherRepository;
 
     @Mock
     private MeetingRepository meetingRepository;
@@ -35,163 +37,89 @@ public class VoucherServiceTest {
     @Mock
     private ProfileRepository profileRepository;
 
+    private ProfileEntity meetingProposer;
+    private ProfileEntity meetingPartner;
+
+    private ProfileEntity externalProfile;
+    private MeetingEntity matchedMeeting;
+
+    private VoucherEntity claimedVoucherProposer;
+    private VoucherEntity unclaimedVoucher;
+
+    @BeforeEach
+    void initTestData() {
+        ProfileTestdataFactory profileTestdataFactory = new ProfileTestdataFactory();
+        meetingProposer = profileTestdataFactory.buildEntity(1);
+        meetingPartner = profileTestdataFactory.buildEntity(2);
+        externalProfile = profileTestdataFactory.buildEntity(3);
+
+        MeetingTestdataFactory meetingTestdataFactory = new MeetingTestdataFactory();
+        matchedMeeting = meetingTestdataFactory.matchedMeeting(meetingProposer, meetingPartner);
+
+        claimedVoucherProposer = new VoucherEntity(UUID.randomUUID(), meetingProposer, "Claimed-Voucher", matchedMeeting);
+        unclaimedVoucher = new VoucherEntity("Unclaimed-Voucher");
+    }
+
     @Test
-    void getVoucherBasedOnMeetingWithoutClaimedVoucher_expectsVoucherInReturn() {
-        VoucherEntity expected = new VoucherEntity("code");
-        long proposerId = 1L;
-        long partnerId = 2L;
-        long meetingId = 1L;
+    void getVoucherBasedOnMeetingWithoutClaimedVoucher_expectsVoucherInReturn() throws ForbiddenVoucherClaim {
+        when(profileRepository.findById(meetingPartner.getId())).thenReturn(Optional.of(meetingPartner));
+        when(meetingRepository.findById(matchedMeeting.getId())).thenReturn(Optional.of(matchedMeeting));
+        when(voucherRepository.getFirstByProfileIsNullAndMeetingIsNull()).thenReturn(Optional.of(unclaimedVoucher));
+        when(voucherRepository.existsByProfileIdAndMeetingId(meetingPartner.getId(), matchedMeeting.getId())).thenReturn(false);
 
-        when(voucherRepository.getFirstByProfileIsNullAndMeetingIsNull()).thenReturn(Optional.of(expected));
-        when(voucherRepository.existsByProfileIdAndMeetingId(proposerId, meetingId)).thenReturn(false);
+        Optional<VoucherEntity> voucherEntity = voucherService.getUnclaimedVoucherForMeeting(meetingPartner.getId(), matchedMeeting.getId());
 
-        ProfileEntity proposer = new ProfileEntity();
-        proposer.setId(proposerId);
-        when(profileRepository.findById(proposerId)).thenReturn(Optional.of(proposer));
-
-        ProfileEntity partner = new ProfileEntity();
-        partner.setId(partnerId);
-
-        MeetingEntity meeting = new MeetingEntity();
-        meeting.setId(meetingId);
-        meeting.setPartner(partner);
-        meeting.setProposer(proposer);
-        when(meetingRepository.findById(meetingId)).thenReturn(Optional.of(meeting));
-
-        try {
-            Optional<VoucherEntity> voucherEntity = voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId);
-            Assertions.assertNotNull(voucherEntity.get());
-            Assertions.assertEquals(expected.getVoucher(), voucherEntity.get().getVoucher());
-        } catch (ForbiddenVoucherClaim e) {
-            Assertions.fail();
-        }
+        Assertions.assertNotNull(voucherEntity.get());
+        Assertions.assertEquals(unclaimedVoucher.getVoucher(), voucherEntity.get().getVoucher());
     }
 
     @Test
     void meetingExists_butUserWasNotAParticipant_expectsExceptionThrown() {
-        long proposerId = 1L;
-        long partnerId = 2L;
-        long meetingId = 1L;
+        when(profileRepository.findById(externalProfile.getId())).thenReturn(Optional.of(meetingPartner));
+        when(meetingRepository.findById(matchedMeeting.getId())).thenReturn(Optional.of(matchedMeeting));
+        when(voucherRepository.getFirstByProfileIsNullAndMeetingIsNull()).thenReturn(Optional.of(unclaimedVoucher));
 
-        ProfileEntity proposer = new ProfileEntity();
-        proposer.setId(proposerId);
-
-
-        ProfileEntity partner = new ProfileEntity();
-        partner.setId(partnerId);
-
-        when(meetingRepository.findById(meetingId)).thenReturn(Optional.empty());
-
-        Assertions.assertThrows(ForbiddenVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(3L, meetingId));
-
+        Assertions.assertThrows(ForbiddenVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(externalProfile.getId(), matchedMeeting.getId()));
     }
 
     @Test
     void meetingDoesNotExists_expectsExceptionThrown() {
-        long proposerId = 1L;
-        long meetingId = 1L;
-
-        ProfileEntity proposer = new ProfileEntity();
-        proposer.setId(proposerId);
-        when(profileRepository.findById(proposerId)).thenReturn(Optional.of(proposer));
+        when(profileRepository.findById(meetingProposer.getId())).thenReturn(Optional.of(meetingProposer));
         when(meetingRepository.findById(2L)).thenReturn(Optional.empty());
-        Assertions.assertThrows(ForbiddenVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId + 1));
 
+        Assertions.assertThrows(ForbiddenVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(meetingProposer.getId(), 2L));
     }
 
     @Test
-    void userIsEligible_butThereAreNoMoreClaimableVouchers_expects_ExceptionThrown() {
-        long proposerId = 1L;
-        long partnerId = 2L;
-        long meetingId = 1L;
-
-        when(voucherRepository.existsByProfileIdAndMeetingId(proposerId, meetingId)).thenReturn(false);
+    void userIsEligible_butThereAreNoMoreClaimableVouchers_expects_EmptyOptional() throws ForbiddenVoucherClaim {
+        when(voucherRepository.existsByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId())).thenReturn(false);
         when(voucherRepository.getFirstByProfileIsNullAndMeetingIsNull()).thenReturn(Optional.empty());
+        when(profileRepository.findById(meetingProposer.getId())).thenReturn(Optional.of(meetingProposer));
+        when(meetingRepository.findById(matchedMeeting.getId())).thenReturn(Optional.of(matchedMeeting));
 
-        ProfileEntity proposer = new ProfileEntity();
-        proposer.setId(proposerId);
-        when(profileRepository.findById(proposerId)).thenReturn(Optional.of(proposer));
-
-        ProfileEntity partner = new ProfileEntity();
-        partner.setId(partnerId);
-
-        MeetingEntity meeting = new MeetingEntity();
-        meeting.setId(meetingId);
-        meeting.setPartner(partner);
-        meeting.setProposer(proposer);
-        when(meetingRepository.findById(meetingId)).thenReturn(Optional.of(meeting));
-
-        Assertions.assertThrows(ForbiddenVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId));
+        Assertions.assertEquals(voucherService.getUnclaimedVoucherForMeeting(meetingProposer.getId(), matchedMeeting.getId()), Optional.empty());
     }
 
     @Test
-    void userAlreadyClaimedVoucherForThisMeeting_expectsIllegalClaimException() {
-        long proposerId = 1L;
-        long partnerId = 2L;
-        long meetingId = 1L;
+    void userAlreadyClaimedVoucherForThisMeeting_expectsAlreadyClaimedVoucher() {
+        when(voucherRepository.getVoucherEntityByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId())).thenReturn(Optional.of(claimedVoucherProposer));
 
-        when(voucherRepository.existsByProfileIdAndMeetingId(proposerId, meetingId)).thenReturn(true);
-
-        ProfileEntity proposer = new ProfileEntity();
-        proposer.setId(proposerId);
-        when(profileRepository.findById(proposerId)).thenReturn(Optional.of(proposer));
-
-        ProfileEntity partner = new ProfileEntity();
-        partner.setId(partnerId);
-
-        MeetingEntity meeting = new MeetingEntity();
-        meeting.setId(meetingId);
-        meeting.setPartner(partner);
-        meeting.setProposer(proposer);
-        when(meetingRepository.findById(meetingId)).thenReturn(Optional.of(meeting));
-
-        Assertions.assertThrows(ForbiddenVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId));
+        VoucherEntity voucherActual = voucherService.getVoucherByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId()).get();
+        Assertions.assertEquals(claimedVoucherProposer, voucherActual);
     }
 
     @Test
     void userAlreadyClaimedVoucherForThisMeeting_expectsAlreadyClaimedUser() {
-        long proposerId = 1L;
-        long partnerId = 2L;
-        long meetingId = 1L;
+        when(voucherRepository.getVoucherEntityByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId())).thenReturn(Optional.of(claimedVoucherProposer));
 
-
-        ProfileEntity proposer = new ProfileEntity();
-        proposer.setId(proposerId);
-
-        ProfileEntity partner = new ProfileEntity();
-        partner.setId(partnerId);
-
-        MeetingEntity meeting = new MeetingEntity();
-        meeting.setId(meetingId);
-        meeting.setPartner(partner);
-        meeting.setProposer(proposer);
-
-        VoucherEntity voucherEntity = new VoucherEntity(UUID.randomUUID(), proposer, "1234", meeting);
-        when(voucherRepository.getVoucherEntityByProfileIdAndMeetingId(proposerId, meetingId)).thenReturn(Optional.of(voucherEntity));
-
-        VoucherEntity voucherActual = voucherService.getVoucherByProfileIdAndMeetingId(proposerId, meetingId).get();
-        Assertions.assertEquals(voucherEntity, voucherActual);
-
+        VoucherEntity voucherActual = voucherService.getVoucherByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId()).get();
+        Assertions.assertEquals(claimedVoucherProposer, voucherActual);
     }
 
     @Test
     void userHasNoVoucher_expectsEmptyOptional() {
-        long proposerId = 1L;
-        long partnerId = 2L;
-        long meetingId = 1L;
+        when(voucherRepository.getVoucherEntityByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId())).thenReturn(Optional.empty());
 
-
-        ProfileEntity proposer = new ProfileEntity();
-        proposer.setId(proposerId);
-
-        ProfileEntity partner = new ProfileEntity();
-        partner.setId(partnerId);
-
-
-
-        when(voucherRepository.getVoucherEntityByProfileIdAndMeetingId(proposerId, meetingId)).thenReturn(Optional.empty());
-
-        Assertions.assertEquals(Optional.empty(),voucherService.getVoucherByProfileIdAndMeetingId(proposerId, meetingId));
-
+        Assertions.assertEquals(Optional.empty(),voucherService.getVoucherByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId()));
     }
 }
