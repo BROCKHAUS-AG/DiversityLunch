@@ -2,7 +2,7 @@ package de.brockhausag.diversitylunchspringboot.voucher.controller;
 
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
-import de.brockhausag.diversitylunchspringboot.voucher.exception.IllegalVoucherClaim;
+import de.brockhausag.diversitylunchspringboot.voucher.exception.ForbiddenVoucherClaim;
 import de.brockhausag.diversitylunchspringboot.voucher.mapper.VoucherMapperImpl;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;
@@ -51,7 +51,7 @@ public class VoucherControllerTest {
 
         try {
             when(voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId)).thenReturn(Optional.of(voucherEntity));
-        } catch (IllegalVoucherClaim e) {
+        } catch (ForbiddenVoucherClaim e) {
            Assertions.fail();
         }
 
@@ -66,7 +66,7 @@ public class VoucherControllerTest {
         long meetingId = 1L;
         try {
             when(voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId)).thenReturn(Optional.empty());
-        } catch (IllegalVoucherClaim e) {
+        } catch (ForbiddenVoucherClaim e) {
             Assertions.fail();
         }
 
@@ -78,8 +78,8 @@ public class VoucherControllerTest {
         long proposerId = 1L;
         long meetingId = 1L;
         try {
-            when(voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId)).thenThrow(IllegalVoucherClaim.class);
-        } catch (IllegalVoucherClaim e) {
+            when(voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId)).thenThrow(ForbiddenVoucherClaim.class);
+        } catch (ForbiddenVoucherClaim e) {
             Assertions.fail();
         }
 

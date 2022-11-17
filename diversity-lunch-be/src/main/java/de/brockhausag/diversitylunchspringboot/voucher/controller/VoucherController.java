@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.voucher.controller;
 
-import de.brockhausag.diversitylunchspringboot.voucher.exception.IllegalVoucherClaim;
+import de.brockhausag.diversitylunchspringboot.voucher.exception.ForbiddenVoucherClaim;
 import de.brockhausag.diversitylunchspringboot.voucher.mapper.VoucherMapper;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;
@@ -46,10 +46,11 @@ public class VoucherController {
             }
 
             if (voucherEntity.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return ResponseEntity.ok().body("no more claimable vouchers available");
             }
             return ResponseEntity.ok().body(voucherEntity.get().getVoucher());
-        } catch (IllegalVoucherClaim e) {
+        } catch (ForbiddenVoucherClaim e) {
+            log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }

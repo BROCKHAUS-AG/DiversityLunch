@@ -4,7 +4,7 @@ import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
-import de.brockhausag.diversitylunchspringboot.voucher.exception.IllegalVoucherClaim;
+import de.brockhausag.diversitylunchspringboot.voucher.exception.ForbiddenVoucherClaim;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;
 import de.brockhausag.diversitylunchspringboot.voucher.repository.VoucherRepository;
 import org.junit.jupiter.api.Assertions;
@@ -17,8 +17,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.mockito.Mockito.when;
 
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -64,7 +62,7 @@ public class VoucherServiceTest {
             Optional<VoucherEntity> voucherEntity = voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId);
             Assertions.assertNotNull(voucherEntity.get());
             Assertions.assertEquals(expected.getVoucher(), voucherEntity.get().getVoucher());
-        } catch (IllegalVoucherClaim e) {
+        } catch (ForbiddenVoucherClaim e) {
             Assertions.fail();
         }
     }
@@ -84,7 +82,7 @@ public class VoucherServiceTest {
 
         when(meetingRepository.findById(meetingId)).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(IllegalVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(3L, meetingId));
+        Assertions.assertThrows(ForbiddenVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(3L, meetingId));
 
     }
 
@@ -97,7 +95,7 @@ public class VoucherServiceTest {
         proposer.setId(proposerId);
         when(profileRepository.findById(proposerId)).thenReturn(Optional.of(proposer));
         when(meetingRepository.findById(2L)).thenReturn(Optional.empty());
-        Assertions.assertThrows(IllegalVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId + 1));
+        Assertions.assertThrows(ForbiddenVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId + 1));
 
     }
 
@@ -123,7 +121,7 @@ public class VoucherServiceTest {
         meeting.setProposer(proposer);
         when(meetingRepository.findById(meetingId)).thenReturn(Optional.of(meeting));
 
-        Assertions.assertThrows(IllegalVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId));
+        Assertions.assertThrows(ForbiddenVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId));
     }
 
     @Test
@@ -147,7 +145,7 @@ public class VoucherServiceTest {
         meeting.setProposer(proposer);
         when(meetingRepository.findById(meetingId)).thenReturn(Optional.of(meeting));
 
-        Assertions.assertThrows(IllegalVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId));
+        Assertions.assertThrows(ForbiddenVoucherClaim.class, () -> voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId));
     }
 
     @Test
