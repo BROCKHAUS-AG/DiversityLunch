@@ -9,7 +9,7 @@ import {
     languageData,
     profileData,
     projectData,
-    religionData,
+    religionData, socialBackgroundData,
     workExperienceData,
 } from '../../../../__global_test_data__/data';
 import * as fetcher from '../../../../utils/fetch.utils';
@@ -70,6 +70,7 @@ describe('Profile form', () => {
         const INSERTED_HOBBY_DESCRIPTOR = hobbyData[0].descriptor;
         const INSERTED_EDUCATION_DESCRIPTOR = educationData[0].descriptor;
         const INSERTED_DIET_DESCRIPTOR = dietData[0].descriptor;
+        const INSERTED_SOCIAL_BACKROUND_DESCRIPTOR = socialBackgroundData[0].descriptor;
 
         const expectInputData = (p: Partial<Profile>) => {
             expect(p.birthYear).toEqual(INSERTED_BIRTH_YEAR);
@@ -82,6 +83,7 @@ describe('Profile form', () => {
             expect(p.hobby?.descriptor).toEqual(INSERTED_HOBBY_DESCRIPTOR);
             expect(p.education?.descriptor).toEqual(INSERTED_EDUCATION_DESCRIPTOR);
             expect(p.diet?.descriptor).toEqual(INSERTED_DIET_DESCRIPTOR);
+            expect(p.socialBackground?.descriptor).toEqual(INSERTED_SOCIAL_BACKROUND_DESCRIPTOR);
         };
         jest.spyOn(fetcher, 'authenticatedFetchGet').mockImplementation(mockedFetchGetProfile);
         renderContainer(<ProfileForm checkValidity={() => true} onSubmit={expectInputData} />);
@@ -125,6 +127,10 @@ describe('Profile form', () => {
         const dietDropdown = await screen.findByLabelText('Ernährung') as HTMLInputElement | null;
         expect(dietDropdown).toBeVisible();
         if (dietDropdown) dietDropdown.value = INSERTED_DIET_DESCRIPTOR;
+
+        const socialBackgroundDropdown = await screen.findByLabelText('Soziale Herkunft') as HTMLInputElement | null;
+        expect(socialBackgroundDropdown).toBeVisible();
+        if (socialBackgroundDropdown) socialBackgroundDropdown.value = INSERTED_SOCIAL_BACKROUND_DESCRIPTOR;
 
         const button = await screen.findByText('Speichern');
         setTimeout(() => button.click(), 0);

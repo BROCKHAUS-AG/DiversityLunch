@@ -8,6 +8,7 @@ import { Language } from './Language';
 import { WorkExperience } from './WorkExperience';
 import { Religion } from './Religion';
 import { SexualOrientation } from './SexualOrientation';
+import { SocialBackground } from './SocialBackground';
 
 export interface Profile {
     id: number,
@@ -17,7 +18,6 @@ export interface Profile {
     hobby: Hobby,
     project: Project
     originCountry: Country,
-    // culture: Culture,
     diet: Diet,
     education: Education,
     gender: Gender,
@@ -25,5 +25,6 @@ export interface Profile {
     motherTongue: Language,
     religion: Religion,
     workExperience: WorkExperience,
-    sexualOrientation: SexualOrientation
+    sexualOrientation: SexualOrientation,
+    socialBackground: SocialBackground
 }

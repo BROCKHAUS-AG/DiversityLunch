@@ -17,6 +17,7 @@ import { projectFetch } from '../../../data/project/project-fetch';
 import { religionFetch } from '../../../data/religion/religion-fetch';
 import { workExperienceFetch } from '../../../data/work-experience/work-experience-fetch';
 import { sexualOrientationFetch } from '../../../data/sexual-orientation/sexual-orientation-fetch';
+import { socialBackgroundFetch } from '../../../data/social-background/social-background-fetch';
 
 export type ProfileFormCallback = (formData: Partial<Profile>) => void;
 export type ProfileFormIsValidCallback = (formData: Partial<Profile>)=>boolean;
@@ -37,32 +38,30 @@ export const ProfileForm: FC<ProfileFormProps> = ({
     const [isValid, setIsValid] = useState(checkValidity(profile));
     const dispatch = useDispatch();
     const countries = useSelector((store: AppStoreState) => store.country);
-    // const cultures = useSelector((store: AppStoreState) => store.culture);
     const diets = useSelector((store: AppStoreState) => store.diet);
     const educations = useSelector((store: AppStoreState) => store.education);
     const genders = useSelector((store: AppStoreState) => store.gender);
     const hobbies = useSelector((store: AppStoreState) => store.hobby);
-    // const industries = useSelector((store: AppStoreState) => store.industry);
     const languages = useSelector((store: AppStoreState) => store.language);
     const project = useSelector((store: AppStoreState) => store.project);
     const religions = useSelector((store: AppStoreState) => store.religion);
     const workExperience = useSelector((store: AppStoreState) => store.workExperience);
     const sexualOrientation = useSelector((store: AppStoreState) => store.sexualOrientation);
+    const socialBackground = useSelector((store: AppStoreState) => store.socialBackground);
 
     useEffect(() => {
         // TODO: Handle network and http errors properly tgohlisch 17.11.2022
         dispatch(countryFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
-        // dispatch(cultureFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(dietFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(educationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(genderFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(hobbyFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
-        // dispatch(industryFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(languageFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(projectFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(religionFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(workExperienceFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(sexualOrientationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(socialBackgroundFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
     }, []);
 
     function updateProfile<KEY extends keyof Profile>(key: KEY, value?: Profile[KEY]) {
@@ -166,6 +165,13 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 onChange={(value) => updateProfile('sexualOrientation', value)}
                 label="Sexualität"
                 currentValue={profile.sexualOrientation || undefined}
+            />
+            <Dropdown
+                options={socialBackground.items}
+                placeholder="Bist du ein Akademikerkind, oder eher die erste Person in der Familie, die studiert oder ihr Abitur gemacht hat?"
+                onChange={(value) => updateProfile('socialBackground', value)}
+                label="Soziale Herkunft"
+                currentValue={profile.socialBackground || undefined}
             />
             <Button
                 disabled={!isValid}
