@@ -1,13 +1,16 @@
 package de.brockhausag.diversitylunchspringboot.voucher.controller;
 
+import de.brockhausag.diversitylunchspringboot.dataFactories.MeetingTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.voucher.exception.ForbiddenVoucherClaim;
-import de.brockhausag.diversitylunchspringboot.voucher.mapper.VoucherMapperImpl;
+import de.brockhausag.diversitylunchspringboot.voucher.mapper.VoucherMapper;
+import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherClaimDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;
 import de.brockhausag.diversitylunchspringboot.voucher.service.VoucherService;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,10 +19,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
-import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -28,100 +34,89 @@ public class VoucherControllerTest {
     private VoucherService voucherService;
 
     @Mock
-    private VoucherMapperImpl voucherMapper;
+    private VoucherMapper voucherMapper;
 
     @InjectMocks
     private VoucherController voucherController;
 
+    private ProfileEntity meetingProposer;
+    private MeetingEntity matchedMeeting;
+    private VoucherEntity claimedVoucherProposer;
+    private VoucherEntity unclaimedVoucher;
+    @BeforeEach
+    void initTestData() {
+        ProfileTestdataFactory profileTestdataFactory = new ProfileTestdataFactory();
+        meetingProposer = profileTestdataFactory.buildEntity(1);
+        ProfileEntity meetingPartner = profileTestdataFactory.buildEntity(2);
+
+        MeetingTestdataFactory meetingTestdataFactory = new MeetingTestdataFactory();
+        matchedMeeting = meetingTestdataFactory.matchedMeeting(meetingProposer, meetingPartner);
+
+        claimedVoucherProposer = new VoucherEntity(UUID.randomUUID(), meetingProposer, "Claimed-Voucher", matchedMeeting);
+        unclaimedVoucher = new VoucherEntity("Unclaimed-Voucher");
+    }
+
     @Test
-    void testServiceRespondsVoucherOptional_expectHTTPOkAndVoucherCode(){
-        long proposerId = 1L;
-        long meetingId = 1L;
-        UUID uuid = UUID.randomUUID();
+    void testServiceRespondsVoucherOptionalIfNoNewVoucherIsClaimed_expectHTTPOkAndVoucherCode() {
+        when(voucherService.checkForClaimedVoucher(meetingProposer.getId(), matchedMeeting.getId())).thenReturn(true);
+        when(voucherService.getVoucherByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId())).thenReturn(Optional.of(claimedVoucherProposer));
 
-        ProfileEntity profile = new ProfileEntity();
-        profile.setId(proposerId);
-        MeetingEntity meeting = new MeetingEntity();
-        meeting.setId(meetingId);
+        ResponseEntity<VoucherClaimDto> resp =  voucherController.claimVoucher(meetingProposer.getId(), matchedMeeting.getId());
 
-        VoucherEntity voucherEntity = new VoucherEntity(uuid,profile,"code",meeting);
-        VoucherDto expectedDto = new VoucherDto(uuid,"code",1L,1L);
-
-
-
-        try {
-            when(voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId)).thenReturn(Optional.of(voucherEntity));
-        } catch (ForbiddenVoucherClaim e) {
-           Assertions.fail();
-        }
-
-        ResponseEntity<?> resp =  voucherController.claimVoucher(proposerId,meetingId);
         assertEquals(HttpStatus.OK, resp.getStatusCode());
-        assertEquals(expectedDto.getVoucherCode(), resp.getBody());
+        assertNotNull(resp.getBody());
+        assertEquals(claimedVoucherProposer.getVoucher(), resp.getBody().getVoucherCode());
+        assertFalse(resp.getBody().isClaimedNewVoucher());
     }
 
     @Test
-    void testServiceRespondsWithEmptyVoucherOptional_expectHTTPNotFound(){
-        long proposerId = 1L;
-        long meetingId = 1L;
-        try {
-            when(voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId)).thenReturn(Optional.empty());
-        } catch (ForbiddenVoucherClaim e) {
-            Assertions.fail();
-        }
+    void testServiceRespondsVoucherOptionalIfANewVoucherIsClaimed_expectHTTPOkAndVoucherCode() throws ForbiddenVoucherClaim {
+        when(voucherService.getUnclaimedVoucherForMeeting(meetingProposer.getId(), matchedMeeting.getId())).thenReturn(Optional.of(claimedVoucherProposer));
+        when(voucherService.checkForClaimedVoucher(meetingProposer.getId(), matchedMeeting.getId())).thenReturn(false);
 
-        assertEquals(new ResponseEntity<>(HttpStatus.NOT_FOUND), voucherController.claimVoucher(proposerId,meetingId));
+        ResponseEntity<VoucherClaimDto> resp =  voucherController.claimVoucher(meetingProposer.getId(), matchedMeeting.getId());
+
+        assertEquals(HttpStatus.OK, resp.getStatusCode());
+        assertNotNull(resp.getBody());
+        assertEquals(claimedVoucherProposer.getVoucher(), resp.getBody().getVoucherCode());
+        assertTrue(resp.getBody().isClaimedNewVoucher());
     }
 
     @Test
-    void testServiceThrowsIllegalClaimException_expectHTTPForbidden() {
-        long proposerId = 1L;
-        long meetingId = 1L;
-        try {
-            when(voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId)).thenThrow(ForbiddenVoucherClaim.class);
-        } catch (ForbiddenVoucherClaim e) {
-            Assertions.fail();
-        }
+    void testServiceRespondsWithEmptyVoucherOptional_expectHTTPOkWithVoucherCodeNull() throws ForbiddenVoucherClaim {
+        when(voucherService.getUnclaimedVoucherForMeeting(meetingProposer.getId(), matchedMeeting.getId())).thenReturn(Optional.empty());
 
-        assertEquals(new ResponseEntity<>(HttpStatus.FORBIDDEN), voucherController.claimVoucher(proposerId,meetingId));
+        ResponseEntity<VoucherClaimDto> resp =  voucherController.claimVoucher(meetingProposer.getId(), matchedMeeting.getId());
+
+        assertEquals(HttpStatus.OK, resp.getStatusCode());
+        assertNotNull(resp.getBody());
+        assertNull(resp.getBody().getVoucherCode());
+        assertFalse(resp.getBody().isClaimedNewVoucher());
+    }
+
+    @Test
+    void testServiceThrowsIllegalClaimException_expectHTTPForbidden() throws ForbiddenVoucherClaim {
+        when(voucherService.getUnclaimedVoucherForMeeting(meetingProposer.getId(), matchedMeeting.getId())).thenThrow(ForbiddenVoucherClaim.class);
+
+        assertEquals(new ResponseEntity<>(HttpStatus.FORBIDDEN), voucherController.claimVoucher(meetingProposer.getId(), matchedMeeting.getId()));
     }
     @Test
-    void testPorfileHasNoVouchers_expectEmptyList(){
-        long profile_id = 1L;
-        when(voucherService.getVoucherByProfileId(profile_id)).thenReturn(Collections.emptyList());
-        assertEquals(voucherController.getVouchers(profile_id).getBody(),Collections.emptyList());
+    void testProfileHasNoVouchers_expectEmptyList(){
+        when(voucherService.getVoucherByProfileId(meetingProposer.getId())).thenReturn(Collections.emptyList());
+
+        assertEquals(voucherController.getVouchers(meetingProposer.getId()).getBody(),Collections.emptyList());
     }
 
     @Test
     void testProfileHasVouchers_expectVoucherDtos(){
+        List<VoucherEntity> voucherEntities = List.of(claimedVoucherProposer, unclaimedVoucher);
+        List<VoucherDto> expected = voucherEntities.stream().map(voucherMapper::entityToDto).toList();
+        when(voucherService.getVoucherByProfileId(meetingProposer.getId())).thenReturn(voucherEntities);
 
-        long profile_id = 1L;
-        long meeting_id = 1L;
-        UUID uuid = UUID.randomUUID();
+        List<VoucherDto> result = voucherController.getVouchers(meetingProposer.getId()).getBody();
 
-        ProfileEntity profile = new ProfileEntity();
-        profile.setId(profile_id);
-        MeetingEntity meeting = new MeetingEntity();
-        meeting.setId(meeting_id);
-
-        VoucherEntity voucher1 = new VoucherEntity(uuid,profile,"code1",meeting);
-        VoucherEntity voucher2 = new VoucherEntity(uuid,profile,"code2",meeting);
-        VoucherEntity[] voucherArray = {voucher1,voucher2};
-        List<VoucherEntity> voucherEntities = new ArrayList<VoucherEntity>(Arrays.asList(voucherArray));
-
-        VoucherDto voucherDto1 = new VoucherDto(uuid,"code1",profile_id,meeting_id);
-        VoucherDto voucherDto2 = new VoucherDto(uuid,"code2",profile_id,meeting_id);
-        List<VoucherDto> expected = List.of(new VoucherDto[]{voucherDto1, voucherDto2});
-
-        when(voucherMapper.mapEntityToDto(voucher1)).thenReturn(voucherDto1);
-        when(voucherMapper.mapEntityToDto(voucher2)).thenReturn(voucherDto2);
-
-        when(voucherService.getVoucherByProfileId(profile_id)).thenReturn(voucherEntities);
-
-        List<VoucherDto> result = voucherController.getVouchers(profile_id).getBody();
-
+        assertNotNull(result);
         assertEquals(expected.size(),result.size());
         assertArrayEquals(expected.toArray(),result.toArray());
     }
-
 }
