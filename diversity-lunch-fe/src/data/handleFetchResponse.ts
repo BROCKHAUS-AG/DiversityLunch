@@ -9,7 +9,7 @@ export async function handleFetchResponse(onGoingFetch: Promise<Response>, onSuc
         if (response.ok) {
             onSuccess(response);
         } else if (callbacks.statusCodeHandlers[statusCode]) {
-      callbacks.statusCodeHandlers[statusCode]!(response);
+            callbacks.statusCodeHandlers[statusCode]!(response);
         }
     } catch (error) {
         callbacks.onNetworkError(error as Error);
