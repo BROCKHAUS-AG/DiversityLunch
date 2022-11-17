@@ -2,6 +2,7 @@ package de.brockhausag.diversitylunchspringboot.voucher.controller;
 
 import de.brockhausag.diversitylunchspringboot.voucher.exception.ForbiddenVoucherClaim;
 import de.brockhausag.diversitylunchspringboot.voucher.mapper.VoucherMapper;
+import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherClaimDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;
 import de.brockhausag.diversitylunchspringboot.voucher.service.VoucherService;
@@ -36,19 +37,25 @@ public class VoucherController {
 
     @PreAuthorize("isProfileOwner(#profileId)")
     @PutMapping("/claim/{profileId}/{meetingId}")
-    public ResponseEntity<?> claimVoucher(@PathVariable Long profileId, @PathVariable Long meetingId) {
+    public ResponseEntity<VoucherClaimDto> claimVoucher(@PathVariable Long profileId, @PathVariable Long meetingId) {
         try {
             Optional<VoucherEntity> voucherEntity;
+            VoucherClaimDto voucherClaimDto = new VoucherClaimDto();
             if (voucherService.checkForClaimedVoucher(profileId, meetingId)) {
                 voucherEntity = voucherService.getVoucherByProfileIdAndMeetingId(profileId, meetingId);
+                voucherClaimDto.setClaimedNewVoucher(false);
             } else {
                 voucherEntity = voucherService.getUnclaimedVoucherForMeeting(profileId, meetingId);
+                voucherClaimDto.setClaimedNewVoucher(true);
             }
 
             if (voucherEntity.isEmpty()) {
-                return ResponseEntity.ok().body("no more claimable vouchers available");
+                voucherClaimDto.setClaimedNewVoucher(false);
+            } else {
+                voucherClaimDto.setVoucherCode(voucherEntity.get().getVoucher());
             }
-            return ResponseEntity.ok().body(voucherEntity.get().getVoucher());
+            
+            return ResponseEntity.ok().body(voucherClaimDto);
         } catch (ForbiddenVoucherClaim e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);

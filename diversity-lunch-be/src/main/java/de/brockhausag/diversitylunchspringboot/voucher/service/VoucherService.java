@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 @RequiredArgsConstructor
 public class VoucherService {
@@ -23,7 +22,6 @@ public class VoucherService {
     private final ProfileRepository profileRepository;
 
     public Optional<VoucherEntity> getUnclaimedVoucherForMeeting(long profileId, long meetingId) throws ForbiddenVoucherClaim {
-
         Optional<MeetingEntity> meeting = meetingRepository.findById(meetingId);
         Optional<ProfileEntity> profileEntity = profileRepository.findById(profileId);
         Optional<VoucherEntity> voucherEntity = voucherRepository.getFirstByProfileIsNullAndMeetingIsNull();
@@ -41,6 +39,7 @@ public class VoucherService {
             voucherEntity.get().setMeeting(meeting.get());
             voucherRepository.save(voucherEntity.get());
         }
+
         return voucherEntity;
     }
 
