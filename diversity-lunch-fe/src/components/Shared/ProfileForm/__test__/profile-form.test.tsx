@@ -15,6 +15,7 @@ import {
 import * as fetcher from '../../../../utils/fetch.utils';
 import { mockedFetchGetProfile } from '../../../../__global_test_data__/fetch';
 import { Profile } from '../../../../model/Profile';
+import { PROFILE_ENDPOINT } from '../../../../data/profile/profile.actions';
 
 describe('Profile form', () => {
     const renderContainer = (component : JSX.Element) => render(
@@ -28,10 +29,10 @@ describe('Profile form', () => {
     beforeEach(() => {
 
     });
-    // TODO: This test fails sometimes, it should at least fail all the time! tgohlisch 17.11.2022
+
     it('should disable the button if checkValidity returns false', async () => {
         jest.spyOn(fetcher, 'authenticatedFetchGet')
-            .mockImplementation(mockedFetchGetProfile);
+            .mockReturnValue(mockedFetchGetProfile(PROFILE_ENDPOINT));
         renderContainer(<ProfileForm checkValidity={() => false} onSubmit={() => {}} />);
 
         const result = await screen.findByText('Speichern');
@@ -41,7 +42,7 @@ describe('Profile form', () => {
 
     it('should enable the button if checkValidity returns true', async () => {
         jest.spyOn(fetcher, 'authenticatedFetchGet')
-            .mockImplementation(mockedFetchGetProfile);
+            .mockReturnValue(mockedFetchGetProfile(PROFILE_ENDPOINT));
         renderContainer(<ProfileForm checkValidity={() => true} onSubmit={() => {}} />);
 
         const result = await screen.findByText('Speichern');
@@ -51,7 +52,7 @@ describe('Profile form', () => {
 
     it('should call onSubmit after button was clicked', async () => {
         jest.spyOn(fetcher, 'authenticatedFetchGet')
-            .mockImplementation(mockedFetchGetProfile);
+            .mockReturnValue(mockedFetchGetProfile(PROFILE_ENDPOINT));
         renderContainer(<ProfileForm checkValidity={() => true} onSubmit={(p) => expect(p).toBeTruthy()} />);
 
         const button = await screen.findByText('Speichern');
