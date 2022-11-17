@@ -5,7 +5,7 @@ import { useParams } from 'react-router';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import { Button } from '../General/Button/Button';
 import { AppStoreState } from '../../store/Store';
-import { authenticatedFetchPut } from '../../utils/fetch.utils';
+import { authenticatedFetchGet, authenticatedFetchPut } from '../../utils/fetch.utils';
 import { AccountState } from '../../data/account/account-state.type';
 import { Account } from '../../types/Account';
 import { PopUp } from '../AdminPanel/userAdministration/PopUp';
@@ -32,11 +32,16 @@ export const VoucherPanel = () => {
         const { profileId } = account;
 
         const response = await authenticatedFetchPut(`/api/voucher/claim/${profileId}/${id}`, '');
+        const responseAmount = await authenticatedFetchGet('/amount');
         if (response.ok) {
-            const voucher = await response.json();
-            setVoucherCode(voucher);
-            setRevealed(true);
-        // else if () { setVouchersEmpty(true); }
+            console.log(responseAmount.json());
+            if (responseAmount.body) {
+                setVouchersEmpty(true);
+            } else {
+                const voucher = await response.json();
+                setVoucherCode(voucher);
+                setRevealed(true);
+            }
         } else {
             setError(true);
         }
