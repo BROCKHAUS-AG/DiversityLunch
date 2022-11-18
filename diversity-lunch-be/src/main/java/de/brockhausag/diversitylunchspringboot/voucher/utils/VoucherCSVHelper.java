@@ -13,22 +13,17 @@ import java.util.List;
 
 public class VoucherCSVHelper {
 
-    public static List<VoucherEntity> csvToVoucherEntities(InputStream is) {
-        try {
-            List<VoucherEntity> voucherEntities = new ArrayList<>();
-            CSVParser csvParser = CSVParser.parse(is, StandardCharsets.UTF_8, CSVFormat.RFC4180);
+    public static List<VoucherEntity> csvToVoucherEntities(InputStream csvInputStream) throws IOException {
+        List<VoucherEntity> voucherEntities = new ArrayList<>();
+        CSVParser csvParser = CSVParser.parse(csvInputStream, StandardCharsets.UTF_8, CSVFormat.RFC4180);
 
+        Iterable<CSVRecord> csvRecords = csvParser.getRecords();
 
-            Iterable<CSVRecord> csvRecords = csvParser.getRecords();
-
-            for (CSVRecord csvRecord : csvRecords) {
-                VoucherEntity voucherEntity = new VoucherEntity(csvRecord.get(0));
-                voucherEntities.add(voucherEntity);
-            }
-
-            return voucherEntities;
-        } catch (IOException ex) {
-            throw new RuntimeException("fail to parse CSV file: " + ex.getMessage());
+        for (CSVRecord csvRecord : csvRecords) {
+            VoucherEntity voucherEntity = new VoucherEntity(csvRecord.get(0));
+            voucherEntities.add(voucherEntity);
         }
+
+        return voucherEntities;
     }
 }

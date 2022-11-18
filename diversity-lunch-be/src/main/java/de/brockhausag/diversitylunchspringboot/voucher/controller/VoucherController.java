@@ -2,9 +2,8 @@ package de.brockhausag.diversitylunchspringboot.voucher.controller;
 
 import de.brockhausag.diversitylunchspringboot.voucher.exception.ForbiddenVoucherClaim;
 import de.brockhausag.diversitylunchspringboot.voucher.mapper.VoucherMapper;
-import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherClaimDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.AdminVoucherDto;
-import de.brockhausag.diversitylunchspringboot.voucher.exception.IllegalVoucherClaim;
+import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherClaimDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;
 import de.brockhausag.diversitylunchspringboot.voucher.service.VoucherService;
@@ -16,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.reactive.result.view.RedirectView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -98,17 +96,21 @@ public class VoucherController {
 
     @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).ADMIN_ROLE_ASSIGN)")
     @PostMapping(value = "/upload", consumes = "multipart/form-data")
-    public ResponseEntity<?> postVouchers(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Boolean> postVouchers(@RequestParam("file") MultipartFile file) {
         try {
             List<VoucherEntity> voucherEntities = VoucherCSVHelper.csvToVoucherEntities(file.getInputStream());
-            voucherService.saveVouchers(voucherEntities);
+            ResponseEntity<Boolean> response;
 
-            return new ResponseEntity<>(HttpStatus.OK);
+            if (voucherService.saveVouchers(voucherEntities)) {
+                response = ResponseEntity.ok().build();
+            } else {
+                response = ResponseEntity.internalServerError().build();
+            }
 
+            return response;
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
 
 }

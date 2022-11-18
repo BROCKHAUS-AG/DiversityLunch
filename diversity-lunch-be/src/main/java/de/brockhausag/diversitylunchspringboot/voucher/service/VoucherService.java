@@ -1,7 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.voucher.service;
 
 import com.google.common.collect.Iterables;
-import com.tngtech.archunit.lang.ArchRule;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
@@ -12,8 +11,6 @@ import de.brockhausag.diversitylunchspringboot.voucher.repository.VoucherReposit
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,11 +43,19 @@ public class VoucherService {
         return voucherEntity;
     }
 
+    public boolean checkForClaimedVoucher(long profileId, long meetingId) {
+        return voucherRepository.existsByProfileIdAndMeetingId(profileId, meetingId);
+    }
+
     public List<VoucherEntity> getVoucherByProfileId(long profileId) {
         return voucherRepository.getAllByProfileId(profileId);
     }
+    public Optional<VoucherEntity> getVoucherByProfileIdAndMeetingId(long profileId, long meetingId) {
+        return voucherRepository.getVoucherEntityByProfileIdAndMeetingId(profileId, meetingId);
+    }
+
     public boolean saveVouchers(Iterable<VoucherEntity> voucherEntities){
-        voucherRepository.saveAll(voucherEntities);
+        Iterable<VoucherEntity> savedVouchers = voucherRepository.saveAll(voucherEntities);
         return Iterables.size(savedVouchers) == Iterables.size(voucherEntities);
     }
 
@@ -64,15 +69,8 @@ public class VoucherService {
     public int getAmountOfClaimedVouchers() {
         return voucherRepository.countAllByProfileIsNotNullAndMeetingIsNotNull();
     }
+
     public List<VoucherEntity> getAllVouchersStored(){
         return voucherRepository.findAll();
-    }
-
-    public static class IllegalVoucherClaim extends Exception {
-
-        public IllegalVoucherClaim(String s) {
-            super(s);
-        }
-
     }
 }
