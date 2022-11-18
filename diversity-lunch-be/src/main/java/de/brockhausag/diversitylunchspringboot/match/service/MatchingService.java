@@ -1,21 +1,21 @@
 package de.brockhausag.diversitylunchspringboot.match.service;
 
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
+import de.brockhausag.diversitylunchspringboot.match.utils.Match;
+import de.brockhausag.diversitylunchspringboot.match.utils.MatchingUtils;
+import de.brockhausag.diversitylunchspringboot.match.utils.ScoreAndCategory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Question;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
-import de.brockhausag.diversitylunchspringboot.match.utils.Match;
-import de.brockhausag.diversitylunchspringboot.match.utils.MatchingUtils;
-import de.brockhausag.diversitylunchspringboot.match.utils.ScoreAndCategory;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MsTeamsService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -32,8 +32,7 @@ public class MatchingService {
     private final DiversityLunchEMailService eMailService;
     private final MsTeamsService msTeamsService;
     private static final Random random = new Random();
-    @Value("${diversity.url.baseUrl}")
-    private String BASE_URL;
+
 
     public void matching(LocalDateTime proposedDateTime, LocalDateTime today){
         if(proposedDateTime == null || today == null ){
@@ -111,16 +110,13 @@ public class MatchingService {
         meetingEntities.forEach(meetingEntity -> {
             log.debug("Sending Email for Meeting: {} - Time: {}", meetingEntity.getId(), modified);
             try {
-                ProfileEntity[] partner = {meetingEntity.getPartner(), meetingEntity.getProposer()};
-                String link = BASE_URL + "/voucherClaim/" + meetingEntity.getId();
-                eMailService.sendEmail(partner[0].getEmail(),
-                        "Dein Diversity-Mittagessen", eMailService.createEmailTemplateHTML(partner[0].getName(), partner[1].getName(),
-                                meetingEntity.getQuestion(),String.format(link,partner[0].getId(),meetingEntity.getId())), eMailService.createEmailTemplatePlain(partner[0].getName(), partner[1].getName(),
-                                meetingEntity.getQuestion(),String.format(link,partner[0].getId(),meetingEntity.getId())));
-                eMailService.sendEmail(partner[1].getEmail(),
-                        "Dein Diversity-Mittagessen", eMailService.createEmailTemplateHTML(partner[1].getName(), partner[0].getName(),
-                                meetingEntity.getQuestion(),String.format(link,partner[1].getId(),meetingEntity.getId())), eMailService.createEmailTemplatePlain(partner[1].getName(), partner[0].getName(),
-                                meetingEntity.getQuestion(),String.format(link,partner[1].getId(),meetingEntity.getId())));
+                ProfileEntity[] attendees = {meetingEntity.getProposer(), meetingEntity.getPartner()};
+                for (ProfileEntity attendee: attendees) {
+                    eMailService.sendEmail(attendee.getEmail(),
+                            "Dein Diversity-Mittagessen",
+                            eMailService.createEmailTemplateHTML(attendees, meetingEntity),
+                            eMailService.createEmailTemplatePlain(attendees, meetingEntity));
+                }
             } catch (Exception e) {
                 log.error("Something went Wrong while Sending Emails", e);
             }
