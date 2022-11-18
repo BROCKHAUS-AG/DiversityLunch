@@ -3,11 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import azureAdminLogo from '../../resources/icons/azure_modern.svg';
 import { AppStoreState } from '../../store/Store';
 import { AccountsState } from '../../data/accounts/accounts-reducer';
-import {
-    assignAdminRole,
-    getAllAccounts,
-    revokeAdminRole,
-} from '../../data/accounts/accounts-fetch';
+import { assignAdminRole, getAllAccounts, revokeAdminRole } from '../../data/accounts/accounts-fetch';
 import { ProfilesState } from '../../data/profiles/profiles-reducer';
 import { getAllProfiles } from '../../data/profiles/profiles-fetch';
 import { User } from './userAdministration/User';
@@ -58,10 +54,10 @@ export const UserList: FC = () => {
 
     const generateAdminListButton = (user: User) => {
         if (user.account.role === Role.ADMIN) {
-            return <button onClick={() => revokeAdmin(user.account.profileId)}>-</button>;
+            return <button onClick={() => revokeAdmin(user.account.id)}>-</button>;
         }
         if (user.account.role === Role.STANDARD) {
-            return <button onClick={() => assignAdmin(user.account.profileId)}>+</button>;
+            return <button onClick={() => assignAdmin(user.account.id)}>+</button>;
         }
         return (
             <button disabled><img alt="Tile Icon" src={azureAdminLogo} height="20em" /></button>
