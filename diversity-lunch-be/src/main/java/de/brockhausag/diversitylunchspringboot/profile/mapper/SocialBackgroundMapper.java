@@ -25,14 +25,4 @@ public class SocialBackgroundMapper implements Mapper<SocialBackgroundDto, Socia
         socialBackgroundEntity.setDescriptor(dto.getDescriptor());
         return socialBackgroundEntity;
     }
-
-    @Override
-    public List<SocialBackgroundDto> entityToDto(List<SocialBackgroundEntity> entities) {
-        return entities.stream().map(this::entityToDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<SocialBackgroundEntity> dtoToEntity(List<SocialBackgroundDto> dtos) {
-        return dtos.stream().map(this::dtoToEntity).collect(Collectors.toList());
-    }
 }
