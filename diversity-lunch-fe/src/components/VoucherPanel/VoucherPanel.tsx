@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../styles/component-styles/voucherpanel/voucherPanel.scss';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
@@ -22,26 +22,29 @@ export const VoucherPanel = () => {
     const [vouchersEmpty, setVouchersEmpty] = useState(false);
     const accountState: AccountState = useSelector((store: AppStoreState) => store.account);
 
+    useEffect(() => {
+        checkIfVouchersAvailable();
+    }, []);
+
     const { id } = useParams<MeetingParams>();
     let account: Account;
     if (accountState.status === 'OK') {
         account = accountState.accountData;
     }
 
+    const checkIfVouchersAvailable = async () => {
+        const responseAmount = await authenticatedFetchGet('/api/voucher/amount?claimed=false');
+        setVouchersEmpty(await responseAmount.text() === '0');
+    };
     const retrieveVoucherCode = async () => {
         const { profileId } = account;
 
         const response = await authenticatedFetchPut(`/api/voucher/claim/${profileId}/${id}`, '');
-        const responseAmount = await authenticatedFetchGet('/amount');
+
         if (response.ok) {
-            console.log(responseAmount.json());
-            if (responseAmount.body) {
-                setVouchersEmpty(true);
-            } else {
-                const voucher = await response.json();
-                setVoucherCode(voucher);
-                setRevealed(true);
-            }
+            const voucher = await response.json();
+            setVoucherCode(voucher.voucherCode);
+            setRevealed(true);
         } else {
             setError(true);
         }
@@ -55,23 +58,31 @@ export const VoucherPanel = () => {
             <div className="ShowVoucher">
                 <DiversityIconContainer title="GUTSCHEIN" />
                 {
-                    revealed
+                    !vouchersEmpty
                         ? (
-                            <>
-                                <p className="ShowVoucher-text">Dein persönlicher Gutschein-Code</p>
-                                <div className="ShowVoucher-code">
-                                    <span className="ShowVoucher-code-text">
-                                        {voucherCode}
-                                    </span>
-                                </div>
-                                <button className="copyButton" onClick={copyToClipboard}>Kopieren</button>
-                            </>
+
+                            revealed
+                                ? (
+                                    <>
+                                        <p className="ShowVoucher-text">Dein persönlicher Gutschein-Code</p>
+                                        <div className="ShowVoucher-code">
+                                            <span className="ShowVoucher-code-text">
+                                                {voucherCode}
+                                            </span>
+                                        </div>
+                                        <button className="copyButton" onClick={copyToClipboard}>Kopieren</button>
+                                    </>
+                                )
+                                : (
+                                    <>
+                                        <p className="ShowVoucher-text">Hier kannst du deinen Gutschein bekommen</p>
+                                        <Button label="FREISCHALTEN" onClick={() => retrieveVoucherCode()} />
+                                    </>
+                                )
+
                         )
                         : (
-                            <>
-                                <p className="ShowVoucher-text">Hier kannst du deinen Gutschein bekommen</p>
-                                <Button label="FREISCHALTEN" onClick={() => retrieveVoucherCode()} />
-                            </>
+                            <p className="ShowVoucher-text">Die Gutscheinaktion ist ausgelaufen</p>
                         )
                 }
                 {
@@ -79,15 +90,6 @@ export const VoucherPanel = () => {
                         <PopUp
                             onButtonClick={() => setError(false)}
                             message="Bei der Abfrage ist ein Fehler aufgetreten"
-                            buttonText="Okay"
-                        />
-                    )
-                }
-                {
-                    vouchersEmpty && (
-                        <PopUp
-                            onButtonClick={() => setVouchersEmpty(false)}
-                            message="Die Gutscheinaktion ist ausgelaufen"
                             buttonText="Okay"
                         />
                     )
