@@ -21,7 +21,6 @@ export interface Profile {
     diet: Diet,
     education: Education,
     gender: Gender,
-    // industry: Industry,
     motherTongue: Language,
     religion: Religion,
     workExperience: WorkExperience,
