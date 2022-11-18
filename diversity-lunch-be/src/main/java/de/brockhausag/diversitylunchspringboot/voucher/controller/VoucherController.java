@@ -2,6 +2,7 @@ package de.brockhausag.diversitylunchspringboot.voucher.controller;
 
 import de.brockhausag.diversitylunchspringboot.voucher.exception.ForbiddenVoucherClaim;
 import de.brockhausag.diversitylunchspringboot.voucher.mapper.VoucherMapper;
+import de.brockhausag.diversitylunchspringboot.voucher.model.AdminVoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherClaimDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;
@@ -44,6 +45,17 @@ public class VoucherController {
         return ResponseEntity.ok(amountOfVouchers);
     }
 
+    @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).ADMIN_ROLE_ASSIGN)")
+    @GetMapping("/admin/all")
+    public ResponseEntity<List<AdminVoucherDto>> getVouchersWithEmail() {
+        List<VoucherEntity> voucherEntities = voucherService.getAllVouchersStored();
+        List<AdminVoucherDto> voucherDtos = new ArrayList<>();
+        for (VoucherEntity voucher : voucherEntities) {
+            voucherDtos.add(voucherMapper.mapEntityToAdminVoucherDto(voucher));
+        }
+        return ResponseEntity.ok().body(voucherDtos);
+    }
+
     @PreAuthorize("isProfileOwner(#profileId)")
     @PutMapping("/claim/{profileId}/{meetingId}")
     public ResponseEntity<VoucherClaimDto> claimVoucher(@PathVariable Long profileId, @PathVariable Long meetingId) {
@@ -84,17 +96,21 @@ public class VoucherController {
 
     @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).ADMIN_ROLE_ASSIGN)")
     @PostMapping(value = "/upload", consumes = "multipart/form-data")
-    public ResponseEntity<?> postVouchers(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Boolean> postVouchers(@RequestParam("file") MultipartFile file) {
         try {
             List<VoucherEntity> voucherEntities = VoucherCSVHelper.csvToVoucherEntities(file.getInputStream());
-            voucherService.saveVouchers(voucherEntities);
+            ResponseEntity<Boolean> response;
 
-            return new ResponseEntity<>(HttpStatus.OK);
+            if (voucherService.saveVouchers(voucherEntities)) {
+                response = ResponseEntity.ok().build();
+            } else {
+                response = ResponseEntity.internalServerError().build();
+            }
 
+            return response;
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
 
 }

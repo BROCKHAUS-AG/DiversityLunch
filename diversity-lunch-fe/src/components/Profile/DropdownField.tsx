@@ -4,7 +4,7 @@ import '../../styles/component-styles/questions/dropdownStyle.scss';
 
 import TextField from '@material-ui/core/TextField';
 import Autocomplete, { AutocompleteRenderInputParams } from '@material-ui/lab/Autocomplete';
-import { Profile } from '../../types/Profile';
+import { Profile } from '../../model/Profile';
 
 type DropdownFieldProps = {
     defaultOption: string;

@@ -15,26 +15,27 @@ import java.security.NoSuchAlgorithmException;
 @Component
 @RequiredArgsConstructor
 public class ProfileTestdataFactory {
-    
+
     private final CountryService countryService;
-    
+
     private final DietService dietService;
-    
+
     private final EducationService educationService;
 
     private final SexualOrientationService sexualOrientationService;
-    
+
     private final GenderService genderService;
-    
+
     private final HobbyService hobbyService;
-    
+
     private final LanguageService languageService;
-    
+
     private final ProjectService projectService;
-    
+
     private final ReligionService religionService;
-    
+
     private final WorkExperienceService workExperienceService;
+    private final SocialBackgroundService socialBackgroundService;
 
     public ProfileEntity createNewMaxProfile() {
         final Long id = 1L;
@@ -51,6 +52,7 @@ public class ProfileTestdataFactory {
         final WorkExperienceEntity workExperience = workExperienceService.getAllEntities().get(0);
         final HobbyEntity hobby = hobbyService.getAllEntities().get(0);
         final SexualOrientationEntity sexualOrientation = sexualOrientationService.getAllEntities().get(0);
+        final SocialBackgroundEntity socialBackground = socialBackgroundService.getAllEntities().get(0);
 
         return new ProfileEntity(id,
                 name,
@@ -65,7 +67,8 @@ public class ProfileTestdataFactory {
                 religion,
                 workExperience,
                 hobby,
-                sexualOrientation);
+                sexualOrientation,
+                socialBackground);
     }
 
     public ProfileEntity createNewErikaProfile() {
@@ -82,7 +85,8 @@ public class ProfileTestdataFactory {
         final ReligionEntity religion = religionService.getAllEntities().get(1);
         final WorkExperienceEntity workExperience = workExperienceService.getAllEntities().get(1);
         final HobbyEntity hobby = hobbyService.getAllEntities().get(1);
-        final SexualOrientationEntity sexualOrientationEntity = sexualOrientationService.getAllEntities().get(1);
+        final SexualOrientationEntity sexualOrientation = sexualOrientationService.getAllEntities().get(1);
+        final SocialBackgroundEntity socialBackground = socialBackgroundService.getAllEntities().get(1);
 
         return new ProfileEntity(id,
                 name,
@@ -97,7 +101,8 @@ public class ProfileTestdataFactory {
                 religion,
                 workExperience,
                 hobby,
-                sexualOrientationEntity);
+                sexualOrientation,
+                socialBackground);
     }
 
     @SneakyThrows

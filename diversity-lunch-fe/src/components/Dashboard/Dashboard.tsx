@@ -12,6 +12,7 @@ import { Account } from '../../types/Account';
 import { AppStoreState } from '../../store/Store';
 import { Role } from '../../model/Role';
 import { LoadingAnimation } from '../Shared/LoadingAnimation';
+import { UserVoucherIconContainer } from '../General/HeaderTemplate/UserVoucherIconContainer';
 
 export const Dashboard = () => {
     const accountState = useSelector((state: AppStoreState) => state.account);
@@ -26,7 +27,11 @@ export const Dashboard = () => {
 
     return (
         <div className="Dashboard">
-            {isAdmin && <AdminPanelIconContainer />}
+            <div className="icon-container">
+                {isAdmin && <AdminPanelIconContainer />}
+                <UserVoucherIconContainer />
+            </div>
+
             <DiversityIconContainer title="DIVERSITY LUNCH" poweredBy />
 
             <div className="Dashboard-tiles-container">

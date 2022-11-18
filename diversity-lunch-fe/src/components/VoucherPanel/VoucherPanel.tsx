@@ -1,56 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import '../../styles/component-styles/voucherpanel/voucherPanel.scss';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
-import { Button } from '../General/Button/Button';
-import { AppStoreState } from '../../store/Store';
-import { authenticatedFetchGet, authenticatedFetchPut } from '../../utils/fetch.utils';
-import { AccountState } from '../../data/account/account-state.type';
-import { Account } from '../../types/Account';
+import { authenticatedFetchGet } from '../../utils/fetch.utils';
 import { PopUp } from '../AdminPanel/userAdministration/PopUp';
 import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
-
-export type MeetingParams = {
-    id: string;
-};
+import { GetVoucher } from './GetVoucher';
 
 export const VoucherPanel = () => {
-    const [revealed, setRevealed] = useState(false);
-    const [voucherCode, setVoucherCode] = useState('empty');
     const [isError, setError] = useState(false);
     const [vouchersEmpty, setVouchersEmpty] = useState(false);
-    const accountState: AccountState = useSelector((store: AppStoreState) => store.account);
 
     useEffect(() => {
         checkIfVouchersAvailable();
     }, []);
 
-    const { id } = useParams<MeetingParams>();
-    let account: Account;
-    if (accountState.status === 'OK') {
-        account = accountState.accountData;
-    }
-
     const checkIfVouchersAvailable = async () => {
         const responseAmount = await authenticatedFetchGet('/api/voucher/amount?claimed=false');
         setVouchersEmpty(await responseAmount.text() === '0');
-    };
-    const retrieveVoucherCode = async () => {
-        const { profileId } = account;
-
-        const response = await authenticatedFetchPut(`/api/voucher/claim/${profileId}/${id}`, '');
-
-        if (response.ok) {
-            const voucher = await response.json();
-            setVoucherCode(voucher.voucherCode);
-            setRevealed(true);
-        } else {
-            setError(true);
-        }
-    };
-    const copyToClipboard = async () => {
-        await navigator.clipboard.writeText(voucherCode);
     };
     return (
         <section className="view">
@@ -58,31 +24,12 @@ export const VoucherPanel = () => {
             <div className="ShowVoucher">
                 <DiversityIconContainer title="GUTSCHEIN" />
                 {
-                    !vouchersEmpty
+                    vouchersEmpty
                         ? (
-
-                            revealed
-                                ? (
-                                    <>
-                                        <p className="ShowVoucher-text">Dein persönlicher Gutschein-Code</p>
-                                        <div className="ShowVoucher-code">
-                                            <span className="ShowVoucher-code-text">
-                                                {voucherCode}
-                                            </span>
-                                        </div>
-                                        <button className="copyButton" onClick={copyToClipboard}>Kopieren</button>
-                                    </>
-                                )
-                                : (
-                                    <>
-                                        <p className="ShowVoucher-text">Hier kannst du deinen Gutschein bekommen</p>
-                                        <Button label="FREISCHALTEN" onClick={() => retrieveVoucherCode()} />
-                                    </>
-                                )
-
+                            <p className="ShowVoucher-text">Die Gutscheinaktion ist ausgelaufen</p>
                         )
                         : (
-                            <p className="ShowVoucher-text">Die Gutscheinaktion ist ausgelaufen</p>
+                            <GetVoucher setError={setError} />
                         )
                 }
                 {

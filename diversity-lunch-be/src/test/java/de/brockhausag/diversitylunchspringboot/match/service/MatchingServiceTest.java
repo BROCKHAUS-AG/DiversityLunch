@@ -51,6 +51,7 @@ class MatchingServiceTest {
     @Mock
     DiversityLunchEMailService mockedEMailService;
 
+    DiversityLunchEMailService eMailService;
     @Mock
     MsTeamsService msTeamsService;
 

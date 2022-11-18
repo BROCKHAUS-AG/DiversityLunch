@@ -46,19 +46,19 @@ public class VoucherService {
         return voucherRepository.existsByProfileIdAndMeetingId(profileId, meetingId);
     }
 
+    public List<VoucherEntity> getVoucherByProfileId(long profileId) {
+        return voucherRepository.getAllByProfileId(profileId);
+    }
     public Optional<VoucherEntity> getVoucherByProfileIdAndMeetingId(long profileId, long meetingId) {
         return voucherRepository.getVoucherEntityByProfileIdAndMeetingId(profileId, meetingId);
     }
 
-    public List<VoucherEntity> getVoucherByProfileId(long profileId) {
-        return voucherRepository.getAllByProfileId(profileId);
-    }
-
-    public void saveVouchers(Iterable<VoucherEntity> voucherEntities) {
+    public boolean saveVouchers(Iterable<VoucherEntity> voucherEntities){
         voucherRepository.saveAll(voucherEntities);
+        return Iterables.size(savedVouchers) == Iterables.size(voucherEntities);
     }
 
-    public int getAmountOfStoredVouchers() {
+    public int getAmountOfStoredVouchers(){
         return voucherRepository.findAll().size();
     }
 
@@ -67,5 +67,9 @@ public class VoucherService {
     }
     public int getAmountOfClaimedVouchers() {
         return voucherRepository.countAllByProfileIsNotNullAndMeetingIsNotNull();
+    }
+
+    public List<VoucherEntity> getAllVouchersStored(){
+        return voucherRepository.findAll();
     }
 }

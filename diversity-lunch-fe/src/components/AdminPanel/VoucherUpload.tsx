@@ -1,83 +1,94 @@
-import React, {
-    ChangeEvent, FC, useEffect, useState,
-} from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { authenticatedFetchGet, authenticatedFetchPostCsv } from '../../utils/fetch.utils';
 import { PopUp } from './userAdministration/PopUp';
+import { VoucherList } from './VoucherList';
 
 export const VoucherUpload: FC = () => {
-    const [selectedCsvFileState, setSelectedCsvFileState] = useState<File | undefined>(undefined);
-    const [uploadState, setUploadState] = useState(false);
-    const [isError, setError] = useState(false);
-    const [voucherState, setVoucherState] = useState('');
-    useEffect(() => {
-        updateVoucherAmount();
-    }, []);
+    const [selectedCsvFile, setSelectedCsvFile] = useState();
+    const [uploadSuccess, setUploadSuccess] = useState(false);
+    const [voucherCountState, setVoucherCountState] = useState('');
+    const [voucherList, setVoucherList] = useState<[]>([]);
 
-    const uploadCSVToFrontend = (event: ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files) {
-            setSelectedCsvFileState(event.target.files[0]);
-        }
+    useEffect(() => {
+        UpdateVoucherAmount();
+        toggleVoucherList();
+    }, [uploadSuccess]);
+
+    const uploadCSVToFrontend = (event: any) => {
+        setSelectedCsvFile(event.target.files[0]);
+        // setIsCsvFilePicked(true);
     };
 
     const uploadCSVFile = async () => {
         const formData = new FormData();
-        if (!selectedCsvFileState) {
-            setUploadState(false);
-            return;
-        }
-        formData.append('file', selectedCsvFileState);
+        // @ts-ignore
+        formData.append('file', selectedCsvFile);
         const result: Response = await authenticatedFetchPostCsv('/api/voucher/upload', formData);
-        setUploadState(result.status === 200);
-        if (result.status === 200) setSelectedCsvFileState(undefined);
+        if (result.status === 200) {
+            setUploadSuccess(true);
+        } else {
+            setUploadSuccess(false);
+        }
     };
 
-    const updateVoucherAmount = async () => {
+    const UpdateVoucherAmount = async () => {
         const amountResp : Response = await authenticatedFetchGet('api/voucher/amount');
         if (amountResp.status === 200) {
-            setVoucherState(await amountResp.text());
+            setVoucherCountState(JSON.stringify(await amountResp.json()));
         } else {
-            setError(true);
+            setVoucherCountState('FEHLER');
         }
+    };
+
+    const getAllVouchers = async () => {
+        const response : Response = await authenticatedFetchGet('api/voucher/admin/all');
+        if (response.status === 200) {
+            setVoucherList(await response.json());
+        } else {
+            // pass
+        }
+    };
+
+    const toggleVoucherList = async () => {
+        await getAllVouchers();
     };
 
     return (
-        <div className="test">
+        <div>
             <div className="CSVUploadContainer">
                 <p className="CSVUploadTitle">Gutschein Upload</p>
 
                 <div>
                     <p>
-                        {
-                            voucherState && `${voucherState} Gutschein(e) vorhanden.`
-                        }
+                        Es sind
+                        {' '}
+                        {voucherCountState}
+                        {' '}
+                        Gutscheine vorhanden.
                     </p>
+                    <details>
+                        <summary className="editListTitle">
+                            Gutscheincodes anzeigen
+                        </summary>
+                        <VoucherList vouchers={voucherList} />
+                    </details>
                 </div>
 
                 <div>
                     <label>
-                        <p>Zum Hochladen ziehe .csv Files im CSV-Format RFC4180 in das Upload Fenster</p>
-                        <input placeholder="Datei hier reinziehen" type="file" accept=".csv" onChange={uploadCSVToFrontend} />
-                        <button disabled={!selectedCsvFileState} onClick={uploadCSVFile}>Upload</button>
+                        <p>Zum Uploaden ziehe .csv Files im Standardformat in das Upload Fenster</p>
+                        <input type="file" accept=".csv" onChange={uploadCSVToFrontend} />
+                        <button onClick={uploadCSVFile}>Upload</button>
                     </label>
                 </div>
             </div>
             {
-                (uploadState)
+                uploadSuccess
                 && (
                     <PopUp
                         message="Der Upload war erfolgreich!"
                         buttonText="Okay"
-                        onButtonClick={() => setUploadState(false)}
-                    />
-                )
-            }
-            {
-                (isError)
-                && (
-                    <PopUp
-                        message="Ein Fehler ist aufgetreten"
-                        buttonText="Okay"
-                        onButtonClick={() => setError(false)}
+                        onButtonClick={() => setUploadSuccess(false)}
                     />
                 )
             }

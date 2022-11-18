@@ -1,24 +1,22 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { authenticatedFetchGet } from '../../utils/fetch.utils';
-import { globalErrorSlice } from '../error/global-error-slice';
-import { Profile } from '../../types/Profile';
 import { profilesAction } from './profiles-reducer';
+import { Profile } from '../../model/Profile';
+import { FetchCallbacks } from '../generic/FetchCallbacks';
+import { handleFetchResponse } from '../handleFetchResponse';
 
-export function getAllProfiles() {
+export function getAllProfiles(fetchCallbacks: FetchCallbacks) {
     return async (dispatch: Dispatch) => {
-        try {
-            const response = await authenticatedFetchGet('api/profiles/all');
-
-            if (!response.ok) {
-                dispatch(globalErrorSlice.httpError({ statusCode: response.status }));
-            } else {
+        const onGoingFetch = authenticatedFetchGet('api/profiles/all');
+        const onSuccess = async (response: Response) => {
+            try {
                 const result : Profile[] = await response.json();
-
                 dispatch(profilesAction.update(result));
                 dispatch(profilesAction.initFetch(undefined));
+            } catch {
+                fetchCallbacks.onNetworkError(new Error(`Parse failed: ${response.url} responded with a non-json body`));
             }
-        } catch (error) {
-            dispatch(globalErrorSlice.error(undefined));
-        }
+        };
+        handleFetchResponse(onGoingFetch, onSuccess, fetchCallbacks);
     };
 }

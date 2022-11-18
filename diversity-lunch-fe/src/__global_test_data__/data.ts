@@ -14,8 +14,13 @@ export const workExperienceData = [{ id: 9, descriptor: '0-4 Jahre' }, { id: 133
 export const hobbyData = [{ id: 6, descriptor: 'DIY', category: { id: 2, descriptor: 'Kreatives' } },
     { id: 7, descriptor: 'Fußball', category: { id: 1, descriptor: 'Sport' } }];
 export const sexualOrientationData = [{ id: 9, descriptor: 'Asexuell' }, { id: 1337, descriptor: 'Pansexuell' }];
+export const socialBackgroundData = [
+    { id: 9, descriptor: 'Nichtakademisches Elternhaus' },
+    { id: 547, descriptor: 'Akademikerfamilie' },
+    { id: 234, descriptor: 'keine Angabe' },
+];
 
-export const profileData = [{
+export const profileData: Profile[] = [{
     id: 4,
     name: 'Horstus',
     email: 'jtonn@brockhaus-ag.de',
@@ -30,6 +35,7 @@ export const profileData = [{
     workExperience: workExperienceData[0],
     hobby: hobbyData[0],
     sexualOrientation: sexualOrientationData[0],
+    socialBackground: socialBackgroundData[0],
 }];
 
 export const accountStandardData = {
@@ -48,7 +54,7 @@ export const accountAzureAdminData = {
     email: 'hans@brockhaus-ag.de',
     role: Role.AZURE_ADMIN,
 };
-export const accountList : Account[] = [
+export const accountList: Account[] = [
     {
         id: 1, profileId: 1, role: Role.STANDARD,
     },
@@ -75,7 +81,7 @@ export const profileList: Profile[] = [
         workExperience: workExperienceData[0],
         hobby: hobbyData[0],
         sexualOrientation: sexualOrientationData[0],
-
+        socialBackground: socialBackgroundData[0],
     },
     {
         id: 2,
@@ -92,7 +98,7 @@ export const profileList: Profile[] = [
         workExperience: workExperienceData[0],
         hobby: hobbyData[0],
         sexualOrientation: sexualOrientationData[0],
-
+        socialBackground: socialBackgroundData[0],
     },
     {
         id: 3,
@@ -109,6 +115,6 @@ export const profileList: Profile[] = [
         workExperience: workExperienceData[0],
         hobby: hobbyData[0],
         sexualOrientation: sexualOrientationData[0],
-
+        socialBackground: socialBackgroundData[0],
     },
 ];
