@@ -5,6 +5,7 @@ import de.brockhausag.diversitylunchspringboot.meeting.model.Question;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMailProperties;
+import de.brockhausag.diversitylunchspringboot.voucher.service.VoucherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
@@ -24,6 +25,10 @@ public class DiversityLunchEMailService {
     private final JavaMailSender emailSender;
     private final DiversityLunchMailProperties properties;
     private final ProfileService profileService;
+    private final VoucherService voucherService;
+    private final int CONSUMED = 0;
+
+    private final String EMPTY = "";
 
     public void sendEmail(String to, String subject, String textHTML, String textPlain) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
@@ -43,7 +48,8 @@ public class DiversityLunchEMailService {
         try {
             ClassPathResource resource = new ClassPathResource("email.html");
             String emailText = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), StandardCharset.UTF_8);
-            return String.format(emailText, recipient, partner, question.getCategory().getKind(), question.getKind(), voucherLink);
+            String processedLink = getProcessedLink(voucherLink);
+            return String.format(emailText, recipient, partner, question.getCategory().getKind(), question.getKind(), processedLink);
         } catch (Exception e) {
             log.error("Failed to read Resource: email.html", e);
         }
@@ -65,11 +71,20 @@ public class DiversityLunchEMailService {
         try {
             ClassPathResource resource = new ClassPathResource("email.txt");
             String emailText = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), StandardCharset.UTF_8);
-            return String.format(emailText, recipient, partner, question.getCategory().getKind(), question.getKind(),voucherLink);
+            String processedLink = getProcessedLink(voucherLink);
+            return String.format(emailText, recipient, partner, question.getCategory().getKind(), question.getKind(),processedLink);
         } catch (Exception e) {
             log.error("Failed to read Resource: email.txt", e);
         }
         return "";
+    }
+
+    public String getProcessedLink(String voucherLink) {
+        int amountOfStoredVouchers = voucherService.getAmountOfStoredVouchers();
+        if (amountOfStoredVouchers == CONSUMED) {
+            voucherLink = EMPTY;
+        }
+        return voucherLink;
     }
 
     public void sendMailToUser(Long id, String body) throws MessagingException {
