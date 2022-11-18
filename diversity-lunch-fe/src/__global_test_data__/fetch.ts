@@ -93,7 +93,7 @@ export const mockedFetchGetAccountByRole = async (role: Role) => {
     return new Response('');
 };
 
-export const mockedFetchGetAccounts = () => async (dispatch: Dispatch, callbacks: FetchCallbacks) => {
+export const mockedFetchGetAccounts = (callbacks: FetchCallbacks) => async (dispatch: Dispatch) => {
     const onGoingFetch = Promise.resolve(new Response(JSON.stringify(accountList), { status: 200, statusText: 'ok' }));
     const onSuccess = async (response: Response) => {
         try {
@@ -107,7 +107,7 @@ export const mockedFetchGetAccounts = () => async (dispatch: Dispatch, callbacks
     handleFetchResponse(onGoingFetch, onSuccess, callbacks);
 };
 
-export const mockedFetchGetProfiles = () => async (dispatch: Dispatch, callbacks: FetchCallbacks) => {
+export const mockedFetchGetProfiles = (callbacks: FetchCallbacks) => async (dispatch: Dispatch) => {
     const onGoingFetch = Promise.resolve(new Response(JSON.stringify(profileList), { status: 200, statusText: 'ok' }));
     const onSuccess = async (response: Response) => {
         try {
@@ -138,7 +138,7 @@ export const mockedRevokeAdminRole = (accountId: number, callbacks: FetchCallbac
     handleFetchResponse(onGoingFetch, onSuccess, callbacks);
 };
 
-export const mockedAssignAdminRole = (accountId: number) => async (dispatch: Dispatch, callbacks: FetchCallbacks) => {
+export const mockedAssignAdminRole = (accountId: number, callbacks: FetchCallbacks) => async (dispatch: Dispatch) => {
     const tempAccount = accountList.find((account) => account.id === accountId);
     if (tempAccount !== undefined) {
         tempAccount.role = Role.ADMIN;
