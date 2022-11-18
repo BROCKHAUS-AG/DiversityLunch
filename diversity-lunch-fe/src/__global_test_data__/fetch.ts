@@ -78,7 +78,7 @@ export const mockedFetchGetAccount = (role: Role) => async (url: string) => {
     }
     return new Response('');
 };
-
+export const mockedFetchGetUsableAccount = () => async () => new Response(JSON.stringify(accountList[0]));
 export const mockedFetchGetAccountByRole = async (role: Role) => {
     if (role === Role.STANDARD) {
         return new Response(JSON.stringify(accountStandardData));

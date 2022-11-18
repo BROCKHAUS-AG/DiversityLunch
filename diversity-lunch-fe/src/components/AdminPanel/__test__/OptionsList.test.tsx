@@ -15,7 +15,8 @@ const addButtonLabel: string = 'Projekt hinzufügen';
 const WrapperComponent: FC = () => {
     const projectState = useSelector((store: AppStoreState) => store.project);
     const dispatch = useDispatch();
-    dispatch(projectFetch.getAll());
+    dispatch(projectFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+    // TODO: Handle network and http errors properly tgohlisch 17.11.2022
     return (
         <OptionsList
             state={projectState}

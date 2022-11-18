@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.profile.utils;
+package de.brockhausag.diversitylunchspringboot.utils.mapper;
 
 import java.util.List;
 

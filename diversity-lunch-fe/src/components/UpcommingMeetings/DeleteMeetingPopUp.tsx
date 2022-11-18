@@ -4,7 +4,7 @@ import React from 'react';
 import { Meeting } from '../../types/Meeting';
 
 // Styles
-import '../../styles/component-styles/upcomming-meetings/deleteMeetingPopUp.scss';
+import '../../styles/component-styles/popup/GeneralPopUp.scss';
 import { Button } from '../General/Button/Button';
 import { dateToString, getMeetingEndTime, substringLocalTime } from '../../utils/date.utils';
 
@@ -22,9 +22,9 @@ export const DeleteMeetingPopUp = (props: MeetingContainerProps) => {
     } = props;
 
     return (
-        <div className="DeleteMeetingPopUp">
-            <div className="DeleteMeetingPopUp-container">
-                <h6 className="DeleteMeetingPopUp-text">
+        <div className="GeneralPopUp">
+            <div className="GeneralPopUp-container">
+                <h6 className="GeneralPopUp-text">
                     Willst du den Termin wirklich löschen?
                 </h6>
                 <div className="DeleteMeetingPopUp-meeting-container">

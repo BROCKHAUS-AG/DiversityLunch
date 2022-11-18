@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Styles
-import '../../styles/component-styles/upcomming-meetings/deleteMeetingPopUp.scss';
+import '../../styles/component-styles/popup/GeneralPopUp.scss';
 
 interface GeneralPopupProps {
     msg :string;
@@ -13,11 +13,11 @@ export const GeneralPopup = (props : GeneralPopupProps) => {
     } = props;
 
     return (
-        <div className="DeleteMeetingPopUp">
-            <div className="DeleteMeetingPopUp-container">
-                <h6 className="DeleteMeetingPopUp-text">
-                    {msg}
-                </h6>
+        <div className="GeneralPopUp">
+            <div className="GeneralPopUp-container">
+                <p className="GeneralPopUp-text">
+                    <b>{msg}</b>
+                </p>
             </div>
         </div>
     );

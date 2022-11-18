@@ -4,7 +4,7 @@ import { Meeting } from '../../../types/Meeting';
 import { DeleteMeetingPopUp } from '../DeleteMeetingPopUp';
 import Mock = jest.Mock;
 
-describe('DeleteMeetingPopUp', () => {
+describe('GeneralMeetingPopUp', () => {
     let defaultMeeting: Meeting;
     let popup: JSX.Element;
     let deleteFunction: Mock;
@@ -31,7 +31,7 @@ describe('DeleteMeetingPopUp', () => {
     it('shows DeleteMeetingPopUp', () => {
         const renderResult = render(popup);
         expect(renderResult.container.firstChild)
-            .toHaveClass('DeleteMeetingPopUp');
+            .toHaveClass('GeneralPopUp');
     });
     it('calls the delete function', () => {
         const renderResult = render(popup);

@@ -5,17 +5,18 @@ import de.brockhausag.diversitylunchspringboot.dataFactories.AccountTestDataFact
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.voucher.mapper.VoucherMapper;
+import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.voucher.exception.IllegalVoucherClaim;
 import de.brockhausag.diversitylunchspringboot.voucher.mapper.VoucherMapperImpl;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;
 import de.brockhausag.diversitylunchspringboot.voucher.service.VoucherService;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,13 +33,13 @@ public class VoucherControllerTest {
     private VoucherService voucherService;
 
     @Mock
-    private VoucherMapper voucherMapper;
+    private VoucherMapperImpl voucherMapper;
 
     @InjectMocks
     private VoucherController voucherController;
 
     @Test
-    void testServiceRespondsVoucherOptional_expectHTTPOkAndVoucherDto(){
+    void testServiceRespondsVoucherOptional_expectHTTPOkAndVoucherCode(){
         long proposerId = 1L;
         long meetingId = 1L;
         UUID uuid = UUID.randomUUID();
@@ -51,12 +52,12 @@ public class VoucherControllerTest {
         VoucherEntity voucherEntity = new VoucherEntity(uuid,profile,"code",meeting);
         VoucherDto expectedDto = new VoucherDto(uuid,"code",1L,1L);
 
-        when(voucherMapper.mapEntityToDto(voucherEntity)).thenReturn(expectedDto);
+
 
         try {
             when(voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId)).thenReturn(Optional.of(voucherEntity));
-        } catch (VoucherService.IllegalVoucherClaim e) {
-            throw new RuntimeException(e);
+        } catch (IllegalVoucherClaim e) {
+           Assertions.fail();
         }
 
         ResponseEntity<?> resp =  voucherController.claimVoucher(proposerId,meetingId);
@@ -70,8 +71,8 @@ public class VoucherControllerTest {
         long meetingId = 1L;
         try {
             when(voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId)).thenReturn(Optional.empty());
-        } catch (VoucherService.IllegalVoucherClaim e) {
-            throw new RuntimeException(e);
+        } catch (IllegalVoucherClaim e) {
+            Assertions.fail();
         }
 
         assertEquals(new ResponseEntity<>(HttpStatus.NOT_FOUND), voucherController.claimVoucher(proposerId,meetingId));
@@ -82,9 +83,9 @@ public class VoucherControllerTest {
         long proposerId = 1L;
         long meetingId = 1L;
         try {
-            when(voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId)).thenThrow(VoucherService.IllegalVoucherClaim.class);
-        } catch (VoucherService.IllegalVoucherClaim e) {
-            throw new RuntimeException(e);
+            when(voucherService.getUnclaimedVoucherForMeeting(proposerId, meetingId)).thenThrow(IllegalVoucherClaim.class);
+        } catch (IllegalVoucherClaim e) {
+            Assertions.fail();
         }
 
         assertEquals(new ResponseEntity<>(HttpStatus.FORBIDDEN), voucherController.claimVoucher(proposerId,meetingId));

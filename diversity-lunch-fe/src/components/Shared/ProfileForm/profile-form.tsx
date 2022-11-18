@@ -50,18 +50,19 @@ export const ProfileForm: FC<ProfileFormProps> = ({
     const sexualOrientation = useSelector((store: AppStoreState) => store.sexualOrientation);
 
     useEffect(() => {
-        dispatch(countryFetch.getAll());
-        // dispatch(cultureFetch.getAll());
-        dispatch(dietFetch.getAll());
-        dispatch(educationFetch.getAll());
-        dispatch(genderFetch.getAll());
-        dispatch(hobbyFetch.getAll());
-        // dispatch(industryFetch.getAll());
-        dispatch(languageFetch.getAll());
-        dispatch(projectFetch.getAll());
-        dispatch(religionFetch.getAll());
-        dispatch(workExperienceFetch.getAll());
-        dispatch(sexualOrientationFetch.getAll());
+        // TODO: Handle network and http errors properly tgohlisch 17.11.2022
+        dispatch(countryFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        // dispatch(cultureFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(dietFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(educationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(genderFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(hobbyFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        // dispatch(industryFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(languageFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(projectFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(religionFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(workExperienceFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(sexualOrientationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
     }, []);
 
     function updateProfile<KEY extends keyof Profile>(key: KEY, value?: Profile[KEY]) {
