@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.utils.mapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public interface Mapper<DtoType, EntityType> {
 
@@ -8,7 +9,11 @@ public interface Mapper<DtoType, EntityType> {
 
     EntityType dtoToEntity(DtoType dto);
 
-    List<DtoType> entityToDto(List<EntityType> entities);
+    default List<DtoType> entityToDto(List<EntityType> entities) {
+        return entities.stream().map(this::entityToDto).collect(Collectors.toList());
+    }
 
-    List<EntityType> dtoToEntity(List<DtoType> dtos);
+    default List<EntityType> dtoToEntity(List<DtoType> dtos) {
+        return dtos.stream().map(this::dtoToEntity).collect(Collectors.toList());
+    }
 }

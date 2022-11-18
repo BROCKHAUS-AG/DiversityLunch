@@ -5,9 +5,6 @@ import de.brockhausag.diversitylunchspringboot.profile.model.entities.ReligionEn
 import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Component
 public class ReligionMapper implements Mapper<ReligionDto, ReligionEntity> {
 
@@ -25,15 +22,5 @@ public class ReligionMapper implements Mapper<ReligionDto, ReligionEntity> {
         religionEntity.setId(dto.getId());
         religionEntity.setDescriptor(dto.getDescriptor());
         return religionEntity;
-    }
-
-    @Override
-    public List<ReligionDto> entityToDto(List<ReligionEntity> entities) {
-        return entities.stream().map(this::entityToDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ReligionEntity> dtoToEntity(List<ReligionDto> dtos) {
-        return dtos.stream().map(this::dtoToEntity).collect(Collectors.toList());
     }
 }

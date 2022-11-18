@@ -5,9 +5,6 @@ import de.brockhausag.diversitylunchspringboot.profile.model.entities.WorkExperi
 import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Component
 public class WorkExperienceMapper implements Mapper<WorkExperienceDto, WorkExperienceEntity> {
     @Override
@@ -24,15 +21,5 @@ public class WorkExperienceMapper implements Mapper<WorkExperienceDto, WorkExper
         workExperienceEntity.setId(dto.getId());
         workExperienceEntity.setDescriptor(dto.getDescriptor());
         return workExperienceEntity;
-    }
-
-    @Override
-    public List<WorkExperienceDto> entityToDto(List<WorkExperienceEntity> entities) {
-        return entities.stream().map(this::entityToDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<WorkExperienceEntity> dtoToEntity(List<WorkExperienceDto> dtos) {
-        return dtos.stream().map(this::dtoToEntity).collect(Collectors.toList());
     }
 }
