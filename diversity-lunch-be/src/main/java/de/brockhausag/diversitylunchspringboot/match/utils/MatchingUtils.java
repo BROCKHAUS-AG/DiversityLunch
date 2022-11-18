@@ -78,10 +78,12 @@ public class MatchingUtils {
         int currentScore;
         if (profile1.getWorkExperience().getDescriptor().equals(profile2.getWorkExperience().getDescriptor())) {
             currentScore = 1;
-        } else if ((profile1.getWorkExperience().getDescriptor().equals("low experience")
-                && profile2.getWorkExperience().getDescriptor().equals("high experience"))
-                || (profile1.getWorkExperience().getDescriptor().equals("high experience")
-                && profile2.getWorkExperience().getDescriptor().equals("low experience"))) {
+
+            //TODO: matching nicht über strings laufen lassen -> metadaten in datenbank präferieren dfuerst-18.11.22
+        } else if ((profile1.getWorkExperience().getDescriptor().equals("0-3 Jahre")
+                && profile2.getWorkExperience().getDescriptor().equals("über 10 Jahre"))
+                || (profile1.getWorkExperience().getDescriptor().equals("über 10 Jahre")
+                && profile2.getWorkExperience().getDescriptor().equals("0-3 Jahre"))) {
             currentScore = 3;
         } else {
             currentScore = 2;
