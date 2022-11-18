@@ -7,8 +7,6 @@ import { APP_STORE } from '../../../../store/Store';
 import { ProfileForm } from '../profile-form';
 import {
     profileData,
-
-    
 } from '../../../../__global_test_data__/data';
 import * as fetcher from '../../../../utils/fetch.utils';
 import { mockedFetchGetProfile } from '../../../../__global_test_data__/fetch';
