@@ -40,7 +40,6 @@ class MatchingServiceTest {
     @Mock
     DiversityLunchEMailService mockedEMailService;
 
-
     @InjectMocks
     private MatchingService matchingService;
 
