@@ -1,13 +1,14 @@
 package de.brockhausag.diversitylunchspringboot.email.service;
 
 import com.nimbusds.jose.util.StandardCharset;
-import de.brockhausag.diversitylunchspringboot.meeting.model.Question;
+import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMailProperties;
 import de.brockhausag.diversitylunchspringboot.voucher.service.VoucherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -26,9 +27,10 @@ public class DiversityLunchEMailService {
     private final DiversityLunchMailProperties properties;
     private final ProfileService profileService;
     private final VoucherService voucherService;
-    private final int CONSUMED = 0;
 
-    private final String EMPTY = "";
+
+    @Value("${diversity.url.baseUrl}")
+    private String BASE_URL;
 
     public void sendEmail(String to, String subject, String textHTML, String textPlain) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
@@ -43,49 +45,65 @@ public class DiversityLunchEMailService {
         log.info("Sent mail");
     }
 
-    public String createEmailTemplateHTML(String recipient, String partner, Question question, String voucherLink) {
+    public String createEmailTemplateHTML(ProfileEntity [] attendees, MeetingEntity meeting) {
 
+        int amountOfStoredVouchers = voucherService.getAmountOfStoredVouchers();
+        if(amountOfStoredVouchers == 0){
+            ClassPathResource resource = new ClassPathResource("MailTemplates/emailWithoutLink.html");
+            return createEmailTemplateNoLink(resource,attendees, meeting);
+        }
+        ClassPathResource resource = new ClassPathResource("MailTemplates/emailWithLink.html");
+        return createEmailTemplateWithLink(resource, attendees, meeting);
+    }
+
+    public String createEmailTemplatePlain(ProfileEntity[] attendees, MeetingEntity meeting) {
+        int amountOfStoredVouchers = voucherService.getAmountOfStoredVouchers();
+        if(amountOfStoredVouchers == 0){
+            ClassPathResource resource = new ClassPathResource("MailTemplates/emailWithoutLink.txt");
+            return createEmailTemplateNoLink(resource, attendees, meeting);
+        }
+        ClassPathResource resource = new ClassPathResource("MailTemplates/emailWithLink.txt");
+        return createEmailTemplateWithLink(resource,attendees, meeting);
+    }
+
+    private String createEmailTemplateWithLink(ClassPathResource resource,ProfileEntity[] attendees, MeetingEntity meeting) {
         try {
-            ClassPathResource resource = new ClassPathResource("email.html");
-            String emailText = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), StandardCharset.UTF_8);
-            String processedLink = getProcessedLink(voucherLink);
-            return String.format(emailText, recipient, partner, question.getCategory().getKind(), question.getKind(), processedLink);
+            String emailText =
+                    new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), StandardCharset.UTF_8);
+            String claimLink = BASE_URL + "/voucherClaim/" + meeting.getId();
+            return String.format(emailText, attendees[0].getName(), attendees[1].getName(),
+                    meeting.getQuestion().getCategory().getKind(), meeting.getQuestion().getKind(), claimLink);
         } catch (Exception e) {
-            log.error("Failed to read Resource: email.html", e);
+            log.error(String.format("Failed to read Resource: %s", resource.getPath()), e);
         }
         return "";
     }
 
-    public String createMsTeamsMeetingTemplateHTML(String profileNameOne, String profileNameTwo, String date, String time) {
+    private String createEmailTemplateNoLink(ClassPathResource resource,ProfileEntity[] attendees, MeetingEntity meeting) {
         try {
-            ClassPathResource resource = new ClassPathResource("msTeamsMeeting.html");
+            String emailText =
+                    new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), StandardCharset.UTF_8);
+            return String.format(emailText, attendees[0].getName(), attendees[1].getName(),
+                    meeting.getQuestion().getCategory().getKind(), meeting.getQuestion().getKind());
+        } catch (Exception e) {
+            log.error(String.format("Failed to read Resource: %s", resource.getPath()), e);
+        }
+        return "";
+    }
+
+
+    public String createMsTeamsMeetingTemplateHTML(String profileNameOne, String profileNameTwo, String date, String time) {
+        ClassPathResource resource = new ClassPathResource("MailTemplates/msTeamsMeeting.html");
+
+        try {
             String meetingText = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), StandardCharset.UTF_8);
             return String.format(meetingText,  profileNameOne, profileNameTwo, date, time);
         } catch (Exception e) {
-            log.error("Failed to read Resource: msTeamsMeeting.html", e);
+            log.error(String.format("Failed to read Resource: %s", resource.getPath()), e);
         }
         return "";
     }
 
-    public String createEmailTemplatePlain(String recipient, String partner, Question question,String voucherLink) {
-        try {
-            ClassPathResource resource = new ClassPathResource("email.txt");
-            String emailText = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), StandardCharset.UTF_8);
-            String processedLink = getProcessedLink(voucherLink);
-            return String.format(emailText, recipient, partner, question.getCategory().getKind(), question.getKind(),processedLink);
-        } catch (Exception e) {
-            log.error("Failed to read Resource: email.txt", e);
-        }
-        return "";
-    }
-
-    public String getProcessedLink(String voucherLink) {
-        int amountOfStoredVouchers = voucherService.getAmountOfStoredVouchers();
-        if (amountOfStoredVouchers == CONSUMED) {
-            voucherLink = EMPTY;
-        }
-        return voucherLink;
-    }
 
     public void sendMailToUser(Long id, String body) throws MessagingException {
         Optional<ProfileEntity> pe = this.profileService.getProfile(id);

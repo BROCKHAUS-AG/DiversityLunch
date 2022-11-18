@@ -2,7 +2,6 @@ package de.brockhausag.diversitylunchspringboot.email;
 
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMailProperties;
-import de.brockhausag.diversitylunchspringboot.voucher.service.VoucherService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,12 +29,9 @@ class DiversityLunchEMailServiceTest {
     @InjectMocks
     DiversityLunchEMailService diversityLunchEMailService;
 
-    @Mock
-    VoucherService voucherService;
 
     @Test
     void testSendEmail() throws MessagingException {
-
         when(mailSender.createMimeMessage()).thenReturn(msg);
         when(props.getSender()).thenReturn("test@test.de");
         diversityLunchEMailService.sendEmail("test@diversity-lunch.de",
@@ -45,19 +41,4 @@ class DiversityLunchEMailServiceTest {
         verify(mailSender, times(1)).send(msg);
     }
 
-    @Test
-    void testEmptyLink() throws MessagingException {
-
-        when(voucherService.getAmountOfStoredVouchers()).thenReturn(0);
-        String link = diversityLunchEMailService.getProcessedLink("Gutscheincode");
-        assert link.equals("");
-    }
-
-    @Test
-    void testLink() throws MessagingException {
-
-        when(voucherService.getAmountOfStoredVouchers()).thenReturn(1);
-        String link = diversityLunchEMailService.getProcessedLink("Gutscheincode");
-        assert link.equals("Gutscheincode");
-    }
 }
