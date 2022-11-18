@@ -1,5 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.voucher.service;
 
+import com.google.common.collect.Iterables;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
@@ -54,7 +55,7 @@ public class VoucherService {
     }
 
     public boolean saveVouchers(Iterable<VoucherEntity> voucherEntities){
-        voucherRepository.saveAll(voucherEntities);
+        Iterable<VoucherEntity> savedVouchers = voucherRepository.saveAll(voucherEntities);
         return Iterables.size(savedVouchers) == Iterables.size(voucherEntities);
     }
 

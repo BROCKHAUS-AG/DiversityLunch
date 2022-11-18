@@ -28,6 +28,16 @@ public class VoucherMapper implements Mapper<VoucherDto, VoucherEntity> {
         );
     }
 
+    @Override
+    public VoucherEntity dtoToEntity(VoucherDto dto) {
+        return new VoucherEntity(
+                dto.getUuid(),
+                profileService.getProfile(dto.getProfileId()).orElseThrow(),
+                dto.getVoucherCode(),
+                meetingService.getMeeting(dto.getMeetingId()).orElseThrow()
+        );
+    }
+
     public AdminVoucherDto mapEntityToAdminVoucherDto(VoucherEntity voucherEntity)
     {
         if(voucherEntity.getProfile() != null)
@@ -45,25 +55,5 @@ public class VoucherMapper implements Mapper<VoucherDto, VoucherEntity> {
             );
         }
 
-    }
-
-    @Override
-    public VoucherDto entityToDto(VoucherEntity entity) {
-        return new VoucherDto(
-                entity.getId(),
-                entity.getVoucher(),
-                entity.getProfile().getId(),
-                entity.getMeeting().getId()
-        );
-    }
-
-    @Override
-    public VoucherEntity dtoToEntity(VoucherDto dto) {
-        return new VoucherEntity(
-                dto.getUuid(),
-                profileService.getProfile(dto.getProfileId()).orElseThrow(),
-                dto.getVoucherCode(),
-                meetingService.getMeeting(dto.getMeetingId()).orElseThrow()
-        );
     }
 }
