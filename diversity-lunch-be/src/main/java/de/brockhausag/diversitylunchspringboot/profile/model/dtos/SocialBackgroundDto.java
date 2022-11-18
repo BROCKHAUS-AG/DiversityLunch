@@ -13,12 +13,11 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class ProjectDto implements BaseDto {
-
+public class SocialBackgroundDto implements BaseDto {
     private Long id;
 
-    @Schema(description = "a project you are involved in", example = "diversity lunch app")
-    @Size(min=2, max=100, message = "diet descriptor must be between 2 and 100 chars long")
+    @Schema(description = "Your socialBackground in years", example = "2 Jahre")
+    @Size(min=1, max=255, message = "socialBackground must be between 1 and 255 chars long")
     @NotNull
     @NotBlank
     private String descriptor;

@@ -42,12 +42,14 @@ public class ProfileEntity {
     private HobbyEntity hobby;
     @ManyToOne
     private SexualOrientationEntity sexualOrientation;
+    @ManyToOne
+    private SocialBackgroundEntity socialBackground;
 
 
 
     @Override
     public int hashCode() {
-        String hashString = this.id.toString() + this.name + this.email + Integer.toString(this.birthYear);
+        String hashString = this.id.toString() + this.name + this.email + this.birthYear;
         return hashString.hashCode();
     }
 
