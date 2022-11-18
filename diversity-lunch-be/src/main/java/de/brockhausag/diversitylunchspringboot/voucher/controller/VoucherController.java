@@ -1,6 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.voucher.controller;
 
+import de.brockhausag.diversitylunchspringboot.voucher.exception.ForbiddenVoucherClaim;
 import de.brockhausag.diversitylunchspringboot.voucher.mapper.VoucherMapper;
+import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherClaimDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.AdminVoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.exception.IllegalVoucherClaim;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherDto;
@@ -32,8 +34,17 @@ public class VoucherController {
 
     @GetMapping("/amount")
     @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).ADMIN_ROLE_ASSIGN)")
-    public ResponseEntity<Integer> getAmountOfVouchersStored() {
-        return ResponseEntity.ok(voucherService.getAmountOfVouchersStored());
+    public ResponseEntity<Integer> getAmountOfVouchersStored(@RequestParam(value = "claimed", required = false) Boolean isVoucherClaimed) {
+        int amountOfVouchers;
+        if (isVoucherClaimed == null) {
+            amountOfVouchers = voucherService.getAmountOfStoredVouchers();
+        } else if (isVoucherClaimed) {
+            amountOfVouchers = voucherService.getAmountOfClaimedVouchers();
+        } else {
+            amountOfVouchers = voucherService.getAmountOfUnclaimedVouchers();
+        }
+
+        return ResponseEntity.ok(amountOfVouchers);
     }
 
     @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).ADMIN_ROLE_ASSIGN)")
@@ -49,20 +60,27 @@ public class VoucherController {
 
     @PreAuthorize("isProfileOwner(#profileId)")
     @PutMapping("/claim/{profileId}/{meetingId}")
-    public ResponseEntity<?> claimVoucher(@PathVariable Long profileId, @PathVariable Long meetingId) {
+    public ResponseEntity<VoucherClaimDto> claimVoucher(@PathVariable Long profileId, @PathVariable Long meetingId) {
         try {
             Optional<VoucherEntity> voucherEntity;
+            VoucherClaimDto voucherClaimDto = new VoucherClaimDto();
             if (voucherService.checkForClaimedVoucher(profileId, meetingId)) {
                 voucherEntity = voucherService.getVoucherByProfileIdAndMeetingId(profileId, meetingId);
+                voucherClaimDto.setClaimedNewVoucher(false);
             } else {
                 voucherEntity = voucherService.getUnclaimedVoucherForMeeting(profileId, meetingId);
+                voucherClaimDto.setClaimedNewVoucher(true);
             }
 
             if (voucherEntity.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                voucherClaimDto.setClaimedNewVoucher(false);
+            } else {
+                voucherClaimDto.setVoucherCode(voucherEntity.get().getVoucher());
             }
-            return ResponseEntity.ok().body(voucherEntity.get().getVoucher());
-        } catch (IllegalVoucherClaim e) {
+
+            return ResponseEntity.ok().body(voucherClaimDto);
+        } catch (ForbiddenVoucherClaim e) {
+            log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
@@ -73,7 +91,7 @@ public class VoucherController {
         List<VoucherEntity> voucherEntities = voucherService.getVoucherByProfileId(profileId);
         List<VoucherDto> voucherDtos = new ArrayList<>();
         for (VoucherEntity voucher : voucherEntities) {
-            voucherDtos.add(voucherMapper.mapEntityToDto(voucher));
+            voucherDtos.add(voucherMapper.entityToDto(voucher));
         }
         return ResponseEntity.ok().body(voucherDtos);
     }
