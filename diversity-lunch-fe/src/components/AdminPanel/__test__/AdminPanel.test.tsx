@@ -51,7 +51,10 @@ describe('Admin Panel', () => {
     it('should display a message when clicking the Send Testmail button', async () => {
         renderContainer(Role.ADMIN);
         jest.spyOn(fetcher, 'authenticatedFetchPost').mockImplementation(async () => new Response(null, { status: 200, statusText: 'Erfolgreich' }));
-        jest.spyOn(fetcher, 'authenticatedFetchGet').mockImplementation(async () => new Response('2', { status: 200, statusText: 'ok' }));
+        //jest.spyOn(fetcher, 'authenticatedFetchGet').mockImplementation(async () => new Response('2', { status: 200, statusText: 'ok' }));
+        jest.spyOn(fetcher, 'authenticatedFetchGet').mockReturnValueOnce((async () => new Response('2', { status: 200, statusText: 'ok' }))()).mockReturnValueOnce((async () => new Response('2', { status: 200, statusText: 'ok' }))());
+
+
         const button = await screen.findByText('Testmail verschicken');
         act(() => {
             fireEvent.click(button);
