@@ -9,6 +9,8 @@ import java.util.UUID;
 
 public interface VoucherRepository extends JpaRepository<VoucherEntity, UUID> {
     Optional<VoucherEntity> getFirstByProfileIsNullAndMeetingIsNull();
+    int countAllByProfileIsNotNullAndMeetingIsNotNull();
+    int countAllByProfileIsNullAndMeetingIsNull();
 
     Optional<VoucherEntity> getVoucherEntityByProfileIdAndMeetingId(long profile_Id, long meeting_Id);
     List<VoucherEntity> getAllByProfileId(long profile_Id);

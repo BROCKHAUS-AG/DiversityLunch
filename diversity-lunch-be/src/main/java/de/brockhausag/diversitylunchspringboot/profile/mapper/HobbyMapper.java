@@ -5,9 +5,6 @@ import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntit
 import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Component
 public class HobbyMapper implements Mapper<HobbyDto, HobbyEntity> {
 
@@ -31,15 +28,5 @@ public class HobbyMapper implements Mapper<HobbyDto, HobbyEntity> {
         entity.setDescriptor(dto.getDescriptor());
         entity.setCategory(categoryMapper.dtoToEntity(dto.getCategory()));
         return entity;
-    }
-
-    @Override
-    public List<HobbyDto> entityToDto(List<HobbyEntity> entities) {
-        return entities.stream().map(this::entityToDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<HobbyEntity> dtoToEntity(List<HobbyDto> dtos) {
-        return dtos.stream().map(this::dtoToEntity).collect(Collectors.toList());
     }
 }

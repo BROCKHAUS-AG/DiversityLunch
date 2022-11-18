@@ -13,11 +13,9 @@ import java.util.List;
 
 public class VoucherCSVHelper {
 
-    public static List<VoucherEntity> csvToVoucherEntities(InputStream is) throws IOException {
-
+    public static List<VoucherEntity> csvToVoucherEntities(InputStream csvInputStream) throws IOException {
         List<VoucherEntity> voucherEntities = new ArrayList<>();
-        CSVParser csvParser = CSVParser.parse(is, StandardCharsets.UTF_8, CSVFormat.RFC4180);
-
+        CSVParser csvParser = CSVParser.parse(csvInputStream, StandardCharsets.UTF_8, CSVFormat.RFC4180);
 
         Iterable<CSVRecord> csvRecords = csvParser.getRecords();
 
@@ -27,6 +25,5 @@ public class VoucherCSVHelper {
         }
 
         return voucherEntities;
-
     }
 }

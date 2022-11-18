@@ -1,8 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
-import de.brockhausag.diversitylunchspringboot.meeting.model.CreateMeetingProposalDto;
-import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingDto;
-import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
+import de.brockhausag.diversitylunchspringboot.meeting.model.*;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 
 import java.time.LocalDateTime;
@@ -75,6 +73,11 @@ public class MeetingTestdataFactory {
         return CreateMeetingProposalDto.builder()
                 .fromDateTime(localDateTime)
                 .build();
+    }
+
+    public MeetingEntity matchedMeeting(ProfileEntity proposerEntity, ProfileEntity partnerEntity) {
+        LocalDateTime date = LocalDateTime.of(2011, 11,11, 11,11);
+        return new MeetingEntity(1L, date, partnerEntity, proposerEntity, 1, Question.CUSTOMER1, date, "");
     }
 
     public List<MeetingProposalEntity> newMeetingProposalList_withMatchingScore29(LocalDateTime time) {

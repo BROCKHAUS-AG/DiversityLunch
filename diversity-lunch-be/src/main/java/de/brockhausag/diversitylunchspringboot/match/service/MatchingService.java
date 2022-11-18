@@ -104,8 +104,6 @@ public class MatchingService {
         return questions.get(randomIndex);
     }
     public void sendQuestions(LocalDateTime now) {
-
-
         log.debug("Sending Emails...");
         LocalDateTime modified = now.truncatedTo(ChronoUnit.MINUTES).with(roundMinutesDownToHalfAndFull()).plusHours(1);
         List<MeetingEntity> meetingEntities = meetingRepository.findByFromDateTime(modified);
