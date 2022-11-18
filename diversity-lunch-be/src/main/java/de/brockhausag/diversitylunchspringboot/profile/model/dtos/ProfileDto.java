@@ -44,4 +44,6 @@ public class ProfileDto {
     private HobbyDto hobby;
     @NotNull
     private SexualOrientationDto sexualOrientation;
+    @NotNull
+    private SocialBackgroundDto socialBackground;
 }

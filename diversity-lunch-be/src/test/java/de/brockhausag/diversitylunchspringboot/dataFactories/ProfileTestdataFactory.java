@@ -21,8 +21,9 @@ public class ProfileTestdataFactory {
     private final ReligionTestDataFactory religionFactory = new ReligionTestDataFactory();
     private final WorkExperienceTestDataFactory workExperienceFactory = new WorkExperienceTestDataFactory();
     private final HobbyTestDataFactory hobbyFactory = new HobbyTestDataFactory();
-
     private final SexualOrientationTestDataFactory sexualOrientationFactory = new SexualOrientationTestDataFactory();
+    private final SocialBackgroundTestDataFactory socialBackgroundFactory = new SocialBackgroundTestDataFactory();
+
     public ProfileEntity buildEntity(int setNumber) {
         if ((setNumber >= 1) && (setNumber <= numberOfCompleteSets)){
             return new ProfileEntity(
@@ -36,7 +37,8 @@ public class ProfileTestdataFactory {
                     religionFactory.buildEntity(setNumber),
                     workExperienceFactory.buildEntity(setNumber),
                     hobbyFactory.buildEntity(setNumber),
-                    sexualOrientationFactory.buildEntity(setNumber));
+                    sexualOrientationFactory.buildEntity(setNumber),
+                    socialBackgroundFactory.buildEntity(setNumber));
         }
         return new ProfileEntity(
                 ids[1], names[1], emails[1], birthYears[1],
@@ -49,7 +51,8 @@ public class ProfileTestdataFactory {
                 religionFactory.buildEntity(1),
                 workExperienceFactory.buildEntity(1),
                 hobbyFactory.buildEntity(1),
-                sexualOrientationFactory.buildEntity(1));
+                sexualOrientationFactory.buildEntity(1),
+                socialBackgroundFactory.buildEntity(1));
     }
 
     public ProfileDto buildDto(int setNumber) {
@@ -65,7 +68,8 @@ public class ProfileTestdataFactory {
                     religionFactory.buildDto(setNumber),
                     workExperienceFactory.buildDto(setNumber),
                     hobbyFactory.buildDto(setNumber),
-                    sexualOrientationFactory.buildDto(setNumber));
+                    sexualOrientationFactory.buildDto(setNumber),
+                    socialBackgroundFactory.buildDto(setNumber));
         }
         return new ProfileDto(
                 ids[1], names[1], emails[1], birthYears[1],
@@ -78,6 +82,7 @@ public class ProfileTestdataFactory {
                 religionFactory.buildDto(1),
                 workExperienceFactory.buildDto(1),
                 hobbyFactory.buildDto(1),
-                sexualOrientationFactory.buildDto(1));
+                sexualOrientationFactory.buildDto(1),
+                socialBackgroundFactory.buildDto(setNumber));
     }
 }

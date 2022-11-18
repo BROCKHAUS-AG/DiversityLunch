@@ -30,3 +30,4 @@ INSERT INTO sexual_orientation_entity(descriptor) VALUES
                                                       ('Pansexuell'),
                                                       ('weitere Orientierungen'),
                                                       ('keine Angabe');
+INSERT INTO social_background_entity(descriptor) VALUES ('Akademikerfamilie'), ('Nichtakademisches Elternhaus'), ('Keine Angabe');
