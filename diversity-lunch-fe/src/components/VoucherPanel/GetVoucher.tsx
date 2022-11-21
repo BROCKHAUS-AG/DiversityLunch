@@ -56,6 +56,10 @@ export const GetVoucher = ({ setError } : GetVoucherProps) => {
                         </span>
                     </div>
                     <button type="button" className="copyButton" onClick={copyToClipboard}>Kopieren</button>
+                    <p className="lieferando-text">
+                        Bestelle jetzt dein Essen bei:&nbsp;
+                        <a href="https://www.lieferando.de/" target="_blank" rel="noopener noreferrer">lieferando.de</a>
+                    </p>
                 </>
             )
             : (
