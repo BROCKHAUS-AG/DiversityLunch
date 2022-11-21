@@ -7,7 +7,6 @@ import { Account } from '../../types/Account';
 import { authenticatedFetchGet } from '../../utils/fetch.utils';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
-import { UserVoucher } from '../../types/UserVoucher';
 
 export const UserVoucherList = () => {
     const accountState: AccountState = useSelector((store: AppStoreState) => store.account);
@@ -15,7 +14,7 @@ export const UserVoucherList = () => {
     const [voucherList, setVoucherList] = useState([]);
 
     const getVoucherList = async (profileId: number) => {
-        const response = await authenticatedFetchGet(`/api/voucher/get/${profileId}`);
+        const response = await authenticatedFetchGet(`/api/voucher/all/${profileId}`);
         if (response.ok) {
             setVoucherList(await response.json());
         }
