@@ -14,7 +14,7 @@ import java.util.stream.StreamSupport;
 @AllArgsConstructor
 public class HobbyService {
     private final HobbyRepository repository;
-    
+
     public HobbyEntity createEntity(HobbyEntity entity){
         //set id to null to force auto generation of id thus avoid updating existing entries
         entity.setId(0L);
@@ -47,5 +47,5 @@ public class HobbyService {
     public boolean existsById(Long id){
         return this.repository.existsById(id);
     }
-    
+
 }

@@ -1,4 +1,4 @@
-
+package de.brockhausag.diversitylunchspringboot.profile.controllerTest;
 
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.profile.controller.HobbyController;
@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import de.brockhausag.diversitylunchspringboot.dataFactories.HobbyTestDataFactory;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
@@ -29,14 +30,11 @@ public class HobbyControllerTest {
     @Mock
     private HobbyMapper mapper;
 
-    @Mock
-    private AccountService accountService;
 
     @InjectMocks
     private HobbyController hobbyController;
 
     private final HobbyTestDataFactory factory = new HobbyTestDataFactory();
-    private final Long accountId = 5L;
 
     @Test
     void testGetHobby_withValidId_returnsOkWithHobbyDto() {
@@ -45,10 +43,10 @@ public class HobbyControllerTest {
         HobbyDto expectedDto = this.factory.buildDto(1);
 
         when(mapper.entityToDto(inputEntity)).thenReturn(expectedDto);
-        when(hobbyService.getHobby(inputEntity.getId())).thenReturn(Optional.of(inputEntity));
+        when(hobbyService.getEntityById(inputEntity.getId())).thenReturn(Optional.of(inputEntity));
 
         //Act
-        ResponseEntity<HobbyDto> response = hobbyController.getHobby(inputEntity.getId());
+        ResponseEntity<HobbyDto> response = hobbyController.get(inputEntity.getId());
 
         //Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -60,10 +58,10 @@ public class HobbyControllerTest {
         //Arrange
         final Long notExistingId = 666L;
 
-        when(hobbyService.getHobby(notExistingId)).thenReturn(Optional.empty());
+        when(hobbyService.getEntityById(notExistingId)).thenReturn(Optional.empty());
 
         //Act
-        ResponseEntity<HobbyDto> response = hobbyController.getHobby(notExistingId);
+        ResponseEntity<HobbyDto> response = hobbyController.get(notExistingId);
 
         //Assert
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
@@ -79,11 +77,11 @@ public class HobbyControllerTest {
 
 
         when(mapper.dtoToEntity(inputDto)).thenReturn(Optional.of(hobbyEntity));
-        when(hobbyService.createHobby(hobbyEntity, accountId)).thenReturn(Optional.of(hobbyEntity));
+        when(hobbyService.createEntity(hobbyEntity)).thenReturn(hobbyEntity);
         when(mapper.entityToDto(hobbyEntity)).thenReturn(expectedDto);
 
         //Act
-        ResponseEntity<HobbyDto> response = hobbyController.createHobby(inputDto, accountId);
+        ResponseEntity<HobbyDto> response = hobbyController.post(inputDto);
 
         //Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -94,60 +92,29 @@ public class HobbyControllerTest {
     void testPostHobby_serviceReturnsEmpty_returnsBadRequest() {
         //Arrange
         HobbyDto inputDto = this.factory.buildDto(1);
-        HobbyEntity hobbyEntity = this.factory.buildEntity(1);
 
-        when(mapper.dtoToEntity(inputDto)).thenReturn(Optional.of(hobbyEntity));
-        when(hobbyService.createHobby(hobbyEntity, accountId)).thenReturn(Optional.empty());
+        when(mapper.dtoToEntity(inputDto)).thenReturn(Optional.empty());
 
         //Act
-        ResponseEntity<HobbyDto> response = hobbyController.createHobby(inputDto, accountId);
+        ResponseEntity<HobbyDto> response = hobbyController.post(inputDto);
 
         //Assert
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
     @Test
-    void testPutHobby_serviceReturnsUpdatedDTO_returnsStatusOK(){
+    void testPutHobby_serviceReturnsUpdatedDTO_returnsStatusOK() {
         //Arrange
         HobbyDto inputDto = this.factory.buildDto(1);
         HobbyEntity hobbyEntity = this.factory.buildEntity(1);
 
         when(mapper.dtoToEntity(inputDto)).thenReturn(Optional.of(hobbyEntity));
-        when(hobbyService.updateHobby(hobbyEntity)).thenReturn(Optional.of(hobbyEntity));
+        when(hobbyService.updateOrCreateEntity(hobbyEntity)).thenReturn(hobbyEntity);
 
         //Act
-        ResponseEntity<HobbyDto> response = hobbyController.updateHobby(hobbyEntity.getId(), inputDto);
+        ResponseEntity<HobbyDto> response = hobbyController.put(inputDto);
 
         //Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
-
-    @Test
-    void testPutHobby_serviceReturnsEmpty_returnsBadRequest() {
-        //Arrange
-        final Long notMatchingId = 95L;
-        HobbyDto inputDto = this.factory.buildDto(1);
-
-        //Act
-        ResponseEntity<HobbyDto> response = hobbyController.updateHobby(notMatchingId, inputDto);
-
-        //Assert
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }
-
-    @Test
-    void testPutHobby_serviceReturnsBadRequest() {
-        //Arrange
-        HobbyEntity hobbyEntity = factory.buildEntity(1);
-        HobbyDto inputDto = factory.buildDto(1);
-
-        when(mapper.dtoToEntity(inputDto)).thenReturn(Optional.of(hobbyEntity));
-        when(hobbyService.updateHobby(hobbyEntity)).thenReturn(Optional.empty());
-
-        //Act
-        ResponseEntity<HobbyDto> response = hobbyController.updateHobby(hobbyEntity.getId(), inputDto);
-
-        //Assert
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 }
