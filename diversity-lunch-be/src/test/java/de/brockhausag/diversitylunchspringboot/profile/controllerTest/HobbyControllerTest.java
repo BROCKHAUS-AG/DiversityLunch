@@ -15,9 +15,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -162,11 +166,34 @@ public class HobbyControllerTest {
 
     @Test
     void testGetAll_withNoValuesInDatabase_returnsEmptyList(){
-        assertTrue(false);
+        when(this.mapper.entityToDto(Collections.emptyList())).thenReturn(Collections.emptyList());
+
+        when(hobbyService.getAllEntities()).thenReturn(Collections.emptyList());
+
+        //Act
+        ResponseEntity<List<HobbyDto>> response = hobbyController.getAll();
+
+        //Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(0,response.getBody().size());
+        assertEquals(Collections.emptyList(), response.getBody());
     }
 
     @Test
     void testGetAll_withThreeValuesInDatabase_returnsListOfThreeDtos(){
-        assertTrue(false);
+        //Arrange
+        List<HobbyEntity> inputEntities = Stream.of(1, 2, 3).map(this.factory::buildEntity).toList();
+        List<HobbyDto> expectedDtos = Stream.of(1, 2, 3).map(this.factory::buildDto).toList();
+        when(this.mapper.entityToDto(inputEntities)).thenReturn(expectedDtos);
+
+        when(hobbyService.getAllEntities()).thenReturn(inputEntities);
+
+        //Act
+        ResponseEntity<List<HobbyDto>> response = hobbyController.getAll();
+
+        //Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expectedDtos.size(),response.getBody().size());
+        assertEquals(expectedDtos, response.getBody());
     }
 }
