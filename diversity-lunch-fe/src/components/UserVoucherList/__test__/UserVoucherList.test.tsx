@@ -1,19 +1,48 @@
-import { render, screen } from '@testing-library/react';
-import { VoucherList } from '../VoucherList';
-import { UserVoucher } from '../../../types/UserVoucher';
+import { render } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import React, { FC } from 'react';
+import {
+    mockedAssignAdminRole,
+    mockedFetchGetAccounts,
+    mockedFetchGetProfiles,
+    mockedFetchGetUserVouchers,
+    mockedRevokeAdminRole,
+} from '../../../__global_test_data__/fetch';
+import * as fetch from '../../../utils/fetch.utils';
+import { UserVoucherList } from '../UserVoucherList';
+import { APP_STORE } from '../../../store/Store';
+import * as accounts from '../../../data/accounts/accounts-fetch';
+import * as profiles from '../../../data/profiles/profiles-fetch';
 
-describe('Admin Panel', () => {
-    it('should render 3 vouchers in table', async () => {
-        const adminVouchers: UserVoucher[] = [
-            { voucherCode: 'code1' },
-            { voucherCode: 'code2' },
-            { voucherCode: 'code3' },
-        ];
+const WrapperComponent: FC = () => (
+    <UserVoucherList />
+);
 
-        render(<VoucherList vouchers={adminVouchers} />);
+describe('UserVoucherList', () => {
+    beforeEach(() => {
+        jest.spyOn(accounts, 'getAllAccounts')
+            .mockImplementation(mockedFetchGetAccounts);
+        jest.spyOn(profiles, 'getAllProfiles')
+            .mockImplementation(mockedFetchGetProfiles);
+        jest.spyOn(accounts, 'assignAdminRole')
+            .mockImplementation(mockedAssignAdminRole);
+        jest.spyOn(accounts, 'revokeAdminRole')
+            .mockImplementation(mockedRevokeAdminRole);
+        render(
+            <BrowserRouter>
+                <Provider store={APP_STORE}>
+                    <WrapperComponent />
+                </Provider>
+            </BrowserRouter>,
+        );
+    });
 
-        expect(screen.getAllByText('code1').length).toBe(1);
-        expect(screen.getAllByText('code2').length).toBe(1);
-        expect(screen.getAllByText('code3').length).toBe(1);
+    it('should render 3 vouchers', async () => {
+        jest.spyOn(fetch, 'authenticatedFetchGet')
+            .mockImplementation(mockedFetchGetUserVouchers);
+        const listElementCount = document.querySelector('ul')!.childElementCount;
+
+        expect(listElementCount).toEqual(3);
     });
 });

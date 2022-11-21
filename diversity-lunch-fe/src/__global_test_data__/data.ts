@@ -1,6 +1,7 @@
 import { Role } from '../model/Role';
 import { Account } from '../types/Account';
 import { Profile } from '../model/Profile';
+import { UserVoucher } from '../types/UserVoucher';
 
 export const categoryData = [{ id: 2, descriptor: 'Kreatives' }, { id: 1337, descriptor: 'Sport' }];
 export const countryData = [{ id: 9, descriptor: 'Bahamas' }, { id: 1337, descriptor: 'Deutschland' }];
@@ -116,5 +117,16 @@ export const profileList: Profile[] = [
         hobby: hobbyData[0],
         sexualOrientation: sexualOrientationData[0],
         socialBackground: socialBackgroundData[0],
+    },
+];
+export const userVoucherList : UserVoucher[] = [
+    {
+        voucherCode: 'abcdef',
+    },
+    {
+        voucherCode: 'abccba',
+    },
+    {
+        voucherCode: '1a2b3c',
     },
 ];
