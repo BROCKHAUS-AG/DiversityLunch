@@ -16,6 +16,7 @@ import {
     profileList,
     projectData,
     religionData,
+    userVoucherList,
     workExperienceData,
 } from './data';
 import { COUNTRY_ENDPOINT } from '../data/country/fetch-country';
@@ -153,4 +154,12 @@ export const mockedAssignAdminRole = (accountId: number, callbacks: FetchCallbac
         }
     };
     handleFetchResponse(onGoingFetch, onSuccess, callbacks);
+};
+
+export const mockedFetchGetUserVouchers = () => {
+    const onGoingFetch = Promise.resolve(new Response(JSON.stringify(userVoucherList), {
+        status: 200,
+        statusText: 'ok',
+    }));
+    return onGoingFetch;
 };
