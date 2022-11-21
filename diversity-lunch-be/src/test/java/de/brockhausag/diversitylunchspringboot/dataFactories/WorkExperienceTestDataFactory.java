@@ -7,7 +7,6 @@ public class WorkExperienceTestDataFactory {
     private static final  int numberOfCompleteSets = 3;
     private static final Long[] ids = {666L, 1L, 2L, 3L};
 
-    //TODO: global test data dfuerst-18.11.22         User Story : 17923
 
     private static final String[] descriptors =  {"incomplete","0-3 Jahre", "4-10 Jahre", "über 10 Jahre"};
 
