@@ -8,6 +8,7 @@ import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEnti
 import de.brockhausag.diversitylunchspringboot.meeting.model.Question;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
+import de.brockhausag.diversitylunchspringboot.meeting.service.MsTeamsService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -36,6 +37,9 @@ class MatchingServiceTest {
 
     @Mock
     private MatchingService matchingServiceMock;
+
+    @Mock
+    MsTeamsService msTeamsService;
 
     @Mock
     DiversityLunchEMailService mockedEMailService;
