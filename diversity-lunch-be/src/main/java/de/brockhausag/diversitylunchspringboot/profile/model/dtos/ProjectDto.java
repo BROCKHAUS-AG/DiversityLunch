@@ -18,7 +18,7 @@ public class ProjectDto implements BaseDto {
     private Long id;
 
     @Schema(description = "a project you are involved in", example = "diversity lunch app")
-    @Size(min=2, max=100, message = "diet descriptor must be between 2 and 50 chars long")
+    @Size(min=2, max=100, message = "diet descriptor must be between 2 and 100 chars long")
     @NotNull
     @NotBlank
     private String descriptor;

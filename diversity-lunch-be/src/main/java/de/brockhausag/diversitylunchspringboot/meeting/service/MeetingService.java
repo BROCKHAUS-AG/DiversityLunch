@@ -2,11 +2,12 @@ package de.brockhausag.diversitylunchspringboot.meeting.service;
 
 import de.brockhausag.diversitylunchspringboot.meeting.mapper.MeetingMapper;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingDto;
+import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -79,5 +80,9 @@ public class MeetingService {
     public boolean checkIfMeetingProposalIsMatched(Long id) {
         MeetingProposalEntity meetingProposal = meetingProposalRepository.getById(id);
         return meetingProposal.isMatched();
+    }
+
+    public Optional<MeetingEntity> getMeeting(Long id) {
+        return meetingRepository.findById(id);
     }
 }

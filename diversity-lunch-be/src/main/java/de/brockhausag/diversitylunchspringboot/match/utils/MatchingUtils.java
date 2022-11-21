@@ -79,7 +79,6 @@ public class MatchingUtils {
         if (profile1.getWorkExperience().getDescriptor().equals(profile2.getWorkExperience().getDescriptor())) {
             currentScore = 1;
 
-            //TODO: matching nicht über strings laufen lassen -> metadaten in datenbank präferieren dfuerst-18.11.22
         } else if ((profile1.getWorkExperience().getDescriptor().equals("0-3 Jahre")
                 && profile2.getWorkExperience().getDescriptor().equals("über 10 Jahre"))
                 || (profile1.getWorkExperience().getDescriptor().equals("über 10 Jahre")
