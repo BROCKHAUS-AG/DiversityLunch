@@ -104,7 +104,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
             />
             <Dropdown
                 options={genders.items}
-                placeholder="Wähle ein Geschlecht?"
+                placeholder="Wähle dein Geschlecht aus"
                 onChange={(value) => updateProfile('gender', value)}
                 label="Geschlecht"
                 currentValue={profile.gender || undefined}
