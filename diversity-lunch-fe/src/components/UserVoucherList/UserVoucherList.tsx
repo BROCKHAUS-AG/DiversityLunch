@@ -17,11 +17,14 @@ export const UserVoucherList = () => {
     const getVoucherList = async (profileId: number) => {
         const response = await authenticatedFetchGet(`/api/voucher/all/${profileId}`);
         if (response.ok) {
-            setVoucherList(await response.json());
+            const jsonRes = await response.json();
+            setVoucherList(jsonRes);
         }
     };
 
-    useEffect(() => { getVoucherList(account.profileId); }, []);
+    useEffect(() => {
+        if (account !== undefined) getVoucherList(account.profileId);
+    }, [account]);
 
     return (
         <div className="ShowVouchers">
@@ -29,7 +32,11 @@ export const UserVoucherList = () => {
             <DiversityIconContainer title="GUTSCHEIN-ÜBERSICHT" />
             <p className="ShowVoucher-text">Hier findest du deine persönlichen Gutscheine</p>
             <ul className="ShowVoucherList">
-                {voucherList.map((voucher: any) => (<li className="voucherItem" key={voucher.uuid}>{voucher.voucherCode}</li>))}
+                {voucherList.map((voucher: UserVoucher) => (
+                    <li className="voucherItem" key={voucherList.indexOf(voucher)}>
+                        {voucher.voucherCode}
+                    </li>
+                ))}
             </ul>
         </div>
     );
