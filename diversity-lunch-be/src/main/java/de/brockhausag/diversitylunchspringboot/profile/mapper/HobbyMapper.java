@@ -30,16 +30,19 @@ public class HobbyMapper {
 
 
     public Optional<HobbyEntity> dtoToEntity(HobbyDto dto) {
-        Optional<HobbyCategoryEntity> optionalHobbyCategoryEntityEntity = this.hobbyCategoryService.getEntityById(dto.getCategory().getId());
+        if ((dto.getCategory() == null) || (dto.getCategory().getId() == null)) {
+            return Optional.empty();
+        }
+        Optional<HobbyCategoryEntity> optionalHobbyCategoryEntity = this.hobbyCategoryService.getEntityById(dto.getCategory().getId());
 
-        if (optionalHobbyCategoryEntityEntity.isEmpty()) {
+        if (optionalHobbyCategoryEntity.isEmpty()) {
             return Optional.empty();
         }
 
         HobbyEntity entity = new HobbyEntity();
         entity.setId(dto.getId());
         entity.setDescriptor(dto.getDescriptor());
-        entity.setCategory(optionalHobbyCategoryEntityEntity.get());
+        entity.setCategory(optionalHobbyCategoryEntity.get());
         return Optional.of(entity);
     }
 

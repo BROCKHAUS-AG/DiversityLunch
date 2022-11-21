@@ -46,7 +46,6 @@ public class HobbyMapperTest {
         HobbyEntity expectedEntity = this.factory.buildEntity(1);
         
         when(this.hobbyCategoryService.getEntityById(expectedEntity.getCategory().getId())).thenReturn(Optional.of(expectedEntity.getCategory()));
-        when(this.hobbyCategoryMapper.dtoToEntity(inputDto.getCategory())).thenReturn(expectedEntity.getCategory());
 
         //Act
         Optional<HobbyEntity> hobbyEntityOptional = this.hobbyMapper.dtoToEntity(inputDto);
@@ -61,14 +60,13 @@ public class HobbyMapperTest {
         //Arrange
         HobbyDto inputDto = this.factory.buildDtoWithoutCategory();
 
-        when(this.hobbyCategoryService.getEntityById(inputDto.getCategory().getId())).thenReturn(Optional.empty());
-
         //Act
         Optional<HobbyEntity> actual = this.hobbyMapper.dtoToEntity(inputDto);
 
         //Assert
         assertTrue(actual.isEmpty());
     }
+
 
     @Test
     void testEntityToDto_withEmptyEntityList_returnsEmptyDtoList() {
