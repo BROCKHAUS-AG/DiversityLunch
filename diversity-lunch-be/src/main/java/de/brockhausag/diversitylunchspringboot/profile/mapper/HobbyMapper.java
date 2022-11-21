@@ -30,7 +30,7 @@ public class HobbyMapper {
 
 
     public Optional<HobbyEntity> dtoToEntity(HobbyDto dto) {
-        if ((dto.getCategory() == null) || (dto.getCategory().getId() == null)) {
+        if (dto.getCategory() == null) {
             return Optional.empty();
         }
         Optional<HobbyCategoryEntity> optionalHobbyCategoryEntity = this.hobbyCategoryService.getEntityById(dto.getCategory().getId());
