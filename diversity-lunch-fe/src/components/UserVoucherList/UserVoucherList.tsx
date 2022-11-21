@@ -7,6 +7,7 @@ import { Account } from '../../types/Account';
 import { authenticatedFetchGet } from '../../utils/fetch.utils';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
+import { UserVoucher } from '../../types/UserVoucher';
 
 export const UserVoucherList = () => {
     const accountState: AccountState = useSelector((store: AppStoreState) => store.account);
