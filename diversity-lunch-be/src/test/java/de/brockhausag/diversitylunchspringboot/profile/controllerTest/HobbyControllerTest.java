@@ -1,43 +1,46 @@
 package de.brockhausag.diversitylunchspringboot.profile.controllerTest;
 
-import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
+import de.brockhausag.diversitylunchspringboot.dataFactories.HobbyTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.profile.controller.HobbyController;
 import de.brockhausag.diversitylunchspringboot.profile.logic.HobbyService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.HobbyMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
-import de.brockhausag.diversitylunchspringboot.dataFactories.HobbyTestDataFactory;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class HobbyControllerTest {
 
+    private final Long notExistingId = 666L;
     @Mock
     private HobbyService hobbyService;
-
     @Mock
     private HobbyMapper mapper;
-
 
     @InjectMocks
     private HobbyController hobbyController;
 
-    private final HobbyTestDataFactory factory = new HobbyTestDataFactory();
+    private HobbyTestDataFactory factory;
+
+    @BeforeEach
+    void setUp() {
+        this.factory = new HobbyTestDataFactory();
+    }
 
     @Test
-    void testGetHobby_withValidId_returnsOkWithHobbyDto() {
+    void testGet_withValidId_returnsOkWithHobbyDto() {
         //Arrange
         HobbyEntity inputEntity = this.factory.buildEntity(1);
         HobbyDto expectedDto = this.factory.buildDto(1);
@@ -54,9 +57,8 @@ public class HobbyControllerTest {
     }
 
     @Test
-    void testGetHobby_withNotExistingId_returnsNotFound() {
+    void testGet_withNotExistingId_returnsNotFound() {
         //Arrange
-        final Long notExistingId = 666L;
 
         when(hobbyService.getEntityById(notExistingId)).thenReturn(Optional.empty());
 
@@ -69,7 +71,7 @@ public class HobbyControllerTest {
     }
 
     @Test
-    void testPostHobby_serviceCreatesEntity_returnsOkWithHobbyDto() {
+    void testPost_withExistingCategory_returnsOkWithHobbyDto() {
         //Arrange
         HobbyDto inputDto = this.factory.buildDto(1);
         HobbyEntity hobbyEntity = this.factory.buildEntity(1);
@@ -89,7 +91,7 @@ public class HobbyControllerTest {
     }
 
     @Test
-    void testPostHobby_serviceReturnsEmpty_returnsBadRequest() {
+    void testPost_withNotExistingCategory_returnsBadRequest() {
         //Arrange
         HobbyDto inputDto = this.factory.buildDto(1);
 
@@ -103,7 +105,7 @@ public class HobbyControllerTest {
     }
 
     @Test
-    void testPutHobby_serviceReturnsUpdatedDTO_returnsStatusOK() {
+    void testPut_withExistingCategory_returnsStatusOK() {
         //Arrange
         HobbyDto inputDto = this.factory.buildDto(1);
         HobbyEntity hobbyEntity = this.factory.buildEntity(1);
@@ -116,5 +118,55 @@ public class HobbyControllerTest {
 
         //Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    void testPut_withNotExistingCategory_returnsBadRequest() {
+        //Arrange
+        HobbyDto inputDto = this.factory.buildDto(1);
+
+        when(mapper.dtoToEntity(inputDto)).thenReturn(Optional.empty());
+
+        //Act
+        ResponseEntity<HobbyDto> response = hobbyController.put(inputDto);
+
+        //Assert
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
+
+    @Test
+    void testDelete_withExistingId_returnsOk(){
+        //Arrange
+        final Long existingId = 42L;
+
+        when(hobbyService.deleteEntityById(existingId)).thenReturn(true);
+
+        //Act
+        ResponseEntity<?> response = hobbyController.delete(existingId);
+
+        //Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    void testDelete_withNotExistingId_returnsNotFound(){
+        //Arrange
+        when(hobbyService.deleteEntityById(notExistingId)).thenReturn(false);
+
+        //Act
+        ResponseEntity<?> response = hobbyController.delete(notExistingId);
+
+        //Assert
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    void testGetAll_withNoValuesInDatabase_returnsEmptyList(){
+        assertTrue(false);
+    }
+
+    @Test
+    void testGetAll_withThreeValuesInDatabase_returnsListOfThreeDtos(){
+        assertTrue(false);
     }
 }
