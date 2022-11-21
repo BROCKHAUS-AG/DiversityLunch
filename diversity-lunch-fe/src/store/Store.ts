@@ -23,8 +23,8 @@ import religionReducer from '../data/religion/religion-reducer';
 import sexualOrientationReducer from '../data/sexual-orientation/sexual-orientation-reducer';
 import socialBackgroundReducer from '../data/social-background/social-background-reducer';
 import workExperienceReducer from '../data/work-experience/work-experience-reducer';
-import discriminationReducer from '../data/work-experience/work-experience-reducer';
 import { profilesReducer } from '../data/profiles/profiles-reducer';
+import discriminationReducer from '../data/discrimination/discrimination-reducer';
 
 const reducers = {
     account: accountReducer,
@@ -50,6 +50,7 @@ const reducers = {
     sexualOrientation: sexualOrientationReducer,
     socialBackground: socialBackgroundReducer,
     workExperience: workExperienceReducer,
+    discrimination: discriminationReducer,
 };
 
 const rootReducer = combineReducers(reducers);

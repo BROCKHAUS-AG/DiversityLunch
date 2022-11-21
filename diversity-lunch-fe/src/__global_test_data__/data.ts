@@ -19,6 +19,7 @@ export const socialBackgroundData = [
     { id: 547, descriptor: 'Akademikerfamilie' },
     { id: 234, descriptor: 'keine Angabe' },
 ];
+export const discriminationData = [{ id: 9, descriptor: 'keine Angabe' }, { id: 1337, descriptor: 'ja' }, { id: 1337, descriptor: 'nein' }];
 
 export const profileData: Profile[] = [{
     id: 4,
@@ -36,6 +37,7 @@ export const profileData: Profile[] = [{
     hobby: hobbyData[0],
     sexualOrientation: sexualOrientationData[0],
     socialBackground: socialBackgroundData[0],
+    discrimination: discriminationData[0],
 }];
 
 export const accountStandardData = {
@@ -82,6 +84,7 @@ export const profileList: Profile[] = [
         hobby: hobbyData[0],
         sexualOrientation: sexualOrientationData[0],
         socialBackground: socialBackgroundData[0],
+        discrimination: discriminationData[0],
     },
     {
         id: 2,
@@ -99,6 +102,7 @@ export const profileList: Profile[] = [
         hobby: hobbyData[0],
         sexualOrientation: sexualOrientationData[0],
         socialBackground: socialBackgroundData[0],
+        discrimination: discriminationData[0],
     },
     {
         id: 3,
@@ -116,5 +120,6 @@ export const profileList: Profile[] = [
         hobby: hobbyData[0],
         sexualOrientation: sexualOrientationData[0],
         socialBackground: socialBackgroundData[0],
+        discrimination: discriminationData[0],
     },
 ];

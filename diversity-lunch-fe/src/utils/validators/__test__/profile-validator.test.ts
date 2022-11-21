@@ -27,6 +27,7 @@ describe('isValidProfile', () => {
             workExperience: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             sexualOrientation: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             socialBackground: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
+            discrimination: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
         };
 
         const result: boolean = isValidProfile(profile);
@@ -57,6 +58,7 @@ describe('isUpdatedProfile', () => {
             workExperience: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             sexualOrientation: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             socialBackground: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
+            discrimination: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
         };
 
         const updatedProfile: Profile = {
@@ -75,6 +77,7 @@ describe('isUpdatedProfile', () => {
             workExperience: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             sexualOrientation: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             socialBackground: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
+            discrimination: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
         };
 
         const result : boolean = isUpdatedProfile(currentProfile, updatedProfile);
@@ -98,6 +101,7 @@ describe('isUpdatedProfile', () => {
             workExperience: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             sexualOrientation: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             socialBackground: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
+            discrimination: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
         };
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars

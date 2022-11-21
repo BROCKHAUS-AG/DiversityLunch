@@ -18,6 +18,7 @@ import { religionFetch } from '../../../data/religion/religion-fetch';
 import { workExperienceFetch } from '../../../data/work-experience/work-experience-fetch';
 import { sexualOrientationFetch } from '../../../data/sexual-orientation/sexual-orientation-fetch';
 import { socialBackgroundFetch } from '../../../data/social-background/social-background-fetch';
+import { discriminationFetch } from '../../../data/discrimination/discrimination-fetch';
 
 export type ProfileFormCallback = (formData: Partial<Profile>) => void;
 export type ProfileFormIsValidCallback = (formData: Partial<Profile>)=>boolean;
@@ -48,6 +49,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
     const workExperience = useSelector((store: AppStoreState) => store.workExperience);
     const sexualOrientation = useSelector((store: AppStoreState) => store.sexualOrientation);
     const socialBackground = useSelector((store: AppStoreState) => store.socialBackground);
+    const discrimination = useSelector((store: AppStoreState) => store.discrimination);
 
     useEffect(() => {
         // TODO: Handle network and http errors properly tgohlisch 17.11.2022
@@ -62,6 +64,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
         dispatch(workExperienceFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(sexualOrientationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(socialBackgroundFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(discriminationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
     }, []);
 
     function updateProfile<KEY extends keyof Profile>(key: KEY, value?: Profile[KEY]) {
@@ -172,6 +175,13 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 onChange={(value) => updateProfile('socialBackground', value)}
                 label="Soziale Herkunft"
                 currentValue={profile.socialBackground || undefined}
+            />
+            <Dropdown
+                options={discrimination.items}
+                placeholder="Wurdest du jemals aufgrund deiner sozialen Herkunft Vorurteilen ausgesetzt, herabwürdigend behandelt, benachteiligt oder ausgeschlossen?"
+                onChange={(value) => updateProfile('discrimination', value)}
+                label="Ausgrenzung?"
+                currentValue={profile.discrimination || undefined}
             />
             <Button
                 disabled={!isValid}
