@@ -104,6 +104,8 @@ public class MatchingUtils {
     }
 
     private int compareProfileAttr(List<Category> categories, String attr1, String attr2, Category category) {
+        if(attr1.equals("Keine Angabe") || attr2.equals("Keine Angabe"))
+            return 0;
         if (!attr1.equals(attr2)) {
             categories.add(category);
             return 3;

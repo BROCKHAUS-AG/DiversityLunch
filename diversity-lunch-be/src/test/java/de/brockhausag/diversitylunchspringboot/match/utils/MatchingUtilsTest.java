@@ -149,4 +149,28 @@ class MatchingUtilsTest {
 
     }
 
+    @Test
+    void testCurrentScoreProfileFor_KeineAngabe_InGender_ShouldHave_27_Points_With_different_profiles() {
+        profile3.getGender().setDescriptor("Keine Angabe");
+        profile1.getGender().setDescriptor("Männlich");
+        final int expectedScore = 27;
+        int actualScore;
+
+        actualScore = MatchingUtils.getCurrentScore(profile1, profile3).currentScore();
+
+        assertEquals(expectedScore, actualScore);
+    }
+
+    @Test
+    void testCurrentScoreProfileFor_KeineAngabe_InGender_ShouldHave_1_Points_With_equal_profiles() {
+        profile2.getGender().setDescriptor("Keine Angabe");
+        profile1.getGender().setDescriptor("Männlich");
+        final int expectedScore = 1;
+        int actualScore;
+
+        actualScore = MatchingUtils.getCurrentScore(profile1, profile2).currentScore();
+
+        assertEquals(expectedScore, actualScore);
+    }
+
 }
