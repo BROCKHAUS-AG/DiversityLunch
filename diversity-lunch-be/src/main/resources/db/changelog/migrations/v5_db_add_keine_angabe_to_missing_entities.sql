@@ -12,3 +12,5 @@ INSERT INTO religion_entity(descriptor) VALUES ('keine Angabe');
 INSERT INTO work_experience_entity(descriptor) VALUES ('keine Angabe');
 
 
+--changeset dfuerst:v5-2
+Update gender_entity SET descriptor='keine Angabe' WHERE descriptor='Keine Angabe';
