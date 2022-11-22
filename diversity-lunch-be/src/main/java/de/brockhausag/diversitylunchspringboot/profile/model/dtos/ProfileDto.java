@@ -47,5 +47,5 @@ public class ProfileDto {
     @NotNull
     private SocialBackgroundDto socialBackground;
     @NotNull
-    private SocialBackgroundDiscriminationDto discrimination;
+    private SocialBackgroundDiscriminationDto socialBackgroundDiscrimination;
 }

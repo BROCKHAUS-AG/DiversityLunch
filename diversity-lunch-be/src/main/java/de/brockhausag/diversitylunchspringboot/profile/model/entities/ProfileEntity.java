@@ -45,7 +45,7 @@ public class ProfileEntity {
     @ManyToOne
     private SocialBackgroundEntity socialBackground;
     @ManyToOne
-    private SocialBackgroundDiscriminationEntity discrimination;
+    private SocialBackgroundDiscriminationEntity socialBackgroundDiscrimination;
 
 
     @Override
