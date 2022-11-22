@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class HobbyControllerTest {
 
-    private final Long notExistingId = 666L;
+    private final Long notExistingId = 42L;
     @Mock
     private HobbyService hobbyService;
     @Mock
