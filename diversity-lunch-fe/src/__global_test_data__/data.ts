@@ -1,6 +1,7 @@
 import { Role } from '../model/Role';
 import { Account } from '../types/Account';
 import { Profile } from '../model/Profile';
+import { UserVoucher } from '../types/UserVoucher';
 
 export const categoryData = [{ id: 2, descriptor: 'Kreatives' }, { id: 1337, descriptor: 'Sport' }];
 export const countryData = [{ id: 9, descriptor: 'Bahamas' }, { id: 1337, descriptor: 'Deutschland' }];
@@ -44,12 +45,14 @@ export const accountStandardData = {
     id: 2,
     email: 'hans@brockhaus-ag.de',
     role: Role.STANDARD,
+    profileId: 1,
 };
 
 export const accountAdminData = {
     id: 2,
     email: 'hans@brockhaus-ag.de',
     role: Role.ADMIN,
+
 };
 export const accountAzureAdminData = {
     id: 2,
@@ -121,5 +124,16 @@ export const profileList: Profile[] = [
         sexualOrientation: sexualOrientationData[0],
         socialBackground: socialBackgroundData[0],
         socialBackgroundDiscrimination: socialBackgroundDiscriminationData[0],
+    },
+];
+export const userVoucherList : UserVoucher[] = [
+    {
+        voucherCode: 'abcdef',
+    },
+    {
+        voucherCode: 'abccba',
+    },
+    {
+        voucherCode: '1a2b3c',
     },
 ];

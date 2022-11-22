@@ -30,11 +30,11 @@ class MatchingUtilsTest {
     private ProfileEntity profile3;
     @BeforeEach
     void setup(){
-        ProfileTestdataFactory factory = new ProfileTestdataFactory();
-        profile1 = factory.buildEntity(1);
-        profile2 = factory.buildEntity(1);
+        ProfileTestdataFactory profileTestdataFactory = new ProfileTestdataFactory();
+        profile1 = profileTestdataFactory.buildEntity(1);
+        profile2 = profileTestdataFactory.buildEntity(1);
         profile2.setId(2L);
-        profile3 = factory.buildEntity(3);
+        profile3 = profileTestdataFactory.buildEntity(3);
     }
 
     @Test
@@ -64,9 +64,9 @@ class MatchingUtilsTest {
 
     @ParameterizedTest(name = "{index} => workExperience={0}, score={1}")
     @CsvSource({
-            "low experience, 1",
-            "mid experience, 2",
-            "high experience, 3"
+            "0-3 Jahre, 1",
+            "4-10 Jahre, 2",
+            "über 10 Jahre, 3"
     })
     void testCurrentScoreLowWorkExperienceProfile2(String workExperience, int score) {
         profile2.getWorkExperience().setDescriptor(workExperience);
@@ -78,9 +78,9 @@ class MatchingUtilsTest {
 
     @ParameterizedTest(name = "{index} => workExperience={0}, score={1}")
     @CsvSource({
-            "low experience, 1",
-            "mid experience, 2",
-            "high experience, 3"
+            "0-3 Jahre, 1",
+            "4-10 Jahre, 2",
+            "über 10 Jahre, 3"
     })
     void testCurrentScoreLowWorkExperienceProfile1(String workExperience, int score) {
         profile1.getWorkExperience().setDescriptor(workExperience);
@@ -92,13 +92,13 @@ class MatchingUtilsTest {
 
     @ParameterizedTest(name = "{index} => workExperience={0}, score={1}")
     @CsvSource({
-            "high experience, 2",
-            "mid experience, 1",
-            "low experience, 2"
+            "0-3 Jahre, 2",
+            "4-10 Jahre, 1",
+            "über 10 Jahre, 2"
     })
     void testCurrentScoreMidWorkExperienceProfile2(String workExperience, int score) {
         profile1.getWorkExperience().setDescriptor(workExperience);
-        profile2.getWorkExperience().setDescriptor("mid experience");
+        profile2.getWorkExperience().setDescriptor("4-10 Jahre");
         ScoreAndCategory expected = new ScoreAndCategory(score, Category.WORK_EXPERIENCE);
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
         assertEquals(score, actual.currentScore());
@@ -107,13 +107,13 @@ class MatchingUtilsTest {
 
     @ParameterizedTest(name = "{index} => workExperience={0}, score={1}")
     @CsvSource({
-            "high experience, 2",
-            "mid experience, 1",
-            "low experience, 2"
+            "0-3 Jahre, 2",
+            "4-10 Jahre, 1",
+            "über 10 Jahre, 2"
     })
     void testCurrentScoreMidWorkExperienceProfile21(String workExperience, int score) {
         profile2.getWorkExperience().setDescriptor(workExperience);
-        profile1.getWorkExperience().setDescriptor("mid experience");
+        profile1.getWorkExperience().setDescriptor("4-10 Jahre");
         ScoreAndCategory expected = new ScoreAndCategory(score, Category.WORK_EXPERIENCE);
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
         assertEquals(score, actual.currentScore());
@@ -147,6 +147,30 @@ class MatchingUtilsTest {
                 actual.category() == Category.GENDER
                 );
 
+    }
+
+    @Test
+    void testCurrentScoreProfileFor_KeineAngabe_InGender_ShouldHave_27_Points_With_different_profiles() {
+        profile3.getGender().setDescriptor("Keine Angabe");
+        profile1.getGender().setDescriptor("Männlich");
+        final int expectedScore = 27;
+        int actualScore;
+
+        actualScore = MatchingUtils.getCurrentScore(profile1, profile3).currentScore();
+
+        assertEquals(expectedScore, actualScore);
+    }
+
+    @Test
+    void testCurrentScoreProfileFor_KeineAngabe_InGender_ShouldHave_1_Points_With_equal_profiles() {
+        profile2.getGender().setDescriptor("Keine Angabe");
+        profile1.getGender().setDescriptor("Männlich");
+        final int expectedScore = 1;
+        int actualScore;
+
+        actualScore = MatchingUtils.getCurrentScore(profile1, profile2).currentScore();
+
+        assertEquals(expectedScore, actualScore);
     }
 
 }
