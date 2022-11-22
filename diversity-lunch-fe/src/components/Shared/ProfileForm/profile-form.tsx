@@ -30,6 +30,7 @@ import { Project } from '../../../model/Project';
 import { WorkExperience } from '../../../model/WorkExperience';
 import { SexualOrientation } from '../../../model/SexualOrientation';
 import { SocialBackground } from '../../../model/SocialBackground';
+import { Identifiable } from '../../../data/generic/Identifiable';
 
 export type ProfileFormCallback = (formData: Partial<Profile>) => void;
 export type ProfileFormIsValidCallback = (formData: Partial<Profile>)=>boolean;
@@ -76,11 +77,6 @@ export const ProfileForm: FC<ProfileFormProps> = ({
         dispatch(socialBackgroundFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
     }, []);
 
-    function sortOptions(state : IdentifiableState<any>) {
-        const copiedList = [...state.items];
-        copiedList.sort((a, b) => a.descriptor.localeCompare(b.descriptor));
-        return copiedList.sort((a, b) => (a.descriptor.toLowerCase() === 'keine angabe' ? -1 : b.descriptor === 'keine angabe' ? 1 : 0));
-    }
     function updateProfile<KEY extends keyof Profile>(key: KEY, value?: Profile[KEY]) {
         const updatedProfile = {
             ...profile,
@@ -96,6 +92,17 @@ export const ProfileForm: FC<ProfileFormProps> = ({
         formEvent.preventDefault();
         formEvent.stopPropagation();
         if (onSubmit) onSubmit(profile);
+    }
+
+    const DEFAULT_OPTION_DESCRIPTOR = 'keine angabe';
+    function sortOptions<T extends Identifiable>(state : IdentifiableState<T>) {
+        const copiedList = [...state.items];
+        copiedList.sort((a, b) => a.descriptor.localeCompare(b.descriptor));
+        return copiedList.sort((a, b) => {
+            if (a.descriptor.toLowerCase() === DEFAULT_OPTION_DESCRIPTOR) return -1;
+            if (b.descriptor.toLowerCase() === DEFAULT_OPTION_DESCRIPTOR) return 1;
+            return 0;
+        });
     }
 
     return (

@@ -5,12 +5,8 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { APP_STORE } from '../../../../store/Store';
 import { ProfileForm } from '../profile-form';
-import {
-    profileData,
-} from '../../../../__global_test_data__/data';
 import * as fetcher from '../../../../utils/fetch.utils';
 import { mockedFetchGetProfile } from '../../../../__global_test_data__/fetch';
-import { Profile } from '../../../../model/Profile';
 import { PROFILE_ENDPOINT } from '../../../../data/profile/profile.actions';
 
 describe('Profile form', () => {
@@ -157,7 +153,7 @@ describe('Profile form', () => {
 
         await waitFor(() => expect(submitCallback).toHaveBeenCalledTimes(1));
         expect(submitCallback.mock.calls[0][0].socialBackground.descriptor).toEqual(INSERTED_SOCIAL_BACKGROUND_DESCRIPTOR);
-    }); */
+    });
 
     it('should  fill in the initialProfile props values as input default values', async () => {
         jest.spyOn(fetcher, 'authenticatedFetchGet').mockImplementation(mockedFetchGetProfile);
@@ -205,5 +201,5 @@ describe('Profile form', () => {
 
         const button = await screen.findByText('Speichern');
         setTimeout(() => button.click(), 0);
-    });
+    }); */
 });
