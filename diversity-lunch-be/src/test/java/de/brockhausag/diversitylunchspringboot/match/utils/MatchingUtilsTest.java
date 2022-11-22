@@ -149,4 +149,14 @@ class MatchingUtilsTest {
 
     }
 
+    @Test
+    void testCurrentScoreProfileKeineAngaben() {
+        profile2.getGender().setDescriptor("Keine Angabe");
+        profile1.getGender().setDescriptor("Männlich");
+        ScoreAndCategory expected = new ScoreAndCategory(0, Category.GENDER);
+        ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
+        assertEquals(0, actual.currentScore());
+        assertEquals(expected.category(), actual.category());
+    }
+
 }
