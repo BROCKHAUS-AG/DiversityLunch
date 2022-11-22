@@ -20,7 +20,8 @@ export const socialBackgroundData = [
     { id: 547, descriptor: 'Akademikerfamilie' },
     { id: 234, descriptor: 'keine Angabe' },
 ];
-export const socialBackgroundDiscriminationData = [{ id: 9, descriptor: 'keine Angabe' }, { id: 1337, descriptor: 'ja' }, { id: 1337, descriptor: 'nein' }];
+export const socialBackgroundDiscriminationData = [{ id: 9, descriptor: 'keine Angabe' },
+    { id: 1337, descriptor: 'ja' }, { id: 1337, descriptor: 'nein' }];
 
 export const profileData: Profile[] = [{
     id: 4,
