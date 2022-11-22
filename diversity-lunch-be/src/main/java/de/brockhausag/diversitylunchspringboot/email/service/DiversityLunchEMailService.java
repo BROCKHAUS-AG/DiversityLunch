@@ -45,33 +45,33 @@ public class DiversityLunchEMailService {
         log.info("Sent mail");
     }
 
-    public String createEmailTemplateHTML(ProfileEntity recipient, ProfileEntity lunchPartner, MeetingEntity meeting) {
+    public String createEmailTemplateHTML(ProfileEntity recipient, ProfileEntity otherParticipant, MeetingEntity meeting) {
 
         int amountOfStoredVouchers = voucherService.getAmountOfStoredVouchers();
         if(amountOfStoredVouchers == 0){
             ClassPathResource resource = new ClassPathResource("MailTemplates/emailWithoutLink.html");
-            return createEmailTemplateNoLink(resource,recipient, lunchPartner, meeting);
+            return createEmailTemplateNoLink(resource,recipient, otherParticipant, meeting);
         }
         ClassPathResource resource = new ClassPathResource("MailTemplates/emailWithLink.html");
-        return createEmailTemplateWithLink(resource, recipient, lunchPartner, meeting);
+        return createEmailTemplateWithLink(resource, recipient, otherParticipant, meeting);
     }
 
-    public String createEmailTemplatePlain(ProfileEntity recipient, ProfileEntity lunchPartner, MeetingEntity meeting) {
+    public String createEmailTemplatePlain(ProfileEntity recipient, ProfileEntity otherParticipant, MeetingEntity meeting) {
         int amountOfStoredVouchers = voucherService.getAmountOfStoredVouchers();
         if(amountOfStoredVouchers == 0){
             ClassPathResource resource = new ClassPathResource("MailTemplates/emailWithoutLink.txt");
-            return createEmailTemplateNoLink(resource, recipient, lunchPartner, meeting);
+            return createEmailTemplateNoLink(resource, recipient, otherParticipant, meeting);
         }
         ClassPathResource resource = new ClassPathResource("MailTemplates/emailWithLink.txt");
-        return createEmailTemplateWithLink(resource,recipient, lunchPartner, meeting);
+        return createEmailTemplateWithLink(resource,recipient, otherParticipant, meeting);
     }
 
-    private String createEmailTemplateWithLink(ClassPathResource resource,ProfileEntity recipient, ProfileEntity lunchPartner, MeetingEntity meeting) {
+    private String createEmailTemplateWithLink(ClassPathResource resource,ProfileEntity recipient, ProfileEntity otherParticipant, MeetingEntity meeting) {
         try {
             String emailText =
                     new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), StandardCharset.UTF_8);
             String claimLink = BASE_URL + "/voucherClaim/" + meeting.getId();
-            return String.format(emailText, recipient.getName(), lunchPartner.getName(),
+            return String.format(emailText, recipient.getName(), otherParticipant.getName(),
                     meeting.getQuestion().getCategory().getKind(), meeting.getQuestion().getKind(), claimLink);
         } catch (Exception e) {
             log.error(String.format("Failed to read Resource: %s", resource.getPath()), e);
@@ -79,11 +79,11 @@ public class DiversityLunchEMailService {
         return "";
     }
 
-    private String createEmailTemplateNoLink(ClassPathResource resource,ProfileEntity recipient, ProfileEntity lunchPartner, MeetingEntity meeting) {
+    private String createEmailTemplateNoLink(ClassPathResource resource,ProfileEntity recipient, ProfileEntity otherParticipant, MeetingEntity meeting) {
         try {
             String emailText =
                     new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), StandardCharset.UTF_8);
-            return String.format(emailText, recipient.getName(), lunchPartner.getName(),
+            return String.format(emailText, recipient.getName(), otherParticipant.getName(),
                     meeting.getQuestion().getCategory().getKind(), meeting.getQuestion().getKind());
         } catch (Exception e) {
             log.error(String.format("Failed to read Resource: %s", resource.getPath()), e);
