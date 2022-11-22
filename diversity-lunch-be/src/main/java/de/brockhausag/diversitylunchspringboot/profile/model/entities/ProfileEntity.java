@@ -44,7 +44,8 @@ public class ProfileEntity {
     private SexualOrientationEntity sexualOrientation;
     @ManyToOne
     private SocialBackgroundEntity socialBackground;
-
+    @ManyToOne
+    private SocialBackgroundDiscriminationEntity discrimination;
 
 
     @Override
