@@ -110,13 +110,16 @@ public class MatchingService {
         meetingEntities.forEach(meetingEntity -> {
             log.debug("Sending Email for Meeting: {} - Time: {}", meetingEntity.getId(), modified);
             try {
-                ProfileEntity[] attendees = {meetingEntity.getProposer(), meetingEntity.getPartner()};
-                for (ProfileEntity attendee: attendees) {
-                    eMailService.sendEmail(attendee.getEmail(),
+                    ProfileEntity proposer = meetingEntity.getProposer();
+                    ProfileEntity partner = meetingEntity.getPartner();
+                    eMailService.sendEmail(proposer.getEmail(),
                             "Dein Diversity-Mittagessen",
-                            eMailService.createEmailTemplateHTML(attendees, meetingEntity),
-                            eMailService.createEmailTemplatePlain(attendees, meetingEntity));
-                }
+                            eMailService.createEmailTemplateHTML(proposer, partner, meetingEntity),
+                            eMailService.createEmailTemplatePlain(proposer, partner, meetingEntity));
+                    eMailService.sendEmail(partner.getEmail(),
+                        "Dein Diversity-Mittagessen",
+                        eMailService.createEmailTemplateHTML(partner, proposer, meetingEntity),
+                        eMailService.createEmailTemplatePlain(partner, proposer, meetingEntity));
             } catch (Exception e) {
                 log.error("Something went Wrong while Sending Emails", e);
             }
