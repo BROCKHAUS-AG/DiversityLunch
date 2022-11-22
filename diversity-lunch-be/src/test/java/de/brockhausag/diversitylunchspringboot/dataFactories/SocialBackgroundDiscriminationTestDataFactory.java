@@ -6,7 +6,7 @@ import de.brockhausag.diversitylunchspringboot.profile.model.entities.SocialBack
 public class SocialBackgroundDiscriminationTestDataFactory {
     private static final  int numberOfCompleteSets = 2;
     private static final Long[] ids = {666L, 1L, 2L};
-    private static final String[] descriptors = {"Akademikerfamilie", "Nichtakademisches Elternhaus", "Keine Angabe"};
+    private static final String[] descriptors = {"Ja", "Nein", "Keine Angabe"};
 
 
     public SocialBackgroundDiscriminationDto buildDto(int setNumber){

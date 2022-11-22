@@ -31,4 +31,4 @@ INSERT INTO sexual_orientation_entity(descriptor) VALUES
                                                       ('weitere Orientierungen'),
                                                       ('keine Angabe');
 INSERT INTO social_background_entity(descriptor) VALUES ('Akademikerfamilie'), ('Nichtakademisches Elternhaus'), ('keine Angabe');
-INSERT INTO discrimination_entity(descriptor) VALUES ('Ja'), ('Nein'), ('keine Angabe');
+INSERT INTO social_background_discrimination_entity(descriptor) VALUES ('Ja'), ('Nein'), ('keine Angabe');
