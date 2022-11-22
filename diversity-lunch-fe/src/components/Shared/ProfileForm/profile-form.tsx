@@ -32,6 +32,7 @@ import { WorkExperience } from '../../../model/WorkExperience';
 import { SexualOrientation } from '../../../model/SexualOrientation';
 import { SocialBackground } from '../../../model/SocialBackground';
 import { Identifiable } from '../../../data/generic/Identifiable';
+import { SocialBackgroundDiscrimination } from '../../../model/SocialBackgroundDiscrimination';
 
 export type ProfileFormCallback = (formData: Partial<Profile>) => void;
 export type ProfileFormIsValidCallback = (formData: Partial<Profile>)=>boolean;
@@ -62,7 +63,9 @@ export const ProfileForm: FC<ProfileFormProps> = ({
     const workExperience : IdentifiableState<WorkExperience> = useSelector((store: AppStoreState) => store.workExperience);
     const sexualOrientation : IdentifiableState<SexualOrientation> = useSelector((store: AppStoreState) => store.sexualOrientation);
     const socialBackground : IdentifiableState<SocialBackground> = useSelector((store: AppStoreState) => store.socialBackground);
-    const socialBackgroundDiscrimination : IdentifiableState<socialBackgroundDiscrimination> = useSelector((store: AppStoreState) => store.socialBackgroundDiscrimination);
+    const socialBackgroundDiscrimination : IdentifiableState<SocialBackgroundDiscrimination> = useSelector(
+        (store: AppStoreState) => store.socialBackgroundDiscrimination,
+    );
 
     useEffect(() => {
         // TODO: Handle network and http errors properly tgohlisch 17.11.2022
@@ -178,7 +181,6 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 label="Bildungsweg"
                 currentValue={profile.education || undefined}
             />
-
             <Dropdown
                 options={sortOptions(diets)}
                 placeholder="Wie ernährst du dich?"
@@ -202,7 +204,8 @@ export const ProfileForm: FC<ProfileFormProps> = ({
             />
             <Dropdown
                 options={sortOptions(socialBackgroundDiscrimination)}
-                placeholder="Wurdest du jemals aufgrund deiner sozialen Herkunft Vorurteilen ausgesetzt, herabwürdigend behandelt, benachteiligt oder ausgeschlossen?"
+                placeholder="Wurdest du jemals aufgrund deiner sozialen Herkunft Vorurteilen ausgesetzt,
+                herabwürdigend behandelt, benachteiligt oder ausgeschlossen?"
                 onChange={(value) => updateProfile('socialBackgroundDiscrimination', value)}
                 label="Ausgrenzung?"
                 currentValue={profile.socialBackgroundDiscrimination || undefined}
