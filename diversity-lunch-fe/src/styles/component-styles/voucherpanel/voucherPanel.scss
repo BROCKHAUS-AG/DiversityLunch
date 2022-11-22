@@ -36,7 +36,7 @@
 
 .ShowVoucher-code-text{
   margin: 10%;
-  margin-bottom: 3%;
+  margin-bottom: 5%;
   font-size: 2.2em;
   height: 60%;
 }
@@ -46,3 +46,25 @@
   padding: 1em;
 }
 
+.lieferando-text {
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.lieferando-link:link {
+  color: #ff8000;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+.lieferando-link:visited {
+  color: #ff8000;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+.lieferando-link:hover {
+  color: #ff8000;
+  background-color: transparent;
+  text-decoration: underline;
+}

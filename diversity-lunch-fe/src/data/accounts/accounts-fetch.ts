@@ -27,7 +27,7 @@ export function revokeAdminRole(accountId: number, fetchCallbacks: FetchCallback
         const onSuccess = async (response: Response) => {
             try {
                 const result : Account[] = await response.json();
-                dispatch(accountsAction.update(result));
+                dispatch(accountsAction.update([result]));
                 dispatch(accountsAction.initFetch(undefined));
             } catch {
                 fetchCallbacks.onNetworkError(new Error(`Parse failed: ${response.url} responded with a non-json body`));

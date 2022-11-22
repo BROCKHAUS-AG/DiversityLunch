@@ -1,8 +1,9 @@
 import React from 'react';
 import '../../styles/component-styles/voucherList/voucherList.scss';
+import { AdminVoucher } from '../../types/AdminVoucher';
 
 interface voucherListProps {
-    vouchers: []
+    vouchers: AdminVoucher []
 }
 
 export const VoucherList: ({ vouchers }: voucherListProps) => any = ({ vouchers }:voucherListProps) => {

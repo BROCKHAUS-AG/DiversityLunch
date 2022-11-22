@@ -33,9 +33,8 @@ export const DateOverview = (props: DateOverviewProps) => {
             </div>
             <div className="DateOverview-info-text-container">
                 <p className="DateOverview-info-text">
-                    Vielen Dank! Die Informationen wurden erfolgreich an uns übermittelt und wir arbeiten
-                    daran, dir
-                    einen Partner für dein Mittagessen zuzuordnen.
+                    Vielen Dank! Die Informationen wurden erfolgreich an uns übermittelt und wir arbeiten daran,
+                    dir eine*n Partner*in für dein Mittagessen zuzuordnen.
                 </p>
             </div>
 
