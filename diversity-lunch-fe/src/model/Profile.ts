@@ -9,7 +9,7 @@ import { WorkExperience } from './WorkExperience';
 import { Religion } from './Religion';
 import { SexualOrientation } from './SexualOrientation';
 import { SocialBackground } from './SocialBackground';
-import { Discrimination } from './Discrimination';
+import { SocialBackgroundDiscrimination } from './SocialBackgroundDiscrimination';
 
 export interface Profile {
     id: number,
@@ -27,5 +27,5 @@ export interface Profile {
     workExperience: WorkExperience,
     sexualOrientation: SexualOrientation,
     socialBackground: SocialBackground,
-    discrimination: Discrimination
+    socialBackgroundDiscrimination: SocialBackgroundDiscrimination
 }

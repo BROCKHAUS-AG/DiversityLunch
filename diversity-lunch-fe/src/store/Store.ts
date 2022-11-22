@@ -24,7 +24,8 @@ import sexualOrientationReducer from '../data/sexual-orientation/sexual-orientat
 import socialBackgroundReducer from '../data/social-background/social-background-reducer';
 import workExperienceReducer from '../data/work-experience/work-experience-reducer';
 import { profilesReducer } from '../data/profiles/profiles-reducer';
-import discriminationReducer from '../data/discrimination/discrimination-reducer';
+import socialBackgroundDiscriminationReducer
+    from '../data/social-background-discrimination/social-background-discrimination-reducer';
 
 const reducers = {
     account: accountReducer,
@@ -50,7 +51,7 @@ const reducers = {
     sexualOrientation: sexualOrientationReducer,
     socialBackground: socialBackgroundReducer,
     workExperience: workExperienceReducer,
-    discrimination: discriminationReducer,
+    socialBackgroundDiscrimination: socialBackgroundDiscriminationReducer,
 };
 
 const rootReducer = combineReducers(reducers);

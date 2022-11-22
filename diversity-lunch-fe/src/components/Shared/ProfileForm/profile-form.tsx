@@ -18,7 +18,7 @@ import { religionFetch } from '../../../data/religion/religion-fetch';
 import { workExperienceFetch } from '../../../data/work-experience/work-experience-fetch';
 import { sexualOrientationFetch } from '../../../data/sexual-orientation/sexual-orientation-fetch';
 import { socialBackgroundFetch } from '../../../data/social-background/social-background-fetch';
-import { discriminationFetch } from '../../../data/discrimination/discrimination-fetch';
+import { socialBackgroundDiscriminationFetch } from '../../../data/social-background-discrimination/social-background-discrimination-fetch';
 
 export type ProfileFormCallback = (formData: Partial<Profile>) => void;
 export type ProfileFormIsValidCallback = (formData: Partial<Profile>)=>boolean;
@@ -49,7 +49,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
     const workExperience = useSelector((store: AppStoreState) => store.workExperience);
     const sexualOrientation = useSelector((store: AppStoreState) => store.sexualOrientation);
     const socialBackground = useSelector((store: AppStoreState) => store.socialBackground);
-    const discrimination = useSelector((store: AppStoreState) => store.discrimination);
+    const socialBackgroundDiscrimination = useSelector((store: AppStoreState) => store.socialBackgroundDiscrimination);
 
     useEffect(() => {
         // TODO: Handle network and http errors properly tgohlisch 17.11.2022
@@ -64,7 +64,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
         dispatch(workExperienceFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(sexualOrientationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(socialBackgroundFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
-        dispatch(discriminationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(socialBackgroundDiscriminationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
     }, []);
 
     function updateProfile<KEY extends keyof Profile>(key: KEY, value?: Profile[KEY]) {
@@ -177,11 +177,11 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 currentValue={profile.socialBackground || undefined}
             />
             <Dropdown
-                options={discrimination.items}
+                options={socialBackgroundDiscrimination.items}
                 placeholder="Wurdest du jemals aufgrund deiner sozialen Herkunft Vorurteilen ausgesetzt, herabwürdigend behandelt, benachteiligt oder ausgeschlossen?"
-                onChange={(value) => updateProfile('discrimination', value)}
+                onChange={(value) => updateProfile('socialBackgroundDiscrimination', value)}
                 label="Ausgrenzung?"
-                currentValue={profile.discrimination || undefined}
+                currentValue={profile.socialBackgroundDiscrimination || undefined}
             />
             <Button
                 disabled={!isValid}
