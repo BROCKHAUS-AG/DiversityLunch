@@ -5,7 +5,6 @@ import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposa
 import de.brockhausag.diversitylunchspringboot.match.service.MatchingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -17,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Configuration
 @EnableScheduling
-@Profile("!Test")
 public class SchedulingConfig {
 
     private final MatchingService matchingService;
