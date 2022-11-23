@@ -17,25 +17,18 @@ import java.security.NoSuchAlgorithmException;
 public class ProfileTestdataFactory {
 
     private final CountryService countryService;
-
     private final DietService dietService;
-
     private final EducationService educationService;
-
     private final SexualOrientationService sexualOrientationService;
-
     private final GenderService genderService;
-
     private final HobbyService hobbyService;
-
     private final LanguageService languageService;
-
     private final ProjectService projectService;
-
     private final ReligionService religionService;
-
     private final WorkExperienceService workExperienceService;
     private final SocialBackgroundService socialBackgroundService;
+    private final SocialBackgroundDiscriminationService socialBackgroundDiscriminationService;
+
 
     public ProfileEntity createNewMaxProfile() {
         final Long id = 1L;
@@ -53,6 +46,7 @@ public class ProfileTestdataFactory {
         final HobbyEntity hobby = hobbyService.getAllEntities().get(0);
         final SexualOrientationEntity sexualOrientation = sexualOrientationService.getAllEntities().get(0);
         final SocialBackgroundEntity socialBackground = socialBackgroundService.getAllEntities().get(0);
+        final SocialBackgroundDiscriminationEntity socialBackgroundDiscrimination = socialBackgroundDiscriminationService.getAllEntities().get(0);
 
         return new ProfileEntity(id,
                 name,
@@ -68,7 +62,8 @@ public class ProfileTestdataFactory {
                 workExperience,
                 hobby,
                 sexualOrientation,
-                socialBackground);
+                socialBackground,
+                socialBackgroundDiscrimination);
     }
 
     public ProfileEntity createNewErikaProfile() {
@@ -87,6 +82,7 @@ public class ProfileTestdataFactory {
         final HobbyEntity hobby = hobbyService.getAllEntities().get(1);
         final SexualOrientationEntity sexualOrientation = sexualOrientationService.getAllEntities().get(1);
         final SocialBackgroundEntity socialBackground = socialBackgroundService.getAllEntities().get(1);
+        final SocialBackgroundDiscriminationEntity socialBackgroundDiscrimination = socialBackgroundDiscriminationService.getAllEntities().get(1);
 
         return new ProfileEntity(id,
                 name,
@@ -102,7 +98,8 @@ public class ProfileTestdataFactory {
                 workExperience,
                 hobby,
                 sexualOrientation,
-                socialBackground);
+                socialBackground,
+                socialBackgroundDiscrimination);
     }
 
     @SneakyThrows

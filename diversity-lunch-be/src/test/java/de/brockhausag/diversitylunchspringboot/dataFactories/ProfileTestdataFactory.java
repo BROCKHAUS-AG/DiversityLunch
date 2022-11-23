@@ -23,6 +23,7 @@ public class ProfileTestdataFactory {
     private final HobbyTestDataFactory hobbyFactory = new HobbyTestDataFactory();
     private final SexualOrientationTestDataFactory sexualOrientationFactory = new SexualOrientationTestDataFactory();
     private final SocialBackgroundTestDataFactory socialBackgroundFactory = new SocialBackgroundTestDataFactory();
+    private final SocialBackgroundDiscriminationTestDataFactory socialBackgroundDiscriminationFactory = new SocialBackgroundDiscriminationTestDataFactory();
 
     public ProfileEntity buildEntity(int setNumber) {
         if ((setNumber >= 1) && (setNumber <= numberOfCompleteSets)){
@@ -38,7 +39,8 @@ public class ProfileTestdataFactory {
                     workExperienceFactory.buildEntity(setNumber),
                     hobbyFactory.buildEntity(setNumber),
                     sexualOrientationFactory.buildEntity(setNumber),
-                    socialBackgroundFactory.buildEntity(setNumber));
+                    socialBackgroundFactory.buildEntity(setNumber),
+                    socialBackgroundDiscriminationFactory.buildEntity(setNumber));
         }
         return new ProfileEntity(
                 ids[1], names[1], emails[1], birthYears[1],
@@ -52,7 +54,8 @@ public class ProfileTestdataFactory {
                 workExperienceFactory.buildEntity(1),
                 hobbyFactory.buildEntity(1),
                 sexualOrientationFactory.buildEntity(1),
-                socialBackgroundFactory.buildEntity(1));
+                socialBackgroundFactory.buildEntity(1),
+                socialBackgroundDiscriminationFactory.buildEntity(1));
     }
 
     public ProfileDto buildDto(int setNumber) {
@@ -69,7 +72,8 @@ public class ProfileTestdataFactory {
                     workExperienceFactory.buildDto(setNumber),
                     hobbyFactory.buildDto(setNumber),
                     sexualOrientationFactory.buildDto(setNumber),
-                    socialBackgroundFactory.buildDto(setNumber));
+                    socialBackgroundFactory.buildDto(setNumber),
+                    socialBackgroundDiscriminationFactory.buildDto(setNumber));
         }
         return new ProfileDto(
                 ids[1], names[1], emails[1], birthYears[1],
@@ -83,6 +87,7 @@ public class ProfileTestdataFactory {
                 workExperienceFactory.buildDto(1),
                 hobbyFactory.buildDto(1),
                 sexualOrientationFactory.buildDto(1),
-                socialBackgroundFactory.buildDto(setNumber));
+                socialBackgroundFactory.buildDto(1),
+                socialBackgroundDiscriminationFactory.buildDto(1));
     }
 }

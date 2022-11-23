@@ -16,6 +16,7 @@ export function isValidProfile(profile: Partial<Profile>): boolean {
         && profile.workExperience
         && profile.sexualOrientation
         && profile.socialBackground
+        && profile.socialBackgroundDiscrimination
     );
 }
 
@@ -34,7 +35,8 @@ export function partialProfileToProfile(profile: Partial<Profile>): Profile | un
         && profile.religion
         && profile.workExperience
         && profile.sexualOrientation
-        && profile.socialBackground) {
+        && profile.socialBackground
+        && profile.socialBackgroundDiscrimination) {
         return profile as Profile;
     }
     return undefined;
@@ -52,5 +54,6 @@ export function isUpdatedProfile(profile: Profile, updatedProfile: Profile): boo
         || profile.religion.id !== updatedProfile.religion.id
         || profile.workExperience.id !== updatedProfile.workExperience.id
         || profile.sexualOrientation.id !== updatedProfile.sexualOrientation.id
-        || profile.socialBackground.id !== updatedProfile.socialBackground.id);
+        || profile.socialBackground.id !== updatedProfile.socialBackground.id
+        || profile.socialBackgroundDiscrimination.id !== updatedProfile.socialBackgroundDiscrimination.id);
 }
