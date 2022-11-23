@@ -72,7 +72,16 @@ public enum Question {
     DIET2("Was esst ihr während eures Gesprächs in der Mittagspause? Wieso ist die Wahl darauf gefallen?",
             Category.DIET),
     DIET3("Was ist euer Lieblingsessen?", Category.DIET),
-    DIET4("Team Frisch oder Team Tiefkühlpizza?", Category.DIET);
+    DIET4("Team Frisch oder Team Tiefkühlpizza?", Category.DIET),
+    SOCIAL_BACKGROUND1("Welche sozialen Ungleichheiten bestehen eurer Meinung nach in der schulischen Bildung?",Category.SOCIAL_BACKGROUND),
+    SOCIAL_BACKGROUND2("Wo gibt es überall soziale Ungleichheit?",Category.SOCIAL_BACKGROUND),
+    SOCIAL_BACKGROUND3("Wie waren eure Werdegänge? Unterhaltet euch darüber, welchen Einfluss die Familie und der soziale Status auf eure Bildungschancen hatten.",Category.SOCIAL_BACKGROUND),
+    SOCIAL_BACKGROUND_DISCRIMINATION1("Haben alle Menschen die gleichen Chancen, wenn sie auf die Welt kommen?",Category.SOCIAL_BACKGROUND_DISCRIMINATION),
+    SOCIAL_BACKGROUND_DISCRIMINATION2("Habt ihr schon einmal Feindseligkeiten aufgrund sozialer Herkunft beobachtet oder erlebt?",Category.SOCIAL_BACKGROUND_DISCRIMINATION),
+    SOCIAL_BACKGROUND_DISCRIMINATION3("Welche Werte und welche Haltungen wurden euch durch eure soziale Herkunft vermittelt?",Category.SOCIAL_BACKGROUND_DISCRIMINATION),
+    SEXUAL_ORIENTATION1("Was ist für dich \"Normal\" sexuell?",Category.SEXUAL_ORIENTATION),
+    SEXUAL_ORIENTATION2("Welche Gemeinsamkeiten könnt ihr in euren Beziehungen feststellen?",Category.SEXUAL_ORIENTATION),
+    SEXUAL_ORIENTATION3("Wie könnte man dich nach deiner sexuellen Orientierung fragen?",Category.SEXUAL_ORIENTATION);
 
     private final String kind;
     private final Category category;

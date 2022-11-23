@@ -2,6 +2,7 @@ package de.brockhausag.diversitylunchspringboot.match.utils;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
+import de.brockhausag.diversitylunchspringboot.meeting.model.Question;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -172,5 +175,15 @@ class MatchingUtilsTest {
 
         assertEquals(expectedScore, actualScore);
     }
+
+    @Test
+    void getRandomQuestionFromCategory_EveryCategory_HasAtleast_One_Question() {
+        for (Category c: Category.values()) {
+            List<Question> questionList = Question.getAllQuestionsWithCategory(c);
+
+            assertTrue(questionList.size() > 0);
+        }
+    }
+
 
 }
