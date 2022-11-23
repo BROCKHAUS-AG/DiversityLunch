@@ -29,7 +29,7 @@ export const UserVoucherList = () => {
     return (
         <div className="ShowVouchers">
             <CloseSiteContainer />
-            <DiversityIconContainer title="GUTSCHEIN-ÜBERSICHT" />
+            <DiversityIconContainer title="GUTSCHEINE" />
             <p className="ShowVoucher-text">Hier findest du deine persönlichen Gutscheine</p>
             <ul className="ShowVoucherList">
                 {voucherList.map((voucher: UserVoucher) => (
