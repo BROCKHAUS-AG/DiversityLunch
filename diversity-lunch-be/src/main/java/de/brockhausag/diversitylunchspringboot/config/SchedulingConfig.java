@@ -23,8 +23,8 @@ public class SchedulingConfig {
     private final MatchingService matchingService;
     private final MeetingProposalRepository meetingProposalRepository;
 
-    // NOTE: Cronjob naming scheme: https://crontab.cronhub.io
-    @Scheduled(cron = "0 2 * * *")
+
+    @Scheduled(cron = "0 0 2 * * *")
     public void scheduleMatching() {
         LocalDate date = LocalDate.now();
         LocalDateTime dateTime = date.atTime(0, 0);
