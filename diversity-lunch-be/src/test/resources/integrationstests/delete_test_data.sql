@@ -14,5 +14,6 @@ DELETE FROM religion_entity;
 DELETE FROM sexual_orientation_entity;
 DELETE FROM work_experience_entity;
 DELETE FROM sexual_orientation_entity;
+DELETE FROM social_background_entity;
 DELETE FROM social_background_discrimination_entity;
 
