@@ -10,7 +10,10 @@ public enum Category {
     HOBBY("Hobby"),
     EDUCATION("Bildungsweg"),
     WORK_EXPERIENCE("Berufserfahrung"),
-    DIET("Ernährung");
+    DIET("Ernährung"),
+    SOCIAL_BACKGROUND("Soziale Herkunft"),
+    SOCIAL_BACKGROUND_DISCRIMINATION("Diskriminierung aufgrund sozialer Herkunft"),
+    SEXUAL_ORIENTATION("Sexuelle Orientierung");
 
     private final String kind;
 
