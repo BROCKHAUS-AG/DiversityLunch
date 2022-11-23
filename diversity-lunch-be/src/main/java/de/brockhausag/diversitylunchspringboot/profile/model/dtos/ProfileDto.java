@@ -46,4 +46,6 @@ public class ProfileDto {
     private SexualOrientationDto sexualOrientation;
     @NotNull
     private SocialBackgroundDto socialBackground;
+    @NotNull
+    private SocialBackgroundDiscriminationDto socialBackgroundDiscrimination;
 }

@@ -18,7 +18,7 @@ public class LanguageDto implements BaseDto {
     private Long id;
 
     @Schema(description = "an official language of the planet earth", example = "english")
-    @Size(min=2, max=50, message = "diet descriptor must be between 2 and 50 chars long")
+    @Size(min=2, max=50, message = "language descriptor must be between 2 and 50 chars long")
     @NotNull
     @NotBlank
     private String descriptor;
