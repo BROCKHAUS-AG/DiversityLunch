@@ -20,6 +20,8 @@ public class SchedulingConfig {
 
     private final MatchingService matchingService;
     private final MeetingProposalRepository meetingProposalRepository;
+    
+    //Note: Cronjob naming sheme https://spring.io/blog/2020/11/10/new-in-spring-5-3-improved-cron-expressions
 
 
     @Scheduled(cron = "0 0 2 * * *")
