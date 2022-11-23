@@ -45,7 +45,7 @@ class AccountControllerTest {
     }
 
     @Test
-    void testGetAccount_withExistentAccount_expectedGetAccountDtoWithStatusOk() {
+    void testGetAccount_withExistingAccount_expectedGetAccountDtoWithStatusOk() {
 
         AccountDto expectedAccountDto = accountTestDataFactory.buildAccountDto();
         AccountEntity accountEntity = accountTestDataFactory.buildAccountWithoutProfile();
@@ -53,9 +53,9 @@ class AccountControllerTest {
         when(accountService.getOrCreateAccount("irgendwas")).thenReturn(accountEntity);
         when(accountMapper.mapEntityToDto(accountEntity)).thenReturn(expectedAccountDto);
 
-        when(principal.getAttribute("unique_name")).thenReturn("irgendwas");
+        when(principal.getAttribute("oid")).thenReturn("irgendwas");
 
-        ResponseEntity<AccountDto> response = accountController.getAccount(principal);
+        ResponseEntity<?> response = accountController.getOrCreateAccount(principal);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(expectedAccountDto, response.getBody());
@@ -63,17 +63,17 @@ class AccountControllerTest {
 
     @Test
     void testGetAccount_withInvalidPrincipal_expectBadRequest() {
-        when(principal.getAttribute("unique_name")).thenReturn(null);
+        when(principal.getAttribute("oid")).thenReturn(null);
 
-        ResponseEntity<AccountDto> response = accountController.getAccount(principal);
+        ResponseEntity<?> response = accountController.getOrCreateAccount(principal);
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
     @Test
     void testGetAccount_withNoPrincipal_expectInternalServerError() {
-        ResponseEntity<AccountDto> response = accountController.getAccount(null);
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        ResponseEntity<?> response = accountController.getOrCreateAccount(null);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
     @Test

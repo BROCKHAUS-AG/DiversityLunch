@@ -20,17 +20,19 @@ export const OptionsList = <T extends Identifiable>(
     const dispatch = useDispatch();
 
     const removeProject = (object: T) => {
-        dispatch(fetch.removeById(object.id));
+        dispatch(fetch.removeById(object.id, { onNetworkError: console.error, statusCodeHandlers: {} }));
+        // TODO: Handle network and http errors properly tgohlisch 17.11.2022
     };
     const updateProject = (object: T) => {
-        dispatch(fetch.put(object));
+        dispatch(fetch.put(object, { onNetworkError: console.error, statusCodeHandlers: {} }));
+        // TODO: Handle network and http errors properly tgohlisch 17.11.2022);
     };
 
     const addProject = (descriptor: string) => {
         dispatch(fetch.post({
             id: 0,
             descriptor,
-        } as T));
+        } as T, { onNetworkError: console.error, statusCodeHandlers: {} })); // TODO: Handle network and http errors properly tgohlisch 17.11.2022;
         setInputText('');
     };
 

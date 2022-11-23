@@ -16,6 +16,7 @@ import {
     profileList,
     projectData,
     religionData,
+    userVoucherList,
     workExperienceData,
 } from './data';
 import { COUNTRY_ENDPOINT } from '../data/country/fetch-country';
@@ -29,11 +30,12 @@ import { WORK_EXPERIENCE_ENDPOINT } from '../data/work-experience/work-experienc
 import { HOBBY_ENDPOINT } from '../data/hobby/fetch-hobby';
 import { PROFILE_ENDPOINT } from '../data/profile/profile.actions';
 import { Role } from '../model/Role';
-import { globalErrorSlice } from '../data/error/global-error-slice';
 import { Account } from '../types/Account';
 import { accountsAction } from '../data/accounts/accounts-reducer';
-import { Profile } from '../types/Profile';
 import { profilesAction } from '../data/profiles/profiles-reducer';
+import { Profile } from '../model/Profile';
+import { handleFetchResponse } from '../data/handleFetchResponse';
+import { FetchCallbacks } from '../data/generic/FetchCallbacks';
 
 export const mockedFetchGetProfile = async (url: string) => {
     if (url.includes(CATEGORY_ENDPOINT)) {
@@ -78,7 +80,7 @@ export const mockedFetchGetAccount = (role: Role) => async (url: string) => {
     }
     return new Response('');
 };
-
+export const mockedFetchGetUsableAccount = () => async () => new Response(JSON.stringify(accountList[0]));
 export const mockedFetchGetAccountByRole = async (role: Role) => {
     if (role === Role.STANDARD) {
         return new Response(JSON.stringify(accountStandardData));
@@ -91,69 +93,73 @@ export const mockedFetchGetAccountByRole = async (role: Role) => {
     }
     return new Response('');
 };
-export const mockedFetchGetAccounts = () => async (dispatch: Dispatch) => {
-    try {
-        const response = new Response(JSON.stringify(accountList), { status: 200, statusText: 'ok' });
 
-        if (!response.ok) {
-            dispatch(globalErrorSlice.httpError({ statusCode: response.status }));
-        } else {
+export const mockedFetchGetAccounts = (callbacks: FetchCallbacks) => async (dispatch: Dispatch) => {
+    const onGoingFetch = Promise.resolve(new Response(JSON.stringify(accountList), { status: 200, statusText: 'ok' }));
+    const onSuccess = async (response: Response) => {
+        try {
             const result: Account[] = await response.json();
-
             dispatch(accountsAction.update(result));
             dispatch(accountsAction.initFetch(undefined));
+        } catch {
+            callbacks.onNetworkError(new Error("Couldn't parse json"));
         }
-    } catch (error) {
-        dispatch(globalErrorSlice.error(undefined));
-    }
+    };
+    handleFetchResponse(onGoingFetch, onSuccess, callbacks);
 };
-export const mockedFetchGetProfiles = () => async (dispatch: Dispatch) => {
-    try {
-        const response = new Response(JSON.stringify(profileList), { status: 200, statusText: 'ok' });
 
-        if (!response.ok) {
-            dispatch(globalErrorSlice.httpError({ statusCode: response.status }));
-        } else {
+export const mockedFetchGetProfiles = (callbacks: FetchCallbacks) => async (dispatch: Dispatch) => {
+    const onGoingFetch = Promise.resolve(new Response(JSON.stringify(profileList), { status: 200, statusText: 'ok' }));
+    const onSuccess = async (response: Response) => {
+        try {
             const result : Profile[] = await response.json();
-
             dispatch(profilesAction.update(result));
             dispatch(profilesAction.initFetch(undefined));
+        } catch {
+            callbacks.onNetworkError(new Error("Couldn't parse json"));
         }
-    } catch (error) {
-        dispatch(globalErrorSlice.error(undefined));
-    }
+    };
+    handleFetchResponse(onGoingFetch, onSuccess, callbacks);
 };
-export const mockedRevokeAdminRole = (accountId: number) => async (dispatch: Dispatch) => {
-    try {
-        const tempAccount = accountList.find((account) => account.id === accountId);
-        if (tempAccount !== undefined) {
-            tempAccount.role = Role.STANDARD;
+
+export const mockedRevokeAdminRole = (accountId: number, callbacks: FetchCallbacks) => async (dispatch: Dispatch) => {
+    const tempAccount = accountList.find((account) => account.id === accountId);
+    if (tempAccount !== undefined) {
+        tempAccount.role = Role.STANDARD;
+    }
+    const onGoingFetch = Promise.resolve(new Response(JSON.stringify(tempAccount), { status: 200, statusText: 'ok' }));
+    const onSuccess = async (response: Response) => {
+        try {
+            const result: Account = await response.json();
+            dispatch(accountsAction.update([result]));
+        } catch {
+            callbacks.onNetworkError(new Error("Couldn't parse json"));
         }
-        const response = new Response(JSON.stringify(tempAccount), { status: 200, statusText: 'ok' });
-        if (!response.ok) {
-            dispatch(globalErrorSlice.httpError({ statusCode: response.status }));
-        } else {
+    };
+    handleFetchResponse(onGoingFetch, onSuccess, callbacks);
+};
+
+export const mockedAssignAdminRole = (accountId: number, callbacks: FetchCallbacks) => async (dispatch: Dispatch) => {
+    const tempAccount = accountList.find((account) => account.id === accountId);
+    if (tempAccount !== undefined) {
+        tempAccount.role = Role.ADMIN;
+    }
+    const onGoingFetch = Promise.resolve(new Response(JSON.stringify(tempAccount), { status: 200, statusText: 'ok' }));
+    const onSuccess = async (response: Response) => {
+        try {
             const result : Account = await response.json();
             dispatch(accountsAction.update([result]));
+        } catch {
+            callbacks.onNetworkError(new Error("Couldn't parse json"));
         }
-    } catch (error) {
-        dispatch(globalErrorSlice.error(undefined));
-    }
+    };
+    handleFetchResponse(onGoingFetch, onSuccess, callbacks);
 };
-export const mockedAssignAdminRole = (accountId: number) => async (dispatch: Dispatch) => {
-    try {
-        const tempAccount = accountList.find((account) => account.id === accountId);
-        if (tempAccount !== undefined) {
-            tempAccount.role = Role.ADMIN;
-        }
-        const response = new Response(JSON.stringify(tempAccount), { status: 200, statusText: 'ok' });
-        if (!response.ok) {
-            dispatch(globalErrorSlice.httpError({ statusCode: response.status }));
-        } else {
-            const result : Account = await response.json();
-            dispatch(accountsAction.update([result]));
-        }
-    } catch (error) {
-        dispatch(globalErrorSlice.error(undefined));
-    }
+
+export const mockedFetchGetUserVouchers = () => {
+    const onGoingFetch = Promise.resolve(new Response(JSON.stringify(userVoucherList), {
+        status: 200,
+        statusText: 'ok',
+    }));
+    return onGoingFetch;
 };

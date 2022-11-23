@@ -22,3 +22,12 @@ INSERT INTO hobby_entity(descriptor, category_id) VALUES ('Angeln', (SELECT * FR
                                                          ('Kochen', (SELECT * FROM kultur)), ('Lesen', (SELECT * FROM unterhaltung)), ('Malen', (SELECT * FROM kreatives)), ('Musik', (SELECT * FROM unterhaltung)),
                                                          ('Puzzlen', (SELECT * FROM unterhaltung)), ('Radsport', (SELECT * FROM sport)), ('Tanzen', (SELECT * FROM sport)), ('Theater', (SELECT * FROM kultur)),
                                                          ('Wandern', (SELECT * FROM natur)), ('Yoga', (SELECT * FROM sport)), ('Sonstiges', (SELECT * FROM sonstiges));
+INSERT INTO sexual_orientation_entity(descriptor) VALUES
+                                                      ('Heterosexuell'),
+                                                      ('Homosexuell'),
+                                                      ('Bisexuell'),
+                                                      ('Asexuell'),
+                                                      ('Pansexuell'),
+                                                      ('weitere Orientierungen'),
+                                                      ('keine Angabe');
+INSERT INTO social_background_entity(descriptor) VALUES ('Akademikerfamilie'), ('Nichtakademisches Elternhaus'), ('Keine Angabe');

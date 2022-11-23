@@ -1,8 +1,7 @@
 import { Dispatch } from 'redux';
 import { authenticatedFetchGet } from '../../utils/fetch.utils';
 import { AccountStateAction } from './account-state-action.type';
-import { AccountDto } from '../../types/dtos/AccountDto';
-import { mapDtoToAccount } from '../../mapper/AccountMapper';
+import { Account } from '../../types/Account';
 
 export const loadAccountErroredAction: AccountStateAction = {
     type: 'ACCOUNT_ERROR',
@@ -22,11 +21,11 @@ export const loadAccount = async (dispatch: Dispatch) => {
     const result: Response = await authenticatedFetchGet('/api/account');
 
     if (result.ok) {
-        const accountDto: AccountDto = await result.json();
+        const account: Account = await result.json();
 
         const accountOkAction: AccountStateAction = {
             type: 'ACCOUNT_LOADING_SUCCEEDED',
-            payload: mapDtoToAccount(accountDto),
+            payload: account,
         };
 
         dispatch(accountOkAction);

@@ -39,13 +39,15 @@ class MatchingServiceTest {
     private MatchingService matchingServiceMock;
 
     @Mock
-    DiversityLunchEMailService eMailService;
+    MsTeamsService msTeamsService;
 
     @Mock
-    MsTeamsService msTeamsService;
+    DiversityLunchEMailService mockedEMailService;
 
     @InjectMocks
     private MatchingService matchingService;
+
+
 
     @Test
     void testMatching_moreThen7DaysUntilMeeting_shouldCallExecuteMatchingWithGivenTimeAnd21ScoreToBeat() {
@@ -126,8 +128,9 @@ class MatchingServiceTest {
 
         matchingService.sendQuestions(LocalDateTime.now());
 
-        verify(eMailService, times(2))
+        verify(mockedEMailService, times(2))
                 .sendEmail(any(), any(), any(),any());
 
     }
+
 }

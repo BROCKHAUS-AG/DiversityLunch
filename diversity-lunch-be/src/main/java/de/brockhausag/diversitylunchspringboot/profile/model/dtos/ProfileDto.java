@@ -42,4 +42,8 @@ public class ProfileDto {
     private WorkExperienceDto workExperience;
     @NotNull
     private HobbyDto hobby;
+    @NotNull
+    private SexualOrientationDto sexualOrientation;
+    @NotNull
+    private SocialBackgroundDto socialBackground;
 }

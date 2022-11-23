@@ -2,11 +2,8 @@ package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.DietDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.DietEntity;
-import de.brockhausag.diversitylunchspringboot.profile.utils.Mapper;
+import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class DietMapper implements Mapper<DietDto, DietEntity> {
@@ -25,15 +22,5 @@ public class DietMapper implements Mapper<DietDto, DietEntity> {
         dietEntity.setId(dto.getId());
         dietEntity.setDescriptor(dto.getDescriptor());
         return dietEntity;
-    }
-
-    @Override
-    public List<DietDto> entityToDto(List<DietEntity> entities) {
-        return entities.stream().map(this::entityToDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<DietEntity> dtoToEntity(List<DietDto> dtos) {
-        return dtos.stream().map(this::dtoToEntity).collect(Collectors.toList());
     }
 }

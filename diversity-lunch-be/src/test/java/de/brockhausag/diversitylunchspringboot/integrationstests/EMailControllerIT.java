@@ -35,6 +35,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -83,7 +84,7 @@ public class EMailControllerIT {
 
         mockMvcSecurity = MockMvcBuilders.webAppContextSetup(appContext).apply(springSecurity()).build();
 
-        when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
+        when(this.diversityLunchMailProperties.getSender()).thenReturn("test@example.com");
         when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
         myProfileEntity = profileTestdataFactory.createNewMaxProfile();
         accountEntity = accountService.getOrCreateAccount(myProfileEntity.getEmail());
@@ -101,7 +102,7 @@ public class EMailControllerIT {
     @SneakyThrows
     @Test
     public void testSendTestMail_expectedToNotThrowException() {
-        when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
+        when(this.diversityLunchMailProperties.getSender()).thenReturn("test@example.com");
 
 
         mockMvc.perform(
@@ -113,7 +114,7 @@ public class EMailControllerIT {
     @Test
     public void testSendTestMail_expectedCorrectTestContentInMail() {
         //Send email
-        when(this.diversityLunchMailProperties.getSender()).thenReturn("diversitylunchtest@brockhaus-ag.de");
+        when(this.diversityLunchMailProperties.getSender()).thenReturn("test@example.com");
 
         mockMvc.perform(
                 post("/api/mailing/sendTestMail")
@@ -142,9 +143,11 @@ public class EMailControllerIT {
 
         //Assert
         Assertions.assertEquals("test@test.de",to);
-        Assertions.assertEquals("diversitylunchtest@brockhaus-ag.de", from);
+        Assertions.assertEquals("test@example.com", from);
         Assertions.assertEquals("Testsubject",subject);
-        Assertions.assertEquals("Hallo :)", body);
+        Assertions.assertNotEquals("", body);
+        Assertions.assertNotEquals(null, body);
+        Assertions.assertEquals("Datum: " + LocalDate.now(), body.substring(0,17));
         Assertions.assertEquals(1, amount);
     }
 
@@ -187,7 +190,7 @@ public class EMailControllerIT {
     private ResultActions performRequestWithToken(String path, AccountEntity accountEntity) throws Exception {
         return mockMvcSecurity.perform(
                 post(path)
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileTestdataFactory.getTokenStringFromId(accountEntity.getUniqueName()))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + profileTestdataFactory.getTokenStringFromId(accountEntity.getOid()))
         );
     }
 

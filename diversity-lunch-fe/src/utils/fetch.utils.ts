@@ -38,6 +38,22 @@ export const authenticatedFetchPost = (url: string, data: any) => {
         },
     });
 };
+export const authenticatedFetchPostCsv = (url: string, data: any) => {
+    const authState = APP_STORE.getState().authentication;
+
+    let bearerToken = '';
+    if (authState.status === 'OK') {
+        bearerToken = `Bearer ${authState.oidcData.access_token}`;
+    }
+
+    return fetch(url, {
+        method: 'POST',
+        body: data,
+        headers: {
+            Authorization: bearerToken,
+        },
+    });
+};
 
 export const authenticatedFetchPut = (url: string, data: any) => {
     const authState = APP_STORE.getState().authentication;

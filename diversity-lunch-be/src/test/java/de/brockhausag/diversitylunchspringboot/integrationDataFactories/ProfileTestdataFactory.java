@@ -15,24 +15,27 @@ import java.security.NoSuchAlgorithmException;
 @Component
 @RequiredArgsConstructor
 public class ProfileTestdataFactory {
-    
+
     private final CountryService countryService;
-    
+
     private final DietService dietService;
-    
+
     private final EducationService educationService;
-    
+
+    private final SexualOrientationService sexualOrientationService;
+
     private final GenderService genderService;
-    
+
     private final HobbyService hobbyService;
-    
+
     private final LanguageService languageService;
-    
+
     private final ProjectService projectService;
-    
+
     private final ReligionService religionService;
-    
+
     private final WorkExperienceService workExperienceService;
+    private final SocialBackgroundService socialBackgroundService;
 
     public ProfileEntity createNewMaxProfile() {
         final Long id = 1L;
@@ -48,7 +51,8 @@ public class ProfileTestdataFactory {
         final ReligionEntity religion = religionService.getAllEntities().get(0);
         final WorkExperienceEntity workExperience = workExperienceService.getAllEntities().get(0);
         final HobbyEntity hobby = hobbyService.getAllEntities().get(0);
-
+        final SexualOrientationEntity sexualOrientation = sexualOrientationService.getAllEntities().get(0);
+        final SocialBackgroundEntity socialBackground = socialBackgroundService.getAllEntities().get(0);
 
         return new ProfileEntity(id,
                 name,
@@ -62,7 +66,9 @@ public class ProfileTestdataFactory {
                 project,
                 religion,
                 workExperience,
-                hobby);
+                hobby,
+                sexualOrientation,
+                socialBackground);
     }
 
     public ProfileEntity createNewErikaProfile() {
@@ -79,6 +85,8 @@ public class ProfileTestdataFactory {
         final ReligionEntity religion = religionService.getAllEntities().get(1);
         final WorkExperienceEntity workExperience = workExperienceService.getAllEntities().get(1);
         final HobbyEntity hobby = hobbyService.getAllEntities().get(1);
+        final SexualOrientationEntity sexualOrientation = sexualOrientationService.getAllEntities().get(1);
+        final SocialBackgroundEntity socialBackground = socialBackgroundService.getAllEntities().get(1);
 
         return new ProfileEntity(id,
                 name,
@@ -92,7 +100,9 @@ public class ProfileTestdataFactory {
                 project,
                 religion,
                 workExperience,
-                hobby);
+                hobby,
+                sexualOrientation,
+                socialBackground);
     }
 
     @SneakyThrows
@@ -108,7 +118,7 @@ public class ProfileTestdataFactory {
                 .getBytes();
         byte[] payload = """
                 {
-                    "unique_name": "%s",
+                    "oid": "%s",
                     "given_name": "%s",
                     "family_name": "%s",
                     "exp": %s
@@ -147,7 +157,7 @@ public class ProfileTestdataFactory {
                 .getBytes();
         byte[] payload = """
                 {
-                    "unique_name": "%s",
+                    "oid": "%s",
                     "given_name": "%s",
                     "family_name": "%s",
                     "exp": %s
@@ -174,7 +184,7 @@ public class ProfileTestdataFactory {
     }
 
     @SneakyThrows
-    public String getTokenStringFromIdChangedUniqueName(String id) {
+    public String getTokenStringFromIdChangedOid(String id) {
 
         byte[] key = "SomeSecretWeDontCheckItAnywayToS".getBytes();
         byte[] header = """
@@ -186,7 +196,7 @@ public class ProfileTestdataFactory {
                 .getBytes();
         byte[] payload = """
                 {
-                    "unique_name": "%s",
+                    "oid": "%s",
                     "given_name": "%s",
                     "family_name": "%s",
                     "exp": %s
@@ -197,7 +207,7 @@ public class ProfileTestdataFactory {
 
         byte[] payloadManipulate = """
                 {
-                    "unique_name": "%s",
+                    "oid": "%s",
                     "given_name": "%s",
                     "family_name": "%s",
                     "exp": %s

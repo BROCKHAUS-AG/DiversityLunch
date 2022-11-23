@@ -1,10 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.profile.controller;
 
-import de.brockhausag.diversitylunchspringboot.profile.logic.HobbyCategoryService;
 import de.brockhausag.diversitylunchspringboot.profile.logic.HobbyService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.HobbyMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyCategoryEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;
 import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.ErrorHandlingController;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +20,9 @@ public class HobbyController extends ErrorHandlingController {
 
     private final HobbyMapper mapper;
     private final HobbyService service;
-    private final HobbyCategoryService hobbyCategoryService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<HobbyDto>> getAll(){
+    public ResponseEntity<List<HobbyDto>> getAll() {
         List<HobbyEntity> countryEntityList = service.getAllEntities();
         return new ResponseEntity<>(
                 mapper.entityToDto(countryEntityList),
@@ -34,9 +31,9 @@ public class HobbyController extends ErrorHandlingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<HobbyDto> getOne(@PathVariable Long id){
+    public ResponseEntity<HobbyDto> get(@PathVariable Long id) {
         Optional<HobbyEntity> optionalHobbyEntity = service.getEntityById(id);
-        if (optionalHobbyEntity.isEmpty()){
+        if (optionalHobbyEntity.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(
@@ -46,42 +43,34 @@ public class HobbyController extends ErrorHandlingController {
     }
 
     @PutMapping
-    public ResponseEntity<HobbyDto> put(@RequestBody HobbyDto hobbyDto){
-        HobbyEntity entity = mapper.dtoToEntity(hobbyDto);
-
-        Optional<HobbyCategoryEntity> category = hobbyCategoryService.getEntityById(entity.getCategory().getId());
-        if(category.isEmpty()) {
+    public ResponseEntity<HobbyDto> put(@RequestBody HobbyDto hobbyDto) {
+        Optional<HobbyEntity> optionalHobbyEntity = mapper.dtoToEntity(hobbyDto);
+        if (optionalHobbyEntity.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        entity.setCategory(category.get());
-        entity = service.updateOrCreateEntity(entity);
-
+        HobbyEntity hobbyEntity = service.updateOrCreateEntity(optionalHobbyEntity.get());
         return new ResponseEntity<>(
-                mapper.entityToDto(entity),
+                mapper.entityToDto(hobbyEntity),
                 HttpStatus.OK
         );
     }
 
     @PostMapping
-    public ResponseEntity<HobbyDto> post(@RequestBody HobbyDto hobbyDto){
-        HobbyEntity entity = mapper.dtoToEntity(hobbyDto);
-
-        Optional<HobbyCategoryEntity> category = hobbyCategoryService.getEntityById(entity.getCategory().getId());
-        if(category.isEmpty()){
+    public ResponseEntity<HobbyDto> post(@RequestBody HobbyDto hobbyDto) {
+        Optional<HobbyEntity> optionalHobbyEntity = mapper.dtoToEntity(hobbyDto);
+        if (optionalHobbyEntity.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        entity.setCategory(category.get());
-        entity = service.createEntity(entity);
-
+        HobbyEntity hobbyEntity = service.createEntity(optionalHobbyEntity.get());
         return new ResponseEntity<>(
-                mapper.entityToDto(entity),
+                mapper.entityToDto(hobbyEntity),
                 HttpStatus.OK
         );
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
-        if (service.deleteEntityById(id)){
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        if (service.deleteEntityById(id)) {
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

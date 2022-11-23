@@ -1,20 +1,24 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
+import de.brockhausag.diversitylunchspringboot.profile.logic.HobbyCategoryService;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyCategoryEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;
-import de.brockhausag.diversitylunchspringboot.profile.utils.Mapper;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
-public class HobbyMapper implements Mapper<HobbyDto, HobbyEntity> {
+@AllArgsConstructor
+public class HobbyMapper {
 
-    private final HobbyCategoryMapper categoryMapper = new HobbyCategoryMapper();
+    private final HobbyCategoryMapper categoryMapper;
+    private final HobbyCategoryService hobbyCategoryService;
 
 
-    @Override
     public HobbyDto entityToDto(HobbyEntity entity) {
         HobbyDto dto = new HobbyDto();
         dto.setId(entity.getId());
@@ -24,22 +28,26 @@ public class HobbyMapper implements Mapper<HobbyDto, HobbyEntity> {
         return dto;
     }
 
-    @Override
-    public HobbyEntity dtoToEntity(HobbyDto dto) {
+
+    public Optional<HobbyEntity> dtoToEntity(HobbyDto dto) {
+        if (dto.getCategory() == null) {
+            return Optional.empty();
+        }
+        Optional<HobbyCategoryEntity> optionalHobbyCategoryEntity = this.hobbyCategoryService.getEntityById(dto.getCategory().getId());
+
+        if (optionalHobbyCategoryEntity.isEmpty()) {
+            return Optional.empty();
+        }
+
         HobbyEntity entity = new HobbyEntity();
         entity.setId(dto.getId());
         entity.setDescriptor(dto.getDescriptor());
-        entity.setCategory(categoryMapper.dtoToEntity(dto.getCategory()));
-        return entity;
+        entity.setCategory(optionalHobbyCategoryEntity.get());
+        return Optional.of(entity);
     }
 
-    @Override
     public List<HobbyDto> entityToDto(List<HobbyEntity> entities) {
-        return entities.stream().map(this::entityToDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<HobbyEntity> dtoToEntity(List<HobbyDto> dtos) {
-        return dtos.stream().map(this::dtoToEntity).collect(Collectors.toList());
-    }
+            return entities.stream().map(this::entityToDto).collect(Collectors.toList());
+        }
 }
+

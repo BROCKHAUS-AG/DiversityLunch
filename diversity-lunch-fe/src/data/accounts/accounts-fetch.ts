@@ -1,58 +1,53 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { authenticatedFetchGet, authenticatedFetchPut } from '../../utils/fetch.utils';
-import { globalErrorSlice } from '../error/global-error-slice';
 import { Account } from '../../types/Account';
 import { accountsAction } from './accounts-reducer';
+import { FetchCallbacks } from '../generic/FetchCallbacks';
+import { handleFetchResponse } from '../handleFetchResponse';
 
-export function getAllAccounts() {
+export function getAllAccounts(fetchCallbacks: FetchCallbacks) {
     return async (dispatch: Dispatch) => {
-        try {
-            const response = await authenticatedFetchGet('api/account/all');
-
-            if (!response.ok) {
-                dispatch(globalErrorSlice.httpError({ statusCode: response.status }));
-            } else {
+        const onGoingFetch = authenticatedFetchGet('api/account/all');
+        const onSuccess = async (response: Response) => {
+            try {
                 const result : Account[] = await response.json();
-
                 dispatch(accountsAction.update(result));
                 dispatch(accountsAction.initFetch(undefined));
+            } catch {
+                fetchCallbacks.onNetworkError(new Error(`Parse failed: ${response.url} responded with a non-json body`));
             }
-        } catch (error) {
-            dispatch(globalErrorSlice.error(undefined));
-        }
+        };
+        handleFetchResponse(onGoingFetch, onSuccess, fetchCallbacks);
     };
 }
 
-export function revokeAdminRole(accountId: number) {
+export function revokeAdminRole(accountId: number, fetchCallbacks: FetchCallbacks) {
     return async (dispatch: Dispatch) => {
-        try {
-            const response = await authenticatedFetchPut(`api/account/revokeAdminRole/${accountId}`, '');
-
-            if (!response.ok) {
-                dispatch(globalErrorSlice.httpError({ statusCode: response.status }));
-            } else {
-                const result : Account = await response.json();
+        const onGoingFetch = authenticatedFetchPut(`api/account/revokeAdminRole/${accountId}`, '');
+        const onSuccess = async (response: Response) => {
+            try {
+                const result : Account[] = await response.json();
                 dispatch(accountsAction.update([result]));
+                dispatch(accountsAction.initFetch(undefined));
+            } catch {
+                fetchCallbacks.onNetworkError(new Error(`Parse failed: ${response.url} responded with a non-json body`));
             }
-        } catch (error) {
-            dispatch(globalErrorSlice.error(undefined));
-        }
+        };
+        handleFetchResponse(onGoingFetch, onSuccess, fetchCallbacks);
     };
 }
 
-export function assignAdminRole(accountId: number) {
+export function assignAdminRole(accountId: number, fetchCallbacks: FetchCallbacks) {
     return async (dispatch: Dispatch) => {
-        try {
-            const response = await authenticatedFetchPut(`api/account/assignAdminRole/${accountId}`, '');
-
-            if (!response.ok) {
-                dispatch(globalErrorSlice.httpError({ statusCode: response.status }));
-            } else {
-                const result : Account = await response.json();
+        const onGoingFetch = authenticatedFetchPut(`api/account/assignAdminRole/${accountId}`, '');
+        const onSuccess = async (response: Response) => {
+            try {
+                const result: Account = await response.json();
                 dispatch(accountsAction.update([result]));
+            } catch {
+                fetchCallbacks.onNetworkError(new Error(`Parse failed: ${response.url} responded with a non-json body`));
             }
-        } catch (error) {
-            dispatch(globalErrorSlice.error(undefined));
-        }
+        };
+        handleFetchResponse(onGoingFetch, onSuccess, fetchCallbacks);
     };
 }

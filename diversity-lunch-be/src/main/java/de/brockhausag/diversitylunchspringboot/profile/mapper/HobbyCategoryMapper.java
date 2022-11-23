@@ -2,11 +2,8 @@ package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyCategoryDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyCategoryEntity;
-import de.brockhausag.diversitylunchspringboot.profile.utils.Mapper;
+import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class HobbyCategoryMapper implements Mapper<HobbyCategoryDto, HobbyCategoryEntity> {
@@ -24,15 +21,5 @@ public class HobbyCategoryMapper implements Mapper<HobbyCategoryDto, HobbyCatego
         hobbyCategoryEntity.setId(dto.getId());
         hobbyCategoryEntity.setDescriptor(dto.getDescriptor());
         return hobbyCategoryEntity;
-    }
-
-    @Override
-    public List<HobbyCategoryDto> entityToDto(List<HobbyCategoryEntity> entities) {
-        return entities.stream().map(this::entityToDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<HobbyCategoryEntity> dtoToEntity(List<HobbyCategoryDto> dtos) {
-        return dtos.stream().map(this::dtoToEntity).collect(Collectors.toList());
     }
 }

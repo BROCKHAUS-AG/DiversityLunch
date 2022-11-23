@@ -49,21 +49,21 @@ export class GenericSlice<T extends Identifiable> {
     }
 
     private addFunction: CaseReducer<IdentifiableState<T>, PayloadAction<T[]>> = (state, action) => {
-        state.items = [...state.items, ...action.payload as Draft<T>[]];
+        state.items.push(...action.payload as Draft<T>[]);
     }
 
     private updateFunction: CaseReducer<IdentifiableState<T>, PayloadAction<T[]>> = (state, action) => {
-        action.payload.forEach((category) => {
-            const idx = state.items.findIndex((e) => e.id === category.id);
+        action.payload.forEach((updatedItem) => {
+            const idx = state.items.findIndex((existingItem) => existingItem.id === updatedItem.id);
             if (idx >= 0) {
-                state.items[idx] = category as Draft<T>;
+                state.items[idx] = updatedItem as Draft<T>;
             } else {
-                state.items.push(category as Draft<T>);
+                state.items.push(updatedItem as Draft<T>);
             }
         });
     }
 
     private removeFunction: CaseReducer<IdentifiableState<T>, PayloadAction<number[]>> = (state, action) => {
-        state.items = state.items.filter((e) => !action.payload.find((r) => r === e.id));
+        state.items = state.items.filter((existingItem) => !action.payload.find((toBeRemovedItem) => toBeRemovedItem === existingItem.id));
     }
 }

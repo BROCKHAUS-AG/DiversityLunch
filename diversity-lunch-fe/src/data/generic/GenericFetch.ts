@@ -1,4 +1,3 @@
-// import {add, initFetch, remove, update} from "./category-reducer";
 import { Dispatch } from '@reduxjs/toolkit';
 import { Identifiable } from './Identifiable';
 import { GenericSlice } from './GenericSlice';
@@ -8,18 +7,19 @@ import {
     authenticatedFetchPost,
     authenticatedFetchPut,
 } from '../../utils/fetch.utils';
-import { globalErrorSlice } from '../error/global-error-slice';
+import { FetchCallbacks } from './FetchCallbacks';
+import { handleFetchResponse } from '../handleFetchResponse';
 
 export class GenericFetch<T extends Identifiable> {
-    private update;
-    private add;
-    private remove;
-    private initFetch;
-    private endpoint : string;
+    private readonly update;
+    private readonly add;
+    private readonly remove;
+    private readonly initFetch;
+    private readonly endpoint : string;
 
     private url : string = '/api/';
 
-    constructor(slice: GenericSlice<T>, endpoint : string, private readonly _errorSlice = globalErrorSlice) {
+    constructor(slice: GenericSlice<T>, endpoint : string) {
         this.update = slice.actions.update;
         this.add = slice.actions.add;
         this.remove = slice.actions.remove;
@@ -27,91 +27,72 @@ export class GenericFetch<T extends Identifiable> {
         this.endpoint = `${endpoint}/`;
     }
 
-    public getAll() {
+    public getAll(callbacks: FetchCallbacks) {
         return async (dispatch: Dispatch) => {
-            try {
-                const response = await authenticatedFetchGet(`${this.url}${this.endpoint}all`);
-
-                if (!response.ok) {
-                    dispatch(this._errorSlice.httpError({ statusCode: response.status }));
-                } else {
-                    const result : T = await response.json();
-
+            const onGoingFetch = authenticatedFetchGet(`${this.url}${this.endpoint}all`);
+            const onSuccess = async (response: Response) => {
+                try {
+                    const result: T = await response.json();
                     dispatch(this.update(result));
                     dispatch(this.initFetch(true));
+                } catch {
+                    callbacks.onNetworkError(new Error("Couldn't parse response body to json."));
                 }
-            } catch (error) {
-                dispatch(this._errorSlice.error(undefined));
-            }
+            };
+            handleFetchResponse(onGoingFetch, onSuccess, callbacks);
         };
     }
 
-    public getById(id: number) {
+    public getById(id: number, callbacks: FetchCallbacks) {
         return async (dispatch: Dispatch) => {
-            try {
-                const response = await authenticatedFetchGet(this.url + this.endpoint + id);
-
-                if (!response.ok) {
-                    dispatch(this._errorSlice.httpError({ statusCode: response.status }));
-                } else {
+            const onGoingFetch = authenticatedFetchGet(this.url + this.endpoint + id);
+            const onSuccess = async (response: Response) => {
+                try {
                     const result : T[] = await response.json();
                     dispatch(this.update(result));
-                    dispatch(this.initFetch(undefined));
+                } catch {
+                    callbacks.onNetworkError(new Error("Couldn't parse response body to json."));
                 }
-            } catch (error) {
-                dispatch(this._errorSlice.error(undefined));
-            }
+            };
+            handleFetchResponse(onGoingFetch, onSuccess, callbacks);
         };
     }
 
-    public post(item : T) {
+    public post(item : T, callbacks: FetchCallbacks) {
         return async (dispatch: Dispatch) => {
-            try {
-                const response = await authenticatedFetchPost(this.url + this.endpoint, item);
-
-                if (!response.ok) {
-                    dispatch(this._errorSlice.httpError({ statusCode: response.status }));
-                } else {
-                    const result : T = await response.json();
+            const onGoingFetch = authenticatedFetchPost(this.url + this.endpoint, item);
+            const onSuccess = async (response: Response) => {
+                try {
+                    const result: T = await response.json();
                     dispatch(this.add([result]));
+                } catch {
+                    callbacks.onNetworkError(new Error('Couldn\'t parse response body to json.'));
                 }
-            } catch (error) {
-                dispatch(this._errorSlice.error(undefined));
-            }
+            };
+            handleFetchResponse(onGoingFetch, onSuccess, callbacks);
         };
     }
 
-    public put(item : T) {
+    public put(item : T, callbacks: FetchCallbacks) {
         return async (dispatch: Dispatch) => {
-            try {
-                const response = await authenticatedFetchPut(this.url + this.endpoint, item);
-
-                if (!response.ok) {
-                    dispatch(this._errorSlice.httpError({ statusCode: response.status }));
-                } else {
-                    const result : T = await response.json();
+            const onGoingFetch = authenticatedFetchPut(this.url + this.endpoint, item);
+            const onSuccess = async (response: Response) => {
+                try {
+                    const result: T = await response.json();
                     dispatch(this.update([result]));
+                } catch {
+                    callbacks.onNetworkError(new Error("Couldn't parse response body to json."));
                 }
-            } catch (error) {
-                dispatch(this._errorSlice.error(undefined));
-            }
+            };
+            handleFetchResponse(onGoingFetch, onSuccess, callbacks);
         };
     }
 
-    public removeById(id : number) {
+    public removeById(id : number, callbacks: FetchCallbacks) {
         return async (dispatch: Dispatch) => {
-            try {
-                const response = await authenticatedFetchDelete(this.url + this.endpoint + id);
-
-                if (!response.ok) {
-                    dispatch(this._errorSlice.httpError({ statusCode: response.status }));
-                } else {
-                    // const result : T[] = await response.json();
-                    dispatch(this.remove([id]));
-                }
-            } catch (error) {
-                dispatch(this._errorSlice.error(undefined));
-            }
+            const onGoingFetch = authenticatedFetchDelete(this.url + this.endpoint + id);
+            const onSuccess = () => dispatch(this.remove([id]));
+            handleFetchResponse(onGoingFetch, onSuccess, callbacks);
         };
     }
 }

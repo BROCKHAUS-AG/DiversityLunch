@@ -1,6 +1,7 @@
 import { Role } from '../model/Role';
 import { Account } from '../types/Account';
 import { Profile } from '../model/Profile';
+import { UserVoucher } from '../types/UserVoucher';
 
 export const categoryData = [{ id: 2, descriptor: 'Kreatives' }, { id: 1337, descriptor: 'Sport' }];
 export const countryData = [{ id: 9, descriptor: 'Bahamas' }, { id: 1337, descriptor: 'Deutschland' }];
@@ -13,8 +14,14 @@ export const religionData = [{ id: 9, descriptor: 'katholisch' }, { id: 1337, de
 export const workExperienceData = [{ id: 9, descriptor: '0-4 Jahre' }, { id: 1337, descriptor: '4-10 Jahre' }];
 export const hobbyData = [{ id: 6, descriptor: 'DIY', category: { id: 2, descriptor: 'Kreatives' } },
     { id: 7, descriptor: 'Fußball', category: { id: 1, descriptor: 'Sport' } }];
+export const sexualOrientationData = [{ id: 9, descriptor: 'Asexuell' }, { id: 1337, descriptor: 'Pansexuell' }];
+export const socialBackgroundData = [
+    { id: 9, descriptor: 'Nichtakademisches Elternhaus' },
+    { id: 547, descriptor: 'Akademikerfamilie' },
+    { id: 234, descriptor: 'keine Angabe' },
+];
 
-export const profileData = [{
+export const profileData: Profile[] = [{
     id: 4,
     name: 'Horstus',
     email: 'jtonn@brockhaus-ag.de',
@@ -28,25 +35,29 @@ export const profileData = [{
     religion: religionData[0],
     workExperience: workExperienceData[0],
     hobby: hobbyData[0],
+    sexualOrientation: sexualOrientationData[0],
+    socialBackground: socialBackgroundData[0],
 }];
 
 export const accountStandardData = {
     id: 2,
     email: 'hans@brockhaus-ag.de',
     role: Role.STANDARD,
+    profileId: 1,
 };
 
 export const accountAdminData = {
     id: 2,
     email: 'hans@brockhaus-ag.de',
     role: Role.ADMIN,
+
 };
 export const accountAzureAdminData = {
     id: 2,
     email: 'hans@brockhaus-ag.de',
     role: Role.AZURE_ADMIN,
 };
-export const accountList : Account[] = [
+export const accountList: Account[] = [
     {
         id: 1, profileId: 1, role: Role.STANDARD,
     },
@@ -72,6 +83,8 @@ export const profileList: Profile[] = [
         religion: religionData[0],
         workExperience: workExperienceData[0],
         hobby: hobbyData[0],
+        sexualOrientation: sexualOrientationData[0],
+        socialBackground: socialBackgroundData[0],
     },
     {
         id: 2,
@@ -87,6 +100,8 @@ export const profileList: Profile[] = [
         religion: religionData[0],
         workExperience: workExperienceData[0],
         hobby: hobbyData[0],
+        sexualOrientation: sexualOrientationData[0],
+        socialBackground: socialBackgroundData[0],
     },
     {
         id: 3,
@@ -102,5 +117,18 @@ export const profileList: Profile[] = [
         religion: religionData[0],
         workExperience: workExperienceData[0],
         hobby: hobbyData[0],
+        sexualOrientation: sexualOrientationData[0],
+        socialBackground: socialBackgroundData[0],
+    },
+];
+export const userVoucherList : UserVoucher[] = [
+    {
+        voucherCode: 'abcdef',
+    },
+    {
+        voucherCode: 'abccba',
+    },
+    {
+        voucherCode: '1a2b3c',
     },
 ];

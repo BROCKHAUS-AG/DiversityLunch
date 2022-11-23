@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.utils.baseApi;
 
-import de.brockhausag.diversitylunchspringboot.profile.utils.Mapper;
+import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +29,9 @@ public class GenericBaseModelController<
 
     @GetMapping("/all")
     public ResponseEntity<List<DtoType>> getAll(){
-        List<EntityType> countryEntityList = service.getAllEntities();
+        List<EntityType> genericEntityList = service.getAllEntities();
         return new ResponseEntity<>(
-                mapper.entityToDto(countryEntityList),
+                mapper.entityToDto(genericEntityList),
                 HttpStatus.OK
         );
     }

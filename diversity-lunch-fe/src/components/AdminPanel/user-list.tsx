@@ -3,11 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import azureAdminLogo from '../../resources/icons/azure_modern.svg';
 import { AppStoreState } from '../../store/Store';
 import { AccountsState } from '../../data/accounts/accounts-reducer';
-import {
-    assignAdminRole,
-    getAllAccounts,
-    revokeAdminRole,
-} from '../../data/accounts/accounts-fetch';
+import { assignAdminRole, getAllAccounts, revokeAdminRole } from '../../data/accounts/accounts-fetch';
 import { ProfilesState } from '../../data/profiles/profiles-reducer';
 import { getAllProfiles } from '../../data/profiles/profiles-fetch';
 import { User } from './userAdministration/User';
@@ -22,8 +18,9 @@ export const UserList: FC = () => {
     const [searchState, setSearchState] = useState('');
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getAllAccounts());
-        dispatch(getAllProfiles());
+        // TODO: Handle network and http errors properly tgohlisch 17.11.2022
+        dispatch(getAllAccounts({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(getAllProfiles({ onNetworkError: console.error, statusCodeHandlers: {} }));
     }, []);
 
     if (!accountsState.fetched || !profilesState.fetched) {
@@ -45,19 +42,22 @@ export const UserList: FC = () => {
         return userList;
     };
 
+    // TODO: Handle network and http errors properly tgohlisch 17.11.2022
     const assignAdmin = (accountId: number) => {
-        dispatch(assignAdminRole(accountId));
+        dispatch(assignAdminRole(accountId, { onNetworkError: console.error, statusCodeHandlers: {} }));
     };
+
+    // TODO: Handle network and http errors properly tgohlisch 17.11.2022
     const revokeAdmin = (accountId: number) => {
-        dispatch(revokeAdminRole(accountId));
+        dispatch(revokeAdminRole(accountId, { onNetworkError: console.error, statusCodeHandlers: {} }));
     };
 
     const generateAdminListButton = (user: User) => {
         if (user.account.role === Role.ADMIN) {
-            return <button onClick={() => revokeAdmin(user.account.profileId)}>-</button>;
+            return <button onClick={() => revokeAdmin(user.account.id)}>-</button>;
         }
         if (user.account.role === Role.STANDARD) {
-            return <button onClick={() => assignAdmin(user.account.profileId)}>+</button>;
+            return <button onClick={() => assignAdmin(user.account.id)}>+</button>;
         }
         return (
             <button disabled><img alt="Tile Icon" src={azureAdminLogo} height="20em" /></button>
