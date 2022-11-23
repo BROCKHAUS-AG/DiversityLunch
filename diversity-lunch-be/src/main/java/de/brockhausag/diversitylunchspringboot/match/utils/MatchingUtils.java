@@ -35,6 +35,12 @@ public class MatchingUtils {
         currentScore += compareProfileAttr(categories, profile1.getEducation().getDescriptor(), profile2.getEducation().getDescriptor(), Category.EDUCATION);
         //ErnährungsweisePunkte
         currentScore += compareProfileAttr(categories, profile1.getDiet().getDescriptor(), profile2.getDiet().getDescriptor(), Category.DIET);
+        // Sexuelle orienteirung
+        currentScore += compareProfileAttr(categories, profile1.getSexualOrientation().getDescriptor(), profile2.getSexualOrientation().getDescriptor(), Category.SEXUAL_ORIENTATION);
+        // Social Background
+        currentScore += compareProfileAttr(categories, profile1.getSocialBackground().getDescriptor(), profile2.getSocialBackground().getDescriptor(), Category.SOCIAL_BACKGROUND);
+        // Social Background Discrimination
+        currentScore += compareProfileAttr(categories, profile1.getSocialBackgroundDiscrimination().getDescriptor(), profile2.getSocialBackgroundDiscrimination().getDescriptor(), Category.SOCIAL_BACKGROUND_DISCRIMINATION);
 
         currentScore = getScoreAndAddCategoriesForBirthYearAndWorkExperience(currentScore, categories, profile1, profile2);
 
@@ -104,7 +110,7 @@ public class MatchingUtils {
     }
 
     private int compareProfileAttr(List<Category> categories, String attr1, String attr2, Category category) {
-        if(attr1.equals("Keine Angabe") || attr2.equals("Keine Angabe"))
+        if(attr1.equalsIgnoreCase("keine angabe") || attr2.equalsIgnoreCase("keine angabe"))
             return 0;
         if (!attr1.equals(attr2)) {
             categories.add(category);
