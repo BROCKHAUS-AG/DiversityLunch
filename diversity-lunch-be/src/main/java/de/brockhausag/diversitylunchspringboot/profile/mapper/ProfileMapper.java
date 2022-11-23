@@ -26,6 +26,8 @@ public class ProfileMapper {
     private final SexualOrientationMapper sexualOrientationMapper;
     private final SocialBackgroundMapper socialBackgroundMapper;
 
+    private final SocialBackgroundDiscriminationMapper socialBackgroundDiscriminationMapper;
+
     private final CountryService countryService;
     private final DietService dietService;
     private final EducationService educationService;
@@ -39,6 +41,9 @@ public class ProfileMapper {
     private final SexualOrientationService  sexualOrientationService;
     private final SocialBackgroundService socialBackgroundService;
 
+    private final SocialBackgroundDiscriminationService socialBackgroundDiscriminationService;
+
+
 
 
     public ProfileDto entityToDto(ProfileEntity entity) {
@@ -47,7 +52,6 @@ public class ProfileMapper {
         dto.setName(entity.getName());
         dto.setEmail(entity.getEmail());
         dto.setBirthYear(entity.getBirthYear());
-
         dto.setEducation(educationMapper.entityToDto(entity.getEducation()));
         dto.setDiet(dietMapper.entityToDto(entity.getDiet()));
         dto.setGender(genderMapper.entityToDto(entity.getGender()));
@@ -59,6 +63,8 @@ public class ProfileMapper {
         dto.setSexualOrientation(sexualOrientationMapper.entityToDto(entity.getSexualOrientation()));
         dto.setHobby(hobbyMapper.entityToDto(entity.getHobby()));
         dto.setSocialBackground(socialBackgroundMapper.entityToDto(entity.getSocialBackground()));
+        dto.setSocialBackgroundDiscrimination(socialBackgroundDiscriminationMapper.entityToDto(entity.getSocialBackgroundDiscrimination()));
+
 
         return dto;
     }
@@ -76,6 +82,7 @@ public class ProfileMapper {
         Optional<WorkExperienceEntity> workExperienceEntityOptional = this.workExperienceService.getEntityById(dto.getWorkExperience().getId());
         Optional<SexualOrientationEntity> sexualOrientationEntityOptional = this.sexualOrientationService.getEntityById(dto.getSexualOrientation().getId());
         Optional<SocialBackgroundEntity> socialBackgroundEntityOptional = this.socialBackgroundService.getEntityById(dto.getSocialBackground().getId());
+        Optional<SocialBackgroundDiscriminationEntity> socialBackgroundDiscriminationEntityOptional = this.socialBackgroundDiscriminationService.getEntityById(dto.getSocialBackgroundDiscrimination().getId());
 
         if (this.allObjectWithIdsArePresent(countryEntityOptional, dietEntityOptional, educationEntityOptional,
                 genderEntityOptional, hobbyEntityOptional, languageEntityOptional, projectEntityOptional,
@@ -97,6 +104,7 @@ public class ProfileMapper {
             entity.setWorkExperience(workExperienceEntityOptional.get());
             entity.setSexualOrientation(sexualOrientationEntityOptional.get());
             entity.setSocialBackground(socialBackgroundEntityOptional.get());
+            entity.setSocialBackgroundDiscrimination(socialBackgroundDiscriminationEntityOptional.get());
 
             return Optional.of(entity);
         }

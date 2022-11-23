@@ -18,7 +18,7 @@ public class GenderDto implements BaseDto {
     private Long id;
 
     @Schema(description = "the gender you identify with", example = "female")
-    @Size(min=2, max=50, message = "diet descriptor must be between 2 and 50 chars long")
+    @Size(min=2, max=50, message = "gender descriptor must be between 2 and 50 chars long")
     @NotNull
     @NotBlank
     private String descriptor;

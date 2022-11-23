@@ -18,6 +18,21 @@ import { religionFetch } from '../../../data/religion/religion-fetch';
 import { workExperienceFetch } from '../../../data/work-experience/work-experience-fetch';
 import { sexualOrientationFetch } from '../../../data/sexual-orientation/sexual-orientation-fetch';
 import { socialBackgroundFetch } from '../../../data/social-background/social-background-fetch';
+import { socialBackgroundDiscriminationFetch } from '../../../data/social-background-discrimination/social-background-discrimination-fetch';
+import { IdentifiableState } from '../../../data/generic/GenericSlice';
+import { Country } from '../../../model/Country';
+import { Diet } from '../../../model/Diet';
+import { Education } from '../../../model/Education';
+import { Gender } from '../../../model/Gender';
+import { Hobby } from '../../../model/Hobby';
+import { Language } from '../../../model/Language';
+import { Religion } from '../../../model/Religion';
+import { Project } from '../../../model/Project';
+import { WorkExperience } from '../../../model/WorkExperience';
+import { SexualOrientation } from '../../../model/SexualOrientation';
+import { SocialBackground } from '../../../model/SocialBackground';
+import { Identifiable } from '../../../data/generic/Identifiable';
+import { SocialBackgroundDiscrimination } from '../../../model/SocialBackgroundDiscrimination';
 
 export type ProfileFormCallback = (formData: Partial<Profile>) => void;
 export type ProfileFormIsValidCallback = (formData: Partial<Profile>)=>boolean;
@@ -37,17 +52,20 @@ export const ProfileForm: FC<ProfileFormProps> = ({
 
     const [isValid, setIsValid] = useState(checkValidity(profile));
     const dispatch = useDispatch();
-    const countries = useSelector((store: AppStoreState) => store.country);
-    const diets = useSelector((store: AppStoreState) => store.diet);
-    const educations = useSelector((store: AppStoreState) => store.education);
-    const genders = useSelector((store: AppStoreState) => store.gender);
-    const hobbies = useSelector((store: AppStoreState) => store.hobby);
-    const languages = useSelector((store: AppStoreState) => store.language);
-    const project = useSelector((store: AppStoreState) => store.project);
-    const religions = useSelector((store: AppStoreState) => store.religion);
-    const workExperience = useSelector((store: AppStoreState) => store.workExperience);
-    const sexualOrientation = useSelector((store: AppStoreState) => store.sexualOrientation);
-    const socialBackground = useSelector((store: AppStoreState) => store.socialBackground);
+    const countries : IdentifiableState<Country> = useSelector((store: AppStoreState) => store.country);
+    const diets : IdentifiableState<Diet> = useSelector((store: AppStoreState) => store.diet);
+    const educations : IdentifiableState<Education> = useSelector((store: AppStoreState) => store.education);
+    const genders : IdentifiableState<Gender> = useSelector((store: AppStoreState) => store.gender);
+    const hobbies : IdentifiableState<Hobby> = useSelector((store: AppStoreState) => store.hobby);
+    const languages : IdentifiableState<Language> = useSelector((store: AppStoreState) => store.language);
+    const project : IdentifiableState<Project> = useSelector((store: AppStoreState) => store.project);
+    const religions: IdentifiableState<Religion> = useSelector((store: AppStoreState) => store.religion);
+    const workExperience : IdentifiableState<WorkExperience> = useSelector((store: AppStoreState) => store.workExperience);
+    const sexualOrientation : IdentifiableState<SexualOrientation> = useSelector((store: AppStoreState) => store.sexualOrientation);
+    const socialBackground : IdentifiableState<SocialBackground> = useSelector((store: AppStoreState) => store.socialBackground);
+    const socialBackgroundDiscrimination : IdentifiableState<SocialBackgroundDiscrimination> = useSelector(
+        (store: AppStoreState) => store.socialBackgroundDiscrimination,
+    );
 
     useEffect(() => {
         // TODO: Handle network and http errors properly tgohlisch 17.11.2022
@@ -62,6 +80,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
         dispatch(workExperienceFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(sexualOrientationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(socialBackgroundFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(socialBackgroundDiscriminationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
     }, []);
 
     function updateProfile<KEY extends keyof Profile>(key: KEY, value?: Profile[KEY]) {
@@ -81,6 +100,17 @@ export const ProfileForm: FC<ProfileFormProps> = ({
         if (onSubmit) onSubmit(profile);
     }
 
+    const DEFAULT_OPTION_DESCRIPTOR = 'keine angabe';
+    function sortOptions<T extends Identifiable>(state : IdentifiableState<T>) {
+        const copiedList = [...state.items];
+        copiedList.sort((a, b) => a.descriptor.localeCompare(b.descriptor));
+        return copiedList.sort((a, b) => {
+            if (a.descriptor.toLowerCase() === DEFAULT_OPTION_DESCRIPTOR) return -1;
+            if (b.descriptor.toLowerCase() === DEFAULT_OPTION_DESCRIPTOR) return 1;
+            return 0;
+        });
+    }
+
     return (
         <form onSubmit={formSubmitted} className="ProfileForm">
             <div className="DropdownQuestion">
@@ -96,82 +126,89 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 />
             </div>
             <Dropdown
-                options={project.items}
+                options={sortOptions(project)}
                 placeholder="In welchem Projekt arbeitest du derzeit?"
                 onChange={(value) => updateProfile('project', value)}
                 label="Projekt"
                 currentValue={profile.project || undefined}
             />
             <Dropdown
-                options={genders.items}
+                options={sortOptions(genders)}
                 placeholder="Wähle dein Geschlecht aus"
                 onChange={(value) => updateProfile('gender', value)}
                 label="Geschlecht"
                 currentValue={profile.gender || undefined}
             />
             <Dropdown
-                options={countries.items}
+                options={sortOptions(countries)}
                 placeholder="Was ist dein Herkunftsland?"
                 onChange={(value) => updateProfile('originCountry', value)}
                 label="Herkunftsland"
                 currentValue={profile.originCountry || undefined}
             />
             <Dropdown
-                options={languages.items}
+                options={sortOptions(languages)}
                 placeholder="Was ist deine Muttersprache?"
                 onChange={(value) => updateProfile('motherTongue', value)}
                 label="Muttersprache"
                 currentValue={profile.motherTongue || undefined}
             />
             <Dropdown
-                options={religions.items}
+                options={sortOptions(religions)}
                 placeholder="An welche Religion glaubst du?"
                 onChange={(value) => updateProfile('religion', value)}
                 label="Religion"
                 currentValue={profile.religion || undefined}
             />
             <Dropdown
-                options={workExperience.items}
+                options={sortOptions(workExperience)}
                 placeholder="Wie viele Jahre Berufserfahrung hast du schon gesammelt?"
                 onChange={(value) => updateProfile('workExperience', value)}
                 label="Berufserfahrung"
                 currentValue={profile.workExperience || undefined}
             />
             <Dropdown
-                options={hobbies.items}
+                options={sortOptions(hobbies)}
                 placeholder="Was hast du für ein Hobby?"
                 onChange={(value) => updateProfile('hobby', value)}
                 label="Hobby"
                 currentValue={profile.hobby || undefined}
             />
             <Dropdown
-                options={educations.items}
+                options={sortOptions(educations)}
                 placeholder="Welchen Bildungsweg hast du bisher bestritten?"
                 onChange={(value) => updateProfile('education', value)}
                 label="Bildungsweg"
                 currentValue={profile.education || undefined}
             />
-
             <Dropdown
-                options={diets.items}
+                options={sortOptions(diets)}
                 placeholder="Wie ernährst du dich?"
                 onChange={(value) => updateProfile('diet', value)}
                 label="Ernährung"
                 currentValue={profile.diet || undefined}
             />
             <Dropdown
-                options={sexualOrientation.items}
+                options={sortOptions(sexualOrientation)}
                 placeholder="Was ist deine sexuelle Orientierung?"
                 onChange={(value) => updateProfile('sexualOrientation', value)}
                 label="Sexualität"
                 currentValue={profile.sexualOrientation || undefined}
             />
             <Dropdown
-                options={socialBackground.items}
+                options={sortOptions(socialBackground)}
                 placeholder="Bist du ein Akademikerkind, oder eher die erste Person in der Familie, die studiert oder ihr Abitur gemacht hat?"
                 onChange={(value) => updateProfile('socialBackground', value)}
                 label="Soziale Herkunft"
                 currentValue={profile.socialBackground || undefined}
+            />
+            <Dropdown
+                options={sortOptions(socialBackgroundDiscrimination)}
+                placeholder="Wurdest du jemals aufgrund deiner sozialen Herkunft Vorurteilen ausgesetzt,
+                herabwürdigend behandelt, benachteiligt oder ausgeschlossen?"
+                onChange={(value) => updateProfile('socialBackgroundDiscrimination', value)}
+                label="Ausgrenzung?"
+                currentValue={profile.socialBackgroundDiscrimination || undefined}
             />
             <Button
                 disabled={!isValid}

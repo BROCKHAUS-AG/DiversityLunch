@@ -43,7 +43,9 @@ class DiversityLunchEMailServiceTest {
    private final  ProfileTestdataFactory profileTestdataFactory = new ProfileTestdataFactory();
     private final MeetingTestdataFactory meetingTestdataFactory = new MeetingTestdataFactory();
 
-    private ProfileEntity[] attendees;
+    private ProfileEntity proposer;
+    private ProfileEntity partner;
+
     private MeetingEntity meeting;
 
     @Value("${diversity.url.baseUrl}")
@@ -51,9 +53,8 @@ class DiversityLunchEMailServiceTest {
 
     @BeforeEach
     void Setup(){
-        ProfileEntity proposer = profileTestdataFactory.buildEntity(1);
-        ProfileEntity partner = profileTestdataFactory.buildEntity(2);
-        attendees = new ProfileEntity[]{proposer, partner};
+        proposer = profileTestdataFactory.buildEntity(1);
+        partner = profileTestdataFactory.buildEntity(2);
         meeting = meetingTestdataFactory.matchedMeeting(proposer, partner);
     }
 
@@ -74,7 +75,7 @@ class DiversityLunchEMailServiceTest {
 
     String claimLinkAnchorTag = String.format("<a href=%s>Hier klicken</a>", BASE_URL + "/voucherClaim/" + meeting.getId());
 
-    String email = diversityLunchEMailService.createEmailTemplateHTML(attendees, meeting);
+    String email = diversityLunchEMailService.createEmailTemplateHTML(proposer, partner, meeting);
 
         assertTrue(email.contains(claimLinkAnchorTag));
     }
@@ -85,7 +86,7 @@ class DiversityLunchEMailServiceTest {
 
         String claimLinkAnchorTag = String.format("<a href=%s>Hier klicken</a>", BASE_URL + "/voucherClaim/" + meeting.getId());
 
-        String email = diversityLunchEMailService.createEmailTemplateHTML(attendees, meeting);
+        String email = diversityLunchEMailService.createEmailTemplateHTML(proposer, partner, meeting);
 
         assertFalse( email.contains(claimLinkAnchorTag));
     }
@@ -96,7 +97,7 @@ class DiversityLunchEMailServiceTest {
 
         String claimLinkAnchorTag = String.format("Hier kannst du deinen Lieferando Gutschein anfordern: %s", BASE_URL + "/voucherClaim/" + meeting.getId());
 
-        String email = diversityLunchEMailService.createEmailTemplatePlain(attendees, meeting);
+        String email = diversityLunchEMailService.createEmailTemplatePlain(proposer, partner, meeting);
 
         assertTrue(email.contains(claimLinkAnchorTag));
     }
@@ -107,8 +108,19 @@ class DiversityLunchEMailServiceTest {
 
         String claimLinkAnchorTag = String.format("Hier kannst du deinen Lieferando Gutschein anfordern: %s", BASE_URL + "/voucherClaim/" + meeting.getId());
 
-        String email = diversityLunchEMailService.createEmailTemplatePlain(attendees, meeting);
+        String email = diversityLunchEMailService.createEmailTemplatePlain(proposer, partner, meeting);
 
         assertFalse( email.contains(claimLinkAnchorTag));
+    }
+
+    @Test
+    void testCreateEmailTemplateHTML_expectsProposerNameForRecipient(){
+        when(voucherService.getAmountOfStoredVouchers()).thenReturn(0);
+
+        String name = String.format("Hallo <b>%s</b>",  proposer.getName());
+        String email = diversityLunchEMailService.createEmailTemplateHTML(proposer, partner, meeting);
+
+        assertTrue( email.contains(name));
+
     }
 }

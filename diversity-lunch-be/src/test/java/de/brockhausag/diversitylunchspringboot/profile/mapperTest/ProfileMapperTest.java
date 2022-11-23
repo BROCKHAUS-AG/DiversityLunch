@@ -1,10 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapperTest;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
-import de.brockhausag.diversitylunchspringboot.profile.data.CountryRepository;
 import de.brockhausag.diversitylunchspringboot.profile.logic.*;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.*;
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.CountryDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,17 +13,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.util.StreamUtils;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -53,6 +48,8 @@ class ProfileMapperTest {
     private WorkExperienceService workExperienceService;
     @Mock
     private SocialBackgroundService socialBackgroundService;
+    @Mock
+    private SocialBackgroundDiscriminationService socialBackgroundDiscriminationService;
 
     @Mock
     private CountryMapper countryMapper;
@@ -76,6 +73,8 @@ class ProfileMapperTest {
     private WorkExperienceMapper workExperienceMapper;
     @Mock
     private SocialBackgroundMapper socialBackgroundMapper;
+    @Mock
+    private SocialBackgroundDiscriminationMapper socialBackgroundDiscriminationMapper;
 
     @InjectMocks
     private ProfileMapper profileMapper;
@@ -102,6 +101,7 @@ class ProfileMapperTest {
         when(dietService.getEntityById(inputDto.getDiet().getId())).thenReturn(Optional.of(expectedEntity.getDiet()));
         when(sexualOrientationService.getEntityById(inputDto.getSexualOrientation().getId())).thenReturn(Optional.of(expectedEntity.getSexualOrientation()));
         when(socialBackgroundService.getEntityById(inputDto.getSocialBackground().getId())).thenReturn(Optional.of(expectedEntity.getSocialBackground()));
+        when(socialBackgroundDiscriminationService.getEntityById(inputDto.getSocialBackgroundDiscrimination().getId())).thenReturn(Optional.of(expectedEntity.getSocialBackgroundDiscrimination()));
 
         //Act
         Optional<ProfileEntity> profileEntityOptional = profileMapper.dtoToEntity(inputDto);
@@ -139,6 +139,7 @@ class ProfileMapperTest {
         when(this.sexualOrientationMapper.entityToDto(any(SexualOrientationEntity.class))).thenReturn(expectedDto.getSexualOrientation());
         when(this.workExperienceMapper.entityToDto(any(WorkExperienceEntity.class))).thenReturn(expectedDto.getWorkExperience());
         when(this.socialBackgroundMapper.entityToDto(any(SocialBackgroundEntity.class))).thenReturn(expectedDto.getSocialBackground());
+        when(this.socialBackgroundDiscriminationMapper.entityToDto(any(SocialBackgroundDiscriminationEntity.class))).thenReturn(expectedDto.getSocialBackgroundDiscrimination());
 
         //Act
         ProfileDto actualDto = this.profileMapper.entityToDto(inputEntity);
@@ -164,6 +165,7 @@ class ProfileMapperTest {
             when(this.sexualOrientationMapper.entityToDto(entity.getSexualOrientation())).thenReturn(dto.getSexualOrientation());
             when(this.workExperienceMapper.entityToDto(entity.getWorkExperience())).thenReturn(dto.getWorkExperience());
             when(this.socialBackgroundMapper.entityToDto(entity.getSocialBackground())).thenReturn(dto.getSocialBackground());
+            when(this.socialBackgroundDiscriminationMapper.entityToDto(entity.getSocialBackgroundDiscrimination())).thenReturn(dto.getSocialBackgroundDiscrimination());
             return null;
         }).forEach(unused->{});
 

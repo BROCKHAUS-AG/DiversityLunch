@@ -1,6 +1,4 @@
-import React, {
-    FC, useEffect, useState,
-} from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
@@ -19,7 +17,6 @@ import '../../styles/component-styles/adminPanel/adminPanel.scss';
 export const AdminPanel: FC = () => {
     const accountState = useSelector((store: AppStoreState) => store.account);
     const projectState = useSelector((store: AppStoreState) => store.project);
-    const hobbyState = useSelector((store: AppStoreState) => store.hobby);
     const [emailSuccess, setEmailSuccess] = useState(false);
     const dispatch = useDispatch();
     useEffect(() => {
@@ -57,7 +54,6 @@ export const AdminPanel: FC = () => {
             <UserList />
             <OptionsList state={projectState} fetch={projectFetch} title="Projektliste anpassen" addButtonLabel="Projekt hinzufügen" />
 
-            <OptionsList state={hobbyState} fetch={hobbyFetch} title="Hobbyliste anpassen" addButtonLabel="Hobby hinzufügen" />
             <VoucherUpload />
 
             <div className="customContainer">
