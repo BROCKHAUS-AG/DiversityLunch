@@ -96,7 +96,6 @@ public class MatchingService {
         meetingProposalRepository.save(bestMatch.proposalOne());
         meetingProposalRepository.save(bestMatch.proposalTwo());
     }
-
     private Question getRandomQuestionFromCategory(Category category) {
         List<Question> questions = Question.getAllQuestionsWithCategory(category);
         int randomIndex = random.nextInt(questions.size());

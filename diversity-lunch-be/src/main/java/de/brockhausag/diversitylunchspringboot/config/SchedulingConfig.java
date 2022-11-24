@@ -5,7 +5,6 @@ import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposa
 import de.brockhausag.diversitylunchspringboot.match.service.MatchingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -17,13 +16,14 @@ import java.util.List;
 @RequiredArgsConstructor
 @Configuration
 @EnableScheduling
-@Profile("!Test")
 public class SchedulingConfig {
 
     private final MatchingService matchingService;
     private final MeetingProposalRepository meetingProposalRepository;
+    
+    //Note: Cronjob naming scheme https://spring.io/blog/2020/11/10/new-in-spring-5-3-improved-cron-expressions
 
-    @Scheduled(cron = "0 2 * * * *")
+    @Scheduled(cron = "0 0 2 * * *")
     public void scheduleMatching() {
         LocalDate date = LocalDate.now();
         LocalDateTime dateTime = date.atTime(0, 0);

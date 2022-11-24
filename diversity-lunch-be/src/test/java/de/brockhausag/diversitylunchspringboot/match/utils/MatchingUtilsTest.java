@@ -2,6 +2,7 @@ package de.brockhausag.diversitylunchspringboot.match.utils;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
+import de.brockhausag.diversitylunchspringboot.meeting.model.Question;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,8 +12,9 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class MatchingUtilsTest {
@@ -132,28 +134,17 @@ class MatchingUtilsTest {
 
     @Test
     void testCurrentScoreProfileAttribute() {
-        int expected = 30;
+        int expected = 33;
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile3);
         assertEquals(expected, actual.currentScore());
-        assertTrue(actual.category() == Category.AGE ||
-                actual.category() == Category.WORK_EXPERIENCE ||
-                actual.category() == Category.DIET ||
-                actual.category() == Category.COUNTRY_OF_ORIGIN ||
-                actual.category() == Category.CUSTOMER ||
-                actual.category() == Category.EDUCATION ||
-                actual.category() == Category.HOBBY ||
-                actual.category() == Category.MOTHER_TONGUE ||
-                actual.category() == Category.RELIGION ||
-                actual.category() == Category.GENDER
-                );
-
+        assertNotNull(actual.category());
     }
 
     @Test
-    void testCurrentScoreProfileFor_KeineAngabe_InGender_ShouldHave_27_Points_With_different_profiles() {
+    void testCurrentScoreProfileFor_KeineAngabe_InGender_ShouldHave_30_Points_With_different_profiles() {
         profile3.getGender().setDescriptor("Keine Angabe");
         profile1.getGender().setDescriptor("Männlich");
-        final int expectedScore = 27;
+        final int expectedScore = 30;
         int actualScore;
 
         actualScore = MatchingUtils.getCurrentScore(profile1, profile3).currentScore();
@@ -172,5 +163,15 @@ class MatchingUtilsTest {
 
         assertEquals(expectedScore, actualScore);
     }
+
+    @Test
+    void getRandomQuestionFromCategory_EveryCategory_HasAtleast_One_Question() {
+        for (Category c: Category.values()) {
+            List<Question> questionList = Question.getAllQuestionsWithCategory(c);
+
+            assertTrue(questionList.size() > 0);
+        }
+    }
+
 
 }
