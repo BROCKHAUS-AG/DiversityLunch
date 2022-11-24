@@ -8,8 +8,6 @@ on:
 jobs:
   parse-version-number:
     runs-on: ubuntu-latest
-    outputs:
-      version-no: ${{ steps.parse_version_number.outputs.version_no }}
     steps:
     - id: parse_version_number
       run: |
