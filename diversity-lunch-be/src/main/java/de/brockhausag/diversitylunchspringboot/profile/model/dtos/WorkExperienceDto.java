@@ -1,9 +1,11 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.dtos;
 
 import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseDto;
+import de.brockhausag.diversitylunchspringboot.generics.WeightedDimension.WeightedDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -13,7 +15,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class WorkExperienceDto implements BaseDto {
+public class WorkExperienceDto implements WeightedDto {
     private Long id;
 
     @Schema(description = "Your workExperience in years", example = "2 Jahre")
@@ -21,4 +23,5 @@ public class WorkExperienceDto implements BaseDto {
     @NotNull
     @NotBlank
     private String descriptor;
+
 }

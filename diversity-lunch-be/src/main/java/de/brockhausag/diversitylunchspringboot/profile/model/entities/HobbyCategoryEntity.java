@@ -17,7 +17,7 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @Entity
-public class HobbyCategoryEntity {
+public class HobbyCategoryEntity implements BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,5 +37,9 @@ public class HobbyCategoryEntity {
         }
         final HobbyCategoryEntity other = (HobbyCategoryEntity) obj;
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
+    }
+
+    public Category getQuestionCategory() {
+        return Category.HOBBY;
     }
 }
