@@ -38,7 +38,7 @@ public class MatchingUtils {
     }
 
     private static int compareHobbies(ProfileEntity profile1, ProfileEntity profile2) {
-        return profile1.getHobby().getCategory() == profile2.getHobby().getCategory() ? 0 : 1;
+        return profile1.getHobby().getQuestionCategory() == profile2.getHobby().getQuestionCategory() ? 0 : 1;
     }
 
     private static int getScoreFromBaseEntities(ProfileEntity profile1, ProfileEntity profile2, List<Category> potentialQuestionsCategories) {
@@ -48,14 +48,11 @@ public class MatchingUtils {
         List<BaseEntity> baseEntitiesProfile2 = profile2.getBaseEntities();
 
         int entityScore;
-        int highestScore = 0;
-        // TODO: CATEGORY PER ID AUS DATENBANK ZIEHEN NICHT MEHR HARDCODEN
         for (int i = 0; i < baseEntitiesProfile1.size(); i++) {
             entityScore = compareBaseEntities(baseEntitiesProfile1.get(i), baseEntitiesProfile2.get(i));
 
-            if (entityScore != 0 && entityScore >= highestScore) {
-                potentialQuestionsCategories.add(Category.AGE);
-                highestScore = entityScore;
+            if (entityScore != 0) {
+                potentialQuestionsCategories.add(baseEntitiesProfile1.get(i).getQuestionCategory());
             }
 
             currentScore += entityScore;
@@ -69,14 +66,11 @@ public class MatchingUtils {
         List<WeightedEntity> weightedEntity2 = profile2.getWeightedEntities();
 
         int entityScore;
-        int highestScore = 0;
-        // TODO: CATEGORY PER ID AUS DATENBANK ZIEHEN NICHT MEHR HARDCODEN
         for (int i = 0; i < weightedEntity1.size(); i++) {
             entityScore = compareWeightedEntities(weightedEntity1.get(i), weightedEntity2.get(i));
 
-            if (entityScore != 0 && entityScore >= highestScore) {
-                potentialQuestionsCategories.add(Category.AGE);
-                highestScore = entityScore;
+            if (entityScore != 0) {
+                potentialQuestionsCategories.add(weightedEntity1.get(i).getQuestionCategory());
             }
 
             currentScore += entityScore;
@@ -94,7 +88,7 @@ public class MatchingUtils {
         return Math.abs(weight1 - weight2);
     }
 
-    private int compareBirthYear(ProfileEntity profile1, ProfileEntity profile2) {
+    private int compareBirthYear(ProfileEntity profile1, ProfileEntity profile2, List<Category> potentialQuestionsCategories) {
         int currentScore = 0;
         int i = Math.abs(profile1.getBirthYear() - profile2.getBirthYear());
         if (i > 3 && i <= 10) {
@@ -103,6 +97,7 @@ public class MatchingUtils {
             currentScore = 2;
         } else if (i >= 20) {
             currentScore = 3;
+            potentialQuestionsCategories.add(profile1.getHobby().getQuestionCategory());
         }
         return currentScore;
     }

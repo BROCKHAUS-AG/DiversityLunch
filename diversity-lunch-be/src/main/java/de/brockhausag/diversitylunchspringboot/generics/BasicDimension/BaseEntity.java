@@ -7,5 +7,5 @@ public interface BaseEntity {
     void setId(Long id);
     String getDescriptor();
     void setDescriptor(String descriptor);
-    Category getCategory();
+    Category getQuestionCategory();
 }
