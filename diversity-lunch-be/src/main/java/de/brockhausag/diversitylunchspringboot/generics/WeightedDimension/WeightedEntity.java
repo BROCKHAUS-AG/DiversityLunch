@@ -17,4 +17,5 @@ public interface WeightedEntity {
     void setDescriptor(String descriptor);
     void setWeight(int weight);
     int getWeight();
+
 }
