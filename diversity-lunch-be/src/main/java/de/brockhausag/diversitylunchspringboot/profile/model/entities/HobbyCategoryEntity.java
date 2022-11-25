@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
 import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntity;
+import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @Entity
-public class HobbyCategoryEntity implements BaseEntity {
+public class HobbyCategoryEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
 import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntity;
+import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,5 +37,9 @@ public class SexualOrientationEntity implements BaseEntity {
         }
         final SexualOrientationEntity other = (SexualOrientationEntity) obj;
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
+    }
+
+    public Category getCategory() {
+        return Category.SEXUAL_ORIENTATION;
     }
 }

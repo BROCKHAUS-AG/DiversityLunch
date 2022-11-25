@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
         import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntity;
+        import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
         import lombok.*;
         import javax.persistence.Entity;
         import javax.persistence.GeneratedValue;
@@ -32,6 +33,10 @@ public class SocialBackgroundDiscriminationEntity implements BaseEntity {
         }
         final SocialBackgroundDiscriminationEntity other = (SocialBackgroundDiscriminationEntity) obj;
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
+    }
+
+    public Category getCategory() {
+        return Category.SOCIAL_BACKGROUND_DISCRIMINATION;
     }
 
 }

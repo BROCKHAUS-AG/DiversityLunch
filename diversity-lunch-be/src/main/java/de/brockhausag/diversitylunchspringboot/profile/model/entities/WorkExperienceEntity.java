@@ -1,15 +1,13 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
 import de.brockhausag.diversitylunchspringboot.generics.WeightedDimension.WeightedEntity;
+import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
@@ -38,5 +36,9 @@ public class WorkExperienceEntity implements WeightedEntity {
         }
         final WorkExperienceEntity other = (WorkExperienceEntity) obj;
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
+    }
+
+    public Category getCategory(){
+        return Category.WORK_EXPERIENCE;
     }
 }

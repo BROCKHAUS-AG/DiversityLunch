@@ -27,12 +27,18 @@ public class MatchingUtils {
         currentScore += getScoreFromBaseEntities(profile1, profile2, potentialQuestionsCategories);
         //Second Score Weighted Entities
         currentScore += getScoreFromWeightedEntities(profile1,profile2,potentialQuestionsCategories);
-        //Third Score Birthdate and or miscellaneous
-        
+        //Third Score Birthdate and hobby or miscellaneous
+        currentScore += compareBirthYear(profile1, profile2);
+        currentScore += compareHobbies(profile1, profile2);
+
 
         int randomIndex = random.nextInt(potentialQuestionsCategories.size());
 
         return new ScoreAndCategory(currentScore, potentialQuestionsCategories.get(randomIndex));
+    }
+
+    private static int compareHobbies(ProfileEntity profile1, ProfileEntity profile2) {
+        return profile1.getHobby().getCategory() == profile2.getHobby().getCategory() ? 0 : 1;
     }
 
     private static int getScoreFromBaseEntities(ProfileEntity profile1, ProfileEntity profile2, List<Category> potentialQuestionsCategories) {
@@ -102,7 +108,7 @@ public class MatchingUtils {
     }
 
     private int compareBaseEntities(BaseEntity entity1, BaseEntity entity2) {
-        if (entity1.getId() == entity2.getId()) {
+        if (entity1.getId() == entity2.getId()){
             return 0;
         }
         return DIFFERENT_BASE_ENTITY_SCORE;
