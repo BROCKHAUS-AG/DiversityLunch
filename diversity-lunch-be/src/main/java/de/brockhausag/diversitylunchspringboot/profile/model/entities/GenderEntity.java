@@ -39,7 +39,7 @@ public class GenderEntity implements BaseEntity {
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
     }
 
-    public Category getCategory() {
+    public Category getQuestionCategory() {
         return Category.GENDER;
     }
 }

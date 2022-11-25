@@ -35,7 +35,7 @@ public class SocialBackgroundDiscriminationEntity implements BaseEntity {
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
     }
 
-    public Category getCategory() {
+    public Category getQuestionCategory() {
         return Category.SOCIAL_BACKGROUND_DISCRIMINATION;
     }
 
