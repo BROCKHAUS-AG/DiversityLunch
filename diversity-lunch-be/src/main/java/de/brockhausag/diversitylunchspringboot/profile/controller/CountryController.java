@@ -5,14 +5,13 @@ import de.brockhausag.diversitylunchspringboot.profile.logic.CountryService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.CountryMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.CountryDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.CountryEntity;
-import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericBaseModelController;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseModelController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/country")
 @RestController
-public class CountryController extends GenericBaseModelController<
+public class CountryController extends BaseModelController<
         CountryDto, CountryEntity, CountryRepository, CountryService, CountryMapper> {
     public CountryController(CountryMapper mapper, CountryService service) {
         super(mapper, service);

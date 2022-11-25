@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
-import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.BaseEntity;
+import de.brockhausag.diversitylunchspringboot.generics.WeightedDimension.WeightedEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,12 +16,14 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Getter
 @Setter
-public class WorkExperienceEntity implements BaseEntity {
+public class WorkExperienceEntity implements WeightedEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String descriptor;
+
+    private  int weight;
 
     @Override
     public int hashCode() {

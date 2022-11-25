@@ -6,6 +6,7 @@ import de.brockhausag.diversitylunchspringboot.profile.model.entities.WorkExperi
 public class WorkExperienceTestDataFactory {
     private static final  int numberOfCompleteSets = 3;
     private static final Long[] ids = {666L, 1L, 2L, 3L};
+    private static final int[] weights = {0,1,2,3};
 
 
     private static final String[] descriptors =  {"incomplete","0-3 Jahre", "4-10 Jahre", "über 10 Jahre"};
@@ -20,9 +21,9 @@ public class WorkExperienceTestDataFactory {
 
     public WorkExperienceEntity buildEntity(int setNumber){
         if ( (setNumber >= 1) && setNumber <= numberOfCompleteSets){
-            return new WorkExperienceEntity(ids[setNumber], descriptors[setNumber]);
+            return new WorkExperienceEntity(ids[setNumber], descriptors[setNumber], weights[setNumber]);
         }
-        return new WorkExperienceEntity(ids[1], descriptors[1]);
+        return new WorkExperienceEntity(ids[1], descriptors[1], weights[1]);
     }
 
     public WorkExperienceEntity buildEntityWithoutId(){

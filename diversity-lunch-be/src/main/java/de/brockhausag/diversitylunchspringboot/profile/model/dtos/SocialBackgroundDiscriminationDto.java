@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.dtos;
 
-        import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.BaseDto;
+        import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseDto;
         import io.swagger.v3.oas.annotations.media.Schema;
         import lombok.*;
 

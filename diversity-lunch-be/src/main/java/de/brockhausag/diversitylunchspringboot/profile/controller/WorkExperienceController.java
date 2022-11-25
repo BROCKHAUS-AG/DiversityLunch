@@ -5,13 +5,13 @@ import de.brockhausag.diversitylunchspringboot.profile.logic.WorkExperienceServi
 import de.brockhausag.diversitylunchspringboot.profile.mapper.WorkExperienceMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.WorkExperienceDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.WorkExperienceEntity;
-import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericBaseModelController;
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseModelController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/work-experience")
 @RestController
-public class WorkExperienceController extends GenericBaseModelController<
+public class WorkExperienceController extends BaseModelController<
         WorkExperienceDto, WorkExperienceEntity, WorkExperienceRepository, WorkExperienceService, WorkExperienceMapper> {
     public WorkExperienceController(WorkExperienceMapper mapper, WorkExperienceService service) {
         super(mapper, service);

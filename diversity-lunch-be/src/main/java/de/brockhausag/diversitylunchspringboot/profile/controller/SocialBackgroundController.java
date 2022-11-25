@@ -5,13 +5,13 @@ import de.brockhausag.diversitylunchspringboot.profile.logic.SocialBackgroundSer
 import de.brockhausag.diversitylunchspringboot.profile.mapper.SocialBackgroundMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.SocialBackgroundDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.SocialBackgroundEntity;
-import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericBaseModelController;
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseModelController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/socialBackground")
 @RestController
-public class SocialBackgroundController extends GenericBaseModelController<SocialBackgroundDto, SocialBackgroundEntity, SocialBackgroundRepository, SocialBackgroundService, SocialBackgroundMapper> {
+public class SocialBackgroundController extends BaseModelController<SocialBackgroundDto, SocialBackgroundEntity, SocialBackgroundRepository, SocialBackgroundService, SocialBackgroundMapper> {
     public SocialBackgroundController(SocialBackgroundMapper mapper, SocialBackgroundService service) {
         super(mapper, service);
     }

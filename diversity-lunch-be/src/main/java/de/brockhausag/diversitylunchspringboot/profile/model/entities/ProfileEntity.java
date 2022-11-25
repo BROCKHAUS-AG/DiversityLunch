@@ -1,12 +1,16 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
 
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntity;
+import de.brockhausag.diversitylunchspringboot.generics.WeightedDimension.WeightedEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -62,6 +66,26 @@ public class ProfileEntity {
         final ProfileEntity other = (ProfileEntity) obj;
         return other.id.equals(this.id) && other.name.equals(this.name) &&
                 other.email.equals(this.email) && (other.birthYear == this.birthYear);
+    }
+
+    public List<BaseEntity> getBaseEntities(){
+        List<BaseEntity> baseEntities = new ArrayList<>();
+        baseEntities.add(originCountry);
+        baseEntities.add(diet);
+        baseEntities.add(education);
+        baseEntities.add(gender);
+        baseEntities.add(motherTongue);
+        baseEntities.add(project);
+        baseEntities.add(religion);
+        baseEntities.add(sexualOrientation);
+        baseEntities.add(socialBackground);
+        baseEntities.add(socialBackgroundDiscrimination);
+        return baseEntities;
+    }
+    public List<WeightedEntity> getWeightedEntities(){
+        List<WeightedEntity> weightedEntitites = new ArrayList<>();
+        weightedEntitites.add(workExperience);
+        return weightedEntitites;
     }
 
 }

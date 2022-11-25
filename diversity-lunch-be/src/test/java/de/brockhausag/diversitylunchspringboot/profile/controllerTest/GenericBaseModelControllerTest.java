@@ -4,8 +4,8 @@ import de.brockhausag.diversitylunchspringboot.dataFactories.BaseModelTestDataFa
 import de.brockhausag.diversitylunchspringboot.dataFactories.TestBaseDto;
 import de.brockhausag.diversitylunchspringboot.dataFactories.TestBaseEntity;
 import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
-import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericBaseModelController;
-import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericBaseEntityService;
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseModelController;
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntityService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +28,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class GenericBaseModelControllerTest {
     private interface TestRepositoryType extends CrudRepository<TestBaseEntity, Long> {}
-    private static class TestServiceType extends GenericBaseEntityService<TestBaseEntity, TestRepositoryType> {
+    private static class TestServiceType extends BaseEntityService<TestBaseEntity, TestRepositoryType> {
         public TestServiceType(TestRepositoryType repository) {
             super(repository);
         }
@@ -42,8 +42,8 @@ public class GenericBaseModelControllerTest {
     private TestServiceType service ;
 
     @InjectMocks
-    private GenericBaseModelController<TestBaseDto,TestBaseEntity,
-                TestRepositoryType,TestServiceType, Mapper<TestBaseDto, TestBaseEntity> > controller;
+    private BaseModelController<TestBaseDto,TestBaseEntity,
+                    TestRepositoryType,TestServiceType, Mapper<TestBaseDto, TestBaseEntity> > controller;
 
     @BeforeEach
     void setup(){

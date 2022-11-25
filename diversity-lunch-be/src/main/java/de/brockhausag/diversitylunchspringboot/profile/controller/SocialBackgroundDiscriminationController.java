@@ -4,13 +4,13 @@ import de.brockhausag.diversitylunchspringboot.profile.logic.SocialBackgroundDis
 import de.brockhausag.diversitylunchspringboot.profile.mapper.SocialBackgroundDiscriminationMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.SocialBackgroundDiscriminationDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.SocialBackgroundDiscriminationEntity;
-import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericBaseModelController;
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseModelController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/social-background-discrimination")
 @RestController
-public class SocialBackgroundDiscriminationController extends GenericBaseModelController<
+public class SocialBackgroundDiscriminationController extends BaseModelController<
         SocialBackgroundDiscriminationDto, SocialBackgroundDiscriminationEntity, SocialBackgroundDiscriminationRepository, SocialBackgroundDiscriminationService, SocialBackgroundDiscriminationMapper> {
 public SocialBackgroundDiscriminationController(SocialBackgroundDiscriminationMapper mapper, SocialBackgroundDiscriminationService service) { super(mapper, service);}
 }

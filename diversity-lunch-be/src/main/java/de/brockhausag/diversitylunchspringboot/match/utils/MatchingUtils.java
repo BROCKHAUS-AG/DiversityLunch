@@ -1,9 +1,12 @@
 package de.brockhausag.diversitylunchspringboot.match.utils;
 
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntity;
+import de.brockhausag.diversitylunchspringboot.generics.WeightedDimension.WeightedEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.util.StreamUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,44 +17,63 @@ import java.util.Random;
 public class MatchingUtils {
 
     private static final Random random = new Random();
+    public static final int DIFFERENT_BASE_ENTITY_SCORE = 3;
 
 
     public ScoreAndCategory getCurrentScore(ProfileEntity profile1, ProfileEntity profile2) {
-        List<Category> categories = new ArrayList<>();
+        List<Category> potentialQuestionsCategories = new ArrayList<>();
         int currentScore = 0;
+
+        List<BaseEntity> baseEntitiesProfile1 = profile1.getBaseEntities();
+        List<BaseEntity> baseEntitiesProfile2 = profile2.getBaseEntities();
+
+        int entityScore;
+        StreamUtils.zip(baseEntitiesProfile1.stream(), baseEntitiesProfile2.stream(), (baseEntity1, baseEntity2) -> {
+
+
+            // TODO: CATEGORY PER ID AUS DATENBANK ZIEHEN NICHT MEHR HARDCODEN
+                entityScore = compareBaseEntities(baseEntity1, baseEntity2);
+                if (entityScore != 0){
+                    potentialQuestionsCategories.add(baseEntity1.)
+                }
+
+
+                }).forEach(unused->{});
+            when
+
         //GeschlechtPunkte
-        currentScore += compareProfileAttr(categories, profile1.getGender().getDescriptor(), profile2.getGender().getDescriptor(), Category.GENDER);
+        currentScore += compareBaseEntities(profile1.getGender().getDescriptor(), profile2.getGender().getDescriptor());
         //KundePunkte
-        currentScore += compareProfileAttr(categories, profile1.getProject().getDescriptor(), profile2.getProject().getDescriptor(), Category.CUSTOMER);
+        currentScore += compareBaseEntities(profile1.getProject().getDescriptor(), profile2.getProject().getDescriptor());
         //HerkunftslandPunkte
-        currentScore += compareProfileAttr(categories, profile1.getOriginCountry().getDescriptor(), profile2.getOriginCountry().getDescriptor(), Category.COUNTRY_OF_ORIGIN);
+        currentScore += compareBaseEntities(profile1.getOriginCountry().getDescriptor(), profile2.getOriginCountry().getDescriptor());
         //MuttersprachePunkte
-        currentScore += compareProfileAttr(categories, profile1.getMotherTongue().getDescriptor(), profile2.getMotherTongue().getDescriptor(), Category.MOTHER_TONGUE);
+        currentScore += compareBaseEntities(profile1.getMotherTongue().getDescriptor(), profile2.getMotherTongue().getDescriptor());
         //HobbyPunkte
-        currentScore += compareProfileAttr(categories, profile1.getHobby().getCategory().getDescriptor(), profile2.getHobby().getCategory().getDescriptor(), Category.HOBBY);
+        currentScore += compareBaseEntities(profile1.getHobby().getCategory().getDescriptor(), profile2.getHobby().getCategory().getDescriptor());
         //ReligionsPunkte
-        currentScore += compareProfileAttr(categories, profile1.getReligion().getDescriptor(), profile2.getReligion().getDescriptor(), Category.RELIGION);
+        currentScore += compareBaseEntities(profile1.getReligion().getDescriptor(), profile2.getReligion().getDescriptor());
         //BildungswegPunkte
-        currentScore += compareProfileAttr(categories, profile1.getEducation().getDescriptor(), profile2.getEducation().getDescriptor(), Category.EDUCATION);
+        currentScore += compareBaseEntities(profile1.getEducation().getDescriptor(), profile2.getEducation().getDescriptor());
         //ErnährungsweisePunkte
-        currentScore += compareProfileAttr(categories, profile1.getDiet().getDescriptor(), profile2.getDiet().getDescriptor(), Category.DIET);
+        currentScore += compareBaseEntities(profile1.getDiet().getDescriptor(), profile2.getDiet().getDescriptor());
         // Sexuelle orienteirung
-        currentScore += compareProfileAttr(categories, profile1.getSexualOrientation().getDescriptor(), profile2.getSexualOrientation().getDescriptor(), Category.SEXUAL_ORIENTATION);
+        currentScore += compareBaseEntities(profile1.getSexualOrientation().getDescriptor(), profile2.getSexualOrientation().getDescriptor());
         // Social Background
-        currentScore += compareProfileAttr(categories, profile1.getSocialBackground().getDescriptor(), profile2.getSocialBackground().getDescriptor(), Category.SOCIAL_BACKGROUND);
+        currentScore += compareBaseEntities(profile1.getSocialBackground().getDescriptor(), profile2.getSocialBackground().getDescriptor());
         // Social Background Discrimination
-        currentScore += compareProfileAttr(categories, profile1.getSocialBackgroundDiscrimination().getDescriptor(), profile2.getSocialBackgroundDiscrimination().getDescriptor(), Category.SOCIAL_BACKGROUND_DISCRIMINATION);
+        currentScore += compareBaseEntities(profile1.getSocialBackgroundDiscrimination().getDescriptor(), profile2.getSocialBackgroundDiscrimination().getDescriptor());
 
-        currentScore = getScoreAndAddCategoriesForBirthYearAndWorkExperience(currentScore, categories, profile1, profile2);
+        currentScore = getScoreAndAddCategoriesForBirthYearAndWorkExperience(currentScore, potentialQuestionsCategories, profile1, profile2);
 
-        int randomIndex = random.nextInt(categories.size());
+        int randomIndex = random.nextInt(potentialQuestionsCategories.size());
 
-        return new ScoreAndCategory(currentScore, categories.get(randomIndex));
+        return new ScoreAndCategory(currentScore, potentialQuestionsCategories.get(randomIndex));
     }
 
     private int getScoreAndAddCategoriesForBirthYearAndWorkExperience(int score, List<Category> categories, ProfileEntity profile1, ProfileEntity profile2) {
         int scoreFromBirthYear = compareBirthYear(profile1, profile2);
-        int scoreFromWorkExperience = compareWorkExperience(profile1, profile2);
+        int scoreFromWorkExperience = scoreWeightedEntities(profile1, profile2);
 
         if (scoreFromBirthYear == 3) {
             categories.add(Category.AGE);
@@ -80,20 +102,14 @@ public class MatchingUtils {
         return score;
     }
 
-    private int compareWorkExperience(ProfileEntity profile1, ProfileEntity profile2) {
-        int currentScore;
-        if (profile1.getWorkExperience().getDescriptor().equals(profile2.getWorkExperience().getDescriptor())) {
-            currentScore = 1;
+    private int scoreWeightedEntities(WeightedEntity weightedEntity1, WeightedEntity weightedEntity2) {
+        int weight1 = weightedEntity1.getWeight();
+        int weight2 = weightedEntity2.getWeight();
 
-        } else if ((profile1.getWorkExperience().getDescriptor().equals("0-3 Jahre")
-                && profile2.getWorkExperience().getDescriptor().equals("über 10 Jahre"))
-                || (profile1.getWorkExperience().getDescriptor().equals("über 10 Jahre")
-                && profile2.getWorkExperience().getDescriptor().equals("0-3 Jahre"))) {
-            currentScore = 3;
-        } else {
-            currentScore = 2;
+        if (weight1 == 0 || weight2 == 0){
+            return 0;
         }
-        return currentScore;
+        return Math.abs(weight1- weight2);
     }
 
     private int compareBirthYear(ProfileEntity profile1, ProfileEntity profile2) {
@@ -109,13 +125,10 @@ public class MatchingUtils {
         return currentScore;
     }
 
-    private int compareProfileAttr(List<Category> categories, String attr1, String attr2, Category category) {
-        if(attr1.equalsIgnoreCase("keine angabe") || attr2.equalsIgnoreCase("keine angabe"))
+    private int compareBaseEntities(BaseEntity entity1, BaseEntity entity2) {
+        if (entity1.getId() == entity2.getId()) {
             return 0;
-        if (!attr1.equals(attr2)) {
-            categories.add(category);
-            return 3;
         }
-        return 0;
+        return DIFFERENT_BASE_ENTITY_SCORE;
     }
 }
