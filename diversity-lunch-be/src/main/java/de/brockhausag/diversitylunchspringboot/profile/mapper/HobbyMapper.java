@@ -23,7 +23,7 @@ public class HobbyMapper {
         HobbyDto dto = new HobbyDto();
         dto.setId(entity.getId());
         dto.setDescriptor(entity.getDescriptor());
-        dto.setCategory(categoryMapper.entityToDto(entity.getQuestionCategory()));
+        dto.setCategory(categoryMapper.entityToDto(entity.getCategory()));
 
         return dto;
     }

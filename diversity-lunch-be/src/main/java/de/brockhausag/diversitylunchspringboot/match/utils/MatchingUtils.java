@@ -4,7 +4,6 @@ import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntit
 import de.brockhausag.diversitylunchspringboot.generics.WeightedDimension.WeightedEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
-import liquibase.pro.packaged.L;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,7 +14,6 @@ import java.util.Random;
 @Slf4j
 @UtilityClass
 public class MatchingUtils {
-
     private static final Random random = new Random();
     public static final int STANDARD_SCORE_BY_DIFFERENCE = 3;
 
