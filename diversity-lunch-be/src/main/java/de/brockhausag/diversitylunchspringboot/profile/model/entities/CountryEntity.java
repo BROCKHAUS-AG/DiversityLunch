@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
 import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntity;
+import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -35,5 +36,7 @@ public class CountryEntity implements BaseEntity {
         final CountryEntity other = (CountryEntity) obj;
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
     }
-
+    public Category getCategory() {
+        return Category.COUNTRY_OF_ORIGIN;
+    }
 }

@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
 import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntity;
+import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,5 +38,9 @@ public class HobbyEntity {
         }
         final HobbyEntity other = (HobbyEntity) obj;
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor) && other.category.equals(this.category);
+    }
+
+    public Category getCategory() {
+        return Category.HOBBY;
     }
 }

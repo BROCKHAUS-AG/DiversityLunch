@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
 import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntity;
+import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -33,6 +34,10 @@ public class ProjectEntity implements BaseEntity {
         }
         final ProjectEntity other = (ProjectEntity) obj;
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
+    }
+
+    public Category getCategory() {
+        return Category.CUSTOMER;
     }
 
 }

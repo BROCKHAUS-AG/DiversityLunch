@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.generics.WeightedDimension;
 
 import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntity;
+import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 
 /*
 * Why does this interface not extend BaseEntity?
@@ -11,6 +12,7 @@ import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntit
 * */
 public interface WeightedEntity {
 
+    Category getCategory();
     Long getId();
     void setId(Long id);
     String getDescriptor();
