@@ -2,7 +2,7 @@ package de.brockhausag.diversitylunchspringboot.profile.serviceTest;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.BaseModelTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.TestBaseEntity;
-import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.GenericBaseEntityService;
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntityService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +27,7 @@ public class GenericBaseEntityServiceTest {
     @Mock
     private TestRepositoryType testRepository;
     @InjectMocks
-    private GenericBaseEntityService<TestBaseEntity, TestRepositoryType> service;
+    private BaseEntityService<TestBaseEntity, TestRepositoryType> service;
 
     @BeforeEach
     void setup(){

@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.profile.utils.baseApi;
+package de.brockhausag.diversitylunchspringboot.generics.BasicDimension;
 
 public interface BaseEntity {
     Long getId();

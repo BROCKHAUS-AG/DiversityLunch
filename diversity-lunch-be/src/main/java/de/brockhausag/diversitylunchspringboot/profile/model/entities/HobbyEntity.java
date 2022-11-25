@@ -1,5 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

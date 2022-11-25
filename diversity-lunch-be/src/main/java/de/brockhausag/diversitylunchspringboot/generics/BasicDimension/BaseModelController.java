@@ -1,5 +1,6 @@
-package de.brockhausag.diversitylunchspringboot.profile.utils.baseApi;
+package de.brockhausag.diversitylunchspringboot.generics.BasicDimension;
 
+import de.brockhausag.diversitylunchspringboot.utils.ErrorHandlingController;
 import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
@@ -10,11 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-public class GenericBaseModelController<
+public class BaseModelController<
         DtoType extends BaseDto,
         EntityType extends BaseEntity,
         RepositoryType extends CrudRepository<EntityType, Long>,
-        ServiceType extends GenericBaseEntityService<EntityType, RepositoryType>,
+        ServiceType extends BaseEntityService<EntityType, RepositoryType>,
         MapperType extends Mapper<DtoType, EntityType>>
         extends ErrorHandlingController {
 
@@ -22,7 +23,7 @@ public class GenericBaseModelController<
     private final MapperType mapper;
     private final ServiceType service;
 
-    public GenericBaseModelController(MapperType mapper, ServiceType service) {
+    public BaseModelController(MapperType mapper, ServiceType service) {
         this.mapper = mapper;
         this.service = service;
     }

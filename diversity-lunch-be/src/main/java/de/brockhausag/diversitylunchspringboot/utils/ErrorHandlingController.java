@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.profile.utils.baseApi;
+package de.brockhausag.diversitylunchspringboot.utils;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;

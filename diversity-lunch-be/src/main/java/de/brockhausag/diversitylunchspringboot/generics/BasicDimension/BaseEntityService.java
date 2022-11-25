@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.profile.utils.baseApi;
+package de.brockhausag.diversitylunchspringboot.generics.BasicDimension;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -7,13 +7,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class GenericBaseEntityService<
+public class BaseEntityService<
         EntityType extends BaseEntity,
         RepositoryType extends CrudRepository<EntityType, Long> > {
 
     private final RepositoryType repository;
 
-    public GenericBaseEntityService(RepositoryType repository) {
+    public BaseEntityService(RepositoryType repository) {
         this.repository = repository;
     }
 

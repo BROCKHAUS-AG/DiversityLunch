@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
-import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.BaseEntity;
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntity;
 import lombok.*;
 
 @NoArgsConstructor
