@@ -4,6 +4,7 @@ import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntit
 import de.brockhausag.diversitylunchspringboot.generics.WeightedDimension.WeightedEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import liquibase.pro.packaged.L;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,7 +17,7 @@ import java.util.Random;
 public class MatchingUtils {
 
     private static final Random random = new Random();
-    public static final int DIFFERENT_BASE_ENTITY_SCORE = 3;
+    public static final int STANDARD_SCORE_BY_DIFFERENCE = 3;
 
 
     public ScoreAndCategory getCurrentScore(ProfileEntity profile1, ProfileEntity profile2) {
@@ -28,17 +29,20 @@ public class MatchingUtils {
         //Second Score Weighted Entities
         currentScore += getScoreFromWeightedEntities(profile1,profile2,potentialQuestionsCategories);
         //Third Score Birthdate and hobby or miscellaneous
-        currentScore += compareBirthYear(profile1, profile2);
-        currentScore += compareHobbies(profile1, profile2);
-
+        currentScore += compareBirthYear(profile1, profile2, potentialQuestionsCategories);
+        currentScore += compareHobbies(profile1, profile2, potentialQuestionsCategories);
 
         int randomIndex = random.nextInt(potentialQuestionsCategories.size());
 
         return new ScoreAndCategory(currentScore, potentialQuestionsCategories.get(randomIndex));
     }
 
-    private static int compareHobbies(ProfileEntity profile1, ProfileEntity profile2) {
-        return profile1.getHobby().getQuestionCategory() == profile2.getHobby().getQuestionCategory() ? 0 : 1;
+    private static int compareHobbies(ProfileEntity profile1, ProfileEntity profile2,List<Category> potentialQuestionsCategories ) {
+        if(profile1.getHobby().getQuestionCategory() == profile2.getHobby().getQuestionCategory()){
+            return 0;
+        }
+        potentialQuestionsCategories.add(Category.HOBBY);
+        return STANDARD_SCORE_BY_DIFFERENCE;
     }
 
     private static int getScoreFromBaseEntities(ProfileEntity profile1, ProfileEntity profile2, List<Category> potentialQuestionsCategories) {
@@ -89,23 +93,24 @@ public class MatchingUtils {
     }
 
     private int compareBirthYear(ProfileEntity profile1, ProfileEntity profile2, List<Category> potentialQuestionsCategories) {
-        int currentScore = 0;
-        int i = Math.abs(profile1.getBirthYear() - profile2.getBirthYear());
-        if (i > 3 && i <= 10) {
-            currentScore = 1;
-        } else if ((i < 20) && (i > 10)) {
-            currentScore = 2;
-        } else if (i >= 20) {
-            currentScore = 3;
-            potentialQuestionsCategories.add(profile1.getHobby().getQuestionCategory());
+        final int TWENTY_YEARS_DIFFERENCE = 20;
+        final int TEN_YEARS_DIFFERENCE = 10;
+
+
+        int ageGap = Math.abs(profile1.getBirthYear() - profile2.getBirthYear());
+        if(ageGap < TEN_YEARS_DIFFERENCE) {
+            return 1;
+        } else if(ageGap < TWENTY_YEARS_DIFFERENCE){
+            return 2;
         }
-        return currentScore;
+        potentialQuestionsCategories.add(Category.AGE);
+        return 3;
     }
 
     private int compareBaseEntities(BaseEntity entity1, BaseEntity entity2) {
         if (entity1.getId() == entity2.getId()){
             return 0;
         }
-        return DIFFERENT_BASE_ENTITY_SCORE;
+        return STANDARD_SCORE_BY_DIFFERENCE;
     }
 }
