@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
 import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntity;
+import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import lombok.*;
 
 @NoArgsConstructor
@@ -28,4 +29,7 @@ public class TestBaseEntity implements BaseEntity {
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
     }
 
+    public Category getQuestionCategory() {
+        return Category.EDUCATION;
+    }
 }
