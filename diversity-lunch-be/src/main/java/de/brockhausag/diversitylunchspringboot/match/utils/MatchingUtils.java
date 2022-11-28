@@ -28,20 +28,12 @@ public class MatchingUtils {
         currentScore += getScoreFromWeightedEntities(profile1,profile2,potentialQuestionsCategories);
         //Third Score Birthdate and hobby or miscellaneous
         currentScore += compareBirthYear(profile1, profile2, potentialQuestionsCategories);
-        currentScore += compareHobbies(profile1, profile2, potentialQuestionsCategories);
 
         int randomIndex = random.nextInt(potentialQuestionsCategories.size());
 
         return new ScoreAndCategory(currentScore, potentialQuestionsCategories.get(randomIndex));
     }
 
-    private static int compareHobbies(ProfileEntity profile1, ProfileEntity profile2,List<Category> potentialQuestionsCategories ) {
-        if(profile1.getHobby().getQuestionCategory() == profile2.getHobby().getQuestionCategory()){
-            return 0;
-        }
-        potentialQuestionsCategories.add(Category.HOBBY);
-        return STANDARD_SCORE_BY_DIFFERENCE;
-    }
 
     private static int getScoreFromBaseEntities(ProfileEntity profile1, ProfileEntity profile2, List<Category> potentialQuestionsCategories) {
         int currentScore = 0;
@@ -51,16 +43,27 @@ public class MatchingUtils {
 
         int entityScore;
         for (int i = 0; i < baseEntitiesProfile1.size(); i++) {
-            entityScore = compareBaseEntities(baseEntitiesProfile1.get(i), baseEntitiesProfile2.get(i));
+            BaseEntity entity1 = baseEntitiesProfile1.get(i);
+            BaseEntity entity2 = baseEntitiesProfile2.get(i);
+
+            if (entityShouldBeIgnored(entity1) || entityShouldBeIgnored(entity2)){
+                continue;
+            }
+            entityScore = compareBaseEntities(entity1, entity2);
 
             if (entityScore != 0) {
-                potentialQuestionsCategories.add(baseEntitiesProfile1.get(i).getQuestionCategory());
+                potentialQuestionsCategories.add(entity1.getQuestionCategory());
             }
 
             currentScore += entityScore;
         }
         return currentScore;
     }
+
+    private static boolean entityShouldBeIgnored(BaseEntity entity) {
+        return entity.getDescriptor().equalsIgnoreCase("keine angabe");
+    }
+
     private static int getScoreFromWeightedEntities(ProfileEntity profile1, ProfileEntity profile2, List<Category> potentialQuestionsCategories) {
         int currentScore = 0;
 
@@ -104,6 +107,7 @@ public class MatchingUtils {
         potentialQuestionsCategories.add(Category.AGE);
         return 3;
     }
+
 
     private int compareBaseEntities(BaseEntity entity1, BaseEntity entity2) {
         if (entity1.getId() == entity2.getId()){
