@@ -1,11 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.generics.BasicDimension;
 
-import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
+import de.brockhausag.diversitylunchspringboot.generics.Dimension.DimensionEntity;
 
-public interface BaseEntity {
-    Long getId();
-    void setId(Long id);
-    String getDescriptor();
-    void setDescriptor(String descriptor);
-    Category getQuestionCategory();
+public interface BaseEntity extends DimensionEntity {
+
 }

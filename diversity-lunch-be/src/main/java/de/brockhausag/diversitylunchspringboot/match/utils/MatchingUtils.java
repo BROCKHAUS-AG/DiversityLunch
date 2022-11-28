@@ -17,6 +17,8 @@ public class MatchingUtils {
     private static final Random random = new Random();
     public static final int STANDARD_SCORE_BY_DIFFERENCE = 3;
 
+    private static final int EQUAL_SCORE = 0;
+
 
     public ScoreAndCategory getCurrentScore(ProfileEntity profile1, ProfileEntity profile2) {
         List<Category> potentialQuestionsCategories = new ArrayList<>();
@@ -26,7 +28,7 @@ public class MatchingUtils {
         currentScore += getScoreFromBaseEntities(profile1, profile2, potentialQuestionsCategories);
         //Second Score Weighted Entities
         currentScore += getScoreFromWeightedEntities(profile1,profile2,potentialQuestionsCategories);
-        //Third Score Birthdate and hobby or miscellaneous
+        //Third Score Birthdate or miscellaneous
         currentScore += compareBirthYear(profile1, profile2, potentialQuestionsCategories);
 
         int randomIndex = random.nextInt(potentialQuestionsCategories.size());
@@ -51,7 +53,7 @@ public class MatchingUtils {
             }
             entityScore = compareBaseEntities(entity1, entity2);
 
-            if (entityScore != 0) {
+            if (entityScore != EQUAL_SCORE) {
                 potentialQuestionsCategories.add(entity1.getQuestionCategory());
             }
 
@@ -67,15 +69,18 @@ public class MatchingUtils {
     private static int getScoreFromWeightedEntities(ProfileEntity profile1, ProfileEntity profile2, List<Category> potentialQuestionsCategories) {
         int currentScore = 0;
 
-        List<WeightedEntity> weightedEntity1 = profile1.getWeightedEntities();
-        List<WeightedEntity> weightedEntity2 = profile2.getWeightedEntities();
+        List<WeightedEntity> weightedEntities1 = profile1.getWeightedEntities();
+        List<WeightedEntity> weightedEntities2 = profile2.getWeightedEntities();
 
         int entityScore;
-        for (int i = 0; i < weightedEntity1.size(); i++) {
-            entityScore = compareWeightedEntities(weightedEntity1.get(i), weightedEntity2.get(i));
+        for (int i = 0; i < weightedEntities1.size(); i++) {
+            WeightedEntity weightedEntity1 = weightedEntities1.get(i);
+            WeightedEntity weightedEntity2 = weightedEntities2.get(i);
 
-            if (entityScore != 0) {
-                potentialQuestionsCategories.add(weightedEntity1.get(i).getQuestionCategory());
+            entityScore = compareWeightedEntities(weightedEntity1, weightedEntity2);
+
+            if (entityScore != EQUAL_SCORE) {
+                potentialQuestionsCategories.add(weightedEntity1.getQuestionCategory());
             }
 
             currentScore += entityScore;
@@ -88,7 +93,7 @@ public class MatchingUtils {
         int weight2 = weightedEntity2.getWeight();
 
         if (weight1 == 0 || weight2 == 0) {
-            return 0;
+            return EQUAL_SCORE;
         }
         return Math.abs(weight1 - weight2);
     }
@@ -97,21 +102,24 @@ public class MatchingUtils {
         final int TWENTY_YEARS_DIFFERENCE = 20;
         final int TEN_YEARS_DIFFERENCE = 10;
 
+        final int LOWEST_SCORE = 1;
+        final int MIDDLE_SCORE = 2;
+        final int HIGHEST_SCORE = 3;
 
         int ageGap = Math.abs(profile1.getBirthYear() - profile2.getBirthYear());
         if(ageGap < TEN_YEARS_DIFFERENCE) {
-            return 1;
+            return LOWEST_SCORE;
         } else if(ageGap < TWENTY_YEARS_DIFFERENCE){
-            return 2;
+            return MIDDLE_SCORE;
         }
         potentialQuestionsCategories.add(Category.AGE);
-        return 3;
+        return HIGHEST_SCORE;
     }
 
 
     private int compareBaseEntities(BaseEntity entity1, BaseEntity entity2) {
         if (entity1.getId() == entity2.getId()){
-            return 0;
+            return EQUAL_SCORE;
         }
         return STANDARD_SCORE_BY_DIFFERENCE;
     }
