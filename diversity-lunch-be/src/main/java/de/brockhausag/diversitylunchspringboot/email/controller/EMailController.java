@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,13 +24,18 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class EMailController {
     private final DiversityLunchEMailService diversityLunchEMailService;
+
+    @Value("${diversity.url.baseUrl}")
+    private String BASE_URL;
+
     @Operation(summary = "Test Mail wird versendet.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Test Mail wurde versendet."),
     })
     @PostMapping("/sendTestMail")
     public ResponseEntity<String> sendTestMail(){
-        String body = "Datum: " + LocalDateTime.now();
+        String claimLink = BASE_URL + "/voucherClaim/testMeeting";
+        String body = "Datum: " + LocalDateTime.now() + "\n" + "Claim-Link: " + claimLink;
         try {
             this.diversityLunchEMailService.sendEmail("test@test.de", "Testsubject", body, body);
             log.info("requested on /api/mailing/sendTestMail successful");
@@ -47,7 +53,8 @@ public class EMailController {
     @PostMapping("/sendTestMailToUser")
     @PreAuthorize("isProfileOwner(#id)")
     public ResponseEntity<String> sendTestMailToUser(Long id){
-        String body = "Datum: " + LocalDateTime.now();
+        String claimLink = BASE_URL + "/voucherClaim/testMeeting";
+        String body = "Datum: " + LocalDateTime.now() + "\n" + "Claim-Link: " + claimLink;
         try {
             diversityLunchEMailService.sendMailToUser(id, body);
             log.info("requested on /api/mailing/sendTestMailToUser successful");
@@ -65,7 +72,8 @@ public class EMailController {
     @PostMapping("/sendTestMailToUser/{id}")
     @PreAuthorize("isProfileOwner(#id)")
     public ResponseEntity<String> sendTestMailToUserPathVariable(@PathVariable long id){
-        String body = "Datum: " + LocalDateTime.now();
+        String claimLink = BASE_URL + "/voucherClaim/testMeeting";
+        String body = "Datum: " + LocalDateTime.now() + "\n" + "Claim-Link: " + claimLink;
         try {
             diversityLunchEMailService.sendMailToUser(id, body);
             log.info("requested on /api/mailing/sendTestMailToUser/{id} successful");
