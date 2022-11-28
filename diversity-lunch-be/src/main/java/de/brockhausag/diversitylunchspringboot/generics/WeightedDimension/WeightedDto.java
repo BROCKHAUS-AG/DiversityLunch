@@ -1,10 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.generics.WeightedDimension;
 
 
+import de.brockhausag.diversitylunchspringboot.generics.Dimension.DimensionDto;
 
-public interface WeightedDto {
-    Long getId();
-    void setId(Long id);
-    String getDescriptor();
-    void setDescriptor(String descriptor);
+public interface WeightedDto extends DimensionDto {
+
 }
