@@ -5,6 +5,7 @@ import de.brockhausag.diversitylunchspringboot.profile.logic.HobbyCategoryServic
 import de.brockhausag.diversitylunchspringboot.profile.mapper.HobbyCategoryMapper;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.HobbyMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyCategoryEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,7 +46,7 @@ public class HobbyMapperTest {
         HobbyDto inputDto = this.factory.buildDto(1);
         HobbyEntity expectedEntity = this.factory.buildEntity(1);
 
-        when(this.hobbyCategoryService.getEntityById(expectedEntity.getQuestionCategory().getId())).thenReturn(Optional.of(expectedEntity.getQuestionCategory()));
+        when(this.hobbyCategoryService.getEntityById(inputDto.getCategory().getId())).thenReturn(Optional.of(expectedEntity.getCategory()));
 
         //Act
         Optional<HobbyEntity> hobbyEntityOptional = this.hobbyMapper.dtoToEntity(inputDto);
@@ -99,7 +100,7 @@ public class HobbyMapperTest {
         //Arrange
         HobbyEntity inputEntity = this.factory.buildEntity(1);
         HobbyDto expectedDto = this.factory.buildDto(1);
-        when(this.hobbyCategoryMapper.entityToDto(inputEntity.getQuestionCategory())).thenReturn(expectedDto.getCategory());
+        when(this.hobbyCategoryMapper.entityToDto(inputEntity.getCategory())).thenReturn(expectedDto.getCategory());
 
         //Act
         HobbyDto actualDto = this.hobbyMapper.entityToDto(inputEntity);
@@ -115,7 +116,7 @@ public class HobbyMapperTest {
         List<HobbyDto> expectedDtos = Stream.of(1, 2, 3).map(this.factory::buildDto).toList();
 
         StreamUtils.zip(inputEntities.stream(), expectedDtos.stream(), (entity, dto) -> {
-            when(this.hobbyCategoryMapper.entityToDto(entity.getQuestionCategory())).thenReturn(dto.getCategory());
+            when(this.hobbyCategoryMapper.entityToDto(entity.getCategory())).thenReturn(dto.getCategory());
             return null;
         }).forEach(unused->{});
 

@@ -80,6 +80,7 @@ public class ProfileEntity {
         baseEntities.add(sexualOrientation);
         baseEntities.add(socialBackground);
         baseEntities.add(socialBackgroundDiscrimination);
+        baseEntities.add(hobby);
         return baseEntities;
     }
     public List<WeightedEntity> getWeightedEntities(){

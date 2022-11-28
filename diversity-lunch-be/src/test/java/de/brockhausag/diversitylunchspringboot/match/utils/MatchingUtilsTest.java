@@ -144,7 +144,7 @@ class MatchingUtilsTest {
     void testCurrentScoreProfileFor_KeineAngabe_InGender_ShouldHave_30_Points_With_different_profiles() {
         profile3.getGender().setDescriptor("Keine Angabe");
         profile1.getGender().setDescriptor("Männlich");
-        final int expectedScore = 30;
+        final int expectedScore = 29;
         int actualScore;
 
         actualScore = MatchingUtils.getCurrentScore(profile1, profile3).currentScore();
