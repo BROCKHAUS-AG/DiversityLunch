@@ -134,16 +134,16 @@ export const ProfileForm: FC<ProfileFormProps> = ({
             />
             <Dropdown
                 options={sortOptions(genders)}
-                placeholder="Wähle dein Geschlecht aus"
+                placeholder="Was ist deine geschlechtliche Identität?"
                 onChange={(value) => updateProfile('gender', value)}
-                label="Geschlecht"
+                label="Geschlechtliche Identität"
                 currentValue={profile.gender || undefined}
             />
             <Dropdown
                 options={sortOptions(countries)}
-                placeholder="Was ist dein Herkunftsland?"
+                placeholder="Was ist deine ethnische Herkunft?"
                 onChange={(value) => updateProfile('originCountry', value)}
-                label="Herkunftsland"
+                label="Ethnische Herkunft"
                 currentValue={profile.originCountry || undefined}
             />
             <Dropdown
