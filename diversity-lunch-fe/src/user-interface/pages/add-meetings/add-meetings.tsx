@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import { SelectMeetingData } from '../../components/select-meeting-data/select-meeting-data';
-import '../../../styles/component-styles/addMeeting/addMeeting.scss';
+import './add-meetings.scss';
 import { DateOverview } from '../../components/date-overview/date-overview';
 import { CreateMeeting } from '../../../model/Meeting';
 

@@ -9,7 +9,7 @@ import { getAllProfiles } from '../../../data/profiles/profiles-fetch';
 import { User } from '../../../model/User';
 import { Account } from '../../../model/Account';
 import { Profile } from '../../../model/Profile';
-import { LoadingAnimation } from '../../Shared/LoadingAnimation';
+import { LoadingAnimation } from '../loading-animation/loading-animation';
 import { Role } from '../../../model/Role';
 
 export const UserList: FC = () => {

@@ -19,16 +19,16 @@ export const IdentifiableOptionsList = <T extends Identifiable>(
     const [inputText, setInputText] = useState('');
     const dispatch = useDispatch();
 
-    const removeProject = (object: T) => {
+    const remove = (object: T) => {
         dispatch(fetch.removeById(object.id, { onNetworkError: console.error, statusCodeHandlers: {} }));
         // TODO: Handle network and http errors properly tgohlisch 17.11.2022
     };
-    const updateProject = (object: T) => {
+    const update = (object: T) => {
         dispatch(fetch.put(object, { onNetworkError: console.error, statusCodeHandlers: {} }));
         // TODO: Handle network and http errors properly tgohlisch 17.11.2022);
     };
 
-    const addProject = (descriptor: string) => {
+    const add = (descriptor: string) => {
         dispatch(fetch.post({
             id: 0,
             descriptor,
@@ -44,12 +44,12 @@ export const IdentifiableOptionsList = <T extends Identifiable>(
                     <p>Bezeichner:</p>
                     <input type="text" value={inputText} onChange={(e : ChangeEvent<HTMLInputElement>) => setInputText(e.target.value)} />
                 </label>
-                <button type="button" onClick={() => addProject(inputText)}>{addButtonLabel}</button>
+                <button type="button" onClick={() => add(inputText)}>{addButtonLabel}</button>
                 {state.items.map((current : T) => (
                     <EditFormField
                         item={current}
-                        onEditClicked={(p: T) => updateProject(p)}
-                        onRemoveClicked={(p: T) => removeProject(p)}
+                        onEditClicked={(p: T) => update(p)}
+                        onRemoveClicked={(p: T) => remove(p)}
                         key={current.id}
                     />
                 ))}

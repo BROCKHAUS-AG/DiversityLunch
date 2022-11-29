@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { loginAfterRedirectAction } from '../../../data/authentication/authentication.actions';
 import { OidcAuthData } from '../../../data/authentication/oidc-auth-data.type';
-import { LoadingAnimation } from '../../Shared/LoadingAnimation';
+import { LoadingAnimation } from '../loading-animation/loading-animation';
 
 type RedirectHandlerProps = {
     authData: OidcAuthData,
