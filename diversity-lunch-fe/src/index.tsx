@@ -9,7 +9,7 @@ import './styles/component-styles/index.scss';
 
 // redux
 import { APP_STORE } from './data/app-store';
-import { AuthenticationCheck } from './components/Core/AuthenticationCheck';
+import { AuthenticationCheck } from './user-interface/components/authentication-check/authentication-check';
 
 ReactDOM.render(
     <React.StrictMode>

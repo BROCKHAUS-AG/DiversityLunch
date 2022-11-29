@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { App } from './components/Core/App';
+import { App } from './user-interface/pages/app';
 
 test.skip('renders learn react link', () => {
     render(<App />);
