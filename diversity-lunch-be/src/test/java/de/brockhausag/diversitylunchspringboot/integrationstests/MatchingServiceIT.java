@@ -75,7 +75,7 @@ class MatchingServiceIT {
         ProfileEntity proposer = profileRepository.findById(3L).orElseThrow();
         MeetingEntity expectedForCase9 = MeetingEntity.builder()
                 .fromDateTime(proposedDateTime)
-                .score(11)
+                .score(10)
                 .partner(partner)
                 .proposer(proposer)
                 .build();
@@ -94,7 +94,7 @@ class MatchingServiceIT {
         ProfileEntity proposer = profileRepository.findById(4L).orElseThrow();
         MeetingEntity expectedForCase0 = MeetingEntity.builder()
                 .fromDateTime(proposedDateTime)
-                .score(25)
+                .score(24)
                 .partner(partner)
                 .proposer(proposer)
                 .build();
