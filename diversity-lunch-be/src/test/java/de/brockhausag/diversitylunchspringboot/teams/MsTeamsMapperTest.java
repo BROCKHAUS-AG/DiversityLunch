@@ -19,9 +19,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class MsTeamsMapperTest {
@@ -68,16 +70,18 @@ public class MsTeamsMapperTest {
         Attendee attendeeOne = result.attendees.get(0);
         Attendee attendeeTwo = result.attendees.get(1);
 
+        assert attendeeOne.emailAddress != null;
         assertEquals(firstExpectedMailAddress, attendeeOne.emailAddress.address);
         assertEquals(firstExpectedMailName, attendeeOne.emailAddress.name);
         assertEquals(AttendeeType.REQUIRED, attendeeOne.type);
 
+        assert attendeeTwo.emailAddress != null;
         assertEquals(secondExpectedMailAddress, attendeeTwo.emailAddress.address);
         assertEquals(secondExpectedMailName, attendeeTwo.emailAddress.name);
         assertEquals(AttendeeType.REQUIRED, attendeeTwo.type);
 
-        assertFalse(result.allowNewTimeProposals);
-        assertTrue(result.isOnlineMeeting);
+        assertNotEquals(Boolean.TRUE, result.allowNewTimeProposals);
+        assertEquals(Boolean.TRUE, result.isOnlineMeeting);
         assertEquals(OnlineMeetingProviderType.TEAMS_FOR_BUSINESS, result.onlineMeetingProvider);
 
         final String expectedDateString = DiversityLunchTimeAndDateFormatter.formatDate(startDateTime);

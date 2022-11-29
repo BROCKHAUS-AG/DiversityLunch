@@ -2,9 +2,9 @@ package de.brockhausag.diversitylunchspringboot.profile.serviceTest;
 
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
-import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,7 +30,6 @@ class ProfileServiceTest {
     private ProfileService service;
 
     private final ProfileTestdataFactory factory = new ProfileTestdataFactory();
-    private final long accountId = 42;
 
     @Test
     void testProfileNonexistent() {
@@ -66,6 +65,7 @@ class ProfileServiceTest {
         ProfileEntity createEntity = this.factory.buildEntity(1);
 
         when(profileRepository.save(createEntity)).thenReturn(expected);
+        long accountId = 42;
         when(accountService.updateAccount(expected, accountId)).thenReturn(Optional.empty());
 
         Optional<ProfileEntity> entity = this.service.createProfile(createEntity, accountId);

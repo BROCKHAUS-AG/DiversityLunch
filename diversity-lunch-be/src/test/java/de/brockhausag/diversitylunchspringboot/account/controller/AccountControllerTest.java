@@ -17,8 +17,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -82,8 +81,7 @@ class AccountControllerTest {
         AccountEntity accountEntity = accountTestDataFactory.buildAccountWithoutProfile();
         try {
             when(accountService.assignAdminRole(any())).thenReturn(Optional.of(accountEntity));
-        } catch (Exception e) {
-        }
+        } catch (Exception ignored) { }
         when(accountMapper.mapEntityToDto(accountEntity)).thenReturn(expectedAccountDto);
 
         ResponseEntity<?> response = accountController.assignAdminRole(expectedAccountDto.getId());
@@ -95,8 +93,7 @@ class AccountControllerTest {
     void testAssignAdminRole_whenServiceReturnsEmpty_expectNotFound() {
         try {
             when(accountService.assignAdminRole(any())).thenReturn(Optional.empty());
-        } catch (Exception e) {
-        }
+        } catch (Exception ignored) { }
         long nonExistingID = 1;
 
         ResponseEntity<?> response = accountController.assignAdminRole(nonExistingID);
@@ -108,8 +105,7 @@ class AccountControllerTest {
     void testAssignAdminRole_whenServiceThrowsException_expectBadRequest() {
         try {
             when(accountService.assignAdminRole(any())).thenThrow(AccountService.IllegalRoleModificationException.class);
-        } catch (Exception e) {
-        }
+        } catch (Exception ignored) { }
         long existingIdWithWrongRole = 1;
 
         ResponseEntity<?> response = accountController.assignAdminRole(existingIdWithWrongRole);
@@ -123,8 +119,7 @@ class AccountControllerTest {
         AccountEntity accountEntity = accountTestDataFactory.buildAccountWithoutProfile();
         try {
             when(accountService.revokeAdminRole(any())).thenReturn(Optional.of(accountEntity));
-        } catch (Exception e) {
-        }
+        } catch (Exception ignored) { }
         when(accountMapper.mapEntityToDto(accountEntity)).thenReturn(expectedAccountDto);
 
         ResponseEntity<?> response = accountController.revokeAdminRole(expectedAccountDto.getId());
@@ -136,8 +131,7 @@ class AccountControllerTest {
     void testRevokeAdminRole_whenServiceReturnsEmpty_expectNotFound() {
         try {
             when(accountService.revokeAdminRole(any())).thenReturn(Optional.empty());
-        } catch (Exception e) {
-        }
+        } catch (Exception ignored) { }
         long nonExistingID = 1;
 
         ResponseEntity<?> response = accountController.revokeAdminRole(nonExistingID);
@@ -149,8 +143,7 @@ class AccountControllerTest {
     void testRevokeAdminRole_whenServiceThrowsException_expectBadRequest() {
         try {
             when(accountService.revokeAdminRole(any())).thenThrow(AccountService.IllegalRoleModificationException.class);
-        } catch (Exception e) {
-        }
+        } catch (Exception ignored) { }
         long existingIdWithWrongRole = 1;
 
         ResponseEntity<?> response = accountController.revokeAdminRole(existingIdWithWrongRole);

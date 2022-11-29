@@ -1,8 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.account.service;
 
 import com.microsoft.graph.models.Group;
-import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
+import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchGroupProperties;
@@ -91,7 +91,7 @@ public class AccountService {
         return  repository.findAll();
     }
 
-    public class  IllegalRoleModificationException extends Exception{
+    public static class  IllegalRoleModificationException extends Exception{
 
         public IllegalRoleModificationException(String s) {
             super(s);
