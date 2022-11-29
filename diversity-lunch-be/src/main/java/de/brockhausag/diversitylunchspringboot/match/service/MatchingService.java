@@ -46,7 +46,6 @@ public class MatchingService {
         }else if(daysUntilMeeting >= 0){
             executeMatching(proposedDateTime, 0);
         }
-
     }
 
     public void executeMatching(LocalDateTime proposedDateTime, int scoreToBeat) {
@@ -54,29 +53,39 @@ public class MatchingService {
                 meetingProposalRepository.findMeetingProposalEntitiesByProposedDateTimeAndMatchedFalse(proposedDateTime);
 
         for (int i = 0; i < meetingProposals.size(); i++) {
+            MeetingProposalEntity firstMeetingProposal = meetingProposals.get(i);
+            MeetingProposalEntity secondMeetingProposal;
 
-            if(meetingProposals.get(i).isMatched()){
-                continue;
-            }
+            if(firstMeetingProposal.isMatched()) continue;
 
             List<Match> matchList = new LinkedList<>();
 
             for (int j = i + 1; j < meetingProposals.size(); j++) {
-                ScoreAndCategory scoreAndCategory = MatchingUtils.getCurrentScore(meetingProposals.get(i).getProposerProfile(),
-                        meetingProposals.get(j).getProposerProfile());
-                Match match = new Match(meetingProposals.get(i), meetingProposals.get(j),
-                       scoreAndCategory.currentScore(), scoreAndCategory.category());
-                if (match.score() >= scoreToBeat) {
-                    matchList.add(match);
+                secondMeetingProposal = meetingProposals.get(j);
+                Match scoredMatch = getScoredMatch(firstMeetingProposal, secondMeetingProposal);
+                if (scoredMatch.score() >= scoreToBeat) {
+                    matchList.add(scoredMatch);
                 }
             }
+
             if (!matchList.isEmpty()) {
                 Match bestMatch = Collections.max(matchList, Comparator.comparingInt(Match::score));
-                String onlineMeetingId = msTeamsService.createMsTeamsMeeting(bestMatch);
-                arrangeMeeting(bestMatch, onlineMeetingId);
-
+                arrangeTeamsMeeting(bestMatch);
             }
         }
+    }
+
+    private void arrangeTeamsMeeting(Match bestMatch) {
+        String onlineMeetingId = msTeamsService.createMsTeamsMeeting(bestMatch);
+        arrangeMeeting(bestMatch, onlineMeetingId);
+    }
+
+    private Match getScoredMatch(MeetingProposalEntity firstMeetingProposal, MeetingProposalEntity secondMeetingProposal) {
+        ScoreAndCategory scoreAndCategory = MatchingUtils.getCurrentScore(firstMeetingProposal.getProposerProfile(),
+                secondMeetingProposal.getProposerProfile());
+
+        return new Match(firstMeetingProposal, secondMeetingProposal,
+               scoreAndCategory.currentScore(), scoreAndCategory.category());
     }
 
     private void arrangeMeeting(Match bestMatch, String onlineMeetingId) {
@@ -96,11 +105,13 @@ public class MatchingService {
         meetingProposalRepository.save(bestMatch.proposalOne());
         meetingProposalRepository.save(bestMatch.proposalTwo());
     }
+
     private Question getRandomQuestionFromCategory(Category category) {
         List<Question> questions = Question.getAllQuestionsWithCategory(category);
         int randomIndex = random.nextInt(questions.size());
         return questions.get(randomIndex);
     }
+
     public void sendQuestions(LocalDateTime now) {
         log.debug("Sending Emails...");
         LocalDateTime modified = now.truncatedTo(ChronoUnit.MINUTES).with(roundMinutesDownToHalfAndFull()).plusHours(1);
