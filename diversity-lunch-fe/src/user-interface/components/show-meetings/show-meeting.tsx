@@ -5,7 +5,7 @@ import './show-meeting.scss';
 import closeIcon from '../../../resources/icons/icon-close.svg';
 import hamburgerIcon from '../../../resources/icons/icon-hamburger.svg';
 import { deleteMeetingProposal } from '../../../data/meeting/meetings.actions';
-import { DeleteMeetingPopUp } from '../delete-meeting-pop-up/DeleteMeetingPopUp';
+import { DeleteMeetingPopUp } from '../delete-meeting-pop-up/delete-meeting-pop-up';
 import { getMeetingEndTime, substringLocalTime } from '../../../utils/date.utils';
 import { useGetAccountInformation } from '../../../hooks/account/account.hook';
 
