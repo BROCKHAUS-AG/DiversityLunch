@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 
-import { AppStoreState } from '../../store/Store';
+import { AppStoreState } from '../../data/app-store';
 import '../../styles/component-styles/questions/questionSite.scss';
 import '../../styles/component-styles/questions/dropdownQuestion.scss';
 import { ProfileForm } from '../Shared/ProfileForm/profile-form';

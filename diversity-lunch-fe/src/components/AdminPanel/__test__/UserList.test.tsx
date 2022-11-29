@@ -10,7 +10,7 @@ import {
     mockedFetchGetAccounts,
     mockedFetchGetProfiles, mockedRevokeAdminRole,
 } from '../../../__global_test_data__/fetch';
-import { APP_STORE } from '../../../store/Store';
+import { APP_STORE } from '../../../data/app-store';
 import * as accounts from '../../../data/accounts/accounts-fetch';
 import * as profiles from '../../../data/profiles/profiles-fetch';
 

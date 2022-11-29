@@ -6,7 +6,7 @@ import { TextField } from '@material-ui/core';
 import { Profile } from '../../../model/Profile';
 import { Dropdown } from '../../Questions/Dropdown';
 import { Button } from '../../General/Button/Button';
-import { AppStoreState } from '../../../store/Store';
+import { AppStoreState } from '../../../data/app-store';
 import { countryFetch } from '../../../data/country/fetch-country';
 import { dietFetch } from '../../../data/diet/fetch-diet';
 import { educationFetch } from '../../../data/education/fetch-education';

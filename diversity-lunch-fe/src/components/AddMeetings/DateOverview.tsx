@@ -4,7 +4,7 @@ import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import '../../styles/component-styles/addMeeting/dateOverview.scss';
 import iconFood from '../../resources/icons/icon-hamburger.svg';
-import { CreateMeeting } from '../../types/Meeting';
+import { CreateMeeting } from '../../model/Meeting';
 import { Button } from '../General/Button/Button';
 import { dateToString, getMeetingEndTime, substringLocalTime } from '../../utils/date.utils';
 

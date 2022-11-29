@@ -4,7 +4,7 @@ import '../../styles/component-styles/profile/profile.scss';
 import { Profile } from '../../model/Profile';
 import { isValidProfile, isUpdatedProfile } from '../../utils/validators/profile-validator';
 import { ProfileForm } from '../Shared/ProfileForm/profile-form';
-import { AppStoreState } from '../../store/Store';
+import { AppStoreState } from '../../data/app-store';
 import { updateProfile } from '../../data/profile/profile.actions';
 import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';

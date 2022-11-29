@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { AppStoreState } from '../../store/Store';
+import { AppStoreState } from '../../data/app-store';
 import { ProfileOverview } from './ProfileOverview';
 import { LoadingAnimation } from '../Shared/LoadingAnimation';
 

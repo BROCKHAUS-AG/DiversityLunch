@@ -1,4 +1,4 @@
-import { Meeting } from '../../types/Meeting';
+import { Meeting } from '../../model/Meeting';
 
 type MeetingsStateOkAction = {
   type: 'MEETINGS_LOADING_SUCCEEDED',

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { VoucherList } from '../VoucherList';
-import { AdminVoucher } from '../../../types/AdminVoucher';
+import { AdminVoucher } from '../../../model/AdminVoucher';
 
 describe('Admin Panel', () => {
     it('should render 3 vouchers in table', async () => {

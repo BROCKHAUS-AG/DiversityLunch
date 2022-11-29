@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
 // eslint-disable-next-line import/no-named-as-default
-import { CreateMeeting } from '../../types/Meeting';
+import { CreateMeeting } from '../../model/Meeting';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import iconFood from '../../resources/icons/icon-hamburger.svg';
 import { createMeetings, loadMeetings } from '../../data/meeting/meetings.actions';
@@ -16,7 +16,7 @@ import { dateToString } from '../../utils/date.utils';
 import { MeetingTimespan } from './MeetingTimespan';
 import { MeetingTimeButton } from '../General/Button/MeetingTimeButton';
 import { MeetingsState } from '../../data/meeting/meetings-state.type';
-import { AppStoreState } from '../../store/Store';
+import { AppStoreState } from '../../data/app-store';
 import { useGetAccountInformation } from '../../hooks/account/account.hook';
 import { Button } from '../General/Button/Button';
 

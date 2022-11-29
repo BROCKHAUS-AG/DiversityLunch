@@ -3,7 +3,7 @@ import {
 } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { APP_STORE } from '../../../../store/Store';
+import { APP_STORE } from '../../../../data/app-store';
 import { ProfileForm } from '../profile-form';
 import * as fetcher from '../../../../utils/fetch.utils';
 import { mockedFetchGetProfile } from '../../../../__global_test_data__/fetch';

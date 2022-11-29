@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Meeting } from '../../types/Meeting';
+import { Meeting } from '../../model/Meeting';
 import '../../styles/component-styles/upcomming-meetings/showMeeting.scss';
 import closeIcon from '../../resources/icons/icon-close.svg';
 import hamburgerIcon from '../../resources/icons/icon-hamburger.svg';

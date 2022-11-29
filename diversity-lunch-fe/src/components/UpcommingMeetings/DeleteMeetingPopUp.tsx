@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Component
-import { Meeting } from '../../types/Meeting';
+import { Meeting } from '../../model/Meeting';
 
 // Styles
 import '../../styles/component-styles/popup/GeneralPopUp.scss';

@@ -3,7 +3,7 @@ import * as redux from 'react-redux';
 import userEvent from '@testing-library/user-event';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import { APP_STORE } from '../../../store/Store';
+import { APP_STORE } from '../../../data/app-store';
 import { SelectMeetingData } from '../SelectMeetingData';
 import * as fetcher from '../../../utils/fetch.utils';
 

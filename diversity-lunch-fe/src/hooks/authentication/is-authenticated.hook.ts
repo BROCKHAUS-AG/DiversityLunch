@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { AppStoreState } from '../../store/Store';
+import { AppStoreState } from '../../data/app-store';
 import { AuthenticationState } from '../../data/authentication/authentication-state.type';
 
 export const useIsAuthenticated = () => {

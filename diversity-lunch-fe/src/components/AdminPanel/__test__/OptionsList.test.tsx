@@ -4,7 +4,7 @@ import {
     fireEvent, render, screen,
 } from '@testing-library/react';
 import React, { FC } from 'react';
-import { APP_STORE, AppStoreState } from '../../../store/Store';
+import { APP_STORE, AppStoreState } from '../../../data/app-store';
 import { projectFetch } from '../../../data/project/project-fetch';
 import { OptionsList } from '../OptionsList';
 import * as fetcher from '../../../utils/fetch.utils';

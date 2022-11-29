@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import { SelectMeetingData } from './SelectMeetingData';
 import '../../styles/component-styles/addMeeting/addMeeting.scss';
 import { DateOverview } from './DateOverview';
-import { CreateMeeting } from '../../types/Meeting';
+import { CreateMeeting } from '../../model/Meeting';
 
 export const AddMeetings = () => {
     const [meeting, setMeeting] = useState<CreateMeeting>({
