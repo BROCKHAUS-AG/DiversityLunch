@@ -1,13 +1,12 @@
 package de.brockhausag.diversitylunchspringboot.meeting.mapper;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.MeetingTestdataFactory;
-import de.brockhausag.diversitylunchspringboot.meeting.mapper.MeetingMapperImpl;
 import de.brockhausag.diversitylunchspringboot.meeting.model.CreateMeetingProposalDto;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingDto;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.profile.ProfileNotFoundException;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

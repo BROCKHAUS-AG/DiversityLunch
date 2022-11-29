@@ -1,12 +1,11 @@
 package de.brockhausag.diversitylunchspringboot.utils;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
 import static de.brockhausag.diversitylunchspringboot.utils.DiversityLunchTemporalAdjusters.roundMinutesDownToHalfAndFull;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DiversityLunchTemporalAdjustersTest {
 

@@ -19,7 +19,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

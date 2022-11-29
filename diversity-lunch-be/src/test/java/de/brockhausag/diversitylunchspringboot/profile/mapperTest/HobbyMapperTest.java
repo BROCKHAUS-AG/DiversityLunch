@@ -5,7 +5,6 @@ import de.brockhausag.diversitylunchspringboot.profile.logic.HobbyCategoryServic
 import de.brockhausag.diversitylunchspringboot.profile.mapper.HobbyCategoryMapper;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.HobbyMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyCategoryEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

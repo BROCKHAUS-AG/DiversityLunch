@@ -2,7 +2,6 @@ package de.brockhausag.diversitylunchspringboot.meeting.CustomValidators;
 
 import de.brockhausag.diversitylunchspringboot.meeting.utils.MeetingProposalValidation;
 
-
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.ElementType;
