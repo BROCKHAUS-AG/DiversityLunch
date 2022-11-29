@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { ShowMeeting } from '../../../components/upcoming-meetings/ShowMeeting';
-import { Meeting } from '../../../../model/Meeting';
-import { APP_STORE } from '../../../../data/app-store';
+import { Meeting } from '../../../model/Meeting';
+import { APP_STORE } from '../../../data/app-store';
+import { ShowMeeting } from './show-meeting';
 
 describe('Show Meeting', () => {
     let defaultMeeting: Meeting;

@@ -2,9 +2,8 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { CloseSite } from '../../components/close-site/close-site';
-import { ShowMeeting } from '../../components/upcoming-meetings/ShowMeeting';
 import { DiversityIcon } from '../../components/diversity-icon/diversity-icon';
-import '../../../styles/component-styles/upcomming-meetings/upcommingMeetings.scss';
+import './upcoming-meetings.scss';
 import { Meeting } from '../../../model/Meeting';
 import { AppStoreState } from '../../../data/app-store';
 import { loadMeetings } from '../../../data/meeting/meetings.actions';
@@ -12,6 +11,7 @@ import { LoadingAnimation } from '../../components/loading-animation/loading-ani
 import { MeetingsState } from '../../../data/meeting/meetings-state.type';
 import { useGetAccountInformation } from '../../../hooks/account/account.hook';
 import { Button } from '../../components/button/button';
+import { ShowMeeting } from '../../components/show-meetings/show-meeting';
 
 export const UpcomingMeetings = () => {
     const dispatch = useDispatch();

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import '../../../styles/component-styles/voucherpanel/voucherPanel.scss';
+import './voucher-panel.scss';
 import { DiversityIcon } from '../../components/diversity-icon/diversity-icon';
 import { authenticatedFetchGet } from '../../../utils/fetch.utils';
 import { PopUp } from '../../components/pop-up/pop-up';
 import { CloseSite } from '../../components/close-site/close-site';
-import { GetVoucher } from '../../components/voucher-panel/GetVoucher';
+import { GetVoucher } from '../../components/get-voucher/get-voucher';
 
 export const VoucherPanel = () => {
     const [isError, setError] = useState(false);

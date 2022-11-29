@@ -4,7 +4,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { TextField } from '@material-ui/core';
 import { Profile } from '../../../model/Profile';
-import { Dropdown } from '../questions/dropdown';
+import { Dropdown } from '../dropdown/dropdown';
 import { Button } from '../button/button';
 import { AppStoreState } from '../../../data/app-store';
 import { countryFetch } from '../../../data/country/fetch-country';

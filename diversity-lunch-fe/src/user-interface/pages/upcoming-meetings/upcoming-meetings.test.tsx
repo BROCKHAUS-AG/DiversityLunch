@@ -3,9 +3,9 @@ import * as redux from 'react-redux';
 import { BrowserRouter, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import userEvent from '@testing-library/user-event';
-import { UpcomingMeetings } from '../upcoming-meetings';
-import { APP_STORE } from '../../../../data/app-store';
-import { Meeting } from '../../../../model/Meeting';
+import { UpcomingMeetings } from './upcoming-meetings';
+import { APP_STORE } from '../../../data/app-store';
+import { Meeting } from '../../../model/Meeting';
 
 let meetingMatched: Meeting;
 let meetingNotMatched: Meeting;
