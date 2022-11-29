@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { CloseSiteContainer } from '../../General/HeaderTemplate/CloseSiteContainer';
+import { CloseSite } from '../close-site/close-site';
 // eslint-disable-next-line import/no-named-as-default
 import { CreateMeeting } from '../../../model/Meeting';
-import { DiversityIconContainer } from '../../General/HeaderTemplate/DiversityIconContainer';
+import { DiversityIcon } from '../diversity-icon/diversity-icon';
 import iconFood from '../../../resources/icons/icon-hamburger.svg';
 import { createMeetings, loadMeetings } from '../../../data/meeting/meetings.actions';
 
 import 'react-calendar/dist/Calendar.css';
-import '../../../styles/component-styles/addMeeting/selectMeetingData.scss';
-import '../../../styles/component-styles/addMeeting/dateOverview.scss';
+import './select-meeting-data.scss';
+import '../date-overview/date-overview.scss';
 import { dateToString } from '../../../utils/date.utils';
 import { MeetingTimespan } from '../../../model/MeetingTimespan';
 import { MeetingTimeButton } from '../meeting-time-button/meeting-time-button';
@@ -120,8 +120,8 @@ export const SelectMeetingData = (props: SelectMeetingDataProps) => {
     && t1.toMinute === t2.toMinute);
     return (
         <div className="SelectMeetingData">
-            <CloseSiteContainer />
-            <DiversityIconContainer title="TERMIN WÄHLEN" />
+            <CloseSite />
+            <DiversityIcon title="TERMIN WÄHLEN" />
 
             <p className="ChooseDate-infoText">An welchem Tag möchtest du dein Diversity Lunch haben?</p>
             <Calendar

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MeetingTimespan } from '../../../model/MeetingTimespan';
-import '../../../styles/component-styles/general/meetingTimeButton/meetingTimeButton.scss';
+import './meeting-time-button.scss';
 
 type MeetingTimeProps = {
   timeSpan: MeetingTimespan,

@@ -1,7 +1,7 @@
 import React from 'react';
-import { LoadingAnimation } from '../../Shared/LoadingAnimation';
+import { LoadingAnimation } from '../loading-animation/loading-animation';
 import { APP_CONFIG } from '../../../config/app-config.const';
-import { storePath } from '../../Shared/SessionStorageRedirection';
+import { storePath } from '../session-storage-redirection/session-storage-redirection';
 
 const oidcWellKnown = {
     authorization_endpoint: APP_CONFIG.REACT_APP_OIDC_AUTHORIZATION_ENDPOINT,

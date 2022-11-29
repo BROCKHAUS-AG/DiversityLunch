@@ -1,9 +1,9 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { useHasProfile } from '../../../hooks/profile/has-profile.hook';
-import { LoadingAnimation } from '../../Shared/LoadingAnimation';
-import { GenericErrorPage } from '../../Shared/GenericErrorPage';
-import { SessionStorageRedirection } from '../../Shared/SessionStorageRedirection';
+import { LoadingAnimation } from '../loading-animation/loading-animation';
+import { GenericErrorPage } from '../../pages/generic-error-page/generic-error-page';
+import { SessionStorageRedirection } from '../session-storage-redirection/session-storage-redirection';
 
 export const HasProfileCheck: React.FC = () => {
     const { profileStatus } = useHasProfile();

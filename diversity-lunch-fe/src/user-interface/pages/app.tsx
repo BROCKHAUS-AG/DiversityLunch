@@ -3,19 +3,19 @@ import {
     BrowserRouter, Redirect, Route, Switch,
 } from 'react-router-dom';
 import { Dashboard } from './dashboard/dashboard';
-import { UpcomingMeetings } from '../UpcommingMeetings/UpcomingMeetings';
-import { QuestionSite } from '../Questions/QuestionSite';
+import { UpcomingMeetings } from './upcoming-meetings/upcoming-meetings';
+import { QuestionSite } from './questions/question-site';
 import '../../styles/core/App.scss';
 import { AddMeetings } from './add-meetings/add-meetings';
-import { Information } from '../Information/Information';
-import { GenericErrorPage } from '../Shared/GenericErrorPage';
+import { Information } from './information/information';
+import { GenericErrorPage } from './generic-error-page/generic-error-page';
 import { HasProfileCheck } from '../components/has-profile-check/has-profile-check';
-import { ProfileOverviewLoader } from '../Profile/ProfileOverviewLoader';
-import { MeetingAlreadyBooked } from '../MeetingAlreadyBooked/MeetingAlreadyBooked';
+import { ProfileOverviewLoader } from './profile-overview/profile-overview-loader';
+import { MeetingAlreadyBooked } from './meeting-already-booked/meeting-already-booked';
 import { BookingError } from './booking-error/booking-error';
 import { AdminPanel } from './admin-panel/admin-panel';
-import { VoucherPanel } from '../VoucherPanel/VoucherPanel';
-import { UserVoucherList } from '../UserVoucherList/UserVoucherList';
+import { VoucherPanel } from './voucher-panel/voucher-panel';
+import { UserVoucherList } from './user-voucher-list/UserVoucherList';
 
 export const App = () => (
     <div className="App">
