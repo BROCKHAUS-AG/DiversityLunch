@@ -5,7 +5,7 @@ import {
 import { Dashboard } from './dashboard/dashboard';
 import { UpcomingMeetings } from './upcoming-meetings/upcoming-meetings';
 import { QuestionSite } from './questions/question-site';
-import '../../styles/core/App.scss';
+import './App.scss';
 import { AddMeetings } from './add-meetings/add-meetings';
 import { Information } from './information/information';
 import { GenericErrorPage } from './generic-error-page/generic-error-page';
@@ -15,7 +15,7 @@ import { MeetingAlreadyBooked } from './meeting-already-booked/meeting-already-b
 import { BookingError } from './booking-error/booking-error';
 import { AdminPanel } from './admin-panel/admin-panel';
 import { VoucherPanel } from './voucher-panel/voucher-panel';
-import { UserVoucherList } from './user-voucher-list/UserVoucherList';
+import { UserVoucherList } from './user-voucher-list/user-voucher-list';
 
 export const App = () => (
     <div className="App">

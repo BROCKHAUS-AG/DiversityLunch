@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import '../../components/profile/profile.scss';
+import './profile.scss';
 import { Profile } from '../../../model/Profile';
 import { isValidProfile, isUpdatedProfile } from '../../../utils/validators/profile-validator';
 import { ProfileForm } from '../../components/profile-form/profile-form';

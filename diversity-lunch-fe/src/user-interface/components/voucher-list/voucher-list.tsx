@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../styles/component-styles/voucherList/voucherList.scss';
+import './voucher-list.scss';
 import { AdminVoucher } from '../../../model/AdminVoucher';
 
 interface voucherListProps {

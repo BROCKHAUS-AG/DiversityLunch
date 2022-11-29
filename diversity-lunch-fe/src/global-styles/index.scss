@@ -1,26 +1,26 @@
-@import "src/styles/core/reset";
+@import "src/global-styles/reset";
 
 @font-face {
   font-family: "GilroyRegular";
-  src: url('../../resources/fonts/Gilroy-Regular.otf') format("trueType");
+  src: url('src/resources/fonts/Gilroy-Regular.otf') format("trueType");
   font-weight: normal;
 }
 
 @font-face {
   font-family: "GilroyLight";
-  src: url('../../resources/fonts/Gilroy-Light.otf') format("trueType");
+  src: url('src/resources/fonts/Gilroy-Light.otf') format("trueType");
   font-weight: normal;
 }
 
 @font-face {
   font-family: "GilroyMedium";
-  src: url('../../resources/fonts/Gilroy-Medium.otf') format("trueType");
+  src: url('src/resources/fonts/Gilroy-Medium.otf') format("trueType");
   font-weight: normal;
 }
 
 @font-face {
   font-family: "SourceSansProRegular";
-  src: url('../../resources/fonts/SourceSansPro-Regular.otf') format("trueType");
+  src: url('src/resources/fonts/SourceSansPro-Regular.otf') format("trueType");
   font-weight: normal;
 }
 

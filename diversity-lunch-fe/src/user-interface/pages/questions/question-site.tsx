@@ -4,8 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { DiversityIcon } from '../../components/diversity-icon/diversity-icon';
 
 import { AppStoreState } from '../../../data/app-store';
-import '../../../styles/component-styles/questions/questionSite.scss';
-import '../../../styles/component-styles/questions/dropdownQuestion.scss';
+import './question-site.scss';
 import { ProfileForm } from '../../components/profile-form/profile-form';
 import { useGetUserInformation } from '../../../hooks/authentication/get-user-info.hook';
 import { Profile } from '../../../model/Profile';

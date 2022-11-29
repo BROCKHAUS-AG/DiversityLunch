@@ -1,5 +1,5 @@
 import { MouseEvent } from 'react';
-import '../../../styles/component-styles/shared/Controlls/IconButton.scss';
+import './icon-button.scss';
 
 export interface IconButtonProps {
     iconPath: string,

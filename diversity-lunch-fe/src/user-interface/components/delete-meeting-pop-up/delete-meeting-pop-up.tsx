@@ -20,7 +20,7 @@ export const DeleteMeetingPopUp = (props: MeetingContainerProps) => {
         onDelete,
         onCancel,
     } = props;
-
+    // TODO statt eigener Klasse einfach den generischen Popup mit den unten stehenden Werten verwenden TGohlisch 29.11.2022
     return (
         <div className="GeneralPopUp">
             <div className="GeneralPopUp-container">

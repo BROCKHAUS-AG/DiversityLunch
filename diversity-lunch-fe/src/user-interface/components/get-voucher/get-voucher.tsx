@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../../styles/component-styles/voucherpanel/voucherPanel.scss';
+import '../../pages/voucher-panel/voucher-panel.scss';
 import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import { Button } from '../button/button';
@@ -58,7 +58,14 @@ export const GetVoucher = ({ setError } : GetVoucherProps) => {
                     <button type="button" className="copyButton" onClick={copyToClipboard}>Kopieren</button>
                     <p className="lieferando-text">
                         Bestelle jetzt dein Essen bei:&nbsp;
-                        <a className="lieferando-link" href="src/user-interface/components/voucher-panel/GetVoucher" target="_blank" rel="noopener noreferrer">lieferando.de</a>
+                        <a
+                            className="lieferando-link"
+                            href="src/user-interface/components/get-voucher/get-voucher.tsx"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            lieferando.de
+                        </a>
                     </p>
                 </>
             )
