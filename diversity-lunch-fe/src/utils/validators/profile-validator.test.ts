@@ -1,5 +1,5 @@
-import { Profile } from '../../../model/Profile';
-import { isUpdatedProfile, isValidProfile } from '../profile-validator';
+import { Profile } from '../../model/Profile';
+import { isUpdatedProfile, isValidProfile } from './profile-validator';
 
 describe('isValidProfile', () => {
     it('should return false if all keys are undefined', () => {
