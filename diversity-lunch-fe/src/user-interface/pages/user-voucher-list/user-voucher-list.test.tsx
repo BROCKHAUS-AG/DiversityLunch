@@ -2,12 +2,12 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider, useDispatch } from 'react-redux';
 import React, { FC, useEffect } from 'react';
-import * as fetch from '../../../../utils/fetch.utils';
-import { UserVoucherList } from '../user-voucher-list';
-import { APP_STORE } from '../../../../data/app-store';
-import { accountStandardData } from '../../../../__global_test_data__/data';
-import { loadAccount } from '../../../../data/account/account.actions';
-import { mockedFetchGetUserVouchers } from '../../../../__global_test_data__/fetch';
+import * as fetch from '../../../utils/fetch.utils';
+import { UserVoucherList } from './user-voucher-list';
+import { APP_STORE } from '../../../data/app-store';
+import { accountStandardData } from '../../../__global_test_data__/data';
+import { loadAccount } from '../../../data/account/account.actions';
+import { mockedFetchGetUserVouchers } from '../../../__global_test_data__/fetch';
 
 const WrapperComponent: FC = () => {
     const dispatch = useDispatch();
