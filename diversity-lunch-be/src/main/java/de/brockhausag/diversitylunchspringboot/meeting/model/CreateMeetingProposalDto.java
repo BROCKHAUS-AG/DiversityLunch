@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.meeting.model;
 
-import de.brockhausag.diversitylunchspringboot.meeting.CustomValidators.ProposedDateTimeValidator;
+import de.brockhausag.diversitylunchspringboot.meeting.customValidators.ProposedDateTimeValidator;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

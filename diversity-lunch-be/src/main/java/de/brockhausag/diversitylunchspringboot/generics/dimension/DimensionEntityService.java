@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.generics.Dimension;
+package de.brockhausag.diversitylunchspringboot.generics.dimension;
 
 import org.springframework.data.repository.CrudRepository;
 

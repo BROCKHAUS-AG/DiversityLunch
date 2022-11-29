@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.match.utils;
 
-import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.DefaultDimensionEntity;
-import de.brockhausag.diversitylunchspringboot.generics.WeightedDimension.WeightedEntity;
+import de.brockhausag.diversitylunchspringboot.generics.basicDimension.DefaultDimensionEntity;
+import de.brockhausag.diversitylunchspringboot.generics.weightedDimension.WeightedEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.experimental.UtilityClass;

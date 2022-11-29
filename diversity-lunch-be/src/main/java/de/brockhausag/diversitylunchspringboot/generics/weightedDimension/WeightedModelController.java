@@ -1,6 +1,6 @@
-package de.brockhausag.diversitylunchspringboot.generics.WeightedDimension;
+package de.brockhausag.diversitylunchspringboot.generics.weightedDimension;
 
-import de.brockhausag.diversitylunchspringboot.generics.Dimension.DimensionModelController;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionModelController;
 import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
 import org.springframework.data.repository.CrudRepository;
 

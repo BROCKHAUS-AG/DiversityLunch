@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.logic;
 
-import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.DefaultDimensionEntityService;
+import de.brockhausag.diversitylunchspringboot.generics.basicDimension.DefaultDimensionEntityService;
 import de.brockhausag.diversitylunchspringboot.profile.data.GenderRepository;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.GenderEntity;
 import org.springframework.stereotype.Service;

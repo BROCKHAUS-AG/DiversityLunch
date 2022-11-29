@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.generics.Dimension;
+package de.brockhausag.diversitylunchspringboot.generics.dimension;
 
 import de.brockhausag.diversitylunchspringboot.utils.ErrorHandlingController;
 import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;

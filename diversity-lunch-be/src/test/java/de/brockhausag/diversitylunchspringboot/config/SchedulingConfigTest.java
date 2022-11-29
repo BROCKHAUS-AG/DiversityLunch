@@ -28,7 +28,7 @@ class SchedulingConfigTest {
     @InjectMocks
     SchedulingConfig schedulingConfig;
 
-    MeetingTestdataFactory meetingTestdataFactory = new MeetingTestdataFactory();
+    final MeetingTestdataFactory meetingTestdataFactory = new MeetingTestdataFactory();
 
     @Test
     void testScheduleMatching() {

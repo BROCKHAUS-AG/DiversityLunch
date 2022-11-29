@@ -69,7 +69,7 @@ public class VoucherServiceTest {
 
         Optional<VoucherEntity> voucherEntity = voucherService.getUnclaimedVoucherForMeeting(meetingPartner.getId(), matchedMeeting.getId());
 
-        Assertions.assertNotNull(voucherEntity.get());
+        Assertions.assertNotNull(voucherEntity.orElseThrow());
         Assertions.assertEquals(unclaimedVoucher.getVoucher(), voucherEntity.get().getVoucher());
     }
 
@@ -104,7 +104,7 @@ public class VoucherServiceTest {
     void userAlreadyClaimedVoucherForThisMeeting_expectsAlreadyClaimedVoucher() {
         when(voucherRepository.getVoucherEntityByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId())).thenReturn(Optional.of(claimedVoucherProposer));
 
-        VoucherEntity voucherActual = voucherService.getVoucherByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId()).get();
+        VoucherEntity voucherActual = voucherService.getVoucherByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId()).orElseThrow();
         Assertions.assertEquals(claimedVoucherProposer, voucherActual);
     }
 
@@ -112,7 +112,7 @@ public class VoucherServiceTest {
     void userAlreadyClaimedVoucherForThisMeeting_expectsAlreadyClaimedUser() {
         when(voucherRepository.getVoucherEntityByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId())).thenReturn(Optional.of(claimedVoucherProposer));
 
-        VoucherEntity voucherActual = voucherService.getVoucherByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId()).get();
+        VoucherEntity voucherActual = voucherService.getVoucherByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId()).orElseThrow();
         Assertions.assertEquals(claimedVoucherProposer, voucherActual);
     }
 

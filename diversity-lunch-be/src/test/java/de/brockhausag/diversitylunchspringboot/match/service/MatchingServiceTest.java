@@ -20,8 +20,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -39,15 +37,13 @@ class MatchingServiceTest {
     private MatchingService matchingServiceMock;
 
     @Mock
-    MsTeamsService msTeamsService;
+    DiversityLunchEMailService mockedEMailService;
 
     @Mock
-    DiversityLunchEMailService mockedEMailService;
+    MsTeamsService msTeamsService;
 
     @InjectMocks
     private MatchingService matchingService;
-
-
 
     @Test
     void testMatching_moreThen7DaysUntilMeeting_shouldCallExecuteMatchingWithGivenTimeAnd21ScoreToBeat() {

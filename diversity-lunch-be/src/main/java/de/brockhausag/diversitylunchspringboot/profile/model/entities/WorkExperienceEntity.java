@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
-import de.brockhausag.diversitylunchspringboot.generics.WeightedDimension.WeightedEntity;
+import de.brockhausag.diversitylunchspringboot.generics.weightedDimension.WeightedEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

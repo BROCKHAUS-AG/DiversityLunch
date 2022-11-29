@@ -174,6 +174,7 @@ public class HobbyControllerTest {
         ResponseEntity<List<HobbyDto>> response = hobbyController.getAll();
 
         //Assert
+        assert response.getBody() != null;
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(0,response.getBody().size());
         assertEquals(Collections.emptyList(), response.getBody());
@@ -192,6 +193,7 @@ public class HobbyControllerTest {
         ResponseEntity<List<HobbyDto>> response = hobbyController.getAll();
 
         //Assert
+        assert response.getBody() != null;
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(expectedDtos.size(),response.getBody().size());
         assertEquals(expectedDtos, response.getBody());

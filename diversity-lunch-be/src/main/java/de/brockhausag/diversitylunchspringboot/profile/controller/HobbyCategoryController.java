@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.controller;
 
-import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.DefaultDimensionModelController;
+import de.brockhausag.diversitylunchspringboot.generics.basicDimension.DefaultDimensionModelController;
 import de.brockhausag.diversitylunchspringboot.profile.data.HobbyCategoryRepository;
 import de.brockhausag.diversitylunchspringboot.profile.logic.HobbyCategoryService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.HobbyCategoryMapper;

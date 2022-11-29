@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.meeting.CustomValidators;
+package de.brockhausag.diversitylunchspringboot.meeting.customValidators;
 
 import de.brockhausag.diversitylunchspringboot.meeting.utils.MeetingProposalValidation;
 

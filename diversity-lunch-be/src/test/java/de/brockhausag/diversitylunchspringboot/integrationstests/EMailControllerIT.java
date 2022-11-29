@@ -163,7 +163,7 @@ public class EMailControllerIT {
     @SneakyThrows
     @Test
     public void testAuthenticationSendTestMailToLoggedInUser_withInvalidId_expectedForbiddenStatus() {
-        Long id = myProfileEntity.getId() + 1;
+        long id = myProfileEntity.getId() + 1;
         String url = "/api/mailing/sendTestMailToUser?id=" + id;
 
         performRequestWithToken(url, accountEntity).andExpect(status().isForbidden());
@@ -181,7 +181,7 @@ public class EMailControllerIT {
     @SneakyThrows
     @Test
     public void testAuthenticationSendTenTestMailsToLoggedInUser_withInvalidId_expectedForbiddenStatus() {
-        Long id = myProfileEntity.getId() + 1;
+        long id = myProfileEntity.getId() + 1;
         String url = "/api/mailing/sendTenTestMailsToUser?id=" + id;
 
         performRequestWithToken(url, accountEntity).andExpect(status().isForbidden());

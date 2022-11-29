@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.controller;
 
-import de.brockhausag.diversitylunchspringboot.generics.WeightedDimension.WeightedModelController;
+import de.brockhausag.diversitylunchspringboot.generics.weightedDimension.WeightedModelController;
 import de.brockhausag.diversitylunchspringboot.profile.data.WorkExperienceRepository;
 import de.brockhausag.diversitylunchspringboot.profile.logic.WorkExperienceService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.WorkExperienceMapper;

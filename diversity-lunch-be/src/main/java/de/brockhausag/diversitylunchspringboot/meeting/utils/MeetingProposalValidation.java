@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.meeting.utils;
 
-import de.brockhausag.diversitylunchspringboot.meeting.CustomValidators.ProposedDateTimeValidator;
+import de.brockhausag.diversitylunchspringboot.meeting.customValidators.ProposedDateTimeValidator;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

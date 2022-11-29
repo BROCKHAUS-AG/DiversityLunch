@@ -2,7 +2,7 @@ package de.brockhausag.diversitylunchspringboot.profile.serviceTest;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.BaseModelTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.TestDefaultDimensionEntity;
-import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.DefaultDimensionEntityService;
+import de.brockhausag.diversitylunchspringboot.generics.basicDimension.DefaultDimensionEntityService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

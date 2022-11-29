@@ -1,12 +1,9 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
 
-import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.DefaultDimensionEntity;
-import de.brockhausag.diversitylunchspringboot.generics.WeightedDimension.WeightedEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import de.brockhausag.diversitylunchspringboot.generics.basicDimension.DefaultDimensionEntity;
+import de.brockhausag.diversitylunchspringboot.generics.weightedDimension.WeightedEntity;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class ProfileEntity {
 
     @Id

@@ -65,7 +65,7 @@ public class HobbyServiceTest {
         //Arrange
         List<HobbyEntity> expectedList = Collections.emptyList();
 
-        when(repository.findAll()).thenReturn((Iterable<HobbyEntity>) expectedList);
+        when(repository.findAll()).thenReturn(expectedList);
         //Act
         List<HobbyEntity> actualList = service.getAllEntities();
 
@@ -79,7 +79,7 @@ public class HobbyServiceTest {
         //Arrange
         List<HobbyEntity> expectedList = Stream.of(1, 2, 3).map(this.factory::buildEntity).toList();
 
-        when(repository.findAll()).thenReturn((Iterable<HobbyEntity>) expectedList);
+        when(repository.findAll()).thenReturn(expectedList);
 
         //Act
         List<HobbyEntity> actualList = service.getAllEntities();

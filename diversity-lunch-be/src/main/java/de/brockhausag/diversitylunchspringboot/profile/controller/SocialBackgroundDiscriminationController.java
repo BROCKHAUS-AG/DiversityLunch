@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.controller;
 
-import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.DefaultDimensionModelController;
+import de.brockhausag.diversitylunchspringboot.generics.basicDimension.DefaultDimensionModelController;
 import de.brockhausag.diversitylunchspringboot.profile.data.SocialBackgroundDiscriminationRepository;
 import de.brockhausag.diversitylunchspringboot.profile.logic.SocialBackgroundDiscriminationService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.SocialBackgroundDiscriminationMapper;

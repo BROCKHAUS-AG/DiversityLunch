@@ -1,6 +1,6 @@
-package de.brockhausag.diversitylunchspringboot.generics.BasicDimension;
+package de.brockhausag.diversitylunchspringboot.generics.basicDimension;
 
-import de.brockhausag.diversitylunchspringboot.generics.Dimension.DimensionEntityService;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionEntityService;
 import org.springframework.data.repository.CrudRepository;
 
 

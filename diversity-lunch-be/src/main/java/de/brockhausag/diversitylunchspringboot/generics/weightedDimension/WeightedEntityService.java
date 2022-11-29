@@ -1,6 +1,6 @@
-package de.brockhausag.diversitylunchspringboot.generics.WeightedDimension;
+package de.brockhausag.diversitylunchspringboot.generics.weightedDimension;
 
-import de.brockhausag.diversitylunchspringboot.generics.Dimension.DimensionEntityService;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionEntityService;
 import org.springframework.data.repository.CrudRepository;
 
 public class WeightedEntityService <
