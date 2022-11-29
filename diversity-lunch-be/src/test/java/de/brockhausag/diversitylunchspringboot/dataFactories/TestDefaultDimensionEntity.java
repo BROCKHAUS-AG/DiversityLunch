@@ -1,14 +1,17 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
-import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntity;
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.DefaultDimensionEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class TestBaseEntity implements BaseEntity {
+public class TestDefaultDimensionEntity implements DefaultDimensionEntity {
 
     private Long id;
 
@@ -25,7 +28,7 @@ public class TestBaseEntity implements BaseEntity {
         if ((obj == null) || (obj.getClass() != this.getClass())) {
             return false;
         }
-        final TestBaseEntity other = (TestBaseEntity) obj;
+        final TestDefaultDimensionEntity other = (TestDefaultDimensionEntity) obj;
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
     }
 

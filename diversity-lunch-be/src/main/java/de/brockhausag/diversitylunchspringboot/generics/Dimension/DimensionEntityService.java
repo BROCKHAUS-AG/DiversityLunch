@@ -1,7 +1,5 @@
 package de.brockhausag.diversitylunchspringboot.generics.Dimension;
 
-import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntity;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -46,9 +44,5 @@ public class DimensionEntityService<
         return StreamSupport
                 .stream(entitiesIterable.spliterator(), false)
                 .collect(Collectors.toList());
-    }
-
-    public boolean existsById(Long id){
-        return this.repository.existsById(id);
     }
 }

@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
-import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntity;
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.DefaultDimensionEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +17,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Getter
 @Setter
-public class GenderEntity implements BaseEntity {
+public class GenderEntity implements DefaultDimensionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

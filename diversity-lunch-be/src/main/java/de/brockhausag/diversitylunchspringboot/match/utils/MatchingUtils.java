@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.match.utils;
 
-import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntity;
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.DefaultDimensionEntity;
 import de.brockhausag.diversitylunchspringboot.generics.WeightedDimension.WeightedEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
@@ -49,13 +49,13 @@ public class MatchingUtils {
     private static int getScoreFromBaseEntities(ProfileEntity profile1, ProfileEntity profile2, List<Category> potentialQuestionsCategories) {
         int currentScore = 0;
 
-        List<BaseEntity> baseEntitiesProfile1 = profile1.getBaseEntities();
-        List<BaseEntity> baseEntitiesProfile2 = profile2.getBaseEntities();
+        List<DefaultDimensionEntity> baseEntitiesProfile1 = profile1.getBaseEntities();
+        List<DefaultDimensionEntity> baseEntitiesProfile2 = profile2.getBaseEntities();
 
         int entityScore;
         for (int i = 0; i < baseEntitiesProfile1.size(); i++) {
-            BaseEntity entity1 = baseEntitiesProfile1.get(i);
-            BaseEntity entity2 = baseEntitiesProfile2.get(i);
+            DefaultDimensionEntity entity1 = baseEntitiesProfile1.get(i);
+            DefaultDimensionEntity entity2 = baseEntitiesProfile2.get(i);
 
             if (entityShouldBeIgnored(entity1) || entityShouldBeIgnored(entity2)){
                 continue;
@@ -71,7 +71,7 @@ public class MatchingUtils {
         return currentScore;
     }
 
-    private static boolean entityShouldBeIgnored(BaseEntity entity) {
+    private static boolean entityShouldBeIgnored(DefaultDimensionEntity entity) {
         return entity.getDescriptor().equalsIgnoreCase("keine angabe");
     }
 
@@ -126,8 +126,8 @@ public class MatchingUtils {
     }
 
 
-    private int compareBaseEntities(BaseEntity entity1, BaseEntity entity2) {
-        if (entity1.getId() == entity2.getId()){
+    private int compareBaseEntities(DefaultDimensionEntity entity1, DefaultDimensionEntity entity2) {
+        if (entity1.getId().equals(entity2.getId())){
             return EQUAL_SCORE;
         }
         return STANDARD_SCORE_BY_DIFFERENCE;

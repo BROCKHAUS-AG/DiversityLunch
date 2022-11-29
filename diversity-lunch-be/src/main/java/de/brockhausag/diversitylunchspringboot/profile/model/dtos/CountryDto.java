@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.dtos;
 
-import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseDto;
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.DefaultDimensionDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class CountryDto implements BaseDto {
+public class CountryDto implements DefaultDimensionDto {
     private Long id;
 
     @Schema(description = "A country of the planet earth", example = "England")

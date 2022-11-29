@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.dtos;
 
-import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseDto;
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.DefaultDimensionDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class SocialBackgroundDto implements BaseDto {
+public class SocialBackgroundDto implements DefaultDimensionDto {
     private Long id;
 
     @Schema(description = "Your socialBackground in years", example = "2 Jahre")

@@ -1,8 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.profile.serviceTest;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.BaseModelTestDataFactory;
-import de.brockhausag.diversitylunchspringboot.dataFactories.TestBaseEntity;
-import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntityService;
+import de.brockhausag.diversitylunchspringboot.dataFactories.TestDefaultDimensionEntity;
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.DefaultDimensionEntityService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,15 +19,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class GenericBaseEntityServiceTest {
-    private interface TestRepositoryType extends CrudRepository<TestBaseEntity, Long>{}
+public class GenericDefaultDimensionEntityServiceTest {
+    private interface TestRepositoryType extends CrudRepository<TestDefaultDimensionEntity, Long>{}
 
 
     private BaseModelTestDataFactory factory;
     @Mock
     private TestRepositoryType testRepository;
     @InjectMocks
-    private BaseEntityService<TestBaseEntity, TestRepositoryType> service;
+    private DefaultDimensionEntityService<TestDefaultDimensionEntity, TestRepositoryType> service;
 
     @BeforeEach
     void setup(){
@@ -65,11 +65,11 @@ public class GenericBaseEntityServiceTest {
     @Test
     void testGetAllEntities_withNoEntitiesInRepository_returnsEmptyList(){
         //Arrange
-        List<TestBaseEntity> expectedList = Collections.emptyList();
+        List<TestDefaultDimensionEntity> expectedList = Collections.emptyList();
 
-        when(testRepository.findAll()).thenReturn((Iterable<TestBaseEntity>) expectedList);
+        when(testRepository.findAll()).thenReturn(expectedList);
         //Act
-        List<TestBaseEntity> actualList = service.getAllEntities();
+        List<TestDefaultDimensionEntity> actualList = service.getAllEntities();
 
         //Assert
         assertEquals(expectedList, actualList);
@@ -78,12 +78,12 @@ public class GenericBaseEntityServiceTest {
     @Test
     void testGetAllEntities_withThreeEntitiesInRepository_returnsListOfThreeEntities(){
         //Arrange
-        List<TestBaseEntity> expectedList = Arrays.asList(factory.buildEntity(1),
+        List<TestDefaultDimensionEntity> expectedList = Arrays.asList(factory.buildEntity(1),
                 factory.buildEntity(2), factory.buildEntity(3));
 
-        when(testRepository.findAll()).thenReturn((Iterable<TestBaseEntity>) expectedList);
+        when(testRepository.findAll()).thenReturn(expectedList);
         //Act
-        List<TestBaseEntity> actualList = service.getAllEntities();
+        List<TestDefaultDimensionEntity> actualList = service.getAllEntities();
 
         //Assert
         assertEquals(expectedList, actualList);

@@ -1,11 +1,11 @@
 package de.brockhausag.diversitylunchspringboot.profile.controllerTest;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.BaseModelTestDataFactory;
-import de.brockhausag.diversitylunchspringboot.dataFactories.TestBaseDto;
-import de.brockhausag.diversitylunchspringboot.dataFactories.TestBaseEntity;
+import de.brockhausag.diversitylunchspringboot.dataFactories.TestDefaultDimensionDto;
+import de.brockhausag.diversitylunchspringboot.dataFactories.TestDefaultDimensionEntity;
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.DefaultDimensionEntityService;
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.DefaultDimensionModelController;
 import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
-import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseModelController;
-import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntityService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,9 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class GenericBaseModelControllerTest {
-    private interface TestRepositoryType extends CrudRepository<TestBaseEntity, Long> {}
-    private static class TestServiceType extends BaseEntityService<TestBaseEntity, TestRepositoryType> {
+public class GenericDefaultDimensionModelControllerTest {
+    private interface TestRepositoryType extends CrudRepository<TestDefaultDimensionEntity, Long> {}
+    private static class TestServiceType extends DefaultDimensionEntityService<TestDefaultDimensionEntity, TestRepositoryType> {
         public TestServiceType(TestRepositoryType repository) {
             super(repository);
         }
@@ -37,13 +37,13 @@ public class GenericBaseModelControllerTest {
     private BaseModelTestDataFactory factory;
 
     @Mock
-    private Mapper<TestBaseDto, TestBaseEntity> mapper;
+    private Mapper<TestDefaultDimensionDto, TestDefaultDimensionEntity> mapper;
     @Mock
     private TestServiceType service ;
 
     @InjectMocks
-    private BaseModelController<TestBaseDto,TestBaseEntity,
-                    TestRepositoryType,TestServiceType, Mapper<TestBaseDto, TestBaseEntity> > controller;
+    private DefaultDimensionModelController<TestDefaultDimensionDto, TestDefaultDimensionEntity,
+                            TestRepositoryType,TestServiceType, Mapper<TestDefaultDimensionDto, TestDefaultDimensionEntity> > controller;
 
     @BeforeEach
     void setup(){
@@ -53,9 +53,9 @@ public class GenericBaseModelControllerTest {
     @Test
     void testGetOne_withExistingId_returnsOkWithTestBaseDto() {
         //Arrange
-        TestBaseDto expectedDto = factory.buildDto(1);
-        TestBaseEntity existingEntity = factory.buildEntity(1);
-        ResponseEntity<TestBaseDto> expectedResponse = new ResponseEntity<>(expectedDto, HttpStatus.OK);
+        TestDefaultDimensionDto expectedDto = factory.buildDto(1);
+        TestDefaultDimensionEntity existingEntity = factory.buildEntity(1);
+        ResponseEntity<TestDefaultDimensionDto> expectedResponse = new ResponseEntity<>(expectedDto, HttpStatus.OK);
 
         when(service.getEntityById(existingEntity.getId())).thenReturn(Optional.of(existingEntity));
         when(mapper.entityToDto(existingEntity)).thenReturn(expectedDto);
@@ -86,9 +86,9 @@ public class GenericBaseModelControllerTest {
     @Test
     void testGetAll_withNoEntitiesInRepository_returnsEmptyList(){
         //Arrange
-        List<TestBaseDto> emptyDtoList = Collections.emptyList();
-        List<TestBaseEntity> emptyEntityList = Collections.emptyList();
-        ResponseEntity<List<TestBaseDto>> expectedResponse = new ResponseEntity<>(
+        List<TestDefaultDimensionDto> emptyDtoList = Collections.emptyList();
+        List<TestDefaultDimensionEntity> emptyEntityList = Collections.emptyList();
+        ResponseEntity<List<TestDefaultDimensionDto>> expectedResponse = new ResponseEntity<>(
                 emptyDtoList,
                 HttpStatus.OK
         );
@@ -96,7 +96,7 @@ public class GenericBaseModelControllerTest {
         when(service.getAllEntities()).thenReturn(emptyEntityList);
         when(mapper.entityToDto(emptyEntityList)).thenReturn(emptyDtoList);
         //Act
-        ResponseEntity<List<TestBaseDto>> actualResponse = controller.getAll();
+        ResponseEntity<List<TestDefaultDimensionDto>> actualResponse = controller.getAll();
 
         //Assert
         assertEquals(expectedResponse.getBody(), actualResponse.getBody());
@@ -106,12 +106,12 @@ public class GenericBaseModelControllerTest {
     @Test
     void testGetAllCountries_withThreeEntitiesInRepository_returnsListOfThreeTestBaseEntities(){
         //Arrange
-        List<TestBaseEntity> entityList = Arrays.asList(factory.buildEntity(1),
+        List<TestDefaultDimensionEntity> entityList = Arrays.asList(factory.buildEntity(1),
                 factory.buildEntity(2), factory.buildEntity(3));
-        List<TestBaseDto> dtoList =Arrays.asList(factory.buildDto(1),
+        List<TestDefaultDimensionDto> dtoList =Arrays.asList(factory.buildDto(1),
                 factory.buildDto(2), factory.buildDto(3));
 
-        ResponseEntity<List<TestBaseDto>> expectedResponse = new ResponseEntity<>(
+        ResponseEntity<List<TestDefaultDimensionDto>> expectedResponse = new ResponseEntity<>(
                 dtoList,
                 HttpStatus.OK
         );
@@ -119,7 +119,7 @@ public class GenericBaseModelControllerTest {
         when(service.getAllEntities()).thenReturn(entityList);
         when(mapper.entityToDto(entityList)).thenReturn(dtoList);
         //Arrange
-        ResponseEntity<List<TestBaseDto>> actualResponse = controller.getAll();
+        ResponseEntity<List<TestDefaultDimensionDto>> actualResponse = controller.getAll();
 
         //Assert
         assertEquals(expectedResponse.getBody(), actualResponse.getBody());
@@ -128,8 +128,8 @@ public class GenericBaseModelControllerTest {
 
     @Test
     void testPostOne_calledThreeTimesWithSameDto_callCreateEntityThreeTimesWithMappedEntity(){
-        TestBaseDto dto = factory.buildDto(1);
-        TestBaseEntity entity = mapper.dtoToEntity(dto);
+        TestDefaultDimensionDto dto = factory.buildDto(1);
+        TestDefaultDimensionEntity entity = mapper.dtoToEntity(dto);
         when(service.createEntity(entity)).thenReturn(entity);
         final int AMOUNT = 3;
 
@@ -142,8 +142,8 @@ public class GenericBaseModelControllerTest {
 
     @Test
     void testPutOne_calledThreeTimesWithSameDto_callCreateOrUpdateEntityThreeTimesWithMappedEntity(){
-        TestBaseDto dto = factory.buildDto(1);
-        TestBaseEntity entity = mapper.dtoToEntity(dto);
+        TestDefaultDimensionDto dto = factory.buildDto(1);
+        TestDefaultDimensionEntity entity = mapper.dtoToEntity(dto);
         when(service.updateOrCreateEntity(entity)).thenReturn(entity);
         final int AMOUNT = 3;
 
