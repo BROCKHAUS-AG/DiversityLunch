@@ -41,7 +41,7 @@ class MatchingUtilsTest {
 
     @Test
     void testCurrentScoreStandard() {
-        ScoreAndCategory expected = new ScoreAndCategory(1, Category.WORK_EXPERIENCE);
+        ScoreAndCategory expected = new ScoreAndCategory(1, Category.DIET);
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
         assertEquals(expected.currentScore(), actual.currentScore());
         assertEquals(expected.category(), actual.category());
@@ -72,7 +72,7 @@ class MatchingUtilsTest {
     })
     void testCurrentScoreLowWorkExperienceProfile2(String workExperience, int score) {
         profile2.getWorkExperience().setDescriptor(workExperience);
-        ScoreAndCategory expected = new ScoreAndCategory(score, Category.WORK_EXPERIENCE);
+        ScoreAndCategory expected = new ScoreAndCategory(score, Category.DIET);
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
         assertEquals(score, actual.currentScore());
         assertEquals(expected.category(), actual.category());
@@ -86,7 +86,7 @@ class MatchingUtilsTest {
     })
     void testCurrentScoreLowWorkExperienceProfile1(String workExperience, int score) {
         profile1.getWorkExperience().setDescriptor(workExperience);
-        ScoreAndCategory expected = new ScoreAndCategory(score, Category.WORK_EXPERIENCE);
+        ScoreAndCategory expected = new ScoreAndCategory(score, Category.DIET);
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
         assertEquals(score, actual.currentScore());
         assertEquals(expected.category(), actual.category());
@@ -101,7 +101,7 @@ class MatchingUtilsTest {
     void testCurrentScoreMidWorkExperienceProfile2(String workExperience, int score) {
         profile1.getWorkExperience().setDescriptor(workExperience);
         profile2.getWorkExperience().setDescriptor("4-10 Jahre");
-        ScoreAndCategory expected = new ScoreAndCategory(score, Category.WORK_EXPERIENCE);
+        ScoreAndCategory expected = new ScoreAndCategory(score, Category.DIET);
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
         assertEquals(score, actual.currentScore());
         assertEquals(expected.category(), actual.category());
@@ -116,7 +116,7 @@ class MatchingUtilsTest {
     void testCurrentScoreMidWorkExperienceProfile21(String workExperience, int score) {
         profile2.getWorkExperience().setDescriptor(workExperience);
         profile1.getWorkExperience().setDescriptor("4-10 Jahre");
-        ScoreAndCategory expected = new ScoreAndCategory(score, Category.WORK_EXPERIENCE);
+        ScoreAndCategory expected = new ScoreAndCategory(score, Category.DIET);
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
         assertEquals(score, actual.currentScore());
         assertEquals(expected.category(), actual.category());
