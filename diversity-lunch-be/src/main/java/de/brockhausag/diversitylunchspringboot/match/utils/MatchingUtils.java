@@ -31,9 +31,18 @@ public class MatchingUtils {
         //Third Score Birthdate or miscellaneous
         currentScore += compareBirthYear(profile1, profile2, potentialQuestionsCategories);
 
-        int randomIndex = random.nextInt(potentialQuestionsCategories.size());
+        Category category;
+        if (potentialQuestionsCategories.size() > 0) {
+            int randomIndex = random.nextInt(potentialQuestionsCategories.size());
+            category = potentialQuestionsCategories.get(randomIndex);
+        } else {
+            // Es besteht kein Matching zwischen exakt übereinstimmenden Profilen
+            // Deshalb werden keine Fragen an die Profile gestellt
+            // Diät wurde als neutrale Kategorie ausgewählt
+            category = Category.DIET;
+        }
 
-        return new ScoreAndCategory(currentScore, potentialQuestionsCategories.get(randomIndex));
+        return new ScoreAndCategory(currentScore, category);
     }
 
 

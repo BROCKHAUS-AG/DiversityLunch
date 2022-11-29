@@ -6,7 +6,8 @@ import org.springframework.data.repository.CrudRepository;
 
 public class BaseEntityService<
         EntityType extends BaseEntity,
-        RepositoryType extends CrudRepository<EntityType, Long> > extends DimensionEntityService {
+        RepositoryType extends CrudRepository<EntityType, Long> > extends DimensionEntityService <
+        EntityType, RepositoryType> {
 
     public BaseEntityService(RepositoryType repository) {
         super(repository);

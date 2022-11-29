@@ -11,7 +11,9 @@ public class WeightedModelController<
         RepositoryType extends CrudRepository<EntityType, Long>,
         ServiceType extends WeightedEntityService<EntityType, RepositoryType>,
         MapperType extends Mapper<DtoType, EntityType>>
-        extends DimensionModelController {
+        extends DimensionModelController <
+        DtoType, EntityType, RepositoryType, ServiceType, MapperType
+        >{
     public WeightedModelController(MapperType mapper, ServiceType service) {
         super(mapper, service);
     }

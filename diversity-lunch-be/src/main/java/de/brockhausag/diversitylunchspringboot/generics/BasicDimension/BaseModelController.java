@@ -10,7 +10,9 @@ public class BaseModelController<
         RepositoryType extends CrudRepository<EntityType, Long>,
         ServiceType extends BaseEntityService<EntityType, RepositoryType>,
         MapperType extends Mapper<DtoType, EntityType>>
-        extends DimensionModelController {
+        extends DimensionModelController<
+        DtoType, EntityType, RepositoryType, ServiceType, MapperType
+        >{
     public BaseModelController(MapperType mapper, ServiceType service) {
         super(mapper, service);
     }
