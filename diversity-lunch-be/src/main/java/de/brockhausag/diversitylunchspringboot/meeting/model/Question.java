@@ -33,7 +33,7 @@ public enum Question {
             "aber auch welche Gemeinsamkeiten teilt ihr?",
             Category.COUNTRY_OF_ORIGIN),
     COUNTRY_OF_ORIGIN2("Welche Probleme bringt ein Migrationshintergrund mit sich, " +
-            "wann wurdet ihr auf eure Herkunft reduziert oder genießt ihr dadurch Vorteile?",
+            "wann wurdet ihr auf eure ethnische Herkunft reduziert oder genießt ihr dadurch Vorteile?",
             Category.COUNTRY_OF_ORIGIN),
     COUNTRY_OF_ORIGIN3("In welchen beruflichen Situationen ist ein interkulturelles Team eurer Meinung nach " +
             "besonders wichtig?", Category.COUNTRY_OF_ORIGIN),
