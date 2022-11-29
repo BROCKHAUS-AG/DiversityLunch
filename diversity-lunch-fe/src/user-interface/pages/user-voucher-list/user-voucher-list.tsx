@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import '../../../styles/component-styles/UserVoucherList/UserVoucherList.scss';
+import './user-voucher-list.scss';
 import { AccountState, AccountStateOk } from '../../../data/account/account-state.type';
 import { AppStoreState } from '../../../data/app-store';
 import { Account } from '../../../model/Account';

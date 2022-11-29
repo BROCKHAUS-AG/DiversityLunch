@@ -2,7 +2,7 @@ import React, { ChangeEvent } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete, { AutocompleteRenderInputParams } from '@material-ui/lab/Autocomplete';
 import { Identifiable } from '../../../data/generic/Identifiable';
-import '../../../styles/component-styles/questions/dropDown.scss';
+import './dropdown.scss';
 
 interface dropdownProps<T extends Identifiable> {
     options: T[];

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../../styles/component-styles/shared/loading-animation.scss';
+import './loading-animation.scss';
 
 type LoadingAnimationProps = {
     size?: 'default' | 'block-app';
