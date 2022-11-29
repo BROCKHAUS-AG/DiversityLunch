@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { CloseSiteContainer } from '../../General/HeaderTemplate/CloseSiteContainer';
-import { DiversityIconContainer } from '../../General/HeaderTemplate/DiversityIconContainer';
-import '../../../styles/component-styles/addMeeting/dateOverview.scss';
+import { CloseSite } from '../close-site/close-site';
+import { DiversityIcon } from '../diversity-icon/diversity-icon';
+import './date-overview.scss';
 import iconFood from '../../../resources/icons/icon-hamburger.svg';
 import { CreateMeeting } from '../../../model/Meeting';
 import { Button } from '../button/button';
@@ -28,8 +28,8 @@ export const DateOverview = (props: DateOverviewProps) => {
     return (
         <div className="DateOverview">
             <div className="DateOverview-logo-container">
-                <CloseSiteContainer />
-                <DiversityIconContainer />
+                <CloseSite />
+                <DiversityIcon />
             </div>
             <div className="DateOverview-info-text-container">
                 <p className="DateOverview-info-text">

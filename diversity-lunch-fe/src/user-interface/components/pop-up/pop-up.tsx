@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../../styles/component-styles/popup/PopUp.scss';
+import './pop-up.scss';
 
 interface PopUpProps {
     onButtonClick: () => void;

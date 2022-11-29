@@ -1,18 +1,18 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { TileIconLink } from '../../components/tile-icon-link/tile-icon-link';
-import { DiversityIconContainer } from '../../General/HeaderTemplate/DiversityIconContainer';
-import '../../../styles/component-styles/dashboard/dashboard.scss';
+import { DiversityIcon } from '../../components/diversity-icon/diversity-icon';
+import './dashboard.scss';
 import iconInfo from '../../../resources/icons/icon-info.svg';
 import iconProfile from '../../../resources/icons/icon-profil.svg';
 import iconMeeting from '../../../resources/icons/icon-anstehende-termine.svg';
 import iconCalendar from '../../../resources/icons/icon-termin-auswählen.svg';
-import { AdminPanelIconContainer } from '../../General/HeaderTemplate/AdminPanelIconContainer';
+import { AdminPanelIcon } from '../../components/admin-panel-icon/admin-panel-icon';
 import { Account } from '../../../model/Account';
 import { AppStoreState } from '../../../data/app-store';
 import { Role } from '../../../model/Role';
-import { LoadingAnimation } from '../../Shared/LoadingAnimation';
-import { UserVoucherIconContainer } from '../../General/HeaderTemplate/UserVoucherIconContainer';
+import { LoadingAnimation } from '../../components/loading-animation/loading-animation';
+import { UserVoucherIcon } from '../../components/user-voucher-icon/user-voucher-icon';
 
 export const Dashboard = () => {
     const accountState = useSelector((state: AppStoreState) => state.account);
@@ -28,11 +28,11 @@ export const Dashboard = () => {
     return (
         <div className="Dashboard">
             <div className="icon-container">
-                {isAdmin && <AdminPanelIconContainer />}
-                <UserVoucherIconContainer />
+                {isAdmin && <AdminPanelIcon />}
+                <UserVoucherIcon />
             </div>
 
-            <DiversityIconContainer title="DIVERSITY LUNCH" poweredBy />
+            <DiversityIcon title="DIVERSITY LUNCH" poweredBy />
 
             <div className="Dashboard-tiles-container">
                 <TileIconLink title="DEIN PROFIL" icon={iconProfile} link="profile" />

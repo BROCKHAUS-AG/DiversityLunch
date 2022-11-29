@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Styles
-import '../../../styles/component-styles/dashboard/tile.scss';
+import './tile-icon-link.scss';
 
 // Navigation
 import { Link } from 'react-router-dom';

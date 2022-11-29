@@ -1,8 +1,8 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { CloseSiteContainer } from '../../General/HeaderTemplate/CloseSiteContainer';
-import { DiversityIconContainer } from '../../General/HeaderTemplate/DiversityIconContainer';
+import { CloseSite } from '../../components/close-site/close-site';
+import { DiversityIcon } from '../../components/diversity-icon/diversity-icon';
 import { AppStoreState } from '../../../data/app-store';
 import { Role } from '../../../model/Role';
 import { projectFetch } from '../../../data/project/project-fetch';
@@ -12,7 +12,7 @@ import { UserList } from '../../components/user-list/user-list';
 import { VoucherUpload } from '../../components/voucher-upload/voucher-upload';
 import { authenticatedFetchPost } from '../../../utils/fetch.utils';
 import { PopUp } from '../../components/pop-up/pop-up';
-import '../../../styles/component-styles/adminPanel/adminPanel.scss';
+import './admin-panel.scss';
 
 export const AdminPanel: FC = () => {
     const accountState = useSelector((store: AppStoreState) => store.account);
@@ -49,8 +49,8 @@ export const AdminPanel: FC = () => {
     };
     return (
         <section className="view">
-            <CloseSiteContainer />
-            <DiversityIconContainer title="ADMIN PANEL" />
+            <CloseSite />
+            <DiversityIcon title="ADMIN PANEL" />
             <UserList />
             <IdentifiableOptionsList state={projectState} fetch={projectFetch} title="Projektliste anpassen" addButtonLabel="Projekt hinzufügen" />
 
