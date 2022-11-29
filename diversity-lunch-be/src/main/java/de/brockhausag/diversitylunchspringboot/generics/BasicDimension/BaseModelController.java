@@ -11,11 +11,6 @@ public class BaseModelController<
         ServiceType extends BaseEntityService<EntityType, RepositoryType>,
         MapperType extends Mapper<DtoType, EntityType>>
         extends DimensionModelController {
-
-
-     MapperType mapper;
-     ServiceType service;
-
     public BaseModelController(MapperType mapper, ServiceType service) {
         super(mapper, service);
     }
