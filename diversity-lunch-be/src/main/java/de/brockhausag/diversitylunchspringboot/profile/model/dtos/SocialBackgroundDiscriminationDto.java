@@ -1,19 +1,19 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.dtos;
 
-        import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseDto;
-        import io.swagger.v3.oas.annotations.media.Schema;
-        import lombok.*;
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.DefaultDimensionDto;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.*;
 
-        import javax.validation.constraints.NotBlank;
-        import javax.validation.constraints.NotNull;
-        import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
-public class SocialBackgroundDiscriminationDto implements BaseDto {
+public class SocialBackgroundDiscriminationDto implements DefaultDimensionDto {
 
     private Long id;
 

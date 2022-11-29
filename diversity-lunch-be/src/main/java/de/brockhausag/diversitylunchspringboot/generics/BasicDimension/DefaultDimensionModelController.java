@@ -4,16 +4,16 @@ import de.brockhausag.diversitylunchspringboot.generics.Dimension.DimensionModel
 import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
 import org.springframework.data.repository.CrudRepository;
 
-public class BaseModelController<
-        DtoType extends BaseDto,
-        EntityType extends BaseEntity,
+public class DefaultDimensionModelController<
+        DtoType extends DefaultDimensionDto,
+        EntityType extends DefaultDimensionEntity,
         RepositoryType extends CrudRepository<EntityType, Long>,
-        ServiceType extends BaseEntityService<EntityType, RepositoryType>,
+        ServiceType extends DefaultDimensionEntityService<EntityType, RepositoryType>,
         MapperType extends Mapper<DtoType, EntityType>>
         extends DimensionModelController<
         DtoType, EntityType, RepositoryType, ServiceType, MapperType
         >{
-    public BaseModelController(MapperType mapper, ServiceType service) {
+    public DefaultDimensionModelController(MapperType mapper, ServiceType service) {
         super(mapper, service);
     }
 }

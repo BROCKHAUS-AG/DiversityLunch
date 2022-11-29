@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
 
-import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.BaseEntity;
+import de.brockhausag.diversitylunchspringboot.generics.BasicDimension.DefaultDimensionEntity;
 import de.brockhausag.diversitylunchspringboot.generics.WeightedDimension.WeightedEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -68,8 +68,8 @@ public class ProfileEntity {
                 other.email.equals(this.email) && (other.birthYear == this.birthYear);
     }
 
-    public List<BaseEntity> getBaseEntities(){
-        List<BaseEntity> baseEntities = new ArrayList<>();
+    public List<DefaultDimensionEntity> getBaseEntities(){
+        List<DefaultDimensionEntity> baseEntities = new ArrayList<>();
         baseEntities.add(originCountry);
         baseEntities.add(diet);
         baseEntities.add(education);
