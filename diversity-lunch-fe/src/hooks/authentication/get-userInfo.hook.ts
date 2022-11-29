@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { useSelector } from 'react-redux';
-import { AppStoreState } from '../../store/Store';
+import { AppStoreState } from '../../data/app-store';
 
 type UserInfo = {
   firstName: string,

@@ -4,7 +4,7 @@ import { FC, useEffect } from 'react';
 import { Provider, useDispatch } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { ProfileOverview } from '../ProfileOverview';
-import { APP_STORE } from '../../../store/Store';
+import { APP_STORE } from '../../../data/app-store';
 import * as fetcher from '../../../utils/fetch.utils';
 import { mockedFetchGetProfile } from '../../../__global_test_data__/fetch';
 import { loadProfile } from '../../../data/profile/profile.actions';

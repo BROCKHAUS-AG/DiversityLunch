@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../styles/component-styles/voucherList/voucherList.scss';
-import { AdminVoucher } from '../../types/AdminVoucher';
+import { AdminVoucher } from '../../model/AdminVoucher';
 
 interface voucherListProps {
     vouchers: AdminVoucher []

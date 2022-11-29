@@ -1,13 +1,13 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import azureAdminLogo from '../../resources/icons/azure_modern.svg';
-import { AppStoreState } from '../../store/Store';
+import { AppStoreState } from '../../data/app-store';
 import { AccountsState } from '../../data/accounts/accounts-reducer';
 import { assignAdminRole, getAllAccounts, revokeAdminRole } from '../../data/accounts/accounts-fetch';
 import { ProfilesState } from '../../data/profiles/profiles-reducer';
 import { getAllProfiles } from '../../data/profiles/profiles-fetch';
 import { User } from './userAdministration/User';
-import { Account } from '../../types/Account';
+import { Account } from '../../model/Account';
 import { Profile } from '../../model/Profile';
 import { LoadingAnimation } from '../Shared/LoadingAnimation';
 import { Role } from '../../model/Role';

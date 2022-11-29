@@ -1,4 +1,4 @@
-import { Role } from '../model/Role';
+import { Role } from './Role';
 
 export type Account = {
   id: number,

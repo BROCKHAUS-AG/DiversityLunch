@@ -8,7 +8,7 @@ import './resources/fonts/GilroyBlack.otf';
 import './styles/component-styles/index.scss';
 
 // redux
-import { APP_STORE } from './store/Store';
+import { APP_STORE } from './data/app-store';
 import { AuthenticationCheck } from './components/Core/AuthenticationCheck';
 
 ReactDOM.render(

@@ -1,5 +1,5 @@
-import { CreateMeetingDto, MeetingDto } from '../types/dtos/MeetingDto';
-import { CreateMeeting, Meeting } from '../types/Meeting';
+import { CreateMeetingDto, MeetingDto } from '../model/dtos/MeetingDto';
+import { CreateMeeting, Meeting } from '../model/Meeting';
 import { dateFromUTCDateString } from '../utils/date.utils';
 
 export const mapMeetingToDto = (meeting: Meeting): MeetingDto => ({

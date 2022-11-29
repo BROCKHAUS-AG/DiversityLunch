@@ -4,8 +4,8 @@ import { BrowserRouter, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import userEvent from '@testing-library/user-event';
 import { UpcomingMeetings } from '../UpcomingMeetings';
-import { APP_STORE } from '../../../store/Store';
-import { Meeting } from '../../../types/Meeting';
+import { APP_STORE } from '../../../data/app-store';
+import { Meeting } from '../../../model/Meeting';
 
 let meetingMatched: Meeting;
 let meetingNotMatched: Meeting;

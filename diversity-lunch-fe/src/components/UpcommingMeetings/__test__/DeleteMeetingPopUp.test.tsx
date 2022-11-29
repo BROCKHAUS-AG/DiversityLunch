@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Meeting } from '../../../types/Meeting';
+import { Meeting } from '../../../model/Meeting';
 import { DeleteMeetingPopUp } from '../DeleteMeetingPopUp';
 import Mock = jest.Mock;
 

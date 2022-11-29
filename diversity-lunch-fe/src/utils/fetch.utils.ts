@@ -1,4 +1,4 @@
-import { APP_STORE } from '../store/Store';
+import { APP_STORE } from '../data/app-store';
 
 /**
  * Das soll nur demonstrieren wie man einen Request mit Authentifizierung absetzen kann.

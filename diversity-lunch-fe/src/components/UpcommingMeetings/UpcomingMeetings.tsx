@@ -5,8 +5,8 @@ import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer
 import { ShowMeeting } from './ShowMeeting';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import '../../styles/component-styles/upcomming-meetings/upcommingMeetings.scss';
-import { Meeting } from '../../types/Meeting';
-import { AppStoreState } from '../../store/Store';
+import { Meeting } from '../../model/Meeting';
+import { AppStoreState } from '../../data/app-store';
 import { loadMeetings } from '../../data/meeting/meetings.actions';
 import { LoadingAnimation } from '../Shared/LoadingAnimation';
 import { MeetingsState } from '../../data/meeting/meetings-state.type';

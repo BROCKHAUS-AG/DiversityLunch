@@ -6,7 +6,7 @@ import * as fetcher from '../../../utils/fetch.utils';
 import { mockedFetchGetAccount } from '../../../__global_test_data__/fetch';
 import { Dashboard } from '../Dashboard';
 import { Role } from '../../../model/Role';
-import { APP_STORE } from '../../../store/Store';
+import { APP_STORE } from '../../../data/app-store';
 import { loadAccount } from '../../../data/account/account.actions';
 
 const AccountLoader: FC = () => {

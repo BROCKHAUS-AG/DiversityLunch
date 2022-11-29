@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import '../../styles/component-styles/UserVoucherList/UserVoucherList.scss';
 import { AccountState, AccountStateOk } from '../../data/account/account-state.type';
-import { AppStoreState } from '../../store/Store';
-import { Account } from '../../types/Account';
+import { AppStoreState } from '../../data/app-store';
+import { Account } from '../../model/Account';
 import { authenticatedFetchGet } from '../../utils/fetch.utils';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
 import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
-import { UserVoucher } from '../../types/UserVoucher';
+import { UserVoucher } from '../../model/UserVoucher';
 
 export const UserVoucherList = () => {
     const accountState: AccountState = useSelector((store: AppStoreState) => store.account);

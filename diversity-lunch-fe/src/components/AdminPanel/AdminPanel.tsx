@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { CloseSiteContainer } from '../General/HeaderTemplate/CloseSiteContainer';
 import { DiversityIconContainer } from '../General/HeaderTemplate/DiversityIconContainer';
-import { AppStoreState } from '../../store/Store';
+import { AppStoreState } from '../../data/app-store';
 import { Role } from '../../model/Role';
 import { projectFetch } from '../../data/project/project-fetch';
 import { OptionsList } from './OptionsList';

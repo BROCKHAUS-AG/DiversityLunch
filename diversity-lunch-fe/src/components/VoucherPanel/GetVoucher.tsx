@@ -4,9 +4,9 @@ import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import { Button } from '../General/Button/Button';
 import { authenticatedFetchPut } from '../../utils/fetch.utils';
-import { Account } from '../../types/Account';
+import { Account } from '../../model/Account';
 import { AccountState } from '../../data/account/account-state.type';
-import { AppStoreState } from '../../store/Store';
+import { AppStoreState } from '../../data/app-store';
 
 type MeetingParams = {
     meetingId: string;
