@@ -24,7 +24,7 @@ public class MicrosoftGraphService {
     private final AADAuthenticationProperties aadAuthenticationProperties;
     private final DiversityLunchMsTeamsProperties diversityLunchMsTeamsProperties;
 
-    private GraphServiceClient<Request> setUpGraphClient(){
+    private GraphServiceClient<Request> setUpGraphClient() {
         String clientId = aadAuthenticationProperties.getClientId();
         String clientSecret = diversityLunchMsTeamsProperties.getClientSecret();
 
@@ -48,7 +48,7 @@ public class MicrosoftGraphService {
                 .buildClient();
     }
 
-    public Event createEvent(Event event){
+    public Event createEvent(Event event) {
         GraphServiceClient<Request> graphClient = setUpGraphClient();
 
         String userId = diversityLunchMsTeamsProperties.getDiversityLunchUserId();

@@ -24,12 +24,12 @@ public class WorkExperienceEntity implements WeightedEntity {
 
     private String descriptor;
 
-    private  int weight;
+    private int weight;
 
     @Override
     public int hashCode() {
         String hashString = this.id.toString() + this.descriptor;
-        return hashString.hashCode() ;
+        return hashString.hashCode();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class WorkExperienceEntity implements WeightedEntity {
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
     }
 
-    public Category getQuestionCategory(){
+    public Category getQuestionCategory() {
         return Category.WORK_EXPERIENCE;
     }
 }

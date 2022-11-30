@@ -13,19 +13,20 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EducationMapperTest {
-    
+
     private EducationEntity firstEntity;
     private EducationEntity secondEntity;
     private EducationEntity thirdEntity;
-    
+
     private EducationDto firstDto;
     private EducationDto secondDto;
     private EducationDto thirdDto;
 
 
     private EducationMapper educationMapper;
+
     @BeforeEach
-    void setup(){
+    void setup() {
         final Long firstId = 1L, secondId = 2L, thirdId = 3L;
         final String firstDescriptor = "First Object", secondDescriptor = "Second Object",
                 thirdDescriptor = "Third Object";
@@ -33,7 +34,7 @@ public class EducationMapperTest {
         firstEntity = new EducationEntity(firstId, firstDescriptor);
         secondEntity = new EducationEntity(secondId, secondDescriptor);
         thirdEntity = new EducationEntity(thirdId, thirdDescriptor);
-        
+
         firstDto = new EducationDto(firstId, firstDescriptor);
         secondDto = new EducationDto(secondId, secondDescriptor);
         thirdDto = new EducationDto(thirdId, thirdDescriptor);
@@ -42,7 +43,7 @@ public class EducationMapperTest {
     }
 
     @Test
-    void testEntityToDto_withOneEntity_returnsOneDto(){
+    void testEntityToDto_withOneEntity_returnsOneDto() {
         //Arrange
         EducationEntity inputEntity = firstEntity;
         EducationDto expectedDto = firstDto;
@@ -55,7 +56,7 @@ public class EducationMapperTest {
     }
 
     @Test
-    void testEntityToDto_withListOfThreeEntities_returnsListOfThreeDtos(){
+    void testEntityToDto_withListOfThreeEntities_returnsListOfThreeDtos() {
         //Arrange
         List<EducationEntity> inputEntityList = Arrays.asList(firstEntity, secondEntity, thirdEntity);
         List<EducationDto> expectedDtoList = Arrays.asList(firstDto, secondDto, thirdDto);
@@ -68,7 +69,7 @@ public class EducationMapperTest {
     }
 
     @Test
-    void testEntityToDto_withEmptyEntityList_returnsEmptyDtoList(){
+    void testEntityToDto_withEmptyEntityList_returnsEmptyDtoList() {
         //Arrange
         List<EducationDto> expectedDtoList = Collections.emptyList();
         List<EducationEntity> inputEntityList = Collections.emptyList();
@@ -81,7 +82,7 @@ public class EducationMapperTest {
     }
 
     @Test
-    void testDtoToEntity_withOneDto_returnsOneEntity(){
+    void testDtoToEntity_withOneDto_returnsOneEntity() {
         //Arrange
         EducationDto inputDto = firstDto;
         EducationEntity expectedEntity = firstEntity;
@@ -95,7 +96,7 @@ public class EducationMapperTest {
     }
 
     @Test
-    void testDtoToEntity_withListOfTwoDtos_returnsListOfTwoEntities(){
+    void testDtoToEntity_withListOfTwoDtos_returnsListOfTwoEntities() {
         //Arrange
         List<EducationEntity> expectedEntityList = Arrays.asList(firstEntity, secondEntity, thirdEntity);
         List<EducationDto> inputDtoList = Arrays.asList(firstDto, secondDto, thirdDto);
@@ -108,7 +109,7 @@ public class EducationMapperTest {
     }
 
     @Test
-    void testDtoToEntity_withEmptyDtoList_returnsEmptyEntityList(){
+    void testDtoToEntity_withEmptyDtoList_returnsEmptyEntityList() {
         //Arrange
         List<EducationDto> inputDtoList = Collections.emptyList();
         List<EducationEntity> expectedEntityList = Collections.emptyList();

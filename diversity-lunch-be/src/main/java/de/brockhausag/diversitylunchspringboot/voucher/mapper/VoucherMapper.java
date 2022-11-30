@@ -15,6 +15,7 @@ public class VoucherMapper implements Mapper<VoucherDto, VoucherEntity> {
 
     private final ProfileService profileService;
     private final MeetingService meetingService;
+
     @Override
     public VoucherDto entityToDto(VoucherEntity entity) {
         return new VoucherDto(
@@ -35,17 +36,13 @@ public class VoucherMapper implements Mapper<VoucherDto, VoucherEntity> {
         );
     }
 
-    public AdminVoucherDto mapEntityToAdminVoucherDto(VoucherEntity voucherEntity)
-    {
-        if(voucherEntity.getProfile() != null)
-        {
+    public AdminVoucherDto mapEntityToAdminVoucherDto(VoucherEntity voucherEntity) {
+        if (voucherEntity.getProfile() != null) {
             return new AdminVoucherDto(
                     voucherEntity.getVoucher(),
                     voucherEntity.getProfile().getEmail()
             );
-        }
-        else
-        {
+        } else {
             return new AdminVoucherDto(
                     voucherEntity.getVoucher(),
                     "Nicht beansprucht"

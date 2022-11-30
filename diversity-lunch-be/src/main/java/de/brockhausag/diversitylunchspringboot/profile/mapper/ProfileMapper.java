@@ -38,12 +38,10 @@ public class ProfileMapper {
     private final ReligionService religionService;
     private final WorkExperienceService workExperienceService;
 
-    private final SexualOrientationService  sexualOrientationService;
+    private final SexualOrientationService sexualOrientationService;
     private final SocialBackgroundService socialBackgroundService;
 
     private final SocialBackgroundDiscriminationService socialBackgroundDiscriminationService;
-
-
 
 
     public ProfileDto entityToDto(ProfileEntity entity) {

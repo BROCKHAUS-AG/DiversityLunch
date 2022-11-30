@@ -28,7 +28,7 @@ public class HobbyEntity implements DefaultDimensionEntity {
     @Override
     public int hashCode() {
         String hashString = this.id.toString() + this.descriptor + this.category.getDescriptor();
-        return hashString.hashCode() ;
+        return hashString.hashCode();
     }
 
     @Override

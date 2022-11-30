@@ -18,7 +18,7 @@ public class DietDto implements DefaultDimensionDto {
     private Long id;
 
     @Schema(description = "A diet that you stick to", example = "vegan")
-    @Size(min=2, max=50, message = "diet descriptor must be between 2 and 50 chars long")
+    @Size(min = 2, max = 50, message = "diet descriptor must be between 2 and 50 chars long")
     @NotNull
     @NotBlank
     private String descriptor;

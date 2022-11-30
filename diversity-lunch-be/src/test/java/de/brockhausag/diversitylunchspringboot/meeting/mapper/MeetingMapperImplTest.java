@@ -24,13 +24,11 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class MeetingMapperImplTest {
 
+    private final MeetingTestdataFactory meetingTestdataFactory = new MeetingTestdataFactory();
     @Mock
     private ProfileService profileService;
-
     @InjectMocks
     private MeetingMapperImpl mapper;
-
-    private final MeetingTestdataFactory meetingTestdataFactory = new MeetingTestdataFactory();
 
     @Test
     void testMapCreateDtoToEntity_ExistingProfileIdProvided_validEntity() {
@@ -41,7 +39,7 @@ class MeetingMapperImplTest {
 
 
         when(profileService.getProfile(profileEntity.getId())).thenReturn(Optional.of(profileEntity));
-        try(var mock = Mockito.mockStatic(LocalDateTime.class)) {
+        try (var mock = Mockito.mockStatic(LocalDateTime.class)) {
             mock.when(LocalDateTime::now).thenReturn(createdAt);
             Optional<MeetingProposalEntity> actualEntity = mapper.mapCreateDtoToEntity(createMeetingProposalDto, profileEntity.getId());
             assertTrue(actualEntity.isPresent());

@@ -10,11 +10,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Constraint(validatedBy = MeetingProposalValidation.class)
-@Target( { ElementType.FIELD })
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ProposedDateTimeValidator {
 
     String message() default "Invalid DateTime";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

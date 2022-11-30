@@ -21,8 +21,9 @@ class MatchingUtilsTest {
     private ProfileEntity profile1;
     private ProfileEntity profile2;
     private ProfileEntity profile3;
+
     @BeforeEach
-    void setup(){
+    void setup() {
         ProfileTestdataFactory profileTestdataFactory = new ProfileTestdataFactory();
         profile1 = profileTestdataFactory.buildEntity(1);
         profile2 = profileTestdataFactory.buildEntity(1);
@@ -166,7 +167,7 @@ class MatchingUtilsTest {
 
     @Test
     void getRandomQuestionFromCategory_EveryCategory_HasAtleast_One_Question() {
-        for (Category c: Category.values()) {
+        for (Category c : Category.values()) {
             List<Question> questionList = Question.getAllQuestionsWithCategory(c);
 
             assertTrue(questionList.size() > 0);

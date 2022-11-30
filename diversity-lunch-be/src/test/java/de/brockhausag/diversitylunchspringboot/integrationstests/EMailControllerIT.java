@@ -79,7 +79,7 @@ public class EMailControllerIT {
 
     @SneakyThrows
     @BeforeEach
-    void setup(){
+    void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(appContext).build();
 
         mockMvcSecurity = MockMvcBuilders.webAppContextSetup(appContext).apply(springSecurity()).build();
@@ -93,10 +93,10 @@ public class EMailControllerIT {
 
     @SneakyThrows
     @AfterEach
-    void cleanup(){
+    void cleanup() {
         // Nach jedem Test soll die Test Mail geloescht werden
-        HttpUriRequest request = new HttpDelete( "http://localhost:8025/api/v1/messages");
-        HttpClientBuilder.create().build().execute( request );
+        HttpUriRequest request = new HttpDelete("http://localhost:8025/api/v1/messages");
+        HttpClientBuilder.create().build().execute(request);
     }
 
     @SneakyThrows
@@ -121,10 +121,10 @@ public class EMailControllerIT {
         );
 
         // Prepare request to Mailhog
-        HttpUriRequest request = new HttpGet( "http://localhost:8025/api/v2/messages");
+        HttpUriRequest request = new HttpGet("http://localhost:8025/api/v2/messages");
 
         //Send request to Mailhog
-        CloseableHttpResponse httpResponse = HttpClientBuilder.create().build().execute( request );
+        CloseableHttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
 
         //Get values from response
         String responseBody = EntityUtils.toString(httpResponse.getEntity());
@@ -142,12 +142,12 @@ public class EMailControllerIT {
         int amount = jsonResponse.getInt("total");
 
         //Assert
-        Assertions.assertEquals("test@test.de",to);
+        Assertions.assertEquals("test@test.de", to);
         Assertions.assertEquals("test@example.com", from);
-        Assertions.assertEquals("Testsubject",subject);
+        Assertions.assertEquals("Testsubject", subject);
         Assertions.assertNotEquals("", body);
         Assertions.assertNotEquals(null, body);
-        Assertions.assertEquals("Datum: " + LocalDate.now(), body.substring(0,17));
+        Assertions.assertEquals("Datum: " + LocalDate.now(), body.substring(0, 17));
         Assertions.assertEquals(1, amount);
     }
 

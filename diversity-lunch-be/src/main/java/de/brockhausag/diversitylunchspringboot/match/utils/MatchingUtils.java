@@ -14,9 +14,8 @@ import java.util.Random;
 @Slf4j
 @UtilityClass
 public class MatchingUtils {
-    private static final Random random = new Random();
     public static final int STANDARD_SCORE_BY_DIFFERENCE = 3;
-
+    private static final Random random = new Random();
     private static final int EQUAL_SCORE = 0;
 
 
@@ -24,10 +23,10 @@ public class MatchingUtils {
         List<Category> potentialQuestionsCategories = new ArrayList<>();
 
         int currentScore = 0;
-        //First: Score Base Entities
-        currentScore += getScoreFromBaseEntities(profile1, profile2, potentialQuestionsCategories);
+        //First: Score Default Entities
+        currentScore += getScoreFromDefaultEntities(profile1, profile2, potentialQuestionsCategories);
         //Second Score Weighted Entities
-        currentScore += getScoreFromWeightedEntities(profile1,profile2,potentialQuestionsCategories);
+        currentScore += getScoreFromWeightedEntities(profile1, profile2, potentialQuestionsCategories);
         //Third Score Birthdate or miscellaneous
         currentScore += compareBirthYear(profile1, profile2, potentialQuestionsCategories);
 
@@ -46,7 +45,7 @@ public class MatchingUtils {
     }
 
 
-    private static int getScoreFromBaseEntities(ProfileEntity profile1, ProfileEntity profile2, List<Category> potentialQuestionsCategories) {
+    private static int getScoreFromDefaultEntities(ProfileEntity profile1, ProfileEntity profile2, List<Category> potentialQuestionsCategories) {
         int currentScore = 0;
 
         List<DefaultDimensionEntity> baseEntitiesProfile1 = profile1.getBaseEntities();
@@ -57,7 +56,7 @@ public class MatchingUtils {
             DefaultDimensionEntity entity1 = baseEntitiesProfile1.get(i);
             DefaultDimensionEntity entity2 = baseEntitiesProfile2.get(i);
 
-            if (entityShouldBeIgnored(entity1) || entityShouldBeIgnored(entity2)){
+            if (entityShouldBeIgnored(entity1) || entityShouldBeIgnored(entity2)) {
                 continue;
             }
             entityScore = compareBaseEntities(entity1, entity2);
@@ -116,9 +115,9 @@ public class MatchingUtils {
         final int HIGHEST_SCORE = 3;
 
         int ageGap = Math.abs(profile1.getBirthYear() - profile2.getBirthYear());
-        if(ageGap < TEN_YEARS_DIFFERENCE) {
+        if (ageGap < TEN_YEARS_DIFFERENCE) {
             return LOWEST_SCORE;
-        } else if(ageGap < TWENTY_YEARS_DIFFERENCE){
+        } else if (ageGap < TWENTY_YEARS_DIFFERENCE) {
             return MIDDLE_SCORE;
         }
         potentialQuestionsCategories.add(Category.AGE);
@@ -127,7 +126,7 @@ public class MatchingUtils {
 
 
     private int compareBaseEntities(DefaultDimensionEntity entity1, DefaultDimensionEntity entity2) {
-        if (entity1.getId().equals(entity2.getId())){
+        if (entity1.getId().equals(entity2.getId())) {
             return EQUAL_SCORE;
         }
         return STANDARD_SCORE_BY_DIFFERENCE;

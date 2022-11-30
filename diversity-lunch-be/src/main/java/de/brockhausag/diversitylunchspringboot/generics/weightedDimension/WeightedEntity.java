@@ -5,9 +5,9 @@ import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionEntit
 public interface WeightedEntity extends DimensionEntity {
 
 
-    void setWeight(int weight);
-
     int getWeight();
+
+    void setWeight(int weight);
 
 
 }

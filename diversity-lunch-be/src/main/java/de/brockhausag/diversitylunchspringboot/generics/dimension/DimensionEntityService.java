@@ -17,29 +17,29 @@ public class DimensionEntityService<
         this.repository = repository;
     }
 
-    public EntityType createEntity(EntityType entity){
+    public EntityType createEntity(EntityType entity) {
         //set id to null to force auto generation of id and thus avoid updating existing entries
         entity.setId(0L);
         return repository.save(entity);
     }
 
-    public Optional<EntityType> getEntityById(Long id){
+    public Optional<EntityType> getEntityById(Long id) {
         return repository.findById(id);
     }
 
-    public EntityType updateOrCreateEntity(EntityType entity){
+    public EntityType updateOrCreateEntity(EntityType entity) {
         return repository.save(entity);
     }
 
-    public boolean deleteEntityById(Long id){
-        if (repository.existsById(id)){
+    public boolean deleteEntityById(Long id) {
+        if (repository.existsById(id)) {
             repository.deleteById(id);
             return true;
         }
         return false;
     }
 
-    public List<EntityType> getAllEntities(){
+    public List<EntityType> getAllEntities() {
         Iterable<EntityType> entitiesIterable = repository.findAll();
         return StreamSupport
                 .stream(entitiesIterable.spliterator(), false)

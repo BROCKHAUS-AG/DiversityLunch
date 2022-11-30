@@ -20,9 +20,6 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class GenericDefaultDimensionEntityServiceTest {
-    private interface TestRepositoryType extends CrudRepository<TestDefaultDimensionEntity, Long>{}
-
-
     private BaseModelTestDataFactory factory;
     @Mock
     private TestRepositoryType testRepository;
@@ -30,12 +27,12 @@ public class GenericDefaultDimensionEntityServiceTest {
     private DefaultDimensionEntityService<TestDefaultDimensionEntity, TestRepositoryType> service;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         this.factory = new BaseModelTestDataFactory();
     }
 
     @Test
-    void testDeleteEntityById_withExistingId_returnsTrue(){
+    void testDeleteEntityById_withExistingId_returnsTrue() {
         //Arrange
         Long existingId = 666L;
 
@@ -63,7 +60,7 @@ public class GenericDefaultDimensionEntityServiceTest {
     }
 
     @Test
-    void testGetAllEntities_withNoEntitiesInRepository_returnsEmptyList(){
+    void testGetAllEntities_withNoEntitiesInRepository_returnsEmptyList() {
         //Arrange
         List<TestDefaultDimensionEntity> expectedList = Collections.emptyList();
 
@@ -76,7 +73,7 @@ public class GenericDefaultDimensionEntityServiceTest {
     }
 
     @Test
-    void testGetAllEntities_withThreeEntitiesInRepository_returnsListOfThreeEntities(){
+    void testGetAllEntities_withThreeEntitiesInRepository_returnsListOfThreeEntities() {
         //Arrange
         List<TestDefaultDimensionEntity> expectedList = Arrays.asList(factory.buildEntity(1),
                 factory.buildEntity(2), factory.buildEntity(3));
@@ -87,6 +84,9 @@ public class GenericDefaultDimensionEntityServiceTest {
 
         //Assert
         assertEquals(expectedList, actualList);
+    }
+
+    private interface TestRepositoryType extends CrudRepository<TestDefaultDimensionEntity, Long> {
     }
 
 }

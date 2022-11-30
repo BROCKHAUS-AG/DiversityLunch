@@ -20,16 +20,13 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class ProfileServiceTest {
 
-    @Mock
-    private ProfileRepository profileRepository;
-
+    private final ProfileTestdataFactory factory = new ProfileTestdataFactory();
     @Mock
     AccountService accountService;
-
+    @Mock
+    private ProfileRepository profileRepository;
     @InjectMocks
     private ProfileService service;
-
-    private final ProfileTestdataFactory factory = new ProfileTestdataFactory();
 
     @Test
     void testProfileNonexistent() {

@@ -66,7 +66,7 @@ public class ProfileEntity {
                 other.email.equals(this.email) && (other.birthYear == this.birthYear);
     }
 
-    public List<DefaultDimensionEntity> getBaseEntities(){
+    public List<DefaultDimensionEntity> getBaseEntities() {
         List<DefaultDimensionEntity> baseEntities = new ArrayList<>();
         baseEntities.add(originCountry);
         baseEntities.add(diet);
@@ -81,7 +81,8 @@ public class ProfileEntity {
         baseEntities.add(hobby);
         return baseEntities;
     }
-    public List<WeightedEntity> getWeightedEntities(){
+
+    public List<WeightedEntity> getWeightedEntities() {
         List<WeightedEntity> weightedEntitites = new ArrayList<>();
         weightedEntitites.add(workExperience);
         return weightedEntitites;

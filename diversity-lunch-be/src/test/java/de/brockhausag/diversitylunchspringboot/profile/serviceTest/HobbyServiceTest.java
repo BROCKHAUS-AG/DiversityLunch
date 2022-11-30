@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class HobbyServiceTest {
-    
+
     private HobbyTestDataFactory factory;
     @Mock
     private HobbyRepository repository;
@@ -28,12 +28,12 @@ public class HobbyServiceTest {
     private HobbyService service;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         this.factory = new HobbyTestDataFactory();
     }
 
     @Test
-    void testDeleteEntityById_withExistingId_returnsTrue(){
+    void testDeleteEntityById_withExistingId_returnsTrue() {
         //Arrange
         Long existingId = 42L;
 
@@ -61,7 +61,7 @@ public class HobbyServiceTest {
     }
 
     @Test
-    void testGetAllEntities_withNoEntitiesInRepository_returnsEmptyList(){
+    void testGetAllEntities_withNoEntitiesInRepository_returnsEmptyList() {
         //Arrange
         List<HobbyEntity> expectedList = Collections.emptyList();
 
@@ -71,11 +71,11 @@ public class HobbyServiceTest {
 
         //Assert
         assertEquals(expectedList, actualList);
-        assertEquals(0,actualList.size());
+        assertEquals(0, actualList.size());
     }
 
     @Test
-    void testGetAllEntities_withThreeEntitiesInRepository_returnsListOfThreeEntities(){
+    void testGetAllEntities_withThreeEntitiesInRepository_returnsListOfThreeEntities() {
         //Arrange
         List<HobbyEntity> expectedList = Stream.of(1, 2, 3).map(this.factory::buildEntity).toList();
 
@@ -86,7 +86,7 @@ public class HobbyServiceTest {
 
         //Assert
         assertEquals(expectedList, actualList);
-        assertEquals(expectedList.size(),actualList.size());
+        assertEquals(expectedList.size(), actualList.size());
     }
 
 

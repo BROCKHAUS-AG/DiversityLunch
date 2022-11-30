@@ -26,22 +26,16 @@ import static org.mockito.Mockito.*;
 class MatchingServiceTest {
 
     private final MeetingTestdataFactory meetingTestdataFactory = new MeetingTestdataFactory();
-
-    @Mock
-    private MeetingProposalRepository meetingProposalRepository;
-
-    @Mock
-    private MeetingRepository meetingRepository;
-
-    @Mock
-    private MatchingService matchingServiceMock;
-
     @Mock
     DiversityLunchEMailService mockedEMailService;
-
     @Mock
     MsTeamsService msTeamsService;
-
+    @Mock
+    private MeetingProposalRepository meetingProposalRepository;
+    @Mock
+    private MeetingRepository meetingRepository;
+    @Mock
+    private MatchingService matchingServiceMock;
     @InjectMocks
     private MatchingService matchingService;
 
@@ -125,7 +119,7 @@ class MatchingServiceTest {
         matchingService.sendQuestions(LocalDateTime.now());
 
         verify(mockedEMailService, times(2))
-                .sendEmail(any(), any(), any(),any());
+                .sendEmail(any(), any(), any(), any());
 
     }
 

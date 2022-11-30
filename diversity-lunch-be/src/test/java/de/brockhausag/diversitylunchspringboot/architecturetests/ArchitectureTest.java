@@ -52,7 +52,7 @@ class ArchitectureTest {
     }
 
     @Test
-    void configTest(){
+    void configTest() {
         ArchRule rule = classes().that()
                 .resideInAPackage("..config..")
                 .or()

@@ -23,17 +23,14 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class ProfileControllerTest {
 
-    @Mock
-    private ProfileService profileService;
-
-    @Mock
-    private ProfileMapper mapper;
-
-    @InjectMocks
-    private ProfileController profileController;
-
     private final ProfileTestdataFactory factory = new ProfileTestdataFactory();
     private final Long accountId = 5L;
+    @Mock
+    private ProfileService profileService;
+    @Mock
+    private ProfileMapper mapper;
+    @InjectMocks
+    private ProfileController profileController;
 
     @Test
     void testGetProfile_withValidId_returnsOkWithProfileDto() {
@@ -104,7 +101,7 @@ class ProfileControllerTest {
     }
 
     @Test
-    void testPutProfile_serviceReturnsUpdatedDTO_returnsStatusOK(){
+    void testPutProfile_serviceReturnsUpdatedDTO_returnsStatusOK() {
         //Arrange
         ProfileDto inputDto = this.factory.buildDto(1);
         ProfileEntity profileEntity = this.factory.buildEntity(1);

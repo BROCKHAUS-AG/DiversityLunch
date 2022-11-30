@@ -18,7 +18,7 @@ public class HobbyDto implements DefaultDimensionDto {
     private Long id;
 
     @Schema(description = "the hobby you practice", example = "football")
-    @Size(min=2, max=50, message = "hobby descriptor must be between 2 and 50 chars long")
+    @Size(min = 2, max = 50, message = "hobby descriptor must be between 2 and 50 chars long")
     @NotNull
     @NotBlank
     private String descriptor;

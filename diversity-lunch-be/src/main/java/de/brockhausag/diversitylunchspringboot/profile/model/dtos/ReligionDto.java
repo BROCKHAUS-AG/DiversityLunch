@@ -18,7 +18,7 @@ public class ReligionDto implements DefaultDimensionDto {
     private Long id;
 
     @Schema(description = "religion you believe in", example = "buddhism")
-    @Size(min=2, max=50, message = "religion descriptor must be between 2 and 50 chars long")
+    @Size(min = 2, max = 50, message = "religion descriptor must be between 2 and 50 chars long")
     @NotNull
     @NotBlank
     private String descriptor;

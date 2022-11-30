@@ -27,23 +27,22 @@ import static de.brockhausag.diversitylunchspringboot.utils.DiversityLunchTempor
 @Service
 public class MatchingService {
 
+    private static final Random random = new Random();
     private final MeetingProposalRepository meetingProposalRepository;
     private final MeetingRepository meetingRepository;
     private final DiversityLunchEMailService eMailService;
     private final MsTeamsService msTeamsService;
-    private static final Random random = new Random();
 
-
-    public void matching(LocalDateTime proposedDateTime, LocalDateTime today){
-        if(proposedDateTime == null || today == null ){
+    public void matching(LocalDateTime proposedDateTime, LocalDateTime today) {
+        if (proposedDateTime == null || today == null) {
             throw new IllegalArgumentException("ProposedDateTime or Today equal to null!");
         }
         long daysUntilMeeting = ChronoUnit.DAYS.between(today, proposedDateTime);
-        if(daysUntilMeeting > 7) {
+        if (daysUntilMeeting > 7) {
             executeMatching(proposedDateTime, 21);
-        }else if(daysUntilMeeting > 2){
+        } else if (daysUntilMeeting > 2) {
             executeMatching(proposedDateTime, 9);
-        }else if(daysUntilMeeting >= 0){
+        } else if (daysUntilMeeting >= 0) {
             executeMatching(proposedDateTime, 0);
         }
     }
@@ -56,16 +55,14 @@ public class MatchingService {
             MeetingProposalEntity firstMeetingProposal = meetingProposals.get(i);
             MeetingProposalEntity secondMeetingProposal;
 
-            if(firstMeetingProposal.isMatched()) continue;
+            if (firstMeetingProposal.isMatched()) continue;
 
             List<Match> matchList = new LinkedList<>();
 
             for (int j = i + 1; j < meetingProposals.size(); j++) {
                 secondMeetingProposal = meetingProposals.get(j);
                 Match scoredMatch = getScoredMatch(firstMeetingProposal, secondMeetingProposal);
-                if (scoredMatch.score() >= scoreToBeat) {
-                    matchList.add(scoredMatch);
-                }
+                if (scoredMatch.score() >= scoreToBeat) matchList.add(scoredMatch);
             }
 
             if (!matchList.isEmpty()) {
@@ -85,7 +82,7 @@ public class MatchingService {
                 secondMeetingProposal.getProposerProfile());
 
         return new Match(firstMeetingProposal, secondMeetingProposal,
-               scoreAndCategory.currentScore(), scoreAndCategory.category());
+                scoreAndCategory.currentScore(), scoreAndCategory.category());
     }
 
     private void arrangeMeeting(Match bestMatch, String onlineMeetingId) {
@@ -120,13 +117,13 @@ public class MatchingService {
         meetingEntities.forEach(meetingEntity -> {
             log.debug("Sending Email for Meeting: {} - Time: {}", meetingEntity.getId(), modified);
             try {
-                    ProfileEntity proposer = meetingEntity.getProposer();
-                    ProfileEntity partner = meetingEntity.getPartner();
-                    eMailService.sendEmail(proposer.getEmail(),
-                            "Dein Diversity-Mittagessen",
-                            eMailService.createEmailTemplateHTML(proposer, partner, meetingEntity),
-                            eMailService.createEmailTemplatePlain(proposer, partner, meetingEntity));
-                    eMailService.sendEmail(partner.getEmail(),
+                ProfileEntity proposer = meetingEntity.getProposer();
+                ProfileEntity partner = meetingEntity.getPartner();
+                eMailService.sendEmail(proposer.getEmail(),
+                        "Dein Diversity-Mittagessen",
+                        eMailService.createEmailTemplateHTML(proposer, partner, meetingEntity),
+                        eMailService.createEmailTemplatePlain(proposer, partner, meetingEntity));
+                eMailService.sendEmail(partner.getEmail(),
                         "Dein Diversity-Mittagessen",
                         eMailService.createEmailTemplateHTML(partner, proposer, meetingEntity),
                         eMailService.createEmailTemplatePlain(partner, proposer, meetingEntity));

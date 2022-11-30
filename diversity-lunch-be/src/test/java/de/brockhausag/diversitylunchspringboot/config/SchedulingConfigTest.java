@@ -19,16 +19,13 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class SchedulingConfigTest {
 
+    final MeetingTestdataFactory meetingTestdataFactory = new MeetingTestdataFactory();
     @Mock
     MatchingService matchingService;
-
     @Mock
     MeetingProposalRepository meetingProposalRepository;
-
     @InjectMocks
     SchedulingConfig schedulingConfig;
-
-    final MeetingTestdataFactory meetingTestdataFactory = new MeetingTestdataFactory();
 
     @Test
     void testScheduleMatching() {

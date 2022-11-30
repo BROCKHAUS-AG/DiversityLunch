@@ -27,7 +27,7 @@ public class SexualOrientationEntity implements DefaultDimensionEntity {
     @Override
     public int hashCode() {
         String hashString = this.id.toString() + this.descriptor;
-        return hashString.hashCode() ;
+        return hashString.hashCode();
     }
 
     @Override

@@ -28,7 +28,7 @@ public class CountryEntity implements DefaultDimensionEntity {
     @Override
     public int hashCode() {
         String hashString = this.id.toString() + this.descriptor;
-        return hashString.hashCode() ;
+        return hashString.hashCode();
     }
 
     @Override
@@ -39,6 +39,7 @@ public class CountryEntity implements DefaultDimensionEntity {
         final CountryEntity other = (CountryEntity) obj;
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
     }
+
     public Category getQuestionCategory() {
         return Category.COUNTRY_OF_ORIGIN;
     }

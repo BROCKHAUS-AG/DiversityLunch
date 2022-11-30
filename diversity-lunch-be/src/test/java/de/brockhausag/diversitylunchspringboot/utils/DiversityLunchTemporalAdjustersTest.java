@@ -11,8 +11,8 @@ class DiversityLunchTemporalAdjustersTest {
 
     @Test
     void roundMinutesDownToHalfAndFullTest() {
-        LocalDateTime time = LocalDateTime.of(2022,3,5, 12, 36, 58);
-        LocalDateTime timeExpected = LocalDateTime.of(2022,3,5, 12, 30, 58);
+        LocalDateTime time = LocalDateTime.of(2022, 3, 5, 12, 36, 58);
+        LocalDateTime timeExpected = LocalDateTime.of(2022, 3, 5, 12, 30, 58);
         LocalDateTime result = time.with(roundMinutesDownToHalfAndFull());
         assertEquals(timeExpected, result);
     }

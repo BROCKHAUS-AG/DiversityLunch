@@ -18,7 +18,7 @@ public class SocialBackgroundDiscriminationDto implements DefaultDimensionDto {
     private Long id;
 
     @Schema(description = "Did you experienced social discrimination", example = "Ja")
-    @Size(min=2, max=50, message = "discrimination descriptor must be between 2 and 50 chars long")
+    @Size(min = 2, max = 50, message = "discrimination descriptor must be between 2 and 50 chars long")
     @NotNull
     @NotBlank
     private String descriptor;

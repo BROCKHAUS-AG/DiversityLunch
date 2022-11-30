@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class HobbyCategoryService extends DefaultDimensionEntityService<HobbyCategoryEntity, HobbyCategoryRepository> {
-        public HobbyCategoryService(HobbyCategoryRepository repository) {
-            super(repository);
-        }
+    public HobbyCategoryService(HobbyCategoryRepository repository) {
+        super(repository);
     }
+}

@@ -13,7 +13,7 @@ public class DiversityLunchTemporalAdjusters {
         return temporal -> {
             LocalDateTime time = LocalDateTime.from(temporal);
             int minutes = time.getMinute();
-            int rounds  = Math.floorDiv(minutes, 30);
+            int rounds = Math.floorDiv(minutes, 30);
             return time.withMinute(rounds == 0 ? 0 : 30);
         };
     }

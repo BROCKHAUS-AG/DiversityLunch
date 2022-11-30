@@ -13,5 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SocialBackgroundDiscriminationController extends DefaultDimensionModelController<
         SocialBackgroundDiscriminationDto, SocialBackgroundDiscriminationEntity, SocialBackgroundDiscriminationRepository, SocialBackgroundDiscriminationService, SocialBackgroundDiscriminationMapper> {
-public SocialBackgroundDiscriminationController(SocialBackgroundDiscriminationMapper mapper, SocialBackgroundDiscriminationService service) { super(mapper, service);}
+    public SocialBackgroundDiscriminationController(SocialBackgroundDiscriminationMapper mapper, SocialBackgroundDiscriminationService service) {
+        super(mapper, service);
+    }
 }

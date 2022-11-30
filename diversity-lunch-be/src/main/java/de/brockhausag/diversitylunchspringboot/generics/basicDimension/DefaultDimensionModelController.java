@@ -12,7 +12,7 @@ public class DefaultDimensionModelController<
         MapperType extends Mapper<DtoType, EntityType>>
         extends DimensionModelController<
         DtoType, EntityType, RepositoryType, ServiceType, MapperType
-        >{
+        > {
     public DefaultDimensionModelController(MapperType mapper, ServiceType service) {
         super(mapper, service);
     }

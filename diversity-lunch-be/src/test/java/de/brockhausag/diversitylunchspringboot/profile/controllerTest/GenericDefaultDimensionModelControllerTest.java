@@ -27,27 +27,18 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class GenericDefaultDimensionModelControllerTest {
-    private interface TestRepositoryType extends CrudRepository<TestDefaultDimensionEntity, Long> {}
-    private static class TestServiceType extends DefaultDimensionEntityService<TestDefaultDimensionEntity, TestRepositoryType> {
-        public TestServiceType(TestRepositoryType repository) {
-            super(repository);
-        }
-    }
-
     private BaseModelTestDataFactory factory;
-
     @Mock
     private Mapper<TestDefaultDimensionDto, TestDefaultDimensionEntity> mapper;
     @Mock
-    private TestServiceType service ;
-
+    private TestServiceType service;
     @InjectMocks
     private DefaultDimensionModelController<TestDefaultDimensionDto, TestDefaultDimensionEntity,
-                            TestRepositoryType,TestServiceType, Mapper<TestDefaultDimensionDto, TestDefaultDimensionEntity> > controller;
+            TestRepositoryType, TestServiceType, Mapper<TestDefaultDimensionDto, TestDefaultDimensionEntity>> controller;
 
     @BeforeEach
-    void setup(){
-       this.factory = new BaseModelTestDataFactory();
+    void setup() {
+        this.factory = new BaseModelTestDataFactory();
     }
 
     @Test
@@ -64,7 +55,7 @@ public class GenericDefaultDimensionModelControllerTest {
         ResponseEntity<?> actualResponse = controller.getOne(existingEntity.getId());
 
         //Assert
-        assertEquals(expectedResponse.getStatusCode(),actualResponse.getStatusCode());
+        assertEquals(expectedResponse.getStatusCode(), actualResponse.getStatusCode());
         assertEquals(expectedResponse.getBody(), actualResponse.getBody());
     }
 
@@ -84,7 +75,7 @@ public class GenericDefaultDimensionModelControllerTest {
     }
 
     @Test
-    void testGetAll_withNoEntitiesInRepository_returnsEmptyList(){
+    void testGetAll_withNoEntitiesInRepository_returnsEmptyList() {
         //Arrange
         List<TestDefaultDimensionDto> emptyDtoList = Collections.emptyList();
         List<TestDefaultDimensionEntity> emptyEntityList = Collections.emptyList();
@@ -104,11 +95,11 @@ public class GenericDefaultDimensionModelControllerTest {
     }
 
     @Test
-    void testGetAllCountries_withThreeEntitiesInRepository_returnsListOfThreeTestBaseEntities(){
+    void testGetAllCountries_withThreeEntitiesInRepository_returnsListOfThreeTestBaseEntities() {
         //Arrange
         List<TestDefaultDimensionEntity> entityList = Arrays.asList(factory.buildEntity(1),
                 factory.buildEntity(2), factory.buildEntity(3));
-        List<TestDefaultDimensionDto> dtoList =Arrays.asList(factory.buildDto(1),
+        List<TestDefaultDimensionDto> dtoList = Arrays.asList(factory.buildDto(1),
                 factory.buildDto(2), factory.buildDto(3));
 
         ResponseEntity<List<TestDefaultDimensionDto>> expectedResponse = new ResponseEntity<>(
@@ -127,7 +118,7 @@ public class GenericDefaultDimensionModelControllerTest {
     }
 
     @Test
-    void testPostOne_calledThreeTimesWithSameDto_callCreateEntityThreeTimesWithMappedEntity(){
+    void testPostOne_calledThreeTimesWithSameDto_callCreateEntityThreeTimesWithMappedEntity() {
         TestDefaultDimensionDto dto = factory.buildDto(1);
         TestDefaultDimensionEntity entity = mapper.dtoToEntity(dto);
         when(service.createEntity(entity)).thenReturn(entity);
@@ -141,7 +132,7 @@ public class GenericDefaultDimensionModelControllerTest {
     }
 
     @Test
-    void testPutOne_calledThreeTimesWithSameDto_callCreateOrUpdateEntityThreeTimesWithMappedEntity(){
+    void testPutOne_calledThreeTimesWithSameDto_callCreateOrUpdateEntityThreeTimesWithMappedEntity() {
         TestDefaultDimensionDto dto = factory.buildDto(1);
         TestDefaultDimensionEntity entity = mapper.dtoToEntity(dto);
         when(service.updateOrCreateEntity(entity)).thenReturn(entity);
@@ -155,7 +146,7 @@ public class GenericDefaultDimensionModelControllerTest {
     }
 
     @Test
-    void testDeleteOne_serviceDeleteByIdReturnTrue_returnStatusCodeOk(){
+    void testDeleteOne_serviceDeleteByIdReturnTrue_returnStatusCodeOk() {
         final Long someIdThatExists = 1337L;
         when(service.deleteEntityById(someIdThatExists)).thenReturn(true);
         var expected = HttpStatus.OK;
@@ -166,7 +157,7 @@ public class GenericDefaultDimensionModelControllerTest {
     }
 
     @Test
-    void testDeleteOne_serviceDeleteByIdReturnFalse_returnStatusCodeNotFound(){
+    void testDeleteOne_serviceDeleteByIdReturnFalse_returnStatusCodeNotFound() {
         final Long someNotExistingId = 1337L;
         when(service.deleteEntityById(someNotExistingId)).thenReturn(false);
         var expected = HttpStatus.NOT_FOUND;
@@ -174,6 +165,15 @@ public class GenericDefaultDimensionModelControllerTest {
         var actual = controller.deleteOne(someNotExistingId).getStatusCode();
 
         assertEquals(expected, actual);
+    }
+
+    private interface TestRepositoryType extends CrudRepository<TestDefaultDimensionEntity, Long> {
+    }
+
+    private static class TestServiceType extends DefaultDimensionEntityService<TestDefaultDimensionEntity, TestRepositoryType> {
+        public TestServiceType(TestRepositoryType repository) {
+            super(repository);
+        }
     }
 
 

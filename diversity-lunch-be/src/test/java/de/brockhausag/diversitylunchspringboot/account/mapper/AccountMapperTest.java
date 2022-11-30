@@ -13,13 +13,13 @@ class AccountMapperTest {
     private AccountTestDataFactory accountTestDataFactory;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         accountTestDataFactory = new AccountTestDataFactory();
         mapper = new AccountMapperImpl();
     }
 
     @Test
-    void test(){
+    void test() {
         AccountEntity accountEntity = accountTestDataFactory.buildAccountWithProfile();
         AccountDto expectedDto = accountTestDataFactory.buildAccountDto();
 
@@ -29,7 +29,7 @@ class AccountMapperTest {
     }
 
     @Test
-    void testWithoutProfile(){
+    void testWithoutProfile() {
         AccountEntity accountEntity = accountTestDataFactory.buildAccountWithoutProfile();
         AccountDto expectedDto = accountTestDataFactory.buildAccountDtoWithoutProfile();
 

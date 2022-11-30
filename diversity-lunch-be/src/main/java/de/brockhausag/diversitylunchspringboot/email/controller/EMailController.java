@@ -33,7 +33,7 @@ public class EMailController {
             @ApiResponse(responseCode = "200", description = "Test Mail wurde versendet."),
     })
     @PostMapping("/sendTestMail")
-    public ResponseEntity<String> sendTestMail(){
+    public ResponseEntity<String> sendTestMail() {
         String claimLink = BASE_URL + "/voucherClaim/testMeeting";
         String body = "Datum: " + LocalDateTime.now() + "\n" + "Claim-Link: " + claimLink;
         try {
@@ -52,7 +52,7 @@ public class EMailController {
     })
     @PostMapping("/sendTestMailToUser")
     @PreAuthorize("isProfileOwner(#id)")
-    public ResponseEntity<String> sendTestMailToUser(Long id){
+    public ResponseEntity<String> sendTestMailToUser(Long id) {
         String claimLink = BASE_URL + "/voucherClaim/testMeeting";
         String body = "Datum: " + LocalDateTime.now() + "\n" + "Claim-Link: " + claimLink;
         try {
@@ -71,7 +71,7 @@ public class EMailController {
     })
     @PostMapping("/sendTestMailToUser/{id}")
     @PreAuthorize("isProfileOwner(#id)")
-    public ResponseEntity<String> sendTestMailToUserPathVariable(@PathVariable long id){
+    public ResponseEntity<String> sendTestMailToUserPathVariable(@PathVariable long id) {
         String claimLink = BASE_URL + "/voucherClaim/testMeeting";
         String body = "Datum: " + LocalDateTime.now() + "\n" + "Claim-Link: " + claimLink;
         try {
@@ -83,15 +83,16 @@ public class EMailController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @Operation(summary = "10 Test Mails werden an eingeloggten User versendet.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "10 Test Mails wurden versendet."),
     })
     @PostMapping("/sendTenTestMailsToUser")
     @PreAuthorize("isProfileOwner(#id)")
-    public ResponseEntity<String> sendTenTestMailsToUser(Long id){
+    public ResponseEntity<String> sendTenTestMailsToUser(Long id) {
         try {
-            for (int i = 1;  i<= 10; i++) {
+            for (int i = 1; i <= 10; i++) {
                 String body = "Datum: " + LocalDateTime.now() + "\n" + "Mailnr.: " + i;
                 diversityLunchEMailService.sendMailToUser(id, body);
             }

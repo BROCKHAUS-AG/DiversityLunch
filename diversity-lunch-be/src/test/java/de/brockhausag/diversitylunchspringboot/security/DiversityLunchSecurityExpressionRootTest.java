@@ -97,7 +97,7 @@ class DiversityLunchSecurityExpressionRootTest {
     }
 
     @Test
-    void isProposalOwner_noProfileFound_returnFalse(){
+    void isProposalOwner_noProfileFound_returnFalse() {
         AccountEntity accountEntity =
                 accountFactory.entityBuilder().profile(profileFactory.buildEntity(1)).build();
         when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
@@ -112,7 +112,7 @@ class DiversityLunchSecurityExpressionRootTest {
     }
 
     @Test
-    void isProposalOwner_noMeetingProposalFound_returnFalse(){
+    void isProposalOwner_noMeetingProposalFound_returnFalse() {
         AccountEntity accountEntity =
                 accountFactory.entityBuilder().profile(profileFactory.buildEntity(1)).build();
         when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
@@ -152,7 +152,7 @@ class DiversityLunchSecurityExpressionRootTest {
     }
 
     @Test
-    void isAccountOwner_withAccount_returnTrue(){
+    void isAccountOwner_withAccount_returnTrue() {
         AccountEntity accountEntity = accountFactory.buildAccountWithProfile();
         when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
         when(oAuth2AuthenticatedPrincipal.getAttribute(any())).thenReturn(accountEntity.getOid());
@@ -162,13 +162,13 @@ class DiversityLunchSecurityExpressionRootTest {
     }
 
     @Test
-    void isAccountOwner_withAccount_returnFalse(){
+    void isAccountOwner_withAccount_returnFalse() {
         AccountEntity accountEntity = accountFactory.buildAccountWithProfile();
         when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
         when(oAuth2AuthenticatedPrincipal.getAttribute(any())).thenReturn(accountEntity.getOid());
         when(accountService.getAccount(accountEntity.getOid())).thenReturn(Optional.of(accountEntity));
 
-        assertFalse(diversityLunchSecurityExpressionRoot.isAccountOwner(accountEntity.getId() +1));
+        assertFalse(diversityLunchSecurityExpressionRoot.isAccountOwner(accountEntity.getId() + 1));
     }
 
     @Test
@@ -178,7 +178,7 @@ class DiversityLunchSecurityExpressionRootTest {
         when(oAuth2AuthenticatedPrincipal.getAttribute(any())).thenReturn(accountEntity.getOid());
         when(accountService.getAccount(accountEntity.getOid())).thenReturn(Optional.empty());
 
-        assertFalse(diversityLunchSecurityExpressionRoot.isAccountOwner(accountEntity.getId() +1));
+        assertFalse(diversityLunchSecurityExpressionRoot.isAccountOwner(accountEntity.getId() + 1));
     }
 
     @Test
