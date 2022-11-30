@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete, { AutocompleteRenderInputParams } from '@material-ui/lab/Autocomplete';
 import { Identifiable } from '../../../data/generic/Identifiable';
 import './dropdown.scss';
+import './dropdownQuestions.scss';
 
 interface dropdownProps<T extends Identifiable> {
     options: T[];
