@@ -59,7 +59,7 @@ public class ProfileMapper {
         dto.setReligion(religionMapper.entityToDto(entity.getReligion()));
         dto.setWorkExperience(workExperienceMapper.entityToDto(entity.getWorkExperience()));
         dto.setSexualOrientation(sexualOrientationMapper.entityToDto(entity.getSexualOrientation()));
-        dto.setHobby(hobbyMapper.entityToDto(entity.getHobby()));
+        dto.setHobby(hobbyMapper.entityToDto(entity.getHobby().get(0)));
         dto.setSocialBackground(socialBackgroundMapper.entityToDto(entity.getSocialBackground()));
         dto.setSocialBackgroundDiscrimination(socialBackgroundDiscriminationMapper.entityToDto(entity.getSocialBackgroundDiscrimination()));
 
@@ -96,7 +96,7 @@ public class ProfileMapper {
                             .diet(dietEntityOptional.orElseThrow())
                             .education(educationEntityOptional.orElseThrow())
                             .gender(genderEntityOptional.orElseThrow())
-                            .hobby(hobbyEntityOptional.orElseThrow())
+                            .hobby(List.of(hobbyEntityOptional.orElseThrow()))
                             .motherTongue(languageEntityOptional.orElseThrow())
                             .project(projectEntityOptional.orElseThrow())
                             .religion(religionEntityOptional.orElseThrow())

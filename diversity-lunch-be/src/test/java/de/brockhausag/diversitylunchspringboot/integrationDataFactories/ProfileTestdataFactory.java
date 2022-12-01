@@ -11,6 +11,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -60,7 +61,7 @@ public class ProfileTestdataFactory {
                 project,
                 religion,
                 workExperience,
-                hobby,
+                List.of(hobby),
                 sexualOrientation,
                 socialBackground,
                 socialBackgroundDiscrimination);
@@ -96,7 +97,7 @@ public class ProfileTestdataFactory {
                 project,
                 religion,
                 workExperience,
-                hobby,
+                List.of(hobby),
                 sexualOrientation,
                 socialBackground,
                 socialBackgroundDiscrimination);

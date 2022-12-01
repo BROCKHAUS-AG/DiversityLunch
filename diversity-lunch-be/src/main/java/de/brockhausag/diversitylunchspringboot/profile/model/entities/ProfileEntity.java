@@ -40,8 +40,14 @@ public class ProfileEntity {
     private ReligionEntity religion;
     @ManyToOne
     private WorkExperienceEntity workExperience;
-    @ManyToOne
-    private HobbyEntity hobby;
+
+    @ManyToMany
+    @JoinTable(
+            name = "profile_hobby",
+            joinColumns = { @JoinColumn(name = "profile_id") },
+            inverseJoinColumns = { @JoinColumn(name = "hobby_id") }
+    )
+    private List<HobbyEntity> hobby;
     @ManyToOne
     private SexualOrientationEntity sexualOrientation;
     @ManyToOne
@@ -78,7 +84,7 @@ public class ProfileEntity {
         baseEntities.add(sexualOrientation);
         baseEntities.add(socialBackground);
         baseEntities.add(socialBackgroundDiscrimination);
-        baseEntities.add(hobby);
+        baseEntities.add(hobby.get(0));
         return baseEntities;
     }
 

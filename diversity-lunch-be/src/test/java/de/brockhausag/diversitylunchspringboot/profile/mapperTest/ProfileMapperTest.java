@@ -95,7 +95,7 @@ class ProfileMapperTest {
         when(religionService.getEntityById(inputDto.getReligion().getId())).thenReturn(Optional.of(expectedEntity.getReligion()));
         when(projectService.getEntityById(inputDto.getProject().getId())).thenReturn(Optional.of(expectedEntity.getProject()));
         when(languageService.getEntityById(inputDto.getMotherTongue().getId())).thenReturn(Optional.of(expectedEntity.getMotherTongue()));
-        when(hobbyService.getEntityById(inputDto.getHobby().getId())).thenReturn(Optional.of(expectedEntity.getHobby()));
+        when(hobbyService.getEntityById(inputDto.getHobby().getId())).thenReturn(Optional.of(expectedEntity.getHobby().get(0)));
         when(genderService.getEntityById(inputDto.getGender().getId())).thenReturn(Optional.of(expectedEntity.getGender()));
         when(educationService.getEntityById(inputDto.getEducation().getId())).thenReturn(Optional.of(expectedEntity.getEducation()));
         when(dietService.getEntityById(inputDto.getDiet().getId())).thenReturn(Optional.of(expectedEntity.getDiet()));
@@ -158,7 +158,7 @@ class ProfileMapperTest {
             when(this.dietMapper.entityToDto(entity.getDiet())).thenReturn(dto.getDiet());
             when(this.educationMapper.entityToDto(entity.getEducation())).thenReturn(dto.getEducation());
             when(this.genderMapper.entityToDto(entity.getGender())).thenReturn(dto.getGender());
-            when(this.hobbyMapper.entityToDto(entity.getHobby())).thenReturn(dto.getHobby());
+            when(this.hobbyMapper.entityToDto(entity.getHobby().get(0))).thenReturn(dto.getHobby());
             when(this.languageMapper.entityToDto(entity.getMotherTongue())).thenReturn(dto.getMotherTongue());
             when(this.projectMapper.entityToDto(entity.getProject())).thenReturn(dto.getProject());
             when(this.religionMapper.entityToDto(entity.getReligion())).thenReturn(dto.getReligion());
