@@ -26,7 +26,7 @@ export const ShowMeeting = ({ meeting }: MeetingContainerProps) => {
 
     const deleteUpcomingMeetingCallback = () => {
         // Delete Upcoming Meeting here / Backend Interface
-        setIsDeletingOpen(false);
+        setIsDeletingUpcoming(false);
     };
 
     return (
