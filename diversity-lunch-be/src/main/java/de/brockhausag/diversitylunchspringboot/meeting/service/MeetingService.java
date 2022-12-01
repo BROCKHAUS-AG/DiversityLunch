@@ -11,7 +11,9 @@ import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEnt
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.List;
@@ -26,6 +28,7 @@ public class MeetingService {
     private final MeetingRepository meetingRepository;
     private final MeetingMapper meetingMapper;
     private final ProfileService profileService;
+    private final MsTeamsService msTeamsService;
 
     public Optional<MeetingProposalEntity> getMeetingProposal(Long id) {
         return this.meetingProposalRepository.findById(id);
@@ -84,5 +87,49 @@ public class MeetingService {
 
     public Optional<MeetingEntity> getMeeting(Long id) {
         return meetingRepository.findById(id);
+    }
+
+    public void cancelMeeting(Long meetingId, Long userId)
+    {
+        MeetingEntity meeting = meetingRepository.findById(meetingId).orElseThrow();
+        ProfileEntity profileCaller;
+        ProfileEntity profileOther;
+        if(meeting.getProposer().getId().equals(userId))
+        {
+            profileCaller = meeting.getProposer();
+            profileOther = meeting.getPartner();
+        }
+        else
+        {
+            profileCaller = meeting.getPartner();
+            profileOther = meeting.getProposer();
+        }
+
+        // 1. Get the proposals of both users
+        MeetingProposalEntity meetingProposalCaller = meetingProposalRepository
+                .findByProposedDateTimeAndProposerProfileAAndMatchedTrue(meeting.getFromDateTime(), profileCaller)
+                .orElseThrow();
+
+        MeetingProposalEntity meetingProposalOther = meetingProposalRepository
+                .findByProposedDateTimeAndProposerProfileAAndMatchedTrue(meeting.getFromDateTime(), profileOther)
+                .orElseThrow();
+
+        // 2. delete proposal for caller
+        meetingProposalRepository.deleteById(meetingProposalCaller.getId());
+
+        // 3. reactivate proposal for the other person (So that he can get matched again)
+        LocalDateTime today = LocalDateTime.now().truncatedTo(ChronoUnit.DAYS);
+        LocalDateTime proposedDay = meeting.getFromDateTime().truncatedTo(ChronoUnit.DAYS);
+        if(today.equals(proposedDay)) {
+            meetingProposalRepository.deleteById(meetingProposalOther.getId());
+        }
+        else {
+            meetingProposalOther.setMatched(false);
+            meetingProposalRepository.save(meetingProposalOther);
+        }
+
+        // 3. Cancel MS meeting and delete meeting
+        msTeamsService.cancelMsTeamsMeeting(meeting);
+        meetingRepository.delete(meeting);
     }
 }
