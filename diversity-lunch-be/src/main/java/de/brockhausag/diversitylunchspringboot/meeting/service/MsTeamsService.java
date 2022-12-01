@@ -2,6 +2,7 @@ package de.brockhausag.diversitylunchspringboot.meeting.service;
 
 import com.microsoft.graph.models.Event;
 import de.brockhausag.diversitylunchspringboot.meeting.mapper.MsTeamsMapper;
+import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.match.utils.Match;
 import lombok.RequiredArgsConstructor;
@@ -26,5 +27,11 @@ public class MsTeamsService {
         Event result = microsoftGraphService.createEvent(event);
 
         return result.id;
+    }
+
+    public void cancelMsTeamsMeeting(MeetingEntity meeting)
+    {
+        String message = "Ein Teilnehmer hat den Termin abgesagt.";
+        microsoftGraphService.cancelEvent(meeting.getMsTeamsMeetingId(), message);
     }
 }
