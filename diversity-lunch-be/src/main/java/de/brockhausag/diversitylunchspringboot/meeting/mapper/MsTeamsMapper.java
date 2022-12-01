@@ -50,7 +50,6 @@ public class MsTeamsMapper {
     }
 
 
-
     private ItemBody getItemBody(ProfileEntity profileEntityOne, ProfileEntity profileEntityTwo, LocalDateTime start) {
         ItemBody itemBody = new ItemBody();
 

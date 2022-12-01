@@ -1,8 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.config;
 
+import de.brockhausag.diversitylunchspringboot.match.service.MatchingService;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
-import de.brockhausag.diversitylunchspringboot.match.service.MatchingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -20,7 +20,7 @@ public class SchedulingConfig {
 
     private final MatchingService matchingService;
     private final MeetingProposalRepository meetingProposalRepository;
-    
+
     //Note: Cronjob naming scheme https://spring.io/blog/2020/11/10/new-in-spring-5-3-improved-cron-expressions
 
     @Scheduled(cron = "0 0 2 * * *")

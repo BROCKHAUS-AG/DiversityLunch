@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
-import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.BaseEntity;
+import de.brockhausag.diversitylunchspringboot.generics.basicDimension.DefaultDimensionEntity;
+import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Getter
 @Setter
-public class SocialBackgroundEntity implements BaseEntity {
+public class SocialBackgroundEntity implements DefaultDimensionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,7 +27,7 @@ public class SocialBackgroundEntity implements BaseEntity {
     @Override
     public int hashCode() {
         String hashString = this.id.toString() + this.descriptor;
-        return hashString.hashCode() ;
+        return hashString.hashCode();
     }
 
     @Override
@@ -36,5 +37,9 @@ public class SocialBackgroundEntity implements BaseEntity {
         }
         final SocialBackgroundEntity other = (SocialBackgroundEntity) obj;
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
+    }
+
+    public Category getQuestionCategory() {
+        return Category.SOCIAL_BACKGROUND;
     }
 }

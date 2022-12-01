@@ -30,15 +30,11 @@ public class MeetingTestdataFactory {
                 .matched(matched);
     }
 
-    public MeetingProposalEntity matchedEntity() {
-        return entityBuilder().build();
-    }
-
-    public MeetingProposalEntity unmatchedEntity(){
+    public MeetingProposalEntity unmatchedEntity() {
         return entityBuilder().matched(false).build();
     }
 
-    public MeetingProposalEntity createEntity(){
+    public MeetingProposalEntity createEntity() {
         return createEntityBuilder().build();
     }
 
@@ -48,12 +44,6 @@ public class MeetingTestdataFactory {
                 .id(id)
                 .fromDateTime(localDateTime)
                 .partnerName(null);
-    }
-
-    public MeetingDto matchedDto() {
-        return dtoBuilder()
-                .partnerName(profileEntity.getName())
-                .build();
     }
 
     public MeetingProposalEntity entity() {
@@ -76,7 +66,7 @@ public class MeetingTestdataFactory {
     }
 
     public MeetingEntity matchedMeeting(ProfileEntity proposerEntity, ProfileEntity partnerEntity) {
-        LocalDateTime date = LocalDateTime.of(2011, 11,11, 11,11);
+        LocalDateTime date = LocalDateTime.of(2011, 11, 11, 11, 11);
         return new MeetingEntity(1L, date, partnerEntity, proposerEntity, 1, Question.CUSTOMER1, date, "");
     }
 

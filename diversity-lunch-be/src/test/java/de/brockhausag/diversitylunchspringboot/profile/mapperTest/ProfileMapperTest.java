@@ -167,7 +167,8 @@ class ProfileMapperTest {
             when(this.socialBackgroundMapper.entityToDto(entity.getSocialBackground())).thenReturn(dto.getSocialBackground());
             when(this.socialBackgroundDiscriminationMapper.entityToDto(entity.getSocialBackgroundDiscrimination())).thenReturn(dto.getSocialBackgroundDiscrimination());
             return null;
-        }).forEach(unused->{});
+        }).forEach(unused -> {
+        });
 
         //Act
         List<ProfileDto> actualDtos = this.profileMapper.entityToDto(inputEntities);

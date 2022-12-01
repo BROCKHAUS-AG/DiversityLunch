@@ -46,30 +46,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ProfileControllerIT {
 
     @Autowired
+    ObjectMapper objectMapper;
+    @Autowired
     private ProfileTestdataFactory profileFactory;
     private MockMvc mockMvc;
-
     private ProfileEntity myProfileEntity;
-
     private AccountEntity myAccountEntity;
     private AccountEntity otherAccountEntity;
-
     @Autowired
     private ProfileMapper profileMapper;
-
     @Autowired
     private WebApplicationContext appContext;
-
-
     @Autowired
     private AccountService accountService;
-
     @Autowired
     private ProfileService profileService;
-
-    @Autowired
-    ObjectMapper objectMapper;
-
     @Mock
     private MicrosoftGraphService microsoftGraphService;
 

@@ -1,4 +1,4 @@
-import { Meeting } from '../../types/Meeting';
+import { Meeting } from '../../model/Meeting';
 
 export type MeetingsPending = {
   status: 'PENDING',

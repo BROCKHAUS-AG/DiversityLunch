@@ -7,7 +7,8 @@ import java.time.format.DateTimeFormatter;
 
 public class DiversityLunchTimeAndDateFormatter {
 
-    private DiversityLunchTimeAndDateFormatter(){}
+    private DiversityLunchTimeAndDateFormatter() {
+    }
 
     public static String convertFromUTCToTimeZoneAndFormatWithPattern(LocalDateTime time, String pattern, String timeZone) {
         ZonedDateTime zonedDateTime = time.atZone(ZoneId.of("UTC"));

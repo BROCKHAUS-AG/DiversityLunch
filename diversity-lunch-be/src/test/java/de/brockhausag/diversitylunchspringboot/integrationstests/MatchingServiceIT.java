@@ -75,7 +75,7 @@ class MatchingServiceIT {
         ProfileEntity proposer = profileRepository.findById(3L).orElseThrow();
         MeetingEntity expectedForCase9 = MeetingEntity.builder()
                 .fromDateTime(proposedDateTime)
-                .score(11)
+                .score(10)
                 .partner(partner)
                 .proposer(proposer)
                 .build();
@@ -94,7 +94,7 @@ class MatchingServiceIT {
         ProfileEntity proposer = profileRepository.findById(4L).orElseThrow();
         MeetingEntity expectedForCase0 = MeetingEntity.builder()
                 .fromDateTime(proposedDateTime)
-                .score(25)
+                .score(24)
                 .partner(partner)
                 .proposer(proposer)
                 .build();
@@ -106,7 +106,7 @@ class MatchingServiceIT {
     }
 
     @Test
-    void testMatchingServiceUnmatched(){
+    void testMatchingServiceUnmatched() {
         LocalDateTime proposedDateTime = LocalDateTime.of(2022, 4, 5, 13, 30);
         MeetingProposalEntity expectedForCaseUnmatched = MeetingProposalEntity.builder()
                 .proposedDateTime(proposedDateTime)
@@ -122,6 +122,7 @@ class MatchingServiceIT {
             log.info("MEETING_PROPOSAL_ENTITY UNMATCHED NOT FOUND. MATCHING FAULTY.");
         }
     }
+
     private void assertionForEquality(MeetingEntity expected, MeetingEntity result, int caseIndex) {
         assertEquals("[" + caseIndex + "] Get Partner Name: ", expected.getPartner().getName(), result.getPartner().getName());
         assertEquals("[" + caseIndex + "] Get Proposer Name: ", expected.getProposer().getName(), result.getProposer().getName());

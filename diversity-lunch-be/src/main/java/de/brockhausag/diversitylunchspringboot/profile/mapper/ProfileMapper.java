@@ -38,12 +38,10 @@ public class ProfileMapper {
     private final ReligionService religionService;
     private final WorkExperienceService workExperienceService;
 
-    private final SexualOrientationService  sexualOrientationService;
+    private final SexualOrientationService sexualOrientationService;
     private final SocialBackgroundService socialBackgroundService;
 
     private final SocialBackgroundDiscriminationService socialBackgroundDiscriminationService;
-
-
 
 
     public ProfileDto entityToDto(ProfileEntity entity) {
@@ -87,26 +85,27 @@ public class ProfileMapper {
         if (this.allObjectWithIdsArePresent(countryEntityOptional, dietEntityOptional, educationEntityOptional,
                 genderEntityOptional, hobbyEntityOptional, languageEntityOptional, projectEntityOptional,
                 religionEntityOptional, workExperienceEntityOptional, socialBackgroundEntityOptional)) {
-            ProfileEntity entity = new ProfileEntity();
-            entity.setId(dto.getId());
-            entity.setName(dto.getName());
-            entity.setEmail(dto.getEmail());
-            entity.setBirthYear(dto.getBirthYear());
 
-            entity.setOriginCountry(countryEntityOptional.get());
-            entity.setDiet(dietEntityOptional.get());
-            entity.setEducation(educationEntityOptional.get());
-            entity.setGender(genderEntityOptional.get());
-            entity.setHobby(hobbyEntityOptional.get());
-            entity.setMotherTongue(languageEntityOptional.get());
-            entity.setProject(projectEntityOptional.get());
-            entity.setReligion(religionEntityOptional.get());
-            entity.setWorkExperience(workExperienceEntityOptional.get());
-            entity.setSexualOrientation(sexualOrientationEntityOptional.get());
-            entity.setSocialBackground(socialBackgroundEntityOptional.get());
-            entity.setSocialBackgroundDiscrimination(socialBackgroundDiscriminationEntityOptional.get());
-
-            return Optional.of(entity);
+            return Optional.of(
+                    ProfileEntity.builder()
+                            .id(dto.getId())
+                            .name(dto.getName())
+                            .email(dto.getEmail())
+                            .birthYear(dto.getBirthYear())
+                            .originCountry(countryEntityOptional.orElseThrow())
+                            .diet(dietEntityOptional.orElseThrow())
+                            .education(educationEntityOptional.orElseThrow())
+                            .gender(genderEntityOptional.orElseThrow())
+                            .hobby(hobbyEntityOptional.orElseThrow())
+                            .motherTongue(languageEntityOptional.orElseThrow())
+                            .project(projectEntityOptional.orElseThrow())
+                            .religion(religionEntityOptional.orElseThrow())
+                            .workExperience(workExperienceEntityOptional.orElseThrow())
+                            .sexualOrientation(sexualOrientationEntityOptional.orElseThrow())
+                            .socialBackground(socialBackgroundEntityOptional.orElseThrow())
+                            .socialBackgroundDiscrimination(socialBackgroundDiscriminationEntityOptional.orElseThrow())
+                            .build()
+            );
         }
         return Optional.empty();
     }

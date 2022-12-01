@@ -30,12 +30,15 @@ public class AccountTestDataFactory {
     public AccountEntity buildAccountWithAzureAdminRole() {
         return entityBuilder().role(AccountRole.AZURE_ADMIN).build();
     }
+
     public AccountEntity buildAccountWithAdminRole() {
         return entityBuilder().role(AccountRole.ADMIN).build();
     }
+
     public AccountEntity buildAccountWithStandardRole() {
         return entityBuilder().role(AccountRole.STANDARD).build();
     }
+
     public AccountEntity buildAccountWithoutProfile() {
         return entityBuilder().profile(null).build();
     }
@@ -52,7 +55,9 @@ public class AccountTestDataFactory {
         return dtoBuilder().build();
     }
 
-    public AccountDto buildAccountDtoWithoutProfile(){return dtoBuilder().profileId(0L).build();}
+    public AccountDto buildAccountDtoWithoutProfile() {
+        return dtoBuilder().profileId(0L).build();
+    }
 
 
 }

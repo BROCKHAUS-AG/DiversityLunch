@@ -26,7 +26,7 @@ public class SexualOrientationMapperTest {
     private SexualOrientationMapper sexualOrientationMapper;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         final Long firstId = 1L, secondId = 2L, thirdId = 3L;
         final String firstDescriptor = "First Object", secondDescriptor = "Second Object",
                 thirdDescriptor = "Third Object";
@@ -43,7 +43,7 @@ public class SexualOrientationMapperTest {
     }
 
     @Test
-    void testEntityToDto_withOneEntity_returnsOneDto(){
+    void testEntityToDto_withOneEntity_returnsOneDto() {
         //Arrange
         SexualOrientationEntity inputEntity = firstEntity;
         SexualOrientationDto expectedDto = firstDto;
@@ -56,7 +56,7 @@ public class SexualOrientationMapperTest {
     }
 
     @Test
-    void testEntityToDto_withListOfThreeEntities_returnsListOfThreeDtos(){
+    void testEntityToDto_withListOfThreeEntities_returnsListOfThreeDtos() {
         //Arrange
         List<SexualOrientationEntity> inputEntityList = Arrays.asList(firstEntity, secondEntity, thirdEntity);
         List<SexualOrientationDto> expectedDtoList = Arrays.asList(firstDto, secondDto, thirdDto);
@@ -70,7 +70,7 @@ public class SexualOrientationMapperTest {
 
 
     @Test
-    void testEntityToDto_withEmptyEntityList_returnsEmptyDtoList(){
+    void testEntityToDto_withEmptyEntityList_returnsEmptyDtoList() {
         //Arrange
         List<SexualOrientationDto> expectedDtoList = Collections.emptyList();
         List<SexualOrientationEntity> inputEntityList = Collections.emptyList();
@@ -83,7 +83,7 @@ public class SexualOrientationMapperTest {
     }
 
     @Test
-    void testDtoToEntity_withOneDto_returnsOneEntity(){
+    void testDtoToEntity_withOneDto_returnsOneEntity() {
         //Arrange
         SexualOrientationDto inputDto = firstDto;
         SexualOrientationEntity expectedEntity = firstEntity;
@@ -97,7 +97,7 @@ public class SexualOrientationMapperTest {
     }
 
     @Test
-    void testDtoToEntity_withListOfTwoDtos_returnsListOfTwoEntities(){
+    void testDtoToEntity_withListOfTwoDtos_returnsListOfTwoEntities() {
         //Arrange
         List<SexualOrientationEntity> expectedEntityList = Arrays.asList(firstEntity, secondEntity, thirdEntity);
         List<SexualOrientationDto> inputDtoList = Arrays.asList(firstDto, secondDto, thirdDto);
@@ -110,7 +110,7 @@ public class SexualOrientationMapperTest {
     }
 
     @Test
-    void testDtoToEntity_withEmptyDtoList_returnsEmptyEntityList(){
+    void testDtoToEntity_withEmptyDtoList_returnsEmptyEntityList() {
         //Arrange
         List<SexualOrientationDto> inputDtoList = Collections.emptyList();
         List<SexualOrientationEntity> expectedEntityList = Collections.emptyList();

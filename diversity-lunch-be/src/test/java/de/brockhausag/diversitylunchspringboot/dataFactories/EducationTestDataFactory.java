@@ -5,44 +5,44 @@ import de.brockhausag.diversitylunchspringboot.profile.model.entities.EducationE
 
 public class EducationTestDataFactory {
 
-    private static final  int numberOfCompleteSets = 3;
+    private static final int numberOfCompleteSets = 3;
     private static final Long[] ids = {666L, 1L, 2L, 3L};
     private static final String[] descriptors = {"incomplete", "first education", "second education", "third education"};
 
-    public EducationDto buildDto(int setNumber){
-        if ( (setNumber >= 1) && setNumber <= numberOfCompleteSets){
+    public EducationDto buildDto(int setNumber) {
+        if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
             return new EducationDto(ids[setNumber], descriptors[setNumber]);
         }
         return new EducationDto(ids[1], descriptors[1]);
     }
 
 
-    public EducationEntity buildEntity(int setNumber){
-        if ( (setNumber >= 1) && setNumber <= numberOfCompleteSets){
+    public EducationEntity buildEntity(int setNumber) {
+        if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
             return new EducationEntity(ids[setNumber], descriptors[setNumber]);
         }
         return new EducationEntity(ids[1], descriptors[1]);
     }
 
-    public EducationEntity buildEntityWithoutId(){
+    public EducationEntity buildEntityWithoutId() {
         EducationEntity incompleteEntity = new EducationEntity();
         incompleteEntity.setDescriptor(descriptors[0]);
         return incompleteEntity;
     }
 
-    public EducationEntity buildEntityWithoutDescriptor(){
+    public EducationEntity buildEntityWithoutDescriptor() {
         EducationEntity incompleteEntity = new EducationEntity();
         incompleteEntity.setId(ids[0]);
         return incompleteEntity;
     }
 
-    public EducationDto buildDtoWithoutId(){
+    public EducationDto buildDtoWithoutId() {
         EducationDto incompleteDto = new EducationDto();
         incompleteDto.setDescriptor(descriptors[0]);
         return incompleteDto;
     }
 
-    public EducationDto buildDtoWithoutDescriptor(){
+    public EducationDto buildDtoWithoutDescriptor() {
         EducationDto incompleteDto = new EducationDto();
         incompleteDto.setId(ids[0]);
         return incompleteDto;

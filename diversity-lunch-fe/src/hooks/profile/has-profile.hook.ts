@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppStoreState } from '../../store/Store';
+import { AppStoreState } from '../../data/app-store';
 import { hasNoProfileAction, loadProfile } from '../../data/profile/profile.actions';
 import { loadAccount } from '../../data/account/account.actions';
 

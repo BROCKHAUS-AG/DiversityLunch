@@ -15,37 +15,32 @@ import java.util.stream.StreamSupport;
 public class HobbyService {
     private final HobbyRepository repository;
 
-    public HobbyEntity createEntity(HobbyEntity entity){
+    public HobbyEntity createEntity(HobbyEntity entity) {
         //set id to null to force auto generation of id thus avoid updating existing entries
         entity.setId(0L);
         return repository.save(entity);
     }
 
-    public Optional<HobbyEntity> getEntityById(Long id){
+    public Optional<HobbyEntity> getEntityById(Long id) {
         return repository.findById(id);
     }
 
-    public HobbyEntity updateOrCreateEntity(HobbyEntity entity){
+    public HobbyEntity updateOrCreateEntity(HobbyEntity entity) {
         return repository.save(entity);
     }
 
-    public boolean deleteEntityById(Long id){
-        if (repository.existsById(id)){
+    public boolean deleteEntityById(Long id) {
+        if (repository.existsById(id)) {
             repository.deleteById(id);
             return true;
         }
         return false;
     }
 
-    public List<HobbyEntity> getAllEntities(){
+    public List<HobbyEntity> getAllEntities() {
         Iterable<HobbyEntity> entitiesIterable = repository.findAll();
         return StreamSupport
                 .stream(entitiesIterable.spliterator(), false)
                 .collect(Collectors.toList());
     }
-
-    public boolean existsById(Long id){
-        return this.repository.existsById(id);
-    }
-
 }

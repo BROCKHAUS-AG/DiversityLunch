@@ -58,7 +58,7 @@ public class MeetingController {
             @Valid @RequestBody CreateMeetingProposalDto createMeetingProposalDto
     ) {
 
-        if(meetingService.meetingExists(id ,createMeetingProposalDto.getFromDateTime())) {
+        if (meetingService.meetingExists(id, createMeetingProposalDto.getFromDateTime())) {
             log.error("Meeting already exists: " + id.toString() + " Date: " + createMeetingProposalDto.getFromDateTime());
             return ResponseEntity.status(409).build();
         }
@@ -82,7 +82,7 @@ public class MeetingController {
     public @ResponseBody
     ResponseEntity<String> deleteMeetingProposal(@PathVariable Long id) {
 
-        if(this.meetingService.checkIfMeetingProposalIsMatched(id))
+        if (this.meetingService.checkIfMeetingProposalIsMatched(id))
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         this.meetingService.deleteMeetingProposal(id);
         return new ResponseEntity<>(HttpStatus.OK);
