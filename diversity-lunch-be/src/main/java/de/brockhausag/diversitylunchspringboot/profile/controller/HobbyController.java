@@ -23,9 +23,9 @@ public class HobbyController extends ErrorHandlingController {
 
     @GetMapping("/all")
     public ResponseEntity<List<HobbyDto>> getAll() {
-        List<HobbyEntity> countryEntityList = service.getAllEntities();
+        List<HobbyEntity> hobbyEntityList = service.getAllEntities();
         return new ResponseEntity<>(
-                mapper.entityToDto(countryEntityList),
+                mapper.entityToDto(hobbyEntityList),
                 HttpStatus.OK
         );
     }
