@@ -7,6 +7,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -43,8 +44,9 @@ public class ProfileDto {
     private ReligionDto religion;
     @NotNull
     private WorkExperienceDto workExperience;
+    
     @NotNull
-    private HobbyDto hobby;
+    private List<HobbyDto> hobby;
     @NotNull
     private SexualOrientationDto sexualOrientation;
     @NotNull

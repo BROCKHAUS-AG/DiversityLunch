@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.logic;
 
 import de.brockhausag.diversitylunchspringboot.profile.data.HobbyRepository;
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,11 @@ public class HobbyService {
     public Optional<HobbyEntity> getEntityById(Long id) {
         return repository.findById(id);
     }
+
+    public List<Optional<HobbyEntity>> getEntitesByDtoList(List <HobbyDto> hobbyDtos) {
+        return hobbyDtos.stream().map(hobbyDto -> getEntityById(hobbyDto.getId())).collect(Collectors.toList());
+    }
+
 
     public HobbyEntity updateOrCreateEntity(HobbyEntity entity) {
         return repository.save(entity);
