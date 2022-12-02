@@ -25,12 +25,10 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class VoucherServiceTest {
 
-    @InjectMocks
-    private VoucherService voucherService;
-
     @Mock
     private static VoucherRepository voucherRepository;
-
+    @InjectMocks
+    private VoucherService voucherService;
     @Mock
     private MeetingRepository meetingRepository;
 
@@ -69,7 +67,7 @@ public class VoucherServiceTest {
 
         Optional<VoucherEntity> voucherEntity = voucherService.getUnclaimedVoucherForMeeting(meetingPartner.getId(), matchedMeeting.getId());
 
-        Assertions.assertNotNull(voucherEntity.get());
+        Assertions.assertNotNull(voucherEntity.orElseThrow());
         Assertions.assertEquals(unclaimedVoucher.getVoucher(), voucherEntity.get().getVoucher());
     }
 
@@ -104,7 +102,7 @@ public class VoucherServiceTest {
     void userAlreadyClaimedVoucherForThisMeeting_expectsAlreadyClaimedVoucher() {
         when(voucherRepository.getVoucherEntityByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId())).thenReturn(Optional.of(claimedVoucherProposer));
 
-        VoucherEntity voucherActual = voucherService.getVoucherByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId()).get();
+        VoucherEntity voucherActual = voucherService.getVoucherByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId()).orElseThrow();
         Assertions.assertEquals(claimedVoucherProposer, voucherActual);
     }
 
@@ -112,7 +110,7 @@ public class VoucherServiceTest {
     void userAlreadyClaimedVoucherForThisMeeting_expectsAlreadyClaimedUser() {
         when(voucherRepository.getVoucherEntityByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId())).thenReturn(Optional.of(claimedVoucherProposer));
 
-        VoucherEntity voucherActual = voucherService.getVoucherByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId()).get();
+        VoucherEntity voucherActual = voucherService.getVoucherByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId()).orElseThrow();
         Assertions.assertEquals(claimedVoucherProposer, voucherActual);
     }
 
@@ -120,6 +118,6 @@ public class VoucherServiceTest {
     void userHasNoVoucher_expectsEmptyOptional() {
         when(voucherRepository.getVoucherEntityByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId())).thenReturn(Optional.empty());
 
-        Assertions.assertEquals(Optional.empty(),voucherService.getVoucherByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId()));
+        Assertions.assertEquals(Optional.empty(), voucherService.getVoucherByProfileIdAndMeetingId(meetingProposer.getId(), matchedMeeting.getId()));
     }
 }

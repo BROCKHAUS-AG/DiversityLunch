@@ -1,10 +1,10 @@
 package de.brockhausag.diversitylunchspringboot.meeting.service;
 
 import com.microsoft.graph.models.Event;
+import de.brockhausag.diversitylunchspringboot.match.utils.Match;
 import de.brockhausag.diversitylunchspringboot.meeting.mapper.MsTeamsMapper;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
-import de.brockhausag.diversitylunchspringboot.match.utils.Match;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

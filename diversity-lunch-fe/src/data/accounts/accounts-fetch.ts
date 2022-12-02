@@ -1,6 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { authenticatedFetchGet, authenticatedFetchPut } from '../../utils/fetch.utils';
-import { Account } from '../../types/Account';
+import { Account } from '../../model/Account';
 import { accountsAction } from './accounts-reducer';
 import { FetchCallbacks } from '../generic/FetchCallbacks';
 import { handleFetchResponse } from '../handleFetchResponse';

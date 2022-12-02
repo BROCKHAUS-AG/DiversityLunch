@@ -1,7 +1,7 @@
 import { Role } from '../model/Role';
-import { Account } from '../types/Account';
+import { Account } from '../model/Account';
 import { Profile } from '../model/Profile';
-import { UserVoucher } from '../types/UserVoucher';
+import { UserVoucher } from '../model/UserVoucher';
 
 export const categoryData = [{ id: 2, descriptor: 'Kreatives' }, { id: 1337, descriptor: 'Sport' }];
 export const countryData = [{ id: 9, descriptor: 'Bahamas' }, { id: 1337, descriptor: 'Deutschland' }];

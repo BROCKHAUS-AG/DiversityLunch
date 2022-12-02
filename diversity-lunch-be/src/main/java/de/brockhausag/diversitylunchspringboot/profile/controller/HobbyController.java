@@ -4,7 +4,7 @@ import de.brockhausag.diversitylunchspringboot.profile.logic.HobbyService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.HobbyMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;
-import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.ErrorHandlingController;
+import de.brockhausag.diversitylunchspringboot.utils.ErrorHandlingController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

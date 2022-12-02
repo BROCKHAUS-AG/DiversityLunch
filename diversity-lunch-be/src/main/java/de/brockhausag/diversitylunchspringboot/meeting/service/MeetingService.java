@@ -55,10 +55,10 @@ public class MeetingService {
 
         Stream<MeetingDto> meetingProposals =
                 meetingProposalRepository.findByProposerProfileAndMatchedFalseAndProposedDateTimeIsAfter(profile, today)
-                .stream()
-                .map(meetingMapper::mapEntityToDto);
+                        .stream()
+                        .map(meetingMapper::mapEntityToDto);
 
-        Stream<MeetingDto> matchedMeetings = Stream.concat(matchedMeetingsByProposer,  matchedMeetingsByPartner);
+        Stream<MeetingDto> matchedMeetings = Stream.concat(matchedMeetingsByProposer, matchedMeetingsByPartner);
         return Stream.concat(matchedMeetings, meetingProposals).toList();
     }
 

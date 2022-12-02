@@ -1,5 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.match.utils;
 
+import de.brockhausag.diversitylunchspringboot.generics.basicDimension.DefaultDimensionEntity;
+import de.brockhausag.diversitylunchspringboot.generics.weightedDimension.WeightedEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.experimental.UtilityClass;
@@ -12,110 +14,121 @@ import java.util.Random;
 @Slf4j
 @UtilityClass
 public class MatchingUtils {
-
+    public static final int STANDARD_SCORE_BY_DIFFERENCE = 3;
     private static final Random random = new Random();
+    private static final int EQUAL_SCORE = 0;
 
 
     public ScoreAndCategory getCurrentScore(ProfileEntity profile1, ProfileEntity profile2) {
-        List<Category> categories = new ArrayList<>();
+        List<Category> potentialQuestionsCategories = new ArrayList<>();
+
         int currentScore = 0;
-        //GeschlechtPunkte
-        currentScore += compareProfileAttr(categories, profile1.getGender().getDescriptor(), profile2.getGender().getDescriptor(), Category.GENDER);
-        //KundePunkte
-        currentScore += compareProfileAttr(categories, profile1.getProject().getDescriptor(), profile2.getProject().getDescriptor(), Category.CUSTOMER);
-        //HerkunftslandPunkte
-        currentScore += compareProfileAttr(categories, profile1.getOriginCountry().getDescriptor(), profile2.getOriginCountry().getDescriptor(), Category.COUNTRY_OF_ORIGIN);
-        //MuttersprachePunkte
-        currentScore += compareProfileAttr(categories, profile1.getMotherTongue().getDescriptor(), profile2.getMotherTongue().getDescriptor(), Category.MOTHER_TONGUE);
-        //HobbyPunkte
-        currentScore += compareProfileAttr(categories, profile1.getHobby().getCategory().getDescriptor(), profile2.getHobby().getCategory().getDescriptor(), Category.HOBBY);
-        //ReligionsPunkte
-        currentScore += compareProfileAttr(categories, profile1.getReligion().getDescriptor(), profile2.getReligion().getDescriptor(), Category.RELIGION);
-        //BildungswegPunkte
-        currentScore += compareProfileAttr(categories, profile1.getEducation().getDescriptor(), profile2.getEducation().getDescriptor(), Category.EDUCATION);
-        //ErnährungsweisePunkte
-        currentScore += compareProfileAttr(categories, profile1.getDiet().getDescriptor(), profile2.getDiet().getDescriptor(), Category.DIET);
-        // Sexuelle orienteirung
-        currentScore += compareProfileAttr(categories, profile1.getSexualOrientation().getDescriptor(), profile2.getSexualOrientation().getDescriptor(), Category.SEXUAL_ORIENTATION);
-        // Social Background
-        currentScore += compareProfileAttr(categories, profile1.getSocialBackground().getDescriptor(), profile2.getSocialBackground().getDescriptor(), Category.SOCIAL_BACKGROUND);
-        // Social Background Discrimination
-        currentScore += compareProfileAttr(categories, profile1.getSocialBackgroundDiscrimination().getDescriptor(), profile2.getSocialBackgroundDiscrimination().getDescriptor(), Category.SOCIAL_BACKGROUND_DISCRIMINATION);
+        //First: Score Default Entities
+        currentScore += getScoreFromDefaultEntities(profile1, profile2, potentialQuestionsCategories);
+        //Second Score Weighted Entities
+        currentScore += getScoreFromWeightedEntities(profile1, profile2, potentialQuestionsCategories);
+        //Third Score Birthdate or miscellaneous
+        currentScore += compareBirthYear(profile1, profile2, potentialQuestionsCategories);
 
-        currentScore = getScoreAndAddCategoriesForBirthYearAndWorkExperience(currentScore, categories, profile1, profile2);
-
-        int randomIndex = random.nextInt(categories.size());
-
-        return new ScoreAndCategory(currentScore, categories.get(randomIndex));
-    }
-
-    private int getScoreAndAddCategoriesForBirthYearAndWorkExperience(int score, List<Category> categories, ProfileEntity profile1, ProfileEntity profile2) {
-        int scoreFromBirthYear = compareBirthYear(profile1, profile2);
-        int scoreFromWorkExperience = compareWorkExperience(profile1, profile2);
-
-        if (scoreFromBirthYear == 3) {
-            categories.add(Category.AGE);
-        }
-        if (scoreFromWorkExperience == 3) {
-            categories.add(Category.WORK_EXPERIENCE);
-        }
-        if (score == 0) {
-            if (scoreFromBirthYear == 2 && scoreFromWorkExperience < 3) {
-                categories.add(Category.AGE);
-            }
-            if (scoreFromBirthYear == 1 && scoreFromWorkExperience < 2) {
-                categories.add(Category.AGE);
-            }
-            if (scoreFromWorkExperience == 2 && scoreFromBirthYear < 3) {
-                categories.add(Category.WORK_EXPERIENCE);
-            }
-            if (scoreFromWorkExperience == 1 && scoreFromBirthYear < 2) {
-                categories.add(Category.WORK_EXPERIENCE);
-            }
-        }
-        //GeburtsjahrPunkte
-        score += scoreFromBirthYear;
-        //BerufserfahrungPunkte
-        score += scoreFromWorkExperience;
-        return score;
-    }
-
-    private int compareWorkExperience(ProfileEntity profile1, ProfileEntity profile2) {
-        int currentScore;
-        if (profile1.getWorkExperience().getDescriptor().equals(profile2.getWorkExperience().getDescriptor())) {
-            currentScore = 1;
-
-        } else if ((profile1.getWorkExperience().getDescriptor().equals("0-3 Jahre")
-                && profile2.getWorkExperience().getDescriptor().equals("über 10 Jahre"))
-                || (profile1.getWorkExperience().getDescriptor().equals("über 10 Jahre")
-                && profile2.getWorkExperience().getDescriptor().equals("0-3 Jahre"))) {
-            currentScore = 3;
+        Category category;
+        if (potentialQuestionsCategories.size() > 0) {
+            int randomIndex = random.nextInt(potentialQuestionsCategories.size());
+            category = potentialQuestionsCategories.get(randomIndex);
         } else {
-            currentScore = 2;
+            // Es besteht kein Matching zwischen exakt übereinstimmenden Profilen
+            // Deshalb werden keine Fragen an die Profile gestellt
+            // Diät wurde als neutrale Kategorie ausgewählt
+            category = Category.DIET;
         }
-        return currentScore;
+
+        return new ScoreAndCategory(currentScore, category);
     }
 
-    private int compareBirthYear(ProfileEntity profile1, ProfileEntity profile2) {
+
+    private static int getScoreFromDefaultEntities(ProfileEntity profile1, ProfileEntity profile2, List<Category> potentialQuestionsCategories) {
         int currentScore = 0;
-        int i = Math.abs(profile1.getBirthYear() - profile2.getBirthYear());
-        if (i > 3 && i <= 10) {
-            currentScore = 1;
-        } else if ((i < 20) && (i > 10)) {
-            currentScore = 2;
-        } else if (i >= 20) {
-            currentScore = 3;
+
+        List<DefaultDimensionEntity> baseEntitiesProfile1 = profile1.getBaseEntities();
+        List<DefaultDimensionEntity> baseEntitiesProfile2 = profile2.getBaseEntities();
+
+        int entityScore;
+        for (int i = 0; i < baseEntitiesProfile1.size(); i++) {
+            DefaultDimensionEntity entity1 = baseEntitiesProfile1.get(i);
+            DefaultDimensionEntity entity2 = baseEntitiesProfile2.get(i);
+
+            if (entityShouldBeIgnored(entity1) || entityShouldBeIgnored(entity2)) {
+                continue;
+            }
+            entityScore = compareBaseEntities(entity1, entity2);
+
+            if (entityScore != EQUAL_SCORE) {
+                potentialQuestionsCategories.add(entity1.getQuestionCategory());
+            }
+
+            currentScore += entityScore;
         }
         return currentScore;
     }
 
-    private int compareProfileAttr(List<Category> categories, String attr1, String attr2, Category category) {
-        if(attr1.equalsIgnoreCase("keine angabe") || attr2.equalsIgnoreCase("keine angabe"))
-            return 0;
-        if (!attr1.equals(attr2)) {
-            categories.add(category);
-            return 3;
+    private static boolean entityShouldBeIgnored(DefaultDimensionEntity entity) {
+        return entity.getDescriptor().equalsIgnoreCase("keine angabe");
+    }
+
+    private static int getScoreFromWeightedEntities(ProfileEntity profile1, ProfileEntity profile2, List<Category> potentialQuestionsCategories) {
+        int currentScore = 0;
+
+        List<WeightedEntity> weightedEntities1 = profile1.getWeightedEntities();
+        List<WeightedEntity> weightedEntities2 = profile2.getWeightedEntities();
+
+        int entityScore;
+        for (int i = 0; i < weightedEntities1.size(); i++) {
+            WeightedEntity weightedEntity1 = weightedEntities1.get(i);
+            WeightedEntity weightedEntity2 = weightedEntities2.get(i);
+
+            entityScore = compareWeightedEntities(weightedEntity1, weightedEntity2);
+
+            if (entityScore != EQUAL_SCORE) {
+                potentialQuestionsCategories.add(weightedEntity1.getQuestionCategory());
+            }
+
+            currentScore += entityScore;
         }
-        return 0;
+        return currentScore;
+    }
+
+    private int compareWeightedEntities(WeightedEntity weightedEntity1, WeightedEntity weightedEntity2) {
+        int weight1 = weightedEntity1.getWeight();
+        int weight2 = weightedEntity2.getWeight();
+
+        if (weight1 == 0 || weight2 == 0) {
+            return EQUAL_SCORE;
+        }
+        return Math.abs(weight1 - weight2);
+    }
+
+    private int compareBirthYear(ProfileEntity profile1, ProfileEntity profile2, List<Category> potentialQuestionsCategories) {
+        final int TWENTY_YEARS_DIFFERENCE = 20;
+        final int TEN_YEARS_DIFFERENCE = 10;
+
+        final int LOWEST_SCORE = 1;
+        final int MIDDLE_SCORE = 2;
+        final int HIGHEST_SCORE = 3;
+
+        int ageGap = Math.abs(profile1.getBirthYear() - profile2.getBirthYear());
+        if (ageGap < TEN_YEARS_DIFFERENCE) {
+            return LOWEST_SCORE;
+        } else if (ageGap < TWENTY_YEARS_DIFFERENCE) {
+            return MIDDLE_SCORE;
+        }
+        potentialQuestionsCategories.add(Category.AGE);
+        return HIGHEST_SCORE;
+    }
+
+
+    private int compareBaseEntities(DefaultDimensionEntity entity1, DefaultDimensionEntity entity2) {
+        if (entity1.getId().equals(entity2.getId())) {
+            return EQUAL_SCORE;
+        }
+        return STANDARD_SCORE_BY_DIFFERENCE;
     }
 }

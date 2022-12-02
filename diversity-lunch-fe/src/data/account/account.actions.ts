@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { authenticatedFetchGet } from '../../utils/fetch.utils';
 import { AccountStateAction } from './account-state-action.type';
-import { Account } from '../../types/Account';
+import { Account } from '../../model/Account';
 
 export const loadAccountErroredAction: AccountStateAction = {
     type: 'ACCOUNT_ERROR',

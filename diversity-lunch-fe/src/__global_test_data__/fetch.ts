@@ -30,7 +30,7 @@ import { WORK_EXPERIENCE_ENDPOINT } from '../data/work-experience/work-experienc
 import { HOBBY_ENDPOINT } from '../data/hobby/fetch-hobby';
 import { PROFILE_ENDPOINT } from '../data/profile/profile.actions';
 import { Role } from '../model/Role';
-import { Account } from '../types/Account';
+import { Account } from '../model/Account';
 import { accountsAction } from '../data/accounts/accounts-reducer';
 import { profilesAction } from '../data/profiles/profiles-reducer';
 import { Profile } from '../model/Profile';

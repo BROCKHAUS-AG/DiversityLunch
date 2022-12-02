@@ -1,8 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.account.service;
 
 import com.microsoft.graph.models.Group;
-import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
+import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchGroupProperties;
@@ -23,7 +23,7 @@ public class AccountService {
 
     private final DiversityLunchGroupProperties diversityLunchGroupProperties;
 
-    public Optional<AccountEntity> getAccount(String oid){
+    public Optional<AccountEntity> getAccount(String oid) {
 
         return repository.getAccountEntityByOid(oid);
     }
@@ -46,12 +46,12 @@ public class AccountService {
         );
     }
 
-    public Optional<AccountEntity> assignAdminRole(Long id) throws  IllegalRoleModificationException{
+    public Optional<AccountEntity> assignAdminRole(Long id) throws IllegalRoleModificationException {
         Optional<AccountEntity> optionalAccount = repository.findById(id);
         if (optionalAccount.isEmpty()) {
             return optionalAccount;
         }
-        AccountEntity account =  optionalAccount.get();
+        AccountEntity account = optionalAccount.get();
         if (account.getRole() == AccountRole.AZURE_ADMIN) {
             throw new IllegalRoleModificationException("Tried to revoke Azure Admin Role by reassigning to Admin Role");
         }
@@ -61,12 +61,12 @@ public class AccountService {
         return optionalAccount;
     }
 
-    public Optional<AccountEntity> revokeAdminRole(Long id) throws  IllegalRoleModificationException{
+    public Optional<AccountEntity> revokeAdminRole(Long id) throws IllegalRoleModificationException {
         Optional<AccountEntity> optionalAccount = repository.findById(id);
         if (optionalAccount.isEmpty()) {
             return optionalAccount;
         }
-        AccountEntity account =  optionalAccount.get();
+        AccountEntity account = optionalAccount.get();
         if (account.getRole() == AccountRole.AZURE_ADMIN) {
             throw new IllegalRoleModificationException("Tried to revoke Azure Admin Role");
         }
@@ -83,15 +83,15 @@ public class AccountService {
     private boolean isAccountInAdminGroup() {
         Optional<List<Group>> optionalGroups = microsoftGraphService.getGroups();
         return optionalGroups.map(groups -> groups.stream()
-                .anyMatch(group -> Objects.equals(group.displayName, diversityLunchGroupProperties.getAdminGroupName())))
+                        .anyMatch(group -> Objects.equals(group.displayName, diversityLunchGroupProperties.getAdminGroupName())))
                 .orElse(false);
     }
 
     public Iterable<AccountEntity> getAccounts() {
-        return  repository.findAll();
+        return repository.findAll();
     }
 
-    public class  IllegalRoleModificationException extends Exception{
+    public static class IllegalRoleModificationException extends Exception {
 
         public IllegalRoleModificationException(String s) {
             super(s);

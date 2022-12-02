@@ -2,8 +2,8 @@ package de.brockhausag.diversitylunchspringboot.email.service;
 
 import com.nimbusds.jose.util.StandardCharset;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMailProperties;
 import de.brockhausag.diversitylunchspringboot.voucher.service.VoucherService;
 import lombok.RequiredArgsConstructor;
@@ -48,9 +48,9 @@ public class DiversityLunchEMailService {
     public String createEmailTemplateHTML(ProfileEntity recipient, ProfileEntity otherParticipant, MeetingEntity meeting) {
 
         int amountOfStoredVouchers = voucherService.getAmountOfStoredVouchers();
-        if(amountOfStoredVouchers == 0){
+        if (amountOfStoredVouchers == 0) {
             ClassPathResource resource = new ClassPathResource("MailTemplates/emailWithoutLink.html");
-            return createEmailTemplateNoLink(resource,recipient, otherParticipant, meeting);
+            return createEmailTemplateNoLink(resource, recipient, otherParticipant, meeting);
         }
         ClassPathResource resource = new ClassPathResource("MailTemplates/emailWithLink.html");
         return createEmailTemplateWithLink(resource, recipient, otherParticipant, meeting);
@@ -58,15 +58,15 @@ public class DiversityLunchEMailService {
 
     public String createEmailTemplatePlain(ProfileEntity recipient, ProfileEntity otherParticipant, MeetingEntity meeting) {
         int amountOfStoredVouchers = voucherService.getAmountOfStoredVouchers();
-        if(amountOfStoredVouchers == 0){
+        if (amountOfStoredVouchers == 0) {
             ClassPathResource resource = new ClassPathResource("MailTemplates/emailWithoutLink.txt");
             return createEmailTemplateNoLink(resource, recipient, otherParticipant, meeting);
         }
         ClassPathResource resource = new ClassPathResource("MailTemplates/emailWithLink.txt");
-        return createEmailTemplateWithLink(resource,recipient, otherParticipant, meeting);
+        return createEmailTemplateWithLink(resource, recipient, otherParticipant, meeting);
     }
 
-    private String createEmailTemplateWithLink(ClassPathResource resource,ProfileEntity recipient, ProfileEntity otherParticipant, MeetingEntity meeting) {
+    private String createEmailTemplateWithLink(ClassPathResource resource, ProfileEntity recipient, ProfileEntity otherParticipant, MeetingEntity meeting) {
         try {
             String emailText =
                     new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), StandardCharset.UTF_8);
@@ -79,7 +79,7 @@ public class DiversityLunchEMailService {
         return "";
     }
 
-    private String createEmailTemplateNoLink(ClassPathResource resource,ProfileEntity recipient, ProfileEntity otherParticipant, MeetingEntity meeting) {
+    private String createEmailTemplateNoLink(ClassPathResource resource, ProfileEntity recipient, ProfileEntity otherParticipant, MeetingEntity meeting) {
         try {
             String emailText =
                     new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), StandardCharset.UTF_8);
@@ -97,7 +97,7 @@ public class DiversityLunchEMailService {
 
         try {
             String meetingText = new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), StandardCharset.UTF_8);
-            return String.format(meetingText,  profileNameOne, profileNameTwo, date, time);
+            return String.format(meetingText, profileNameOne, profileNameTwo, date, time);
         } catch (Exception e) {
             log.error(String.format("Failed to read Resource: %s", resource.getPath()), e);
         }
@@ -110,8 +110,7 @@ public class DiversityLunchEMailService {
         if (pe.isPresent()) {
             this.sendEmail(pe.get().getEmail(), "Testsubject", body, body);
             log.info("Successfully sent mail to " + pe.get().getEmail());
-        }
-        else {
+        } else {
             log.info("Profile with ID:" + id + " not found");
         }
     }

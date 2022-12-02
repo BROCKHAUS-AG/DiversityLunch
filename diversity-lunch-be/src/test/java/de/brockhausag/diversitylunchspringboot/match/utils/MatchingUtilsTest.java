@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -19,19 +18,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class MatchingUtilsTest {
 
-
-    public static int[][] dataSetYears() {
-        return new int[][]{
-                {1971, 3},
-                {1977, 4}
-        };
-    }
-
     private ProfileEntity profile1;
     private ProfileEntity profile2;
     private ProfileEntity profile3;
+
     @BeforeEach
-    void setup(){
+    void setup() {
         ProfileTestdataFactory profileTestdataFactory = new ProfileTestdataFactory();
         profile1 = profileTestdataFactory.buildEntity(1);
         profile2 = profileTestdataFactory.buildEntity(1);
@@ -41,84 +33,93 @@ class MatchingUtilsTest {
 
     @Test
     void testCurrentScoreStandard() {
-        ScoreAndCategory expected = new ScoreAndCategory(1, Category.WORK_EXPERIENCE);
+        ScoreAndCategory expected = new ScoreAndCategory(1, Category.DIET);
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
         assertEquals(expected.currentScore(), actual.currentScore());
         assertEquals(expected.category(), actual.category());
     }
 
-    @ParameterizedTest
-    @MethodSource(value = "dataSetYears")
-    void testCurrentScoreBirthYear(int[] data) {
-        profile2.setBirthYear(data[0]);
+    @ParameterizedTest(name = "{index} => birthYear={0}, expectedScore={1}, expectedCategoryIdentifier={2}")
+    @CsvSource({
+            "1971, 2, DIET",
+            "1977, 3, AGE",
+    })
+    void testCurrentScoreBirthYear(int birthYear, int expectedScore, String expectedCategoryIdentifier) {
+        profile2.setBirthYear(birthYear);
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
-        assertEquals(data[1], actual.currentScore());
-        assertEquals(Category.AGE, actual.category());
+        assertEquals(expectedScore, actual.currentScore());
+        assertEquals(getCategoryFromIdentifier(expectedCategoryIdentifier), actual.category());
     }
 
     @Test
     void testCurrentScoreBirthYear() {
         profile2.setBirthYear(1961);
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
-        assertEquals(2, actual.currentScore());
-        assertTrue(actual.category() == Category.AGE || actual.category() == Category.WORK_EXPERIENCE);
+        assertEquals(1, actual.currentScore());
+        assertSame(actual.category(), Category.DIET);
     }
 
-    @ParameterizedTest(name = "{index} => workExperience={0}, score={1}")
+    @ParameterizedTest(name = "{index} => workExperience={0}, experienceWeight={1}, expectedScore={2}, expectedCategoryIdentifier={3}")
     @CsvSource({
-            "0-3 Jahre, 1",
-            "4-10 Jahre, 2",
-            "über 10 Jahre, 3"
+            "0-3 Jahre, 1, 1, DIET",
+            "4-10 Jahre, 2, 2, WORK_EXPERIENCE",
+            "über 10 Jahre, 3, 3, WORK_EXPERIENCE"
     })
-    void testCurrentScoreLowWorkExperienceProfile2(String workExperience, int score) {
+    void testCurrentScoreLowWorkExperienceProfile2(String workExperience, int experienceWeight, int expectedScore, String expectedCategoryIdentifier) {
         profile2.getWorkExperience().setDescriptor(workExperience);
-        ScoreAndCategory expected = new ScoreAndCategory(score, Category.WORK_EXPERIENCE);
+        profile2.getWorkExperience().setWeight(experienceWeight);
+        ScoreAndCategory expected = new ScoreAndCategory(expectedScore, getCategoryFromIdentifier(expectedCategoryIdentifier));
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
-        assertEquals(score, actual.currentScore());
+        assertEquals(expectedScore, actual.currentScore());
         assertEquals(expected.category(), actual.category());
     }
 
-    @ParameterizedTest(name = "{index} => workExperience={0}, score={1}")
+    @ParameterizedTest(name = "{index} => workExperience={0}, experienceWeight={1}, expectedScore={2}, expectedCategoryIdentifier={3}")
     @CsvSource({
-            "0-3 Jahre, 1",
-            "4-10 Jahre, 2",
-            "über 10 Jahre, 3"
+            "0-3 Jahre, 1, 1, DIET",
+            "4-10 Jahre, 2, 2, WORK_EXPERIENCE",
+            "über 10 Jahre, 3, 3, WORK_EXPERIENCE"
     })
-    void testCurrentScoreLowWorkExperienceProfile1(String workExperience, int score) {
+    void testCurrentScoreLowWorkExperienceProfile1(String workExperience, int experienceWeight, int expectedScore, String expectedCategoryIdentifier) {
         profile1.getWorkExperience().setDescriptor(workExperience);
-        ScoreAndCategory expected = new ScoreAndCategory(score, Category.WORK_EXPERIENCE);
+        profile1.getWorkExperience().setWeight(experienceWeight);
+        ScoreAndCategory expected = new ScoreAndCategory(expectedScore, getCategoryFromIdentifier(expectedCategoryIdentifier));
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
-        assertEquals(score, actual.currentScore());
+        assertEquals(expectedScore, actual.currentScore());
         assertEquals(expected.category(), actual.category());
     }
 
-    @ParameterizedTest(name = "{index} => workExperience={0}, score={1}")
+    @ParameterizedTest(name = "{index} => workExperience={0}, experienceWeight={1}, expectedScore={2}, expectedCategoryIdentifier={3}")
     @CsvSource({
-            "0-3 Jahre, 2",
-            "4-10 Jahre, 1",
-            "über 10 Jahre, 2"
+            "0-3 Jahre, 1, 2, WORK_EXPERIENCE",
+            "4-10 Jahre, 2, 1, DIET",
+            "über 10 Jahre, 3, 2, WORK_EXPERIENCE"
     })
-    void testCurrentScoreMidWorkExperienceProfile2(String workExperience, int score) {
+    void testCurrentScoreMidWorkExperienceProfile2(String workExperience, int experienceWeight, int expectedScore, String expectedCategoryIdentifier) {
         profile1.getWorkExperience().setDescriptor(workExperience);
+        profile1.getWorkExperience().setWeight(experienceWeight);
         profile2.getWorkExperience().setDescriptor("4-10 Jahre");
-        ScoreAndCategory expected = new ScoreAndCategory(score, Category.WORK_EXPERIENCE);
+        profile2.getWorkExperience().setWeight(2);
+        ScoreAndCategory expected = new ScoreAndCategory(expectedScore, getCategoryFromIdentifier(expectedCategoryIdentifier));
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
-        assertEquals(score, actual.currentScore());
+        assertEquals(expectedScore, actual.currentScore());
         assertEquals(expected.category(), actual.category());
     }
 
-    @ParameterizedTest(name = "{index} => workExperience={0}, score={1}")
+    @ParameterizedTest(name = "{index} => workExperience={0}, experienceWeight={1}, expectedScore={2}, expectedCategoryIdentifier={3}")
     @CsvSource({
-            "0-3 Jahre, 2",
-            "4-10 Jahre, 1",
-            "über 10 Jahre, 2"
+            "0-3 Jahre, 1, 2, WORK_EXPERIENCE",
+            "4-10 Jahre, 2, 1, DIET",
+            "über 10 Jahre, 3, 2, WORK_EXPERIENCE"
     })
-    void testCurrentScoreMidWorkExperienceProfile21(String workExperience, int score) {
+    void testCurrentScoreMidWorkExperienceProfile21(String workExperience, int experienceWeight, int expectedScore, String expectedCategoryIdentifier) {
         profile2.getWorkExperience().setDescriptor(workExperience);
+        profile2.getWorkExperience().setWeight(experienceWeight);
         profile1.getWorkExperience().setDescriptor("4-10 Jahre");
-        ScoreAndCategory expected = new ScoreAndCategory(score, Category.WORK_EXPERIENCE);
+        profile1.getWorkExperience().setWeight(2);
+        ScoreAndCategory expected = new ScoreAndCategory(expectedScore, getCategoryFromIdentifier(expectedCategoryIdentifier));
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
-        assertEquals(score, actual.currentScore());
+        assertEquals(expectedScore, actual.currentScore());
         assertEquals(expected.category(), actual.category());
     }
 
@@ -134,7 +135,7 @@ class MatchingUtilsTest {
 
     @Test
     void testCurrentScoreProfileAttribute() {
-        int expected = 33;
+        int expected = 32;
         ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile3);
         assertEquals(expected, actual.currentScore());
         assertNotNull(actual.category());
@@ -144,7 +145,7 @@ class MatchingUtilsTest {
     void testCurrentScoreProfileFor_KeineAngabe_InGender_ShouldHave_30_Points_With_different_profiles() {
         profile3.getGender().setDescriptor("Keine Angabe");
         profile1.getGender().setDescriptor("Männlich");
-        final int expectedScore = 30;
+        final int expectedScore = 29;
         int actualScore;
 
         actualScore = MatchingUtils.getCurrentScore(profile1, profile3).currentScore();
@@ -166,12 +167,19 @@ class MatchingUtilsTest {
 
     @Test
     void getRandomQuestionFromCategory_EveryCategory_HasAtleast_One_Question() {
-        for (Category c: Category.values()) {
+        for (Category c : Category.values()) {
             List<Question> questionList = Question.getAllQuestionsWithCategory(c);
 
             assertTrue(questionList.size() > 0);
         }
     }
 
-
+    private Category getCategoryFromIdentifier(String categoryIdentifier) {
+        return switch (categoryIdentifier) {
+            case "DIET" -> Category.DIET;
+            case "WORK_EXPERIENCE" -> Category.WORK_EXPERIENCE;
+            case "AGE" -> Category.AGE;
+            default -> null;
+        };
+    }
 }

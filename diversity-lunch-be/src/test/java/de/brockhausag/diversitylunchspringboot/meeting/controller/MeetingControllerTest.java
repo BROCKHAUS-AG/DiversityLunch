@@ -40,7 +40,7 @@ class MeetingControllerTest {
     private ProfileTestdataFactory profileTestdataFactory;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         this.profileTestdataFactory = new ProfileTestdataFactory();
         this.meetingTestdataFactory = new MeetingTestdataFactory();
     }
@@ -82,7 +82,7 @@ class MeetingControllerTest {
     }
 
     @Test
-    void testPostMeeting_serviceProfileNotFound_returnsBadRequest(){
+    void testPostMeeting_serviceProfileNotFound_returnsBadRequest() {
         CreateMeetingProposalDto createMeetingProposalDto = this.meetingTestdataFactory.createDto();
         long invalidId = 119L;
 

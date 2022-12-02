@@ -25,8 +25,9 @@ public class CountryMapperTest {
 
 
     private CountryMapper countryMapper;
+
     @BeforeEach
-    void setup(){
+    void setup() {
         final Long firstId = 1L, secondId = 2L, thirdId = 3L;
         final String firstDescriptor = "First Object", secondDescriptor = "Second Object",
                 thirdDescriptor = "Third Object";
@@ -43,7 +44,7 @@ public class CountryMapperTest {
     }
 
     @Test
-    void testEntityToDto_withOneEntity_returnsOneDto(){
+    void testEntityToDto_withOneEntity_returnsOneDto() {
         //Arrange
         CountryEntity inputEntity = firstEntity;
         CountryDto expectedDto = firstDto;
@@ -56,7 +57,7 @@ public class CountryMapperTest {
     }
 
     @Test
-    void testEntityToDto_withListOfThreeEntities_returnsListOfThreeDtos(){
+    void testEntityToDto_withListOfThreeEntities_returnsListOfThreeDtos() {
         //Arrange
         List<CountryEntity> inputEntityList = Arrays.asList(firstEntity, secondEntity, thirdEntity);
         List<CountryDto> expectedDtoList = Arrays.asList(firstDto, secondDto, thirdDto);
@@ -69,7 +70,7 @@ public class CountryMapperTest {
     }
 
     @Test
-    void testEntityToDto_withEmptyEntityList_returnsEmptyDtoList(){
+    void testEntityToDto_withEmptyEntityList_returnsEmptyDtoList() {
         //Arrange
         List<CountryDto> expectedDtoList = Collections.emptyList();
         List<CountryEntity> inputEntityList = Collections.emptyList();
@@ -82,7 +83,7 @@ public class CountryMapperTest {
     }
 
     @Test
-    void testDtoToEntity_withOneDto_returnsOneEntity(){
+    void testDtoToEntity_withOneDto_returnsOneEntity() {
         //Arrange
         CountryDto inputDto = firstDto;
         CountryEntity expectedEntity = firstEntity;
@@ -96,7 +97,7 @@ public class CountryMapperTest {
     }
 
     @Test
-    void testDtoToEntity_withListOfTwoDtos_returnsListOfTwoEntities(){
+    void testDtoToEntity_withListOfTwoDtos_returnsListOfTwoEntities() {
         //Arrange
         List<CountryEntity> expectedEntityList = Arrays.asList(firstEntity, secondEntity, thirdEntity);
         List<CountryDto> inputDtoList = Arrays.asList(firstDto, secondDto, thirdDto);
@@ -109,7 +110,7 @@ public class CountryMapperTest {
     }
 
     @Test
-    void testDtoToEntity_withEmptyDtoList_returnsEmptyEntityList(){
+    void testDtoToEntity_withEmptyDtoList_returnsEmptyEntityList() {
         //Arrange
         List<CountryDto> inputDtoList = Collections.emptyList();
         List<CountryEntity> expectedEntityList = Collections.emptyList();
