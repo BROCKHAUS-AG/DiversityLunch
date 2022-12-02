@@ -57,7 +57,7 @@ public class ProfileTestdataFactory {
                 projectFactory.buildDto(actualSetNumber),
                 religionFactory.buildDto(actualSetNumber),
                 workExperienceFactory.buildDto(actualSetNumber),
-                hobbyFactory.buildDto(actualSetNumber),
+                hobbyFactory.buildDtoList(actualSetNumber),
                 sexualOrientationFactory.buildDto(actualSetNumber),
                 socialBackgroundFactory.buildDto(actualSetNumber),
                 socialBackgroundDiscriminationFactory.buildDto(actualSetNumber));

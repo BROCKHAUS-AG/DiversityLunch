@@ -42,7 +42,7 @@ public class HobbyMapperTest {
     @Test
     void testDtoToEntity_withOneDto_returnsOneEntity() {
         //Arrange
-        HobbyDto inputDto = this.factory.buildDto(1);
+        HobbyDto inputDto = this.factory.buildDtoList(1);
         HobbyEntity expectedEntity = this.factory.buildEntity(1);
 
         when(this.hobbyCategoryService.getEntityById(inputDto.getCategory().getId())).thenReturn(Optional.of(expectedEntity.getCategory()));
@@ -70,7 +70,7 @@ public class HobbyMapperTest {
     @Test
     void testDtoToEntity_withDtoWithWrongCategoryId_returnsOneEmptyOptional() {
         //Arrange
-        HobbyDto inputDto = this.factory.buildDto(1);
+        HobbyDto inputDto = this.factory.buildDtoList(1);
         Long wrongId = 99L;
         inputDto.getCategory().setId(wrongId);
 
@@ -99,7 +99,7 @@ public class HobbyMapperTest {
     void testEntityToDto_withOneEntity_returnsOneDto() {
         //Arrange
         HobbyEntity inputEntity = this.factory.buildEntity(1);
-        HobbyDto expectedDto = this.factory.buildDto(1);
+        HobbyDto expectedDto = this.factory.buildDtoList(1);
         when(this.hobbyCategoryMapper.entityToDto(inputEntity.getCategory())).thenReturn(expectedDto.getCategory());
 
         //Act
@@ -113,7 +113,7 @@ public class HobbyMapperTest {
     void testEntityToDto_withListOfThreeEntities_returnsListOfThreeDtos() {
         //Arrange
         List<HobbyEntity> inputEntities = Stream.of(1, 2, 3).map(this.factory::buildEntity).toList();
-        List<HobbyDto> expectedDtos = Stream.of(1, 2, 3).map(this.factory::buildDto).toList();
+        List<HobbyDto> expectedDtos = Stream.of(1, 2, 3).map(this.factory::buildDtoList).toList();
 
         StreamUtils.zip(inputEntities.stream(), expectedDtos.stream(), (entity, dto) -> {
             when(this.hobbyCategoryMapper.entityToDto(entity.getCategory())).thenReturn(dto.getCategory());
