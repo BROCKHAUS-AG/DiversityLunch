@@ -58,7 +58,7 @@ public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot
         return profileId.isPresent() && proposalProfileId.isPresent() && profileId.get().equals(proposalProfileId.get());
     }
 
-    public boolean isMeetingsParticipant(Long meetingId, Long userId)
+    public boolean isMeetingsParticipantAndOwner(Long meetingId, Long userId)
     {
         boolean isParticipantAndAccountOwner = false;
         Optional<Long> profileId = getProfileId();

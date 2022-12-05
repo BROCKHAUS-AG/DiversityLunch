@@ -94,7 +94,7 @@ public class MeetingController {
             @ApiResponse(responseCode = "200", description = "der angegebene Termin wird aus der Datenbank gelöscht, dem Partner wird wieder als ungematched angezeigt"),
             @ApiResponse(responseCode = "400", description = "der Termin oder einer der User konnte nicht gefunden werden"),
     })
-    @PreAuthorize("isMeetingsParticipant(#meetingId, #userId)")
+    @PreAuthorize("isMeetingsParticipantAndOwner(#meetingId, #userId)")
     @PostMapping("/{userId}/cancel/{meetingId}")
     public @ResponseBody
     ResponseEntity<String> cancelMeeting(@PathVariable Long userId, @PathVariable Long meetingId) {
