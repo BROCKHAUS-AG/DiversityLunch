@@ -41,7 +41,7 @@ public class ProfileEntity {
     @ManyToOne
     private WorkExperienceEntity workExperience;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "profile_hobby",
             joinColumns = { @JoinColumn(name = "profile_id") },
@@ -84,7 +84,7 @@ public class ProfileEntity {
         baseEntities.add(sexualOrientation);
         baseEntities.add(socialBackground);
         baseEntities.add(socialBackgroundDiscrimination);
-        baseEntities.add(hobby.get(0));
+        baseEntities.addAll(hobby);
         return baseEntities;
     }
 
