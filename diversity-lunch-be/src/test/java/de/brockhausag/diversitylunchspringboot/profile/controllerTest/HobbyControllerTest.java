@@ -97,7 +97,7 @@ public class HobbyControllerTest {
     @Test
     void testPost_withNotExistingCategory_returnsBadRequest() {
         //Arrange
-        HobbyDto inputDto = this.factory.buildDtoList(1);
+        HobbyDto inputDto = this.factory.buildDto(1);
 
         when(mapper.dtoToEntity(inputDto)).thenReturn(Optional.empty());
 
@@ -111,7 +111,7 @@ public class HobbyControllerTest {
     @Test
     void testPut_withExistingCategory_returnsStatusOK() {
         //Arrange
-        HobbyDto inputDto = this.factory.buildDtoList(1);
+        HobbyDto inputDto = this.factory.buildDto(1);
         HobbyEntity hobbyEntity = this.factory.buildEntity(1);
 
         when(mapper.dtoToEntity(inputDto)).thenReturn(Optional.of(hobbyEntity));
@@ -127,7 +127,7 @@ public class HobbyControllerTest {
     @Test
     void testPut_withNotExistingCategory_returnsBadRequest() {
         //Arrange
-        HobbyDto inputDto = this.factory.buildDtoList(1);
+        HobbyDto inputDto = this.factory.buildDto(1);
 
         when(mapper.dtoToEntity(inputDto)).thenReturn(Optional.empty());
 
