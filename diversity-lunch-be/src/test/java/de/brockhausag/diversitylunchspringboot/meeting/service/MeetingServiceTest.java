@@ -187,4 +187,21 @@ class MeetingServiceTest {
         assertNull(result.get(2).getPartnerName());
 
     }
+
+    @Test
+    void testIfCancelMeetingReturnsFalseWhenTheMeetingWasInThePast()
+    {
+        Long meetingId = 42L;
+        Long userId = 9L;
+
+        MeetingEntity meetingEntity = MeetingEntity.builder()
+                .id(meetingId)
+                .fromDateTime(LocalDateTime.now().minusDays(1))
+                .build();
+        Optional<MeetingEntity> meetingEntityOptional = Optional.of(meetingEntity);
+
+        when(meetingRepository.findById(meetingId)).thenReturn(meetingEntityOptional);
+        boolean canCancel = service.cancelMeeting(meetingId, userId);
+        assertFalse(canCancel);
+    }
 }

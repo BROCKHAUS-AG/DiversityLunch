@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
@@ -85,6 +86,27 @@ public class MeetingController {
         if(this.meetingService.checkIfMeetingProposalIsMatched(id))
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         this.meetingService.deleteMeetingProposal(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "Das angegebene Meeting wird für den User abgesagt.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "der angegebene Termin wird aus der Datenbank gelöscht, dem Partner wird wieder als ungematched angezeigt"),
+            @ApiResponse(responseCode = "400", description = "der Termin oder einer der User konnte nicht gefunden werden"),
+    })
+    @PreAuthorize("isMeetingsParticipant(#meetingId, #userId)")
+    @PostMapping("/{userId}/cancel/{meetingId}")
+    public @ResponseBody
+    ResponseEntity<String> cancelMeeting(@PathVariable Long userId, @PathVariable Long meetingId) {
+        // NOTE(dianati): We know who the user is (OAauth) gives us the current user
+        try {
+            boolean couldCancel = this.meetingService.cancelMeeting(meetingId, userId);
+            if(!couldCancel)
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (NoSuchElementException e)
+        {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

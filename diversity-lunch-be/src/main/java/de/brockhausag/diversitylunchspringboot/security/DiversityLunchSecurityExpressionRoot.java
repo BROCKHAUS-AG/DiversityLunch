@@ -2,6 +2,7 @@ package de.brockhausag.diversitylunchspringboot.security;
 
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
+import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MeetingService;
 import lombok.Generated;
@@ -55,6 +56,21 @@ public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot
         Optional<MeetingProposalEntity> optionalMeeting = meetingService.getMeetingProposal(id);
         Optional<Long> proposalProfileId = optionalMeeting.map(meeting -> meeting.getProposerProfile().getId());
         return profileId.isPresent() && proposalProfileId.isPresent() && profileId.get().equals(proposalProfileId.get());
+    }
+
+    public boolean isMeetingsParticipant(Long meetingId, Long userId)
+    {
+        boolean isParticipantAndAccountOwner = false;
+        Optional<Long> profileId = getProfileId();
+        Optional<MeetingEntity> meeting = meetingService.getMeeting(meetingId);
+
+        if(profileId.isPresent() && meeting.isPresent())
+        {
+            isParticipantAndAccountOwner = profileId.get().equals(userId) &&
+                    (meeting.get().getPartner().getId().equals(userId) ||
+                    meeting.get().getProposer().getId().equals(userId));
+        }
+        return isParticipantAndAccountOwner;
     }
 
     public boolean isAccountOwner(Long id) {

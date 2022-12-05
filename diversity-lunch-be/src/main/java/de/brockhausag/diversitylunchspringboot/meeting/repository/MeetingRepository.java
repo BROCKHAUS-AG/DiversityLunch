@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Repository
 public interface MeetingRepository extends JpaRepository<MeetingEntity, Long> {
@@ -18,4 +19,6 @@ public interface MeetingRepository extends JpaRepository<MeetingEntity, Long> {
     List<MeetingEntity> findByProposerAndFromDateTimeIsAfter(@NotNull ProfileEntity entity, @NotNull LocalDateTime localDateTime);
 
     List<MeetingEntity> findByFromDateTime(@NotNull LocalDateTime fromDateTime);
+
+    Optional<MeetingEntity> findByMsTeamsMeetingId(@NotNull String meetingId);
 }

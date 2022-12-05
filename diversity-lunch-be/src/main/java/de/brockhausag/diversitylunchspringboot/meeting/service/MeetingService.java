@@ -1,5 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.meeting.service;
 
+import com.microsoft.graph.models.Attendee;
+import com.microsoft.graph.models.Event;
+import com.microsoft.graph.models.ResponseType;
 import de.brockhausag.diversitylunchspringboot.meeting.mapper.MeetingMapper;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingDto;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
@@ -11,12 +14,11 @@ import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEnt
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -29,6 +31,7 @@ public class MeetingService {
     private final MeetingMapper meetingMapper;
     private final ProfileService profileService;
     private final MsTeamsService msTeamsService;
+    private final MicrosoftGraphService microsoftGraphService;
 
     public Optional<MeetingProposalEntity> getMeetingProposal(Long id) {
         return this.meetingProposalRepository.findById(id);
@@ -58,10 +61,10 @@ public class MeetingService {
 
         Stream<MeetingDto> meetingProposals =
                 meetingProposalRepository.findByProposerProfileAndMatchedFalseAndProposedDateTimeIsAfter(profile, today)
-                .stream()
-                .map(meetingMapper::mapEntityToDto);
+                        .stream()
+                        .map(meetingMapper::mapEntityToDto);
 
-        Stream<MeetingDto> matchedMeetings = Stream.concat(matchedMeetingsByProposer,  matchedMeetingsByPartner);
+        Stream<MeetingDto> matchedMeetings = Stream.concat(matchedMeetingsByProposer, matchedMeetingsByPartner);
         return Stream.concat(matchedMeetings, meetingProposals).toList();
     }
 
@@ -89,47 +92,70 @@ public class MeetingService {
         return meetingRepository.findById(id);
     }
 
-    public void cancelMeeting(Long meetingId, Long userId)
-    {
-        MeetingEntity meeting = meetingRepository.findById(meetingId).orElseThrow();
-        ProfileEntity profileCaller;
-        ProfileEntity profileOther;
-        if(meeting.getProposer().getId().equals(userId))
+    public boolean cancelMeeting(Long meetingId, Long userId) {
+        Optional<MeetingEntity> meetingEntityOptional = meetingRepository.findById(meetingId);
+        LocalDateTime timeNow = LocalDateTime.now();
+        boolean canCancel = meetingEntityOptional.isPresent() &&
+                timeNow.isBefore(meetingEntityOptional.get().getFromDateTime());
+        if(canCancel)
         {
-            profileCaller = meeting.getProposer();
-            profileOther = meeting.getPartner();
+            MeetingEntity meeting = meetingEntityOptional.get();
+
+            ProfileEntity profileCaller;
+            ProfileEntity profileOther;
+            if (meeting.getProposer().getId().equals(userId)) {
+                profileCaller = meeting.getProposer();
+                profileOther = meeting.getPartner();
+            } else {
+                profileCaller = meeting.getPartner();
+                profileOther = meeting.getProposer();
+            }
+
+            MeetingProposalEntity meetingProposalCaller = meetingProposalRepository
+                    .findByProposedDateTimeAndProposerProfileAndMatchedTrue(meeting.getFromDateTime(), profileCaller)
+                    .orElseThrow();
+
+            MeetingProposalEntity meetingProposalOther = meetingProposalRepository
+                    .findByProposedDateTimeAndProposerProfileAndMatchedTrue(meeting.getFromDateTime(), profileOther)
+                    .orElseThrow();
+
+            meetingProposalRepository.deleteById(meetingProposalCaller.getId());
+
+            LocalDateTime today = timeNow.truncatedTo(ChronoUnit.DAYS);
+            LocalDateTime proposedDay = meeting.getFromDateTime().truncatedTo(ChronoUnit.DAYS);
+            if (today.equals(proposedDay)) {
+                meetingProposalRepository.deleteById(meetingProposalOther.getId());
+            } else {
+                meetingProposalOther.setMatched(false);
+                meetingProposalRepository.save(meetingProposalOther);
+            }
+
+            msTeamsService.cancelMsTeamsMeeting(meeting);
+            meetingRepository.delete(meeting);
         }
-        else
-        {
-            profileCaller = meeting.getPartner();
-            profileOther = meeting.getProposer();
-        }
 
-        // 1. Get the proposals of both users
-        MeetingProposalEntity meetingProposalCaller = meetingProposalRepository
-                .findByProposedDateTimeAndProposerProfileAAndMatchedTrue(meeting.getFromDateTime(), profileCaller)
-                .orElseThrow();
-
-        MeetingProposalEntity meetingProposalOther = meetingProposalRepository
-                .findByProposedDateTimeAndProposerProfileAAndMatchedTrue(meeting.getFromDateTime(), profileOther)
-                .orElseThrow();
-
-        // 2. delete proposal for caller
-        meetingProposalRepository.deleteById(meetingProposalCaller.getId());
-
-        // 3. reactivate proposal for the other person (So that he can get matched again)
-        LocalDateTime today = LocalDateTime.now().truncatedTo(ChronoUnit.DAYS);
-        LocalDateTime proposedDay = meeting.getFromDateTime().truncatedTo(ChronoUnit.DAYS);
-        if(today.equals(proposedDay)) {
-            meetingProposalRepository.deleteById(meetingProposalOther.getId());
-        }
-        else {
-            meetingProposalOther.setMatched(false);
-            meetingProposalRepository.save(meetingProposalOther);
-        }
-
-        // 3. Cancel MS meeting and delete meeting
-        msTeamsService.cancelMsTeamsMeeting(meeting);
-        meetingRepository.delete(meeting);
+        return canCancel;
     }
+
+    /*
+    public int cancelAllDeclinedMeetings() {
+        List<Event> declinedEvents = microsoftGraphService.getAllDeclinedEventsAfterToday();
+        for (Event event : declinedEvents) {
+            Optional<Long> userId = Optional.empty();
+            if (event.attendees != null) {
+                Optional<MeetingEntity> meeting = meetingRepository.findByMsTeamsMeetingId(event.id);
+                for (Attendee attendee : event.attendees) {
+                    if(attendee.status != null && attendee.status.response == ResponseType.DECLINED){
+
+                        break;
+                    }
+                }
+                if (meeting.isPresent() && userId.isPresent()) {
+                    cancelMeeting(meeting.get().getId(), userId.get());
+                }
+            }
+        }
+        return 0;
+    }
+    */
 }

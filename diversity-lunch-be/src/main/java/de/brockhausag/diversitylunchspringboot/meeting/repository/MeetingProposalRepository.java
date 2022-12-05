@@ -21,5 +21,5 @@ public interface MeetingProposalRepository extends JpaRepository<MeetingProposal
 
     List<MeetingProposalEntity> findMeetingProposalEntitiesByProposedDateTimeAndMatchedFalse(LocalDateTime proposedDateTime);
 
-    Optional<MeetingProposalEntity> findByProposedDateTimeAndProposerProfileAAndMatchedTrue(LocalDateTime proposedDateTime, ProfileEntity entity);
+    Optional<MeetingProposalEntity> findByProposedDateTimeAndProposerProfileAndMatchedTrue(LocalDateTime proposedDateTime, ProfileEntity entity);
 }
