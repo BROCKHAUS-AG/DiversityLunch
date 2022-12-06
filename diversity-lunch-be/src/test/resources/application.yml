@@ -25,5 +25,7 @@ spring:
 diversity:
   ms-teams:
     time-zone: "Europe/Berlin"
-  url:
+  settings:
     baseUrl: "https://example.com"
+    matchingCronJob: "${MATCHING_CRONJOB:}"
+    meetingReminderCronJob: "${MEETING_REMINDER_CRONJOB:}"
