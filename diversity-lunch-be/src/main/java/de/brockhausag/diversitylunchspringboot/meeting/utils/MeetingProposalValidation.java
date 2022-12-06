@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.meeting.utils;
 
-import de.brockhausag.diversitylunchspringboot.meeting.CustomValidators.ProposedDateTimeValidator;
+import de.brockhausag.diversitylunchspringboot.meeting.customValidators.ProposedDateTimeValidator;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -18,9 +18,15 @@ import java.util.TimeZone;
  * ("Sommerzeit", meaning summer time) making Germany effectively part of the GMT+2 zone) has to be considered as well,
  * leading to two different valid GMT+0 time arrays.
  */
-public class MeetingProposalValidation implements ConstraintValidator<ProposedDateTimeValidator,LocalDateTime> {
-    private static final LocalTime[] validSummerTimes = {LocalTime.of(10,30), LocalTime.of(11, 0),LocalTime.of(11, 30)};
-    private static final LocalTime[] validWinterTimes = {LocalTime.of(11,30), LocalTime.of(12, 0),LocalTime.of(12, 30)};
+public class MeetingProposalValidation implements ConstraintValidator<ProposedDateTimeValidator, LocalDateTime> {
+    private static final LocalTime[] validSummerTimes = {LocalTime.of(10, 30), LocalTime.of(11, 0), LocalTime.of(11, 30)};
+    private static final LocalTime[] validWinterTimes = {LocalTime.of(11, 30), LocalTime.of(12, 0), LocalTime.of(12, 30)};
+
+    private static boolean isSummerTime(LocalDateTime proposedDateTime) {
+        final TimeZone europeBerlinTimeZone = TimeZone.getTimeZone(ZoneId.of("Europe/Berlin"));
+        final Date date = Date.from(proposedDateTime.atZone(europeBerlinTimeZone.toZoneId()).toInstant());
+        return europeBerlinTimeZone.inDaylightTime(date);
+    }
 
     @Override
     public void initialize(ProposedDateTimeValidator proposedDateTimeValidator) {
@@ -30,11 +36,5 @@ public class MeetingProposalValidation implements ConstraintValidator<ProposedDa
     public boolean isValid(LocalDateTime proposedDateTime, ConstraintValidatorContext cxt) {
         final LocalTime[] validTimes = isSummerTime(proposedDateTime) ? validSummerTimes : validWinterTimes;
         return Arrays.stream(validTimes).anyMatch(t -> t.equals(proposedDateTime.toLocalTime()));
-    }
-
-    private static boolean isSummerTime(LocalDateTime proposedDateTime) {
-        final TimeZone europeBerlinTimeZone = TimeZone.getTimeZone(ZoneId.of("Europe/Berlin"));
-        final Date date = Date.from(proposedDateTime.atZone(europeBerlinTimeZone.toZoneId()).toInstant());
-        return europeBerlinTimeZone.inDaylightTime(date);
     }
 }

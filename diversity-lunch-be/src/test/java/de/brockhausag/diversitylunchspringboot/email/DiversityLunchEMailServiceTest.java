@@ -19,30 +19,25 @@ import org.springframework.mail.javamail.JavaMailSender;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class DiversityLunchEMailServiceTest {
 
+    private final ProfileTestdataFactory profileTestdataFactory = new ProfileTestdataFactory();
+    private final MeetingTestdataFactory meetingTestdataFactory = new MeetingTestdataFactory();
     @Mock
     MimeMessage msg;
-
     @Mock
     JavaMailSender mailSender;
-
     @Mock
     DiversityLunchMailProperties props;
-
     @InjectMocks
     DiversityLunchEMailService diversityLunchEMailService;
-
     @Mock
     VoucherService voucherService;
-
-   private final  ProfileTestdataFactory profileTestdataFactory = new ProfileTestdataFactory();
-    private final MeetingTestdataFactory meetingTestdataFactory = new MeetingTestdataFactory();
-
     private ProfileEntity proposer;
     private ProfileEntity partner;
 
@@ -52,7 +47,7 @@ class DiversityLunchEMailServiceTest {
     private String BASE_URL;
 
     @BeforeEach
-    void Setup(){
+    void Setup() {
         proposer = profileTestdataFactory.buildEntity(1);
         partner = profileTestdataFactory.buildEntity(2);
         meeting = meetingTestdataFactory.matchedMeeting(proposer, partner);
@@ -70,29 +65,29 @@ class DiversityLunchEMailServiceTest {
     }
 
     @Test
-    void testCreateEMailTemplateHTML_expectsEmailWithClaimLink(){
-    when(voucherService.getAmountOfStoredVouchers()).thenReturn(1);
+    void testCreateEMailTemplateHTML_expectsEmailWithClaimLink() {
+        when(voucherService.getAmountOfStoredVouchers()).thenReturn(1);
 
-    String claimLinkAnchorTag = String.format("<a href=%s>Hier klicken</a>", BASE_URL + "/voucherClaim/" + meeting.getId());
+        String claimLinkAnchorTag = String.format("<a href=%s>Hier klicken</a>", BASE_URL + "/voucherClaim/" + meeting.getId());
 
-    String email = diversityLunchEMailService.createEmailTemplateHTML(proposer, partner, meeting);
+        String email = diversityLunchEMailService.createEmailTemplateHTML(proposer, partner, meeting);
 
         assertTrue(email.contains(claimLinkAnchorTag));
     }
 
     @Test
-    void testCreateEMailTemplateHTML_expectsEmailWithoutClaimLink(){
+    void testCreateEMailTemplateHTML_expectsEmailWithoutClaimLink() {
         when(voucherService.getAmountOfStoredVouchers()).thenReturn(0);
 
         String claimLinkAnchorTag = String.format("<a href=%s>Hier klicken</a>", BASE_URL + "/voucherClaim/" + meeting.getId());
 
         String email = diversityLunchEMailService.createEmailTemplateHTML(proposer, partner, meeting);
 
-        assertFalse( email.contains(claimLinkAnchorTag));
+        assertFalse(email.contains(claimLinkAnchorTag));
     }
 
     @Test
-    void testCreateEMailTemplatePlain_expectsEmailWithClaimLink(){
+    void testCreateEMailTemplatePlain_expectsEmailWithClaimLink() {
         when(voucherService.getAmountOfStoredVouchers()).thenReturn(1);
 
         String claimLinkAnchorTag = String.format("Hier kannst du deinen Lieferando Gutschein anfordern: %s", BASE_URL + "/voucherClaim/" + meeting.getId());
@@ -103,24 +98,24 @@ class DiversityLunchEMailServiceTest {
     }
 
     @Test
-    void testCreateEMailTemplatePlain_expectsEmailWithoutClaimLink(){
+    void testCreateEMailTemplatePlain_expectsEmailWithoutClaimLink() {
         when(voucherService.getAmountOfStoredVouchers()).thenReturn(0);
 
         String claimLinkAnchorTag = String.format("Hier kannst du deinen Lieferando Gutschein anfordern: %s", BASE_URL + "/voucherClaim/" + meeting.getId());
 
         String email = diversityLunchEMailService.createEmailTemplatePlain(proposer, partner, meeting);
 
-        assertFalse( email.contains(claimLinkAnchorTag));
+        assertFalse(email.contains(claimLinkAnchorTag));
     }
 
     @Test
-    void testCreateEmailTemplateHTML_expectsProposerNameForRecipient(){
+    void testCreateEmailTemplateHTML_expectsProposerNameForRecipient() {
         when(voucherService.getAmountOfStoredVouchers()).thenReturn(0);
 
-        String name = String.format("Hallo <b>%s</b>",  proposer.getName());
+        String name = String.format("Hallo <b>%s</b>", proposer.getName());
         String email = diversityLunchEMailService.createEmailTemplateHTML(proposer, partner, meeting);
 
-        assertTrue( email.contains(name));
+        assertTrue(email.contains(name));
 
     }
 }

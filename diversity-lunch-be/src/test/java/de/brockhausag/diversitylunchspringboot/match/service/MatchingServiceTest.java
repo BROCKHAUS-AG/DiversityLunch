@@ -20,34 +20,24 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class MatchingServiceTest {
 
     private final MeetingTestdataFactory meetingTestdataFactory = new MeetingTestdataFactory();
-
-    @Mock
-    private MeetingProposalRepository meetingProposalRepository;
-
-    @Mock
-    private MeetingRepository meetingRepository;
-
-    @Mock
-    private MatchingService matchingServiceMock;
-
-    @Mock
-    MsTeamsService msTeamsService;
-
     @Mock
     DiversityLunchEMailService mockedEMailService;
-
+    @Mock
+    MsTeamsService msTeamsService;
+    @Mock
+    private MeetingProposalRepository meetingProposalRepository;
+    @Mock
+    private MeetingRepository meetingRepository;
+    @Mock
+    private MatchingService matchingServiceMock;
     @InjectMocks
     private MatchingService matchingService;
-
-
 
     @Test
     void testMatching_moreThen7DaysUntilMeeting_shouldCallExecuteMatchingWithGivenTimeAnd21ScoreToBeat() {
@@ -129,7 +119,7 @@ class MatchingServiceTest {
         matchingService.sendQuestions(LocalDateTime.now());
 
         verify(mockedEMailService, times(2))
-                .sendEmail(any(), any(), any(),any());
+                .sendEmail(any(), any(), any(), any());
 
     }
 

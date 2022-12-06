@@ -119,7 +119,7 @@ class MeetingServiceTest {
     }
 
     @Test
-    void testGetAllMeetingProposals_shouldReturnAnEmptyList(){
+    void testGetAllMeetingProposals_shouldReturnAnEmptyList() {
 
         long profileId = 0;
 
@@ -145,7 +145,7 @@ class MeetingServiceTest {
         when(meetingProposalRepository.findByProposerProfile(existingMeetingProposalEntity.getProposerProfile())).thenReturn(List.of(existingMeetingProposalEntity));
         when(profileService.getProfile(existingMeetingProposalEntity.getProposerProfile().getId())).thenReturn(Optional.of(existingMeetingProposalEntity.getProposerProfile()));
         //Act
-        boolean meetingExists = service.meetingExists(1L,existingMeetingProposalEntity.getProposedDateTime());
+        boolean meetingExists = service.meetingExists(1L, existingMeetingProposalEntity.getProposedDateTime());
 
         //Assert
         assertTrue(meetingExists);
@@ -157,14 +157,14 @@ class MeetingServiceTest {
         when(meetingProposalRepository.findByProposerProfile(existingMeetingProposalEntity.getProposerProfile())).thenReturn(List.of());
         when(profileService.getProfile(existingMeetingProposalEntity.getProposerProfile().getId())).thenReturn(Optional.of(existingMeetingProposalEntity.getProposerProfile()));
         //Act
-        boolean meetingExists = service.meetingExists(1L,existingMeetingProposalEntity.getProposedDateTime());
+        boolean meetingExists = service.meetingExists(1L, existingMeetingProposalEntity.getProposedDateTime());
 
         //Assert
         assertFalse(meetingExists);
     }
 
     @Test
-    void testGetAllMeetingsInFutureForUser(){
+    void testGetAllMeetingsInFutureForUser() {
 
         MeetingEntity meetingEntity1 = MeetingEntity.builder()
                 .fromDateTime(LocalDateTime.now().plusDays(6))

@@ -28,7 +28,7 @@ located in `Diversity-Lunch-App` where `diversity-lunch-be` and `diversity-lunch
 need this entry to work properly.**
 
 If you dont want to have an entry like this you have to edit the tests
-in `diversity-lunch-fe` in `ProfileOverview.test.tsx`. Under `projects:'Sonstiges'` you have to replace `Sonstiges`
+in `diversity-lunch-fe` in `profile-overview.test.tsx`. Under `projects:'Sonstiges'` you have to replace `Sonstiges`
 with one customer/ project thats inside `customers.txt`.
 
 

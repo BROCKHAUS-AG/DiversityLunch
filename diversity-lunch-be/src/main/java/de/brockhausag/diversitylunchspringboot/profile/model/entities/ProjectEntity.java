@@ -1,7 +1,11 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
-import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.BaseEntity;
-import lombok.*;
+import de.brockhausag.diversitylunchspringboot.generics.basicDimension.DefaultDimensionEntity;
+import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +17,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ProjectEntity implements BaseEntity {
+public class ProjectEntity implements DefaultDimensionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +27,7 @@ public class ProjectEntity implements BaseEntity {
     @Override
     public int hashCode() {
         String hashString = this.id.toString() + this.descriptor;
-        return hashString.hashCode() ;
+        return hashString.hashCode();
     }
 
     @Override
@@ -33,6 +37,10 @@ public class ProjectEntity implements BaseEntity {
         }
         final ProjectEntity other = (ProjectEntity) obj;
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
+    }
+
+    public Category getQuestionCategory() {
+        return Category.CUSTOMER;
     }
 
 }

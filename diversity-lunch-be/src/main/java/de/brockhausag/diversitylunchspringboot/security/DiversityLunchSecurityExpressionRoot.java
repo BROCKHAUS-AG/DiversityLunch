@@ -19,23 +19,33 @@ import java.util.Optional;
 @Slf4j
 public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot implements MethodSecurityExpressionOperations {
 
+    private final AccountService accountService;
+    private final MeetingService meetingService;
     @Getter
     @Setter
     private Object filterObject;
-
     @Getter
     @Setter
     private Object returnObject;
-
     private Object target;
-
-    private final AccountService accountService;
-    private final MeetingService meetingService;
 
     public DiversityLunchSecurityExpressionRoot(Authentication authentication, AccountService accountService, MeetingService meetingService) {
         super(authentication);
         this.accountService = accountService;
         this.meetingService = meetingService;
+    }
+
+    public static Optional<String> extractOID(OAuth2AuthenticatedPrincipal principal) {
+        if (principal == null) {
+            log.debug("No principal");
+            return Optional.empty();
+        }
+        Object claimValue = principal.getAttribute("oid");
+        if (claimValue == null) {
+            log.debug("No Claim with oid");
+            return Optional.empty();
+        }
+        return Optional.of(claimValue.toString());
     }
 
     @Generated
@@ -44,7 +54,9 @@ public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot
     }
 
     @Generated
-    public void setThis(Object target){ this.target = target; }
+    public void setThis(Object target) {
+        this.target = target;
+    }
 
     public boolean isProfileOwner(Long id) {
         Optional<Long> profileId = getProfileId();
@@ -80,7 +92,7 @@ public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot
 
     public boolean hasAccountRole(AccountRole role) {
         Optional<String> oid = getOID();
-        if(oid.isEmpty())
+        if (oid.isEmpty())
             return false;
         Optional<AccountEntity> account = accountService.getAccount(oid.get());
         return account.isPresent() && account.get().getRole().equals(role);
@@ -88,13 +100,13 @@ public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot
 
     public boolean hasAccountPermission(AccountPermission permission) {
         Optional<String> oid = getOID();
-        if(oid.isEmpty())
+        if (oid.isEmpty())
             return false;
         Optional<AccountEntity> account = accountService.getAccount(oid.get());
         return account.isPresent() && account.get().getRole().getPermissions().contains(permission);
     }
 
-    private OAuth2AuthenticatedPrincipal getOAuth2AuthenticatedPrincipal(){
+    private OAuth2AuthenticatedPrincipal getOAuth2AuthenticatedPrincipal() {
         Object principal = this.getAuthentication().getPrincipal();
 
         if (!(principal instanceof OAuth2AuthenticatedPrincipal oAuth2Authentication)) {
@@ -104,7 +116,7 @@ public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot
         return oAuth2Authentication;
     }
 
-    public Optional<String> getOID(){
+    public Optional<String> getOID() {
         return DiversityLunchSecurityExpressionRoot.extractOID(getOAuth2AuthenticatedPrincipal());
     }
 
@@ -113,28 +125,15 @@ public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot
 
     }
 
-    private Optional<Long> getProfileId(){
+    private Optional<Long> getProfileId() {
         return getAccount().map(account -> account.getProfile().getId());
     }
 
     private Optional<AccountEntity> getAccount() {
         Optional<String> oidOptional = getOID();
-        if(oidOptional.isEmpty())
+        if (oidOptional.isEmpty())
             return Optional.empty();
 
         return accountService.getAccount(oidOptional.get());
-    }
-
-    public static Optional<String> extractOID(OAuth2AuthenticatedPrincipal principal) {
-        if(principal == null){
-            log.debug("No principal");
-            return Optional.empty();
-        }
-        Object claimValue = principal.getAttribute("oid");
-        if(claimValue == null){
-            log.debug("No Claim with oid");
-            return Optional.empty();
-        }
-        return Optional.of(claimValue.toString());
     }
 }

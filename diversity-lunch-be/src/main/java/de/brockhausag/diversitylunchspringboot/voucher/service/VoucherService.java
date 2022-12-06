@@ -26,7 +26,7 @@ public class VoucherService {
         Optional<MeetingEntity> meeting = meetingRepository.findById(meetingId);
         Optional<VoucherEntity> voucherEntity = voucherRepository.getFirstByProfileIsNullAndMeetingIsNull();
 
-        if (meeting.isEmpty()|| profileEntity.isEmpty() || !(meeting.get().getPartner().getId() == profileId || meeting.get().getProposer().getId() == profileId)) {
+        if (meeting.isEmpty() || profileEntity.isEmpty() || !(meeting.get().getPartner().getId() == profileId || meeting.get().getProposer().getId() == profileId)) {
             throw new ForbiddenVoucherClaim();
         }
 
@@ -50,27 +50,29 @@ public class VoucherService {
     public List<VoucherEntity> getVoucherByProfileId(long profileId) {
         return voucherRepository.getAllByProfileId(profileId);
     }
+
     public Optional<VoucherEntity> getVoucherByProfileIdAndMeetingId(long profileId, long meetingId) {
         return voucherRepository.getVoucherEntityByProfileIdAndMeetingId(profileId, meetingId);
     }
 
-    public boolean saveVouchers(Iterable<VoucherEntity> voucherEntities){
+    public boolean saveVouchers(Iterable<VoucherEntity> voucherEntities) {
         Iterable<VoucherEntity> savedVouchers = voucherRepository.saveAll(voucherEntities);
         return Iterables.size(savedVouchers) == Iterables.size(voucherEntities);
     }
 
-    public int getAmountOfStoredVouchers(){
+    public int getAmountOfStoredVouchers() {
         return voucherRepository.findAll().size();
     }
 
     public int getAmountOfUnclaimedVouchers() {
         return voucherRepository.countAllByProfileIsNullAndMeetingIsNull();
     }
+
     public int getAmountOfClaimedVouchers() {
         return voucherRepository.countAllByProfileIsNotNullAndMeetingIsNotNull();
     }
 
-    public List<VoucherEntity> getAllVouchersStored(){
+    public List<VoucherEntity> getAllVouchersStored() {
         return voucherRepository.findAll();
     }
 }

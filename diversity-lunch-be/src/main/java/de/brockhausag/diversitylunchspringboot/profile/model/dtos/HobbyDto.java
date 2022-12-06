@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.dtos;
 
-import de.brockhausag.diversitylunchspringboot.profile.utils.baseApi.BaseDto;
+import de.brockhausag.diversitylunchspringboot.generics.basicDimension.DefaultDimensionDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -13,12 +13,12 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class HobbyDto implements BaseDto {
+public class HobbyDto implements DefaultDimensionDto {
 
     private Long id;
 
     @Schema(description = "the hobby you practice", example = "football")
-    @Size(min=2, max=50, message = "hobby descriptor must be between 2 and 50 chars long")
+    @Size(min = 2, max = 50, message = "hobby descriptor must be between 2 and 50 chars long")
     @NotNull
     @NotBlank
     private String descriptor;

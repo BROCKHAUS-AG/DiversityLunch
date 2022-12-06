@@ -47,7 +47,7 @@ public class HobbyMapper {
     }
 
     public List<HobbyDto> entityToDto(List<HobbyEntity> entities) {
-            return entities.stream().map(this::entityToDto).collect(Collectors.toList());
-        }
+        return entities.stream().map(this::entityToDto).collect(Collectors.toList());
+    }
 }
 

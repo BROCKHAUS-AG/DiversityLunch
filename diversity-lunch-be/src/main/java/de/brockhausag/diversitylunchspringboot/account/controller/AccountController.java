@@ -69,6 +69,7 @@ public class AccountController {
         AccountDto accountDto = mapper.mapEntityToDto(optionalAccount.get());
         return ResponseEntity.ok().body(accountDto);
     }
+
     @PutMapping("/revokeAdminRole/{id}")
     @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).ADMIN_ROLE_ASSIGN)")
     public ResponseEntity<?> revokeAdminRole(@PathVariable Long id) {

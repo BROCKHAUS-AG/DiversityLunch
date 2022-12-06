@@ -15,7 +15,7 @@ public class MsTeamsTestConfig {
     @Bean
     @Primary
     public MicrosoftGraphService microsoftGraphService() {
-        final MicrosoftGraphService service  = Mockito.mock(MicrosoftGraphService.class);
+        final MicrosoftGraphService service = Mockito.mock(MicrosoftGraphService.class);
         final Event customEvent = new Event();
         customEvent.id = "Test12345";
         Mockito.when(service.createEvent(Mockito.any())).thenReturn(customEvent);
