@@ -3,13 +3,12 @@ package de.brockhausag.diversitylunchspringboot.match.utils;
 import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionEntity;
 import de.brockhausag.diversitylunchspringboot.generics.weightedDimension.WeightedEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Slf4j
 @UtilityClass
@@ -17,6 +16,7 @@ public class MatchingUtils {
     public static final int STANDARD_SCORE_BY_DIFFERENCE = 3;
     private static final Random random = new Random();
     private static final int EQUAL_SCORE = 0;
+    public static final String KEINE_ANGABE = "keine angabe";
 
 
     public ScoreAndCategory getCurrentScore(ProfileEntity profile1, ProfileEntity profile2) {
@@ -29,6 +29,7 @@ public class MatchingUtils {
         currentScore += getScoreFromWeightedEntities(profile1, profile2, potentialQuestionsCategories);
         //Third Score Birthdate or miscellaneous
         currentScore += compareBirthYear(profile1, profile2, potentialQuestionsCategories);
+        currentScore += compareHobbies(profile1, profile2, potentialQuestionsCategories);
 
         Category category;
         if (potentialQuestionsCategories.size() > 0) {
@@ -44,12 +45,37 @@ public class MatchingUtils {
         return new ScoreAndCategory(currentScore, category);
     }
 
+    private static int compareHobbies(ProfileEntity profile1, ProfileEntity profile2, List<Category> potentialQuestionsCategories) {
+        Set<HobbyEntity> hobbies1 = new HashSet<>(profile1.getHobby());
+        Set<HobbyEntity> hobbies2 = new HashSet<>(profile2.getHobby());
+
+        if(hobbies1.size() == 0 || hobbies2.size() == 0){
+            return  0;
+        }
+
+        int totalHobbiesBetweenBoth = hobbies1.size() + hobbies2.size();
+        hobbies1.removeAll(hobbies2);
+        hobbies2.removeAll(profile1.getHobby());
+
+        // common elements between profile 1 and 2
+        hobbies1.addAll(hobbies2);
+
+        int differentHobbies = hobbies1.size();
+
+        double ratio = (double) differentHobbies / totalHobbiesBetweenBoth;
+
+        if (ratio > 0) {
+            potentialQuestionsCategories.add(Category.HOBBY);
+        }
+        return (int) Math.round(ratio * STANDARD_SCORE_BY_DIFFERENCE);
+    }
+
 
     private static int getScoreFromDefaultEntities(ProfileEntity profile1, ProfileEntity profile2, List<Category> potentialQuestionsCategories) {
         int currentScore = 0;
 
-        List<DefaultDimensionEntity> baseEntitiesProfile1 = profile1.getBaseEntities();
-        List<DefaultDimensionEntity> baseEntitiesProfile2 = profile2.getBaseEntities();
+        List<DefaultDimensionEntity> baseEntitiesProfile1 = profile1.getDefaultEntities();
+        List<DefaultDimensionEntity> baseEntitiesProfile2 = profile2.getDefaultEntities();
 
         int entityScore;
         for (int i = 0; i < baseEntitiesProfile1.size(); i++) {
@@ -71,7 +97,7 @@ public class MatchingUtils {
     }
 
     private static boolean entityShouldBeIgnored(DefaultDimensionEntity entity) {
-        return entity.getDescriptor().equalsIgnoreCase("keine angabe");
+        return entity.getDescriptor().equalsIgnoreCase(KEINE_ANGABE);
     }
 
     private static int getScoreFromWeightedEntities(ProfileEntity profile1, ProfileEntity profile2, List<Category> potentialQuestionsCategories) {

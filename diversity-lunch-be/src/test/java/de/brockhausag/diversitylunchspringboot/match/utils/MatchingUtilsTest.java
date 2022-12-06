@@ -1,19 +1,23 @@
 package de.brockhausag.diversitylunchspringboot.match.utils;
 
+import de.brockhausag.diversitylunchspringboot.dataFactories.HobbyTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Question;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class MatchingUtilsTest {
@@ -22,9 +26,15 @@ class MatchingUtilsTest {
     private ProfileEntity profile2;
     private ProfileEntity profile3;
 
+    @Mock
+    private ProfileEntity mockedProfile;
+
+    private HobbyTestDataFactory hobbyTestDataFactory;
+
     @BeforeEach
     void setup() {
         ProfileTestdataFactory profileTestdataFactory = new ProfileTestdataFactory();
+        hobbyTestDataFactory = new HobbyTestDataFactory();
         profile1 = profileTestdataFactory.buildEntity(1);
         profile2 = profileTestdataFactory.buildEntity(1);
         profile2.setId(2L);
@@ -154,6 +164,22 @@ class MatchingUtilsTest {
     }
 
     @Test
+    void testScoreBetweenDifferentHobbies_1_different_hobby_shouldReturn2() {
+        HobbyEntity hobby1 = hobbyTestDataFactory.buildEntity(1);
+        HobbyEntity hobby2 = hobbyTestDataFactory.buildEntity(2);
+
+        when(mockedProfile.getHobby()).thenReturn(List.of(hobby1, hobby2));
+        when(mockedProfile.getBirthYear()).thenReturn(profile2.getBirthYear());
+
+        // birth year gives a lowest score of 1 so our score will be 2
+        int expected = 2;
+
+        int actualScore = MatchingUtils.getCurrentScore(mockedProfile, profile2).currentScore();
+
+        assertEquals(expected, actualScore);
+    }
+
+    @Test
     void testCurrentScoreProfileFor_KeineAngabe_InGender_ShouldHave_1_Points_With_equal_profiles() {
         profile2.getGender().setDescriptor("Keine Angabe");
         profile1.getGender().setDescriptor("Männlich");
@@ -177,6 +203,7 @@ class MatchingUtilsTest {
     private Category getCategoryFromIdentifier(String categoryIdentifier) {
         return switch (categoryIdentifier) {
             case "DIET" -> Category.DIET;
+            case "HOBBY" -> Category.HOBBY;
             case "WORK_EXPERIENCE" -> Category.WORK_EXPERIENCE;
             case "AGE" -> Category.AGE;
             default -> null;

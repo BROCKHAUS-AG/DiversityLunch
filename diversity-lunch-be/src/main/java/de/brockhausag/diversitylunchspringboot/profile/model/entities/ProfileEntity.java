@@ -72,7 +72,7 @@ public class ProfileEntity {
                 other.email.equals(this.email) && (other.birthYear == this.birthYear);
     }
 
-    public List<DefaultDimensionEntity> getBaseEntities() {
+    public List<DefaultDimensionEntity> getDefaultEntities() {
         List<DefaultDimensionEntity> baseEntities = new ArrayList<>();
         baseEntities.add(originCountry);
         baseEntities.add(diet);
@@ -84,7 +84,6 @@ public class ProfileEntity {
         baseEntities.add(sexualOrientation);
         baseEntities.add(socialBackground);
         baseEntities.add(socialBackgroundDiscrimination);
-        baseEntities.addAll(hobby);
         return baseEntities;
     }
 

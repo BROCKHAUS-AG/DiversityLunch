@@ -43,7 +43,7 @@ public class ProfileDto {
     private WorkExperienceDto workExperience;
 
     @NotNull
-    @Size(min = 1, max = 3)
+    @Size(max = 3)
     private List<HobbyDto> hobby;
     @NotNull
     private SexualOrientationDto sexualOrientation;
