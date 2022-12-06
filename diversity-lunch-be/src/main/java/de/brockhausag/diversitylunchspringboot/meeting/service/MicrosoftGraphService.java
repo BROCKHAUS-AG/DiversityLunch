@@ -5,6 +5,7 @@ import com.azure.identity.ClientSecretCredentialBuilder;
 import com.azure.spring.autoconfigure.aad.AADAuthenticationProperties;
 import com.microsoft.graph.authentication.TokenCredentialAuthProvider;
 import com.microsoft.graph.models.Event;
+import com.microsoft.graph.models.EventCancelParameterSet;
 import com.microsoft.graph.models.Group;
 import com.microsoft.graph.requests.GraphServiceClient;
 import com.microsoft.graph.requests.GroupCollectionPage;
@@ -54,6 +55,16 @@ public class MicrosoftGraphService {
         String userId = diversityLunchMsTeamsProperties.getDiversityLunchUserId();
 
         return graphClient.users(userId).events().buildRequest().post(event);
+    }
+
+    public void cancelEvent(String eventId, String cancellationMessage)
+    {
+        GraphServiceClient<Request> graphClient = setUpGraphClient();
+        String userId = diversityLunchMsTeamsProperties.getDiversityLunchUserId();
+        EventCancelParameterSet cancelMessage = EventCancelParameterSet.newBuilder()
+                .withComment(cancellationMessage)
+                .build();
+        graphClient.users(userId).events(eventId).cancel(cancelMessage).buildRequest().post();
     }
 
     public Optional<List<Group>> getGroups() {
