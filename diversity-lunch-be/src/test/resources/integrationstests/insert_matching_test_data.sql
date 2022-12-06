@@ -24,13 +24,17 @@ INSERT INTO profile_entity(id, birth_year, email, name, diet_id, education_id, g
     (5, 1998, 'copyOfFirst.profile@some.tdl', 'copyOfFirst', (SELECT * FROM meat), (SELECT * FROM study), (SELECT * FROM male), (SELECT * FROM german), (SELECT * FROM algeria), (SELECT * FROM internProject), (SELECT * FROM jewish),(SELECT * FROM lowExperience),(SELECT * FROM heterosexual), (SELECT * FROM academicFamily), (SELECT * FROM yes) );
 
 WITH cooking AS (SELECT id FROM hobby_entity WHERE hobby_entity.descriptor='Kochen' LIMIT 1),
-    gaming AS (SELECT id FROM hobby_entity WHERE hobby_entity.descriptor='Gaming' LIMIT 1)
+    gaming AS (SELECT id FROM hobby_entity WHERE hobby_entity.descriptor='Gaming' LIMIT 1),
+    hunting AS (SELECT id FROM hobby_entity WHERE hobby_entity.descriptor='Jagen' LIMIT 1)
+
 INSERT INTO profile_hobby(hobby_id, profile_id) VALUES
     ((SELECT * FROM cooking), 1),
     ((SELECT * FROM cooking), 2),
     ((SELECT * FROM cooking), 3),
+    ((SELECT * FROM hunting), 3),
     ((SELECT * FROM gaming), 3),
     ((SELECT * FROM gaming), 4),
+    ((SELECT * FROM hunting), 4),
     ((SELECT * FROM gaming), 5);
 
 

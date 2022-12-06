@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
 
-import de.brockhausag.diversitylunchspringboot.generics.basicDimension.DefaultDimensionEntity;
+import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionEntity;
 import de.brockhausag.diversitylunchspringboot.generics.weightedDimension.WeightedEntity;
 import lombok.*;
 
@@ -41,7 +41,7 @@ public class ProfileEntity {
     @ManyToOne
     private WorkExperienceEntity workExperience;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "profile_hobby",
             joinColumns = { @JoinColumn(name = "profile_id") },
