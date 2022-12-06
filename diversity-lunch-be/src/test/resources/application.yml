@@ -27,3 +27,5 @@ diversity:
     time-zone: "Europe/Berlin"
   settings:
     baseUrl: "https://example.com"
+    matchingCronJob: "${MATCHING_CRONJOB:}"
+    meetingReminderCronJob: "${MEETING_REMINDER_CRONJOB:}"
