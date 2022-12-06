@@ -1,10 +1,12 @@
 package de.brockhausag.diversitylunchspringboot.security;
 
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
+import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.dataFactories.AccountTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.MeetingTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MeetingService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
@@ -16,6 +18,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,6 +38,9 @@ class DiversityLunchSecurityExpressionRootTest {
 
     @Mock
     private AccountService accountService;
+
+    @Mock
+    private AccountRepository accountRepository;
 
     @Mock
     private MeetingService meetingService;
@@ -241,5 +248,110 @@ class DiversityLunchSecurityExpressionRootTest {
 
         assertTrue(diversityLunchSecurityExpressionRoot.hasAccountPermission(AccountPermission.PROFILE_OPTION_READ));
         assertFalse(diversityLunchSecurityExpressionRoot.hasAccountPermission(AccountPermission.PROFILE_OPTION_WRITE));
+    }
+
+    @Test
+    void testIsMeetingsParticipantAndOwner_proposerIsAllowedToAccess_returnsTrue() {
+        ProfileEntity profileProposer = profileFactory.buildEntity(1);
+        ProfileEntity profilePartner = profileFactory.buildEntity(2);
+        MeetingEntity meetingEntity = MeetingEntity.builder()
+                .id(1L)
+                .proposer(profileProposer)
+                .partner(profilePartner)
+                .build();
+        AccountEntity accountEntity = AccountEntity.builder()
+                .id(1L)
+                .oid("1234")
+                .profile(profileProposer)
+                .build();
+
+        when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
+        when(oAuth2AuthenticatedPrincipal.getAttribute(any())).thenReturn(accountEntity.getOid());
+        when(meetingService.getMeeting(meetingEntity.getId())).thenReturn(Optional.of(meetingEntity));
+        when(accountService.getAccount(any())).thenReturn(Optional.of(accountEntity));
+
+        boolean isParticipantAndOwner = diversityLunchSecurityExpressionRoot
+                .isMeetingsParticipantAndOwner(meetingEntity.getId(), profileProposer.getId());
+
+        assertTrue(isParticipantAndOwner);
+    }
+
+    @Test
+    void testIsMeetingsParticipantAndOwner_partnerIsAllowedToAccess_returnsTrue() {
+        ProfileEntity profileProposer = profileFactory.buildEntity(1);
+        ProfileEntity profilePartner = profileFactory.buildEntity(2);
+        MeetingEntity meetingEntity = MeetingEntity.builder()
+                .id(1L)
+                .proposer(profileProposer)
+                .partner(profilePartner)
+                .build();
+        AccountEntity accountEntity = AccountEntity.builder()
+                .id(1L)
+                .oid("1234")
+                .profile(profilePartner)
+                .build();
+
+        when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
+        when(oAuth2AuthenticatedPrincipal.getAttribute(any())).thenReturn(accountEntity.getOid());
+        when(meetingService.getMeeting(meetingEntity.getId())).thenReturn(Optional.of(meetingEntity));
+        when(accountService.getAccount(any())).thenReturn(Optional.of(accountEntity));
+
+        boolean isParticipantAndOwner = diversityLunchSecurityExpressionRoot
+                .isMeetingsParticipantAndOwner(meetingEntity.getId(), profilePartner.getId());
+
+        assertTrue(isParticipantAndOwner);
+    }
+
+    @Test
+    void testIsMeetingsParticipantAndOwner_wrongMeetingId_returnsFalse() {
+        ProfileEntity profileProposer = profileFactory.buildEntity(1);
+        ProfileEntity profilePartner = profileFactory.buildEntity(2);
+        MeetingEntity meetingEntity = MeetingEntity.builder()
+                .id(1L)
+                .proposer(profileProposer)
+                .partner(profilePartner)
+                .build();
+        AccountEntity accountEntity = AccountEntity.builder()
+                .id(1L)
+                .oid("1234")
+                .profile(profilePartner)
+                .build();
+
+        when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
+        when(oAuth2AuthenticatedPrincipal.getAttribute(any())).thenReturn(accountEntity.getOid());
+        when(meetingService.getMeeting(any())).thenReturn(Optional.empty());
+        when(accountService.getAccount(any())).thenReturn(Optional.of(accountEntity));
+
+        boolean isParticipantAndOwner = diversityLunchSecurityExpressionRoot
+                .isMeetingsParticipantAndOwner(42L, profilePartner.getId());
+
+        assertFalse(isParticipantAndOwner);
+    }
+
+    @Test
+    void testIsMeetingsParticipantAndOwner_notPartOfTheMeeting_returnsFalse() {
+        ProfileEntity profileProposer = profileFactory.buildEntity(1);
+        ProfileEntity profilePartner = profileFactory.buildEntity(2);
+        ProfileEntity callerProfile = profileFactory.buildEntity(3);
+        MeetingEntity meetingEntity = MeetingEntity.builder()
+                .id(1L)
+                .proposer(profileProposer)
+                .partner(profilePartner)
+                .build();
+        AccountEntity accountEntity = AccountEntity.builder()
+                .id(1L)
+                .oid("1234")
+                .profile(callerProfile)
+                .build();
+
+        when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
+        when(oAuth2AuthenticatedPrincipal.getAttribute(any())).thenReturn(accountEntity.getOid());
+        when(meetingService.getMeeting(any())).thenReturn(Optional.empty());
+        when(accountService.getAccount(any())).thenReturn(Optional.of(accountEntity));
+
+        boolean isParticipantAndOwner = diversityLunchSecurityExpressionRoot
+                .isMeetingsParticipantAndOwner(meetingEntity.getId(), callerProfile.getId());
+
+        assertFalse(isParticipantAndOwner);
     }
 }

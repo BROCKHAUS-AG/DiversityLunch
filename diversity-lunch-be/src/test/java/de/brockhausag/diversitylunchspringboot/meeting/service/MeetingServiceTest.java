@@ -264,9 +264,52 @@ class MeetingServiceTest {
         boolean actual = service.cancelMeeting(meetingEntity.getId(), profileEntityOne.getId());
 
         //Assert
+        assertTrue(actual);
         verify(meetingProposalRepository, times(1)).deleteById(meetingProposalEntityOne.getId());
         verify(msTeamsService, times(1)).cancelMsTeamsMeeting(meetingEntity);
         verify(meetingProposalRepository, times(1)).save(meetingProposalEntityTwoUpdated);
+    }
+
+    @Test
+    void testCancelMeeting_onMeetingDay_DeleteMeetingAndPartnerProposal(){
+        //Arrange
+        ProfileEntity profileEntityOne = profileFactory.buildEntity(1);
+        ProfileEntity profileEntityTwo = profileFactory.buildEntity(2);
+        LocalDateTime meetingTime = LocalDateTime.now().plusMinutes(5);
+        String teamsMeetingId = "42";
+        MeetingProposalEntity meetingProposalEntityOne = MeetingProposalEntity.builder()
+                .id(1L)
+                .proposerProfile(profileEntityOne)
+                .proposedDateTime(meetingTime)
+                .matched(true)
+                .build();
+        MeetingProposalEntity meetingProposalEntityTwo = MeetingProposalEntity.builder()
+                .id(2L)
+                .proposerProfile(profileEntityTwo)
+                .proposedDateTime(meetingTime)
+                .matched(true)
+                .build();
+        MeetingEntity meetingEntity = MeetingEntity.builder()
+                .id(1L)
+                .fromDateTime(meetingTime)
+                .partner(profileEntityOne)
+                .proposer(profileEntityTwo)
+                .msTeamsMeetingId(teamsMeetingId)
+                .build();
+
+
+        when(meetingRepository.findById(meetingEntity.getId())).thenReturn(Optional.of(meetingEntity));
+        when(meetingProposalRepository.findByProposedDateTimeAndProposerProfileAndMatchedTrue(meetingTime, profileEntityOne))
+                .thenReturn(Optional.of(meetingProposalEntityOne));
+        when(meetingProposalRepository.findByProposedDateTimeAndProposerProfileAndMatchedTrue(meetingTime, profileEntityTwo))
+                .thenReturn(Optional.of(meetingProposalEntityTwo));
+
+        //Act
+        boolean actual = service.cancelMeeting(meetingEntity.getId(), profileEntityOne.getId());
+
+        //Assert
         assertTrue(actual);
+        verify(meetingProposalRepository, times(2)).deleteById(any());
+        verify(msTeamsService, times(1)).cancelMsTeamsMeeting(meetingEntity);
     }
 }
