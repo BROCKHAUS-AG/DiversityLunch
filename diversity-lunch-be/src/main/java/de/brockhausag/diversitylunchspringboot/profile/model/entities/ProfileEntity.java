@@ -41,7 +41,7 @@ public class ProfileEntity {
     @ManyToOne
     private WorkExperienceEntity workExperience;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "profile_hobby",
             joinColumns = { @JoinColumn(name = "profile_id") },
