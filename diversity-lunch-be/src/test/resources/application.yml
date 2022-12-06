@@ -25,5 +25,5 @@ spring:
 diversity:
   ms-teams:
     time-zone: "Europe/Berlin"
-  url:
+  settings:
     baseUrl: "https://example.com"
