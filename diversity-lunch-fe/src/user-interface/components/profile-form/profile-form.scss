@@ -1,0 +1,59 @@
+.Multi-select-label{
+  margin-bottom: 4%;
+}
+
+.Multi-select-container{
+  width: 80%;
+  padding: 5%;
+  margin: 3%;
+}
+.chip {
+  align-items: center;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 11px;
+  color: black;
+  display: inline-flex;
+  font-size: 13px;
+  line-height: 19px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  padding: 4px 10px;
+  font-family: SourceSansProRegular, sans-serif;
+}
+
+.highlightOption {
+  background: rgba(0, 0, 0, 0.08);
+  color: black;
+}
+
+.multiSelectContainer li:hover {
+  background: whitesmoke;
+  color: black;
+  cursor: pointer;
+}
+
+.closeIcon {
+  cursor: pointer;
+  float: right;
+  height: 13px;
+  margin-left: 5px;
+  width: 13px;
+  color: black;
+}
+
+
+/*
+.inputField { // To change input field position or margin
+  margin: 5px;
+}
+
+.optionContainer { // To change css for option container
+  border: 2px solid;
+}
+
+.option { // To change css for dropdown options
+  color: blue;
+}
+
+.groupHeading { // To chanage group heading style
+}*/

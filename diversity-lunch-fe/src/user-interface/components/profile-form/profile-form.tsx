@@ -1,8 +1,9 @@
-import {
+import React, {
     ChangeEvent, FC, FormEvent, useEffect, useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextField } from '@material-ui/core';
+import { Multiselect } from 'multiselect-react-dropdown';
 import { Profile } from '../../../model/Profile';
 import { Dropdown } from '../dropdown/dropdown';
 import { Button } from '../button/button';
@@ -18,7 +19,9 @@ import { religionFetch } from '../../../data/religion/religion-fetch';
 import { workExperienceFetch } from '../../../data/work-experience/work-experience-fetch';
 import { sexualOrientationFetch } from '../../../data/sexual-orientation/sexual-orientation-fetch';
 import { socialBackgroundFetch } from '../../../data/social-background/social-background-fetch';
-import { socialBackgroundDiscriminationFetch } from '../../../data/social-background-discrimination/social-background-discrimination-fetch';
+import {
+    socialBackgroundDiscriminationFetch,
+} from '../../../data/social-background-discrimination/social-background-discrimination-fetch';
 import { IdentifiableState } from '../../../data/generic/GenericSlice';
 import { Country } from '../../../model/Country';
 import { Diet } from '../../../model/Diet';
@@ -33,6 +36,7 @@ import { SexualOrientation } from '../../../model/SexualOrientation';
 import { SocialBackground } from '../../../model/SocialBackground';
 import { Identifiable } from '../../../data/generic/Identifiable';
 import { SocialBackgroundDiscrimination } from '../../../model/SocialBackgroundDiscrimination';
+import './profile-form.scss';
 
 export type ProfileFormCallback = (formData: Partial<Profile>) => void;
 export type ProfileFormIsValidCallback = (formData: Partial<Profile>)=>boolean;
@@ -110,6 +114,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
             return 0;
         });
     }
+    const [stateSelected] = useState([]);
 
     return (
         <form onSubmit={formSubmitted} className="ProfileForm">
@@ -125,6 +130,19 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                     defaultValue={profile.birthYear}
                 />
             </div>
+            <div className="Multi-select-container">
+                <p className="Multi-select-label">Was sind deine Hobbies?</p>
+
+                <Multiselect
+                    options={sortOptions(hobbies)}
+                    placeholder="Wähle bis zu drei Hobbies aus..."
+                    onSelect={console.log}
+                    displayValue="descriptor"
+                    selectionLimit={3}
+                    closeIcon="cancel"
+                />
+            </div>
+
             <Dropdown
                 options={sortOptions(project)}
                 placeholder="In welchem Projekt arbeitest du derzeit?"
@@ -167,13 +185,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 label="Berufserfahrung"
                 currentValue={profile.workExperience || undefined}
             />
-            <Dropdown
-                options={sortOptions(hobbies)}
-                placeholder="Was hast du für ein Hobby?"
-                onChange={(value) => updateProfile('hobby', value)}
-                label="Hobby"
-                currentValue={profile.hobby || undefined}
-            />
+
             <Dropdown
                 options={sortOptions(educations)}
                 placeholder="Welchen Bildungsweg hast du bisher bestritten?"
