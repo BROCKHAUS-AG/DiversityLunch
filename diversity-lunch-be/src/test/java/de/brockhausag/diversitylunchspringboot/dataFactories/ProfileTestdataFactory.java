@@ -3,6 +3,8 @@ package de.brockhausag.diversitylunchspringboot.dataFactories;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 
+import java.util.List;
+
 public class ProfileTestdataFactory {
 
     private static final int numberOfCompleteSets = 3;
@@ -26,68 +28,38 @@ public class ProfileTestdataFactory {
     private final SocialBackgroundDiscriminationTestDataFactory socialBackgroundDiscriminationFactory = new SocialBackgroundDiscriminationTestDataFactory();
 
     public ProfileEntity buildEntity(int setNumber) {
-        if ((setNumber >= 1) && (setNumber <= numberOfCompleteSets)) {
-            return new ProfileEntity(
-                    ids[setNumber], names[setNumber], emails[setNumber], birthYears[setNumber],
-                    countryFactory.buildEntity(setNumber),
-                    dietFactory.buildEntity(setNumber),
-                    educationFactory.buildEntity(setNumber),
-                    genderFactory.buildEntity(setNumber),
-                    languageFactory.buildEntity(setNumber),
-                    projectFactory.buildEntity(setNumber),
-                    religionFactory.buildEntity(setNumber),
-                    workExperienceFactory.buildEntity(setNumber),
-                    hobbyFactory.buildEntity(setNumber),
-                    sexualOrientationFactory.buildEntity(setNumber),
-                    socialBackgroundFactory.buildEntity(setNumber),
-                    socialBackgroundDiscriminationFactory.buildEntity(setNumber));
-        }
+        int actualSetNumber = (setNumber >= 1) && (setNumber <= numberOfCompleteSets) ? setNumber : 1;
         return new ProfileEntity(
-                ids[1], names[1], emails[1], birthYears[1],
-                countryFactory.buildEntity(1),
-                dietFactory.buildEntity(1),
-                educationFactory.buildEntity(1),
-                genderFactory.buildEntity(1),
-                languageFactory.buildEntity(1),
-                projectFactory.buildEntity(1),
-                religionFactory.buildEntity(1),
-                workExperienceFactory.buildEntity(1),
-                hobbyFactory.buildEntity(1),
-                sexualOrientationFactory.buildEntity(1),
-                socialBackgroundFactory.buildEntity(1),
-                socialBackgroundDiscriminationFactory.buildEntity(1));
+                ids[actualSetNumber], names[actualSetNumber], emails[actualSetNumber], birthYears[actualSetNumber],
+                countryFactory.buildEntity(actualSetNumber),
+                dietFactory.buildEntity(actualSetNumber),
+                educationFactory.buildEntity(actualSetNumber),
+                genderFactory.buildEntity(actualSetNumber),
+                languageFactory.buildEntity(actualSetNumber),
+                projectFactory.buildEntity(actualSetNumber),
+                religionFactory.buildEntity(actualSetNumber),
+                workExperienceFactory.buildEntity(actualSetNumber),
+                List.of(hobbyFactory.buildEntity(actualSetNumber)),
+                sexualOrientationFactory.buildEntity(actualSetNumber),
+                socialBackgroundFactory.buildEntity(actualSetNumber),
+                socialBackgroundDiscriminationFactory.buildEntity(actualSetNumber));
     }
 
     public ProfileDto buildDto(int setNumber) {
-        if ((setNumber >= 1) && (setNumber <= numberOfCompleteSets)) {
-            return new ProfileDto(
-                    ids[setNumber], names[setNumber], emails[setNumber], birthYears[setNumber],
-                    countryFactory.buildDto(setNumber),
-                    dietFactory.buildDto(setNumber),
-                    educationFactory.buildDto(setNumber),
-                    genderFactory.buildDto(setNumber),
-                    languageFactory.buildDto(setNumber),
-                    projectFactory.buildDto(setNumber),
-                    religionFactory.buildDto(setNumber),
-                    workExperienceFactory.buildDto(setNumber),
-                    hobbyFactory.buildDto(setNumber),
-                    sexualOrientationFactory.buildDto(setNumber),
-                    socialBackgroundFactory.buildDto(setNumber),
-                    socialBackgroundDiscriminationFactory.buildDto(setNumber));
-        }
+        int actualSetNumber = (setNumber >= 1) && (setNumber <= numberOfCompleteSets) ? setNumber : 1;
         return new ProfileDto(
-                ids[1], names[1], emails[1], birthYears[1],
-                countryFactory.buildDto(1),
-                dietFactory.buildDto(1),
-                educationFactory.buildDto(1),
-                genderFactory.buildDto(1),
-                languageFactory.buildDto(1),
-                projectFactory.buildDto(1),
-                religionFactory.buildDto(1),
-                workExperienceFactory.buildDto(1),
-                hobbyFactory.buildDto(1),
-                sexualOrientationFactory.buildDto(1),
-                socialBackgroundFactory.buildDto(1),
-                socialBackgroundDiscriminationFactory.buildDto(1));
+                ids[actualSetNumber], names[actualSetNumber], emails[actualSetNumber], birthYears[actualSetNumber],
+                countryFactory.buildDto(actualSetNumber),
+                dietFactory.buildDto(actualSetNumber),
+                educationFactory.buildDto(actualSetNumber),
+                genderFactory.buildDto(actualSetNumber),
+                languageFactory.buildDto(actualSetNumber),
+                projectFactory.buildDto(actualSetNumber),
+                religionFactory.buildDto(actualSetNumber),
+                workExperienceFactory.buildDto(actualSetNumber),
+                hobbyFactory.buildDtoList(actualSetNumber),
+                sexualOrientationFactory.buildDto(actualSetNumber),
+                socialBackgroundFactory.buildDto(actualSetNumber),
+                socialBackgroundDiscriminationFactory.buildDto(actualSetNumber));
     }
 }

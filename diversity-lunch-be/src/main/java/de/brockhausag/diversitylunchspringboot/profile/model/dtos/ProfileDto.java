@@ -3,10 +3,8 @@ package de.brockhausag.diversitylunchspringboot.profile.model.dtos;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -43,8 +41,10 @@ public class ProfileDto {
     private ReligionDto religion;
     @NotNull
     private WorkExperienceDto workExperience;
+
     @NotNull
-    private HobbyDto hobby;
+    @Size(max = 3)
+    private List<HobbyDto> hobby;
     @NotNull
     private SexualOrientationDto sexualOrientation;
     @NotNull
