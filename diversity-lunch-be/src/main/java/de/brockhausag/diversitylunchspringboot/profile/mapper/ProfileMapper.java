@@ -32,7 +32,6 @@ public class ProfileMapper {
     private final DietService dietService;
     private final EducationService educationService;
     private final GenderService genderService;
-    private final HobbyService hobbyService;
     private final LanguageService languageService;
     private final ProjectService projectService;
     private final ReligionService religionService;
@@ -73,7 +72,7 @@ public class ProfileMapper {
         Optional<DietEntity> dietEntityOptional = this.dietService.getEntityById(dto.getDiet().getId());
         Optional<EducationEntity> educationEntityOptional = this.educationService.getEntityById(dto.getEducation().getId());
         Optional<GenderEntity> genderEntityOptional = this.genderService.getEntityById(dto.getGender().getId());
-        List<Optional<HobbyEntity>> hobbyEntityOptional = this.hobbyService.getEntitesByDtoList(dto.getHobby());
+        List<Optional<HobbyEntity>> hobbyEntityOptional = this.hobbyMapper.dtoToEntity(dto.getHobby());
         Optional<LanguageEntity> languageEntityOptional = this.languageService.getEntityById(dto.getMotherTongue().getId());
         Optional<ProjectEntity> projectEntityOptional = this.projectService.getEntityById(dto.getProject().getId());
         Optional<ReligionEntity> religionEntityOptional = this.religionService.getEntityById(dto.getReligion().getId());
