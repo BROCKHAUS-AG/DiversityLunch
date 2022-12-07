@@ -5,6 +5,7 @@ import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFact
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchApplicationSettingsProperties;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMailProperties;
 import de.brockhausag.diversitylunchspringboot.voucher.service.VoucherService;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,6 +35,9 @@ class DiversityLunchEMailServiceTest {
     JavaMailSender mailSender;
     @Mock
     DiversityLunchMailProperties props;
+    @Mock
+    // Is used even if IntelliJ says not. The Test-Suit will fail, if the Mock gets removed.
+    DiversityLunchApplicationSettingsProperties settingsProperties;
     @InjectMocks
     DiversityLunchEMailService diversityLunchEMailService;
     @Mock
