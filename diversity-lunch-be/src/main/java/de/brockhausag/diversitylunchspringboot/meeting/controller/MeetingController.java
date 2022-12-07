@@ -94,12 +94,12 @@ public class MeetingController {
             @ApiResponse(responseCode = "200", description = "der angegebene Termin wird aus der Datenbank gelöscht, dem Partner wird wieder als ungematched angezeigt"),
             @ApiResponse(responseCode = "400", description = "der Termin oder einer der User konnte nicht gefunden werden"),
     })
-    @PreAuthorize("isMeetingsParticipantAndOwner(#meetingId, #userId)")
-    @PostMapping("/{userId}/cancel/{meetingId}")
+    @PreAuthorize("isMeetingsParticipantAndOwner(#meetingId, #profileId)")
+    @PostMapping("/{profileId}/cancel/{meetingId}")
     public @ResponseBody
-    ResponseEntity<String> cancelMeeting(@PathVariable Long userId, @PathVariable Long meetingId) {
+    ResponseEntity<String> cancelMeeting(@PathVariable Long profileId, @PathVariable Long meetingId) {
         try {
-            boolean couldCancel = this.meetingService.cancelMeeting(meetingId, userId);
+            boolean couldCancel = this.meetingService.cancelMeeting(meetingId, profileId);
             if(!couldCancel)
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (NoSuchElementException e)

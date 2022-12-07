@@ -70,17 +70,17 @@ public class DiversityLunchSecurityExpressionRoot extends SecurityExpressionRoot
         return profileId.isPresent() && proposalProfileId.isPresent() && profileId.get().equals(proposalProfileId.get());
     }
 
-    public boolean isMeetingsParticipantAndOwner(Long meetingId, Long userId)
+    public boolean isMeetingsParticipantAndOwner(Long meetingId, Long profileId)
     {
         boolean isParticipantAndAccountOwner = false;
-        Optional<Long> profileId = getProfileId();
+        Optional<Long> profileIdOfAccount = getProfileId();
         Optional<MeetingEntity> meeting = meetingService.getMeeting(meetingId);
 
-        if(profileId.isPresent() && meeting.isPresent())
+        if(profileIdOfAccount.isPresent() && meeting.isPresent())
         {
-            isParticipantAndAccountOwner = profileId.get().equals(userId) &&
-                    (meeting.get().getPartner().getId().equals(userId) ||
-                    meeting.get().getProposer().getId().equals(userId));
+            isParticipantAndAccountOwner = profileIdOfAccount.get().equals(profileId) &&
+                    (meeting.get().getPartner().getId().equals(profileId) ||
+                    meeting.get().getProposer().getId().equals(profileId));
         }
         return isParticipantAndAccountOwner;
     }
