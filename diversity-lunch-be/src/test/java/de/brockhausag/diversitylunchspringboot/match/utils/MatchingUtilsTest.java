@@ -2,6 +2,7 @@ package de.brockhausag.diversitylunchspringboot.match.utils;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.HobbyTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.match.records.ScoreAndCategory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Question;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;
