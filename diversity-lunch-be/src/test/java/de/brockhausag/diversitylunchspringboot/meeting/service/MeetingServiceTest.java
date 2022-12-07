@@ -196,7 +196,7 @@ class MeetingServiceTest {
     void testCancelMeeting_withMeetingInThePast_returnsFalse()
     {
         Long meetingId = 42L;
-        Long userId = 9L;
+        Long profileId = 9L;
 
         MeetingEntity meetingEntity = MeetingEntity.builder()
                 .id(meetingId)
@@ -205,7 +205,7 @@ class MeetingServiceTest {
         Optional<MeetingEntity> meetingEntityOptional = Optional.of(meetingEntity);
 
         when(meetingRepository.findById(meetingId)).thenReturn(meetingEntityOptional);
-        boolean canCancel = service.cancelMeeting(meetingId, userId);
+        boolean canCancel = service.cancelMeeting(meetingId, profileId);
         assertFalse(canCancel);
     }
 
@@ -213,10 +213,10 @@ class MeetingServiceTest {
     void testCancelMeeting_withNotExistingMeetingId_returnsFalse()
     {
         Long meetingId = 42L;
-        Long userId = 9L;
+        Long profileId = 9L;
 
         when(meetingRepository.findById(meetingId)).thenReturn(Optional.empty());
-        boolean canCancel = service.cancelMeeting(meetingId, userId);
+        boolean canCancel = service.cancelMeeting(meetingId, profileId);
         assertFalse(canCancel);
     }
 
