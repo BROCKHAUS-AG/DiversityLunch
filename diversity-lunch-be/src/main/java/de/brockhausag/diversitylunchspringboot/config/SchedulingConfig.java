@@ -21,9 +21,8 @@ public class SchedulingConfig {
     private final MatchingService matchingService;
     private final MeetingProposalRepository meetingProposalRepository;
 
-    //Note: Cronjob naming scheme https://spring.io/blog/2020/11/10/new-in-spring-5-3-improved-cron-expressions
-
-    @Scheduled(cron = "0 0 2 * * *")
+    // Note: Cronjob naming scheme https://spring.io/blog/2020/11/10/new-in-spring-5-3-improved-cron-expressions
+    @Scheduled(cron = "#{'${diversity.settings.matchingCronJob}' > '' ? '${diversity.settings.matchingCronJob}' : '0 0 2 * * *'}") // Every Day at 02:00
     public void scheduleMatching() {
         LocalDate date = LocalDate.now();
         LocalDateTime dateTime = date.atTime(0, 0);
@@ -36,7 +35,7 @@ public class SchedulingConfig {
         allMatchTimes.forEach(time -> matchingService.matching(time, dateTime));
     }
 
-    @Scheduled(cron = "0 0/30 * * * *") // Every Full and Half Hour
+    @Scheduled(cron = "#{'${diversity.settings.meetingReminderCronJob}' > '' ? '${diversity.settings.meetingReminderCronJob}' : '0 0/30 * * * *'}") // Every Full and Half Hour
     public void scheduleMailBeforeMeetingSending() {
         LocalDateTime dateTime = LocalDateTime.now(ZoneOffset.UTC);
         matchingService.sendQuestions(dateTime);
