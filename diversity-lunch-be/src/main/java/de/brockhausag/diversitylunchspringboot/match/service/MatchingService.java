@@ -1,9 +1,9 @@
 package de.brockhausag.diversitylunchspringboot.match.service;
 
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
-import de.brockhausag.diversitylunchspringboot.match.utils.Match;
+import de.brockhausag.diversitylunchspringboot.match.records.Match;
+import de.brockhausag.diversitylunchspringboot.match.records.ScoreAndCategory;
 import de.brockhausag.diversitylunchspringboot.match.utils.MatchingUtils;
-import de.brockhausag.diversitylunchspringboot.match.utils.ScoreAndCategory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
@@ -26,7 +26,6 @@ import static de.brockhausag.diversitylunchspringboot.utils.DiversityLunchTempor
 @Slf4j
 @Service
 public class MatchingService {
-
     private static final Random random = new Random();
     private final MeetingProposalRepository meetingProposalRepository;
     private final MeetingRepository meetingRepository;

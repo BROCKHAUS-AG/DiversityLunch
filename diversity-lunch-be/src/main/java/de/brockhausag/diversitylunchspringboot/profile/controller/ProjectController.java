@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.controller;
 
-import de.brockhausag.diversitylunchspringboot.generics.basicDimension.DefaultDimensionModelController;
+import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionModelController;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProjectRepository;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProjectService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.ProjectMapper;

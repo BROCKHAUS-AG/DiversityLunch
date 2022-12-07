@@ -81,6 +81,7 @@ class ProfileControllerIT {
         profileService.createProfile(otherProfileEntity, otherAccountEntity.getId()).orElseThrow();
     }
 
+
     @Test
     void testGetProfile_withValidId_thenOKWithExpectedProfile() throws Exception {
         this.mockMvc
@@ -96,8 +97,10 @@ class ProfileControllerIT {
                 .andExpect(jsonPath("$.diet.descriptor").value(myProfileEntity.getDiet().getDescriptor()))
                 .andExpect(jsonPath("$.education.descriptor").value(myProfileEntity.getEducation().getDescriptor()))
                 .andExpect(jsonPath("$.gender.descriptor").value(myProfileEntity.getGender().getDescriptor()))
-                .andExpect(jsonPath("$.hobby.descriptor").value(myProfileEntity.getHobby().getDescriptor()))
-                .andExpect(jsonPath("$.hobby.category.descriptor").value(myProfileEntity.getHobby().getCategory().getDescriptor()))
+                .andExpect(jsonPath("$.hobby[0].descriptor").value(myProfileEntity.getHobby().get(0).getDescriptor()))
+                .andExpect(jsonPath("$.hobby[1].descriptor").value(myProfileEntity.getHobby().get(1).getDescriptor()))
+                .andExpect(jsonPath("$.hobby[2].descriptor").value(myProfileEntity.getHobby().get(2).getDescriptor()))
+                .andExpect(jsonPath("$.hobby[0].category.descriptor").value(myProfileEntity.getHobby().get(0).getCategory().getDescriptor()))
                 .andExpect(jsonPath("$.motherTongue.descriptor").value(myProfileEntity.getMotherTongue().getDescriptor()))
                 .andExpect(jsonPath("$.originCountry.descriptor").value(myProfileEntity.getOriginCountry().getDescriptor()))
                 .andExpect(jsonPath("$.religion.descriptor").value(myProfileEntity.getReligion().getDescriptor()))
