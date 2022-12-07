@@ -1,7 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.security;
 
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
-import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.dataFactories.AccountTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.MeetingTestdataFactory;
@@ -18,8 +17,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -39,9 +36,6 @@ class DiversityLunchSecurityExpressionRootTest {
 
     @Mock
     private AccountService accountService;
-
-    @Mock
-    private AccountRepository accountRepository;
 
     @Mock
     private MeetingService meetingService;
@@ -306,16 +300,10 @@ class DiversityLunchSecurityExpressionRootTest {
     @Test
     void testIsMeetingsParticipantAndOwner_wrongMeetingId_returnsFalse() {
         ProfileEntity profileProposer = profileFactory.buildEntity(1);
-        ProfileEntity profilePartner = profileFactory.buildEntity(2);
-        MeetingEntity meetingEntity = MeetingEntity.builder()
-                .id(1L)
-                .proposer(profileProposer)
-                .partner(profilePartner)
-                .build();
         AccountEntity accountEntity = AccountEntity.builder()
                 .id(1L)
                 .oid("1234")
-                .profile(profilePartner)
+                .profile(profileProposer)
                 .build();
 
         when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
@@ -324,7 +312,7 @@ class DiversityLunchSecurityExpressionRootTest {
         when(accountService.getAccount(any())).thenReturn(Optional.of(accountEntity));
 
         boolean isParticipantAndOwner = diversityLunchSecurityExpressionRoot
-                .isMeetingsParticipantAndOwner(42L, profilePartner.getId());
+                .isMeetingsParticipantAndOwner(42L, profileProposer.getId());
 
         assertFalse(isParticipantAndOwner);
     }
@@ -347,7 +335,7 @@ class DiversityLunchSecurityExpressionRootTest {
 
         when(authentication.getPrincipal()).thenReturn(oAuth2AuthenticatedPrincipal);
         when(oAuth2AuthenticatedPrincipal.getAttribute(any())).thenReturn(accountEntity.getOid());
-        when(meetingService.getMeeting(any())).thenReturn(Optional.empty());
+        when(meetingService.getMeeting(meetingEntity.getId())).thenReturn(Optional.of(meetingEntity));
         when(accountService.getAccount(any())).thenReturn(Optional.of(accountEntity));
 
         boolean isParticipantAndOwner = diversityLunchSecurityExpressionRoot
