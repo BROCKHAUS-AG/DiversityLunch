@@ -136,26 +136,4 @@ public class MeetingService {
 
         return canCancel;
     }
-
-    /*
-    public int cancelAllDeclinedMeetings() {
-        List<Event> declinedEvents = microsoftGraphService.getAllDeclinedEventsAfterToday();
-        for (Event event : declinedEvents) {
-            Optional<Long> userId = Optional.empty();
-            if (event.attendees != null) {
-                Optional<MeetingEntity> meeting = meetingRepository.findByMsTeamsMeetingId(event.id);
-                for (Attendee attendee : event.attendees) {
-                    if(attendee.status != null && attendee.status.response == ResponseType.DECLINED){
-
-                        break;
-                    }
-                }
-                if (meeting.isPresent() && userId.isPresent()) {
-                    cancelMeeting(meeting.get().getId(), userId.get());
-                }
-            }
-        }
-        return 0;
-    }
-    */
 }
