@@ -4,6 +4,7 @@ import com.microsoft.graph.models.Attendee;
 import com.microsoft.graph.models.Event;
 import com.microsoft.graph.models.ResponseType;
 import de.brockhausag.diversitylunchspringboot.meeting.mapper.MeetingMapper;
+import de.brockhausag.diversitylunchspringboot.meeting.model.DeclinedMeeting;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingDto;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
@@ -12,6 +13,7 @@ import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingReposit
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,6 +26,7 @@ import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MeetingService {
 
     private final MeetingProposalRepository meetingProposalRepository;
@@ -31,7 +34,6 @@ public class MeetingService {
     private final MeetingMapper meetingMapper;
     private final ProfileService profileService;
     private final MsTeamsService msTeamsService;
-    private final MicrosoftGraphService microsoftGraphService;
 
     public Optional<MeetingProposalEntity> getMeetingProposal(Long id) {
         return this.meetingProposalRepository.findById(id);
@@ -113,11 +115,15 @@ public class MeetingService {
 
             MeetingProposalEntity meetingProposalCaller = meetingProposalRepository
                     .findByProposedDateTimeAndProposerProfileAndMatchedTrue(meeting.getFromDateTime(), profileCaller)
-                    .orElseThrow();
+                    .orElse(null);
 
             MeetingProposalEntity meetingProposalOther = meetingProposalRepository
                     .findByProposedDateTimeAndProposerProfileAndMatchedTrue(meeting.getFromDateTime(), profileOther)
-                    .orElseThrow();
+                    .orElse(null);
+
+            if(meetingProposalCaller == null || meetingProposalOther == null) {
+                return false;
+            }
 
             meetingProposalRepository.deleteById(meetingProposalCaller.getId());
 
@@ -135,5 +141,23 @@ public class MeetingService {
         }
 
         return canCancel;
+    }
+
+    public int cancelDeclinedMeetings() {
+        List<DeclinedMeeting> declinedMeetings = msTeamsService.getAllDeclinedMeetings();
+        int successFullCanceledMeetings = 0;
+
+        for (DeclinedMeeting declinedMeeting : declinedMeetings) {
+            boolean couldCancel = cancelMeeting(declinedMeeting.meetingEntity().getId(), declinedMeeting.decliner().getId());
+            if (couldCancel) {
+                successFullCanceledMeetings++;
+                log.info("Successfully canceled meeting with id %d".formatted(declinedMeeting.meetingEntity().getId()));
+            } else {
+                log.warn("Failed to cancel meeting with id %d".formatted(declinedMeeting.meetingEntity().getId()));
+            }
+        }
+
+        log.info("Successfully canceled %d Meetings".formatted(successFullCanceledMeetings));
+        return successFullCanceledMeetings;
     }
 }

@@ -36,6 +36,7 @@ public class MsTeamsMapper {
 
         event.body = getItemBody(profileEntityOne, profileEntityTwo, meetingProposalEntityOne.getProposedDateTime());
 
+        event.responseRequested = true;
         event.allowNewTimeProposals = false;
         event.isOnlineMeeting = true;
         event.onlineMeetingProvider = OnlineMeetingProviderType.TEAMS_FOR_BUSINESS;
