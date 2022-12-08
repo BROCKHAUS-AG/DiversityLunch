@@ -1,25 +1,58 @@
-.Multi-select-label{
+.Multi-select-label {
   margin-bottom: 4%;
 }
 
-.Multi-select-container{
+.Multi-select-container {
   width: 80%;
   padding: 5%;
   margin: 3%;
+
+  .labelWrapper {
+    background-color: #f0f0f0;
+    padding: 5px;
+    width: 100%;
+    top: 8px;
+    left: 8px;
+    position: relative;
+    z-index: 999;
+
+    label {
+      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 0.00938em;
+      color: rgba(0, 0, 0, 0.54);
+      font-size: .8rem;
+    }
+  }
+
+
+  .chip {
+    align-items: center;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 11px;
+    color: black;
+    display: inline-flex;
+    font-size: 13px;
+    line-height: 19px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    padding: 4px 10px;
+    font-family: SourceSansProRegular, sans-serif;
+  }
+
+  input {
+    background: transparent;
+    border: none;
+    margin-top: 3px;
+    max-height: 42px;
+  }
+
+  input::placeholder {
+    width: 100%;
+  }
 }
-.chip {
-  align-items: center;
-  background: rgba(0, 0, 0, 0.08);
-  border-radius: 11px;
-  color: black;
-  display: inline-flex;
-  font-size: 13px;
-  line-height: 19px;
-  margin-bottom: 5px;
-  margin-right: 5px;
-  padding: 4px 10px;
-  font-family: SourceSansProRegular, sans-serif;
-}
+
 
 .highlightOption {
   background: rgba(0, 0, 0, 0.08);
@@ -56,12 +89,6 @@
   position: relative;
 }
 
-.multiSelectContainer input {
-  background: transparent;
-  border: none;
-  margin-top: 3px;
-  max-height: 42px;
-}
 
 /*
 .optionContainer { // To change css for option container

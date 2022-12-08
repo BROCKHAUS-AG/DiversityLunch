@@ -128,13 +128,13 @@ export const ProfileForm: FC<ProfileFormProps> = ({
     const hobbiesCounterToString = () => {
         switch (hobbyCounterCompState) {
             case 0:
-                return 'Wähle bis zu 3 Hobbies';
+                return 'Noch keines Ausgewählt';
             case 1:
-                return 'Wähle noch bis zu 2 Hobbies';
+                return '2 | 3';
             case 2:
-                return 'Wähle noch bis zu 1 Hobby';
+                return '1 | 3';
             default:
-                return '';
+                return '0 | 3';
         }
     };
 
@@ -154,7 +154,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
             </div>
             <div className="Multi-select-container">
                 <p className="Multi-select-label">Was sind deine Hobbies?</p>
-
+                <span className="labelWrapper"><label>Hobbies</label></span>
                 <Multiselect
                     options={sortOptions(hobbies)}
                     placeholder={hobbiesCounterToString()}
@@ -165,7 +165,6 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                     closeIcon="cancel"
                 />
             </div>
-
             <Dropdown
                 options={sortOptions(project)}
                 placeholder="In welchem Projekt arbeitest du derzeit?"
