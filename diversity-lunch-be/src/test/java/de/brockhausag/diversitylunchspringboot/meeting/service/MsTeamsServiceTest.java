@@ -3,7 +3,7 @@ package de.brockhausag.diversitylunchspringboot.meeting.service;
 import com.microsoft.graph.models.*;
 import de.brockhausag.diversitylunchspringboot.dataFactories.MeetingTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
-import de.brockhausag.diversitylunchspringboot.meeting.mapper.MsTeamsMapper;
+import de.brockhausag.diversitylunchspringboot.meeting.model.DeclinedMeeting;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
@@ -14,18 +14,21 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
 
 @ExtendWith(MockitoExtension.class)
 class MsTeamsServiceTest {
     @Mock
     MicrosoftGraphService microsoftGraphService;
-    @Mock
-    MsTeamsMapper msTeamsMapper;
     @Mock
     MeetingRepository meetingRepository;
 
@@ -41,37 +44,21 @@ class MsTeamsServiceTest {
         meetingFactory = new MeetingTestdataFactory();
     }
 
-    /*
     @Test
-    public void testGetAllDeclinedMeetings_withThreeDeclinedEvents() {
-        ProfileEntity profile1 = testdataFactory.buildEntity(1);
-        ProfileEntity profile2 = testdataFactory.buildEntity(2);
+    void testGetAllDeclinedMeetingsShouldReturnTheCorrectAmountOfDeclinedMeetings () {
+        ProfileEntity p1 = profileFactory.buildEntity(1);
+        ProfileEntity p2 = profileFactory.buildEntity(2);
+        MeetingEntity meeting = meetingFactory.matchedMeeting(p1, p2);
 
-        Attendee attendee1 = new Attendee();
-        attendee1.status = new ResponseStatus();
-        attendee1.status.response = ResponseType.ACCEPTED;
-        Attendee attendee2 = new Attendee();
-        attendee2.status = new ResponseStatus();
-        attendee2.status.response = ResponseType.DECLINED;
-        Event event1 = new Event();
-        event1.attendees = List.of(attendee1, attendee2);
-        Event event2 = new Event();
-        event2.attendees = List.of(attendee1, attendee1);
+        List<Event> eventList = new ArrayList<>();
+        IntStream.range(0, 10).forEach(i -> eventList.add(createMicrosoftGraphEvent(p1, i%2 == 0, p2, i%4 == 0)));
 
-        String msTeamsId = "42";
-        MeetingEntity meeting = MeetingEntity.builder()
-                .msTeamsMeetingId(msTeamsId)
-                .build();
+        when(microsoftGraphService.getAllFutureEvents()).thenReturn(eventList);
+        when(meetingRepository.findByMsTeamsMeetingId(any())).thenReturn(Optional.of(meeting));
 
-        List<Event> futureEvents = List.of(event1, event1, event2, event1);
-        when(microsoftGraphService.getAllFutureEvents()).thenReturn(Optional.of(futureEvents));
-        when(meetingRepository.findByMsTeamsMeetingId(any())).thenReturn(meeting);
-
-        List<DeclinedMeeting> declinedMeetings = msTeamsService.getAllDeclinedMeetings();
-        int actual = declinedMeetings.size();
-        assertEquals(3, actual);
+        List<DeclinedMeeting> actual = msTeamsService.getAllDeclinedMeetings();
+        assertEquals(5, actual.size());
     }
-    */
 
     @Test
     void testGetCancelerEmail_OneProfileCanceledTheMeeting() {
@@ -96,6 +83,16 @@ class MsTeamsServiceTest {
 
         Optional<String> actual = MsTeamsService.getCancelerEmail(event);
         assertFalse(actual.isPresent());
+    }
+
+    @Test
+    void testGetCancelerEmail_BothProfileCanceledTheMeeting_ShouldReturnEmptyOptional() {
+        ProfileEntity p1 = profileFactory.buildEntity(1);
+        ProfileEntity p2 = profileFactory.buildEntity(2);
+        Event event = createMicrosoftGraphEvent(p1, true, p2, true);
+
+        Optional<String> actual = MsTeamsService.getCancelerEmail(event);
+        assertEquals(p1.getEmail(), actual.orElseThrow());
     }
 
     @Test
