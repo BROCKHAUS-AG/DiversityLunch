@@ -3,8 +3,11 @@ package de.brockhausag.diversitylunchspringboot.config;
 import de.brockhausag.diversitylunchspringboot.match.service.MatchingService;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
+import de.brockhausag.diversitylunchspringboot.meeting.service.MeetingService;
+import de.brockhausag.diversitylunchspringboot.meeting.service.MsTeamsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -20,6 +23,7 @@ public class SchedulingConfig {
 
     private final MatchingService matchingService;
     private final MeetingProposalRepository meetingProposalRepository;
+    private final MeetingService meetingService;
 
     // Note: Cronjob naming scheme https://spring.io/blog/2020/11/10/new-in-spring-5-3-improved-cron-expressions
     @Scheduled(cron = "#{'${diversity.settings.matchingCronJob}' > '' ? '${diversity.settings.matchingCronJob}' : '0 0 2 * * *'}") // Every Day at 02:00
@@ -39,5 +43,9 @@ public class SchedulingConfig {
     public void scheduleMailBeforeMeetingSending() {
         LocalDateTime dateTime = LocalDateTime.now(ZoneOffset.UTC);
         matchingService.sendQuestions(dateTime);
+    }
+
+    public void scheduleCancelDeclinedMeetings() {
+        meetingService.cancelDeclinedMeetings();
     }
 }
