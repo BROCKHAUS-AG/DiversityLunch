@@ -1,6 +1,7 @@
 DELETE FROM account_entity;
 DELETE FROM meeting_proposal_entity;
 DELETE FROM meeting_entity;
+DELETE FROM profile_hobby;
 DELETE FROM profile_entity;
 DELETE FROM country_entity;
 DELETE FROM diet_entity;

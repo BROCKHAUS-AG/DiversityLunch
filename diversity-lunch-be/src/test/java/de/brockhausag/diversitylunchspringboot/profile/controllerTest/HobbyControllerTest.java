@@ -184,7 +184,7 @@ public class HobbyControllerTest {
     void testGetAll_withThreeValuesInDatabase_returnsListOfThreeDtos() {
         //Arrange
         List<HobbyEntity> inputEntities = Stream.of(1, 2, 3).map(this.factory::buildEntity).toList();
-        List<HobbyDto> expectedDtos = Stream.of(1, 2, 3).map(this.factory::buildDto).toList();
+        List<HobbyDto> expectedDtos = this.factory.buildDtoList(3);
         when(this.mapper.entityToDto(inputEntities)).thenReturn(expectedDtos);
 
         when(hobbyService.getAllEntities()).thenReturn(inputEntities);
