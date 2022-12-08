@@ -68,7 +68,7 @@ public class MicrosoftGraphService {
         graphClient.users(userId).events(eventId).cancel(cancelMessage).buildRequest().post();
     }
 
-    public Optional<List<Event>> getAllFutureEvents() {
+    public List<Event> getAllFutureEvents() {
         GraphServiceClient<Request> graphClient = setUpGraphClient();
         String userId = diversityLunchMsTeamsProperties.getDiversityLunchUserId();
         LocalDateTime dateTime = LocalDateTime.now();
@@ -83,7 +83,7 @@ public class MicrosoftGraphService {
                 .top(50)
                 .get();
 
-        return eventCollectionPage == null ? Optional.empty() : Optional.of(eventCollectionPage.getCurrentPage());
+        return eventCollectionPage == null ? List.of() : eventCollectionPage.getCurrentPage();
     }
 
     public static List<Event> filterDeclinedEvents(List<Event> eventList) {

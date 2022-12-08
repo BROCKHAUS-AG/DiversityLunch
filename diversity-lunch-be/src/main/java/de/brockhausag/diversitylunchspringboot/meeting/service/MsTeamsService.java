@@ -12,7 +12,6 @@ import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingReposit
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,7 +26,6 @@ public class MsTeamsService {
 
     private final MsTeamsMapper msTeamsMapper;
     private final MicrosoftGraphService microsoftGraphService;
-
     private final MeetingRepository meetingRepository;
 
     public String createMsTeamsMeeting(Match matchEntity) {
@@ -47,33 +45,44 @@ public class MsTeamsService {
     }
 
     public List<DeclinedMeeting> getAllDeclinedMeetings() {
-        List<DeclinedMeeting> declinedMeetings = new ArrayList<>();
+        List<Event> allFutureEvents = microsoftGraphService.getAllFutureEvents();
+        List<Event> canceledEvents = MicrosoftGraphService.filterDeclinedEvents(allFutureEvents);
+        return buildDeclinedMeetings(canceledEvents);
+    }
 
-        Optional<List<Event>> allFutureEvents = microsoftGraphService.getAllFutureEvents();
-        if(allFutureEvents.isPresent()) {
-            List<Event> canceledEvents = MicrosoftGraphService.filterDeclinedEvents(allFutureEvents.get());
-            for(Event e: canceledEvents) {
-                Optional<MeetingEntity> meetingEntity = meetingRepository.findByMsTeamsMeetingId(e.id);
-                if(meetingEntity.isPresent()) {
-                    String emailCanceled = "";
-                    for(Attendee attendee: e.attendees) {
-                        if(attendee.status.response == ResponseType.DECLINED)
-                        {
-                            emailCanceled = attendee.emailAddress.address;
-                            break;
-                        }
-                    }
-                    ProfileEntity cancelerProfile;
-                    if(meetingEntity.get().getProposer().getEmail().equalsIgnoreCase(emailCanceled)) {
-                        cancelerProfile = meetingEntity.get().getProposer();
-                    }
-                    else {
-                        cancelerProfile = meetingEntity.get().getPartner();
-                    }
-                    declinedMeetings.add(new DeclinedMeeting(meetingEntity.get(), cancelerProfile));
-                }
+    List<DeclinedMeeting> buildDeclinedMeetings(List<Event> canceledEvents) {
+        List<DeclinedMeeting> declinedMeetings = new ArrayList<>();
+        for(Event event: canceledEvents) {
+            Optional<MeetingEntity> meetingEntity = meetingRepository.findByMsTeamsMeetingId(event.id);
+            if(meetingEntity.isPresent()) {
+                String emailCanceled = getCancelerEmail(event);
+                ProfileEntity cancelerProfile = getCancelerProfileByEmail(meetingEntity.get(), emailCanceled);
+                declinedMeetings.add(new DeclinedMeeting(meetingEntity.get(), cancelerProfile));
             }
         }
         return declinedMeetings;
+    }
+
+    static String getCancelerEmail(Event event) {
+        String emailCanceled = "";
+        for(Attendee attendee: event.attendees) {
+            if(attendee.status.response == ResponseType.DECLINED)
+            {
+                emailCanceled = attendee.emailAddress.address;
+                break;
+            }
+        }
+        return emailCanceled;
+    }
+
+    static ProfileEntity getCancelerProfileByEmail(MeetingEntity meetingEntity, String emailCanceled) {
+        ProfileEntity cancelerProfile;
+        if(meetingEntity.getProposer().getEmail().equalsIgnoreCase(emailCanceled)) {
+            cancelerProfile = meetingEntity.getProposer();
+        }
+        else {
+            cancelerProfile = meetingEntity.getPartner();
+        }
+        return cancelerProfile;
     }
 }

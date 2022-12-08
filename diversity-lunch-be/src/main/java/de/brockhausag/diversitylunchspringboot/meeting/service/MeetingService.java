@@ -143,12 +143,21 @@ public class MeetingService {
         return canCancel;
     }
 
-    public void cancelDeclinedMeetings() {
+    public int cancelDeclinedMeetings() {
         List<DeclinedMeeting> declinedMeetings = msTeamsService.getAllDeclinedMeetings();
+        int successFullCanceledMeetings = 0;
 
         for (DeclinedMeeting declinedMeeting : declinedMeetings) {
             boolean couldCancel = cancelMeeting(declinedMeeting.meetingEntity().getId(), declinedMeeting.decliner().getId());
-            log.info("Tried to cancel meeting with id %d returned %b".formatted(declinedMeeting.meetingEntity().getId(), couldCancel));
+            if (couldCancel) {
+                successFullCanceledMeetings++;
+                log.info("Successfully canceled meeting with id %d".formatted(declinedMeeting.meetingEntity().getId()));
+            } else {
+                log.warn("Failed to cancel meeting with id %d".formatted(declinedMeeting.meetingEntity().getId()));
+            }
         }
+
+        log.info("Successfully canceled %d Meetings".formatted(successFullCanceledMeetings));
+        return successFullCanceledMeetings;
     }
 }
