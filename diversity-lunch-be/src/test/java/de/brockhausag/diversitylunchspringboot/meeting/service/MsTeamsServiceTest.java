@@ -79,13 +79,23 @@ class MsTeamsServiceTest {
         ProfileEntity p2 = profileFactory.buildEntity(2);
         Event event1 = createMicrosoftGraphEvent(p1, true, p2, false);
 
-        String cancelerMail1 = MsTeamsService.getCancelerEmail(event1);
+        String cancelerMail1 = MsTeamsService.getCancelerEmail(event1).orElseThrow();
         assertEquals(p1.getEmail(), cancelerMail1);
 
         Event event2 = createMicrosoftGraphEvent(p1, false, p2, true);
 
-        String cancelerMail2 = MsTeamsService.getCancelerEmail(event2);
+        String cancelerMail2 = MsTeamsService.getCancelerEmail(event2).orElseThrow();
         assertEquals(p2.getEmail(), cancelerMail2);
+    }
+
+    @Test
+    void testGetCancelerEmail_NoProfileCanceledTheMeeting_ShouldReturnEmptyOptional() {
+        ProfileEntity p1 = profileFactory.buildEntity(1);
+        ProfileEntity p2 = profileFactory.buildEntity(2);
+        Event event = createMicrosoftGraphEvent(p1, false, p2, false);
+
+        Optional<String> actual = MsTeamsService.getCancelerEmail(event);
+        assertFalse(actual.isPresent());
     }
 
     @Test
