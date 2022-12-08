@@ -114,7 +114,29 @@ export const ProfileForm: FC<ProfileFormProps> = ({
             return 0;
         });
     }
-    const [stateSelected] = useState([]);
+
+    const [hobbyCounterCompState, setHobbyCounterCompState] = useState(0);
+
+    const increaseCounter = () => {
+        setHobbyCounterCompState(hobbyCounterCompState + 1);
+    };
+
+    const decreaseCounter = () => {
+        setHobbyCounterCompState(hobbyCounterCompState - 1);
+    };
+
+    const hobbiesCounterToString = () => {
+        switch (hobbyCounterCompState) {
+            case 0:
+                return 'Wähle bis zu 3 Hobbies';
+            case 1:
+                return 'Wähle noch bis zu 2 Hobbies';
+            case 2:
+                return 'Wähle noch bis zu 1 Hobby';
+            default:
+                return '';
+        }
+    };
 
     return (
         <form onSubmit={formSubmitted} className="ProfileForm">
@@ -135,8 +157,9 @@ export const ProfileForm: FC<ProfileFormProps> = ({
 
                 <Multiselect
                     options={sortOptions(hobbies)}
-                    placeholder="Wähle bis zu drei Hobbies aus..."
-                    onSelect={console.log}
+                    placeholder={hobbiesCounterToString()}
+                    onSelect={increaseCounter} // Function will trigger on select event
+                    onRemove={decreaseCounter} // Function will trigger on remove event
                     displayValue="descriptor"
                     selectionLimit={3}
                     closeIcon="cancel"

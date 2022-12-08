@@ -41,12 +41,29 @@
   color: black;
 }
 
-
-/*
-.inputField { // To change input field position or margin
-  margin: 5px;
+.searchBox {
+  width: auto;
+  font-family: SourceSansProRegular, sans-serif;
+  font-size: 1.1rem;
+  overflow-y: clip;
 }
 
+.searchWrapper {
+  border: 1px solid #b8b8b8;
+  border-radius: 0px;
+  min-height: 22px;
+  padding: 5px;
+  position: relative;
+}
+
+.multiSelectContainer input {
+  background: transparent;
+  border: none;
+  margin-top: 3px;
+  max-height: 42px;
+}
+
+/*
 .optionContainer { // To change css for option container
   border: 2px solid;
 }
