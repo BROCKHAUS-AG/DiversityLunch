@@ -338,7 +338,7 @@ class MeetingServiceTest {
         doReturn(false).when(mockedMeetingService).cancelMeeting(meetingEntity1.getId(), profileEntityTwo.getId());
 
         int actual = mockedMeetingService.cancelDeclinedMeetings();
-        assertEquals(0, actual);
+        assertEquals(1, actual);
         verify(mockedMeetingService, times(2)).cancelMeeting(any(), any());
     }
 

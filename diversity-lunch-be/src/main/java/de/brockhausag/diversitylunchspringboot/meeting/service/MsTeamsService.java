@@ -50,17 +50,15 @@ public class MsTeamsService {
         return buildDeclinedMeetings(canceledEvents);
     }
 
-    List<DeclinedMeeting> buildDeclinedMeetings(List<Event> canceledEvents) {
-        List<DeclinedMeeting> declinedMeetings = new ArrayList<>();
-        for(Event event: canceledEvents) {
-            Optional<MeetingEntity> meetingEntity = meetingRepository.findByMsTeamsMeetingId(event.id);
-            if(meetingEntity.isPresent()) {
-                String emailCanceled = getCancelerEmail(event);
-                ProfileEntity cancelerProfile = getCancelerProfileByEmail(meetingEntity.get(), emailCanceled);
-                declinedMeetings.add(new DeclinedMeeting(meetingEntity.get(), cancelerProfile));
-            }
+    static Optional<ProfileEntity> getCancelerProfileByEmail(MeetingEntity meetingEntity, String emailCanceled) {
+        ProfileEntity cancelerProfile = null;
+        if(meetingEntity.getProposer().getEmail().equalsIgnoreCase(emailCanceled)) {
+            cancelerProfile = meetingEntity.getProposer();
         }
-        return declinedMeetings;
+        else if (meetingEntity.getPartner().getEmail().equalsIgnoreCase(emailCanceled)){
+            cancelerProfile = meetingEntity.getPartner();
+        }
+        return Optional.ofNullable(cancelerProfile);
     }
 
     static String getCancelerEmail(Event event) {
@@ -75,14 +73,19 @@ public class MsTeamsService {
         return emailCanceled;
     }
 
-    static ProfileEntity getCancelerProfileByEmail(MeetingEntity meetingEntity, String emailCanceled) {
-        ProfileEntity cancelerProfile;
-        if(meetingEntity.getProposer().getEmail().equalsIgnoreCase(emailCanceled)) {
-            cancelerProfile = meetingEntity.getProposer();
+    List<DeclinedMeeting> buildDeclinedMeetings(List<Event> canceledEvents) {
+        List<DeclinedMeeting> declinedMeetings = new ArrayList<>();
+        for(Event event: canceledEvents) {
+            Optional<MeetingEntity> meetingEntity = meetingRepository.findByMsTeamsMeetingId(event.id);
+            if(meetingEntity.isPresent()) {
+                String emailCanceled = getCancelerEmail(event);
+                // When we can't map the MS-Teams e-mail to a user, but the user is part of the meeting then we
+                // simply choose the first (proposer) as attandee who canceled the meeting
+                ProfileEntity cancelerProfile = getCancelerProfileByEmail(meetingEntity.get(), emailCanceled)
+                        .orElse(meetingEntity.get().getProposer());
+                declinedMeetings.add(new DeclinedMeeting(meetingEntity.get(), cancelerProfile));
+            }
         }
-        else {
-            cancelerProfile = meetingEntity.getPartner();
-        }
-        return cancelerProfile;
+        return declinedMeetings;
     }
 }
