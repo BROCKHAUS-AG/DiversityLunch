@@ -1,12 +1,12 @@
 package de.brockhausag.diversitylunchspringboot.email.controller;
 
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
+import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchApplicationSettingsProperties;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,9 +24,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class EMailController {
     private final DiversityLunchEMailService diversityLunchEMailService;
-
-    @Value("${diversity.url.baseUrl}")
-    private String BASE_URL;
+    private final DiversityLunchApplicationSettingsProperties settingsProperties;
 
     @Operation(summary = "Test Mail wird versendet.")
     @ApiResponses(value = {
@@ -34,7 +32,7 @@ public class EMailController {
     })
     @PostMapping("/sendTestMail")
     public ResponseEntity<String> sendTestMail() {
-        String claimLink = BASE_URL + "/voucherClaim/testMeeting";
+        String claimLink = settingsProperties.getBaseUrl() + "/voucherClaim/testMeeting";
         String body = "Datum: " + LocalDateTime.now() + "\n" + "Claim-Link: " + claimLink;
         try {
             this.diversityLunchEMailService.sendEmail("test@test.de", "Testsubject", body, body);
@@ -53,7 +51,7 @@ public class EMailController {
     @PostMapping("/sendTestMailToUser")
     @PreAuthorize("isProfileOwner(#id)")
     public ResponseEntity<String> sendTestMailToUser(Long id) {
-        String claimLink = BASE_URL + "/voucherClaim/testMeeting";
+        String claimLink = settingsProperties.getBaseUrl() + "/voucherClaim/testMeeting";
         String body = "Datum: " + LocalDateTime.now() + "\n" + "Claim-Link: " + claimLink;
         try {
             diversityLunchEMailService.sendMailToUser(id, body);
@@ -72,7 +70,7 @@ public class EMailController {
     @PostMapping("/sendTestMailToUser/{id}")
     @PreAuthorize("isProfileOwner(#id)")
     public ResponseEntity<String> sendTestMailToUserPathVariable(@PathVariable long id) {
-        String claimLink = BASE_URL + "/voucherClaim/testMeeting";
+        String claimLink = settingsProperties.getBaseUrl() + "/voucherClaim/testMeeting";
         String body = "Datum: " + LocalDateTime.now() + "\n" + "Claim-Link: " + claimLink;
         try {
             diversityLunchEMailService.sendMailToUser(id, body);

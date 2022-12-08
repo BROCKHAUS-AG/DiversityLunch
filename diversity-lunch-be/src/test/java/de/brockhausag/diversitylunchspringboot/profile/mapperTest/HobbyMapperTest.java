@@ -113,7 +113,7 @@ public class HobbyMapperTest {
     void testEntityToDto_withListOfThreeEntities_returnsListOfThreeDtos() {
         //Arrange
         List<HobbyEntity> inputEntities = Stream.of(1, 2, 3).map(this.factory::buildEntity).toList();
-        List<HobbyDto> expectedDtos = Stream.of(1, 2, 3).map(this.factory::buildDto).toList();
+        List<HobbyDto> expectedDtos = factory.buildDtoList(3);
 
         StreamUtils.zip(inputEntities.stream(), expectedDtos.stream(), (entity, dto) -> {
             when(this.hobbyCategoryMapper.entityToDto(entity.getCategory())).thenReturn(dto.getCategory());

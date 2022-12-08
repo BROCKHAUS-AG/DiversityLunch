@@ -4,11 +4,11 @@ import com.nimbusds.jose.util.StandardCharset;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchApplicationSettingsProperties;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMailProperties;
 import de.brockhausag.diversitylunchspringboot.voucher.service.VoucherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -27,10 +27,7 @@ public class DiversityLunchEMailService {
     private final DiversityLunchMailProperties properties;
     private final ProfileService profileService;
     private final VoucherService voucherService;
-
-
-    @Value("${diversity.url.baseUrl}")
-    private String BASE_URL;
+    private final DiversityLunchApplicationSettingsProperties settingsProperties;
 
     public void sendEmail(String to, String subject, String textHTML, String textPlain) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
@@ -70,7 +67,7 @@ public class DiversityLunchEMailService {
         try {
             String emailText =
                     new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), StandardCharset.UTF_8);
-            String claimLink = BASE_URL + "/voucherClaim/" + meeting.getId();
+            String claimLink = settingsProperties.getBaseUrl() + "/voucherClaim/" + meeting.getId();
             return String.format(emailText, recipient.getName(), otherParticipant.getName(),
                     meeting.getQuestion().getCategory().getKind(), meeting.getQuestion().getKind(), claimLink);
         } catch (Exception e) {

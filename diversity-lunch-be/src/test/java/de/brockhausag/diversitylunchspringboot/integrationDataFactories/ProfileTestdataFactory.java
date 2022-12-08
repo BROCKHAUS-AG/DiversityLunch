@@ -11,6 +11,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -43,7 +44,7 @@ public class ProfileTestdataFactory {
         final ProjectEntity project = projectService.getAllEntities().get(0);
         final ReligionEntity religion = religionService.getAllEntities().get(0);
         final WorkExperienceEntity workExperience = workExperienceService.getAllEntities().get(0);
-        final HobbyEntity hobby = hobbyService.getAllEntities().get(0);
+        final List<HobbyEntity> hobby = hobbyService.getAllEntities().subList(0, 3);
         final SexualOrientationEntity sexualOrientation = sexualOrientationService.getAllEntities().get(0);
         final SocialBackgroundEntity socialBackground = socialBackgroundService.getAllEntities().get(0);
         final SocialBackgroundDiscriminationEntity socialBackgroundDiscrimination = socialBackgroundDiscriminationService.getAllEntities().get(0);
@@ -79,7 +80,7 @@ public class ProfileTestdataFactory {
         final ProjectEntity project = projectService.getAllEntities().get(1);
         final ReligionEntity religion = religionService.getAllEntities().get(1);
         final WorkExperienceEntity workExperience = workExperienceService.getAllEntities().get(1);
-        final HobbyEntity hobby = hobbyService.getAllEntities().get(1);
+        final List<HobbyEntity> hobby = hobbyService.getAllEntities().subList(0, 3);
         final SexualOrientationEntity sexualOrientation = sexualOrientationService.getAllEntities().get(1);
         final SocialBackgroundEntity socialBackground = socialBackgroundService.getAllEntities().get(1);
         final SocialBackgroundDiscriminationEntity socialBackgroundDiscrimination = socialBackgroundDiscriminationService.getAllEntities().get(1);

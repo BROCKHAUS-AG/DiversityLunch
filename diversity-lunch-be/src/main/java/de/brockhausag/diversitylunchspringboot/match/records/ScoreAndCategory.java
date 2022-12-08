@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.match.utils;
+package de.brockhausag.diversitylunchspringboot.match.records;
 
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 

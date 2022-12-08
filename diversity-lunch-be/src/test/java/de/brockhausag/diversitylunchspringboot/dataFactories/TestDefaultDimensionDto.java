@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
-import de.brockhausag.diversitylunchspringboot.generics.basicDimension.DefaultDimensionDto;
+import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionDto;
 import lombok.*;
 
 @NoArgsConstructor

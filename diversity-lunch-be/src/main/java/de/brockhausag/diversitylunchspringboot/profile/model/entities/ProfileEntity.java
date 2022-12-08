@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
 
-import de.brockhausag.diversitylunchspringboot.generics.basicDimension.DefaultDimensionEntity;
+import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionEntity;
 import de.brockhausag.diversitylunchspringboot.generics.weightedDimension.WeightedEntity;
 import lombok.*;
 
@@ -40,8 +40,14 @@ public class ProfileEntity {
     private ReligionEntity religion;
     @ManyToOne
     private WorkExperienceEntity workExperience;
-    @ManyToOne
-    private HobbyEntity hobby;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "profile_hobby",
+            joinColumns = { @JoinColumn(name = "profile_id") },
+            inverseJoinColumns = { @JoinColumn(name = "hobby_id") }
+    )
+    private List<HobbyEntity> hobby;
     @ManyToOne
     private SexualOrientationEntity sexualOrientation;
     @ManyToOne
@@ -66,7 +72,7 @@ public class ProfileEntity {
                 other.email.equals(this.email) && (other.birthYear == this.birthYear);
     }
 
-    public List<DefaultDimensionEntity> getBaseEntities() {
+    public List<DefaultDimensionEntity> getDefaultEntities() {
         List<DefaultDimensionEntity> baseEntities = new ArrayList<>();
         baseEntities.add(originCountry);
         baseEntities.add(diet);
@@ -78,7 +84,6 @@ public class ProfileEntity {
         baseEntities.add(sexualOrientation);
         baseEntities.add(socialBackground);
         baseEntities.add(socialBackgroundDiscrimination);
-        baseEntities.add(hobby);
         return baseEntities;
     }
 

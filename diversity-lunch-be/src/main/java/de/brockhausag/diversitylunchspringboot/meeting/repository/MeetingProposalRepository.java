@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface MeetingProposalRepository extends JpaRepository<MeetingProposalEntity, Long> {
@@ -19,4 +20,6 @@ public interface MeetingProposalRepository extends JpaRepository<MeetingProposal
     List<MeetingProposalEntity> findMeetingProposalEntitiesByMatchedFalse();
 
     List<MeetingProposalEntity> findMeetingProposalEntitiesByProposedDateTimeAndMatchedFalse(LocalDateTime proposedDateTime);
+
+    Optional<MeetingProposalEntity> findByProposedDateTimeAndProposerProfileAndMatchedTrue(LocalDateTime proposedDateTime, ProfileEntity entity);
 }

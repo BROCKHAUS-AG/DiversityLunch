@@ -21,6 +21,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,8 +35,6 @@ class ProfileMapperTest {
     private EducationService educationService;
     @Mock
     private GenderService genderService;
-    @Mock
-    private HobbyService hobbyService;
     @Mock
     private LanguageService languageService;
     @Mock
@@ -95,7 +94,7 @@ class ProfileMapperTest {
         when(religionService.getEntityById(inputDto.getReligion().getId())).thenReturn(Optional.of(expectedEntity.getReligion()));
         when(projectService.getEntityById(inputDto.getProject().getId())).thenReturn(Optional.of(expectedEntity.getProject()));
         when(languageService.getEntityById(inputDto.getMotherTongue().getId())).thenReturn(Optional.of(expectedEntity.getMotherTongue()));
-        when(hobbyService.getEntityById(inputDto.getHobby().getId())).thenReturn(Optional.of(expectedEntity.getHobby()));
+        when(hobbyMapper.dtoToEntity(inputDto.getHobby())).thenReturn(expectedEntity.getHobby().stream().map(Optional::of).toList());
         when(genderService.getEntityById(inputDto.getGender().getId())).thenReturn(Optional.of(expectedEntity.getGender()));
         when(educationService.getEntityById(inputDto.getEducation().getId())).thenReturn(Optional.of(expectedEntity.getEducation()));
         when(dietService.getEntityById(inputDto.getDiet().getId())).thenReturn(Optional.of(expectedEntity.getDiet()));
@@ -132,7 +131,7 @@ class ProfileMapperTest {
         when(this.dietMapper.entityToDto(any(DietEntity.class))).thenReturn(expectedDto.getDiet());
         when(this.educationMapper.entityToDto(any(EducationEntity.class))).thenReturn(expectedDto.getEducation());
         when(this.genderMapper.entityToDto(any(GenderEntity.class))).thenReturn(expectedDto.getGender());
-        when(this.hobbyMapper.entityToDto(any(HobbyEntity.class))).thenReturn(expectedDto.getHobby());
+        when(this.hobbyMapper.entityToDto(anyList())).thenReturn(expectedDto.getHobby());
         when(this.languageMapper.entityToDto(any(LanguageEntity.class))).thenReturn(expectedDto.getMotherTongue());
         when(this.projectMapper.entityToDto(any(ProjectEntity.class))).thenReturn(expectedDto.getProject());
         when(this.religionMapper.entityToDto(any(ReligionEntity.class))).thenReturn(expectedDto.getReligion());

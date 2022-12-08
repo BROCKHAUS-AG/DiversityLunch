@@ -63,6 +63,7 @@ diversity:
 
   groups:
     admin-group-name: "${ADMIN_GROUP_NAME}"
-  url:
+  settings:
     baseUrl: "${BASE_URL}"
-
+    matchingCronJob: "${MATCHING_CRONJOB:}"
+    meetingReminderCronJob: "${MEETING_REMINDER_CRONJOB:}"

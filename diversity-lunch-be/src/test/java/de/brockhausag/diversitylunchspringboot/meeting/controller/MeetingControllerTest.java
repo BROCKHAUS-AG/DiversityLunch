@@ -133,4 +133,28 @@ class MeetingControllerTest {
 
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
     }
+
+    @Test
+    void testCancelMeeting_withCorrectRequest_returnsOk(){
+        Long meetingId = 1L;
+        Long profileId = 1L;
+
+        when(meetingService.cancelMeeting(meetingId, profileId)).thenReturn(true);
+
+        ResponseEntity<String> response = meetingController.cancelMeeting(profileId, meetingId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    void testCancelMeeting_withPastMeeting_returnsBadRequest(){
+        Long meetingId = 1L;
+        Long profileId = 1L;
+
+        when(meetingService.cancelMeeting(meetingId, profileId)).thenReturn(false);
+
+        ResponseEntity<String> response = meetingController.cancelMeeting(profileId, meetingId);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
 }
