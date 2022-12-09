@@ -331,8 +331,8 @@ class MeetingServiceTest {
 
         MeetingEntity meetingEntity1 = meetingFactory.matchedMeeting(profileEntityOne, profileEntityTwo);
 
-        DeclinedMeeting declinedMeeting1 = new DeclinedMeeting(meetingEntity1, profileEntityOne);
-        DeclinedMeeting declinedMeeting2 = new DeclinedMeeting(meetingEntity1, profileEntityTwo);
+        DeclinedMeeting declinedMeeting1 = new DeclinedMeeting(meetingEntity1, List.of(profileEntityOne));
+        DeclinedMeeting declinedMeeting2 = new DeclinedMeeting(meetingEntity1, List.of(profileEntityTwo));
 
         List<DeclinedMeeting> declinedMeetings = List.of(declinedMeeting1, declinedMeeting2);
         when(msTeamsService.getAllDeclinedMeetings()).thenReturn(declinedMeetings);
@@ -344,7 +344,7 @@ class MeetingServiceTest {
 
         int actual = mockedMeetingService.cancelDeclinedMeetings();
         assertEquals(1, actual);
-        verify(mockedMeetingService, times(2)).cancelMeeting(any(), any());
+        verify(mockedMeetingService, times(2)).cancelMeeting(any());
     }
 
     @Test
