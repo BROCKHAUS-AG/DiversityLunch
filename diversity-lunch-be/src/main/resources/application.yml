@@ -68,3 +68,4 @@ diversity:
     scheduling:
       matchingCronJob: "${MATCHING_CRONJOB:0 0 2 * * *}"
       meetingReminderCronJob: "${MEETING_REMINDER_CRONJOB:0 0/30 * * * *}"
+      cancelDeclinedMeetingsCronJob: "${MEETING_CANCEL_DECLINED_CRONJOB: 0 0/5 * * * *}"
