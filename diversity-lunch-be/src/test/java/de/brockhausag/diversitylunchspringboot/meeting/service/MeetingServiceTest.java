@@ -261,10 +261,13 @@ class MeetingServiceTest {
 
 
         when(meetingRepository.findById(meetingEntity.getId())).thenReturn(Optional.of(meetingEntity));
+
         when(meetingProposalRepository.findByProposedDateTimeAndProposerProfileAndMatchedTrue(meetingTime, profileEntityOne))
                 .thenReturn(Optional.of(meetingProposalEntityOne));
         when(meetingProposalRepository.findByProposedDateTimeAndProposerProfileAndMatchedTrue(meetingTime, profileEntityTwo))
                 .thenReturn(Optional.of(meetingProposalEntityTwo));
+
+        when(profileService.getProfile(1L)).thenReturn(Optional.of(profileEntityOne));
 
         //Act
         boolean actual = meetingService.cancelMeeting(meetingEntity.getId(), profileEntityOne.getId());
