@@ -101,9 +101,12 @@ public class MeetingService {
             if (isParticipant) {
                 success = cancelMeeting(new DeclinedMeeting(meeting.get(), declinerList));
             } else {
-                log.warn("Tried to cancel Meeting (Id: %d), where the deliner (Id: %d) is not participant of the Meeting"
+                log.warn("Tried to cancel Meeting (Id: %d), where the decliner (Id: %d) is not participant of the Meeting"
                         .formatted(meeting.get().getId(), profileId));
             }
+        } else {
+            log.warn("Tried to cancel Meeting (Id: %d), but could not get the MeetingEntity or the Decliner (Id: %d)"
+                    .formatted(meetingId, profileId));
         }
 
         return success;

@@ -277,6 +277,7 @@ class MeetingServiceTest {
         verify(meetingProposalRepository, times(1)).deleteById(meetingProposalEntityOne.getId());
         verify(msTeamsService, times(1)).cancelMsTeamsMeeting(meetingEntity);
         verify(meetingProposalRepository, times(1)).save(meetingProposalEntityTwoUpdated);
+        verify(meetingRepository, times(1)).delete(meetingEntity);
     }
 
     @Test
@@ -320,6 +321,7 @@ class MeetingServiceTest {
         assertTrue(actual);
         verify(meetingProposalRepository, times(2)).deleteById(any());
         verify(msTeamsService, times(1)).cancelMsTeamsMeeting(meetingEntity);
+        verify(meetingRepository, times(1)).delete(meetingEntity);
     }
 
     @Test
