@@ -23,7 +23,6 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 public class MsTeamsService {
-
     private final MsTeamsMapper msTeamsMapper;
     private final MicrosoftGraphService microsoftGraphService;
     private final MeetingRepository meetingRepository;
@@ -38,10 +37,19 @@ public class MsTeamsService {
         return result.id;
     }
 
-    public void cancelMsTeamsMeeting(MeetingEntity meeting)
-    {
-        String message = "Ein Teilnehmer hat den Termin abgesagt.";
-        microsoftGraphService.cancelEvent(meeting.getMsTeamsMeetingId(), message);
+    static List<String> getCancelerEmail(Event event) {
+        List<String> emailsCanceled = new ArrayList<>();
+        if (event != null && event.attendees != null) {
+            for (Attendee attendee : event.attendees) {
+                if (attendee.status != null
+                    && attendee.emailAddress != null
+                    && attendee.status.response == ResponseType.DECLINED
+                ) {
+                        emailsCanceled.add(attendee.emailAddress.address);
+                }
+            }
+        }
+        return emailsCanceled;
     }
 
     public List<DeclinedMeeting> getAllDeclinedMeetings() {
@@ -50,7 +58,13 @@ public class MsTeamsService {
         return buildDeclinedMeetings(canceledEvents);
     }
 
-    static Optional<ProfileEntity> getCancelerProfileByEmail(MeetingEntity meetingEntity, String emailCanceled) {
+    public void cancelMsTeamsMeeting(MeetingEntity meeting)
+    {
+        String message = "Einer der Teilnehmenden hat den Termin abgesagt.";
+        microsoftGraphService.cancelEvent(meeting.getMsTeamsMeetingId(), message);
+    }
+
+    Optional<ProfileEntity> getCancelerProfileByEmail(MeetingEntity meetingEntity, String emailCanceled) {
         ProfileEntity cancelerProfile = null;
         if(meetingEntity.getProposer().getEmail().equalsIgnoreCase(emailCanceled)) {
             cancelerProfile = meetingEntity.getProposer();
@@ -61,29 +75,18 @@ public class MsTeamsService {
         return Optional.ofNullable(cancelerProfile);
     }
 
-    static Optional<String> getCancelerEmail(Event event) {
-        String emailCanceled = null;
-        for(Attendee attendee: event.attendees) {
-            if(attendee.status.response == ResponseType.DECLINED)
-            {
-                emailCanceled = attendee.emailAddress.address;
-                break;
-            }
-        }
-        return Optional.ofNullable(emailCanceled);
-    }
-
     List<DeclinedMeeting> buildDeclinedMeetings(List<Event> canceledEvents) {
         List<DeclinedMeeting> declinedMeetings = new ArrayList<>();
         for(Event event: canceledEvents) {
             Optional<MeetingEntity> meetingEntity = meetingRepository.findByMsTeamsMeetingId(event.id);
             if(meetingEntity.isPresent()) {
-                String emailCanceled = getCancelerEmail(event).orElseThrow();
-                // When we can't map the MS-Teams e-mail to a user, but the user is part of the meeting then we
-                // simply choose the first (proposer) as attandee who canceled the meeting
-                ProfileEntity cancelerProfile = getCancelerProfileByEmail(meetingEntity.get(), emailCanceled)
-                        .orElse(meetingEntity.get().getProposer());
-                declinedMeetings.add(new DeclinedMeeting(meetingEntity.get(), cancelerProfile));
+                List<String> emailsCanceled = getCancelerEmail(event);
+                List<ProfileEntity> cancelerProfiles = emailsCanceled.stream()
+                        .map(mail -> getCancelerProfileByEmail(meetingEntity.get(), mail))
+                        .filter(Optional::isPresent)
+                        .map(Optional::get)
+                        .toList();
+                declinedMeetings.add(new DeclinedMeeting(meetingEntity.get(), cancelerProfiles));
             }
         }
         return declinedMeetings;
