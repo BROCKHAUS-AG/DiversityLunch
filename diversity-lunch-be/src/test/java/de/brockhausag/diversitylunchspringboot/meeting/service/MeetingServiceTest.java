@@ -314,6 +314,8 @@ class MeetingServiceTest {
         when(meetingProposalRepository.findByProposedDateTimeAndProposerProfileAndMatchedTrue(meetingTime, profileEntityTwo))
                 .thenReturn(Optional.of(meetingProposalEntityTwo));
 
+        when(profileService.getProfile(1L)).thenReturn(Optional.of(profileEntityOne));
+
         //Act
         boolean actual = meetingService.cancelMeeting(meetingEntity.getId(), profileEntityOne.getId());
 
@@ -339,8 +341,8 @@ class MeetingServiceTest {
 
         MeetingService mockedMeetingService = spy(meetingService);
 
-        doReturn(true).when(mockedMeetingService).cancelMeeting(meetingEntity1.getId(), profileEntityOne.getId());
-        doReturn(false).when(mockedMeetingService).cancelMeeting(meetingEntity1.getId(), profileEntityTwo.getId());
+        doReturn(true).when(mockedMeetingService).cancelMeeting(declinedMeeting1);
+        doReturn(false).when(mockedMeetingService).cancelMeeting(declinedMeeting2);
 
         int actual = mockedMeetingService.cancelDeclinedMeetings();
         assertEquals(1, actual);
