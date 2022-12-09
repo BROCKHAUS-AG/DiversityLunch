@@ -47,6 +47,7 @@ public class SchedulingConfig {
         matchingService.sendQuestions(dateTime);
     }
 
+    @Scheduled(cron = "${diversity.settings.scheduling.cancelDeclinedMeetingsCronJob}")
     public void scheduleCancelDeclinedMeetings() {
         meetingService.cancelDeclinedMeetings();
     }
