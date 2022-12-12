@@ -81,7 +81,7 @@ export const deleteMeetingProposal = (meeting: Meeting, profileId: number) => as
 export const deleteMeetingUpcoming = (meeting: Meeting, profileId: number) => async (dispatch: Dispatch) => {
     dispatch(startUpdatingAction);
 
-    const result = await authenticatedFetchPost('api/meetings/{profileId}/cancel/{meetingId}', {});
+    const result = await authenticatedFetchPost(`api/meetings/${profileId}/cancel/${meeting.id}`, {});
     if (result.ok) {
         const meetingOK = await loadingFunction(profileId);
         dispatch({ ...meetingOK, type: 'MEETINGS_UPDATED' });
