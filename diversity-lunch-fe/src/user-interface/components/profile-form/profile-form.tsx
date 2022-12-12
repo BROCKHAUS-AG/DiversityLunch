@@ -116,13 +116,16 @@ export const ProfileForm: FC<ProfileFormProps> = ({
     }
 
     const [hobbyCounterCompState, setHobbyCounterCompState] = useState(0);
+    const multiselectRef = React.createRef<Multiselect>();
 
     const increaseCounter = () => {
         setHobbyCounterCompState(hobbyCounterCompState + 1);
+        updateProfile('hobby', multiselectRef.current?.getSelectedItems());
     };
 
     const decreaseCounter = () => {
         setHobbyCounterCompState(hobbyCounterCompState - 1);
+        updateProfile('hobby', multiselectRef.current?.getSelectedItems());
     };
 
     const hobbiesCounterToString = () => {
@@ -130,11 +133,11 @@ export const ProfileForm: FC<ProfileFormProps> = ({
             case 0:
                 return 'Noch keines Ausgewählt';
             case 1:
-                return '2 | 3';
-            case 2:
                 return '1 | 3';
+            case 2:
+                return '2 | 3';
             default:
-                return '0 | 3';
+                return '3 | 3';
         }
     };
 
@@ -163,6 +166,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                     displayValue="descriptor"
                     selectionLimit={3}
                     closeIcon="cancel"
+                    ref={multiselectRef}
                 />
             </div>
             <Dropdown
