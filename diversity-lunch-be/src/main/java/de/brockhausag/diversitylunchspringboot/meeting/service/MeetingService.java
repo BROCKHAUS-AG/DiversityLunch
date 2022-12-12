@@ -1,8 +1,5 @@
 package de.brockhausag.diversitylunchspringboot.meeting.service;
 
-import com.microsoft.graph.models.Attendee;
-import com.microsoft.graph.models.Event;
-import com.microsoft.graph.models.ResponseType;
 import de.brockhausag.diversitylunchspringboot.meeting.mapper.MeetingMapper;
 import de.brockhausag.diversitylunchspringboot.meeting.model.DeclinedMeeting;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingDto;
@@ -18,10 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 @Service
@@ -94,53 +88,101 @@ public class MeetingService {
         return meetingRepository.findById(id);
     }
 
-    public boolean cancelMeeting(Long meetingId, Long userId) {
-        Optional<MeetingEntity> meetingEntityOptional = meetingRepository.findById(meetingId);
-        LocalDateTime timeNow = LocalDateTime.now();
-        boolean canCancel = meetingEntityOptional.isPresent() &&
-                timeNow.isBefore(meetingEntityOptional.get().getFromDateTime());
-        if(canCancel)
-        {
-            MeetingEntity meeting = meetingEntityOptional.get();
+    public boolean cancelMeeting(Long meetingId, Long profileId) {
+        boolean success = false;
+        Optional<MeetingEntity> meeting = getMeeting(meetingId);
+        Optional<ProfileEntity> decliner = profileService.getProfile(profileId);
+        List<ProfileEntity> declinerList = decliner.map(List::of).orElseGet(Collections::emptyList);
 
-            ProfileEntity profileCaller;
-            ProfileEntity profileOther;
-            if (meeting.getProposer().getId().equals(userId)) {
-                profileCaller = meeting.getProposer();
-                profileOther = meeting.getPartner();
+        if (meeting.isPresent() && decliner.isPresent()) {
+            // is the profiledID even part of the meeting
+            boolean isParticipant = Stream.of(meeting.get().getProposer(), meeting.get().getPartner())
+                    .anyMatch(p -> p.getId().equals(profileId));
+            if (isParticipant) {
+                success = cancelMeeting(new DeclinedMeeting(meeting.get(), declinerList));
             } else {
-                profileCaller = meeting.getPartner();
-                profileOther = meeting.getProposer();
+                log.warn("Tried to cancel Meeting (Id: %d), where the decliner (Id: %d) is not participant of the Meeting"
+                        .formatted(meeting.get().getId(), profileId));
             }
-
-            MeetingProposalEntity meetingProposalCaller = meetingProposalRepository
-                    .findByProposedDateTimeAndProposerProfileAndMatchedTrue(meeting.getFromDateTime(), profileCaller)
-                    .orElse(null);
-
-            MeetingProposalEntity meetingProposalOther = meetingProposalRepository
-                    .findByProposedDateTimeAndProposerProfileAndMatchedTrue(meeting.getFromDateTime(), profileOther)
-                    .orElse(null);
-
-            if(meetingProposalCaller == null || meetingProposalOther == null) {
-                return false;
-            }
-
-            meetingProposalRepository.deleteById(meetingProposalCaller.getId());
-
-            LocalDateTime today = timeNow.truncatedTo(ChronoUnit.DAYS);
-            LocalDateTime proposedDay = meeting.getFromDateTime().truncatedTo(ChronoUnit.DAYS);
-            if (today.equals(proposedDay)) {
-                meetingProposalRepository.deleteById(meetingProposalOther.getId());
-            } else {
-                meetingProposalOther.setMatched(false);
-                meetingProposalRepository.save(meetingProposalOther);
-            }
-
-            msTeamsService.cancelMsTeamsMeeting(meeting);
-            meetingRepository.delete(meeting);
+        } else {
+            log.warn("Tried to cancel Meeting (Id: %d), but could not get the MeetingEntity or the Decliner (Id: %d)"
+                    .formatted(meetingId, profileId));
         }
 
-        return canCancel;
+        return success;
+    }
+
+    public boolean cancelMeeting(DeclinedMeeting declinedMeeting) {
+        MeetingEntity meeting = declinedMeeting.meetingEntity();
+        LocalDateTime today = LocalDateTime.now().truncatedTo(ChronoUnit.DAYS);
+        LocalDateTime proposedDay = meeting.getFromDateTime().truncatedTo(ChronoUnit.DAYS);
+        boolean success = false;
+
+        if(proposedDay.isAfter(today) && declinedMeeting.decliner().size() == 1) {
+            success = cancelMeetingForOneParticipant(meeting, declinedMeeting.decliner().get(0));
+        }
+        else if (today.isEqual(proposedDay) || proposedDay.isAfter(today)){
+            success = cancelMeetingForAllParticipants(declinedMeeting);
+        }
+
+        return success;
+    }
+
+    boolean cancelMeetingForAllParticipants(DeclinedMeeting declinedMeeting) {
+        List<Optional<MeetingProposalEntity>> meetingProposals = new ArrayList<>();
+        meetingProposals.add(getMeetingProposalForProfile(declinedMeeting.meetingEntity(), declinedMeeting.meetingEntity().getProposer()));
+        meetingProposals.add(getMeetingProposalForProfile(declinedMeeting.meetingEntity(), declinedMeeting.meetingEntity().getPartner()));
+
+        boolean success = meetingProposals.stream().allMatch(Optional::isPresent);
+
+        if (success) {
+            deleteMeetingProposals(meetingProposals.stream().filter(Optional::isPresent).map(Optional::get).toList());
+            cancelAndDeleteMeeting(declinedMeeting.meetingEntity());
+            log.info("Deleted Meeting-Proposals for Meeting with id " + declinedMeeting.meetingEntity().getId());
+        } else {
+            log.warn("Tried to delete both MeetingProposals of a matching Meeting, but could not find all Proposals!");
+        }
+
+        return success;
+    }
+
+    boolean cancelMeetingForOneParticipant(MeetingEntity meeting, ProfileEntity decliner) {
+        Optional<MeetingProposalEntity> meetingProposalDecliner = getMeetingProposalForProfile(meeting, decliner);
+        Optional<MeetingProposalEntity> meetingProposalPartner = getMeetingProposalForProfile(meeting, getOtherParticipant(meeting, decliner));
+
+        boolean success = meetingProposalDecliner.isPresent() && meetingProposalPartner.isPresent();
+
+        if (success) {
+            deleteMeetingProposals(List.of(meetingProposalDecliner.get()));
+            cancelAndDeleteMeeting(meeting);
+            meetingProposalPartner.get().setMatched(false);
+            meetingProposalRepository.save(meetingProposalPartner.get());
+            log.info("Deleted Meeting-Proposal for Decliner and enabled Meeting-Proposal for Partner (Meeting-Id: %d)".formatted(meeting.getId()));
+        } else {
+            log.warn("Tried to delete both MeetingProposals of a matching Meeting, but could not find all Proposals!");
+        }
+
+        return success;
+    }
+
+    ProfileEntity getOtherParticipant (MeetingEntity meeting, ProfileEntity participant) {
+        return Objects.equals(meeting.getPartner().getId(), participant.getId()) ? meeting.getProposer() : meeting.getPartner();
+    }
+
+    void deleteMeetingProposals (List<MeetingProposalEntity> meetingProposals) {
+        for (MeetingProposalEntity meetingProposal : meetingProposals) {
+            meetingProposalRepository.deleteById(meetingProposal.getId());
+        }
+    }
+
+    Optional<MeetingProposalEntity> getMeetingProposalForProfile (MeetingEntity meeting, ProfileEntity profile) {
+        return meetingProposalRepository.findByProposedDateTimeAndProposerProfileAndMatchedTrue(meeting.getFromDateTime(), profile);
+    }
+
+    void cancelAndDeleteMeeting(MeetingEntity meeting) {
+        msTeamsService.cancelMsTeamsMeeting(meeting);
+        meetingRepository.delete(meeting);
+        log.info("Deleted MeetingEntity and canceled MsTeamsMeeting for Meeting with id " + meeting.getId());
     }
 
     public int cancelDeclinedMeetings() {
@@ -148,7 +190,7 @@ public class MeetingService {
         int successFullCanceledMeetings = 0;
 
         for (DeclinedMeeting declinedMeeting : declinedMeetings) {
-            boolean couldCancel = cancelMeeting(declinedMeeting.meetingEntity().getId(), declinedMeeting.decliner().getId());
+            boolean couldCancel = cancelMeeting(declinedMeeting);
             if (couldCancel) {
                 successFullCanceledMeetings++;
                 log.info("Successfully canceled meeting with id %d".formatted(declinedMeeting.meetingEntity().getId()));

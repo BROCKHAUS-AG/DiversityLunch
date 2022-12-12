@@ -261,10 +261,13 @@ class MeetingServiceTest {
 
 
         when(meetingRepository.findById(meetingEntity.getId())).thenReturn(Optional.of(meetingEntity));
+
         when(meetingProposalRepository.findByProposedDateTimeAndProposerProfileAndMatchedTrue(meetingTime, profileEntityOne))
                 .thenReturn(Optional.of(meetingProposalEntityOne));
         when(meetingProposalRepository.findByProposedDateTimeAndProposerProfileAndMatchedTrue(meetingTime, profileEntityTwo))
                 .thenReturn(Optional.of(meetingProposalEntityTwo));
+
+        when(profileService.getProfile(1L)).thenReturn(Optional.of(profileEntityOne));
 
         //Act
         boolean actual = meetingService.cancelMeeting(meetingEntity.getId(), profileEntityOne.getId());
@@ -274,6 +277,7 @@ class MeetingServiceTest {
         verify(meetingProposalRepository, times(1)).deleteById(meetingProposalEntityOne.getId());
         verify(msTeamsService, times(1)).cancelMsTeamsMeeting(meetingEntity);
         verify(meetingProposalRepository, times(1)).save(meetingProposalEntityTwoUpdated);
+        verify(meetingRepository, times(1)).delete(meetingEntity);
     }
 
     @Test
@@ -310,6 +314,8 @@ class MeetingServiceTest {
         when(meetingProposalRepository.findByProposedDateTimeAndProposerProfileAndMatchedTrue(meetingTime, profileEntityTwo))
                 .thenReturn(Optional.of(meetingProposalEntityTwo));
 
+        when(profileService.getProfile(1L)).thenReturn(Optional.of(profileEntityOne));
+
         //Act
         boolean actual = meetingService.cancelMeeting(meetingEntity.getId(), profileEntityOne.getId());
 
@@ -317,6 +323,7 @@ class MeetingServiceTest {
         assertTrue(actual);
         verify(meetingProposalRepository, times(2)).deleteById(any());
         verify(msTeamsService, times(1)).cancelMsTeamsMeeting(meetingEntity);
+        verify(meetingRepository, times(1)).delete(meetingEntity);
     }
 
     @Test
@@ -326,20 +333,20 @@ class MeetingServiceTest {
 
         MeetingEntity meetingEntity1 = meetingFactory.matchedMeeting(profileEntityOne, profileEntityTwo);
 
-        DeclinedMeeting declinedMeeting1 = new DeclinedMeeting(meetingEntity1, profileEntityOne);
-        DeclinedMeeting declinedMeeting2 = new DeclinedMeeting(meetingEntity1, profileEntityTwo);
+        DeclinedMeeting declinedMeeting1 = new DeclinedMeeting(meetingEntity1, List.of(profileEntityOne));
+        DeclinedMeeting declinedMeeting2 = new DeclinedMeeting(meetingEntity1, List.of(profileEntityTwo));
 
         List<DeclinedMeeting> declinedMeetings = List.of(declinedMeeting1, declinedMeeting2);
         when(msTeamsService.getAllDeclinedMeetings()).thenReturn(declinedMeetings);
 
         MeetingService mockedMeetingService = spy(meetingService);
 
-        doReturn(true).when(mockedMeetingService).cancelMeeting(meetingEntity1.getId(), profileEntityOne.getId());
-        doReturn(false).when(mockedMeetingService).cancelMeeting(meetingEntity1.getId(), profileEntityTwo.getId());
+        doReturn(true).when(mockedMeetingService).cancelMeeting(declinedMeeting1);
+        doReturn(false).when(mockedMeetingService).cancelMeeting(declinedMeeting2);
 
         int actual = mockedMeetingService.cancelDeclinedMeetings();
         assertEquals(1, actual);
-        verify(mockedMeetingService, times(2)).cancelMeeting(any(), any());
+        verify(mockedMeetingService, times(2)).cancelMeeting(any());
     }
 
     @Test

@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -45,7 +44,7 @@ class MsTeamsServiceTest {
     }
 
     @Test
-    void testGetAllDeclinedMeetingsShouldReturnTheCorrectAmountOfDeclinedMeetings () {
+    void testGetAllDeclinedMeetings_ShouldReturnTheCorrectAmountOfDeclinedMeetings () {
         ProfileEntity p1 = profileFactory.buildEntity(1);
         ProfileEntity p2 = profileFactory.buildEntity(2);
         MeetingEntity meeting = meetingFactory.matchedMeeting(p1, p2);
@@ -66,13 +65,15 @@ class MsTeamsServiceTest {
         ProfileEntity p2 = profileFactory.buildEntity(2);
         Event event1 = createMicrosoftGraphEvent(p1, true, p2, false);
 
-        String cancelerMail1 = MsTeamsService.getCancelerEmail(event1).orElseThrow();
-        assertEquals(p1.getEmail(), cancelerMail1);
+        List<String> cancelerMail1 = MsTeamsService.getCancelerEmail(event1);
+        assertEquals(1, cancelerMail1.size());
+        assertEquals(p1.getEmail(), cancelerMail1.get(0));
 
         Event event2 = createMicrosoftGraphEvent(p1, false, p2, true);
 
-        String cancelerMail2 = MsTeamsService.getCancelerEmail(event2).orElseThrow();
-        assertEquals(p2.getEmail(), cancelerMail2);
+        List<String> cancelerMail2 = MsTeamsService.getCancelerEmail(event2);
+        assertEquals(1, cancelerMail2.size());
+        assertEquals(p2.getEmail(), cancelerMail2.get(0));
     }
 
     @Test
@@ -81,8 +82,8 @@ class MsTeamsServiceTest {
         ProfileEntity p2 = profileFactory.buildEntity(2);
         Event event = createMicrosoftGraphEvent(p1, false, p2, false);
 
-        Optional<String> actual = MsTeamsService.getCancelerEmail(event);
-        assertFalse(actual.isPresent());
+        List<String> actual = MsTeamsService.getCancelerEmail(event);
+        assertTrue(actual.isEmpty());
     }
 
     @Test
@@ -91,8 +92,8 @@ class MsTeamsServiceTest {
         ProfileEntity p2 = profileFactory.buildEntity(2);
         Event event = createMicrosoftGraphEvent(p1, true, p2, true);
 
-        Optional<String> actual = MsTeamsService.getCancelerEmail(event);
-        assertEquals(p1.getEmail(), actual.orElseThrow());
+        List<String> actual = MsTeamsService.getCancelerEmail(event);
+        assertEquals(2, actual.size());
     }
 
     @Test
@@ -101,10 +102,10 @@ class MsTeamsServiceTest {
         ProfileEntity p2 = profileFactory.buildEntity(2);
         MeetingEntity meeting = meetingFactory.matchedMeeting(p1, p2);
 
-        ProfileEntity actual1 = MsTeamsService.getCancelerProfileByEmail(meeting, p1.getEmail()).orElseThrow();
+        ProfileEntity actual1 = msTeamsService.getCancelerProfileByEmail(meeting, p1.getEmail()).orElseThrow();
         assertEquals(p1, actual1);
 
-        ProfileEntity actual2 = MsTeamsService.getCancelerProfileByEmail(meeting, p2.getEmail()).orElseThrow();
+        ProfileEntity actual2 = msTeamsService.getCancelerProfileByEmail(meeting, p2.getEmail()).orElseThrow();
         assertEquals(p2, actual2);
     }
 
@@ -114,7 +115,7 @@ class MsTeamsServiceTest {
         ProfileEntity p2 = profileFactory.buildEntity(2);
         MeetingEntity meeting = meetingFactory.matchedMeeting(p1, p2);
 
-        Optional<ProfileEntity> actual = MsTeamsService.getCancelerProfileByEmail(meeting, "NotTheReal@Mail");
+        Optional<ProfileEntity> actual = msTeamsService.getCancelerProfileByEmail(meeting, "NotTheReal@Mail");
         assertFalse(actual.isPresent());
     }
 
