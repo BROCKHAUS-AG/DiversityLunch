@@ -60,7 +60,7 @@ public class MsTeamsService {
 
     public void cancelMsTeamsMeeting(MeetingEntity meeting)
     {
-        String message = "Einer der Teilnehmenden hat den Termin abgesagt.";
+        String message = "Eine teilnehmende Person hat den Termin abgesagt.";
         microsoftGraphService.cancelEvent(meeting.getMsTeamsMeetingId(), message);
     }
 
