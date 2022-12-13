@@ -4,7 +4,8 @@ import { Meeting } from '../../../model/Meeting';
 import './show-meeting.scss';
 import closeIcon from '../../../resources/icons/icon-close.svg';
 import hamburgerIcon from '../../../resources/icons/icon-hamburger.svg';
-import { deleteMeetingProposal } from '../../../data/meeting/meetings.actions';
+import { deleteMeetingProposal, deleteMeetingUpcoming } from '../../../data/meeting/meetings.actions';
+
 import { DeleteMeetingPopUp } from '../delete-meeting-pop-up/delete-meeting-pop-up';
 import { getMeetingEndTime, substringLocalTime } from '../../../utils/date.utils';
 import { useGetAccountInformation } from '../../../hooks/account/account.hook';
@@ -15,12 +16,19 @@ interface MeetingContainerProps {
 
 export const ShowMeeting = ({ meeting }: MeetingContainerProps) => {
     const dispatch = useDispatch();
-    const [isDeleting, setIsDeleting] = useState(false);
+    const [isDeletingOpen, setIsDeletingOpen] = useState(false);
+    const [isDeletingUpcoming, setIsDeletingUpcoming] = useState(false);
     const { profileId } = useGetAccountInformation();
 
-    const deleteMeetingCallback = () => {
+    const deleteOpenMeetingCallback = () => {
         dispatch(deleteMeetingProposal(meeting, profileId));
-        setIsDeleting(false);
+        setIsDeletingOpen(false);
+    };
+
+    const deleteUpcomingMeetingCallback = () => {
+        // Delete Upcoming Meeting here / Backend Interface
+        dispatch(deleteMeetingUpcoming(meeting, profileId));
+        setIsDeletingUpcoming(false);
     };
 
     return (
@@ -47,31 +55,56 @@ export const ShowMeeting = ({ meeting }: MeetingContainerProps) => {
                     className="ShowMeeting-hamburgerIcon"
                 />
                 {
-                    !meeting.partnerName
-                    && (
-                        <div
-                            className="ShowMeeting-closeIcon"
-                            role="none"
-                            onClick={() => {
-                                setIsDeleting(true);
-                            }}
-                        >
-                            <img
-                                alt="icon_close"
-                                src={closeIcon}
-                            />
-                        </div>
-                    )
+                    meeting.partnerName
+                        ? (
+                            <div
+                                className="ShowMeeting-closeIcon"
+                                role="none"
+                                onClick={() => {
+                                    setIsDeletingUpcoming(true);
+                                }}
+                            >
+                                <img
+                                    alt="icon_close"
+                                    src={closeIcon}
+                                />
+                            </div>
+                        )
+                        : (
+                            <div
+                                className="ShowMeeting-closeIcon"
+                                role="none"
+                                onClick={() => {
+                                    setIsDeletingOpen(true);
+                                }}
+                            >
+                                <img
+                                    alt="icon_close"
+                                    src={closeIcon}
+                                />
+                            </div>
+                        )
+
                 }
             </div>
 
             {
-                isDeleting
+                isDeletingOpen
                 && (
                     <DeleteMeetingPopUp
                         meeting={meeting}
-                        onDelete={deleteMeetingCallback}
-                        onCancel={() => setIsDeleting(false)}
+                        onDelete={deleteOpenMeetingCallback}
+                        onCancel={() => setIsDeletingOpen(false)}
+                    />
+                )
+            }
+            {
+                isDeletingUpcoming
+                && (
+                    <DeleteMeetingPopUp
+                        meeting={meeting}
+                        onDelete={deleteUpcomingMeetingCallback}
+                        onCancel={() => setIsDeletingUpcoming(false)}
                     />
                 )
             }

@@ -31,6 +31,7 @@
 
 .GeneralPopUp-text{
   max-width: 380px;
+  line-height: 1;
 }
 
 .DeleteMeetingPopUp-meeting-container{
@@ -39,7 +40,8 @@
   justify-content: center;
   align-items: center;
   font-size:  1.2em;
-  margin: 10%;
+  margin: 8%;
+  line-height: 1;
 }
 
 .DeleteMeetingPopUp-button-container{
