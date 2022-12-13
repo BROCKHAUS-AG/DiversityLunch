@@ -45,6 +45,8 @@
     border: none;
     margin-top: 3px;
     max-height: 42px;
+    color: currentColor;
+    font: inherit;
   }
 
   input::placeholder {
@@ -81,7 +83,7 @@
 }
 
 .searchWrapper {
-  border: 1px solid #b8b8b8;
+  border: 1px solid #b9b9b9;
   border-radius: 0px;
   min-height: 22px;
   padding: 5px;

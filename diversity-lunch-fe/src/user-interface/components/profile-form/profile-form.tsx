@@ -134,7 +134,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
     const hobbiesCounterToString = () => {
         switch (hobbyCounterCompState) {
             case 0:
-                return 'Noch keines Ausgewählt';
+                return 'keine Angabe';
             case 1:
                 return '1 | 3';
             case 2:
