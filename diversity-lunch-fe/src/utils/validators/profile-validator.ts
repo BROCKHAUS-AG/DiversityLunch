@@ -64,5 +64,5 @@ function isUpdatedHobbies(first: Array<Hobby>, second: Array<Hobby>): boolean {
     if (first.length !== second.length) {
         return true;
     }
-    return !first.map((value) => second.includes(value)).every((x) => x);
+    return !first.map((value) => second.find((valueUpdated) => value.id === valueUpdated.id)).every((x) => x);
 }
