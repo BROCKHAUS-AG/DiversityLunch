@@ -115,7 +115,10 @@ export const ProfileForm: FC<ProfileFormProps> = ({
         });
     }
 
-    const [hobbyCounterCompState, setHobbyCounterCompState] = useState(0);
+    // Helper Function to set an initalState for the MultiSelect - Form "Hobbies".
+    let initalHobbyCounterHelper = profile.hobby?.length;
+    if (initalHobbyCounterHelper === undefined) { initalHobbyCounterHelper = 0; }
+    const [hobbyCounterCompState, setHobbyCounterCompState] = useState(initalHobbyCounterHelper);
     const multiselectRef = React.createRef<Multiselect>();
 
     const increaseCounter = () => {
@@ -159,6 +162,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 <p className="Multi-select-label">Was sind deine Hobbies?</p>
                 <span className="labelWrapper"><label>Hobbies</label></span>
                 <Multiselect
+                    selectedValues={profile.hobby || undefined}
                     options={sortOptions(hobbies)}
                     placeholder={hobbiesCounterToString()}
                     onSelect={increaseCounter} // Function will trigger on select event
