@@ -16,7 +16,7 @@ export interface Profile {
     name: string,
     birthYear: number,
     email: string,
-    hobby: Hobby,
+    hobby: Array<Hobby>,
     project: Project
     originCountry: Country,
     diet: Diet,
