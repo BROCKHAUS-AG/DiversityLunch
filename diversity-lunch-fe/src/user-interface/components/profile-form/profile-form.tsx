@@ -1,8 +1,9 @@
-import {
+import React, {
     ChangeEvent, FC, FormEvent, useEffect, useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextField } from '@material-ui/core';
+import { Multiselect } from 'multiselect-react-dropdown';
 import { Profile } from '../../../model/Profile';
 import { Dropdown } from '../dropdown/dropdown';
 import { Button } from '../button/button';
@@ -18,7 +19,9 @@ import { religionFetch } from '../../../data/religion/religion-fetch';
 import { workExperienceFetch } from '../../../data/work-experience/work-experience-fetch';
 import { sexualOrientationFetch } from '../../../data/sexual-orientation/sexual-orientation-fetch';
 import { socialBackgroundFetch } from '../../../data/social-background/social-background-fetch';
-import { socialBackgroundDiscriminationFetch } from '../../../data/social-background-discrimination/social-background-discrimination-fetch';
+import {
+    socialBackgroundDiscriminationFetch,
+} from '../../../data/social-background-discrimination/social-background-discrimination-fetch';
 import { IdentifiableState } from '../../../data/generic/GenericSlice';
 import { Country } from '../../../model/Country';
 import { Diet } from '../../../model/Diet';
@@ -33,6 +36,7 @@ import { SexualOrientation } from '../../../model/SexualOrientation';
 import { SocialBackground } from '../../../model/SocialBackground';
 import { Identifiable } from '../../../data/generic/Identifiable';
 import { SocialBackgroundDiscrimination } from '../../../model/SocialBackgroundDiscrimination';
+import './profile-form.scss';
 
 export type ProfileFormCallback = (formData: Partial<Profile>) => void;
 export type ProfileFormIsValidCallback = (formData: Partial<Profile>)=>boolean;
@@ -111,6 +115,35 @@ export const ProfileForm: FC<ProfileFormProps> = ({
         });
     }
 
+    // Helper Function to set an initalState for the MultiSelect - Form "Hobbies".
+    let initalHobbyCounterHelper = profile.hobby?.length;
+    if (initalHobbyCounterHelper === undefined) { initalHobbyCounterHelper = 0; }
+    const [hobbyCounterCompState, setHobbyCounterCompState] = useState(initalHobbyCounterHelper);
+    const multiselectRef = React.createRef<Multiselect>();
+
+    const increaseCounter = () => {
+        setHobbyCounterCompState(hobbyCounterCompState + 1);
+        updateProfile('hobby', multiselectRef.current?.getSelectedItems());
+    };
+
+    const decreaseCounter = () => {
+        setHobbyCounterCompState(hobbyCounterCompState - 1);
+        updateProfile('hobby', multiselectRef.current?.getSelectedItems());
+    };
+
+    const hobbiesCounterToString = () => {
+        switch (hobbyCounterCompState) {
+            case 0:
+                return 'Noch keines Ausgewählt';
+            case 1:
+                return '1 | 3';
+            case 2:
+                return '2 | 3';
+            default:
+                return '3 | 3';
+        }
+    };
+
     return (
         <form onSubmit={formSubmitted} className="ProfileForm">
             <div className="DropdownQuestion">
@@ -123,6 +156,21 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                     onChange={(e: ChangeEvent<HTMLInputElement>) => updateProfile('birthYear', e.target.valueAsNumber)}
                     InputProps={{ inputProps: { min: 1900, max: 2022 } }}
                     defaultValue={profile.birthYear}
+                />
+            </div>
+            <div className="Multi-select-container">
+                <p className="Multi-select-label">Was sind deine Hobbies?</p>
+                <span className="labelWrapper"><label>Hobbies</label></span>
+                <Multiselect
+                    selectedValues={profile.hobby || undefined}
+                    options={sortOptions(hobbies)}
+                    placeholder={hobbiesCounterToString()}
+                    onSelect={increaseCounter} // Function will trigger on select event
+                    onRemove={decreaseCounter} // Function will trigger on remove event
+                    displayValue="descriptor"
+                    selectionLimit={3}
+                    closeIcon="cancel"
+                    ref={multiselectRef}
                 />
             </div>
             <Dropdown
@@ -167,13 +215,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 label="Berufserfahrung"
                 currentValue={profile.workExperience || undefined}
             />
-            <Dropdown
-                options={sortOptions(hobbies)}
-                placeholder="Was hast du für ein Hobby?"
-                onChange={(value) => updateProfile('hobby', value)}
-                label="Hobby"
-                currentValue={profile.hobby || undefined}
-            />
+
             <Dropdown
                 options={sortOptions(educations)}
                 placeholder="Welchen Bildungsweg hast du bisher bestritten?"

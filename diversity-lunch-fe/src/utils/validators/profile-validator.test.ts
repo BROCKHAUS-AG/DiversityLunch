@@ -17,7 +17,7 @@ describe('isValidProfile', () => {
             education: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             email: 'beste@email.wogibt',
             gender: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
-            hobby: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
+            hobby: [{ id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' }],
             id: 42,
             motherTongue: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             name: 'Klaus',
@@ -48,7 +48,7 @@ describe('isUpdatedProfile', () => {
             education: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             email: 'beste@email.wogibt',
             gender: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
-            hobby: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
+            hobby: [{ id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' }],
             id: 42,
             motherTongue: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             name: 'Klaus',
@@ -67,7 +67,7 @@ describe('isUpdatedProfile', () => {
             education: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             email: 'beste@email.wogibt',
             gender: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
-            hobby: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
+            hobby: [{ id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' }],
             id: 42,
             motherTongue: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             name: 'Klaus',
@@ -91,7 +91,7 @@ describe('isUpdatedProfile', () => {
             education: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             email: 'beste@email.wogibt',
             gender: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
-            hobby: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
+            hobby: [{ id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' }],
             id: 42,
             motherTongue: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             name: 'Klaus',
@@ -104,15 +104,13 @@ describe('isUpdatedProfile', () => {
             socialBackgroundDiscrimination: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
         };
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        Object.entries(currentProfile).forEach(([key], index) => {
+        Object.entries(currentProfile).forEach(([key]) => {
             const updatedProfile : Profile = JSON.parse(JSON.stringify(currentProfile));
             if (key === 'birthYear') updatedProfile[key] += 1;
-            else if (key === 'id' || key === 'name' || key === 'email') return;
+            else if (key === 'id' || key === 'name' || key === 'email' || key === 'hobby') return;
             else {
-                // eslint-disable-next-line no-param-reassign
                 // @ts-ignore
-                updatedProfile[key].id += 1;
+                updatedProfile[key].id += 1; // Element implicitly has an 'any' type, type 'string' can't be used to index type 'Profile'
             }
             const result : boolean = isUpdatedProfile(currentProfile, updatedProfile);
             expect(result).toBe(true);
