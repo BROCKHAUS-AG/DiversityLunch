@@ -32,8 +32,6 @@ export const Dashboard = () => {
                 <UserVoucherIcon />
             </div>
 
-            <DiversityIcon title="DIVERSITY LUNCH" poweredBy />
-
             <div className="Dashboard-tiles-container">
                 <TileIconLink title="DEIN PROFIL" icon={iconProfile} link="profile" />
                 <TileIconLink title="TERMIN WÄHLEN" icon={iconCalendar} link="/add+meetings/choose+date" />

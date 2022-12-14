@@ -1,9 +1,15 @@
+.diversitylunch-logo{
+  height: 100%;
+  width: 100%;
+}
+
 .IconHeader-diversity-logo-container{
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  height: 100%;
   color: #b81f40;
 }
 
@@ -12,7 +18,8 @@
 }
 
 .IconHeader-diversity-icon {
-  width: 40%;
+  height: 8rem;
+  width: auto;
 }
 
 .IconHeader-title{

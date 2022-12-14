@@ -16,10 +16,12 @@ import { BookingError } from './booking-error/booking-error';
 import { AdminPanel } from './admin-panel/admin-panel';
 import { VoucherPanel } from './voucher-panel/voucher-panel';
 import { UserVoucherList } from './user-voucher-list/user-voucher-list';
+import { AppHeader } from '../components/header/header';
 
 export const App = () => (
     <div className="App">
         <div className="Screen">
+            <AppHeader />
             <BrowserRouter>
                 <Switch>
                     <Route exact path="/">

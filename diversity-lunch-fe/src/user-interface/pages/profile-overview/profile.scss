@@ -35,3 +35,15 @@
   align-items: center;
 }
 
+.ProfileForm{
+  .DropdownQuestion{
+    input{
+      background: lightgrey;
+    }
+    input::placeholder{
+
+    }
+  }
+
+}
+

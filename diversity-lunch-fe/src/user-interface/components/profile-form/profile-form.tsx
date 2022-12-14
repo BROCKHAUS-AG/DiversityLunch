@@ -158,10 +158,11 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                     defaultValue={profile.birthYear}
                 />
             </div>
-            <div className="Multi-select-container">
+            <div className="Multi-select-container DropdownQuestion">
                 <p className="Multi-select-label">Was sind deine Hobbies?</p>
                 <span className="labelWrapper"><label>Hobbies</label></span>
                 <Multiselect
+                    showCheckbox
                     selectedValues={profile.hobby || undefined}
                     options={sortOptions(hobbies)}
                     placeholder={hobbiesCounterToString()}

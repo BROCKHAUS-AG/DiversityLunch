@@ -4,11 +4,7 @@ html {
 
 //Übergeordneter Container in dem alle Components liegen
 .App {
-  background-color: darkgray;
-  display: flex;
-  justify-content: center;
-  min-height: 100vh;
-  height: 100%;
+
   font-family: SourceSansProRegular, sans-serif;
   font-weight: 400;
   font-size: 1rem;
@@ -18,13 +14,8 @@ html {
 
 //Die Mobile View, die auf jedem Gerät angezeigt wird
 .Screen {
-  width: 100%;
-  max-width: 700px;
-  min-height: 100vh;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  background-color: #f0f0f0;
+
+  background-color: #ffffff;
 }
 
 h1 {
