@@ -21,13 +21,13 @@ public class HobbyCategoryMapperTest {
     private HobbyCategoryTestDataFactory factory;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         this.factory = new HobbyCategoryTestDataFactory();
         this.mapper = new HobbyCategoryMapper();
     }
 
     @Test
-    void testEntityToDto_withOneEntity_returnsOneDto(){
+    void testEntityToDto_withOneEntity_returnsOneDto() {
         //Arrange
         HobbyCategoryEntity inputEntity = factory.buildEntity(1);
         HobbyCategoryDto expectedDto = factory.buildDto(1);
@@ -40,7 +40,7 @@ public class HobbyCategoryMapperTest {
     }
 
     @Test
-    void testEntityToDto_withListOfThreeEntities_returnsListOfThreeDtos(){
+    void testEntityToDto_withListOfThreeEntities_returnsListOfThreeDtos() {
         //Arrange
         List<HobbyCategoryEntity> inputEntityList = Arrays.asList(factory.buildEntity(1), factory.buildEntity(2), factory.buildEntity(3));
         List<HobbyCategoryDto> expectedDtoList = Arrays.asList(factory.buildDto(1), factory.buildDto(2), factory.buildDto(3));
@@ -53,7 +53,7 @@ public class HobbyCategoryMapperTest {
     }
 
     @Test
-    void testEntityToDto_withEmptyEntityList_returnsEmptyDtoList(){
+    void testEntityToDto_withEmptyEntityList_returnsEmptyDtoList() {
         //Arrange
         List<HobbyCategoryDto> expectedDtoList = Collections.emptyList();
         List<HobbyCategoryEntity> inputEntityList = Collections.emptyList();
@@ -66,7 +66,7 @@ public class HobbyCategoryMapperTest {
     }
 
     @Test
-    void testDtoToEntity_withOneDto_returnsOneEntity(){
+    void testDtoToEntity_withOneDto_returnsOneEntity() {
         //Arrange
         HobbyCategoryDto inputDto = factory.buildDto(1);
         HobbyCategoryEntity expectedEntity = factory.buildEntity(1);
@@ -80,7 +80,7 @@ public class HobbyCategoryMapperTest {
     }
 
     @Test
-    void testDtoToEntity_withListOfTwoDtos_returnsListOfTwoEntities(){
+    void testDtoToEntity_withListOfTwoDtos_returnsListOfTwoEntities() {
         //Arrange
         List<HobbyCategoryEntity> expectedEntityList = Arrays.asList(factory.buildEntity(1), factory.buildEntity(2), factory.buildEntity(3));
         List<HobbyCategoryDto> inputDtoList = Arrays.asList(factory.buildDto(1), factory.buildDto(2), factory.buildDto(3));
@@ -92,7 +92,7 @@ public class HobbyCategoryMapperTest {
     }
 
     @Test
-    void testDtoToEntity_withEmptyDtoList_returnsEmptyEntityList(){
+    void testDtoToEntity_withEmptyDtoList_returnsEmptyEntityList() {
         //Arrange
         List<HobbyCategoryDto> inputDtoList = Collections.emptyList();
         List<HobbyCategoryEntity> expectedEntityList = Collections.emptyList();

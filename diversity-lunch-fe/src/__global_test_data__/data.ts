@@ -1,7 +1,7 @@
 import { Role } from '../model/Role';
-import { Account } from '../types/Account';
+import { Account } from '../model/Account';
 import { Profile } from '../model/Profile';
-import { UserVoucher } from '../types/UserVoucher';
+import { UserVoucher } from '../model/UserVoucher';
 
 export const categoryData = [{ id: 2, descriptor: 'Kreatives' }, { id: 1337, descriptor: 'Sport' }];
 export const countryData = [{ id: 9, descriptor: 'Bahamas' }, { id: 1337, descriptor: 'Deutschland' }];
@@ -36,7 +36,7 @@ export const profileData: Profile[] = [{
     project: projectData[0],
     religion: religionData[0],
     workExperience: workExperienceData[0],
-    hobby: hobbyData[0],
+    hobby: [hobbyData[0]],
     sexualOrientation: sexualOrientationData[0],
     socialBackground: socialBackgroundData[0],
     socialBackgroundDiscrimination: socialBackgroundDiscriminationData[0],
@@ -85,7 +85,7 @@ export const profileList: Profile[] = [
         project: projectData[0],
         religion: religionData[0],
         workExperience: workExperienceData[0],
-        hobby: hobbyData[0],
+        hobby: [hobbyData[0]],
         sexualOrientation: sexualOrientationData[0],
         socialBackground: socialBackgroundData[0],
         socialBackgroundDiscrimination: socialBackgroundDiscriminationData[0],
@@ -103,7 +103,7 @@ export const profileList: Profile[] = [
         project: projectData[0],
         religion: religionData[0],
         workExperience: workExperienceData[0],
-        hobby: hobbyData[0],
+        hobby: [hobbyData[0]],
         sexualOrientation: sexualOrientationData[0],
         socialBackground: socialBackgroundData[0],
         socialBackgroundDiscrimination: socialBackgroundDiscriminationData[0],
@@ -121,7 +121,7 @@ export const profileList: Profile[] = [
         project: projectData[0],
         religion: religionData[0],
         workExperience: workExperienceData[0],
-        hobby: hobbyData[0],
+        hobby: [hobbyData[0]],
         sexualOrientation: sexualOrientationData[0],
         socialBackground: socialBackgroundData[0],
         socialBackgroundDiscrimination: socialBackgroundDiscriminationData[0],

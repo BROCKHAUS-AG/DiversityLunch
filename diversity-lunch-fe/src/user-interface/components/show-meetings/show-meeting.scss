@@ -1,0 +1,38 @@
+@import "src/global-styles/reset";
+
+.ShowMeeting{
+  background-color: #c8c8c8;
+
+  width: 76%;
+  margin: 5% 0 5% 10%;
+  padding: 2%;
+
+  border: 1px solid black;
+
+  display: flex;
+}
+
+
+.ShowMeeting-text-container{
+  width: 70%;
+}
+
+.ShowMeeting-icon-container{
+  width: 30%;
+
+}
+
+.ShowMeeting-text{
+  margin: 5%;
+}
+
+.ShowMeeting-hamburgerIcon{
+  width: 40px;
+  margin-top: 15%;
+}
+
+.ShowMeeting-closeIcon{
+  width: 20px;
+  float: right;
+  margin: 2%;
+}

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
@@ -58,7 +59,7 @@ public class MeetingController {
             @Valid @RequestBody CreateMeetingProposalDto createMeetingProposalDto
     ) {
 
-        if(meetingService.meetingExists(id ,createMeetingProposalDto.getFromDateTime())) {
+        if (meetingService.meetingExists(id, createMeetingProposalDto.getFromDateTime())) {
             log.error("Meeting already exists: " + id.toString() + " Date: " + createMeetingProposalDto.getFromDateTime());
             return ResponseEntity.status(409).build();
         }
@@ -82,9 +83,29 @@ public class MeetingController {
     public @ResponseBody
     ResponseEntity<String> deleteMeetingProposal(@PathVariable Long id) {
 
-        if(this.meetingService.checkIfMeetingProposalIsMatched(id))
+        if (this.meetingService.checkIfMeetingProposalIsMatched(id))
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         this.meetingService.deleteMeetingProposal(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "Das angegebene Meeting wird für den User abgesagt.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "der angegebene Termin wird aus der Datenbank gelöscht, dem Partner wird wieder als ungematched angezeigt"),
+            @ApiResponse(responseCode = "400", description = "der Termin oder einer der User konnte nicht gefunden werden"),
+    })
+    @PreAuthorize("isMeetingsParticipantAndOwner(#meetingId, #profileId)")
+    @PostMapping("/{profileId}/cancel/{meetingId}")
+    public @ResponseBody
+    ResponseEntity<String> cancelMeeting(@PathVariable Long profileId, @PathVariable Long meetingId) {
+        try {
+            boolean couldCancel = this.meetingService.cancelMeeting(meetingId, profileId);
+            if(!couldCancel)
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (NoSuchElementException e)
+        {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

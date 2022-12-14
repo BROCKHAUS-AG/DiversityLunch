@@ -1,12 +1,11 @@
 package de.brockhausag.diversitylunchspringboot.profile.controllerTest;
 
-import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.profile.controller.ProfileController;
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.ProfileMapper;
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,20 +23,14 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class ProfileControllerTest {
 
-    @Mock
-    private ProfileService profileService;
-
-    @Mock
-    private ProfileMapper mapper;
-
-    @Mock
-    private AccountService accountService;
-
-    @InjectMocks
-    private ProfileController profileController;
-
     private final ProfileTestdataFactory factory = new ProfileTestdataFactory();
     private final Long accountId = 5L;
+    @Mock
+    private ProfileService profileService;
+    @Mock
+    private ProfileMapper mapper;
+    @InjectMocks
+    private ProfileController profileController;
 
     @Test
     void testGetProfile_withValidId_returnsOkWithProfileDto() {
@@ -108,7 +101,7 @@ class ProfileControllerTest {
     }
 
     @Test
-    void testPutProfile_serviceReturnsUpdatedDTO_returnsStatusOK(){
+    void testPutProfile_serviceReturnsUpdatedDTO_returnsStatusOK() {
         //Arrange
         ProfileDto inputDto = this.factory.buildDto(1);
         ProfileEntity profileEntity = this.factory.buildEntity(1);

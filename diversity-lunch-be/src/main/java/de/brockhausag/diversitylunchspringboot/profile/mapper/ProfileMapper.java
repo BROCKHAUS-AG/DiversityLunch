@@ -32,18 +32,15 @@ public class ProfileMapper {
     private final DietService dietService;
     private final EducationService educationService;
     private final GenderService genderService;
-    private final HobbyService hobbyService;
     private final LanguageService languageService;
     private final ProjectService projectService;
     private final ReligionService religionService;
     private final WorkExperienceService workExperienceService;
 
-    private final SexualOrientationService  sexualOrientationService;
+    private final SexualOrientationService sexualOrientationService;
     private final SocialBackgroundService socialBackgroundService;
 
     private final SocialBackgroundDiscriminationService socialBackgroundDiscriminationService;
-
-
 
 
     public ProfileDto entityToDto(ProfileEntity entity) {
@@ -75,7 +72,7 @@ public class ProfileMapper {
         Optional<DietEntity> dietEntityOptional = this.dietService.getEntityById(dto.getDiet().getId());
         Optional<EducationEntity> educationEntityOptional = this.educationService.getEntityById(dto.getEducation().getId());
         Optional<GenderEntity> genderEntityOptional = this.genderService.getEntityById(dto.getGender().getId());
-        Optional<HobbyEntity> hobbyEntityOptional = this.hobbyService.getEntityById(dto.getHobby().getId());
+        List<Optional<HobbyEntity>> hobbyEntityOptional = this.hobbyMapper.dtoToEntity(dto.getHobby());
         Optional<LanguageEntity> languageEntityOptional = this.languageService.getEntityById(dto.getMotherTongue().getId());
         Optional<ProjectEntity> projectEntityOptional = this.projectService.getEntityById(dto.getProject().getId());
         Optional<ReligionEntity> religionEntityOptional = this.religionService.getEntityById(dto.getReligion().getId());
@@ -84,35 +81,44 @@ public class ProfileMapper {
         Optional<SocialBackgroundEntity> socialBackgroundEntityOptional = this.socialBackgroundService.getEntityById(dto.getSocialBackground().getId());
         Optional<SocialBackgroundDiscriminationEntity> socialBackgroundDiscriminationEntityOptional = this.socialBackgroundDiscriminationService.getEntityById(dto.getSocialBackgroundDiscrimination().getId());
 
-        if (this.allObjectWithIdsArePresent(countryEntityOptional, dietEntityOptional, educationEntityOptional,
-                genderEntityOptional, hobbyEntityOptional, languageEntityOptional, projectEntityOptional,
-                religionEntityOptional, workExperienceEntityOptional, socialBackgroundEntityOptional)) {
-            ProfileEntity entity = new ProfileEntity();
-            entity.setId(dto.getId());
-            entity.setName(dto.getName());
-            entity.setEmail(dto.getEmail());
-            entity.setBirthYear(dto.getBirthYear());
+        if ((this.allObjectWithIdsArePresent(countryEntityOptional, dietEntityOptional, educationEntityOptional,
+                genderEntityOptional, languageEntityOptional, projectEntityOptional,
+                religionEntityOptional, workExperienceEntityOptional, socialBackgroundEntityOptional))
+        &&
+        this.allHobbiesInListArePresent(hobbyEntityOptional))
 
-            entity.setOriginCountry(countryEntityOptional.get());
-            entity.setDiet(dietEntityOptional.get());
-            entity.setEducation(educationEntityOptional.get());
-            entity.setGender(genderEntityOptional.get());
-            entity.setHobby(hobbyEntityOptional.get());
-            entity.setMotherTongue(languageEntityOptional.get());
-            entity.setProject(projectEntityOptional.get());
-            entity.setReligion(religionEntityOptional.get());
-            entity.setWorkExperience(workExperienceEntityOptional.get());
-            entity.setSexualOrientation(sexualOrientationEntityOptional.get());
-            entity.setSocialBackground(socialBackgroundEntityOptional.get());
-            entity.setSocialBackgroundDiscrimination(socialBackgroundDiscriminationEntityOptional.get());
-
-            return Optional.of(entity);
+        {
+            // TODO: remove stream and if clause on top
+            return Optional.of(
+                    ProfileEntity.builder()
+                            .id(dto.getId())
+                            .name(dto.getName())
+                            .email(dto.getEmail())
+                            .birthYear(dto.getBirthYear())
+                            .originCountry(countryEntityOptional.orElseThrow())
+                            .diet(dietEntityOptional.orElseThrow())
+                            .education(educationEntityOptional.orElseThrow())
+                            .gender(genderEntityOptional.orElseThrow())
+                            .hobby(hobbyEntityOptional.stream().map(Optional::orElseThrow).collect(Collectors.toList()))
+                            .motherTongue(languageEntityOptional.orElseThrow())
+                            .project(projectEntityOptional.orElseThrow())
+                            .religion(religionEntityOptional.orElseThrow())
+                            .workExperience(workExperienceEntityOptional.orElseThrow())
+                            .sexualOrientation(sexualOrientationEntityOptional.orElseThrow())
+                            .socialBackground(socialBackgroundEntityOptional.orElseThrow())
+                            .socialBackgroundDiscrimination(socialBackgroundDiscriminationEntityOptional.orElseThrow())
+                            .build()
+            );
         }
         return Optional.empty();
     }
 
     private boolean allObjectWithIdsArePresent(Optional<?>... optionals) {
         return Arrays.stream(optionals).allMatch(Optional::isPresent);
+    }
+
+    private boolean allHobbiesInListArePresent(List<Optional<HobbyEntity>> hobbyEntitites) {
+        return hobbyEntitites.stream().allMatch(Optional::isPresent);
     }
 
     public List<ProfileDto> entityToDto(List<ProfileEntity> entities) {

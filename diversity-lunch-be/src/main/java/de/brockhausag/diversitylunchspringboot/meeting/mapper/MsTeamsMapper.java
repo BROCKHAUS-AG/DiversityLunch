@@ -36,6 +36,7 @@ public class MsTeamsMapper {
 
         event.body = getItemBody(profileEntityOne, profileEntityTwo, meetingProposalEntityOne.getProposedDateTime());
 
+        event.responseRequested = true;
         event.allowNewTimeProposals = false;
         event.isOnlineMeeting = true;
         event.onlineMeetingProvider = OnlineMeetingProviderType.TEAMS_FOR_BUSINESS;
@@ -48,7 +49,6 @@ public class MsTeamsMapper {
         dateTimeTimeZone.timeZone = diversityLunchMsTeamsProperties.getTimeZone();
         return dateTimeTimeZone;
     }
-
 
 
     private ItemBody getItemBody(ProfileEntity profileEntityOne, ProfileEntity profileEntityTwo, LocalDateTime start) {

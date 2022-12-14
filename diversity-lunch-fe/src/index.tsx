@@ -5,11 +5,11 @@ import reportWebVitals from './reportWebVitals';
 import './resources/fonts/GilroyBlack.otf';
 
 // Styles
-import './styles/component-styles/index.scss';
+import './global-styles/index.scss';
 
 // redux
-import { APP_STORE } from './store/Store';
-import { AuthenticationCheck } from './components/Core/AuthenticationCheck';
+import { APP_STORE } from './data/app-store';
+import { AuthenticationCheck } from './user-interface/components/authentication-check/authentication-check';
 
 ReactDOM.render(
     <React.StrictMode>

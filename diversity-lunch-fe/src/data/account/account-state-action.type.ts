@@ -1,4 +1,4 @@
-import { Account } from '../../types/Account';
+import { Account } from '../../model/Account';
 
 type AccountStateOkAction = {
   type: 'ACCOUNT_LOADING_SUCCEEDED',

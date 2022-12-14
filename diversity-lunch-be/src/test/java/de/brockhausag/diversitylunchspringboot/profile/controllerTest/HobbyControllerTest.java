@@ -139,7 +139,7 @@ public class HobbyControllerTest {
     }
 
     @Test
-    void testDelete_withExistingId_returnsOk(){
+    void testDelete_withExistingId_returnsOk() {
         //Arrange
         final Long existingId = 42L;
 
@@ -153,7 +153,7 @@ public class HobbyControllerTest {
     }
 
     @Test
-    void testDelete_withNotExistingId_returnsNotFound(){
+    void testDelete_withNotExistingId_returnsNotFound() {
         //Arrange
         when(hobbyService.deleteEntityById(notExistingId)).thenReturn(false);
 
@@ -165,7 +165,7 @@ public class HobbyControllerTest {
     }
 
     @Test
-    void testGetAll_withNoValuesInDatabase_returnsEmptyList(){
+    void testGetAll_withNoValuesInDatabase_returnsEmptyList() {
         when(this.mapper.entityToDto(Collections.emptyList())).thenReturn(Collections.emptyList());
 
         when(hobbyService.getAllEntities()).thenReturn(Collections.emptyList());
@@ -174,16 +174,17 @@ public class HobbyControllerTest {
         ResponseEntity<List<HobbyDto>> response = hobbyController.getAll();
 
         //Assert
+        assert response.getBody() != null;
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(0,response.getBody().size());
+        assertEquals(0, response.getBody().size());
         assertEquals(Collections.emptyList(), response.getBody());
     }
 
     @Test
-    void testGetAll_withThreeValuesInDatabase_returnsListOfThreeDtos(){
+    void testGetAll_withThreeValuesInDatabase_returnsListOfThreeDtos() {
         //Arrange
         List<HobbyEntity> inputEntities = Stream.of(1, 2, 3).map(this.factory::buildEntity).toList();
-        List<HobbyDto> expectedDtos = Stream.of(1, 2, 3).map(this.factory::buildDto).toList();
+        List<HobbyDto> expectedDtos = this.factory.buildDtoList(3);
         when(this.mapper.entityToDto(inputEntities)).thenReturn(expectedDtos);
 
         when(hobbyService.getAllEntities()).thenReturn(inputEntities);
@@ -192,8 +193,9 @@ public class HobbyControllerTest {
         ResponseEntity<List<HobbyDto>> response = hobbyController.getAll();
 
         //Assert
+        assert response.getBody() != null;
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(expectedDtos.size(),response.getBody().size());
+        assertEquals(expectedDtos.size(), response.getBody().size());
         assertEquals(expectedDtos, response.getBody());
     }
 }

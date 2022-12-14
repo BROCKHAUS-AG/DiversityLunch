@@ -5,9 +5,9 @@ import {
     authenticatedFetchGet,
     authenticatedFetchPost,
 } from '../../utils/fetch.utils';
-import { MeetingDto } from '../../types/dtos/MeetingDto';
+import { MeetingDto } from '../../model/dtos/MeetingDto';
 import { mapCreateMeetingToDto, mapDtoToMeeting } from '../../mapper/MeetingMapper';
-import { CreateMeeting, Meeting } from '../../types/Meeting';
+import { CreateMeeting, Meeting } from '../../model/Meeting';
 
 export const startLoadingAction: MeetingsStateAction = {
     type: 'MEETINGS_LOADING',
@@ -72,6 +72,16 @@ export const deleteMeetingProposal = (meeting: Meeting, profileId: number) => as
     dispatch(startUpdatingAction);
 
     const result = await authenticatedFetchDelete(`api/meetings/${meeting.id}`);
+    if (result.ok) {
+        const meetingOK = await loadingFunction(profileId);
+        dispatch({ ...meetingOK, type: 'MEETINGS_UPDATED' });
+    }
+};
+
+export const deleteMeetingUpcoming = (meeting: Meeting, profileId: number) => async (dispatch: Dispatch) => {
+    dispatch(startUpdatingAction);
+
+    const result = await authenticatedFetchPost(`api/meetings/${profileId}/cancel/${meeting.id}`, {});
     if (result.ok) {
         const meetingOK = await loadingFunction(profileId);
         dispatch({ ...meetingOK, type: 'MEETINGS_UPDATED' });

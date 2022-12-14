@@ -45,7 +45,7 @@ public class HobbyMapperTest {
         HobbyDto inputDto = this.factory.buildDto(1);
         HobbyEntity expectedEntity = this.factory.buildEntity(1);
 
-        when(this.hobbyCategoryService.getEntityById(expectedEntity.getCategory().getId())).thenReturn(Optional.of(expectedEntity.getCategory()));
+        when(this.hobbyCategoryService.getEntityById(inputDto.getCategory().getId())).thenReturn(Optional.of(expectedEntity.getCategory()));
 
         //Act
         Optional<HobbyEntity> hobbyEntityOptional = this.hobbyMapper.dtoToEntity(inputDto);
@@ -56,7 +56,7 @@ public class HobbyMapperTest {
     }
 
     @Test
-    void testDtoToEntity_withOneBrokenDto_returnsOneEmptyOptional(){
+    void testDtoToEntity_withOneBrokenDto_returnsOneEmptyOptional() {
         //Arrange
         HobbyDto inputDto = this.factory.buildDtoWithoutCategory();
 
@@ -66,8 +66,9 @@ public class HobbyMapperTest {
         //Assert
         assertTrue(actual.isEmpty());
     }
+
     @Test
-    void testDtoToEntity_withDtoWithWrongCategoryId_returnsOneEmptyOptional(){
+    void testDtoToEntity_withDtoWithWrongCategoryId_returnsOneEmptyOptional() {
         //Arrange
         HobbyDto inputDto = this.factory.buildDto(1);
         Long wrongId = 99L;
@@ -112,12 +113,13 @@ public class HobbyMapperTest {
     void testEntityToDto_withListOfThreeEntities_returnsListOfThreeDtos() {
         //Arrange
         List<HobbyEntity> inputEntities = Stream.of(1, 2, 3).map(this.factory::buildEntity).toList();
-        List<HobbyDto> expectedDtos = Stream.of(1, 2, 3).map(this.factory::buildDto).toList();
+        List<HobbyDto> expectedDtos = factory.buildDtoList(3);
 
         StreamUtils.zip(inputEntities.stream(), expectedDtos.stream(), (entity, dto) -> {
             when(this.hobbyCategoryMapper.entityToDto(entity.getCategory())).thenReturn(dto.getCategory());
             return null;
-        }).forEach(unused->{});
+        }).forEach(unused -> {
+        });
 
         //Act
         List<HobbyDto> actualDtos = this.hobbyMapper.entityToDto(inputEntities);

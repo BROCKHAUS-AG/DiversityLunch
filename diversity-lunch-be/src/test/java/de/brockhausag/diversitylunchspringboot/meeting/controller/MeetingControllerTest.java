@@ -40,7 +40,7 @@ class MeetingControllerTest {
     private ProfileTestdataFactory profileTestdataFactory;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         this.profileTestdataFactory = new ProfileTestdataFactory();
         this.meetingTestdataFactory = new MeetingTestdataFactory();
     }
@@ -82,7 +82,7 @@ class MeetingControllerTest {
     }
 
     @Test
-    void testPostMeeting_serviceProfileNotFound_returnsBadRequest(){
+    void testPostMeeting_serviceProfileNotFound_returnsBadRequest() {
         CreateMeetingProposalDto createMeetingProposalDto = this.meetingTestdataFactory.createDto();
         long invalidId = 119L;
 
@@ -132,5 +132,29 @@ class MeetingControllerTest {
         ResponseEntity<MeetingDto> response = meetingController.createMeetingProposal(profileEntity.getId(), createMeetingProposalDto);
 
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    }
+
+    @Test
+    void testCancelMeeting_withCorrectRequest_returnsOk(){
+        Long meetingId = 1L;
+        Long profileId = 1L;
+
+        when(meetingService.cancelMeeting(meetingId, profileId)).thenReturn(true);
+
+        ResponseEntity<String> response = meetingController.cancelMeeting(profileId, meetingId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    void testCancelMeeting_withPastMeeting_returnsBadRequest(){
+        Long meetingId = 1L;
+        Long profileId = 1L;
+
+        when(meetingService.cancelMeeting(meetingId, profileId)).thenReturn(false);
+
+        ResponseEntity<String> response = meetingController.cancelMeeting(profileId, meetingId);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 }

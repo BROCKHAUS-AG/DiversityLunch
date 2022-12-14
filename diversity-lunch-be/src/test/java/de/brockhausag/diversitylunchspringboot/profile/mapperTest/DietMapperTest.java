@@ -24,8 +24,9 @@ public class DietMapperTest {
 
 
     private DietMapper dietMapper;
+
     @BeforeEach
-    void setup(){
+    void setup() {
         final Long firstId = 1L, secondId = 2L, thirdId = 3L;
         final String firstDescriptor = "First Object", secondDescriptor = "Second Object",
                 thirdDescriptor = "Third Object";
@@ -42,7 +43,7 @@ public class DietMapperTest {
     }
 
     @Test
-    void testEntityToDto_withOneEntity_returnsOneDto(){
+    void testEntityToDto_withOneEntity_returnsOneDto() {
         //Arrange
         DietEntity inputEntity = firstEntity;
         DietDto expectedDto = firstDto;
@@ -55,7 +56,7 @@ public class DietMapperTest {
     }
 
     @Test
-    void testEntityToDto_withListOfThreeEntities_returnsListOfThreeDtos(){
+    void testEntityToDto_withListOfThreeEntities_returnsListOfThreeDtos() {
         //Arrange
         List<DietEntity> inputEntityList = Arrays.asList(firstEntity, secondEntity, thirdEntity);
         List<DietDto> expectedDtoList = Arrays.asList(firstDto, secondDto, thirdDto);
@@ -68,7 +69,7 @@ public class DietMapperTest {
     }
 
     @Test
-    void testEntityToDto_withEmptyEntityList_returnsEmptyDtoList(){
+    void testEntityToDto_withEmptyEntityList_returnsEmptyDtoList() {
         //Arrange
         List<DietDto> expectedDtoList = Collections.emptyList();
         List<DietEntity> inputEntityList = Collections.emptyList();
@@ -81,7 +82,7 @@ public class DietMapperTest {
     }
 
     @Test
-    void testDtoToEntity_withOneDto_returnsOneEntity(){
+    void testDtoToEntity_withOneDto_returnsOneEntity() {
         //Arrange
         DietDto inputDto = firstDto;
         DietEntity expectedEntity = firstEntity;
@@ -95,7 +96,7 @@ public class DietMapperTest {
     }
 
     @Test
-    void testDtoToEntity_withListOfTwoDtos_returnsListOfTwoEntities(){
+    void testDtoToEntity_withListOfTwoDtos_returnsListOfTwoEntities() {
         //Arrange
         List<DietEntity> expectedEntityList = Arrays.asList(firstEntity, secondEntity, thirdEntity);
         List<DietDto> inputDtoList = Arrays.asList(firstDto, secondDto, thirdDto);
@@ -108,7 +109,7 @@ public class DietMapperTest {
     }
 
     @Test
-    void testDtoToEntity_withEmptyDtoList_returnsEmptyEntityList(){
+    void testDtoToEntity_withEmptyDtoList_returnsEmptyEntityList() {
         //Arrange
         List<DietDto> inputDtoList = Collections.emptyList();
         List<DietEntity> expectedEntityList = Collections.emptyList();

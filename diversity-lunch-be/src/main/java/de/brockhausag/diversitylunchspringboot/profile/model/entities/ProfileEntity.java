@@ -1,18 +1,20 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionEntity;
+import de.brockhausag.diversitylunchspringboot.generics.weightedDimension.WeightedEntity;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class ProfileEntity {
 
     @Id
@@ -38,8 +40,14 @@ public class ProfileEntity {
     private ReligionEntity religion;
     @ManyToOne
     private WorkExperienceEntity workExperience;
-    @ManyToOne
-    private HobbyEntity hobby;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "profile_hobby",
+            joinColumns = { @JoinColumn(name = "profile_id") },
+            inverseJoinColumns = { @JoinColumn(name = "hobby_id") }
+    )
+    private List<HobbyEntity> hobby;
     @ManyToOne
     private SexualOrientationEntity sexualOrientation;
     @ManyToOne
@@ -62,6 +70,27 @@ public class ProfileEntity {
         final ProfileEntity other = (ProfileEntity) obj;
         return other.id.equals(this.id) && other.name.equals(this.name) &&
                 other.email.equals(this.email) && (other.birthYear == this.birthYear);
+    }
+
+    public List<DefaultDimensionEntity> getDefaultEntities() {
+        List<DefaultDimensionEntity> baseEntities = new ArrayList<>();
+        baseEntities.add(originCountry);
+        baseEntities.add(diet);
+        baseEntities.add(education);
+        baseEntities.add(gender);
+        baseEntities.add(motherTongue);
+        baseEntities.add(project);
+        baseEntities.add(religion);
+        baseEntities.add(sexualOrientation);
+        baseEntities.add(socialBackground);
+        baseEntities.add(socialBackgroundDiscrimination);
+        return baseEntities;
+    }
+
+    public List<WeightedEntity> getWeightedEntities() {
+        List<WeightedEntity> weightedEntitites = new ArrayList<>();
+        weightedEntitites.add(workExperience);
+        return weightedEntitites;
     }
 
 }

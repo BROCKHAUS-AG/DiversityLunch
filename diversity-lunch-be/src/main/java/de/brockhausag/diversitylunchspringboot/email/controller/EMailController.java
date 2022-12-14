@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.email.controller;
 
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
+import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchApplicationSettingsProperties;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -23,13 +24,16 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class EMailController {
     private final DiversityLunchEMailService diversityLunchEMailService;
+    private final DiversityLunchApplicationSettingsProperties settingsProperties;
+
     @Operation(summary = "Test Mail wird versendet.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Test Mail wurde versendet."),
     })
     @PostMapping("/sendTestMail")
-    public ResponseEntity<String> sendTestMail(){
-        String body = "Datum: " + LocalDateTime.now();
+    public ResponseEntity<String> sendTestMail() {
+        String claimLink = settingsProperties.getBaseUrl() + "/voucherClaim/testMeeting";
+        String body = "Datum: " + LocalDateTime.now() + "\n" + "Claim-Link: " + claimLink;
         try {
             this.diversityLunchEMailService.sendEmail("test@test.de", "Testsubject", body, body);
             log.info("requested on /api/mailing/sendTestMail successful");
@@ -46,8 +50,9 @@ public class EMailController {
     })
     @PostMapping("/sendTestMailToUser")
     @PreAuthorize("isProfileOwner(#id)")
-    public ResponseEntity<String> sendTestMailToUser(Long id){
-        String body = "Datum: " + LocalDateTime.now();
+    public ResponseEntity<String> sendTestMailToUser(Long id) {
+        String claimLink = settingsProperties.getBaseUrl() + "/voucherClaim/testMeeting";
+        String body = "Datum: " + LocalDateTime.now() + "\n" + "Claim-Link: " + claimLink;
         try {
             diversityLunchEMailService.sendMailToUser(id, body);
             log.info("requested on /api/mailing/sendTestMailToUser successful");
@@ -64,8 +69,9 @@ public class EMailController {
     })
     @PostMapping("/sendTestMailToUser/{id}")
     @PreAuthorize("isProfileOwner(#id)")
-    public ResponseEntity<String> sendTestMailToUserPathVariable(@PathVariable long id){
-        String body = "Datum: " + LocalDateTime.now();
+    public ResponseEntity<String> sendTestMailToUserPathVariable(@PathVariable long id) {
+        String claimLink = settingsProperties.getBaseUrl() + "/voucherClaim/testMeeting";
+        String body = "Datum: " + LocalDateTime.now() + "\n" + "Claim-Link: " + claimLink;
         try {
             diversityLunchEMailService.sendMailToUser(id, body);
             log.info("requested on /api/mailing/sendTestMailToUser/{id} successful");
@@ -75,15 +81,16 @@ public class EMailController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @Operation(summary = "10 Test Mails werden an eingeloggten User versendet.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "10 Test Mails wurden versendet."),
     })
     @PostMapping("/sendTenTestMailsToUser")
     @PreAuthorize("isProfileOwner(#id)")
-    public ResponseEntity<String> sendTenTestMailsToUser(Long id){
+    public ResponseEntity<String> sendTenTestMailsToUser(Long id) {
         try {
-            for (int i = 1;  i<= 10; i++) {
+            for (int i = 1; i <= 10; i++) {
                 String body = "Datum: " + LocalDateTime.now() + "\n" + "Mailnr.: " + i;
                 diversityLunchEMailService.sendMailToUser(id, body);
             }
