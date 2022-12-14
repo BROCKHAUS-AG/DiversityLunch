@@ -1,8 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapperTest;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.HobbyTestDataFactory;
-import de.brockhausag.diversitylunchspringboot.profile.logic.HobbyCategoryService;
-import de.brockhausag.diversitylunchspringboot.profile.mapper.HobbyCategoryMapper;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.HobbyMapper;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;

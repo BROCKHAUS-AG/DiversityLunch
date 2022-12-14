@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.dtos;
 
 import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionDto;
+import de.brockhausag.diversitylunchspringboot.generics.multiDimension.MultiDimensionDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -13,7 +14,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class HobbyDto implements DefaultDimensionDto {
+public class HobbyDto implements MultiDimensionDto {
 
     private Long id;
 
@@ -22,7 +23,4 @@ public class HobbyDto implements DefaultDimensionDto {
     @NotNull
     @NotBlank
     private String descriptor;
-    @NotNull
-    private HobbyCategoryDto category;
-
 }

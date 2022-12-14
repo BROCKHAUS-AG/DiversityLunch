@@ -39,6 +39,7 @@ public class SocialBackgroundEntity implements DefaultDimensionEntity {
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
     }
 
+    @Override
     public Category getQuestionCategory() {
         return Category.SOCIAL_BACKGROUND;
     }

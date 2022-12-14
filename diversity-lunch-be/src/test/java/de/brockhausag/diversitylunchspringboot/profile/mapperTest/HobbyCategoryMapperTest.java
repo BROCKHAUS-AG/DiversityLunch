@@ -1,9 +1,5 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapperTest;
 
-import de.brockhausag.diversitylunchspringboot.dataFactories.HobbyCategoryTestDataFactory;
-import de.brockhausag.diversitylunchspringboot.profile.mapper.HobbyCategoryMapper;
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyCategoryDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyCategoryEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
