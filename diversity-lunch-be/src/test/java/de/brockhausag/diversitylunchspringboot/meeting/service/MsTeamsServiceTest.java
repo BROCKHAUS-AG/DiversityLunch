@@ -59,66 +59,6 @@ class MsTeamsServiceTest {
         assertEquals(5, actual.size());
     }
 
-    @Test
-    void testGetCancelerEmail_OneProfileCanceledTheMeeting() {
-        ProfileEntity p1 = profileFactory.buildEntity(1);
-        ProfileEntity p2 = profileFactory.buildEntity(2);
-        Event event1 = createMicrosoftGraphEvent(p1, true, p2, false);
-
-        List<String> cancelerMail1 = MsTeamsService.getCancelerEmail(event1);
-        assertEquals(1, cancelerMail1.size());
-        assertEquals(p1.getEmail(), cancelerMail1.get(0));
-
-        Event event2 = createMicrosoftGraphEvent(p1, false, p2, true);
-
-        List<String> cancelerMail2 = MsTeamsService.getCancelerEmail(event2);
-        assertEquals(1, cancelerMail2.size());
-        assertEquals(p2.getEmail(), cancelerMail2.get(0));
-    }
-
-    @Test
-    void testGetCancelerEmail_NoProfileCanceledTheMeeting_ShouldReturnEmptyOptional() {
-        ProfileEntity p1 = profileFactory.buildEntity(1);
-        ProfileEntity p2 = profileFactory.buildEntity(2);
-        Event event = createMicrosoftGraphEvent(p1, false, p2, false);
-
-        List<String> actual = MsTeamsService.getCancelerEmail(event);
-        assertTrue(actual.isEmpty());
-    }
-
-    @Test
-    void testGetCancelerEmail_BothProfileCanceledTheMeeting_ShouldReturnEmptyOptional() {
-        ProfileEntity p1 = profileFactory.buildEntity(1);
-        ProfileEntity p2 = profileFactory.buildEntity(2);
-        Event event = createMicrosoftGraphEvent(p1, true, p2, true);
-
-        List<String> actual = MsTeamsService.getCancelerEmail(event);
-        assertEquals(2, actual.size());
-    }
-
-    @Test
-    void testGetCancelerProfileByEmail_BothMeetingsMatchWithEmail() {
-        ProfileEntity p1 = profileFactory.buildEntity(1);
-        ProfileEntity p2 = profileFactory.buildEntity(2);
-        MeetingEntity meeting = meetingFactory.matchedMeeting(p1, p2);
-
-        ProfileEntity actual1 = msTeamsService.getCancelerProfileByEmail(meeting, p1.getEmail()).orElseThrow();
-        assertEquals(p1, actual1);
-
-        ProfileEntity actual2 = msTeamsService.getCancelerProfileByEmail(meeting, p2.getEmail()).orElseThrow();
-        assertEquals(p2, actual2);
-    }
-
-    @Test
-    void testGetCancelerProfileByEmail_WithoutMatchingEmail () {
-        ProfileEntity p1 = profileFactory.buildEntity(1);
-        ProfileEntity p2 = profileFactory.buildEntity(2);
-        MeetingEntity meeting = meetingFactory.matchedMeeting(p1, p2);
-
-        Optional<ProfileEntity> actual = msTeamsService.getCancelerProfileByEmail(meeting, "NotTheReal@Mail");
-        assertFalse(actual.isPresent());
-    }
-
     private Event createMicrosoftGraphEvent(ProfileEntity profile1, boolean profile1Declined, ProfileEntity profile2, boolean profile2Declined) {
         Attendee attendee1 = createMicrosoftGraphAttendee(profile1, profile1Declined);
         Attendee attendee2 = createMicrosoftGraphAttendee(profile2, profile2Declined);
