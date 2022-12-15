@@ -2,26 +2,11 @@ INSERT INTO country_entity(descriptor) VALUES ('Algerien'),('Andorra'),('Angola'
 INSERT INTO diet_entity(descriptor)  VALUES ('Fleischesser'),('Vegetarier'),('Veganer'), ('Sonstige');
 INSERT INTO education_entity(descriptor) VALUES ('Ausbildung'), ('Studium'), ('Andere Wege');
 INSERT INTO gender_entity(descriptor) VALUES ('Männlich'), ('Weiblich'), ('Keine Angabe');
-INSERT INTO hobby_category_entity(descriptor) VALUES ('Sport'), ('Kreatives'), ('Natur'), ('Unterhaltung'), ('Kultur'), ('Sonstiges');
 INSERT INTO language_entity(descriptor) VALUES ('Akan'),('Amharisch'),('Arabisch'),('Aserbaidschanisch'),('Assamesisch'),('Awadhi'),('Belutschisch'),('Bengalisch'),('Bhojpuri'),('Bulgarisch'),('Burmesisch'),('Cebuano'),('Chhattisgarhi'),('Chichewa'),('Chittagonisch'),('Dakhini'),('Deutsch'),('Dhundari'),('Daenisch'),('Englisch'),('Estnisch'),('Finnisch'),('Franzoesisch'),('Fulfulde'),('Ganchinesisch'),('Griechisch'),('Guarani'),('Gujarati'),('Haitanischeskreol'),('Hakkachinesisch'),('Haryanvi'),('Hausa'),('Hiligaynon'),('Hindi'),('Hmong'),('Hocharabisch'),('Igbo'),('Ilokano'),('Indonesisch'),('Irisch'),('Italienisch'),('Japanisch'),('Javanisch'),('Jinchinesisch'),('Kannada'),('Kantonesisch'),('Kasachisch'),('Katalanisch'),('Khmer'),('Kinyarwanda'),('Kirundi'),('Konkani'),('Koreanisch'),('Kroatisch'),('Kurdisch'),('Lettisch'),('Litauisch'),('Maduresisch'),('Magahi'),('Maithili'),('Malagasy'),('Malaiisch'),('Malayalam'),('Maltesisch'),('Marathi'),('Marwari'),('Minanchinesisch'),('Minbeichinesisch'),('Mindongchinesisch'),('Moore'),('Nahuatl'),('Nepali'),('Niederlaendisch'),('Oriya'),('Oromo'),('Panjabi'),('Paschtunisch'),('Persisch'),('Polnisch'),('Portugiesisch'),('Quechua'),('Rumaenisch'),('Russisch'),('Saraiki'),('Schwedisch'),('Sindhi'),('Singhalesisch'),('Slowakisch'),('Slowenisch'),('Somali'),('Spanisch'),('Suaheli'),('Sundanesisch'),('Sylheti'),('Tagalog'),('Tamil'),('Telugu'),('Thai'),('Tschechisch'),('Turkmenisch'),('Tuerkisch'),('Uigurisch'),('Ukrainisch'),('Ungarisch'),('Urdu'),('Usbekisch'),('Vietnamesisch'),('Weissrussisch'),('Wuchinesisch'),('Xiangchinesisch'),('Yoruba'),('Zhuangchinesisch'),('Isixhosa'),('Isizulu'),('Aegyptischarabisch'),('Mandarinchinesisch');
 INSERT INTO project_entity(descriptor) VALUES ('Externes Projekt'), ('Internes Projekt');
 INSERT INTO religion_entity(descriptor) VALUES ('Judentum'),('Christentum'),('Islam'),('Hinduismus'),('Buddhismus'),('Sonstige'),('Kein Glaube');
 INSERT INTO work_experience_entity(descriptor, weight) VALUES ('0-3 Jahre', 1), ('4-10 Jahre', 2),('über 10 Jahre', 3);
-
-WITH sport AS (SELECT id FROM hobby_category_entity WHERE hobby_category_entity.descriptor = 'Sport' LIMIT 1),
-     kreatives AS (SELECT id FROM hobby_category_entity WHERE hobby_category_entity.descriptor = 'Kreatives' LIMIT 1),
-     natur AS (SELECT id FROM hobby_category_entity WHERE hobby_category_entity.descriptor = 'Natur' LIMIT 1),
-     unterhaltung AS (SELECT id FROM hobby_category_entity WHERE hobby_category_entity.descriptor = 'Unterhaltung' LIMIT 1),
-     kultur AS (SELECT id FROM hobby_category_entity WHERE hobby_category_entity.descriptor = 'Kultur' LIMIT 1),
-     sonstiges AS (SELECT id FROM hobby_category_entity WHERE hobby_category_entity.descriptor = 'Sonstiges' LIMIT 1)
-
-INSERT INTO hobby_entity(descriptor, category_id) VALUES ('Angeln', (SELECT * FROM natur)), ('Ballsport', (SELECT * FROM sport)), ('Bogenschießen', (SELECT * FROM sport)), ('Camping', (SELECT * FROM natur)),
-                                                         ('Dart', (SELECT * FROM sport)), ('DIY', (SELECT * FROM kreatives)), ('Filme', (SELECT * FROM unterhaltung)), ('Gaming', (SELECT * FROM unterhaltung)),
-                                                         ('Gärtnern', (SELECT * FROM natur)), ('Fotografie', (SELECT * FROM kreatives)), ('Gesellschaftsspiele', (SELECT * FROM kultur)),
-                                                         ('Jagen', (SELECT * FROM natur)), ('Joggen', (SELECT * FROM sport)), ('Kampfsport', (SELECT * FROM sport)), ('Klettern', (SELECT * FROM sport)),
-                                                         ('Kochen', (SELECT * FROM kultur)), ('Lesen', (SELECT * FROM unterhaltung)), ('Malen', (SELECT * FROM kreatives)), ('Musik', (SELECT * FROM unterhaltung)),
-                                                         ('Puzzlen', (SELECT * FROM unterhaltung)), ('Radsport', (SELECT * FROM sport)), ('Tanzen', (SELECT * FROM sport)), ('Theater', (SELECT * FROM kultur)),
-                                                         ('Wandern', (SELECT * FROM natur)), ('Yoga', (SELECT * FROM sport)), ('Sonstiges', (SELECT * FROM sonstiges));
+INSERT INTO hobby_entity(descriptor) VALUES ('Angeln'), ('Ballsport'), ('Bogenschießen'), ('Camping'), ('Dart'), ('DIY'), ('Filme'), ('Gaming'), ('Gärtnern'), ('Fotografie'), ('Gesellschaftsspiele'), ('Jagen'), ('Joggen'), ('Kampfsport'), ('Klettern'), ('Kochen'), ('Lesen'), ('Malen'), ('Musik'), ('Puzzlen'), ('Radsport'), ('Tanzen'), ('Theater'), ('Wandern'), ('Yoga'), ('Sonstiges');
 INSERT INTO sexual_orientation_entity(descriptor) VALUES
                                                       ('Heterosexuell'),
                                                       ('Homosexuell'),
