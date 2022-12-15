@@ -2,6 +2,7 @@ import React from 'react';
 import { DiversityIcon } from '../../components/diversity-icon/diversity-icon';
 import { CloseSite } from '../../components/close-site/close-site';
 import './information.scss';
+import Faq from '../../components/faq/faq';
 
 export const Information = () => (
     <div className="Information">
@@ -32,6 +33,8 @@ export const Information = () => (
             <br />
             Das Diversity-Team der BROCKHAUS AG
         </p>
+
+        <Faq />
 
     </div>
 );
