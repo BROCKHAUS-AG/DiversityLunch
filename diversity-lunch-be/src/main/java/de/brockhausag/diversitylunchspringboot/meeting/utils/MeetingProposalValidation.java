@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.meeting.utils;
 
 import de.brockhausag.diversitylunchspringboot.meeting.customValidators.ProposedDateTimeValidator;
+import org.apache.tomcat.jni.Local;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -9,6 +10,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -19,8 +21,12 @@ import java.util.TimeZone;
  * leading to two different valid GMT+0 time arrays.
  */
 public class MeetingProposalValidation implements ConstraintValidator<ProposedDateTimeValidator, LocalDateTime> {
-    private static final LocalTime[] validSummerTimes = {LocalTime.of(10, 30), LocalTime.of(11, 0), LocalTime.of(11, 30)};
-    private static final LocalTime[] validWinterTimes = {LocalTime.of(11, 30), LocalTime.of(12, 0), LocalTime.of(12, 30)};
+    private static final List<LocalTime> validTimeslots = List.of(
+            LocalTime.of(10, 30),
+            LocalTime.of(11, 0),
+            LocalTime.of(11, 30),
+            LocalTime.of(12, 0)
+            );
 
     private static boolean isSummerTime(LocalDateTime proposedDateTime) {
         final TimeZone europeBerlinTimeZone = TimeZone.getTimeZone(ZoneId.of("Europe/Berlin"));
@@ -34,7 +40,9 @@ public class MeetingProposalValidation implements ConstraintValidator<ProposedDa
 
     @Override
     public boolean isValid(LocalDateTime proposedDateTime, ConstraintValidatorContext cxt) {
-        final LocalTime[] validTimes = isSummerTime(proposedDateTime) ? validSummerTimes : validWinterTimes;
-        return Arrays.stream(validTimes).anyMatch(t -> t.equals(proposedDateTime.toLocalTime()));
+        final List<LocalTime> validTimes = isSummerTime(proposedDateTime) ?
+                validTimeslots :
+                validTimeslots.stream().map(timeSlot -> timeSlot.plusHours(1)).toList();
+        return validTimes.stream().anyMatch(t -> t.equals(proposedDateTime.toLocalTime()));
     }
 }

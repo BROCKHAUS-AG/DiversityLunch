@@ -48,13 +48,13 @@ public class MeetingProposalValidationTest {
     }
 
     @Test
-    void test_12_00_isNoValidSummerTime() {
+    void test_12_00_isValidSummerTime() {
         LocalDateTime proposedDate_1200_1st_June_2022 = LocalDateTime.of(2022, Month.JUNE, 1, 12, 0);
         MeetingProposalValidation meetingProposalValidation = new MeetingProposalValidation();
 
         boolean result = meetingProposalValidation.isValid(proposedDate_1200_1st_June_2022, cvcMock);
 
-        assertFalse(result);
+        assertTrue(result);
     }
 
     @Test
