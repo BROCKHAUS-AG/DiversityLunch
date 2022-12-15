@@ -134,4 +134,41 @@ public class HobbyControllerTest {
         assertEquals(expectedDtos.size(), response.getBody().size());
         assertEquals(expectedDtos, response.getBody());
     }
+
+    @Test
+    void testGetSelection_withNoValuesInDatabase_returnsEmptyList() {
+        List<Long> inputIds = Stream.of(30L, 40L, 42L).toList();
+
+        when(this.mapper.entityToDto(Collections.emptyList())).thenReturn(Collections.emptyList());
+        when(hobbyService.getEntitySelectionByIds(inputIds)).thenReturn(Collections.emptyList());
+
+        //Act
+        ResponseEntity<List<HobbyDto>> response = hobbyController.getSelection(inputIds);
+
+        //Assert
+        assert response.getBody() != null;
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(0, response.getBody().size());
+        assertEquals(Collections.emptyList(), response.getBody());
+    }
+
+    @Test
+    void testGetSelection_withThreeValuesInDatabase_returnsListOfThreeDtos() {
+        //Arrange
+        List<Long> inputIds = Stream.of(30L, 40L, 42L).toList();
+        List<HobbyEntity> inputEntities = Stream.of(1, 2, 3).map(this.factory::buildEntity).toList();
+        List<HobbyDto> expectedDtos = this.factory.buildDtoList(3);
+        when(this.mapper.entityToDto(inputEntities)).thenReturn(expectedDtos);
+
+        when(hobbyService.getEntitySelectionByIds(inputIds)).thenReturn(inputEntities);
+
+        //Act
+        ResponseEntity<List<HobbyDto>> response = hobbyController.getSelection(inputIds);
+
+        //Assert
+        assert response.getBody() != null;
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expectedDtos.size(), response.getBody().size());
+        assertEquals(expectedDtos, response.getBody());
+    }
 }

@@ -26,9 +26,6 @@ public class MultiDimensionModelController <
     @GetMapping("/selection")
     public ResponseEntity<List<DtoType>> getSelection(@RequestBody List<Long> idList) {
         List<EntityType> entityList = service.getEntitySelectionByIds(idList);
-        if (entityList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(
                 mapper.entityToDto(entityList),
                 HttpStatus.OK
