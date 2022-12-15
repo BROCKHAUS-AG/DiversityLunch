@@ -4,9 +4,7 @@ import './meeting-time-button.scss';
 
 type MeetingTimeProps = {
   timeSpan: MeetingTimespan,
-  // eslint-disable-next-line no-unused-vars
   onTimeChange: (timespan: MeetingTimespan) => void,
-  // eslint-disable-next-line no-unused-vars
   setCurrentTimeLabel: (timeLabel: string) => void,
   isActive: boolean,
 }
