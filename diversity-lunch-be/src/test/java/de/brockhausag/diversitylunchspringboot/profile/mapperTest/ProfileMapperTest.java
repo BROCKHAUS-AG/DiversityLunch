@@ -94,7 +94,7 @@ class ProfileMapperTest {
         when(religionService.getEntityById(inputDto.getReligion().getId())).thenReturn(Optional.of(expectedEntity.getReligion()));
         when(projectService.getEntityById(inputDto.getProject().getId())).thenReturn(Optional.of(expectedEntity.getProject()));
         when(languageService.getEntityById(inputDto.getMotherTongue().getId())).thenReturn(Optional.of(expectedEntity.getMotherTongue()));
-        when(hobbyMapper.dtoToEntity(inputDto.getHobby())).thenReturn(expectedEntity.getHobby().stream().map(Optional::of).toList());
+        when(hobbyMapper.dtoToEntity(inputDto.getHobby())).thenReturn(expectedEntity.getHobby());
         when(genderService.getEntityById(inputDto.getGender().getId())).thenReturn(Optional.of(expectedEntity.getGender()));
         when(educationService.getEntityById(inputDto.getEducation().getId())).thenReturn(Optional.of(expectedEntity.getEducation()));
         when(dietService.getEntityById(inputDto.getDiet().getId())).thenReturn(Optional.of(expectedEntity.getDiet()));

@@ -5,7 +5,7 @@ import de.brockhausag.diversitylunchspringboot.dataFactories.TestDefaultDimensio
 import de.brockhausag.diversitylunchspringboot.dataFactories.TestDefaultDimensionEntity;
 import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionEntityService;
 import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionModelController;
-import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,12 +29,12 @@ import static org.mockito.Mockito.*;
 public class GenericDefaultDimensionModelControllerTest {
     private BaseModelTestDataFactory factory;
     @Mock
-    private Mapper<TestDefaultDimensionDto, TestDefaultDimensionEntity> mapper;
+    private DimensionMapper<TestDefaultDimensionDto, TestDefaultDimensionEntity> dimensionMapper;
     @Mock
     private TestServiceType service;
     @InjectMocks
     private DefaultDimensionModelController<TestDefaultDimensionDto, TestDefaultDimensionEntity,
-            TestRepositoryType, TestServiceType, Mapper<TestDefaultDimensionDto, TestDefaultDimensionEntity>> controller;
+            TestRepositoryType, TestServiceType, DimensionMapper<TestDefaultDimensionDto, TestDefaultDimensionEntity>> controller;
 
     @BeforeEach
     void setup() {
@@ -49,7 +49,7 @@ public class GenericDefaultDimensionModelControllerTest {
         ResponseEntity<TestDefaultDimensionDto> expectedResponse = new ResponseEntity<>(expectedDto, HttpStatus.OK);
 
         when(service.getEntityById(existingEntity.getId())).thenReturn(Optional.of(existingEntity));
-        when(mapper.entityToDto(existingEntity)).thenReturn(expectedDto);
+        when(dimensionMapper.entityToDto(existingEntity)).thenReturn(expectedDto);
 
         //Act
         ResponseEntity<?> actualResponse = controller.getOne(existingEntity.getId());
@@ -85,7 +85,7 @@ public class GenericDefaultDimensionModelControllerTest {
         );
 
         when(service.getAllEntities()).thenReturn(emptyEntityList);
-        when(mapper.entityToDto(emptyEntityList)).thenReturn(emptyDtoList);
+        when(dimensionMapper.entityToDto(emptyEntityList)).thenReturn(emptyDtoList);
         //Act
         ResponseEntity<List<TestDefaultDimensionDto>> actualResponse = controller.getAll();
 
@@ -108,7 +108,7 @@ public class GenericDefaultDimensionModelControllerTest {
         );
 
         when(service.getAllEntities()).thenReturn(entityList);
-        when(mapper.entityToDto(entityList)).thenReturn(dtoList);
+        when(dimensionMapper.entityToDto(entityList)).thenReturn(dtoList);
         //Arrange
         ResponseEntity<List<TestDefaultDimensionDto>> actualResponse = controller.getAll();
 
@@ -120,7 +120,7 @@ public class GenericDefaultDimensionModelControllerTest {
     @Test
     void testPostOne_calledThreeTimesWithSameDto_callCreateEntityThreeTimesWithMappedEntity() {
         TestDefaultDimensionDto dto = factory.buildDto(1);
-        TestDefaultDimensionEntity entity = mapper.dtoToEntity(dto);
+        TestDefaultDimensionEntity entity = dimensionMapper.dtoToEntity(dto);
         when(service.createEntity(entity)).thenReturn(entity);
         final int AMOUNT = 3;
 
@@ -134,7 +134,7 @@ public class GenericDefaultDimensionModelControllerTest {
     @Test
     void testPutOne_calledThreeTimesWithSameDto_callCreateOrUpdateEntityThreeTimesWithMappedEntity() {
         TestDefaultDimensionDto dto = factory.buildDto(1);
-        TestDefaultDimensionEntity entity = mapper.dtoToEntity(dto);
+        TestDefaultDimensionEntity entity = dimensionMapper.dtoToEntity(dto);
         when(service.updateOrCreateEntity(entity)).thenReturn(entity);
         final int AMOUNT = 3;
 

@@ -2,11 +2,11 @@ package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.DietDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.DietEntity;
-import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DietMapper implements Mapper<DietDto, DietEntity> {
+public class DietMapper implements DimensionMapper<DietDto, DietEntity> {
 
     @Override
     public DietDto entityToDto(DietEntity entity) {

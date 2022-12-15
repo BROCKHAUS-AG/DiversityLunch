@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
 import de.brockhausag.diversitylunchspringboot.profile.logic.*;
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.*;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +26,7 @@ public class ProfileMapper {
     private final HobbyMapper hobbyMapper;
     private final SexualOrientationMapper sexualOrientationMapper;
     private final SocialBackgroundMapper socialBackgroundMapper;
-
     private final SocialBackgroundDiscriminationMapper socialBackgroundDiscriminationMapper;
-
     private final CountryService countryService;
     private final DietService dietService;
     private final EducationService educationService;
@@ -37,10 +36,8 @@ public class ProfileMapper {
     private final ProjectService projectService;
     private final ReligionService religionService;
     private final WorkExperienceService workExperienceService;
-
     private final SexualOrientationService sexualOrientationService;
     private final SocialBackgroundService socialBackgroundService;
-
     private final SocialBackgroundDiscriminationService socialBackgroundDiscriminationService;
 
 
@@ -73,7 +70,7 @@ public class ProfileMapper {
         Optional<DietEntity> dietEntityOptional = this.dietService.getEntityById(dto.getDiet().getId());
         Optional<EducationEntity> educationEntityOptional = this.educationService.getEntityById(dto.getEducation().getId());
         Optional<GenderEntity> genderEntityOptional = this.genderService.getEntityById(dto.getGender().getId());
-        List<HobbyEntity> hobbyEntity = this.hobbyService.dtoToEntity(dto.getHobby());
+        List<HobbyEntity> hobbyEntityList = this.hobbyService.getEntitySelectionByIds(dto.getHobby().stream().map(HobbyDto::getId).collect(Collectors.toList()));
         Optional<LanguageEntity> languageEntityOptional = this.languageService.getEntityById(dto.getMotherTongue().getId());
         Optional<ProjectEntity> projectEntityOptional = this.projectService.getEntityById(dto.getProject().getId());
         Optional<ReligionEntity> religionEntityOptional = this.religionService.getEntityById(dto.getReligion().getId());
@@ -82,12 +79,9 @@ public class ProfileMapper {
         Optional<SocialBackgroundEntity> socialBackgroundEntityOptional = this.socialBackgroundService.getEntityById(dto.getSocialBackground().getId());
         Optional<SocialBackgroundDiscriminationEntity> socialBackgroundDiscriminationEntityOptional = this.socialBackgroundDiscriminationService.getEntityById(dto.getSocialBackgroundDiscrimination().getId());
 
-        if ((this.allObjectWithIdsArePresent(countryEntityOptional, dietEntityOptional, educationEntityOptional,
+        if (this.allObjectWithIdsArePresent(countryEntityOptional, dietEntityOptional, educationEntityOptional,
                 genderEntityOptional, languageEntityOptional, projectEntityOptional,
                 religionEntityOptional, workExperienceEntityOptional, socialBackgroundEntityOptional))
-        &&
-        this.allHobbiesInListArePresent(hobbyEntity))
-
         {
             // TODO: remove stream and if clause on top
             return Optional.of(
@@ -100,7 +94,7 @@ public class ProfileMapper {
                             .diet(dietEntityOptional.orElseThrow())
                             .education(educationEntityOptional.orElseThrow())
                             .gender(genderEntityOptional.orElseThrow())
-                            .hobby(hobbyEntity.stream().map(Optional::orElseThrow).collect(Collectors.toList()))
+                            .hobby(hobbyEntityList)
                             .motherTongue(languageEntityOptional.orElseThrow())
                             .project(projectEntityOptional.orElseThrow())
                             .religion(religionEntityOptional.orElseThrow())
@@ -120,9 +114,6 @@ public class ProfileMapper {
         return Arrays.stream(optionals).allMatch(Optional::isPresent);
     }
 
-    private boolean allHobbiesInListArePresent(List<Optional<HobbyEntity>> hobbyEntitites) {
-        return hobbyEntitites.stream().allMatch(Optional::isPresent);
-    }
 
     public List<ProfileDto> entityToDto(List<ProfileEntity> entities) {
         return entities.stream().map(this::entityToDto).collect(Collectors.toList());

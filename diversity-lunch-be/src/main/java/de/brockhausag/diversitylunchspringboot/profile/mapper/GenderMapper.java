@@ -2,11 +2,11 @@ package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.GenderDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.GenderEntity;
-import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GenderMapper implements Mapper<GenderDto, GenderEntity> {
+public class GenderMapper implements DimensionMapper<GenderDto, GenderEntity> {
 
     @Override
     public GenderDto entityToDto(GenderEntity entity) {

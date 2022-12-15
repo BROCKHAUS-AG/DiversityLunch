@@ -2,17 +2,13 @@ package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;
-import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 @Component
 @AllArgsConstructor
-public class HobbyMapper implements Mapper<HobbyDto, HobbyEntity> {
+public class HobbyMapper implements DimensionMapper<HobbyDto, HobbyEntity> {
 
     @Override
     public HobbyDto entityToDto(HobbyEntity entity) {
