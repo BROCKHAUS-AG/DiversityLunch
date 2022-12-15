@@ -52,8 +52,19 @@ export const AdminPanel: FC = () => {
             <CloseSite />
             <DiversityIcon title="ADMIN PANEL" />
             <UserList />
-            <IdentifiableOptionsList state={projectState} fetch={projectFetch} title="Projektliste anpassen" addButtonLabel="Projekt hinzufügen" />
-
+            <div className="optionsListContainer">
+                <div>
+                    <details>
+                        <summary className="editListTitle">
+                            Profilangaben
+                        </summary>
+                        <br />
+                        <section>
+                            <IdentifiableOptionsList state={projectState} fetch={projectFetch} title="" addButtonLabel="Projekt hinzufügen" />
+                        </section>
+                    </details>
+                </div>
+            </div>
             <VoucherUpload />
 
             <div className="customContainer">

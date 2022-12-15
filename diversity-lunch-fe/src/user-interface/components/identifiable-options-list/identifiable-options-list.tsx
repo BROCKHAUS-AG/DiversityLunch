@@ -40,19 +40,27 @@ export const IdentifiableOptionsList = <T extends Identifiable>(
         <div className="optionsListContainer">
             <p className="editListTitle">{title}</p>
             <div>
-                <label>
-                    <p>Bezeichner:</p>
-                    <input type="text" value={inputText} onChange={(e : ChangeEvent<HTMLInputElement>) => setInputText(e.target.value)} />
-                </label>
-                <button type="button" onClick={() => add(inputText)}>{addButtonLabel}</button>
-                {state.items.map((current : T) => (
-                    <EditFormField
-                        item={current}
-                        onEditClicked={(p: T) => update(p)}
-                        onRemoveClicked={(p: T) => remove(p)}
-                        key={current.id}
-                    />
-                ))}
+                <details>
+                    <summary className="editListTitle">
+                        Projektliste anpassen
+                    </summary>
+                    <br />
+                    <section id="searchContainer">
+                        <label>
+                            <p>Frage: In welchem Projekt arbeitest du derzeit?</p>
+                            <input type="text" value={inputText} onChange={(e : ChangeEvent<HTMLInputElement>) => setInputText(e.target.value)} />
+                        </label>
+                        <button type="button" onClick={() => add(inputText)}>{addButtonLabel}</button>
+                        {state.items.map((current : T) => (
+                            <EditFormField
+                                item={current}
+                                onEditClicked={(p: T) => update(p)}
+                                onRemoveClicked={(p: T) => remove(p)}
+                                key={current.id}
+                            />
+                        ))}
+                    </section>
+                </details>
             </div>
         </div>
     );
