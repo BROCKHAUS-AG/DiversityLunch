@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface MeetingRepository extends JpaRepository<MeetingEntity, Long> {

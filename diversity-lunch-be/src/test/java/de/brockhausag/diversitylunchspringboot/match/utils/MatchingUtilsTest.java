@@ -4,7 +4,6 @@ import de.brockhausag.diversitylunchspringboot.dataFactories.HobbyTestDataFactor
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.match.records.ScoreAndCategory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
-import de.brockhausag.diversitylunchspringboot.meeting.model.Question;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.BeforeEach;
@@ -190,15 +189,6 @@ class MatchingUtilsTest {
         actualScore = MatchingUtils.getCurrentScore(profile1, profile2).currentScore();
 
         assertEquals(expectedScore, actualScore);
-    }
-
-    @Test
-    void getRandomQuestionFromCategory_EveryCategory_HasAtleast_One_Question() {
-        for (Category c : Category.values()) {
-            List<Question> questionList = Question.getAllQuestionsWithCategory(c);
-
-            assertTrue(questionList.size() > 0);
-        }
     }
 
     private Category getCategoryFromIdentifier(String categoryIdentifier) {

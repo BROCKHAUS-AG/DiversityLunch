@@ -16,4 +16,6 @@ DELETE FROM work_experience_entity;
 DELETE FROM sexual_orientation_entity;
 DELETE FROM social_background_entity;
 DELETE FROM social_background_discrimination_entity;
+DELETE FROM question_entity;
+DELETE FROM dimension_category_entity;
 

@@ -41,7 +41,7 @@ public class ProjectEntity implements DefaultDimensionEntity {
 
     @Override
     public Category getQuestionCategory() {
-        return Category.CUSTOMER;
+        return Category.Project;
     }
 
 }
