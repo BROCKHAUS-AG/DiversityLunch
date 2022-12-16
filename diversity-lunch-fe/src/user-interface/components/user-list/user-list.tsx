@@ -1,21 +1,23 @@
-import React, { FC, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {FC, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import azureAdminLogo from '../../../resources/icons/azure_modern.svg';
-import { AppStoreState } from '../../../data/app-store';
-import { AccountsState } from '../../../data/accounts/accounts-reducer';
-import { assignAdminRole, getAllAccounts, revokeAdminRole } from '../../../data/accounts/accounts-fetch';
-import { ProfilesState } from '../../../data/profiles/profiles-reducer';
-import { getAllProfiles } from '../../../data/profiles/profiles-fetch';
-import { User } from '../../../model/User';
-import { Account } from '../../../model/Account';
-import { Profile } from '../../../model/Profile';
-import { LoadingAnimation } from '../loading-animation/loading-animation';
-import { Role } from '../../../model/Role';
+import {AppStoreState} from '../../../data/app-store';
+import {AccountsState} from '../../../data/accounts/accounts-reducer';
+import {assignAdminRole, getAllAccounts, revokeAdminRole} from '../../../data/accounts/accounts-fetch';
+import {ProfilesState} from '../../../data/profiles/profiles-reducer';
+import {getAllProfiles} from '../../../data/profiles/profiles-fetch';
+import {User} from '../../../model/User';
+import {Account} from '../../../model/Account';
+import {Profile} from '../../../model/Profile';
+import {LoadingAnimation} from '../loading-animation/loading-animation';
+import {Role} from '../../../model/Role';
 
 export const UserList: FC = () => {
     const accountsState: AccountsState = useSelector((store: AppStoreState) => store.accounts);
     const profilesState: ProfilesState = useSelector((store: AppStoreState) => store.profiles);
     const [searchState, setSearchState] = useState('');
+    const [sortState, setSortState] = useState(true);
+    const [sortOrderState, setSortOrderState] = useState(true);
     const dispatch = useDispatch();
     useEffect(() => {
         // TODO: Handle network and http errors properly tgohlisch 17.11.2022
@@ -39,7 +41,24 @@ export const UserList: FC = () => {
             });
         });
 
-        return userList;
+        let sortedList = sortState ? sortByName(userList) : sortByRole(userList);
+        sortedList = sortOrderState ? sortedList.reverse() : sortedList;
+        return sortedList;
+    };
+
+    const sortByName = (userList: User[]): User[] => userList.sort((a, b) => a.profile.name.localeCompare(b.profile.name));
+
+    const sortByRole = (userList: User[]): User[] => {
+        const sortedList: User[] = [];
+        const azureAdminList: User[] = userList.filter((user) => user.account.role === Role.AZURE_ADMIN);
+        const adminList: User[] = userList.filter((user) => user.account.role === Role.ADMIN);
+        const standardUserList: User[] = userList.filter((user) => user.account.role === Role.STANDARD);
+
+        sortByName(azureAdminList).forEach((user) => sortedList.push(user));
+        sortByName(adminList).forEach((user) => sortedList.push(user));
+        sortByName(standardUserList).forEach((user) => sortedList.push(user));
+
+        return sortedList;
     };
 
     // TODO: Handle network and http errors properly tgohlisch 17.11.2022
@@ -86,6 +105,10 @@ export const UserList: FC = () => {
                     </summary>
                     <br />
                     <input defaultValue={searchState} onChange={(e) => setSearchState(e.target.value)} placeholder="SUCHEN" />
+                    <button onClick={() => setSortState(!sortState)}>{sortState ? 'Sortiere nach Rollen' : 'Sortiere nach Namen'}</button>
+                    <button onClick={() => setSortOrderState(!sortOrderState)}>
+                        {sortOrderState ? 'Aufsteigend' : 'Absteigend'}
+                    </button>
                     <section id="searchContainer">
                         {UserListContainer}
                     </section>
