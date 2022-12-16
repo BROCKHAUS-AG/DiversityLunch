@@ -2,11 +2,11 @@ package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.WorkExperienceDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.WorkExperienceEntity;
-import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class WorkExperienceMapper implements Mapper<WorkExperienceDto, WorkExperienceEntity> {
+public class WorkExperienceMapper implements DimensionMapper<WorkExperienceDto, WorkExperienceEntity> {
     @Override
     public WorkExperienceDto entityToDto(WorkExperienceEntity entity) {
         WorkExperienceDto workExperienceDto = new WorkExperienceDto();

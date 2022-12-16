@@ -11,7 +11,7 @@ public class DimensionEntityService<
         EntityType extends DimensionEntity,
         RepositoryType extends CrudRepository<EntityType, Long>> {
 
-    private final RepositoryType repository;
+    protected final RepositoryType repository;
 
     public DimensionEntityService(RepositoryType repository) {
         this.repository = repository;

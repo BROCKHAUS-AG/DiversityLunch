@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.generics.defaultDimension;
 
 import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionModelController;
-import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import org.springframework.data.repository.CrudRepository;
 
 public class DefaultDimensionModelController<
@@ -9,7 +9,7 @@ public class DefaultDimensionModelController<
         EntityType extends DefaultDimensionEntity,
         RepositoryType extends CrudRepository<EntityType, Long>,
         ServiceType extends DefaultDimensionEntityService<EntityType, RepositoryType>,
-        MapperType extends Mapper<DtoType, EntityType>>
+        MapperType extends DimensionMapper<DtoType, EntityType>>
         extends DimensionModelController<
         DtoType, EntityType, RepositoryType, ServiceType, MapperType
         > {

@@ -3,6 +3,7 @@ package de.brockhausag.diversitylunchspringboot.profile.mapperTest;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.profile.logic.*;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.*;
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,6 +36,8 @@ class ProfileMapperTest {
     private EducationService educationService;
     @Mock
     private GenderService genderService;
+    @Mock
+    private HobbyService hobbyService;
     @Mock
     private LanguageService languageService;
     @Mock
@@ -94,7 +97,7 @@ class ProfileMapperTest {
         when(religionService.getEntityById(inputDto.getReligion().getId())).thenReturn(Optional.of(expectedEntity.getReligion()));
         when(projectService.getEntityById(inputDto.getProject().getId())).thenReturn(Optional.of(expectedEntity.getProject()));
         when(languageService.getEntityById(inputDto.getMotherTongue().getId())).thenReturn(Optional.of(expectedEntity.getMotherTongue()));
-        when(hobbyMapper.dtoToEntity(inputDto.getHobby())).thenReturn(expectedEntity.getHobby().stream().map(Optional::of).toList());
+        when(hobbyService.getEntitySelectionByIds(inputDto.getHobby().stream().map(HobbyDto::getId).toList())).thenReturn(expectedEntity.getHobby());
         when(genderService.getEntityById(inputDto.getGender().getId())).thenReturn(Optional.of(expectedEntity.getGender()));
         when(educationService.getEntityById(inputDto.getEducation().getId())).thenReturn(Optional.of(expectedEntity.getEducation()));
         when(dietService.getEntityById(inputDto.getDiet().getId())).thenReturn(Optional.of(expectedEntity.getDiet()));

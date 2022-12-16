@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.generics.weightedDimension;
 
 import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionModelController;
-import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import org.springframework.data.repository.CrudRepository;
 
 
@@ -10,7 +10,7 @@ public class WeightedModelController<
         EntityType extends WeightedEntity,
         RepositoryType extends CrudRepository<EntityType, Long>,
         ServiceType extends WeightedEntityService<EntityType, RepositoryType>,
-        MapperType extends Mapper<DtoType, EntityType>>
+        MapperType extends DimensionMapper<DtoType, EntityType>>
         extends DimensionModelController<
         DtoType, EntityType, RepositoryType, ServiceType, MapperType
         > {

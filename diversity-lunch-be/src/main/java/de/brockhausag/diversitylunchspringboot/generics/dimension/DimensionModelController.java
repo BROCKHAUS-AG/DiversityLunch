@@ -1,7 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.generics.dimension;
 
 import de.brockhausag.diversitylunchspringboot.utils.ErrorHandlingController;
-import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +14,12 @@ public class DimensionModelController<DtoType extends DimensionDto,
         EntityType extends DimensionEntity,
         RepositoryType extends CrudRepository<EntityType, Long>,
         ServiceType extends DimensionEntityService<EntityType, RepositoryType>,
-        MapperType extends Mapper<DtoType, EntityType>>
+        MapperType extends DimensionMapper<DtoType, EntityType>>
         extends ErrorHandlingController {
 
 
-    private final MapperType mapper;
-    private final ServiceType service;
+    protected final MapperType mapper;
+    protected final ServiceType service;
 
     public DimensionModelController(MapperType mapper, ServiceType service) {
         this.mapper = mapper;
