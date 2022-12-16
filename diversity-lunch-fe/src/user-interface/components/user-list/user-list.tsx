@@ -12,10 +12,31 @@ import { Profile } from '../../../model/Profile';
 import { LoadingAnimation } from '../loading-animation/loading-animation';
 import { Role } from '../../../model/Role';
 
+class SortState {
+    sortType: SortType;
+    sortOrder: SortOrder;
+
+    constructor(type: SortType, order: SortOrder) {
+        this.sortType = type;
+        this.sortOrder = order;
+    }
+}
+
+enum SortType {
+    BY_NAME,
+    BY_ROLE,
+}
+
+enum SortOrder {
+    ASCENDING,
+    DESCENDING
+}
+
 export const UserList: FC = () => {
     const accountsState: AccountsState = useSelector((store: AppStoreState) => store.accounts);
     const profilesState: ProfilesState = useSelector((store: AppStoreState) => store.profiles);
     const [searchState, setSearchState] = useState('');
+    const [sortState, setSortState] = useState(new SortState(SortType.BY_NAME, SortOrder.ASCENDING));
     const dispatch = useDispatch();
     useEffect(() => {
         // TODO: Handle network and http errors properly tgohlisch 17.11.2022
@@ -39,7 +60,49 @@ export const UserList: FC = () => {
             });
         });
 
-        return userList;
+        let sortedList: User[] = [];
+
+        if (sortState.sortType === SortType.BY_NAME) sortedList = sortByName(userList);
+        if (sortState.sortType === SortType.BY_ROLE) sortedList = sortByRole(userList);
+
+        if (sortState.sortOrder === SortOrder.DESCENDING) sortedList.reverse();
+
+        return sortedList;
+    };
+
+    const sortByName = (userList: User[]): User[] => userList.sort((a, b) => a.profile.name.localeCompare(b.profile.name));
+
+    const sortByRole = (userList: User[]): User[] => {
+        const sortedList: User[] = [];
+        const azureAdminList: User[] = userList.filter((user) => user.account.role === Role.AZURE_ADMIN);
+        const adminList: User[] = userList.filter((user) => user.account.role === Role.ADMIN);
+        const standardUserList: User[] = userList.filter((user) => user.account.role === Role.STANDARD);
+
+        sortByName(azureAdminList).forEach((user) => sortedList.push(user));
+        sortByName(adminList).forEach((user) => sortedList.push(user));
+        sortByName(standardUserList).forEach((user) => sortedList.push(user));
+
+        return sortedList;
+    };
+
+    const toggleSortType = (): SortState => {
+        let sortType: SortType;
+        if (sortState.sortType === SortType.BY_NAME) {
+            sortType = SortType.BY_ROLE;
+        } else {
+            sortType = SortType.BY_NAME;
+        }
+        return new SortState(sortType, sortState.sortOrder);
+    };
+
+    const toggleSortOrder = (): SortState => {
+        let newSortOrder;
+        if (sortState.sortOrder === SortOrder.ASCENDING) {
+            newSortOrder = SortOrder.DESCENDING;
+        } else {
+            newSortOrder = SortOrder.ASCENDING;
+        }
+        return new SortState(sortState.sortType, newSortOrder);
     };
 
     // TODO: Handle network and http errors properly tgohlisch 17.11.2022
@@ -86,6 +149,12 @@ export const UserList: FC = () => {
                     </summary>
                     <br />
                     <input defaultValue={searchState} onChange={(e) => setSearchState(e.target.value)} placeholder="SUCHEN" />
+                    <button onClick={() => setSortState(toggleSortType())}>
+                        {sortState.sortType === SortType.BY_NAME ? 'Sortiere nach Rollen' : 'Sortiere nach Namen'}
+                    </button>
+                    <button onClick={() => setSortState(toggleSortOrder())}>
+                        {sortState.sortOrder === SortOrder.ASCENDING ? 'Aufsteigend' : 'Absteigend'}
+                    </button>
                     <section id="searchContainer">
                         {UserListContainer}
                     </section>
