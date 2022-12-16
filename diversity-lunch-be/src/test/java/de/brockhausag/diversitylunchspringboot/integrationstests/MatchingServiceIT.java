@@ -65,7 +65,7 @@ class MatchingServiceIT {
         log.info("MEETING_ENTITY 21: " + result);
         assertFalse(result.isEmpty());
         assertMeetingIsEqual(expectedForCase21First, result.get(0), 0);
-        assertFalse(result.get(0).getQuestion().getKind().isEmpty());
+        assertFalse(result.get(0).getQuestion().getQuestionText().isEmpty());
     }
 
     @Test
@@ -84,7 +84,7 @@ class MatchingServiceIT {
         log.info("MEETING_ENTITY 9: " + result);
         assertFalse(result.isEmpty());
         assertMeetingIsEqual(expectedForCase9, result.get(0), 9);
-        assertFalse(result.get(0).getQuestion().getKind().isEmpty());
+        assertFalse(result.get(0).getQuestion().getQuestionText().isEmpty());
     }
 
     @Test

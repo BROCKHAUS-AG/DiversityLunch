@@ -2,13 +2,14 @@ package de.brockhausag.diversitylunchspringboot.match.service;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.MeetingTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.QuestionTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
-import de.brockhausag.diversitylunchspringboot.meeting.model.Question;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MsTeamsService;
+import de.brockhausag.diversitylunchspringboot.meeting.service.QuestionService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,6 +27,7 @@ import static org.mockito.Mockito.*;
 class MatchingServiceTest {
 
     private final MeetingTestdataFactory meetingTestdataFactory = new MeetingTestdataFactory();
+    private final QuestionTestDataFactory questionTestDataFactory = new QuestionTestDataFactory();
     @Mock
     DiversityLunchEMailService mockedEMailService;
     @Mock
@@ -36,6 +38,8 @@ class MatchingServiceTest {
     private MeetingRepository meetingRepository;
     @Mock
     private MatchingService matchingServiceMock;
+    @Mock
+    private QuestionService questionService;
     @InjectMocks
     private MatchingService matchingService;
 
@@ -79,6 +83,8 @@ class MatchingServiceTest {
         LocalDateTime time = LocalDateTime.of(2022, 3, 3, 12, 30, 0);
         List<MeetingProposalEntity> list = meetingTestdataFactory.newMeetingProposalList_withMatchingScore29(time);
         when(meetingProposalRepository.findMeetingProposalEntitiesByProposedDateTimeAndMatchedFalse(any())).thenReturn(list);
+        when(questionService.getQuestionsForCategory(any())).thenReturn(List.of(questionTestDataFactory.buildEntity("Q1"), questionTestDataFactory.buildEntity("Q2")));
+
         matchingService.executeMatching(time, 0);
         verify(meetingRepository, times(1)).save(any());
         verify(meetingProposalRepository, times(2)).save(any());
@@ -111,7 +117,7 @@ class MatchingServiceTest {
                 .partner(profileTestdataFactory.buildEntity(1))
                 .proposer(profileTestdataFactory.buildEntity(2))
                 .createdAt(LocalDateTime.now())
-                .question(Question.COUNTRY_OF_ORIGIN2)
+                .question(questionTestDataFactory.buildEntity("Wo kommst du her?", "Herkunft"))
                 .build());
 
         when(meetingRepository.findByFromDateTime(any())).thenReturn(meetingEntities);

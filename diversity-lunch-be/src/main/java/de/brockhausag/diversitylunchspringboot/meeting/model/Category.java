@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.meeting.model;
 
 public enum Category {
-    CUSTOMER("Kunde"),
+    Project("Projekt"),
     AGE("Alter"),
     GENDER("Geschlechtliche Identität"),
     COUNTRY_OF_ORIGIN("Ethnische Herkunft"),

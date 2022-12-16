@@ -37,8 +37,8 @@ public class MeetingEntity {
     private int score;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    private Question question;
+    @ManyToOne
+    private QuestionEntity question;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)

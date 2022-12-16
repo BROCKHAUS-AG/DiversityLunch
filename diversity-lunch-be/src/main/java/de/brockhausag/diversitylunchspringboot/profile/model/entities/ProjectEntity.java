@@ -40,7 +40,7 @@ public class ProjectEntity implements DefaultDimensionEntity {
     }
 
     public Category getQuestionCategory() {
-        return Category.CUSTOMER;
+        return Category.Project;
     }
 
 }

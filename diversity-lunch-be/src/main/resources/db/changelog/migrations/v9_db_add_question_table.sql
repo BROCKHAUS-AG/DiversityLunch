@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS dimension_category_entity(
 -- changeset adianati:v9-2
 CREATE TABLE IF NOT EXISTS question_entity(
     id BIGSERIAL PRIMARY KEY,
-    id_category BIGSERIAL REFERENCES dimension_category_entity(id),
+    category_id BIGSERIAL REFERENCES dimension_category_entity(id),
     question_text VARCHAR
 );
 
@@ -44,7 +44,7 @@ WITH
     sozia_id AS (SELECT id FROM dimension_category_entity WHERE descriptor LIKE 'Soziale Herkunft' LIMIT 1),
     discr_id AS (SELECT id FROM dimension_category_entity WHERE descriptor LIKE 'Diskriminierung aufgrund sozialer Herkunft' LIMIT 1),
     sexue_id AS (SELECT id FROM dimension_category_entity WHERE descriptor LIKE 'Sexuelle Orientierung' LIMIT 1)
-INSERT INTO question_entity (id_category, question_text) VALUES
+INSERT INTO question_entity (category_id, question_text) VALUES
     ((SELECT * FROM proje_id), 'Diversity matters! Inwiefern spielt gesellschaftliche Vielfalt an eurem Arbeitsplatz eine Rolle? Und in welchen Bereichen vermisst ihr bei der BROCKHAUS AG oder in eurem Team mehr Vielfalt?'),
     ((SELECT * FROM proje_id), 'Könntet ihr euch vorstellen mit einer Person mit Behinderung zusammen in einem Team zu arbeiten? Welche Chancen und Herausforderungen seht ihr dabei für euch?'),
     ((SELECT * FROM alter_id), 'Was denkt ihr: Sind altersgemischte Teams innovativer und leistungsfähiger als altershomogene Arbeitsgruppen?'),
@@ -95,4 +95,4 @@ ALTER TABLE meeting_entity ADD COLUMN question_id BIGSERIAL REFERENCES question_
 
 WITH
     ernae_id AS (SELECT id FROM dimension_category_entity WHERE descriptor LIKE 'Ernährung' LIMIT 1)
-UPDATE meeting_entity SET question_id = (SELECT id FROM question_entity WHERE id_category = (SELECT * FROM ernae_id) LIMIT 1);
+UPDATE meeting_entity SET question_id = (SELECT id FROM question_entity WHERE category_id = (SELECT * FROM ernae_id) LIMIT 1);

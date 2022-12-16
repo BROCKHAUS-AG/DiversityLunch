@@ -1,8 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.meeting.service;
 
-import com.microsoft.graph.models.Attendee;
 import com.microsoft.graph.models.Event;
-import com.microsoft.graph.models.ResponseType;
 import de.brockhausag.diversitylunchspringboot.match.records.Match;
 import de.brockhausag.diversitylunchspringboot.meeting.mapper.MsTeamsMapper;
 import de.brockhausag.diversitylunchspringboot.meeting.model.DeclinedMeeting;
