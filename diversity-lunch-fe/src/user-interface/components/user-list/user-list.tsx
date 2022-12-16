@@ -1,23 +1,42 @@
-import React, {FC, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { FC, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import azureAdminLogo from '../../../resources/icons/azure_modern.svg';
-import {AppStoreState} from '../../../data/app-store';
-import {AccountsState} from '../../../data/accounts/accounts-reducer';
-import {assignAdminRole, getAllAccounts, revokeAdminRole} from '../../../data/accounts/accounts-fetch';
-import {ProfilesState} from '../../../data/profiles/profiles-reducer';
-import {getAllProfiles} from '../../../data/profiles/profiles-fetch';
-import {User} from '../../../model/User';
-import {Account} from '../../../model/Account';
-import {Profile} from '../../../model/Profile';
-import {LoadingAnimation} from '../loading-animation/loading-animation';
-import {Role} from '../../../model/Role';
+import { AppStoreState } from '../../../data/app-store';
+import { AccountsState } from '../../../data/accounts/accounts-reducer';
+import { assignAdminRole, getAllAccounts, revokeAdminRole } from '../../../data/accounts/accounts-fetch';
+import { ProfilesState } from '../../../data/profiles/profiles-reducer';
+import { getAllProfiles } from '../../../data/profiles/profiles-fetch';
+import { User } from '../../../model/User';
+import { Account } from '../../../model/Account';
+import { Profile } from '../../../model/Profile';
+import { LoadingAnimation } from '../loading-animation/loading-animation';
+import { Role } from '../../../model/Role';
+
+class SortState {
+    sortType: SortType;
+    sortOrder: SortOrder;
+
+    constructor(type: SortType, order: SortOrder) {
+        this.sortType = type;
+        this.sortOrder = order;
+    }
+}
+
+enum SortType {
+    BY_NAME,
+    BY_ROLE,
+}
+
+enum SortOrder {
+    ASCENDING,
+    DESCENDING
+}
 
 export const UserList: FC = () => {
     const accountsState: AccountsState = useSelector((store: AppStoreState) => store.accounts);
     const profilesState: ProfilesState = useSelector((store: AppStoreState) => store.profiles);
     const [searchState, setSearchState] = useState('');
-    const [sortState, setSortState] = useState(true);
-    const [sortOrderState, setSortOrderState] = useState(true);
+    const [sortState, setSortState] = useState(new SortState(SortType.BY_NAME, SortOrder.ASCENDING));
     const dispatch = useDispatch();
     useEffect(() => {
         // TODO: Handle network and http errors properly tgohlisch 17.11.2022
@@ -41,8 +60,13 @@ export const UserList: FC = () => {
             });
         });
 
-        let sortedList = sortState ? sortByName(userList) : sortByRole(userList);
-        sortedList = sortOrderState ? sortedList.reverse() : sortedList;
+        let sortedList: User[] = [];
+
+        if (sortState.sortType === SortType.BY_NAME) sortedList = sortByName(userList);
+        if (sortState.sortType === SortType.BY_ROLE) sortedList = sortByRole(userList);
+
+        if (sortState.sortOrder === SortOrder.DESCENDING) sortedList.reverse();
+
         return sortedList;
     };
 
@@ -59,6 +83,26 @@ export const UserList: FC = () => {
         sortByName(standardUserList).forEach((user) => sortedList.push(user));
 
         return sortedList;
+    };
+
+    const toggleSortType = (): SortState => {
+        let sortType: SortType;
+        if (sortState.sortType === SortType.BY_NAME) {
+            sortType = SortType.BY_ROLE;
+        } else {
+            sortType = SortType.BY_NAME;
+        }
+        return new SortState(sortType, sortState.sortOrder);
+    };
+
+    const toggleSortOrder = (): SortState => {
+        let newSortOrder;
+        if (sortState.sortOrder === SortOrder.ASCENDING) {
+            newSortOrder = SortOrder.DESCENDING;
+        } else {
+            newSortOrder = SortOrder.ASCENDING;
+        }
+        return new SortState(sortState.sortType, newSortOrder);
     };
 
     // TODO: Handle network and http errors properly tgohlisch 17.11.2022
@@ -105,9 +149,11 @@ export const UserList: FC = () => {
                     </summary>
                     <br />
                     <input defaultValue={searchState} onChange={(e) => setSearchState(e.target.value)} placeholder="SUCHEN" />
-                    <button onClick={() => setSortState(!sortState)}>{sortState ? 'Sortiere nach Rollen' : 'Sortiere nach Namen'}</button>
-                    <button onClick={() => setSortOrderState(!sortOrderState)}>
-                        {sortOrderState ? 'Aufsteigend' : 'Absteigend'}
+                    <button onClick={() => setSortState(toggleSortType())}>
+                        {sortState.sortType === SortType.BY_NAME ? 'Sortiere nach Rollen' : 'Sortiere nach Namen'}
+                    </button>
+                    <button onClick={() => setSortState(toggleSortOrder())}>
+                        {sortState.sortOrder === SortOrder.ASCENDING ? 'Aufsteigend' : 'Absteigend'}
                     </button>
                     <section id="searchContainer">
                         {UserListContainer}
