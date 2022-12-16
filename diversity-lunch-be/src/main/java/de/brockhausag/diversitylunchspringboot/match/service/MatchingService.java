@@ -7,10 +7,11 @@ import de.brockhausag.diversitylunchspringboot.match.utils.MatchingUtils;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
-import de.brockhausag.diversitylunchspringboot.meeting.model.Question;
+import de.brockhausag.diversitylunchspringboot.meeting.model.QuestionEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MsTeamsService;
+import de.brockhausag.diversitylunchspringboot.meeting.service.QuestionService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,7 @@ public class MatchingService {
     private final MeetingRepository meetingRepository;
     private final DiversityLunchEMailService eMailService;
     private final MsTeamsService msTeamsService;
+    private final QuestionService questionService;
 
     public void matching(LocalDateTime proposedDateTime, LocalDateTime today) {
         if (proposedDateTime == null || today == null) {
@@ -102,10 +104,15 @@ public class MatchingService {
         meetingProposalRepository.save(bestMatch.proposalTwo());
     }
 
-    private Question getRandomQuestionFromCategory(Category category) {
-        List<Question> questions = Question.getAllQuestionsWithCategory(category);
-        int randomIndex = random.nextInt(questions.size());
-        return questions.get(randomIndex);
+    private QuestionEntity getRandomQuestionFromCategory(Category category) throws NoSuchElementException {
+        List<QuestionEntity> questions = questionService.getQuestionsForCategory(category.getKind());
+        if (questions.size() == 0) {
+            log.error("Could not find any question for category %s.".formatted(category.getKind()));
+            throw new NoSuchElementException("Could not find any question for category %s.".formatted(category.getKind()));
+        } else {
+            int randomIndex = random.nextInt(questions.size());
+            return questions.get(randomIndex);
+        }
     }
 
     public void sendQuestions(LocalDateTime now) {
