@@ -104,10 +104,15 @@ public class MatchingService {
         meetingProposalRepository.save(bestMatch.proposalTwo());
     }
 
-    private QuestionEntity getRandomQuestionFromCategory(Category category) {
+    private QuestionEntity getRandomQuestionFromCategory(Category category) throws NoSuchElementException {
         List<QuestionEntity> questions = questionService.getQuestionsForCategory(category.getKind());
-        int randomIndex = random.nextInt(questions.size());
-        return questions.get(randomIndex);
+        if (questions.size() == 0) {
+            log.error("Could not find any question for category %s.".formatted(category.getKind()));
+            throw new NoSuchElementException("Could not find any question for category %s.".formatted(category.getKind()));
+        } else {
+            int randomIndex = random.nextInt(questions.size());
+            return questions.get(randomIndex);
+        }
     }
 
     public void sendQuestions(LocalDateTime now) {
