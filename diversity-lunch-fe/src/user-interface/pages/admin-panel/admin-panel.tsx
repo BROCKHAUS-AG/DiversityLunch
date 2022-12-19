@@ -50,7 +50,6 @@ export const AdminPanel: FC = () => {
     return (
         <section className="view">
             <CloseSite />
-            <DiversityIcon title="ADMIN PANEL" />
             <UserList />
             <IdentifiableOptionsList state={projectState} fetch={projectFetch} title="Projektliste anpassen" addButtonLabel="Projekt hinzufügen" />
 
