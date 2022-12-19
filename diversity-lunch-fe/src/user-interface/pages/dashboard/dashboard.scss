@@ -1,47 +1,54 @@
-  .Dashboard{
-  width:100%;
-  height: 100vh;
-
+.Dashboard {
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.Dashboard-logo-container{
-  width: 100%;
-  height: 50vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-}
-
-.Dashboard-icon-container{
+.Dashboard-icon-container {
   width: 100%;
   max-width: 600px;
-
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 
 }
 
-.Dashboard-icons{
-  max-width: 8%;
-  margin: 5%;
+.Dashboard-icons {
+
 }
 
-
-.Dashboard-tiles-container{
+.Dashboard-tiles-container {
   width: 100%;
-  height:50vh;
+  display: flex;
+  justify-content: space-evenly;
+  border: solid #333333 1px;
 
-  display: grid;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: 50% 50%;
+  .ClickIcon-Wrapper:hover {
+    background: #6E1326;
+
+    h5 {
+      color: white;
+    }
+
+    .Tile-icon {
+      filter: brightness(0) saturate(100%) invert(100%) sepia(5%) saturate(4807%) hue-rotate(296deg) brightness(115%) contrast(103%);
+    }
+
+  }
+
 }
 
 p {
   font-family: SourceSansProRegular, sans-serif;
+}
+
+@media screen and (min-width: 450px) {
+
+}
+
+@media screen and (min-width: 850px) {
+
 }

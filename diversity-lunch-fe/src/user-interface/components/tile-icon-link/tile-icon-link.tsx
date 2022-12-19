@@ -15,7 +15,7 @@ type TilesProps = {
 export const TileIconLink = (props:TilesProps) => {
     const { title, icon, link } = props;
     return (
-        <div>
+        <div className="ClickIcon-Wrapper">
             <Link to={link} className="Tile-link">
                 <div className="Tile">
                     <img alt="TileIconLink Icon" className="Tile-icon" src={icon} />

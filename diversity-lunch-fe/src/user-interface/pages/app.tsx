@@ -76,7 +76,10 @@ export const App = () => (
                         <UserVoucherList />
                     </Route>
 
-                    <Route path="/" render={() => <GenericErrorPage errorMessage="ERROR 404 - THIS SITE DOES NOT EXIST" />} />
+                    <Route
+                        path="/"
+                        render={() => <GenericErrorPage errorMessage="ERROR 404 - THIS SITE DOES NOT EXIST" />}
+                    />
                 </Switch>
             </BrowserRouter>
         </div>

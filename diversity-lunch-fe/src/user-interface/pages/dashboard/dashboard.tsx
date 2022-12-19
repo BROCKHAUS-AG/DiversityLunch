@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { TileIconLink } from '../../components/tile-icon-link/tile-icon-link';
-import { DiversityIcon } from '../../components/diversity-icon/diversity-icon';
 import './dashboard.scss';
 import iconInfo from '../../../resources/icons/icon-info.svg';
 import iconProfile from '../../../resources/icons/icon-profil.svg';
