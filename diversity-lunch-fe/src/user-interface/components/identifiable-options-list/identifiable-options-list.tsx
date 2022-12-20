@@ -9,12 +9,13 @@ interface OptionsListProps<T extends Identifiable> {
     state: IdentifiableState<T>,
     fetch: GenericFetch<T>,
     title: string,
+    header: string,
     addButtonLabel: string,
 }
 
 export const IdentifiableOptionsList = <T extends Identifiable>(
     {
-        state, fetch, title, addButtonLabel,
+        state, fetch, title, header, addButtonLabel,
     } : OptionsListProps<T>) => {
     const [inputText, setInputText] = useState('');
     const dispatch = useDispatch();
@@ -41,12 +42,14 @@ export const IdentifiableOptionsList = <T extends Identifiable>(
             <div>
                 <details>
                     <summary className="editListTitle">
-                        Projektliste anpassen
+                        {title}
                     </summary>
                     <br />
                     <section id="searchContainer">
                         <label>
-                            <p className="customizeDimensionHeader">Frage: In welchem Projekt arbeitest du derzeit?</p>
+                            <p className="customizeDimensionHeader">
+                                {header}
+                            </p>
                             <input type="text" value={inputText} onChange={(e : ChangeEvent<HTMLInputElement>) => setInputText(e.target.value)} />
                         </label>
                         <button type="button" onClick={() => add(inputText)}>{addButtonLabel}</button>

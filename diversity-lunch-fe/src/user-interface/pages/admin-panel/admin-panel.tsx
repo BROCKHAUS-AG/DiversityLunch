@@ -66,7 +66,13 @@ export const AdminPanel: FC = () => {
                                     Profilangaben
                                 </summary>
                                 <section>
-                                    <IdentifiableOptionsList state={projectState} fetch={projectFetch} title="" addButtonLabel="Projekt hinzufügen" />
+                                    <IdentifiableOptionsList
+                                        state={projectState}
+                                        fetch={projectFetch}
+                                        title="Projektliste anpassen"
+                                        header="Frage: In welchem Projekt arbeitest du derzeit?"
+                                        addButtonLabel="Projekt hinzufügen"
+                                    />
                                 </section>
                             </details>
                         </div>
