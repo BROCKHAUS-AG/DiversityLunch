@@ -9,12 +9,13 @@ interface OptionsListProps<T extends Identifiable> {
     state: IdentifiableState<T>,
     fetch: GenericFetch<T>,
     title: string,
+    header: string,
     addButtonLabel: string,
 }
 
 export const IdentifiableOptionsList = <T extends Identifiable>(
     {
-        state, fetch, title, addButtonLabel,
+        state, fetch, title, header, addButtonLabel,
     } : OptionsListProps<T>) => {
     const [inputText, setInputText] = useState('');
     const dispatch = useDispatch();
@@ -38,21 +39,30 @@ export const IdentifiableOptionsList = <T extends Identifiable>(
 
     return (
         <div className="optionsListContainer">
-            <p className="editListTitle">{title}</p>
             <div>
-                <label>
-                    <p>Bezeichner:</p>
-                    <input type="text" value={inputText} onChange={(e : ChangeEvent<HTMLInputElement>) => setInputText(e.target.value)} />
-                </label>
-                <button type="button" onClick={() => add(inputText)}>{addButtonLabel}</button>
-                {state.items.map((current : T) => (
-                    <EditFormField
-                        item={current}
-                        onEditClicked={(p: T) => update(p)}
-                        onRemoveClicked={(p: T) => remove(p)}
-                        key={current.id}
-                    />
-                ))}
+                <details>
+                    <summary className="editListTitle">
+                        {title}
+                    </summary>
+                    <br />
+                    <section id="searchContainer">
+                        <label>
+                            <p className="customizeDimensionHeader">
+                                {header}
+                            </p>
+                            <input type="text" value={inputText} onChange={(e : ChangeEvent<HTMLInputElement>) => setInputText(e.target.value)} />
+                        </label>
+                        <button type="button" onClick={() => add(inputText)}>{addButtonLabel}</button>
+                        {state.items.map((current : T) => (
+                            <EditFormField
+                                item={current}
+                                onEditClicked={(p: T) => update(p)}
+                                onRemoveClicked={(p: T) => remove(p)}
+                                key={current.id}
+                            />
+                        ))}
+                    </section>
+                </details>
             </div>
         </div>
     );
