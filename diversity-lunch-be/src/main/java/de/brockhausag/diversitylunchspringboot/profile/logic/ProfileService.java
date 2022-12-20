@@ -39,7 +39,7 @@ public class ProfileService {
         return Optional.of(repository.save(updateEntity));
     }
 
-    public List<ProfileEntity> getAllProfilesWithSelectedDimensionOption(DimensionEntity dimensionEntity) {
-
-    }
+   public List<ProfileEntity> getAllProfilesWithSelectedDimensionOption(DimensionEntity dimensionEntity) {
+       return null;
+   }
 }

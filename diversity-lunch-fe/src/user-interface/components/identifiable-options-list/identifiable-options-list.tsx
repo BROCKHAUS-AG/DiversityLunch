@@ -38,7 +38,7 @@ export const IdentifiableOptionsList = <T extends Identifiable>(
     };
 
     return (
-        <div className="optionsListContainer">
+        <div className="optionsListInOptionsListContainer">
             <div>
                 <details>
                     <summary className="editListTitle">
