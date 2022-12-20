@@ -48,15 +48,17 @@ export const AdminPanel: FC = () => {
         setEmailSuccess(result.status === 200);
     };
     return (
-
         <section className="view">
+
             <div className="adminPanelContainer">
                 <div className="header">
                     <CloseSite />
                     <DiversityIcon title="ADMIN PANEL" />
                 </div>
+
                 <div className="bottom">
                     <UserList />
+
                     <div className="optionsListContainer">
                         <div>
                             <details>
@@ -69,9 +71,10 @@ export const AdminPanel: FC = () => {
                             </details>
                         </div>
                     </div>
+
                     <VoucherUpload />
 
-                    <div className="customContainer">
+                    <div className="testMailContainer">
                         <button className="testmailButton" onClick={sendTestmail}>Testmail verschicken</button>
                     </div>
                     {emailSuccess && <PopUp onButtonClick={() => { setEmailSuccess(false); }} message="Testmail gesendet" buttonText="Okay" />}

@@ -54,34 +54,44 @@ export const VoucherUpload: FC = () => {
     };
 
     return (
-        <div className="CSVUploadContainer">
-            <p className="CSVUploadTitle">Gutschein Upload</p>
 
-            <div>
-                <p className="voucherCountState">
-                    Es sind
-                    {' '}
-                    {voucherCountState}
-                    {' '}
-                    Gutscheine vorhanden.
-                </p>
-                <details>
-                    <summary className="editListTitle">
-                        Gutscheincodes anzeigen
-                    </summary>
-                    <VoucherList vouchers={voucherList} />
-                </details>
-            </div>
+        <div className="optionsListContainer">
+            <details>
+                <summary className="editListTitle">
+                    Gutschein Upload
+                </summary>
+                <section>
 
-            <div>
-                <label>
-                    <p>Zum Uploaden ziehe .csv Files im Standardformat in das Upload Fenster</p>
-                    <input type="file" accept=".csv" onChange={uploadCSVToFrontend} />
-                    <button onClick={uploadCSVFile}>Upload</button>
-                </label>
-            </div>
-            {
-                uploadSuccess
+                    <div className="customizeCSVUpload">
+
+                        <div className="customizeCSVUploadHeader">
+                            <p>
+                                Es sind
+                                {' '}
+                                {voucherCountState}
+                                {' '}
+                                Gutscheine vorhanden.
+                            </p>
+                        </div>
+
+                        <div className="customizeCSVUploadHeader">
+                            <details>
+                                <summary className="editListTitle">
+                                    Gutscheincodes anzeigen
+                                </summary>
+                                <VoucherList vouchers={voucherList} />
+                            </details>
+                        </div>
+
+                        <div>
+                            <label>
+                                <p>Zum Uploaden ziehe .csv Files im Standardformat in das Upload Fenster</p>
+                                <input type="file" accept=".csv" onChange={uploadCSVToFrontend} />
+                                <button onClick={uploadCSVFile}>Upload</button>
+                            </label>
+                        </div>
+                        {
+                            uploadSuccess
                 && (
                     <PopUp
                         message="Der Upload war erfolgreich!"
@@ -89,7 +99,12 @@ export const VoucherUpload: FC = () => {
                         onButtonClick={() => setUploadSuccess(false)}
                     />
                 )
-            }
+                        }
+
+                    </div>
+                </section>
+            </details>
         </div>
+
     );
 };

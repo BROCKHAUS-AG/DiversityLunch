@@ -92,9 +92,19 @@ input:focus {
 .CSVUploadContainer .voucherCountState {
   padding-bottom: 2%;
 }
-.optionsListContainer .projectListHeader {
+
+.optionsListContainer .customizeDimensionHeader {
   padding: 1%;
 }
+
+.optionsListContainer .customizeCSVUpload {
+  padding: 20px 20px;
+}
+
+.optionsListContainer .customizeCSVUpload .customizeCSVUploadHeader {
+  padding-bottom: 2.5%;
+}
+
 .optionsListContainer {
   padding: 20px 20px;
 }
