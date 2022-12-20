@@ -89,5 +89,46 @@ public class HobbyServiceTest {
         assertEquals(expectedList.size(), actualList.size());
     }
 
+    @Test
+    void testGetEntitySelectionByIds_withThreeExistingIds_returnThreeEntities() {
+        // Arrange
+        List<HobbyEntity> expectedList = Stream.of(1, 2, 3).map(this.factory::buildEntity).toList();
+        List<Long> existingIds = Stream.of(30L, 40L, 42L).toList();
 
+        when(repository.findAllById(existingIds)).thenReturn(expectedList);
+
+        // Act
+        List<HobbyEntity> actualList = service.getEntitySelectionByIds(existingIds);
+
+        // Assert
+        assertEquals(expectedList.size(), actualList.size());
+        assertEquals(expectedList, actualList);
+    }
+
+    @Test
+    void testGetEntitySelectionByIds_withThreeNotExistingIds_returnEmptyList() {
+        // Arrange
+        List<Long> notExistingIds = Stream.of(30L, 40L, 42L).toList();
+        when(repository.findAllById(notExistingIds)).thenReturn(Collections.emptyList());
+
+        // Act
+        List<HobbyEntity> actualList = service.getEntitySelectionByIds(notExistingIds);
+
+        //Assert
+        assertEquals(0, actualList.size());
+        assertEquals(Collections.emptyList(), actualList);
+    }
+
+    @Test
+    void testGetEntitySelectionByIds_withEmptyList_returnEmptyList() {
+        // Arrange
+        when(repository.findAllById(Collections.emptyList())).thenReturn(Collections.emptyList());
+
+        // Act
+        List<HobbyEntity> actualList = service.getEntitySelectionByIds(Collections.emptyList());
+
+        //Assert
+        assertEquals(0, actualList.size());
+        assertEquals(Collections.emptyList(), actualList);
+    }
 }

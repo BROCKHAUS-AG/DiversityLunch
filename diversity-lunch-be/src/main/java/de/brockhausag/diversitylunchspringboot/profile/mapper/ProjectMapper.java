@@ -2,11 +2,11 @@ package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProjectDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProjectEntity;
-import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProjectMapper implements Mapper<ProjectDto, ProjectEntity> {
+public class ProjectMapper implements DimensionMapper<ProjectDto, ProjectEntity> {
 
     @Override
     public ProjectDto entityToDto(ProjectEntity entity) {

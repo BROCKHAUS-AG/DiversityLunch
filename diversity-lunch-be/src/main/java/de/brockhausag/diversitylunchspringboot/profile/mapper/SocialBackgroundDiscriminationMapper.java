@@ -2,11 +2,11 @@ package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.SocialBackgroundDiscriminationDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.SocialBackgroundDiscriminationEntity;
-import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SocialBackgroundDiscriminationMapper implements Mapper<SocialBackgroundDiscriminationDto, SocialBackgroundDiscriminationEntity> {
+public class SocialBackgroundDiscriminationMapper implements DimensionMapper<SocialBackgroundDiscriminationDto, SocialBackgroundDiscriminationEntity> {
 
     @Override
     public SocialBackgroundDiscriminationDto entityToDto(SocialBackgroundDiscriminationEntity entity) {

@@ -41,6 +41,7 @@ public class WorkExperienceEntity implements WeightedEntity {
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
     }
 
+    @Override
     public Category getQuestionCategory() {
         return Category.WORK_EXPERIENCE;
     }

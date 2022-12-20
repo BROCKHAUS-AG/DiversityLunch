@@ -2,12 +2,12 @@ package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.SexualOrientationDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.SexualOrientationEntity;
-import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import org.springframework.stereotype.Component;
 
 
 @Component
-public class SexualOrientationMapper implements Mapper<SexualOrientationDto, SexualOrientationEntity> {
+public class SexualOrientationMapper implements DimensionMapper<SexualOrientationDto, SexualOrientationEntity> {
     @Override
     public SexualOrientationDto entityToDto(SexualOrientationEntity entity) {
         SexualOrientationDto sexualOrientationDto = new SexualOrientationDto();

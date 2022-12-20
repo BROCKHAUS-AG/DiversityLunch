@@ -1,9 +1,9 @@
-package de.brockhausag.diversitylunchspringboot.utils.mapper;
+package de.brockhausag.diversitylunchspringboot.generics.dimension;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public interface Mapper<DtoType, EntityType> {
+public interface DimensionMapper<DtoType, EntityType> {
 
     DtoType entityToDto(EntityType entity);
 
