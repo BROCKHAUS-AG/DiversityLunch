@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import azureAdminLogo from '../../../resources/icons/azure_modern.svg';
 import { AppStoreState } from '../../../data/app-store';
 import { AccountsState } from '../../../data/accounts/accounts-reducer';
@@ -23,8 +24,8 @@ class SortState {
 }
 
 enum SortType {
-    BY_NAME,
-    BY_ROLE,
+    BY_NAME = 'name',
+    BY_ROLE = 'role',
 }
 
 enum SortOrder {
@@ -148,13 +149,26 @@ export const UserList: FC = () => {
                         Userrechte vergeben
                     </summary>
                     <br />
-                    <input defaultValue={searchState} onChange={(e) => setSearchState(e.target.value)} placeholder="SUCHEN" />
-                    <button onClick={() => setSortState(toggleSortType())}>
-                        {sortState.sortType === SortType.BY_NAME ? 'Sortiere nach Rollen' : 'Sortiere nach Namen'}
-                    </button>
-                    <button onClick={() => setSortState(toggleSortOrder())}>
-                        {sortState.sortOrder === SortOrder.ASCENDING ? 'Aufsteigend' : 'Absteigend'}
-                    </button>
+                    <div>
+                        <input defaultValue={searchState} onChange={(e) => setSearchState(e.target.value)} placeholder="SUCHEN" />
+                        Sortiere nach:
+                        <ToggleButtonGroup
+                            size="small"
+                            value={sortState.sortType}
+                            exclusive
+                            onChange={(event, newState) => {
+                                if (newState !== null) {
+                                    setSortState(toggleSortType());
+                                }
+                            }}
+                        >
+                            <ToggleButton value="name">Name</ToggleButton>
+                            <ToggleButton value="role">Rolle</ToggleButton>
+                        </ToggleButtonGroup>
+                        <button onClick={() => setSortState(toggleSortOrder())}>
+                            {sortState.sortOrder === SortOrder.ASCENDING ? '↓' : '↑'}
+                        </button>
+                    </div>
                     <section id="searchContainer">
                         {UserListContainer}
                     </section>
