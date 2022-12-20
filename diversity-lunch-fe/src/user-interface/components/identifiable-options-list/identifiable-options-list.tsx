@@ -47,7 +47,7 @@ export const IdentifiableOptionsList = <T extends Identifiable>(
                     <br />
                     <section id="searchContainer">
                         <label>
-                            <p>Frage: In welchem Projekt arbeitest du derzeit?</p>
+                            <p className="projectListHeader">Frage: In welchem Projekt arbeitest du derzeit?</p>
                             <input type="text" value={inputText} onChange={(e : ChangeEvent<HTMLInputElement>) => setInputText(e.target.value)} />
                         </label>
                         <button type="button" onClick={() => add(inputText)}>{addButtonLabel}</button>

@@ -48,29 +48,35 @@ export const AdminPanel: FC = () => {
         setEmailSuccess(result.status === 200);
     };
     return (
+
         <section className="view">
-            <CloseSite />
-            <DiversityIcon title="ADMIN PANEL" />
-            <UserList />
-            <div className="optionsListContainer">
-                <div>
-                    <details>
-                        <summary className="editListTitle">
-                            Profilangaben
-                        </summary>
-                        <br />
-                        <section>
-                            <IdentifiableOptionsList state={projectState} fetch={projectFetch} title="" addButtonLabel="Projekt hinzufügen" />
-                        </section>
-                    </details>
+            <div className="adminPanelContainer">
+                <div className="header">
+                    <CloseSite />
+                    <DiversityIcon title="ADMIN PANEL" />
+                </div>
+                <div className="bottom">
+                    <UserList />
+                    <div className="optionsListContainer">
+                        <div>
+                            <details>
+                                <summary className="editListTitle">
+                                    Profilangaben
+                                </summary>
+                                <section>
+                                    <IdentifiableOptionsList state={projectState} fetch={projectFetch} title="" addButtonLabel="Projekt hinzufügen" />
+                                </section>
+                            </details>
+                        </div>
+                    </div>
+                    <VoucherUpload />
+
+                    <div className="customContainer">
+                        <button className="testmailButton" onClick={sendTestmail}>Testmail verschicken</button>
+                    </div>
+                    {emailSuccess && <PopUp onButtonClick={() => { setEmailSuccess(false); }} message="Testmail gesendet" buttonText="Okay" />}
                 </div>
             </div>
-            <VoucherUpload />
-
-            <div className="customContainer">
-                <button className="testmailButton" onClick={sendTestmail}>Testmail verschicken</button>
-            </div>
-            {emailSuccess && <PopUp onButtonClick={() => { setEmailSuccess(false); }} message="Testmail gesendet" buttonText="Okay" />}
         </section>
 
     );

@@ -56,7 +56,7 @@ input:focus {
 .usersList{
   display: grid;
   grid-template-columns: 65% 25% 10%;
-  gap: 0px 0px;
+  gap: 0px;
 
   letter-spacing: 0.015em;
   font-family: GilroyLight, sans-serif;
@@ -82,17 +82,23 @@ input:focus {
 }
 
 .CSVUploadContainer {
-  padding: 20px;
+  padding: 15px 20px;
 }
 
 .CSVUploadContainer div{
-  margin: 20px;
+  margin: 25px;
 }
 
+.CSVUploadContainer .voucherCountState {
+  padding-bottom: 2%;
+}
+.optionsListContainer .projectListHeader {
+  padding: 1%;
+}
 .optionsListContainer {
-  padding: 20px;
+  padding: 20px 20px;
 }
 
 .optionsListContainer div {
-  margin: 20px;
+
 }

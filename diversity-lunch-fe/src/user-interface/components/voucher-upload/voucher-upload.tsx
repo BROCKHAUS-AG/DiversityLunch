@@ -54,33 +54,31 @@ export const VoucherUpload: FC = () => {
     };
 
     return (
-        <div>
-            <div className="CSVUploadContainer">
-                <p className="CSVUploadTitle">Gutschein Upload</p>
+        <div className="CSVUploadContainer">
+            <p className="CSVUploadTitle">Gutschein Upload</p>
 
-                <div>
-                    <p>
-                        Es sind
-                        {' '}
-                        {voucherCountState}
-                        {' '}
-                        Gutscheine vorhanden.
-                    </p>
-                    <details>
-                        <summary className="editListTitle">
-                            Gutscheincodes anzeigen
-                        </summary>
-                        <VoucherList vouchers={voucherList} />
-                    </details>
-                </div>
+            <div>
+                <p className="voucherCountState">
+                    Es sind
+                    {' '}
+                    {voucherCountState}
+                    {' '}
+                    Gutscheine vorhanden.
+                </p>
+                <details>
+                    <summary className="editListTitle">
+                        Gutscheincodes anzeigen
+                    </summary>
+                    <VoucherList vouchers={voucherList} />
+                </details>
+            </div>
 
-                <div>
-                    <label>
-                        <p>Zum Uploaden ziehe .csv Files im Standardformat in das Upload Fenster</p>
-                        <input type="file" accept=".csv" onChange={uploadCSVToFrontend} />
-                        <button onClick={uploadCSVFile}>Upload</button>
-                    </label>
-                </div>
+            <div>
+                <label>
+                    <p>Zum Uploaden ziehe .csv Files im Standardformat in das Upload Fenster</p>
+                    <input type="file" accept=".csv" onChange={uploadCSVToFrontend} />
+                    <button onClick={uploadCSVFile}>Upload</button>
+                </label>
             </div>
             {
                 uploadSuccess
