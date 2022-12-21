@@ -6,7 +6,6 @@ ALTER TABLE country_entity ADD COLUMN isDefault boolean not null default false;
 ALTER TABLE diet_entity ADD COLUMN isDefault boolean not null default false;
 ALTER TABLE education_entity ADD COLUMN isDefault boolean not null default false;
 ALTER TABLE gender_entity ADD COLUMN isDefault boolean not null default false;
-ALTER TABLE hobby_entity ADD COLUMN isDefault boolean not null default false;
 ALTER TABLE language_entity ADD COLUMN isDefault boolean not null default false;
 ALTER TABLE religion_entity ADD COLUMN isDefault boolean not null default false;
 ALTER TABLE sexual_orientation_entity ADD COLUMN isDefault boolean not null default false;
@@ -27,4 +26,3 @@ Update social_background_discrimination_entity    SET isDefault=true   WHERE low
 Update work_experience_entity                     SET isDefault=true   WHERE lower(descriptor)=lower('keine angabe');
 Update social_background_entity  SET isDefault=true   WHERE lower(descriptor)=lower('keine angabe');
 Update project_entity  SET isDefault=true WHERE lower(descriptor)=lower('keine angabe');
-Update hobby_entity SET isDefault=true WHERE lower(descriptor)=lower('sonstiges');
