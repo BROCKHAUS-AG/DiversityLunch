@@ -37,6 +37,7 @@ import { SocialBackground } from '../../../model/SocialBackground';
 import { Identifiable } from '../../../data/generic/Identifiable';
 import { SocialBackgroundDiscrimination } from '../../../model/SocialBackgroundDiscrimination';
 import './profile-form.scss';
+import { profileFormQuestion } from '../../../globals/profile-form-question';
 
 export type ProfileFormCallback = (formData: Partial<Profile>) => void;
 export type ProfileFormIsValidCallback = (formData: Partial<Profile>)=>boolean;
@@ -147,7 +148,9 @@ export const ProfileForm: FC<ProfileFormProps> = ({
     return (
         <form onSubmit={formSubmitted} className="ProfileForm">
             <div className="DropdownQuestion">
-                <p className="DropdownQuestion-question">Wann wurdest du geboren?</p>
+                <p className="DropdownQuestion-question">
+                    {profileFormQuestion.age}
+                </p>
                 <TextField
                     id="birth_year"
                     label="Geburtsjahr"
@@ -159,7 +162,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 />
             </div>
             <div className="Multi-select-container">
-                <p className="Multi-select-label">Was sind deine Hobbies?</p>
+                <p className="Multi-select-label">{profileFormQuestion.hobby}</p>
                 <span className="labelWrapper"><label>Hobbies</label></span>
                 <Multiselect
                     selectedValues={profile.hobby || undefined}
@@ -175,42 +178,42 @@ export const ProfileForm: FC<ProfileFormProps> = ({
             </div>
             <Dropdown
                 options={sortOptions(project)}
-                placeholder="In welchem Projekt arbeitest du derzeit?"
+                placeholder={profileFormQuestion.project}
                 onChange={(value) => updateProfile('project', value)}
                 label="Projekt"
                 currentValue={profile.project || undefined}
             />
             <Dropdown
                 options={sortOptions(genders)}
-                placeholder="Was ist deine geschlechtliche Identität?"
+                placeholder={profileFormQuestion.gender}
                 onChange={(value) => updateProfile('gender', value)}
                 label="Geschlechtliche Identität"
                 currentValue={profile.gender || undefined}
             />
             <Dropdown
                 options={sortOptions(countries)}
-                placeholder="Was ist deine ethnische Herkunft?"
+                placeholder={profileFormQuestion.country}
                 onChange={(value) => updateProfile('originCountry', value)}
                 label="Ethnische Herkunft"
                 currentValue={profile.originCountry || undefined}
             />
             <Dropdown
                 options={sortOptions(languages)}
-                placeholder="Was ist deine Muttersprache?"
+                placeholder={profileFormQuestion.language}
                 onChange={(value) => updateProfile('motherTongue', value)}
                 label="Muttersprache"
                 currentValue={profile.motherTongue || undefined}
             />
             <Dropdown
                 options={sortOptions(religions)}
-                placeholder="An welche Religion glaubst du?"
+                placeholder={profileFormQuestion.religion}
                 onChange={(value) => updateProfile('religion', value)}
                 label="Religion"
                 currentValue={profile.religion || undefined}
             />
             <Dropdown
                 options={sortOptions(workExperience)}
-                placeholder="Wie viele Jahre Berufserfahrung hast du schon gesammelt?"
+                placeholder={profileFormQuestion.workExperience}
                 onChange={(value) => updateProfile('workExperience', value)}
                 label="Berufserfahrung"
                 currentValue={profile.workExperience || undefined}
@@ -218,36 +221,35 @@ export const ProfileForm: FC<ProfileFormProps> = ({
 
             <Dropdown
                 options={sortOptions(educations)}
-                placeholder="Welchen Bildungsweg hast du bisher bestritten?"
+                placeholder={profileFormQuestion.education}
                 onChange={(value) => updateProfile('education', value)}
                 label="Bildungsweg"
                 currentValue={profile.education || undefined}
             />
             <Dropdown
                 options={sortOptions(diets)}
-                placeholder="Wie ernährst du dich?"
+                placeholder={profileFormQuestion.diet}
                 onChange={(value) => updateProfile('diet', value)}
                 label="Ernährung"
                 currentValue={profile.diet || undefined}
             />
             <Dropdown
                 options={sortOptions(sexualOrientation)}
-                placeholder="Was ist deine sexuelle Orientierung?"
+                placeholder={profileFormQuestion.sexualOrientation}
                 onChange={(value) => updateProfile('sexualOrientation', value)}
                 label="Sexualität"
                 currentValue={profile.sexualOrientation || undefined}
             />
             <Dropdown
                 options={sortOptions(socialBackground)}
-                placeholder="Bist du ein Akademikerkind, oder eher die erste Person in der Familie, die studiert oder ihr Abitur gemacht hat?"
+                placeholder={profileFormQuestion.socialBackground}
                 onChange={(value) => updateProfile('socialBackground', value)}
                 label="Soziale Herkunft"
                 currentValue={profile.socialBackground || undefined}
             />
             <Dropdown
                 options={sortOptions(socialBackgroundDiscrimination)}
-                placeholder="Wurdest du jemals aufgrund deiner sozialen Herkunft Vorurteilen ausgesetzt,
-                herabwürdigend behandelt, benachteiligt oder ausgeschlossen?"
+                placeholder={profileFormQuestion.socialBackgroundDiscrimination}
                 onChange={(value) => updateProfile('socialBackgroundDiscrimination', value)}
                 label="Ausgrenzung?"
                 currentValue={profile.socialBackgroundDiscrimination || undefined}

@@ -25,6 +25,7 @@ import { countryFetch } from '../../../data/country/fetch-country';
 import {
     socialBackgroundDiscriminationFetch,
 } from '../../../data/social-background-discrimination/social-background-discrimination-fetch';
+import { profileFormQuestion } from '../../../globals/profile-form-question';
 
 export const AdminPanel: FC = () => {
     const accountState = useSelector((store: AppStoreState) => store.account);
@@ -92,86 +93,84 @@ export const AdminPanel: FC = () => {
                                         state={hobbyState}
                                         fetch={hobbyFetch}
                                         title="Hobbies anpassen"
-                                        header="Frage: Was sind deine Hobbies?"
+                                        header={`Frage: ${profileFormQuestion.hobby}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={projectState}
                                         fetch={projectFetch}
                                         title="Projektliste anpassen"
-                                        header="Frage: In welchem Projekt arbeitest du derzeit?"
+                                        header={`Frage: ${profileFormQuestion.project}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={genderState}
                                         fetch={genderFetch}
                                         title="Geschlechtliche Identität anpassen"
-                                        header="Frage: Was ist deine geschlechtliche Identität?"
+                                        header={`Frage: ${profileFormQuestion.gender}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={countryState}
                                         fetch={countryFetch}
                                         title="Ethnische Herkunft anpassen"
-                                        header="Frage: Was ist deine ethnische Herkunft?"
+                                        header={`Frage: ${profileFormQuestion.country}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={languageState}
                                         fetch={languageFetch}
                                         title="Muttersprache anpassen"
-                                        header="Frage: Was ist deine Muttersprache?"
+                                        header={`Frage: ${profileFormQuestion.language}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={religionState}
                                         fetch={religionFetch}
                                         title="Religion anpassen"
-                                        header="Frage: An welche Religion glaubst du?"
+                                        header={`Frage: ${profileFormQuestion.religion}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={workExperienceState}
                                         fetch={workExperienceFetch}
                                         title="Berufserfahrung anpassen"
-                                        header="Frage: Wie viele Jahre Berufserfahrung hast du schon gesammelt?"
+                                        header={`Frage: ${profileFormQuestion.workExperience}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={educationState}
                                         fetch={educationFetch}
                                         title="Bildungsweg anpassen"
-                                        header="Frage: Welchen Bildungsweg hast du bisher bestritten?"
+                                        header={`Frage: ${profileFormQuestion.education}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={dietState}
                                         fetch={dietFetch}
                                         title="Ernährung anpassen"
-                                        header="Frage: Wie ernährst du dich?"
+                                        header={`Frage: ${profileFormQuestion.diet}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={sexualOrientationState}
                                         fetch={sexualOrientationFetch}
                                         title="Sexuelle Orientierung anpassen"
-                                        header="Frage: Was ist deine sexuelle Orientierung?"
+                                        header={`Frage: ${profileFormQuestion.sexualOrientation}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={socialBackgroundState}
                                         fetch={socialBackgroundFetch}
                                         title="Soziale Herkunft anpassen"
-                                        header="Frage: Bist du ein Akademikerkind, oder eher die erste Person in der Familie,
-                                                die studiert oder ihr Abitur gemacht hat?"
+                                        header={`Frage: ${profileFormQuestion.socialBackground}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={socialBackgroundDiscriminationState}
                                         fetch={socialBackgroundDiscriminationFetch}
                                         title="Ausgrenzung anpassen"
-                                        header="Frage: Wurdest du jemals aufgrund deiner sozialen Herkunft Vorurteilen ausgesetzt,
-                                                herabwürdigend behandelt, benachteiligt oder ausgeschlossen?"
+                                        header={`Frage: ${profileFormQuestion.socialBackgroundDiscrimination}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                 </section>
