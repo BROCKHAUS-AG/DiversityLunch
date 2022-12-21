@@ -11,9 +11,9 @@ public class CountryTestDataFactory {
 
     public CountryDto buildDto(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new CountryDto(ids[setNumber], descriptors[setNumber]);
+            return new CountryDto(ids[setNumber], descriptors[setNumber], false);
         }
-        return new CountryDto(ids[1], descriptors[1]);
+        return new CountryDto(ids[1], descriptors[1], false);
     }
 
 

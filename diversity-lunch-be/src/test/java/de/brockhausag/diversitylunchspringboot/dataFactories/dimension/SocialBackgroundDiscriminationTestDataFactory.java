@@ -11,9 +11,9 @@ public class SocialBackgroundDiscriminationTestDataFactory {
 
     public SocialBackgroundDiscriminationDto buildDto(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new SocialBackgroundDiscriminationDto(ids[setNumber], descriptors[setNumber]);
+            return new SocialBackgroundDiscriminationDto(ids[setNumber], descriptors[setNumber], false);
         }
-        return new SocialBackgroundDiscriminationDto(ids[1], descriptors[1]);
+        return new SocialBackgroundDiscriminationDto(ids[1], descriptors[1], false);
     }
 
 

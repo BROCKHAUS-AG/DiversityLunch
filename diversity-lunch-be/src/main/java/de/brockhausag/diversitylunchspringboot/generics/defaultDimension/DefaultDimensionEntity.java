@@ -4,6 +4,5 @@ import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionEntit
 
 public interface DefaultDimensionEntity extends DimensionEntity {
     boolean isDefault();
-
     void setDefault(boolean isDefault);
 }

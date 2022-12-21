@@ -10,9 +10,7 @@ import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
+@Data
 public class EducationDto implements DefaultDimensionDto {
 
     private Long id;
@@ -23,12 +21,8 @@ public class EducationDto implements DefaultDimensionDto {
     @NotBlank
     private String descriptor;
 
-    @Override
-    public EducationDto clone() {
-        try {
-            return (EducationDto) super.clone();
-        } catch (CloneNotSupportedException e) {
-            return new EducationDto(this.id, this.descriptor);
-        }
-    }
+    @NotNull
+    @Schema(description = "Default value for the given dimension")
+    private boolean isDefault;
+
 }

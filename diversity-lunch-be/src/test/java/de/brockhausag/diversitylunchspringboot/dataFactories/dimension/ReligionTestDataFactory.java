@@ -11,9 +11,9 @@ public class ReligionTestDataFactory {
 
     public ReligionDto buildDto(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new ReligionDto(ids[setNumber], descriptors[setNumber]);
+            return new ReligionDto(ids[setNumber], descriptors[setNumber], false);
         }
-        return new ReligionDto(ids[1], descriptors[1]);
+        return new ReligionDto(ids[1], descriptors[1], false);
     }
 
 
