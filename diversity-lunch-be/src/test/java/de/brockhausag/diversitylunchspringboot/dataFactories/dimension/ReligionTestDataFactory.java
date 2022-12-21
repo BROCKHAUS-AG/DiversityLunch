@@ -1,8 +1,5 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ReligionDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.ReligionEntity;
-
 public class ReligionTestDataFactory {
 
     private static final int numberOfCompleteSets = 3;

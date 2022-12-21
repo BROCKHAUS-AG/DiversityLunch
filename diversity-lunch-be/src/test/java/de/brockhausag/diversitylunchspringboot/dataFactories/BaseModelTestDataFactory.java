@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
-import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.TestDefaultDimensionEntity;
+import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.TestBasicDimension;
 
 public class BaseModelTestDataFactory {
 
@@ -16,21 +16,21 @@ public class BaseModelTestDataFactory {
     }
 
 
-    public TestDefaultDimensionEntity buildEntity(int setNumber) {
+    public TestBasicDimension buildEntity(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new TestDefaultDimensionEntity(ids[setNumber], descriptors[setNumber]);
+            return new TestBasicDimension(ids[setNumber], descriptors[setNumber]);
         }
-        return new TestDefaultDimensionEntity(ids[1], descriptors[1]);
+        return new TestBasicDimension(ids[1], descriptors[1]);
     }
 
-    public TestDefaultDimensionEntity buildEntityWithoutId() {
-        TestDefaultDimensionEntity incompleteEntity = new TestDefaultDimensionEntity();
+    public TestBasicDimension buildEntityWithoutId() {
+        TestBasicDimension incompleteEntity = new TestBasicDimension();
         incompleteEntity.setDescriptor(descriptors[0]);
         return incompleteEntity;
     }
 
-    public TestDefaultDimensionEntity buildEntityWithoutDescriptor() {
-        TestDefaultDimensionEntity incompleteEntity = new TestDefaultDimensionEntity();
+    public TestBasicDimension buildEntityWithoutDescriptor() {
+        TestBasicDimension incompleteEntity = new TestBasicDimension();
         incompleteEntity.setId(ids[0]);
         return incompleteEntity;
     }

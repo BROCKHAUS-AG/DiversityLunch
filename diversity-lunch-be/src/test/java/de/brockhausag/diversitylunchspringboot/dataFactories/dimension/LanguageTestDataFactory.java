@@ -1,8 +1,5 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.LanguageDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.LanguageEntity;
-
 public class LanguageTestDataFactory {
 
     private static final int numberOfCompleteSets = 3;

@@ -1,14 +1,12 @@
 package de.brockhausag.diversitylunchspringboot.profile.logic;
 
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
-import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionEntity;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,7 +37,7 @@ public class ProfileService {
         return Optional.of(repository.save(updateEntity));
     }
 
-   public List<ProfileEntity> getAllProfilesWithSelectedDimensionOption(DimensionEntity dimensionEntity) {
+/*   public List<ProfileEntity> getAllProfilesWithSelectedDimensionOption(DimensionEntity dimensionEntity) {
        return null;
-   }
+   }*/
 }

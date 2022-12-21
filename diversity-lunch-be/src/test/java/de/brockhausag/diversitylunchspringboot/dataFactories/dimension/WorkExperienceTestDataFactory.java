@@ -1,8 +1,5 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.WorkExperienceDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.WorkExperienceEntity;
-
 public class WorkExperienceTestDataFactory {
     private static final int numberOfCompleteSets = 3;
     private static final Long[] ids = {666L, 1L, 2L, 3L};

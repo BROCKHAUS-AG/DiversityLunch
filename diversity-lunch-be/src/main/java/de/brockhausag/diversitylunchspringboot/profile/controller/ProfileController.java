@@ -1,8 +1,7 @@
+/*
 package de.brockhausag.diversitylunchspringboot.profile.controller;
 
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
-import de.brockhausag.diversitylunchspringboot.profile.mapper.ProfileMapper;
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -138,3 +137,4 @@ public class ProfileController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 }
+*/

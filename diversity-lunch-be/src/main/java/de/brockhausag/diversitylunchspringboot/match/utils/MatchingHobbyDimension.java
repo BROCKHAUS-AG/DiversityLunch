@@ -1,7 +1,7 @@
+/*
 package de.brockhausag.diversitylunchspringboot.match.utils;
 
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.experimental.UtilityClass;
 
@@ -38,3 +38,4 @@ public class MatchingHobbyDimension {
         return (int) Math.round(ratio * STANDARD_SCORE_BY_DIFFERENCE);
     }
 }
+*/

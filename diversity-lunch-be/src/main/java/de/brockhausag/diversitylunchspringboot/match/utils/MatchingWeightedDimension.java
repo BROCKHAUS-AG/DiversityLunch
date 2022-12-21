@@ -1,6 +1,6 @@
+/*
 package de.brockhausag.diversitylunchspringboot.match.utils;
 
-import de.brockhausag.diversitylunchspringboot.generics.weightedDimension.WeightedEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.experimental.UtilityClass;
@@ -13,6 +13,8 @@ public class MatchingWeightedDimension {
 
     static int getScoreFromWeightedEntities(ProfileEntity profile1, ProfileEntity profile2, List<Category> potentialQuestionsCategories) {
         int currentScore = 0;
+
+        return 1;
 
         List<WeightedEntity> weightedEntities1 = profile1.getWeightedEntities();
         List<WeightedEntity> weightedEntities2 = profile2.getWeightedEntities();
@@ -43,3 +45,4 @@ public class MatchingWeightedDimension {
         return Math.abs(weight1 - weight2);
     }
 }
+*/

@@ -7,8 +7,6 @@ import de.brockhausag.diversitylunchspringboot.config.SecurityConfig;
 import de.brockhausag.diversitylunchspringboot.integrationDataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
-import de.brockhausag.diversitylunchspringboot.profile.mapper.ProfileMapper;
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

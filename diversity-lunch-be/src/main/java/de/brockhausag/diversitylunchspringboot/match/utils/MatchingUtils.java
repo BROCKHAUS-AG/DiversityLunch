@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static de.brockhausag.diversitylunchspringboot.match.utils.MatchingDefaultDimension.getScoreFromDefaultEntities;
-import static de.brockhausag.diversitylunchspringboot.match.utils.MatchingHobbyDimension.compareHobbies;
-import static de.brockhausag.diversitylunchspringboot.match.utils.MatchingWeightedDimension.getScoreFromWeightedEntities;
+//import static de.brockhausag.diversitylunchspringboot.match.utils.MatchingDefaultDimension.getScoreFromDefaultEntities;
+//import static de.brockhausag.diversitylunchspringboot.match.utils.MatchingHobbyDimension.compareHobbies;
+//import static de.brockhausag.diversitylunchspringboot.match.utils.MatchingWeightedDimension.getScoreFromWeightedEntities;
 
 @Slf4j
 @UtilityClass
@@ -24,12 +24,12 @@ public class MatchingUtils {
 
         int currentScore = 0;
         //First: Score Default Entities
-        currentScore += getScoreFromDefaultEntities(profile1, profile2, potentialQuestionsCategories);
+//        currentScore += getScoreFromDefaultEntities(profile1, profile2, potentialQuestionsCategories);
         //Second Score Weighted Entities
-        currentScore += getScoreFromWeightedEntities(profile1, profile2, potentialQuestionsCategories);
+        //currentScore += getScoreFromWeightedEntities(profile1, profile2, potentialQuestionsCategories);
         //Third Score Birthdate or miscellaneous
         currentScore += compareBirthYear(profile1, profile2, potentialQuestionsCategories);
-        currentScore += compareHobbies(profile1, profile2, potentialQuestionsCategories);
+//        currentScore += compareHobbies(profile1, profile2, potentialQuestionsCategories);
 
         Category category;
         if (potentialQuestionsCategories.size() > 0) {

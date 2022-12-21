@@ -1,8 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.integrationDataFactories;
 
 import com.nimbusds.jose.util.Base64URL;
-import de.brockhausag.diversitylunchspringboot.profile.logic.*;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.*;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;

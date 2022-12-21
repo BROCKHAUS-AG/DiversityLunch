@@ -1,9 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.serviceTest;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.HobbyTestDataFactory;
-import de.brockhausag.diversitylunchspringboot.profile.data.HobbyRepository;
-import de.brockhausag.diversitylunchspringboot.profile.logic.HobbyService;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

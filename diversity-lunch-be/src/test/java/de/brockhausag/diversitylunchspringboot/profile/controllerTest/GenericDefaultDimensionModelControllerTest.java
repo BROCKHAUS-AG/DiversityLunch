@@ -2,10 +2,8 @@ package de.brockhausag.diversitylunchspringboot.profile.controllerTest;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.BaseModelTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.TestDefaultDimensionDto;
-import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.TestDefaultDimensionEntity;
-import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionEntityService;
-import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionModelController;
-import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
+import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.TestBasicDimension;
+import de.brockhausag.diversitylunchspringboot.dimensions.dimension.DimensionMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,12 +27,12 @@ import static org.mockito.Mockito.*;
 public class GenericDefaultDimensionModelControllerTest {
     private BaseModelTestDataFactory factory;
     @Mock
-    private DimensionMapper<TestDefaultDimensionDto, TestDefaultDimensionEntity> dimensionMapper;
+    private DimensionMapper<TestDefaultDimensionDto, TestBasicDimension> dimensionMapper;
     @Mock
     private TestServiceType service;
     @InjectMocks
-    private DefaultDimensionModelController<TestDefaultDimensionDto, TestDefaultDimensionEntity,
-            TestRepositoryType, TestServiceType, DimensionMapper<TestDefaultDimensionDto, TestDefaultDimensionEntity>> controller;
+    private DefaultDimensionModelController<TestDefaultDimensionDto, TestBasicDimension,
+            TestRepositoryType, TestServiceType, DimensionMapper<TestDefaultDimensionDto, TestBasicDimension>> controller;
 
     @BeforeEach
     void setup() {
@@ -45,7 +43,7 @@ public class GenericDefaultDimensionModelControllerTest {
     void testGetOne_withExistingId_returnsOkWithTestBaseDto() {
         //Arrange
         TestDefaultDimensionDto expectedDto = factory.buildDto(1);
-        TestDefaultDimensionEntity existingEntity = factory.buildEntity(1);
+        TestBasicDimension existingEntity = factory.buildEntity(1);
         ResponseEntity<TestDefaultDimensionDto> expectedResponse = new ResponseEntity<>(expectedDto, HttpStatus.OK);
 
         when(service.getEntityById(existingEntity.getId())).thenReturn(Optional.of(existingEntity));
@@ -78,7 +76,7 @@ public class GenericDefaultDimensionModelControllerTest {
     void testGetAll_withNoEntitiesInRepository_returnsEmptyList() {
         //Arrange
         List<TestDefaultDimensionDto> emptyDtoList = Collections.emptyList();
-        List<TestDefaultDimensionEntity> emptyEntityList = Collections.emptyList();
+        List<TestBasicDimension> emptyEntityList = Collections.emptyList();
         ResponseEntity<List<TestDefaultDimensionDto>> expectedResponse = new ResponseEntity<>(
                 emptyDtoList,
                 HttpStatus.OK
@@ -97,7 +95,7 @@ public class GenericDefaultDimensionModelControllerTest {
     @Test
     void testGetAllCountries_withThreeEntitiesInRepository_returnsListOfThreeTestBaseEntities() {
         //Arrange
-        List<TestDefaultDimensionEntity> entityList = Arrays.asList(factory.buildEntity(1),
+        List<TestBasicDimension> entityList = Arrays.asList(factory.buildEntity(1),
                 factory.buildEntity(2), factory.buildEntity(3));
         List<TestDefaultDimensionDto> dtoList = Arrays.asList(factory.buildDto(1),
                 factory.buildDto(2), factory.buildDto(3));
@@ -120,7 +118,7 @@ public class GenericDefaultDimensionModelControllerTest {
     @Test
     void testPostOne_calledThreeTimesWithSameDto_callCreateEntityThreeTimesWithMappedEntity() {
         TestDefaultDimensionDto dto = factory.buildDto(1);
-        TestDefaultDimensionEntity entity = dimensionMapper.dtoToEntity(dto);
+        TestBasicDimension entity = dimensionMapper.dtoToEntity(dto);
         when(service.createEntity(entity)).thenReturn(entity);
         final int AMOUNT = 3;
 
@@ -134,7 +132,7 @@ public class GenericDefaultDimensionModelControllerTest {
     @Test
     void testPutOne_calledThreeTimesWithSameDto_callCreateOrUpdateEntityThreeTimesWithMappedEntity() {
         TestDefaultDimensionDto dto = factory.buildDto(1);
-        TestDefaultDimensionEntity entity = dimensionMapper.dtoToEntity(dto);
+        TestBasicDimension entity = dimensionMapper.dtoToEntity(dto);
         when(service.updateOrCreateEntity(entity)).thenReturn(entity);
         final int AMOUNT = 3;
 
@@ -167,10 +165,11 @@ public class GenericDefaultDimensionModelControllerTest {
         assertEquals(expected, actual);
     }
 
-    private interface TestRepositoryType extends CrudRepository<TestDefaultDimensionEntity, Long> {
+    private interface TestRepositoryType extends CrudRepository<TestBasicDimension, Long> {
     }
 
-    private static class TestServiceType extends DefaultDimensionEntityService<TestDefaultDimensionEntity, TestRepositoryType> {
+    private static class TestServiceType extends DimensionEntityService<
+            EntityType, RepositoryType> {
         public TestServiceType(TestRepositoryType repository) {
             super(repository);
         }

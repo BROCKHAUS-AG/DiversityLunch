@@ -4,6 +4,7 @@ import de.brockhausag.diversitylunchspringboot.match.service.MatchingService;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MeetingService;
+import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +25,7 @@ public class SchedulingConfig {
     private final MatchingService matchingService;
     private final MeetingProposalRepository meetingProposalRepository;
     private final MeetingService meetingService;
+    private final MicrosoftGraphService microsoftGraphService;
 
     // Note: Cronjob naming scheme https://spring.io/blog/2020/11/10/new-in-spring-5-3-improved-cron-expressions
     @Scheduled(cron = "${diversity.settings.scheduling.matchingCronJob}") // Every Day at 02:00
@@ -50,5 +52,10 @@ public class SchedulingConfig {
     @Scheduled(cron = "${diversity.settings.scheduling.cancelDeclinedMeetingsCronJob}")
     public void scheduleCancelDeclinedMeetings() {
         meetingService.cancelDeclinedMeetings();
+    }
+
+    @Scheduled(cron = "0/5 * * * * *")
+    public void test() {
+        microsoftGraphService.test();
     }
 }

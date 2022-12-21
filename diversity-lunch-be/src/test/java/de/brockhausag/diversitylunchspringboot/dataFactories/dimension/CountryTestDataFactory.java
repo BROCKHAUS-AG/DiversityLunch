@@ -1,8 +1,5 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.CountryDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.CountryEntity;
-
 public class CountryTestDataFactory {
 
     private static final int numberOfCompleteSets = 3;

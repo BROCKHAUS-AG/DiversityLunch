@@ -1,10 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapperTest;
 
-import de.brockhausag.diversitylunchspringboot.dataFactories.*;
+import de.brockhausag.diversitylunchspringboot.dataFactories.HobbyTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.*;
-import de.brockhausag.diversitylunchspringboot.profile.mapper.*;
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.*;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -188,7 +185,7 @@ public class DimensionMapperTest {
         assertEquals(3, actualSocialBackgroundDiscriminationDto.size());
         assertEquals(3, actualSocialBackgroundDto.size());
         assertEquals(3, actualWorkExperienceDto.size());
-        
+
         assertEquals(expectedCountryDto, actualCountryDto);
         assertEquals(expectedDietDto, actualDietDto);
         assertEquals(expectedEducationDto, actualEducationDto);

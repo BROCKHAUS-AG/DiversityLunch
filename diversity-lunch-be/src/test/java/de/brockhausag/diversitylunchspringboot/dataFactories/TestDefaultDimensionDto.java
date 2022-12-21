@@ -1,6 +1,5 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
-import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionDto;
 import lombok.*;
 
 @NoArgsConstructor
@@ -8,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class TestDefaultDimensionDto implements DefaultDimensionDto {
+public class TestDefaultDimensionDto extends DimensionDto {
 
     private Long id;
     private String descriptor;

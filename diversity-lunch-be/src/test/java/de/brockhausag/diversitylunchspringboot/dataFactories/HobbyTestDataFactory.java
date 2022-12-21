@@ -1,8 +1,5 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;
-
 import java.util.List;
 import java.util.stream.Stream;
 

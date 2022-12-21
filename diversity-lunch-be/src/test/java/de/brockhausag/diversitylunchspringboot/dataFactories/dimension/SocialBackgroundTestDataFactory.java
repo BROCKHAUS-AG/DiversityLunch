@@ -1,8 +1,5 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.SocialBackgroundDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.SocialBackgroundEntity;
-
 public class SocialBackgroundTestDataFactory {
     private static final int numberOfCompleteSets = 2;
     private static final Long[] ids = {666L, 1L, 2L};

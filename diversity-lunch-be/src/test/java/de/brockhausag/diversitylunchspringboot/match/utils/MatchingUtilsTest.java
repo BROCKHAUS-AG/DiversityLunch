@@ -4,7 +4,6 @@ import de.brockhausag.diversitylunchspringboot.dataFactories.HobbyTestDataFactor
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.match.records.ScoreAndCategory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

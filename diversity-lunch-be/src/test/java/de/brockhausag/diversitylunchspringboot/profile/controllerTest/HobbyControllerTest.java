@@ -1,11 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.controllerTest;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.HobbyTestDataFactory;
-import de.brockhausag.diversitylunchspringboot.profile.controller.HobbyController;
-import de.brockhausag.diversitylunchspringboot.profile.logic.HobbyService;
-import de.brockhausag.diversitylunchspringboot.profile.mapper.HobbyMapper;
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

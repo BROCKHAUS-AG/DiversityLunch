@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.meeting.model;
 
-import de.brockhausag.diversitylunchspringboot.generics.dimensionCategory.DimensionCategoryEntity;
+import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,7 +16,7 @@ public class QuestionEntity {
 
     @NotNull
     @ManyToOne
-    private DimensionCategoryEntity category;
+    private DimensionCategory category;
 
     @NotNull
     private String questionText;

@@ -1,14 +1,14 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
-import de.brockhausag.diversitylunchspringboot.generics.dimensionCategory.DimensionCategoryEntity;
+import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
 
 public class DimensionCategoryTestDataFactory {
-    DimensionCategoryEntity buildEntity () {
+    DimensionCategory buildEntity () {
         return buildEntity("Test-Category");
     }
 
-    DimensionCategoryEntity buildEntity (String descriptor) {
-        var dimensionCategory = new DimensionCategoryEntity();
+    DimensionCategory buildEntity (String descriptor) {
+        var dimensionCategory = new DimensionCategory();
 
         dimensionCategory.setId(1L);
         dimensionCategory.setDescriptor(descriptor);

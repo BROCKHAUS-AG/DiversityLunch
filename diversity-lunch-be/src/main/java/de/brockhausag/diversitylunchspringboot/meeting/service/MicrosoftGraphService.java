@@ -10,6 +10,7 @@ import com.microsoft.graph.requests.GraphServiceClient;
 import com.microsoft.graph.requests.GroupCollectionPage;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMsTeamsProperties;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.Request;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MicrosoftGraphService {
 
 
@@ -108,5 +110,24 @@ public class MicrosoftGraphService {
         GraphServiceClient<Request> graphClient = setUpGraphClient();
         GroupCollectionPage groupCollectionPage = graphClient.groups().buildRequest().get();
         return groupCollectionPage != null ? Optional.of(groupCollectionPage.getCurrentPage()) : Optional.empty();
+    }
+
+    public void test() {
+        GraphServiceClient<Request> graphClient = setUpGraphClient();
+        String userId = "c5b1bdf1-f22e-49ad-bbac-db73e31340a4";
+
+        LocalDateTime dateTime = LocalDateTime.now();
+        String dateTimeString = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        EventCollectionPage eventCollectionPage = graphClient.users(userId)
+                .calendar()
+                .events()
+                .buildRequest()
+                .filter("start/dateTime ge '" + dateTimeString +"'")
+                .top(10)
+                .get();
+        for (Event event : eventCollectionPage.getCurrentPage()) {
+            log.info(event.subject);
+        }
     }
 }

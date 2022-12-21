@@ -1,8 +1,5 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProjectDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProjectEntity;
-
 public class ProjectTestDataFactory {
 
     private static final int numberOfCompleteSets = 3;

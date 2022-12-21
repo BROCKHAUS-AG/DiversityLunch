@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
-import de.brockhausag.diversitylunchspringboot.generics.dimensionCategory.DimensionCategoryEntity;
+import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.*;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 
@@ -68,7 +68,7 @@ public class MeetingTestdataFactory {
 
     public MeetingEntity matchedMeeting(ProfileEntity proposerEntity, ProfileEntity partnerEntity) {
         LocalDateTime date = LocalDateTime.of(2011, 11, 11, 11, 11);
-        DimensionCategoryEntity category = new DimensionCategoryTestDataFactory().buildEntity("Projekt");
+        DimensionCategory category = new DimensionCategoryTestDataFactory().buildEntity("Projekt");
         QuestionEntity question = new QuestionTestDataFactory().buildEntity(category);
         return new MeetingEntity(1L, date, partnerEntity, proposerEntity, 1, question, date, "");
     }

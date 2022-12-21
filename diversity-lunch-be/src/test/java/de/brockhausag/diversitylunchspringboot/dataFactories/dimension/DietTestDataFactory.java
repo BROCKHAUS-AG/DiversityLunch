@@ -1,8 +1,5 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.DietDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.DietEntity;
-
 public class DietTestDataFactory {
 
     private static final Long[] ids = {666L, 1L, 2L, 3L};

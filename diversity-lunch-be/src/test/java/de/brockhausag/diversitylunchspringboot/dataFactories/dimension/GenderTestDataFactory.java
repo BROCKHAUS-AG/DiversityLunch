@@ -1,8 +1,5 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.GenderDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.GenderEntity;
-
 public class GenderTestDataFactory {
 
     private static final int numberOfCompleteSets = 3;
