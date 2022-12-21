@@ -13,9 +13,9 @@ public class WorkExperienceTestDataFactory {
 
     public WorkExperienceDto buildDto(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new WorkExperienceDto(ids[setNumber], descriptors[setNumber]);
+            return new WorkExperienceDto(ids[setNumber], descriptors[setNumber], false);
         }
-        return new WorkExperienceDto(ids[1], descriptors[1]);
+        return new WorkExperienceDto(ids[1], descriptors[1], false);
     }
 
 

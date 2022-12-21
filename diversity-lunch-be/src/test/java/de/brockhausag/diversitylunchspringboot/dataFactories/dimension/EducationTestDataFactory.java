@@ -11,9 +11,9 @@ public class EducationTestDataFactory {
 
     public EducationDto buildDto(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new EducationDto(ids[setNumber], descriptors[setNumber]);
+            return new EducationDto(ids[setNumber], descriptors[setNumber], false);
         }
-        return new EducationDto(ids[1], descriptors[1]);
+        return new EducationDto(ids[1], descriptors[1], false);
     }
 
 

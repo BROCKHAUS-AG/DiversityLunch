@@ -149,6 +149,7 @@ public class GenericDefaultDimensionModelControllerTest {
     void testDeleteOne_serviceDeleteByIdReturnTrue_returnStatusCodeOk() {
         final Long someIdThatExists = 1337L;
         when(service.deleteEntityById(someIdThatExists)).thenReturn(true);
+        when(service.getEntityById(someIdThatExists)).thenReturn(Optional.of(new TestDefaultDimensionEntity()));
         var expected = HttpStatus.OK;
 
         var actual = controller.deleteOne(someIdThatExists).getStatusCode();
@@ -159,7 +160,8 @@ public class GenericDefaultDimensionModelControllerTest {
     @Test
     void testDeleteOne_serviceDeleteByIdReturnFalse_returnStatusCodeNotFound() {
         final Long someNotExistingId = 1337L;
-        when(service.deleteEntityById(someNotExistingId)).thenReturn(false);
+        when(service.getEntityById(someNotExistingId)).thenReturn(Optional.empty());
+
         var expected = HttpStatus.NOT_FOUND;
 
         var actual = controller.deleteOne(someNotExistingId).getStatusCode();

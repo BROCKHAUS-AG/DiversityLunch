@@ -10,9 +10,9 @@ public class BaseModelTestDataFactory {
 
     public TestDefaultDimensionDto buildDto(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new TestDefaultDimensionDto(ids[setNumber], descriptors[setNumber]);
+            return new TestDefaultDimensionDto(ids[setNumber], descriptors[setNumber], false);
         }
-        return new TestDefaultDimensionDto(ids[1], descriptors[1]);
+        return new TestDefaultDimensionDto(ids[1], descriptors[1], false);
     }
 
 

@@ -11,9 +11,9 @@ public class GenderTestDataFactory {
 
     public GenderDto buildDto(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new GenderDto(ids[setNumber], descriptors[setNumber]);
+            return new GenderDto(ids[setNumber], descriptors[setNumber], false);
         }
-        return new GenderDto(ids[1], descriptors[1]);
+        return new GenderDto(ids[1], descriptors[1], false);
     }
 
 

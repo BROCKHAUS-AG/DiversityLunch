@@ -11,9 +11,9 @@ public class DietTestDataFactory {
 
     public DietDto buildDto(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new DietDto(ids[setNumber], descriptors[setNumber]);
+            return new DietDto(ids[setNumber], descriptors[setNumber], false);
         }
-        return new DietDto(ids[1], descriptors[1]);
+        return new DietDto(ids[1], descriptors[1], false);
     }
 
 

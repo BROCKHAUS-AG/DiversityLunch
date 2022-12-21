@@ -10,9 +10,7 @@ import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
+@Data
 public class SexualOrientationDto implements DefaultDimensionDto {
     private Long id;
     @Schema(description = "The sexuality of a Person", example = "Asexual")
@@ -20,4 +18,8 @@ public class SexualOrientationDto implements DefaultDimensionDto {
     @NotNull
     @NotBlank
     private String descriptor;
+
+    @NotNull
+    @Schema(description = "Default value for the given dimension")
+    private boolean isDefault;
 }

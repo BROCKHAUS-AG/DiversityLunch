@@ -11,9 +11,9 @@ public class ProjectTestDataFactory {
 
     public ProjectDto buildDto(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new ProjectDto(ids[setNumber], descriptors[setNumber]);
+            return new ProjectDto(ids[setNumber], descriptors[setNumber], false);
         }
-        return new ProjectDto(ids[1], descriptors[1]);
+        return new ProjectDto(ids[1], descriptors[1], false);
     }
 
 

@@ -10,9 +10,7 @@ import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
+@Data
 public class SocialBackgroundDiscriminationDto implements DefaultDimensionDto {
 
     private Long id;
@@ -22,4 +20,8 @@ public class SocialBackgroundDiscriminationDto implements DefaultDimensionDto {
     @NotNull
     @NotBlank
     private String descriptor;
+
+    @NotNull
+    @Schema(description = "Default value for the given dimension")
+    private boolean isDefault;
 }
