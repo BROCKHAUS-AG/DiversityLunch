@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.dataFactories;
+package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.SocialBackgroundDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.SocialBackgroundEntity;
@@ -19,9 +19,9 @@ public class SocialBackgroundTestDataFactory {
 
     public SocialBackgroundEntity buildEntity(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new SocialBackgroundEntity(ids[setNumber], descriptors[setNumber]);
+            return new SocialBackgroundEntity(ids[setNumber], descriptors[setNumber], false);
         }
-        return new SocialBackgroundEntity(ids[1], descriptors[1]);
+        return new SocialBackgroundEntity(ids[1], descriptors[1], false);
     }
 
     public SocialBackgroundEntity buildEntityWithoutId() {

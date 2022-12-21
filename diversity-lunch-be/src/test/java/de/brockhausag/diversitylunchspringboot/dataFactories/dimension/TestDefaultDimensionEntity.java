@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.dataFactories;
+package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
 import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
@@ -34,5 +34,14 @@ public class TestDefaultDimensionEntity implements DefaultDimensionEntity {
 
     public Category getQuestionCategory() {
         return Category.EDUCATION;
+    }
+
+    @Override
+    public boolean isDefault() {
+        return false;
+    }
+
+    @Override
+    public void setDefault(boolean isDefault) {
     }
 }

@@ -1,5 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
+import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.TestDefaultDimensionEntity;
+
 public class BaseModelTestDataFactory {
 
     private static final int numberOfCompleteSets = 3;

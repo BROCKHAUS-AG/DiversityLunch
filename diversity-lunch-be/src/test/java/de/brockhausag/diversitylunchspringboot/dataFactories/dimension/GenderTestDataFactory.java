@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.dataFactories;
+package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.GenderDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.GenderEntity;
@@ -19,9 +19,9 @@ public class GenderTestDataFactory {
 
     public GenderEntity buildEntity(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new GenderEntity(ids[setNumber], descriptors[setNumber]);
+            return new GenderEntity(ids[setNumber], descriptors[setNumber], false);
         }
-        return new GenderEntity(ids[1], descriptors[1]);
+        return new GenderEntity(ids[1], descriptors[1], false);
     }
 
     public GenderEntity buildEntityWithoutId() {

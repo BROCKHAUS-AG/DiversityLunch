@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.dataFactories;
+package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.SexualOrientationDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.SexualOrientationEntity;
@@ -18,9 +18,9 @@ public class SexualOrientationTestDataFactory {
 
     public SexualOrientationEntity buildEntity(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new SexualOrientationEntity(ids[setNumber], descriptors[setNumber]);
+            return new SexualOrientationEntity(ids[setNumber], descriptors[setNumber], false);
         }
-        return new SexualOrientationEntity(ids[1], descriptors[1]);
+        return new SexualOrientationEntity(ids[1], descriptors[1], false);
     }
 
     public SexualOrientationEntity buildEntityWithoutId() {

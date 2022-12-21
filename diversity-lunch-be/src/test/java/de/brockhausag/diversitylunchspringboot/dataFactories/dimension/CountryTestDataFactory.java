@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.dataFactories;
+package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.CountryDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.CountryEntity;
@@ -19,9 +19,9 @@ public class CountryTestDataFactory {
 
     public CountryEntity buildEntity(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new CountryEntity(ids[setNumber], descriptors[setNumber]);
+            return new CountryEntity(ids[setNumber], descriptors[setNumber], false);
         }
-        return new CountryEntity(ids[1], descriptors[1]);
+        return new CountryEntity(ids[1], descriptors[1], false);
     }
 
     public CountryEntity buildEntityWithoutId() {

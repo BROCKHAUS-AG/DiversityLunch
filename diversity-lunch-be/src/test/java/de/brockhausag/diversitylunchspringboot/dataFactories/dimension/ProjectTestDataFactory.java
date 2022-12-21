@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.dataFactories;
+package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProjectDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProjectEntity;
@@ -19,9 +19,9 @@ public class ProjectTestDataFactory {
 
     public ProjectEntity buildEntity(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new ProjectEntity(ids[setNumber], descriptors[setNumber]);
+            return new ProjectEntity(ids[setNumber], descriptors[setNumber], false);
         }
-        return new ProjectEntity(ids[1], descriptors[1]);
+        return new ProjectEntity(ids[1], descriptors[1], false);
     }
 
     public ProjectEntity buildEntityWithoutId() {

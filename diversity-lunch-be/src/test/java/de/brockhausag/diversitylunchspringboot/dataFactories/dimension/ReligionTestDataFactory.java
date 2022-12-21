@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.dataFactories;
+package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ReligionDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ReligionEntity;
@@ -19,9 +19,9 @@ public class ReligionTestDataFactory {
 
     public ReligionEntity buildEntity(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new ReligionEntity(ids[setNumber], descriptors[setNumber]);
+            return new ReligionEntity(ids[setNumber], descriptors[setNumber], false);
         }
-        return new ReligionEntity(ids[1], descriptors[1]);
+        return new ReligionEntity(ids[1], descriptors[1], false);
     }
 
     public ReligionEntity buildEntityWithoutId() {

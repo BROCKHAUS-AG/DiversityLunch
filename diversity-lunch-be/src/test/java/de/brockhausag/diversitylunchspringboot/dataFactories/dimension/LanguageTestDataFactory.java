@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.dataFactories;
+package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.LanguageDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.LanguageEntity;
@@ -19,9 +19,9 @@ public class LanguageTestDataFactory {
 
     public LanguageEntity buildEntity(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new LanguageEntity(ids[setNumber], descriptors[setNumber]);
+            return new LanguageEntity(ids[setNumber], descriptors[setNumber], false);
         }
-        return new LanguageEntity(ids[1], descriptors[1]);
+        return new LanguageEntity(ids[1], descriptors[1], false);
     }
 
     public LanguageEntity buildEntityWithoutId() {

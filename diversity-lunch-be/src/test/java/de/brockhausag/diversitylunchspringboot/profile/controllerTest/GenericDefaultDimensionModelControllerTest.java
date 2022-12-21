@@ -2,7 +2,7 @@ package de.brockhausag.diversitylunchspringboot.profile.controllerTest;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.BaseModelTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.TestDefaultDimensionDto;
-import de.brockhausag.diversitylunchspringboot.dataFactories.TestDefaultDimensionEntity;
+import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.TestDefaultDimensionEntity;
 import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionEntityService;
 import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionModelController;
 import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
