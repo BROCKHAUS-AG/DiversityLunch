@@ -43,7 +43,8 @@ public class ProfileTestdataFactory {
                 List.of(hobbyFactory.buildEntity(actualSetNumber)),
                 sexualOrientationFactory.buildEntity(actualSetNumber),
                 socialBackgroundFactory.buildEntity(actualSetNumber),
-                socialBackgroundDiscriminationFactory.buildEntity(actualSetNumber));
+                socialBackgroundDiscriminationFactory.buildEntity(actualSetNumber),
+                false);
     }
 
     public ProfileDto buildDto(int setNumber) {

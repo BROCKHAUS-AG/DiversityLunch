@@ -64,7 +64,8 @@ public class ProfileTestdataFactory {
                 hobby,
                 sexualOrientation,
                 socialBackground,
-                socialBackgroundDiscrimination);
+                socialBackgroundDiscrimination,
+                false);
     }
 
     public ProfileEntity createNewErikaProfile() {
@@ -100,7 +101,8 @@ public class ProfileTestdataFactory {
                 hobby,
                 sexualOrientation,
                 socialBackground,
-                socialBackgroundDiscrimination);
+                socialBackgroundDiscrimination,
+                false);
     }
 
     @SneakyThrows

@@ -55,6 +55,7 @@ public class ProfileEntity {
     @ManyToOne
     private SocialBackgroundDiscriminationEntity socialBackgroundDiscrimination;
 
+    private boolean wasChangedByAdmin;
 
     @Override
     public int hashCode() {
