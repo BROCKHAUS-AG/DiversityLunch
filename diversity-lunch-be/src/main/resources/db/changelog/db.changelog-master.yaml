@@ -27,3 +27,5 @@ databaseChangeLog:
       file: /db/changelog/migrations/v10_db_remove_hobby_category_entity.sql
   - include:
       file: /db/changelog/migrations/v11_db_alter_profile_add_column_changed.sql
+  - include:
+      file: /db/changelog/migrations/v12_db_add_isDefault_Column_to_entities.sql
