@@ -26,8 +26,10 @@ import {
     socialBackgroundDiscriminationFetch,
 } from '../../../data/social-background-discrimination/social-background-discrimination-fetch';
 import { profileFormQuestion } from '../../../globals/profile-form-question';
+import { LoadingAnimation } from '../../components/loading-animation/loading-animation';
 
 export const AdminPanel: FC = () => {
+    const profileState = useSelector((state: AppStoreState) => state.profile);
     const accountState = useSelector((store: AppStoreState) => store.account);
     const hobbyState = useSelector((store: AppStoreState) => store.hobby);
     const projectState = useSelector((store: AppStoreState) => store.project);
@@ -43,11 +45,26 @@ export const AdminPanel: FC = () => {
     const socialBackgroundDiscriminationState = useSelector((store: AppStoreState) => store.socialBackgroundDiscrimination);
     const [emailSuccess, setEmailSuccess] = useState(false);
     const dispatch = useDispatch();
+
     useEffect(() => {
         // TODO: Handle network and http errors properly tgohlisch 17.11.2022
-        dispatch(projectFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(countryFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(dietFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(educationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(genderFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(hobbyFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(languageFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(projectFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(religionFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(workExperienceFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(sexualOrientationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(socialBackgroundFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(socialBackgroundDiscriminationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
     }, []);
+
+    if (profileState.status !== 'OK') {
+        return <LoadingAnimation />;
+    }
 
     if (accountState.status === 'OK') {
         if (accountState.accountData.role !== Role.ADMIN && accountState.accountData.role !== Role.AZURE_ADMIN) {
