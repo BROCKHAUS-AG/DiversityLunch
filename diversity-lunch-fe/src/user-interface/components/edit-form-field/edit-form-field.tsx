@@ -10,8 +10,12 @@ interface AdminPanelListItemProp<T extends Identifiable> {
 export const EditFormField = <T extends Identifiable>({ item, onEditClicked, onRemoveClicked }: AdminPanelListItemProp<T>) => {
     const [input, setInput] = useState(item.descriptor);
     const [saveButtonActive, setSaveButtonActive] = useState(false);
+    const [defaultValue, setDefaultValue] = useState(false);
 
     useEffect(() => {
+        if (item.descriptor === 'keine Angabe') {
+            setDefaultValue(true);
+        }
         setSaveButtonActive(false);
         setInput(item.descriptor);
     }, [item.descriptor]);
@@ -27,12 +31,22 @@ export const EditFormField = <T extends Identifiable>({ item, onEditClicked, onR
 
     return (
         <article>
-            <input type="text" value={input} onChange={inputChangedHandler} data-testid={`${item.id}`} />
-            {saveButtonActive && (
-                <button type="button" onClick={updateClickHandler}>Speichern</button>
-            )}
+            {
+                defaultValue
+                    ? (
+                        <input type="text" value={input} />
+                    )
+                    : (
+                        <>
+                            <input type="text" value={input} onChange={inputChangedHandler} data-testid={`${item.id}`} />
+                            {saveButtonActive && (
+                                <button type="button" onClick={updateClickHandler}>Speichern</button>
+                            )}
 
-            <button type="button" onClick={() => onRemoveClicked(item)}>Löschen</button>
+                            <button type="button" onClick={() => onRemoveClicked(item)}>Löschen</button>
+                        </>
+                    )
+            }
         </article>
     );
 };
