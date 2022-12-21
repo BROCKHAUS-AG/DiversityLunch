@@ -23,6 +23,7 @@ public class EducationEntity implements DefaultDimensionEntity {
     private Long id;
 
     private String descriptor;
+    private boolean isDefault;
 
     @Override
     public int hashCode() {

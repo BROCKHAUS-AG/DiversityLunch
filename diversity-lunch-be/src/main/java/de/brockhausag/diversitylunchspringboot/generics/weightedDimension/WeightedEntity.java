@@ -9,5 +9,7 @@ public interface WeightedEntity extends DimensionEntity {
 
     void setWeight(int weight);
 
+    boolean isDefault();
 
+    void setDefault(boolean isDefault);
 }
