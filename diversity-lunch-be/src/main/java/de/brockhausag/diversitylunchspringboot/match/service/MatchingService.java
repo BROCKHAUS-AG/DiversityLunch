@@ -105,14 +105,15 @@ public class MatchingService {
     }
 
     private QuestionEntity getRandomQuestionFromCategory(Category category) throws NoSuchElementException {
-        List<QuestionEntity> questions = questionService.getQuestionsForCategory(category.getKind());
+        /*List<QuestionEntity> questions = questionService.getQuestionsForCategory(category.getKind());
         if (questions.size() == 0) {
             log.error("Could not find any question for category %s.".formatted(category.getKind()));
             throw new NoSuchElementException("Could not find any question for category %s.".formatted(category.getKind()));
         } else {
             int randomIndex = random.nextInt(questions.size());
             return questions.get(randomIndex);
-        }
+        }*/
+        return new QuestionEntity();
     }
 
     public void sendQuestions(LocalDateTime now) {

@@ -112,7 +112,7 @@ public class MicrosoftGraphService {
         return groupCollectionPage != null ? Optional.of(groupCollectionPage.getCurrentPage()) : Optional.empty();
     }
 
-    public void test() {
+/* TODO test with correct permissions    public void test() {
         GraphServiceClient<Request> graphClient = setUpGraphClient();
         String userId = "c5b1bdf1-f22e-49ad-bbac-db73e31340a4";
 
@@ -129,5 +129,5 @@ public class MicrosoftGraphService {
         for (Event event : eventCollectionPage.getCurrentPage()) {
             log.info(event.subject);
         }
-    }
+    }*/
 }

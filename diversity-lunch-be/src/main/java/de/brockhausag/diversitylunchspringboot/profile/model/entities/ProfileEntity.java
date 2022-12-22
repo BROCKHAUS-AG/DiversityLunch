@@ -1,9 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
 
-import de.brockhausag.diversitylunchspringboot.dimensions.basicDimension.SelectableBasicValue;
-import de.brockhausag.diversitylunchspringboot.dimensions.multiselectDimension.MultiSelectValueMap;
-import de.brockhausag.diversitylunchspringboot.dimensions.weightedDimension.SelectableWeightedValue;
+import de.brockhausag.diversitylunchspringboot.dimensions.basicDimension.BasicDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.Map;
 
 @Entity
 @NoArgsConstructor
@@ -32,10 +31,11 @@ public class ProfileEntity {
     @NotNull
     private boolean wasChangedByAdmin;
 
-    @ManyToMany
-    private List<SelectableBasicValue> selectedBasicValues;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @MapKeyJoinColumn(name = "dimension_category", referencedColumnName = "id")
+    private Map<DimensionCategory, BasicDimensionSelectableOption> selectedBasicValues;
+/*    @ManyToMany(fetch = FetchType.EAGER)
     private List<SelectableWeightedValue> selectedWeightedValues;
-    @ManyToMany
-    private List<MultiSelectValueMap> selectedMultiselectValues;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<MultiSelectValueMap> selectedMultiselectValues;*/
 }
