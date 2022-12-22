@@ -19,6 +19,7 @@ export function isValidProfile(profile: Partial<Profile>): boolean {
         && profile.socialBackgroundDiscrimination
         && profile.hobby
         && profile.hobby!.length <= 3
+        && profile.wasChangedByAdmin
     );
 }
 
@@ -38,7 +39,8 @@ export function partialProfileToProfile(profile: Partial<Profile>): Profile | un
         && profile.workExperience
         && profile.sexualOrientation
         && profile.socialBackground
-        && profile.socialBackgroundDiscrimination) {
+        && profile.socialBackgroundDiscrimination
+        && profile.wasChangedByAdmin) {
         return profile as Profile;
     }
     return undefined;
@@ -57,7 +59,8 @@ export function isUpdatedProfile(profile: Profile, updatedProfile: Profile): boo
         || profile.sexualOrientation.id !== updatedProfile.sexualOrientation.id
         || profile.socialBackground.id !== updatedProfile.socialBackground.id
         || profile.socialBackgroundDiscrimination.id !== updatedProfile.socialBackgroundDiscrimination.id)
-        || isUpdatedHobbies(profile.hobby, updatedProfile.hobby);
+        || isUpdatedHobbies(profile.hobby, updatedProfile.hobby)
+        || profile.wasChangedByAdmin !== updatedProfile.wasChangedByAdmin;
 }
 
 function isUpdatedHobbies(first: Array<Hobby>, second: Array<Hobby>): boolean {

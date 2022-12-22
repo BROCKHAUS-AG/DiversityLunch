@@ -23,6 +23,9 @@ export const socialBackgroundData = [
 export const socialBackgroundDiscriminationData = [{ id: 9, descriptor: 'keine Angabe' },
     { id: 1337, descriptor: 'ja' }, { id: 1337, descriptor: 'nein' }];
 
+export const wasChangedByAdminData = [{ id: 9, descriptor: 'false' },
+    { id: 1337, descriptor: 'true' }];
+
 export const profileData: Profile[] = [{
     id: 4,
     name: 'Horstus',
@@ -40,6 +43,7 @@ export const profileData: Profile[] = [{
     sexualOrientation: sexualOrientationData[0],
     socialBackground: socialBackgroundData[0],
     socialBackgroundDiscrimination: socialBackgroundDiscriminationData[0],
+    wasChangedByAdmin: wasChangedByAdminData[0],
 }];
 
 export const accountStandardData = {
@@ -89,6 +93,7 @@ export const profileList: Profile[] = [
         sexualOrientation: sexualOrientationData[0],
         socialBackground: socialBackgroundData[0],
         socialBackgroundDiscrimination: socialBackgroundDiscriminationData[0],
+        wasChangedByAdmin: wasChangedByAdminData[0],
     },
     {
         id: 2,
@@ -107,6 +112,7 @@ export const profileList: Profile[] = [
         sexualOrientation: sexualOrientationData[0],
         socialBackground: socialBackgroundData[0],
         socialBackgroundDiscrimination: socialBackgroundDiscriminationData[0],
+        wasChangedByAdmin: wasChangedByAdminData[0],
     },
     {
         id: 3,
@@ -125,6 +131,7 @@ export const profileList: Profile[] = [
         sexualOrientation: sexualOrientationData[0],
         socialBackground: socialBackgroundData[0],
         socialBackgroundDiscrimination: socialBackgroundDiscriminationData[0],
+        wasChangedByAdmin: wasChangedByAdminData[0],
     },
 ];
 export const userVoucherList : UserVoucher[] = [

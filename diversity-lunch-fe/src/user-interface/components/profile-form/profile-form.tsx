@@ -38,6 +38,7 @@ import { Identifiable } from '../../../data/generic/Identifiable';
 import { SocialBackgroundDiscrimination } from '../../../model/SocialBackgroundDiscrimination';
 import './profile-form.scss';
 import { profileFormQuestion } from '../../../globals/profile-form-question';
+import { wasChangedByAdminFetch } from '../../../data/was-changed-by-admin/was-changed-by-admin-fetch';
 
 export type ProfileFormCallback = (formData: Partial<Profile>) => void;
 export type ProfileFormIsValidCallback = (formData: Partial<Profile>)=>boolean;
@@ -86,6 +87,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
         dispatch(sexualOrientationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(socialBackgroundFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(socialBackgroundDiscriminationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(wasChangedByAdminFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
     }, []);
 
     function updateProfile<KEY extends keyof Profile>(key: KEY, value?: Profile[KEY]) {

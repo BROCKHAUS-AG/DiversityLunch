@@ -28,6 +28,7 @@ describe('isValidProfile', () => {
             sexualOrientation: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             socialBackground: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             socialBackgroundDiscrimination: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
+            wasChangedByAdmin: { id: 7, descriptor: 'false' },
         };
 
         const result: boolean = isValidProfile(profile);
@@ -59,6 +60,7 @@ describe('isUpdatedProfile', () => {
             sexualOrientation: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             socialBackground: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             socialBackgroundDiscrimination: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
+            wasChangedByAdmin: { id: 7, descriptor: 'false' },
         };
 
         const updatedProfile: Profile = {
@@ -78,6 +80,7 @@ describe('isUpdatedProfile', () => {
             sexualOrientation: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             socialBackground: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             socialBackgroundDiscrimination: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
+            wasChangedByAdmin: { id: 7, descriptor: 'false' },
         };
 
         const result : boolean = isUpdatedProfile(currentProfile, updatedProfile);
@@ -102,6 +105,7 @@ describe('isUpdatedProfile', () => {
             sexualOrientation: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             socialBackground: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
             socialBackgroundDiscrimination: { id: 7, descriptor: 'hier könnte was sinnvolles stehen, hauptsache nicht leer!' },
+            wasChangedByAdmin: { id: 7, descriptor: 'false' },
         };
 
         Object.entries(currentProfile).forEach(([key]) => {
