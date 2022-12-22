@@ -17,7 +17,7 @@ public class WeightedDimension {
     private DimensionCategory dimensionCategory;
     @OneToMany
     @JoinColumn(name = "dimension_category_id")
-    private List<SelectableWeightedValue> selectableValues;
+    private List<WeightedDimensionSelectableOption> selectableValues;
     @OneToOne
-    private SelectableWeightedValue defaultValue;
+    private WeightedDimensionSelectableOption defaultValue;
 }

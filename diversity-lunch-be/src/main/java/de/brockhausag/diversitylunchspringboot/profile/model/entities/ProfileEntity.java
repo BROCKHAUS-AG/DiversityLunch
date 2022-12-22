@@ -3,6 +3,8 @@ package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
 import de.brockhausag.diversitylunchspringboot.dimensions.basicDimension.BasicDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.multiselectDimension.MultiselectDimensionSelectableOptionsCollection;
+import de.brockhausag.diversitylunchspringboot.dimensions.weightedDimension.WeightedDimensionSelectableOption;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,8 +36,11 @@ public class ProfileEntity {
     @ManyToMany(fetch = FetchType.EAGER)
     @MapKeyJoinColumn(name = "dimension_category", referencedColumnName = "id")
     private Map<DimensionCategory, BasicDimensionSelectableOption> selectedBasicValues;
-/*    @ManyToMany(fetch = FetchType.EAGER)
-    private List<SelectableWeightedValue> selectedWeightedValues;
+
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<MultiSelectValueMap> selectedMultiselectValues;*/
+    @MapKeyJoinColumn(name = "dimension_category", referencedColumnName = "id")
+    private Map<DimensionCategory, WeightedDimensionSelectableOption> selectedWeightedValues;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @MapKeyJoinColumn(name = "dimension_category", referencedColumnName = "id")
+    private Map<DimensionCategory, MultiselectDimensionSelectableOptionsCollection> selectedMultiselectValues;
 }

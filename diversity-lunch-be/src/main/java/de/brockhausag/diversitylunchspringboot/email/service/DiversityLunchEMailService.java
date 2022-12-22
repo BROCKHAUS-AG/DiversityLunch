@@ -69,7 +69,7 @@ public class DiversityLunchEMailService {
                     new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), StandardCharset.UTF_8);
             String claimLink = settingsProperties.getBaseUrl() + "/voucherClaim/" + meeting.getId();
             return String.format(emailText, recipient.getName(), otherParticipant.getName(),
-                    meeting.getQuestion().getCategory().getCategoryDescription(), meeting.getQuestion().getQuestionText(), claimLink);
+                    meeting.getQuestion().getCategory().getProfileQuestion(), meeting.getQuestion().getQuestionText(), claimLink);
         } catch (Exception e) {
             log.error(String.format("Failed to read Resource: %s", resource.getPath()), e);
         }
@@ -81,7 +81,7 @@ public class DiversityLunchEMailService {
             String emailText =
                     new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), StandardCharset.UTF_8);
             return String.format(emailText, recipient.getName(), otherParticipant.getName(),
-                    meeting.getQuestion().getCategory().getCategoryDescription(), meeting.getQuestion().getQuestionText());
+                    meeting.getQuestion().getCategory().getProfileQuestion(), meeting.getQuestion().getQuestionText());
         } catch (Exception e) {
             log.error(String.format("Failed to read Resource: %s", resource.getPath()), e);
         }
