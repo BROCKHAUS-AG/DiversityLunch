@@ -47,7 +47,7 @@ public class DimensionModelController<DtoType extends DimensionDto,
         );
     }
 
-    @PostMapping
+    @PostMapping("/")
     @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).PROFILE_OPTION_WRITE)")
     public ResponseEntity<DtoType> postOne(@RequestBody DtoType dto) {
         EntityType entity = mapper.dtoToEntity(dto);
@@ -57,7 +57,7 @@ public class DimensionModelController<DtoType extends DimensionDto,
         return ResponseEntity.ok(mapper.entityToDto((entity)));
     }
 
-    @PutMapping
+    @PutMapping("/")
     @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).PROFILE_OPTION_WRITE)")
     public ResponseEntity<DtoType> putOne(@RequestBody DtoType dto) {
         EntityType entity = mapper.dtoToEntity(dto);

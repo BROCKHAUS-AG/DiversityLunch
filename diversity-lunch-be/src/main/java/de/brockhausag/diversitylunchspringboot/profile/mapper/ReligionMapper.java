@@ -13,6 +13,7 @@ public class ReligionMapper implements DimensionMapper<ReligionDto, ReligionEnti
         ReligionDto religionDto = new ReligionDto();
         religionDto.setId(entity.getId());
         religionDto.setDescriptor(entity.getDescriptor());
+        religionDto.setDefault(entity.isDefault());
         return religionDto;
     }
 
@@ -21,6 +22,7 @@ public class ReligionMapper implements DimensionMapper<ReligionDto, ReligionEnti
         ReligionEntity religionEntity = new ReligionEntity();
         religionEntity.setId(dto.getId());
         religionEntity.setDescriptor(dto.getDescriptor());
+        religionEntity.setDefault(dto.isDefault());
         return religionEntity;
     }
 }

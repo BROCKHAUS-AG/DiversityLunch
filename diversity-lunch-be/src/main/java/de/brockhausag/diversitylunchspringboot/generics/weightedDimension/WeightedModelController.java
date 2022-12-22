@@ -2,11 +2,13 @@ package de.brockhausag.diversitylunchspringboot.generics.weightedDimension;
 
 import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionModelController;
+import liquibase.pro.packaged.P;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 public class WeightedModelController<
@@ -36,13 +38,13 @@ public class WeightedModelController<
     }
 
     @Override
-    public ResponseEntity<DtoType> postOne(DtoType dto) {
+    public ResponseEntity<DtoType> postOne(@RequestBody DtoType dto) {
         dto.setDefault(false); // A new value must not be default
         return super.postOne(dto);
     }
 
     @Override
-    public ResponseEntity<DtoType> putOne(DtoType dto) {
+    public ResponseEntity<DtoType> putOne(@RequestBody DtoType dto) {
         var dbEntity = service.getEntityById(dto.getId());
         if(dbEntity.isPresent()) {
             dto.setDefault(dbEntity.get().isDefault());
@@ -53,7 +55,7 @@ public class WeightedModelController<
     }
 
     @Override
-    public ResponseEntity<?> deleteOne(Long id) {
+    public ResponseEntity<?> deleteOne(@PathVariable Long id) {
         var dbEntity = service.getEntityById(id);
         if (dbEntity.isEmpty())
             return ResponseEntity.notFound().build();

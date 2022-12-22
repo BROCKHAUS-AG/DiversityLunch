@@ -14,6 +14,7 @@ public class LanguageMapper implements DimensionMapper<LanguageDto, LanguageEnti
         LanguageDto languageDto = new LanguageDto();
         languageDto.setId(entity.getId());
         languageDto.setDescriptor(entity.getDescriptor());
+        languageDto.setDefault(entity.isDefault());
         return languageDto;
     }
 
@@ -22,6 +23,7 @@ public class LanguageMapper implements DimensionMapper<LanguageDto, LanguageEnti
         LanguageEntity languageEntity = new LanguageEntity();
         languageEntity.setId(dto.getId());
         languageEntity.setDescriptor(dto.getDescriptor());
+        languageEntity.setDefault(dto.isDefault());
         return languageEntity;
     }
 }

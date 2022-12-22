@@ -13,6 +13,7 @@ public class ProjectMapper implements DimensionMapper<ProjectDto, ProjectEntity>
         ProjectDto projectDto = new ProjectDto();
         projectDto.setId(entity.getId());
         projectDto.setDescriptor(entity.getDescriptor());
+        projectDto.setDefault(entity.isDefault());
         return projectDto;
     }
 
@@ -21,6 +22,7 @@ public class ProjectMapper implements DimensionMapper<ProjectDto, ProjectEntity>
         ProjectEntity projectEntity = new ProjectEntity();
         projectEntity.setId(dto.getId());
         projectEntity.setDescriptor(dto.getDescriptor());
+        projectEntity.setDefault(dto.isDefault());
         return projectEntity;
     }
 }

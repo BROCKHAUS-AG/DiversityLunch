@@ -47,6 +47,7 @@ public class ProfileMapper {
         dto.setName(entity.getName());
         dto.setEmail(entity.getEmail());
         dto.setBirthYear(entity.getBirthYear());
+        dto.setWasChangedByAdmin(entity.isWasChangedByAdmin());
         dto.setEducation(educationMapper.entityToDto(entity.getEducation()));
         dto.setDiet(dietMapper.entityToDto(entity.getDiet()));
         dto.setGender(genderMapper.entityToDto(entity.getGender()));
@@ -90,6 +91,7 @@ public class ProfileMapper {
                             .name(dto.getName())
                             .email(dto.getEmail())
                             .birthYear(dto.getBirthYear())
+                            .wasChangedByAdmin(dto.isWasChangedByAdmin())
                             .originCountry(countryEntityOptional.orElseThrow())
                             .diet(dietEntityOptional.orElseThrow())
                             .education(educationEntityOptional.orElseThrow())

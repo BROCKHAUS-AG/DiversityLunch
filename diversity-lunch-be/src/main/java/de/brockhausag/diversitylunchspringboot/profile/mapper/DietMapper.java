@@ -13,6 +13,7 @@ public class DietMapper implements DimensionMapper<DietDto, DietEntity> {
         DietDto dietDto = new DietDto();
         dietDto.setId(entity.getId());
         dietDto.setDescriptor(entity.getDescriptor());
+        dietDto.setDefault(entity.isDefault());
         return dietDto;
     }
 
@@ -21,6 +22,7 @@ public class DietMapper implements DimensionMapper<DietDto, DietEntity> {
         DietEntity dietEntity = new DietEntity();
         dietEntity.setId(dto.getId());
         dietEntity.setDescriptor(dto.getDescriptor());
+        dietEntity.setDefault(dto.isDefault());
         return dietEntity;
     }
 }

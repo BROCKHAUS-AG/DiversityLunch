@@ -12,6 +12,7 @@ public class EducationMapper implements DimensionMapper<EducationDto, EducationE
         EducationDto educationDto = new EducationDto();
         educationDto.setId(entity.getId());
         educationDto.setDescriptor(entity.getDescriptor());
+        educationDto.setDefault(entity.isDefault());
         return educationDto;
     }
 
@@ -20,6 +21,7 @@ public class EducationMapper implements DimensionMapper<EducationDto, EducationE
         EducationEntity educationEntity = new EducationEntity();
         educationEntity.setId(dto.getId());
         educationEntity.setDescriptor(dto.getDescriptor());
+        educationEntity.setDefault(dto.isDefault());
         return educationEntity;
     }
 }

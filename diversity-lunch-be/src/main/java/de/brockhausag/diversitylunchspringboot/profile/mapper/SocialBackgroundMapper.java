@@ -15,6 +15,7 @@ public class SocialBackgroundMapper implements DimensionMapper<SocialBackgroundD
         SocialBackgroundDto socialBackgroundDto = new SocialBackgroundDto();
         socialBackgroundDto.setId(entity.getId());
         socialBackgroundDto.setDescriptor(entity.getDescriptor());
+        socialBackgroundDto.setDefault(entity.isDefault());
         return socialBackgroundDto;
     }
 
@@ -23,16 +24,7 @@ public class SocialBackgroundMapper implements DimensionMapper<SocialBackgroundD
         SocialBackgroundEntity socialBackgroundEntity = new SocialBackgroundEntity();
         socialBackgroundEntity.setId(dto.getId());
         socialBackgroundEntity.setDescriptor(dto.getDescriptor());
+        socialBackgroundEntity.setDefault(dto.isDefault());
         return socialBackgroundEntity;
-    }
-
-    @Override
-    public List<SocialBackgroundDto> entityToDto(List<SocialBackgroundEntity> entities) {
-        return entities.stream().map(this::entityToDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<SocialBackgroundEntity> dtoToEntity(List<SocialBackgroundDto> dtos) {
-        return dtos.stream().map(this::dtoToEntity).collect(Collectors.toList());
     }
 }
