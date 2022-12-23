@@ -14,7 +14,7 @@ export const EditFormField = <T extends Identifiable>({ item, onEditClicked, onR
 
     useEffect(() => {
         // TODO: "keine Angabe" zu z.B. item.default ändern, warten auf BE - fabio 21.12.2022
-        if (item.descriptor === 'keine Angabe') {
+        if (item.descriptor.toLowerCase() === 'keine angabe') {
             setDefaultValue(true);
         }
         setSaveButtonActive(false);

@@ -23,6 +23,7 @@ export const Dashboard = () => {
     const profileState = useSelector((state: AppStoreState) => state.profile);
     const [isChange, setIsChange] = useState(false);
     let account : Account;
+    const profile: Profile = (profileState as ProfileStateOk).profileData;
 
     useEffect(() => {
         createPopUpIfWasChangedByAdmin();
@@ -35,7 +36,6 @@ export const Dashboard = () => {
     }
 
     const isAdmin : boolean = account.role === Role.ADMIN || account.role === Role.AZURE_ADMIN;
-    const profile: Profile = (profileState as ProfileStateOk).profileData;
 
     const createPopUpIfWasChangedByAdmin = () => {
         if (profile.wasChangedByAdmin) {

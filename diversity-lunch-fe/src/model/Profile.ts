@@ -10,7 +10,6 @@ import { Religion } from './Religion';
 import { SexualOrientation } from './SexualOrientation';
 import { SocialBackground } from './SocialBackground';
 import { SocialBackgroundDiscrimination } from './SocialBackgroundDiscrimination';
-import { WasChangedByAdmin } from './WasChangedByAdmin';
 
 export interface Profile {
     id: number,
@@ -29,5 +28,5 @@ export interface Profile {
     sexualOrientation: SexualOrientation,
     socialBackground: SocialBackground,
     socialBackgroundDiscrimination: SocialBackgroundDiscrimination,
-    wasChangedByAdmin: WasChangedByAdmin
+    wasChangedByAdmin: boolean
 }

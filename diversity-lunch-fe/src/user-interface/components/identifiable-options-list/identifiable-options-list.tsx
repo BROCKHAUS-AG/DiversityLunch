@@ -32,7 +32,7 @@ export const IdentifiableOptionsList = <T extends Identifiable>(
     const add = (descriptor: string) => {
         // TODO: "keine Angabe" zu z.B. item.default ändern, warten auf BE - fabio 22.12.2022
         // Default Value darf nicht öfters hinzugefügt werden
-        if (descriptor !== 'keine Angabe') {
+        if (descriptor.toLowerCase() !== 'keine angabe') {
             // TODO: Handle network and http errors properly tgohlisch 17.11.2022;
             dispatch(fetch.post({
                 id: 0,
