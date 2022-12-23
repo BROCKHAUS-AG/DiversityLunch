@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { TileIconLink } from '../../components/tile-icon-link/tile-icon-link';
 import { DiversityIcon } from '../../components/diversity-icon/diversity-icon';
@@ -14,34 +14,39 @@ import { Role } from '../../../model/Role';
 import { LoadingAnimation } from '../../components/loading-animation/loading-animation';
 import { UserVoucherIcon } from '../../components/user-voucher-icon/user-voucher-icon';
 import { PopUp } from '../../components/pop-up/pop-up';
+import { Profile } from '../../../model/Profile';
+import { ProfileStateOk } from '../../../data/profile/profile-state.type';
+import { authenticatedFetchPut } from '../../../utils/fetch.utils';
 
 export const Dashboard = () => {
     const accountState = useSelector((state: AppStoreState) => state.account);
+    const profileState = useSelector((state: AppStoreState) => state.profile);
     const [isChange, setIsChange] = useState(false);
     let account : Account;
 
+    useEffect(() => {
+        createPopUpIfWasChangedByAdmin();
+    }, []);
+
     if (accountState.status === 'OK') {
         account = accountState.accountData;
-
-        // Check if admin changed profile inputs
-        /* if (    ) {
-            setIsChange(true);
-        // change when "okay" is pressed was-changed-by-admin in profile_entity to false
-            wasChangeByAdminToFalse();
-        } */
     } else {
         return <LoadingAnimation />;
     }
 
     const isAdmin : boolean = account.role === Role.ADMIN || account.role === Role.AZURE_ADMIN;
+    const profile: Profile = (profileState as ProfileStateOk).profileData;
 
-    /* const wasChangeByAdminToFalse = async () => {
+    const createPopUpIfWasChangedByAdmin = () => {
+        if (profile.wasChangedByAdmin) {
+            setIsChange(true);
+        }
+    };
+
+    const wasChangeByAdminToFalse = async () => {
         const { profileId } = account;
-        const response = authenticatedFetchPut(`/api/profiles/${profileId}/profilechangeAccepted`, '');
-        const abc = await response.json();
-
-        // setWasChangedByAdminFlagToFalse
-    }; */
+        await authenticatedFetchPut(`/api/profiles/${profileId}/profilechangeAccepted`, '');
+    };
 
     return (
         <div className="Dashboard">
@@ -61,7 +66,10 @@ export const Dashboard = () => {
             {
                 isChange && (
                     <PopUp
-                        onButtonClick={() => setIsChange(false)}
+                        onButtonClick={() => {
+                            setIsChange(false);
+                            wasChangeByAdminToFalse();
+                        }}
                         message="Deine Profilangaben haben sich geändert, bitte kontrolliere diese auf richtigkeit!"
                         buttonText="Okay"
                     />
