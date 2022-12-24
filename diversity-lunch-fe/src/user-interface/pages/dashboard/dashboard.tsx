@@ -1,11 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { TileIconLink } from '../../components/tile-icon-link/tile-icon-link';
 import './dashboard.scss';
-import iconInfo from '../../../resources/icons/icon-info.svg';
-import iconProfile from '../../../resources/icons/icon-profil.svg';
-import iconMeeting from '../../../resources/icons/icon-anstehende-termine.svg';
-import iconCalendar from '../../../resources/icons/icon-termin-auswählen.svg';
 import { AdminPanelIcon } from '../../components/admin-panel-icon/admin-panel-icon';
 import { Account } from '../../../model/Account';
 import { AppStoreState } from '../../../data/app-store';
@@ -32,10 +27,7 @@ export const Dashboard = () => {
             </div>
 
             <div className="Dashboard-tiles-container">
-                <TileIconLink title="DEIN PROFIL" icon={iconProfile} link="profile" />
-                <TileIconLink title="TERMIN WÄHLEN" icon={iconCalendar} link="/add+meetings/choose+date" />
-                <TileIconLink title="ANSTEHENDE MEETINGS" icon={iconMeeting} link="upcoming+meetings" />
-                <TileIconLink title="INFORMATIONEN" icon={iconInfo} link="information" />
+                <h1>Frohe Feiertage!</h1>
             </div>
 
         </div>

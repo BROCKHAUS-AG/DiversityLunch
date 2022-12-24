@@ -39,7 +39,7 @@ import { SocialBackgroundDiscrimination } from '../../../model/SocialBackgroundD
 import './profile-form.scss';
 
 export type ProfileFormCallback = (formData: Partial<Profile>) => void;
-export type ProfileFormIsValidCallback = (formData: Partial<Profile>)=>boolean;
+export type ProfileFormIsValidCallback = (formData: Partial<Profile>) => boolean;
 
 export interface ProfileFormProps {
     initialProfile?: Partial<Profile>,
@@ -56,18 +56,18 @@ export const ProfileForm: FC<ProfileFormProps> = ({
 
     const [isValid, setIsValid] = useState(checkValidity(profile));
     const dispatch = useDispatch();
-    const countries : IdentifiableState<Country> = useSelector((store: AppStoreState) => store.country);
-    const diets : IdentifiableState<Diet> = useSelector((store: AppStoreState) => store.diet);
-    const educations : IdentifiableState<Education> = useSelector((store: AppStoreState) => store.education);
-    const genders : IdentifiableState<Gender> = useSelector((store: AppStoreState) => store.gender);
-    const hobbies : IdentifiableState<Hobby> = useSelector((store: AppStoreState) => store.hobby);
-    const languages : IdentifiableState<Language> = useSelector((store: AppStoreState) => store.language);
-    const project : IdentifiableState<Project> = useSelector((store: AppStoreState) => store.project);
+    const countries: IdentifiableState<Country> = useSelector((store: AppStoreState) => store.country);
+    const diets: IdentifiableState<Diet> = useSelector((store: AppStoreState) => store.diet);
+    const educations: IdentifiableState<Education> = useSelector((store: AppStoreState) => store.education);
+    const genders: IdentifiableState<Gender> = useSelector((store: AppStoreState) => store.gender);
+    const hobbies: IdentifiableState<Hobby> = useSelector((store: AppStoreState) => store.hobby);
+    const languages: IdentifiableState<Language> = useSelector((store: AppStoreState) => store.language);
+    const project: IdentifiableState<Project> = useSelector((store: AppStoreState) => store.project);
     const religions: IdentifiableState<Religion> = useSelector((store: AppStoreState) => store.religion);
-    const workExperience : IdentifiableState<WorkExperience> = useSelector((store: AppStoreState) => store.workExperience);
-    const sexualOrientation : IdentifiableState<SexualOrientation> = useSelector((store: AppStoreState) => store.sexualOrientation);
-    const socialBackground : IdentifiableState<SocialBackground> = useSelector((store: AppStoreState) => store.socialBackground);
-    const socialBackgroundDiscrimination : IdentifiableState<SocialBackgroundDiscrimination> = useSelector(
+    const workExperience: IdentifiableState<WorkExperience> = useSelector((store: AppStoreState) => store.workExperience);
+    const sexualOrientation: IdentifiableState<SexualOrientation> = useSelector((store: AppStoreState) => store.sexualOrientation);
+    const socialBackground: IdentifiableState<SocialBackground> = useSelector((store: AppStoreState) => store.socialBackground);
+    const socialBackgroundDiscrimination: IdentifiableState<SocialBackgroundDiscrimination> = useSelector(
         (store: AppStoreState) => store.socialBackgroundDiscrimination,
     );
 
@@ -105,19 +105,26 @@ export const ProfileForm: FC<ProfileFormProps> = ({
     }
 
     const DEFAULT_OPTION_DESCRIPTOR = 'keine angabe';
-    function sortOptions<T extends Identifiable>(state : IdentifiableState<T>) {
+
+    function sortOptions<T extends Identifiable>(state: IdentifiableState<T>) {
         const copiedList = [...state.items];
-        copiedList.sort((a, b) => a.descriptor.localeCompare(b.descriptor));
-        return copiedList.sort((a, b) => {
-            if (a.descriptor.toLowerCase() === DEFAULT_OPTION_DESCRIPTOR) return -1;
-            if (b.descriptor.toLowerCase() === DEFAULT_OPTION_DESCRIPTOR) return 1;
-            return 0;
-        });
+        if (copiedList.length > 0) {
+            console.log('copiList ', copiedList);
+            copiedList.sort((a, b) => a.descriptor?.localeCompare(b.descriptor));
+            return copiedList.sort((a, b) => {
+                if (a.descriptor.toLowerCase() === DEFAULT_OPTION_DESCRIPTOR) return -1;
+                if (b.descriptor.toLowerCase() === DEFAULT_OPTION_DESCRIPTOR) return 1;
+                return 0;
+            });
+        }
+        return 0;
     }
 
     // Helper Function to set an initalState for the MultiSelect - Form "Hobbies".
     let initalHobbyCounterHelper = profile.hobby?.length;
-    if (initalHobbyCounterHelper === undefined) { initalHobbyCounterHelper = 0; }
+    if (initalHobbyCounterHelper === undefined) {
+        initalHobbyCounterHelper = 0;
+    }
     const [hobbyCounterCompState, setHobbyCounterCompState] = useState(initalHobbyCounterHelper);
     const multiselectRef = React.createRef<Multiselect>();
 
