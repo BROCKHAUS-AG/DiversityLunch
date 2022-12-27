@@ -2,12 +2,12 @@
 
 
 -- changeset dfuerst:v13-1
-CREATE TABLE dimension_category
-(
-    id               BIGSERIAL PRIMARY KEY,
-    description      varchar(64)  NOT NULL,
-    profile_question varchar(128) NOT NULL
-);
+ALTER  TABLE dimension_category_entity rename column
+descriptor to description;
+ALTER TABLE dimension_category_entity add column profile_question
+varchar(128) NOT NULL default 'question';
+ALTER TABLE dimension_category_entity rename to dimension_category;
+
 CREATE TABLE basic_dimension
 (
     id               BIGSERIAL PRIMARY KEY,
@@ -62,12 +62,6 @@ create table profile_entity_selected_weighted_values
     primary key (profile_entity_id, dimension_category)
 );
 
-create table question_entity
-(
-    id            bigserial primary key,
-    question_text varchar(128) not null,
-    category_id   bigint       not null
-);
 
 create table weighted_dimension
 (
