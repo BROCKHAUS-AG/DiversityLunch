@@ -49,7 +49,8 @@ public class SchedulingConfig {
     @Scheduled(cron = "0/5 * * * * *")
     public void test() {
         profileService.getAllProfiles().forEach(profile -> {
-            log.warn(profile.toString());
+            log.warn("\nWeighted:" + profile.getSelectedWeightedValues().toString() +
+                    "\nMulti:" +  profile.getSelectedMultiselectValues().toString());
         });
     }
 }

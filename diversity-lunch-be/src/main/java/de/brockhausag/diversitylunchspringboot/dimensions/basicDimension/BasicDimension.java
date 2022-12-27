@@ -2,6 +2,7 @@ package de.brockhausag.diversitylunchspringboot.dimensions.basicDimension;
 
 import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
 import lombok.Data;
+import org.springframework.data.repository.cdi.Eager;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,8 +17,8 @@ public class BasicDimension {
     private Long id;
     @NotNull
     @OneToOne
-    private DimensionCategory category;
-    @OneToMany()
+    private DimensionCategory dimensionCategory;
+    @OneToMany
     @JoinColumn(name = "dimension_category_id")
     @Size(min = 1)
     private List<BasicDimensionSelectableOption> selectableValues;
