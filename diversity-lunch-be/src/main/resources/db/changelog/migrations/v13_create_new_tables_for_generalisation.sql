@@ -32,7 +32,7 @@ CREATE TABLE basic_dimension
 
 create table basic_dimension_selectable_option
 (
-    id                    BIGSERIAL   ,
+    id                    BIGSERIAL  primary key   ,
     ignore_in_scoring     boolean     ,
     value                 varchar(128) ,
     dimension_category_id bigint
@@ -40,13 +40,13 @@ create table basic_dimension_selectable_option
 
 create table multiselect_dimension
 (
-    id          BIGSERIAL ,
+    id          BIGSERIAL  primary key ,
     dimension_category_id bigint    
 );
 
 create table multiselect_dimension_selectable_option
 (
-    id                    BIGSERIAL   ,
+    id                    BIGSERIAL  primary key   ,
     value                 varchar(128) ,
     dimension_category_id bigint
 );
@@ -60,14 +60,14 @@ create table profile_entity_selected_basic_values
 
 create table profile_entity_selected_multiselect_value
 (
-    id                 BIGSERIAL ,
+    id                 BIGSERIAL  primary key ,
     profile_id         bigint    ,
     multiselect_dimension bigint    
 );
 create table profile_entity_selected_multiselect_value_selected_options
 (
     profile_entity_selected_multiselect_value_id bigint ,
-    selected_options_id                          bigint 
+    selected_options_id                          bigint
 );
 create table profile_entity_selected_weighted_values
 (
@@ -87,7 +87,7 @@ create table weighted_dimension
 
 create table weighted_dimension_selectable_option
 (
-    id                    bigserial       ,
+    id                    BIGSERIAL  primary key,
     ignore_in_scoring     boolean      ,
     value                 varchar(128) ,
     weight                integer       check (weight >= 0),
