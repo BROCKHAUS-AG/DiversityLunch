@@ -16,7 +16,7 @@ public class BasicDimension {
     private Long id;
     @NotNull
     @OneToOne
-    private DimensionCategory category;
+    private DimensionCategory dimensionCategory;
     @OneToMany()
     @JoinColumn(name = "dimension_category_id")
     @Size(min = 1)
