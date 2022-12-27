@@ -5,8 +5,23 @@
 ALTER  TABLE dimension_category_entity rename column
 descriptor to description;
 ALTER TABLE dimension_category_entity add column profile_question
-varchar(128) default 'question';
+varchar(1024) default 'question';
 ALTER TABLE dimension_category_entity rename to dimension_category;
+
+UPDATE dimension_category SET profile_question='Wann wurdest du geboren?' WHERE description='Alter';
+UPDATE dimension_category SET profile_question='Was sind deine Hobbies?' WHERE description='Hobby';
+UPDATE dimension_category SET profile_question='Was ist deine Muttersprache?' WHERE description='Muttersprache';
+UPDATE dimension_category SET profile_question='In welchem Projekt arbeitest du derzeit?' WHERE description='Projekt';
+UPDATE dimension_category SET profile_question='Was ist deine geschlechtliche Identität?' WHERE description='Geschlechtliche Identität';
+UPDATE dimension_category SET profile_question='Was ist deine ethnische Herkunft?' WHERE description='Ethnische Herkunft';
+UPDATE dimension_category SET profile_question='An welche Religion glaubst du?' WHERE description='Religion';
+UPDATE dimension_category SET profile_question='Wie viele Jahre Berufserfahrung hast du schon gesammelt?' WHERE description='Berufserfahrung';
+UPDATE dimension_category SET profile_question='Welchen Bildungsweg hast du bisher bestritten?' WHERE description='Bildungsweg';
+UPDATE dimension_category SET profile_question='Wie ernährst du dich?' WHERE description='Ernährung';
+UPDATE dimension_category SET profile_question='Was ist deine sexuelle Orientierung?' WHERE description='Sexuelle Orientierung';
+UPDATE dimension_category SET profile_question='Bist du ein Akademikerkind, oder eher die erste Person in der Familie, die studiert oder ihr Abitur gemacht hat?' WHERE description='Soziale Herkunft';
+UPDATE dimension_category SET profile_question='Wurdest du jemals aufgrund deiner sozialen Herkunft Vorurteilen ausgesetzt, herabwürdigend behandelt, benachteiligt oder ausgeschlossen?' WHERE description='Diskriminierung aufgrund sozialer Herkunft';
+
 
 CREATE TABLE basic_dimension
 (
@@ -19,7 +34,7 @@ create table basic_dimension_selectable_option
 (
     id                    BIGSERIAL   ,
     ignore_in_scoring     boolean     ,
-    value                 varchar(64) ,
+    value                 varchar(128) ,
     dimension_category_id bigint
 );
 
@@ -32,7 +47,7 @@ create table multiselect_dimension
 create table multiselect_dimension_selectable_option
 (
     id                    BIGSERIAL   ,
-    value                 varchar(64) ,
+    value                 varchar(128) ,
     dimension_category_id bigint
 );
 create table profile_entity_selected_basic_values
@@ -74,7 +89,7 @@ create table weighted_dimension_selectable_option
 (
     id                    bigserial       ,
     ignore_in_scoring     boolean      ,
-    value                 varchar(64) ,
+    value                 varchar(128) ,
     weight                integer       check (weight >= 0),
     dimension_category_id bigint
 );
