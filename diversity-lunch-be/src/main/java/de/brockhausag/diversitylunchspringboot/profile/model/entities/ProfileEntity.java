@@ -48,7 +48,7 @@ public class ProfileEntity {
     @MapKeyJoinColumn(name = "weighted_dimension", referencedColumnName = "id")
     @ToString.Exclude
     private Map<WeightedDimension, WeightedDimensionSelectableOption> selectedWeightedValues;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "profile_id")
     @MapKeyJoinColumn(name = "multiselect_dimension", referencedColumnName = "id")
     @ToString.Exclude
