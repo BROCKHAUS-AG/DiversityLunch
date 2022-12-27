@@ -11,7 +11,7 @@ ALTER TABLE dimension_category_entity rename to dimension_category;
 CREATE TABLE basic_dimension
 (
     id               BIGSERIAL PRIMARY KEY,
-    category_id      BIGINT ,
+    dimension_category_id      BIGINT ,
     default_value_id BIGINT 
 );
 
@@ -20,20 +20,20 @@ create table basic_dimension_selectable_option
     id                    BIGSERIAL   ,
     ignore_in_scoring     boolean     ,
     value                 varchar(64) ,
-    dimension_category_id bigint      
+    dimension_category_id bigint
 );
 
 create table multiselect_dimension
 (
     id          BIGSERIAL ,
-    category_id bigint    
+    dimension_category_id bigint    
 );
 
 create table multiselect_dimension_selectable_option
 (
     id                    BIGSERIAL   ,
     value                 varchar(64) ,
-    dimension_category_id bigint      
+    dimension_category_id bigint
 );
 create table profile_entity_selected_basic_values
 (
@@ -75,6 +75,6 @@ create table weighted_dimension_selectable_option
     ignore_in_scoring     boolean      ,
     value                 varchar(64) ,
     weight                integer       check (weight >= 0),
-    dimension_category_id bigint       
+    dimension_category_id bigint
 );
 
