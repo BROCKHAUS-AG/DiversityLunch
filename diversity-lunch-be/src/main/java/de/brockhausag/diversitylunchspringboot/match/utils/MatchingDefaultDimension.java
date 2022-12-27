@@ -1,37 +1,36 @@
-/*
 package de.brockhausag.diversitylunchspringboot.match.utils;
 
 import de.brockhausag.diversitylunchspringboot.dimensions.basicDimension.BasicDimension;
-import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
+import de.brockhausag.diversitylunchspringboot.dimensions.basicDimension.BasicDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;
+import java.util.Set;
 
 @UtilityClass
 public class MatchingDefaultDimension {
     public static final int STANDARD_SCORE_BY_DIFFERENCE = 3;
-    public static final String KEINE_ANGABE = "keine angabe";
     private static final int EQUAL_SCORE = 0;
 
-    static int getScoreFromDefaultEntities(ProfileEntity profile1, ProfileEntity profile2, List<Category> potentialQuestionsCategories) {
+    static int getScoreFromDefaultDimensions(ProfileEntity profile1, ProfileEntity profile2, List<DimensionCategory> potentialQuestionsCategories) {
         int currentScore = 0;
 
-        List<BasicDimension> baseEntitiesProfile1 = profile1.getDefaultEntities();
-        List<BasicDimension> baseEntitiesProfile2 = profile2.getDefaultEntities();
+        Set<BasicDimension> basicDimensionSet = profile1.getSelectedBasicValues().keySet();
 
         int entityScore;
-        for (int i = 0; i < baseEntitiesProfile1.size(); i++) {
-            BasicDimension entity1 = baseEntitiesProfile1.get(i);
-            BasicDimension entity2 = baseEntitiesProfile2.get(i);
+        for (BasicDimension dimension : basicDimensionSet) {
+            BasicDimensionSelectableOption option1 = profile1.getSelectedBasicValues().get(dimension);
+            BasicDimensionSelectableOption option2 = profile2.getSelectedBasicValues().get(dimension);
 
-            if (entityShouldBeIgnored(entity1) || entityShouldBeIgnored(entity2)) {
+            if (option1.isIgnoreInScoring() || option2.isIgnoreInScoring()) {
                 continue;
             }
-            entityScore = compareDefaultDimensionEntities(entity1, entity2);
+            entityScore = compareDefaultDimensionOptions(option1, option2);
 
             if (entityScore != EQUAL_SCORE) {
-                potentialQuestionsCategories.add(entity1.getQuestionCategory());
+                potentialQuestionsCategories.add(option1.getDimensionCategory());
             }
 
             currentScore += entityScore;
@@ -39,15 +38,10 @@ public class MatchingDefaultDimension {
         return currentScore;
     }
 
-    private int compareDefaultDimensionEntities(BasicDimension entity1, BasicDimension entity2) {
-        if (entity1.getId().equals(entity2.getId())) {
+    private int compareDefaultDimensionOptions(BasicDimensionSelectableOption option1, BasicDimensionSelectableOption option2) {
+        if (option1.getId().equals(option2.getId())) {
             return EQUAL_SCORE;
         }
         return STANDARD_SCORE_BY_DIFFERENCE;
     }
-
-    private static boolean entityShouldBeIgnored(BasicDimension entity) {
-        return entity.getDescriptor().equalsIgnoreCase(KEINE_ANGABE);
-    }
 }
-*/

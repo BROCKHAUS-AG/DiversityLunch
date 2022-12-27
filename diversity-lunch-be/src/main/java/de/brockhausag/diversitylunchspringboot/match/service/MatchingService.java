@@ -1,10 +1,10 @@
 package de.brockhausag.diversitylunchspringboot.match.service;
 
+import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
 import de.brockhausag.diversitylunchspringboot.match.records.Match;
 import de.brockhausag.diversitylunchspringboot.match.records.ScoreAndCategory;
 import de.brockhausag.diversitylunchspringboot.match.utils.MatchingUtils;
-import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.QuestionEntity;
@@ -104,16 +104,15 @@ public class MatchingService {
         meetingProposalRepository.save(bestMatch.proposalTwo());
     }
 
-    private QuestionEntity getRandomQuestionFromCategory(Category category) throws NoSuchElementException {
-        /*List<QuestionEntity> questions = questionService.getQuestionsForCategory(category.getKind());
+    private QuestionEntity getRandomQuestionFromCategory(DimensionCategory category) throws NoSuchElementException {
+        List<QuestionEntity> questions = questionService.getQuestionsForCategory(category);
         if (questions.size() == 0) {
-            log.error("Could not find any question for category %s.".formatted(category.getKind()));
-            throw new NoSuchElementException("Could not find any question for category %s.".formatted(category.getKind()));
+            log.error("Could not find any question for category %s.".formatted(category.getDescription()));
+            throw new NoSuchElementException("Could not find any question for category %s.".formatted(category.getDescription()));
         } else {
             int randomIndex = random.nextInt(questions.size());
             return questions.get(randomIndex);
-        }*/
-        return new QuestionEntity();
+        }
     }
 
     public void sendQuestions(LocalDateTime now) {

@@ -1,23 +1,24 @@
 package de.brockhausag.diversitylunchspringboot.dimensions.weightedDimension;
 
 import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class WeightedDimensionSelectableOption {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
     @NotBlank
@@ -30,4 +31,17 @@ public class WeightedDimensionSelectableOption {
     @NotNull
     @ManyToOne
     private DimensionCategory dimensionCategory;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        WeightedDimensionSelectableOption that = (WeightedDimensionSelectableOption) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

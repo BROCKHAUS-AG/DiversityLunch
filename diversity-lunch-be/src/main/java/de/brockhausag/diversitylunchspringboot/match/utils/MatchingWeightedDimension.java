@@ -1,33 +1,32 @@
-/*
 package de.brockhausag.diversitylunchspringboot.match.utils;
 
-import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
+import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.weightedDimension.WeightedDimension;
+import de.brockhausag.diversitylunchspringboot.dimensions.weightedDimension.WeightedDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;
+import java.util.Set;
 
 @UtilityClass
 public class MatchingWeightedDimension {
     private static final int EQUAL_SCORE = 0;
 
-    static int getScoreFromWeightedEntities(ProfileEntity profile1, ProfileEntity profile2, List<Category> potentialQuestionsCategories) {
+    static int getScoreFromWeightedDimensions(ProfileEntity profile1, ProfileEntity profile2, List<DimensionCategory> potentialQuestionsCategories) {
         int currentScore = 0;
 
-        return 1;
-
-        List<WeightedEntity> weightedEntities1 = profile1.getWeightedEntities();
-        List<WeightedEntity> weightedEntities2 = profile2.getWeightedEntities();
+        Set<WeightedDimension> weightedDimensionSet = profile1.getSelectedWeightedValues().keySet();
 
         int entityScore;
-        for (int i = 0; i < weightedEntities1.size(); i++) {
-            WeightedEntity weightedEntity1 = weightedEntities1.get(i);
-            WeightedEntity weightedEntity2 = weightedEntities2.get(i);
+        for (WeightedDimension dimension : weightedDimensionSet) {
+            WeightedDimensionSelectableOption option1 = profile1.getSelectedWeightedValues().get(dimension);
+            WeightedDimensionSelectableOption option2 = profile2.getSelectedWeightedValues().get(dimension);
 
-            entityScore = compareWeightedEntities(weightedEntity1, weightedEntity2);
+            entityScore = compareWeightedEntities(option1, option2);
 
             if (entityScore != EQUAL_SCORE) {
-                potentialQuestionsCategories.add(weightedEntity1.getQuestionCategory());
+                potentialQuestionsCategories.add(option1.getDimensionCategory());
             }
 
             currentScore += entityScore;
@@ -35,9 +34,9 @@ public class MatchingWeightedDimension {
         return currentScore;
     }
 
-    private int compareWeightedEntities(WeightedEntity weightedEntity1, WeightedEntity weightedEntity2) {
-        int weight1 = weightedEntity1.getWeight();
-        int weight2 = weightedEntity2.getWeight();
+    private int compareWeightedEntities(WeightedDimensionSelectableOption option1, WeightedDimensionSelectableOption option2) {
+        int weight1 = option1.getWeight();
+        int weight2 = option2.getWeight();
 
         if (weight1 == 0 || weight2 == 0) {
             return EQUAL_SCORE;
@@ -45,4 +44,3 @@ public class MatchingWeightedDimension {
         return Math.abs(weight1 - weight2);
     }
 }
-*/
