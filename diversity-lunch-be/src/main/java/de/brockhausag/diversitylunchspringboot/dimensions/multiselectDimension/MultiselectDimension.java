@@ -17,7 +17,7 @@ public class MultiselectDimension {
     @NotNull
     @OneToOne
     private DimensionCategory dimensionCategory;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "dimension_category_id")
     @Size(min = 1)
     private List<MultiselectDimensionSelectableOption> selectableValues;

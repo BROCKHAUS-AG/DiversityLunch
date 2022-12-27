@@ -15,7 +15,7 @@ public class WeightedDimension {
     private Long id;
     @OneToOne
     private DimensionCategory dimensionCategory;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "dimension_category_id")
     private List<WeightedDimensionSelectableOption> selectableValues;
     @OneToOne
