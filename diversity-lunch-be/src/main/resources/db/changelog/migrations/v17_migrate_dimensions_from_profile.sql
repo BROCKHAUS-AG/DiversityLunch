@@ -2,45 +2,78 @@
 
 -- changeset dfuerst:v17-1
 INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
-    (SELECT id, diet_id , (SELECT id FROM dimension_category WHERE description='Ernährung') FROM profile_entity);
+    (SELECT id, diet_id ,
+            (SELECT b.id FROM basic_dimension b
+                JOIN dimension_category dc on b.dimension_category_id = dc.id
+                WHERE dc.description='Ernährung')
+     FROM profile_entity);
 ----------------------------------------
 INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
-    (SELECT id, education_id , (SELECT id FROM dimension_category WHERE description='Bildungsweg') FROM profile_entity);
+    (SELECT id, education_id , (SELECT b.id FROM basic_dimension b
+                                                     JOIN dimension_category dc on b.dimension_category_id = dc.id
+                                WHERE dc.description='Bildungsweg')
+     FROM profile_entity);
 --------------------------------------
 INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
-    (SELECT id, gender_id , (SELECT id FROM dimension_category WHERE description='Geschlechtliche Identität') FROM profile_entity);
+    (SELECT id, gender_id , (SELECT b.id FROM basic_dimension b
+                                                  JOIN dimension_category dc on b.dimension_category_id = dc.id
+                             WHERE dc.description='Geschlechtliche Identität')
+     FROM profile_entity);
 --------------------------------------
 INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
-    (SELECT id, mother_tongue_id , (SELECT id FROM dimension_category WHERE description='Muttersprache') FROM profile_entity);
+    (SELECT id, mother_tongue_id , (SELECT b.id FROM basic_dimension b
+                                                         JOIN dimension_category dc on b.dimension_category_id = dc.id
+                                    WHERE dc.description='Muttersprache')
+     FROM profile_entity);--------------------------------------
+INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
+    (SELECT id, origin_country_id , (SELECT b.id FROM basic_dimension b
+                                                          JOIN dimension_category dc on b.dimension_category_id = dc.id
+                                     WHERE dc.description='Ethnische Herkunft')
+     FROM profile_entity);--------------------------------------
+INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
+    (SELECT id, project_id , (SELECT b.id FROM basic_dimension b
+                                                   JOIN dimension_category dc on b.dimension_category_id = dc.id
+                              WHERE dc.description='Projekt')
+     FROM profile_entity);--------------------------------------
+INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
+    (SELECT id, religion_id , (SELECT b.id FROM basic_dimension b
+                                                    JOIN dimension_category dc on b.dimension_category_id = dc.id
+                               WHERE dc.description='Religion')
+     FROM profile_entity);--------------------------------------
+INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
+    (SELECT id, sexual_orientation_id , (SELECT b.id FROM basic_dimension b
+                                                              JOIN dimension_category dc on b.dimension_category_id = dc.id
+                                         WHERE dc.description='Sexuelle Orientierung')
+     FROM profile_entity);
 --------------------------------------
 INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
-    (SELECT id, origin_country_id , (SELECT id FROM dimension_category WHERE description='Ethnische Herkunft') FROM profile_entity);
+    (SELECT id, social_background_id ,(SELECT b.id FROM basic_dimension b
+                                                            JOIN dimension_category dc on b.dimension_category_id = dc.id
+                                       WHERE dc.description='Soziale Herkunft')
+     FROM profile_entity);
 --------------------------------------
 INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
-    (SELECT id, project_id , (SELECT id FROM dimension_category WHERE description='Projekt') FROM profile_entity);
---------------------------------------
-INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
-    (SELECT id, religion_id , (SELECT id FROM dimension_category WHERE description='Religion') FROM profile_entity);
---------------------------------------
-INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
-    (SELECT id, sexual_orientation_id , (SELECT id FROM dimension_category WHERE description='Sexuelle Orientierung') FROM profile_entity);
---------------------------------------
-INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
-    (SELECT id, social_background_id , (SELECT id FROM dimension_category WHERE description='Soziale Herkunft') FROM profile_entity);
---------------------------------------
-INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
-    (SELECT id, social_background_discrimination_id , (SELECT id FROM dimension_category WHERE description='Diskriminierung aufgrund sozialer Herkunft') FROM profile_entity);
---------------------------------------
+    (SELECT id, social_background_discrimination_id ,(SELECT b.id FROM basic_dimension b
+                                                                           JOIN dimension_category dc on b.dimension_category_id = dc.id
+                                                      WHERE dc.description='Diskriminierung aufgrund sozialer Herkunft')
+     FROM profile_entity);--------------------------------------
 
 -- changeset dfuerst:v17-2
 --------------------------------------
 INSERT INTO profile_entity_selected_weighted_values(profile_entity_id, selected_weighted_values_id, weighted_dimension)
-    (SELECT id, work_experience_id , (SELECT id FROM dimension_category WHERE description='Berufserfahrung') FROM profile_entity);
+    (SELECT id, work_experience_id , (SELECT b.id FROM weighted_dimension b
+                                                           JOIN dimension_category dc on b.dimension_category_id = dc.id
+                                      WHERE dc.description='Berufserfahrung')
+     FROM profile_entity);
 --------------------------------------
 
 -- changeset dfuerst:v17-3
 INSERT INTO profile_entity_selected_multiselect_value(profile_id, multiselect_dimension)
- SELECT id, (SELECT id from dimension_category WHERE description='Hobby') FROM profile_entity;
+ SELECT id, (SELECT b.id FROM multiselect_dimension b
+                                  JOIN dimension_category dc on b.dimension_category_id = dc.id
+             WHERE dc.description='Hobby')
+FROM profile_entity);
+
 
 INSERT INTO profile_entity_selected_multiselect_value_selected_options(profile_entity_selected_multiselect_value_id, selected_options_id)
 (SELECT a.id, b.hobby_id FROM profile_entity p
