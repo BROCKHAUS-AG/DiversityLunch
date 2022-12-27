@@ -35,3 +35,120 @@ UPDATE  basic_dimension SET default_value_id=(SELECT id FROM basic_dimension_sel
 WHERE category_id=(Select id FROM dimension_category WHERE description='Soziale Herkunft');
 
 -------------------------------------------------------------
+
+INSERT INTO basic_dimension_selectable_option(value, dimension_category_id) SELECT descriptor, (Select id FROM dimension_category WHERE description='Diskriminierung aufgrund sozialer Herkunft') FROM social_background_discrimination_entity;
+UPDATE basic_dimension_selectable_option SET ignore_in_scoring=false WHERE dimension_category_id=(Select id FROM dimension_category WHERE description='Diskriminierung aufgrund sozialer Herkunft');
+UPDATE basic_dimension_selectable_option SET ignore_in_scoring=true WHERE value='keine Angabe' AND dimension_category_id=(Select id FROM dimension_category WHERE description='Diskriminierung aufgrund sozialer Herkunft');
+
+INSERT INTO basic_dimension(category_id) (Select id FROM dimension_category WHERE description='Diskriminierung aufgrund sozialer Herkunft');
+UPDATE  basic_dimension SET default_value_id=(SELECT id FROM basic_dimension_selectable_option
+                                              WHERE value='keine Angabe'
+                                                AND dimension_category_id=(Select id FROM dimension_category WHERE description='Diskriminierung aufgrund sozialer Herkunft'))
+WHERE category_id=(Select id FROM dimension_category WHERE description='Diskriminierung aufgrund sozialer Herkunft');
+
+----------------------------------------------------------
+
+INSERT INTO basic_dimension_selectable_option(value, dimension_category_id) SELECT descriptor, (Select id FROM dimension_category WHERE description='Sexuelle Orientierung') FROM sexual_orientation_entity;
+UPDATE basic_dimension_selectable_option SET ignore_in_scoring=false WHERE dimension_category_id=(Select id FROM dimension_category WHERE description='Sexuelle Orientierung');
+UPDATE basic_dimension_selectable_option SET ignore_in_scoring=true WHERE value='keine Angabe' AND dimension_category_id=(Select id FROM dimension_category WHERE description='Sexuelle Orientierung');
+
+INSERT INTO basic_dimension(category_id) (Select id FROM dimension_category WHERE description='Sexuelle Orientierung');
+UPDATE  basic_dimension SET default_value_id=(SELECT id FROM basic_dimension_selectable_option
+                                              WHERE value='keine Angabe'
+                                                AND dimension_category_id=(Select id FROM dimension_category WHERE description='Sexuelle Orientierung'))
+WHERE category_id=(Select id FROM dimension_category WHERE description='Sexuelle Orientierung');
+
+----------------------------------------------------------
+
+
+INSERT INTO basic_dimension_selectable_option(value, dimension_category_id) SELECT descriptor, (Select id FROM dimension_category WHERE description='Projekt') FROM project_entity;
+UPDATE basic_dimension_selectable_option SET ignore_in_scoring=false WHERE dimension_category_id=(Select id FROM dimension_category WHERE description='Projekt');
+UPDATE basic_dimension_selectable_option SET ignore_in_scoring=true WHERE value='keine Angabe' AND dimension_category_id=(Select id FROM dimension_category WHERE description='Projekt');
+
+INSERT INTO basic_dimension(category_id) (Select id FROM dimension_category WHERE description='Projekt');
+UPDATE  basic_dimension SET default_value_id=(SELECT id FROM basic_dimension_selectable_option
+                                              WHERE value='keine Angabe'
+                                                AND dimension_category_id=(Select id FROM dimension_category WHERE description='Projekt'))
+WHERE category_id=(Select id FROM dimension_category WHERE description='Projekt');
+
+----------------------------------------------------------
+
+INSERT INTO basic_dimension_selectable_option(value, dimension_category_id) SELECT descriptor, (Select id FROM dimension_category WHERE description='Geschlechtliche Identität') FROM gender_entity;
+UPDATE basic_dimension_selectable_option SET ignore_in_scoring=false WHERE dimension_category_id=(Select id FROM dimension_category WHERE description='Geschlechtliche Identität');
+UPDATE basic_dimension_selectable_option SET ignore_in_scoring=true WHERE value='keine Angabe' AND dimension_category_id=(Select id FROM dimension_category WHERE description='Geschlechtliche Identität');
+
+INSERT INTO basic_dimension(category_id) (Select id FROM dimension_category WHERE description='Geschlechtliche Identität');
+UPDATE  basic_dimension SET default_value_id=(SELECT id FROM basic_dimension_selectable_option
+                                              WHERE value='keine Angabe'
+                                                AND dimension_category_id=(Select id FROM dimension_category WHERE description='Geschlechtliche Identität'))
+WHERE category_id=(Select id FROM dimension_category WHERE description='Geschlechtliche Identität');
+
+----------------------------------------------------------
+
+
+INSERT INTO basic_dimension_selectable_option(value, dimension_category_id)
+    SELECT descriptor, (Select id FROM dimension_category
+                              WHERE description='Bildungsweg') FROM education_entity;
+UPDATE basic_dimension_selectable_option SET ignore_in_scoring=false
+    WHERE dimension_category_id=(Select id FROM dimension_category
+    WHERE description='Bildungsweg');
+UPDATE basic_dimension_selectable_option SET ignore_in_scoring=true
+    WHERE value='keine Angabe' AND
+    dimension_category_id=(Select id FROM dimension_category
+    WHERE description='Bildungsweg');
+
+INSERT INTO basic_dimension(category_id)
+    (Select id FROM dimension_category WHERE description='Bildungsweg');
+UPDATE  basic_dimension SET default_value_id=(SELECT id FROM basic_dimension_selectable_option
+    WHERE value='keine Angabe'
+    AND dimension_category_id=(Select id FROM dimension_category
+    WHERE description='Bildungsweg'))
+WHERE category_id=(Select id FROM dimension_category
+WHERE description='Bildungsweg');
+
+----------------------------------------------------------
+
+INSERT INTO basic_dimension_selectable_option(value, dimension_category_id)
+SELECT descriptor, (Select id FROM dimension_category
+                    WHERE description='Ernährung') FROM diet_entity;
+UPDATE basic_dimension_selectable_option SET ignore_in_scoring=false
+WHERE dimension_category_id=(Select id FROM dimension_category
+                             WHERE description='Ernährung');
+UPDATE basic_dimension_selectable_option SET ignore_in_scoring=true
+WHERE value='keine Angabe' AND
+        dimension_category_id=(Select id FROM dimension_category
+                               WHERE description='Ernährung');
+
+INSERT INTO basic_dimension(category_id)
+    (Select id FROM dimension_category WHERE description='Ernährung');
+UPDATE  basic_dimension SET default_value_id=(SELECT id FROM basic_dimension_selectable_option
+                                              WHERE value='keine Angabe'
+                                                AND dimension_category_id=(Select id FROM dimension_category
+                                                                           WHERE description='Ernährung'))
+WHERE category_id=(Select id FROM dimension_category
+                   WHERE description='Ernährung');
+
+----------------------------------------------------------
+
+
+INSERT INTO basic_dimension_selectable_option(value, dimension_category_id)
+SELECT descriptor, (Select id FROM dimension_category
+                    WHERE description='Muttersprache') FROM language_entity;
+UPDATE basic_dimension_selectable_option SET ignore_in_scoring=false
+WHERE dimension_category_id=(Select id FROM dimension_category
+                             WHERE description='Muttersprache');
+UPDATE basic_dimension_selectable_option SET ignore_in_scoring=true
+WHERE value='keine Angabe' AND
+        dimension_category_id=(Select id FROM dimension_category
+                               WHERE description='Muttersprache');
+
+INSERT INTO basic_dimension(category_id)
+    (Select id FROM dimension_category WHERE description='Muttersprache');
+UPDATE  basic_dimension SET default_value_id=(SELECT id FROM basic_dimension_selectable_option
+                                              WHERE value='keine Angabe'
+                                                AND dimension_category_id=(Select id FROM dimension_category
+                                                                           WHERE description='Muttersprache'))
+WHERE category_id=(Select id FROM dimension_category
+                   WHERE description='Muttersprache');
+
+----------------------------------------------------------
