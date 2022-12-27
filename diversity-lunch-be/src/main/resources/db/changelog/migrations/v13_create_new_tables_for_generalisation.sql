@@ -66,6 +66,7 @@ create table profile_entity_selected_weighted_values
 create table weighted_dimension
 (
     id                    BIGSERIAL  primary key,
+    default_value_id BIGINT,
     dimension_category_id bigint
 );
 
