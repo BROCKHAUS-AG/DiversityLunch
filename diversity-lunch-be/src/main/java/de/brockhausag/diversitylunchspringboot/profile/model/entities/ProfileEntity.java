@@ -1,9 +1,12 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
 
+import de.brockhausag.diversitylunchspringboot.dimensions.basicDimension.BasicDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.basicDimension.BasicDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.multiselectDimension.MultiselectDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.multiselectDimension.ProfileEntitySelectedMultiselectValue;
+import de.brockhausag.diversitylunchspringboot.dimensions.weightedDimension.WeightedDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.weightedDimension.WeightedDimensionSelectableOption;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,15 +37,15 @@ public class ProfileEntity {
     private boolean wasChangedByAdmin;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @MapKeyJoinColumn(name = "dimension_category", referencedColumnName = "id")
-    private Map<DimensionCategory, BasicDimensionSelectableOption> selectedBasicValues;
+    @MapKeyJoinColumn(name = "basic_dimension", referencedColumnName = "id")
+    private Map<BasicDimension, BasicDimensionSelectableOption> selectedBasicValues;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @MapKeyJoinColumn(name = "dimension_category", referencedColumnName = "id")
-    private Map<DimensionCategory, WeightedDimensionSelectableOption> selectedWeightedValues;
+    @MapKeyJoinColumn(name = "weighted_dimension", referencedColumnName = "id")
+    private Map<WeightedDimension, WeightedDimensionSelectableOption> selectedWeightedValues;
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "profile_id")
-    @MapKeyJoinColumn(name = "dimension_category", referencedColumnName = "id")
-    private Map<DimensionCategory, ProfileEntitySelectedMultiselectValue> selectedMultiselectValues;
+    @MapKeyJoinColumn(name = "multiselect_dimension", referencedColumnName = "id")
+    private Map<MultiselectDimension, ProfileEntitySelectedMultiselectValue> selectedMultiselectValues;
 
 }
