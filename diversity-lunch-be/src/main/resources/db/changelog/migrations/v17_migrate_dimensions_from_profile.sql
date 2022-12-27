@@ -69,7 +69,7 @@ INSERT INTO profile_entity_selected_weighted_values(profile_entity_id, selected_
 
 -- changeset dfuerst:v17-3
 INSERT INTO profile_entity_selected_multiselect_value(profile_id, multiselect_dimension)
- SELECT id, (SELECT b.id FROM multiselect_dimension b
+ (SELECT id, (SELECT b.id FROM multiselect_dimension b
                                   JOIN dimension_category dc on b.dimension_category_id = dc.id
              WHERE dc.description='Hobby')
 FROM profile_entity);
