@@ -1,5 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.dimensions.basicDimension;
 
+import de.brockhausag.diversitylunchspringboot.dimensions._interfaces.baseModel.Dimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -16,7 +17,7 @@ import java.util.Set;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class BasicDimension {
+public class BasicDimension implements Dimension<BasicDimensionSelectableOption> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -45,4 +46,5 @@ public class BasicDimension {
     public int hashCode() {
         return getClass().hashCode();
     }
+
 }
