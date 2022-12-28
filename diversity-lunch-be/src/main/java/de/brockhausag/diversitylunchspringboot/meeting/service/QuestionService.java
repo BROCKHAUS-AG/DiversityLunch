@@ -17,6 +17,6 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
 
     public List<QuestionEntity> getQuestionsForCategory (DimensionCategory category) {
-        return new ArrayList(questionRepository.getAllByCategoryId(category.getId()));
+        return questionRepository.getAllByCategoryId(category.getId());
     }
 }

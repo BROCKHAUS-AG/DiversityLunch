@@ -15,6 +15,7 @@ import java.util.Objects;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class MultiselectDimensionSelectableOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

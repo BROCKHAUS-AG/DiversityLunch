@@ -17,6 +17,7 @@ import java.util.Set;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class BasicDimension implements Dimension<BasicDimensionSelectableOption> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,5 +47,4 @@ public class BasicDimension implements Dimension<BasicDimensionSelectableOption>
     public int hashCode() {
         return getClass().hashCode();
     }
-
 }

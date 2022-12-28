@@ -16,6 +16,7 @@ import java.util.Objects;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class WeightedDimensionSelectableOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

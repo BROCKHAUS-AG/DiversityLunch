@@ -1,5 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.meeting.service;
 
+import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
 import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,11 +26,15 @@ class QuestionServiceTest {
 
     @Test
     void getQuestionForCategory_returnsEmptyListIfNoCategoryIsFound() {
-        when(categoryRepository.getDimensionCategoryEntityByDescriptor(any())).thenReturn(Optional.empty());
+        // Arrange
+        DimensionCategory input = new DimensionCategory();
+        when(categoryRepository.getDimensionCategoryByDescription(any())).thenReturn(Optional.empty());
 
-        var actual = questionService.getQuestionsForCategory("");
+        // Act
+        var actual = questionService.getQuestionsForCategory(input);
 
+        // Assert
         assertEquals(0, actual.size());
-        verify(categoryRepository, times(1)).getDimensionCategoryEntityByDescriptor(any());
+        verify(categoryRepository, times(1)).getDimensionCategoryByDescription(any());
     }
 }

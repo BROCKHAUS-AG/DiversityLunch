@@ -2,8 +2,10 @@ package de.brockhausag.diversitylunchspringboot.match.utils;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.HobbyTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.dimensions.basicDimension.BasicDimension;
+import de.brockhausag.diversitylunchspringboot.dimensions.basicDimension.BasicDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
 import de.brockhausag.diversitylunchspringboot.match.records.ScoreAndCategory;
-import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +15,9 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -34,10 +38,27 @@ class MatchingUtilsTest {
     void setup() {
         ProfileTestdataFactory profileTestdataFactory = new ProfileTestdataFactory();
         hobbyTestDataFactory = new HobbyTestDataFactory();
-        profile1 = profileTestdataFactory.buildEntity(1);
-        profile2 = profileTestdataFactory.buildEntity(1);
-        profile2.setId(2L);
-        profile3 = profileTestdataFactory.buildEntity(3);
+        profile1 = ProfileEntity.builder()
+                .id(1L)
+                .name("First User")
+                .email("first.mail@some.tld")
+                .birthYear(1957)
+                .wasChangedByAdmin(false)
+                .build();
+        profile2 = ProfileEntity.builder()
+                .id(2L)
+                .name("Second User")
+                .email("second.mail@some.tld")
+                .birthYear(1930)
+                .wasChangedByAdmin(false)
+                .build();
+        profile3 = ProfileEntity.builder()
+                .id(3L)
+                .name("Third User")
+                .email("third.mail@some.tld")
+                .birthYear(2001)
+                .wasChangedByAdmin(false)
+                .build();
     }
 
     @Test

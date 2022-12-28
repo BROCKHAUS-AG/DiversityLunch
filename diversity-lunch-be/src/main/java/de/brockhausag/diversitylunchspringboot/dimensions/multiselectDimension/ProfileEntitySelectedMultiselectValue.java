@@ -11,8 +11,6 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
 public class ProfileEntitySelectedMultiselectValue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

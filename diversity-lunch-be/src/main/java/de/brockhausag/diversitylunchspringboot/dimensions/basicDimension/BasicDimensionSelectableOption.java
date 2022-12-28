@@ -16,6 +16,7 @@ import java.util.Objects;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class BasicDimensionSelectableOption implements SelectableOptions {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
