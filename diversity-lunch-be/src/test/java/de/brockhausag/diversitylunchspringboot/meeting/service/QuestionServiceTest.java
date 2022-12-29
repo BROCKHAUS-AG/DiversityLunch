@@ -2,6 +2,7 @@ package de.brockhausag.diversitylunchspringboot.meeting.service;
 
 import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
 import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategoryRepository;
+import de.brockhausag.diversitylunchspringboot.meeting.repository.QuestionRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,10 +20,12 @@ import static org.mockito.Mockito.*;
 class QuestionServiceTest {
 
     @Mock
-    private DimensionCategoryRepository categoryRepository;
-
+    private QuestionRepository questionRepository;
     @InjectMocks
     private QuestionService questionService;
+    @Mock
+    private DimensionCategoryRepository categoryRepository;
+
 
     @Test
     void getQuestionForCategory_returnsEmptyListIfNoCategoryIsFound() {

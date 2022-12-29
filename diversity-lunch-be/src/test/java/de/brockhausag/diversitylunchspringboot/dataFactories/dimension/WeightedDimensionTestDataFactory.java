@@ -1,26 +1,26 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.basicDimension.BasicDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.weightedDimension.WeightedDimension;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class BasicDimensionTestDataFactory {
+public class WeightedDimensionTestDataFactory {
 
-    public BasicDimension buildEntity(int setNumber) {
-        BasicSelectableOptionTestDataFactory selectableFactory = new BasicSelectableOptionTestDataFactory();
+    public WeightedDimension buildEntity(int setNumber) {
+        WeightedSelectableOptionTestDataFactory selectableFactory = new WeightedSelectableOptionTestDataFactory();
         DimensionCategory category;
-        BasicDimension result;
+        WeightedDimension result;
         switch (setNumber) {
             case 1:
                 category = DimensionCategory.builder()
-                        .id(1L)
-                        .description("Geschlecht")
-                        .profileQuestion("Geschlecht?")
+                        .id(3L)
+                        .description("Arbeitserfahrung")
+                        .profileQuestion("Arbeitserfahrung?")
                         .build();
-                result = BasicDimension.builder()
+                result = WeightedDimension.builder()
                         .id(1L)
                         .dimensionCategory(category)
                         .selectableValues(selectableFactory.buildEntities(category, 4))
@@ -29,11 +29,11 @@ public class BasicDimensionTestDataFactory {
                 break;
             case 2:
                 category = DimensionCategory.builder()
-                        .id(2L)
-                        .description("Projekt")
-                        .profileQuestion("Projekt?")
+                        .id(4L)
+                        .description("Arbeitszeit")
+                        .profileQuestion("Arbeitszeit?")
                         .build();
-                result = BasicDimension.builder()
+                result = WeightedDimension.builder()
                         .id(2L)
                         .dimensionCategory(category)
                         .selectableValues(selectableFactory.buildEntities(category, 4))
@@ -42,11 +42,11 @@ public class BasicDimensionTestDataFactory {
                 break;
             default:
                 category = DimensionCategory.builder()
-                        .id(10L)
+                        .id(11L)
                         .description("Default")
                         .profileQuestion("Default?")
                         .build();
-                result = BasicDimension.builder()
+                result = WeightedDimension.builder()
                         .id(10L)
                         .dimensionCategory(category)
                         .selectableValues(selectableFactory.buildEntities(category, 4))
@@ -56,7 +56,7 @@ public class BasicDimensionTestDataFactory {
         return result;
     }
 
-    public Set<BasicDimension> buildEntities(int amount) {
+    public Set<WeightedDimension> buildEntities(int amount) {
         return Stream.of(1, 2).map(this::buildEntity).limit(amount).collect(Collectors.toSet());
     }
 }

@@ -10,8 +10,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
-@Entity
 @Getter
+@Entity
 @Setter
 @ToString
 @NoArgsConstructor
@@ -21,11 +21,14 @@ public class BasicDimensionSelectableOption implements SelectableOptions {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull@NotBlank
     @NotNull
     @NotBlank
     private String value;
     @NotNull
+    @NotNull
     private boolean ignoreInScoring;
+    @NotNull
     @NotNull
     @ManyToOne
     private DimensionCategory dimensionCategory;
@@ -42,4 +45,5 @@ public class BasicDimensionSelectableOption implements SelectableOptions {
     public int hashCode() {
         return getClass().hashCode();
     }
+
 }

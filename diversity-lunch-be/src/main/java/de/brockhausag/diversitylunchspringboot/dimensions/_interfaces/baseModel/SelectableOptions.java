@@ -7,7 +7,7 @@ public interface SelectableOptions {
 
     void setId(Long id);
 
-    void getValue();
+    String getValue();
 
     void setValue(String value);
 

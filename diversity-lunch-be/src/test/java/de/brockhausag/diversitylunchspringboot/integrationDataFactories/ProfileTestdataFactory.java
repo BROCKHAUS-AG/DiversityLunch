@@ -15,7 +15,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class ProfileTestdataFactory {
-
+/*
     private final CountryService countryService;
     private final DietService dietService;
     private final EducationService educationService;
@@ -102,7 +102,7 @@ public class ProfileTestdataFactory {
                 socialBackground,
                 socialBackgroundDiscrimination,
                 false);
-    }
+    }*/
 
     @SneakyThrows
     public String getTokenStringFromId(String id) {

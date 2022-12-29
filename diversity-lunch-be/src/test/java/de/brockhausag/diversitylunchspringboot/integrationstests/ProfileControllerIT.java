@@ -51,8 +51,8 @@ class ProfileControllerIT {
     private ProfileEntity myProfileEntity;
     private AccountEntity myAccountEntity;
     private AccountEntity otherAccountEntity;
-    @Autowired
-    private ProfileMapper profileMapper;
+    //@Autowired
+    //private ProfileMapper profileMapper;
     @Autowired
     private WebApplicationContext appContext;
     @Autowired
@@ -68,7 +68,7 @@ class ProfileControllerIT {
                 .apply(springSecurity())
                 .build();
 
-        myProfileEntity = profileFactory.createNewMaxProfile();
+        /*myProfileEntity = profileFactory.createNewMaxProfile();
         ProfileEntity otherProfileEntity = profileFactory.createNewErikaProfile();
         myAccountEntity = accountService.getOrCreateAccount(myProfileEntity.getEmail());
         otherAccountEntity = accountService.getOrCreateAccount(otherProfileEntity.getEmail());
@@ -76,10 +76,10 @@ class ProfileControllerIT {
         when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
 
         myProfileEntity = profileService.createProfile(myProfileEntity, myAccountEntity.getId()).orElseThrow();
-        profileService.createProfile(otherProfileEntity, otherAccountEntity.getId()).orElseThrow();
+        profileService.createProfile(otherProfileEntity, otherAccountEntity.getId()).orElseThrow();*/
     }
 
-
+/*
     @Test
     void testGetProfile_withValidId_thenOKWithExpectedProfile() throws Exception {
         this.mockMvc
@@ -161,5 +161,5 @@ class ProfileControllerIT {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(profileJSON)
                 ).andExpect(status().isForbidden());
-    }
+    }*/
 }

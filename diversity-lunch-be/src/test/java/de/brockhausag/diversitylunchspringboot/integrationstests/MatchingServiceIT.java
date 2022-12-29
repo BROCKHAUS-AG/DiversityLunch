@@ -105,7 +105,7 @@ class MatchingServiceIT {
         assertMeetingIsEqual(expectedForCase0, result.get(0), 21);
     }
 
-    @Test
+    /*@Test
     void testMatchingServiceUnmatched() {
         LocalDateTime proposedDateTime = LocalDateTime.of(2022, 4, 5, 13, 30);
         MeetingProposalEntity expectedForCaseUnmatched = MeetingProposalEntity.builder()
@@ -121,7 +121,7 @@ class MatchingServiceIT {
         } else {
             log.info("MEETING_PROPOSAL_ENTITY UNMATCHED NOT FOUND. MATCHING FAULTY.");
         }
-    }
+    }*/
 
     private void assertMeetingIsEqual(MeetingEntity expected, MeetingEntity result, int caseIndex) {
         assertEquals("[" + caseIndex + "] Get Partner Name: ", expected.getPartner().getName(), result.getPartner().getName());

@@ -1,74 +1,76 @@
-package de.brockhausag.diversitylunchspringboot.match.utils;
+package de.brockhausag.diversitylunchspringboot.match.model;
 
-import de.brockhausag.diversitylunchspringboot.dataFactories.HobbyTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
-import de.brockhausag.diversitylunchspringboot.dimensions.basicDimension.BasicDimension;
-import de.brockhausag.diversitylunchspringboot.dimensions.basicDimension.BasicDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategoryRepository;
 import de.brockhausag.diversitylunchspringboot.match.records.ScoreAndCategory;
+import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class MatchingUtilsTest {
+class MatchingTest {
 
     private ProfileEntity profile1;
     private ProfileEntity profile2;
     private ProfileEntity profile3;
-
     @Mock
-    private ProfileEntity mockedProfile;
-
-    private HobbyTestDataFactory hobbyTestDataFactory;
+    private Random random;
+    @Mock
+    private DimensionCategoryRepository categoryRepository;
+    @InjectMocks
+    private Matching match;
 
     @BeforeEach
     void setup() {
         ProfileTestdataFactory profileTestdataFactory = new ProfileTestdataFactory();
-        hobbyTestDataFactory = new HobbyTestDataFactory();
-        profile1 = ProfileEntity.builder()
-                .id(1L)
-                .name("First User")
-                .email("first.mail@some.tld")
-                .birthYear(1957)
-                .wasChangedByAdmin(false)
-                .build();
-        profile2 = ProfileEntity.builder()
-                .id(2L)
-                .name("Second User")
-                .email("second.mail@some.tld")
-                .birthYear(1930)
-                .wasChangedByAdmin(false)
-                .build();
-        profile3 = ProfileEntity.builder()
-                .id(3L)
-                .name("Third User")
-                .email("third.mail@some.tld")
-                .birthYear(2001)
-                .wasChangedByAdmin(false)
-                .build();
+        profile1 = profileTestdataFactory.buildEntity(1);
+        profile2 = profileTestdataFactory.buildEntity(2);
+        profile3 = profileTestdataFactory.buildEntity(3);
     }
 
     @Test
-    void testCurrentScoreStandard() {
-        ScoreAndCategory expected = new ScoreAndCategory(1, Category.DIET);
-        ScoreAndCategory actual = MatchingUtils.getCurrentScore(profile1, profile2);
+    void testScoreAndCategory_withProfile1AndProfile2_shouldReturnScore2AndCategoryDiet() {
+        // Arrange
+        match = new Matching(random, categoryRepository,
+                MeetingProposalEntity.builder()
+                    .proposerProfile(profile1)
+                    .build(),
+                MeetingProposalEntity.builder()
+                    .proposerProfile(profile2)
+                    .build());
+        ScoreAndCategory expected = new ScoreAndCategory(16,
+                DimensionCategory.builder()
+                    .id(1L)
+                    .description("Geschlecht")
+                    .profileQuestion("Geschlecht?")
+                    .build());
+        when(random.nextInt(anyInt())).thenReturn(0);
+
+        // Act
+        ScoreAndCategory actual = match.getStats();
+
+
+        // Assert
         assertEquals(expected.currentScore(), actual.currentScore());
         assertEquals(expected.category(), actual.category());
     }
-
+/*
     @ParameterizedTest(name = "{index} => birthYear={0}, expectedScore={1}, expectedCategoryIdentifier={2}")
     @CsvSource({
             "1971, 2, DIET",
@@ -219,5 +221,5 @@ class MatchingUtilsTest {
             case "AGE" -> Category.AGE;
             default -> null;
         };
-    }
+    }*/
 }

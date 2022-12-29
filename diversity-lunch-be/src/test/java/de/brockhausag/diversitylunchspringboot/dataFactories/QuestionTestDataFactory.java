@@ -19,8 +19,7 @@ public class QuestionTestDataFactory {
     }
 
     public QuestionEntity buildEntity(String questionText) {
-        var dimensionCategory = new DimensionCategory();
-        dimensionCategory.setDescriptor("Test-Category");
+        var dimensionCategory = DimensionCategory.builder().id(1L).description("test-category").profileQuestion("test-question").build();
 
         return buildEntity(questionText, dimensionCategory);
     }
@@ -30,7 +29,7 @@ public class QuestionTestDataFactory {
     }
 
     public QuestionEntity buildEntity(String questionText, String dimensionCategory) {
-        DimensionCategory category = new DimensionCategoryTestDataFactory().buildEntity(dimensionCategory);
+        DimensionCategory category = DimensionCategory.builder().id(1L).description("dimensionCategory").profileQuestion(dimensionCategory + "?").build();
         return buildEntity(questionText, category);
     }
 }

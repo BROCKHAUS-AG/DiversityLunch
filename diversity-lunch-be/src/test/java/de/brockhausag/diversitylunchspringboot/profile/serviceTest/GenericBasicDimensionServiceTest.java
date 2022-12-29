@@ -1,7 +1,5 @@
 package de.brockhausag.diversitylunchspringboot.profile.serviceTest;
 
-import de.brockhausag.diversitylunchspringboot.dataFactories.BaseModelTestDataFactory;
-import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.TestBasicDimension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class GenericBasicDimensionServiceTest {
+public class GenericBasicDimensionServiceTest {/*
     private BaseModelTestDataFactory factory;
     @Mock
     private TestRepositoryType testRepository;
@@ -87,5 +85,5 @@ public class GenericBasicDimensionServiceTest {
 
     private interface TestRepositoryType extends CrudRepository<TestBasicDimension, Long> {
     }
-
+*/
 }

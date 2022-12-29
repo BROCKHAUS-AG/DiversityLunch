@@ -68,7 +68,7 @@ public class MeetingTestdataFactory {
 
     public MeetingEntity matchedMeeting(ProfileEntity proposerEntity, ProfileEntity partnerEntity) {
         LocalDateTime date = LocalDateTime.of(2011, 11, 11, 11, 11);
-        DimensionCategory category = new DimensionCategoryTestDataFactory().buildEntity("Projekt");
+        DimensionCategory category = DimensionCategory.builder().id(1L).description("Projekt").profileQuestion("Projekt?").build();
         QuestionEntity question = new QuestionTestDataFactory().buildEntity(category);
         return new MeetingEntity(1L, date, partnerEntity, proposerEntity, 1, question, date, "");
     }

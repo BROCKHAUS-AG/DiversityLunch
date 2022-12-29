@@ -7,8 +7,8 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -27,7 +27,7 @@ public class MultiselectDimension {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "dimension_category_id")
     @Size(min = 1)
-    private List<MultiselectDimensionSelectableOption> selectableValues;
+    private Set<MultiselectDimensionSelectableOption> selectableValues;
 
     @Override
     public boolean equals(Object o) {

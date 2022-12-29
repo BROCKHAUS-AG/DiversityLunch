@@ -3,35 +3,17 @@ package de.brockhausag.diversitylunchspringboot.dataFactories;
 import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.*;
 import de.brockhausag.diversitylunchspringboot.dimensions.basicDimension.BasicDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.basicDimension.BasicDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.multiselectDimension.MultiselectDimension;
+import de.brockhausag.diversitylunchspringboot.dimensions.multiselectDimension.MultiselectDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.multiselectDimension.ProfileEntitySelectedMultiselectValue;
+import de.brockhausag.diversitylunchspringboot.dimensions.weightedDimension.WeightedDimension;
+import de.brockhausag.diversitylunchspringboot.dimensions.weightedDimension.WeightedDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ProfileTestdataFactory {
-
-    private static final int numberOfCompleteSets = 3;
-    private static final Long[] ids = {1L, 2L, 3L};
-    private static final String[] names = {"first user", "second user", "third user"};
-    private static final String[] emails = {"first.mail@some.tld", "second.mail@some.tld", "third.mail@some.tld"};
-    private static final int[] birthYears = {1957, 1930, 2001};
-
-
-    private final CountryTestDataFactory countryFactory = new CountryTestDataFactory();
-    private final DietTestDataFactory dietFactory = new DietTestDataFactory();
-    private final EducationTestDataFactory educationFactory = new EducationTestDataFactory();
-    private final GenderTestDataFactory genderFactory = new GenderTestDataFactory();
-    private final LanguageTestDataFactory languageFactory = new LanguageTestDataFactory();
-    private final ProjectTestDataFactory projectFactory = new ProjectTestDataFactory();
-    private final ReligionTestDataFactory religionFactory = new ReligionTestDataFactory();
-    private final WorkExperienceTestDataFactory workExperienceFactory = new WorkExperienceTestDataFactory();
-    private final HobbyTestDataFactory hobbyFactory = new HobbyTestDataFactory();
-    private final SexualOrientationTestDataFactory sexualOrientationFactory = new SexualOrientationTestDataFactory();
-    private final SocialBackgroundTestDataFactory socialBackgroundFactory = new SocialBackgroundTestDataFactory();
-    private final SocialBackgroundDiscriminationTestDataFactory socialBackgroundDiscriminationFactory = new SocialBackgroundDiscriminationTestDataFactory();
 
     public ProfileEntity buildEntity(int setNumber) {
         ProfileEntity result;
@@ -43,6 +25,8 @@ public class ProfileTestdataFactory {
                         .email("first.mail@some.tld")
                         .birthYear(1957)
                         .selectedBasicValues(getBasicSelectedOptions(setNumber))
+                        .selectedWeightedValues(getWeightedSelectedOptions(setNumber))
+                        .selectedMultiselectValues(getMultiselectSelectedOptions(setNumber))
                         .wasChangedByAdmin(false)
                         .build();
                 break;
@@ -51,8 +35,10 @@ public class ProfileTestdataFactory {
                         .id(2L)
                         .name("Second User")
                         .email("second.mail@some.tld")
-                        .birthYear(1930)
+                        .birthYear(1940)
                         .selectedBasicValues(getBasicSelectedOptions(setNumber))
+                        .selectedWeightedValues(getWeightedSelectedOptions(setNumber))
+                        .selectedMultiselectValues(getMultiselectSelectedOptions(setNumber))
                         .wasChangedByAdmin(false)
                         .build();
                 break;
@@ -63,6 +49,8 @@ public class ProfileTestdataFactory {
                         .email("third.mail@some.tld")
                         .birthYear(2001)
                         .selectedBasicValues(getBasicSelectedOptions(setNumber))
+                        .selectedWeightedValues(getWeightedSelectedOptions(setNumber))
+                        .selectedMultiselectValues(getMultiselectSelectedOptions(setNumber))
                         .wasChangedByAdmin(false)
                         .build();
                 break;
@@ -73,28 +61,12 @@ public class ProfileTestdataFactory {
                         .email("default.mail@some.tld")
                         .birthYear(2000)
                         .selectedBasicValues(getBasicSelectedOptions(setNumber))
+                        .selectedWeightedValues(getWeightedSelectedOptions(setNumber))
+                        .selectedMultiselectValues(getMultiselectSelectedOptions(setNumber))
                         .wasChangedByAdmin(false)
                         .build();
         }
         return result;
-    }
-
-    public ProfileDto buildDto(int setNumber) {
-        int actualSetNumber = (setNumber >= 1) && (setNumber <= numberOfCompleteSets) ? setNumber : 1;
-        return new ProfileDto(
-                ids[actualSetNumber], names[actualSetNumber], emails[actualSetNumber], birthYears[actualSetNumber],
-                countryFactory.buildDto(actualSetNumber),
-                dietFactory.buildDto(actualSetNumber),
-                educationFactory.buildDto(actualSetNumber),
-                genderFactory.buildDto(actualSetNumber),
-                languageFactory.buildDto(actualSetNumber),
-                projectFactory.buildDto(actualSetNumber),
-                religionFactory.buildDto(actualSetNumber),
-                workExperienceFactory.buildDto(actualSetNumber),
-                hobbyFactory.buildDtoList(actualSetNumber),
-                sexualOrientationFactory.buildDto(actualSetNumber),
-                socialBackgroundFactory.buildDto(actualSetNumber),
-                socialBackgroundDiscriminationFactory.buildDto(actualSetNumber));
     }
 
     private Map<BasicDimension, BasicDimensionSelectableOption> getBasicSelectedOptions(int setNumber) {
@@ -118,6 +90,62 @@ public class ProfileTestdataFactory {
                 default:
             }
             result.put(d, basicSelectableFactory.buildEntity(d.getDimensionCategory(), selectedValue));
+        }
+        return result;
+    }
+
+    private Map<WeightedDimension, WeightedDimensionSelectableOption> getWeightedSelectedOptions(int setNumber) {
+        WeightedDimensionTestDataFactory WeightedFactory = new WeightedDimensionTestDataFactory();
+        WeightedSelectableOptionTestDataFactory WeightedSelectableFactory = new WeightedSelectableOptionTestDataFactory();
+        Set<WeightedDimension> WeightedDimensions = WeightedFactory.buildEntities(2);
+        Map<WeightedDimension, WeightedDimensionSelectableOption> result = new HashMap<>();
+        int selectedValue = 0;
+
+        for (WeightedDimension d : WeightedDimensions) {
+            switch (setNumber) {
+                case 1:
+                    selectedValue = 1;
+                    break;
+                case 2:
+                    selectedValue = 2;
+                    break;
+                case 3:
+                    selectedValue++;
+                    break;
+                default:
+            }
+            result.put(d, WeightedSelectableFactory.buildEntity(d.getDimensionCategory(), selectedValue));
+        }
+        return result;
+    }
+    private Map<MultiselectDimension, ProfileEntitySelectedMultiselectValue> getMultiselectSelectedOptions(int setNumber) {
+        MultiselectDimensionTestDataFactory MultiselectFactory = new MultiselectDimensionTestDataFactory();
+        MultiselectSelectableOptionTestDataFactory MultiselectSelectableFactory = new MultiselectSelectableOptionTestDataFactory();
+        Set<MultiselectDimension> MultiselectDimensions = MultiselectFactory.buildEntities(2);
+        Map<MultiselectDimension, ProfileEntitySelectedMultiselectValue> result = new HashMap<>();
+
+        for (MultiselectDimension d : MultiselectDimensions) {
+            Set<MultiselectDimensionSelectableOption> selectedOptions = new HashSet<>();
+            switch (setNumber) {
+                case 1:
+                    selectedOptions.add(MultiselectSelectableFactory.buildEntity(d.getDimensionCategory(), 1));
+                    selectedOptions.add(MultiselectSelectableFactory.buildEntity(d.getDimensionCategory(), 2));
+                    selectedOptions.add(MultiselectSelectableFactory.buildEntity(d.getDimensionCategory(), 3));
+                    break;
+                case 2:
+                    selectedOptions.add(MultiselectSelectableFactory.buildEntity(d.getDimensionCategory(), 4));
+                    selectedOptions.add(MultiselectSelectableFactory.buildEntity(d.getDimensionCategory(), 5));
+                    selectedOptions.add(MultiselectSelectableFactory.buildEntity(d.getDimensionCategory(), 6));
+                    break;
+                case 3:
+                    selectedOptions.add(MultiselectSelectableFactory.buildEntity(d.getDimensionCategory(), 3));
+                    selectedOptions.add(MultiselectSelectableFactory.buildEntity(d.getDimensionCategory(), 4));
+                    break;
+                default:
+            }
+            ProfileEntitySelectedMultiselectValue selectedMultiselectValue = new ProfileEntitySelectedMultiselectValue();
+            selectedMultiselectValue.setSelectedOptions(selectedOptions);
+            result.put(d, selectedMultiselectValue);
         }
         return result;
     }

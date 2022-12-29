@@ -94,13 +94,13 @@ class MeetingControllerIT {
 
         when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
 
-        profileMax = profileFactory.createNewMaxProfile();
-        AccountEntity accountEntity = accountService.getOrCreateAccount(profileMax.getEmail());
-        profileMax = profileService.createProfile(profileMax, accountEntity.getId()).orElseThrow();
+        //profileMax = profileFactory.createNewMaxProfile();
+        //AccountEntity accountEntity = accountService.getOrCreateAccount(profileMax.getEmail());
+        //profileMax = profileService.createProfile(profileMax, accountEntity.getId()).orElseThrow();
 
-        profileErika = profileFactory.createNewErikaProfile();
-        AccountEntity accountEntity1 = accountService.getOrCreateAccount(profileErika.getEmail());
-        profileErika = profileService.createProfile(profileErika, accountEntity1.getId()).orElseThrow();
+        //profileErika = profileFactory.createNewErikaProfile();
+        //AccountEntity accountEntity1 = accountService.getOrCreateAccount(profileErika.getEmail());
+        //profileErika = profileService.createProfile(profileErika, accountEntity1.getId()).orElseThrow();
     }
 
     @AfterEach
