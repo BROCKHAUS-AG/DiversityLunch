@@ -9,6 +9,7 @@ import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEnt
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
@@ -70,6 +71,43 @@ class MatchingTest {
         assertEquals(expected.currentScore(), actual.currentScore());
         assertEquals(expected.category(), actual.category());
     }
+
+    @ParameterizedTest
+    //currentScore          1, 1, 2, 3
+    //birthYearDifference   0, <10, <20, >20
+    //birthYear             1957, 1957, 1971, 1977
+    void testCurrentScoreBirthYear() {
+        profile2.setSelectedBasicValues(profile1.getSelectedBasicValues());
+        profile2.setSelectedWeightedValues(profile1.getSelectedWeightedValues());
+        profile2.setSelectedMultiselectValues(profile1.getSelectedMultiselectValues());
+
+        profile1.setBirthYear(1971);
+        profile2.setBirthYear(1977);
+
+        match = new Matching(random, categoryRepository,
+                MeetingProposalEntity.builder()
+                        .proposerProfile(profile1)
+                        .build(),
+                MeetingProposalEntity.builder()
+                        .proposerProfile(profile2)
+                        .build());
+        ScoreAndCategory expected = new ScoreAndCategory(1,
+                DimensionCategory.builder()
+                        .id(2L)
+                        .description("Ernährung")
+                        .profileQuestion("Ernährung?")
+                        .build());
+        when(categoryRepository.getDimensionCategoryByDescription("Ernährung")).thenReturn(Optional.ofNullable(expected.category()));
+
+        ScoreAndCategory actual = match.getStats();
+
+        assertEquals(expected.currentScore(), actual.currentScore());
+        assertEquals(expected.category(), actual.category());
+    }
+
+
+
+
 /*
     @ParameterizedTest(name = "{index} => birthYear={0}, expectedScore={1}, expectedCategoryIdentifier={2}")
     @CsvSource({
