@@ -10,8 +10,10 @@ import de.brockhausag.diversitylunchspringboot.dimensions.weightedDimension.Weig
 import de.brockhausag.diversitylunchspringboot.dimensions.weightedDimension.WeightedDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class ProfileTestdataFactory {
 
@@ -35,7 +37,7 @@ public class ProfileTestdataFactory {
                         .id(2L)
                         .name("Second User")
                         .email("second.mail@some.tld")
-                        .birthYear(1940)
+                        .birthYear(2001)
                         .selectedBasicValues(getBasicSelectedOptions(setNumber))
                         .selectedWeightedValues(getWeightedSelectedOptions(setNumber))
                         .selectedMultiselectValues(getMultiselectSelectedOptions(setNumber))
@@ -47,7 +49,7 @@ public class ProfileTestdataFactory {
                         .id(3L)
                         .name("Third User")
                         .email("third.mail@some.tld")
-                        .birthYear(2001)
+                        .birthYear(1969)
                         .selectedBasicValues(getBasicSelectedOptions(setNumber))
                         .selectedWeightedValues(getWeightedSelectedOptions(setNumber))
                         .selectedMultiselectValues(getMultiselectSelectedOptions(setNumber))
@@ -82,7 +84,7 @@ public class ProfileTestdataFactory {
                     selectedValue = 1;
                     break;
                 case 2:
-                    selectedValue = 2;
+                    selectedValue = 3;
                     break;
                 case 3:
                     selectedValue++;
@@ -107,7 +109,7 @@ public class ProfileTestdataFactory {
                     selectedValue = 1;
                     break;
                 case 2:
-                    selectedValue = 2;
+                    selectedValue = 3;
                     break;
                 case 3:
                     selectedValue++;
@@ -140,6 +142,7 @@ public class ProfileTestdataFactory {
                 case 3:
                     selectedOptions.add(MultiselectSelectableFactory.buildEntity(d.getDimensionCategory(), 3));
                     selectedOptions.add(MultiselectSelectableFactory.buildEntity(d.getDimensionCategory(), 4));
+                    selectedOptions.add(MultiselectSelectableFactory.buildEntity(d.getDimensionCategory(), 5));
                     break;
                 default:
             }

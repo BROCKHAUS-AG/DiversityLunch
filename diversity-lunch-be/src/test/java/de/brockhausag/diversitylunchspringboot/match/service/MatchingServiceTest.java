@@ -3,7 +3,10 @@ package de.brockhausag.diversitylunchspringboot.match.service;
 import de.brockhausag.diversitylunchspringboot.dataFactories.MeetingTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.QuestionTestDataFactory;
+import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
+import de.brockhausag.diversitylunchspringboot.match.model.Matching;
+import de.brockhausag.diversitylunchspringboot.match.records.ScoreAndCategory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
@@ -42,6 +45,8 @@ class MatchingServiceTest {
     private QuestionService questionService;
     @InjectMocks
     private MatchingService matchingService;
+    @Mock
+    private Matching matching;
 
     @Test
     void testMatching_moreThen7DaysUntilMeeting_shouldCallExecuteMatchingWithGivenTimeAnd21ScoreToBeat() {
@@ -80,22 +85,35 @@ class MatchingServiceTest {
 
     @Test
     void testExecuteMatching_MatchProposal_MeetingShouldBeCreated() {
+        // Arrange
         LocalDateTime time = LocalDateTime.of(2022, 3, 3, 12, 30, 0);
         List<MeetingProposalEntity> list = meetingTestdataFactory.newMeetingProposalList_withMatchingScore29(time);
         when(meetingProposalRepository.findMeetingProposalEntitiesByProposedDateTimeAndMatchedFalse(any())).thenReturn(list);
         when(questionService.getQuestionsForCategory(any())).thenReturn(List.of(questionTestDataFactory.buildEntity("Q1"), questionTestDataFactory.buildEntity("Q2")));
+        when(matchingService.createMatching(any(MeetingProposalEntity.class), any(MeetingProposalEntity.class))).thenReturn(matching);
+        when(matching.getStats()).thenReturn(new ScoreAndCategory(19, DimensionCategory.builder().build()));
 
+        // Act
         matchingService.executeMatching(time, 0);
+
+        // Assert
         verify(meetingRepository, times(1)).save(any());
         verify(meetingProposalRepository, times(2)).save(any());
     }
 
     @Test
     void testExecuteMatching_MatchProposalScoreToLow_MeetingShouldNotBeCreated() {
+        // Arrange
         LocalDateTime time = LocalDateTime.of(2022, 3, 3, 0, 0, 0);
         List<MeetingProposalEntity> list = meetingTestdataFactory.newMeetingProposalList_withMatchingScore1(time);
         when(meetingProposalRepository.findMeetingProposalEntitiesByProposedDateTimeAndMatchedFalse(any())).thenReturn(list);
+        when(matchingService.createMatching(any(MeetingProposalEntity.class), any(MeetingProposalEntity.class))).thenReturn(matching);
+        when(matching.getStats()).thenReturn(new ScoreAndCategory(8, DimensionCategory.builder().build()));
+
+        // Act
         matchingService.executeMatching(time, 9);
+
+        // Assert
         verify(meetingRepository, times(0)).save(any());
         verify(meetingProposalRepository, times(0)).save(any());
     }
@@ -128,7 +146,4 @@ class MatchingServiceTest {
                 .sendEmail(any(), any(), any(), any());
 
     }
-
-
-
 }

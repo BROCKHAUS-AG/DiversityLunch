@@ -21,14 +21,11 @@ public class BasicDimensionSelectableOption implements SelectableOptions {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull@NotBlank
     @NotNull
     @NotBlank
     private String value;
     @NotNull
-    @NotNull
     private boolean ignoreInScoring;
-    @NotNull
     @NotNull
     @ManyToOne
     private DimensionCategory dimensionCategory;

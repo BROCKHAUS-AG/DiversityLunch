@@ -6,6 +6,7 @@ import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.Dime
 import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategoryRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.multiselectDimension.MultiselectDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.multiselectDimension.MultiselectDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.multiselectDimension.ProfileEntitySelectedMultiselectValue;
 import de.brockhausag.diversitylunchspringboot.dimensions.weightedDimension.WeightedDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.weightedDimension.WeightedDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.match.records.ScoreAndCategory;
@@ -69,7 +70,7 @@ public class Matching {
             BasicDimensionSelectableOption option1 = firstProfile.getSelectedBasicValues().get(dimension);
             BasicDimensionSelectableOption option2 = secondProfile.getSelectedBasicValues().get(dimension);
 
-            if (option1.isIgnoreInScoring() || option2.isIgnoreInScoring()) {
+            if (option1 == null || option1.isIgnoreInScoring() || option2 == null || option2.isIgnoreInScoring()) {
                 continue;
             }
             entityScore = compareDefaultDimensionOptions(option1, option2);
@@ -102,6 +103,9 @@ public class Matching {
             WeightedDimensionSelectableOption option1 = firstProfile.getSelectedWeightedValues().get(dimension);
             WeightedDimensionSelectableOption option2 = secondProfile.getSelectedWeightedValues().get(dimension);
 
+            if (option1 == null || option1.isIgnoreInScoring() || option2 == null || option2.isIgnoreInScoring()) {
+                continue;
+            }
             entityScore = compareWeightedEntities(option1, option2);
 
             if (entityScore != EQUAL_SCORE) {
@@ -131,11 +135,15 @@ public class Matching {
         Set<MultiselectDimension> multiselectDimensionSet = firstProfile.getSelectedMultiselectValues().keySet();
 
         for (MultiselectDimension dimension : multiselectDimensionSet) {
-            Set<MultiselectDimensionSelectableOption> optionList1 = new HashSet<>(firstProfile.getSelectedMultiselectValues().get(dimension).getSelectedOptions());
-            Set<MultiselectDimensionSelectableOption> optionList2 = new HashSet<>(secondProfile.getSelectedMultiselectValues().get(dimension).getSelectedOptions());
+            ProfileEntitySelectedMultiselectValue option1 = firstProfile.getSelectedMultiselectValues().get(dimension);
+            ProfileEntitySelectedMultiselectValue option2 = secondProfile.getSelectedMultiselectValues().get(dimension);
+            if (option1 == null || option2 == null)
+                continue;
+            Set<MultiselectDimensionSelectableOption> optionList1 = new HashSet<>(option1.getSelectedOptions());
+            Set<MultiselectDimensionSelectableOption> optionList2 = new HashSet<>(option2.getSelectedOptions());
 
             if(optionList1.size() == 0 || optionList2.size() == 0){
-                return  0;
+                continue;
             }
 
             int totalOptionsBetweenBoth = optionList1.size() + optionList2.size();
@@ -147,7 +155,7 @@ public class Matching {
 
             double ratio = (double) differentOptions / totalOptionsBetweenBoth;
 
-            if (ratio > 0) {
+            if (ratio != EQUAL_SCORE) {
                 potentialQuestionsCategories.add(dimension.getDimensionCategory());
             }
             currentScore += (int) Math.round(ratio * STANDARD_SCORE_BY_DIFFERENCE);

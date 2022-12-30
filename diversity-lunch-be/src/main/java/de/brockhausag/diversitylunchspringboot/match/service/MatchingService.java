@@ -62,7 +62,7 @@ public class MatchingService {
 
             for (int j = i + 1; j < meetingProposals.size(); j++) {
                 secondMeetingProposal = meetingProposals.get(j);
-                Matching scoredMatch = new Matching(random, categoryRepository, firstMeetingProposal, secondMeetingProposal);
+                Matching scoredMatch = createMatching(firstMeetingProposal, secondMeetingProposal);
                 if (scoredMatch.getStats().currentScore() >= scoreToBeat) matchList.add(scoredMatch);
             }
 
@@ -71,6 +71,10 @@ public class MatchingService {
                 arrangeTeamsMeeting(bestMatch);
             }
         }
+    }
+
+    protected Matching createMatching(MeetingProposalEntity firstProposal, MeetingProposalEntity secondProposal) {
+        return new Matching(random, categoryRepository, firstProposal, secondProposal);
     }
 
     private void arrangeTeamsMeeting(Matching bestMatch) {
