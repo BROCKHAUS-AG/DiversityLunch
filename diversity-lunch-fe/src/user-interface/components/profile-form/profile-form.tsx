@@ -108,16 +108,13 @@ export const ProfileForm: FC<ProfileFormProps> = ({
 
     function sortOptions<T extends Identifiable>(state: IdentifiableState<T>) {
         const copiedList = [...state.items];
-        if (copiedList.length > 0) {
-            console.log('copiList ', copiedList);
-            copiedList.sort((a, b) => a.descriptor?.localeCompare(b.descriptor));
-            return copiedList.sort((a, b) => {
-                if (a.descriptor.toLowerCase() === DEFAULT_OPTION_DESCRIPTOR) return -1;
-                if (b.descriptor.toLowerCase() === DEFAULT_OPTION_DESCRIPTOR) return 1;
-                return 0;
-            });
-        }
-        return 0;
+
+        copiedList.sort((a, b) => a.descriptor?.localeCompare(b.descriptor));
+        return copiedList.sort((a, b) => {
+            if (a.descriptor.toLowerCase() === DEFAULT_OPTION_DESCRIPTOR) return -1;
+            if (b.descriptor.toLowerCase() === DEFAULT_OPTION_DESCRIPTOR) return 1;
+            return 0;
+        });
     }
 
     // Helper Function to set an initalState for the MultiSelect - Form "Hobbies".
@@ -154,40 +151,53 @@ export const ProfileForm: FC<ProfileFormProps> = ({
     return (
         <form onSubmit={formSubmitted} className="ProfileForm">
             <div className="DropdownQuestion">
-                <p className="DropdownQuestion-question">Wann wurdest du geboren?</p>
-                <TextField
-                    id="birth_year"
-                    label="Geburtsjahr"
-                    variant="outlined"
-                    type="number"
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => updateProfile('birthYear', e.target.valueAsNumber)}
-                    InputProps={{ inputProps: { min: 1900, max: 2022 } }}
-                    defaultValue={profile.birthYear}
-                />
+                <div className="inLineToggle">
+                    <p className="DropdownQuestion-question">Wann wurdest du geboren?</p>
+                </div>
+                <div className="inLineToggleHelper">
+                    <TextField
+                        id="birth_year"
+                        label="Geburtsjahr"
+                        variant="outlined"
+                        type="number"
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => updateProfile('birthYear', e.target.valueAsNumber)}
+                        InputProps={{ inputProps: { min: 1900, max: 2022 } }}
+                        defaultValue={profile.birthYear}
+                    />
+                </div>
             </div>
             <div className="Multi-select-container DropdownQuestion">
-                <p className="Multi-select-label">Was sind deine Hobbies?</p>
-                <span className="labelWrapper"><label>Hobbies</label></span>
-                <Multiselect
-                    showCheckbox
-                    selectedValues={profile.hobby || undefined}
-                    options={sortOptions(hobbies)}
-                    placeholder={hobbiesCounterToString()}
-                    onSelect={increaseCounter} // Function will trigger on select event
-                    onRemove={decreaseCounter} // Function will trigger on remove event
-                    displayValue="descriptor"
-                    selectionLimit={3}
-                    closeIcon="cancel"
-                    ref={multiselectRef}
-                />
+
+                <div className="inLineToggle">
+                    <p className="Multi-select-label">Was sind deine Hobbies?</p>
+                </div>
+                <div className="inLineToggleHelper">
+                    <fieldset>
+                        <legend>Hobbies</legend>
+                        <Multiselect
+                            showCheckbox
+                            selectedValues={profile.hobby || undefined}
+                            options={sortOptions(hobbies)}
+                            placeholder={hobbiesCounterToString()}
+                            onSelect={increaseCounter} // Function will trigger on select event
+                            onRemove={decreaseCounter} // Function will trigger on remove event
+                            displayValue="descriptor"
+                            selectionLimit={3}
+                            closeIcon="cancel"
+                            ref={multiselectRef}
+                        />
+                    </fieldset>
+                </div>
             </div>
+
             <Dropdown
-                options={sortOptions(project)}
+                options={sortOptions(genders)}
                 placeholder="In welchem Projekt arbeitest du derzeit?"
                 onChange={(value) => updateProfile('project', value)}
                 label="Projekt"
                 currentValue={profile.project || undefined}
             />
+
             <Dropdown
                 options={sortOptions(genders)}
                 placeholder="Was ist deine geschlechtliche Identität?"

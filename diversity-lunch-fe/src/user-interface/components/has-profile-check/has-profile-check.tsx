@@ -8,6 +8,8 @@ import { SessionStorageRedirection } from '../session-storage-redirection/sessio
 export const HasProfileCheck: React.FC = () => {
     const { profileStatus } = useHasProfile();
 
+    console.log('hasprofilecheck ', profileStatus);
+
     if (profileStatus === 'ERROR') {
         return <GenericErrorPage />;
     }

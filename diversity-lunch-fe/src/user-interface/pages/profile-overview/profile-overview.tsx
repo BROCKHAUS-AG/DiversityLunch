@@ -6,8 +6,6 @@ import { isValidProfile, isUpdatedProfile } from '../../../utils/validators/prof
 import { ProfileForm } from '../../components/profile-form/profile-form';
 import { AppStoreState } from '../../../data/app-store';
 import { updateProfile } from '../../../data/profile/profile.actions';
-import { CloseSite } from '../../components/close-site/close-site';
-import { DiversityIcon } from '../../components/diversity-icon/diversity-icon';
 import { ProfileStateOk } from '../../../data/profile/profile-state.type';
 import { LoadingAnimation } from '../../components/loading-animation/loading-animation';
 
@@ -29,13 +27,8 @@ export const ProfileOverview = () => {
 
     return (
         <section className="view">
-            <div className="Profile-logo-container">
-                <CloseSite />
-                <DiversityIcon title="DEIN PROFIL" />
-            </div>
-
             <div className="Profile-name-container">
-                <h5 className="Profile-user-name">{profile.name}</h5>
+                <h3>{`Hallo ${profile.name}`}</h3>
             </div>
             {profile.name !== ''
                 && <ProfileForm initialProfile={profile} onSubmit={submit} checkValidity={isUpdated} />}

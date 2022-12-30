@@ -14,6 +14,7 @@ import { NavbarData } from './NavbarData';
 // STYLES
 import './navbar.scss';
 import { UserVoucherIcon } from '../user-voucher-icon/user-voucher-icon';
+import { CloseSite } from '../close-site/close-site';
 
 export const Navbar = () => {
     const [sidebar, setSidebar] = useState(false);
@@ -27,6 +28,7 @@ export const Navbar = () => {
                     <Link to="#" className="menu-bars">
                         <p onClick={showSidebar}>MOBILE</p>
                     </Link>
+                    <CloseSite />
                 </div>
                 <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
                     <ul className="nav-menu-items" onClick={showSidebar}>

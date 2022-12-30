@@ -8,6 +8,7 @@ export interface LocalStorageRedirectionProps {
 export const SessionStorageRedirection = ({ defaultPath }: LocalStorageRedirectionProps) => {
     const storedPath = getStoredPath();
     useEffect(() => clearStoredPath, []);
+    console.log('return path', storedPath, defaultPath);
     return <Redirect to={storedPath || defaultPath} />;
 };
 

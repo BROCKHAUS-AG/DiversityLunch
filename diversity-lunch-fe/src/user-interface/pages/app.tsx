@@ -18,6 +18,7 @@ import { VoucherPanel } from './voucher-panel/voucher-panel';
 import { UserVoucherList } from './user-voucher-list/user-voucher-list';
 import { AppHeader } from '../components/header/header';
 import { Navbar } from '../components/navbar/Navbar';
+import { CloseSite } from '../components/close-site/close-site';
 
 export const App = () => (
     <div className="App">
@@ -25,6 +26,10 @@ export const App = () => (
             <AppHeader />
             <BrowserRouter>
                 <Navbar />
+                <div className="toggleStyle">
+                    <CloseSite />
+                </div>
+
                 <div className="bodyContainer">
                     <Switch>
                         <Route exact path="/">

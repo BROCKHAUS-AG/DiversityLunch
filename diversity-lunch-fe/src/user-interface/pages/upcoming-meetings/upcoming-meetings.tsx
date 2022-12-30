@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { CloseSite } from '../../components/close-site/close-site';
-import { DiversityIcon } from '../../components/diversity-icon/diversity-icon';
 import './upcoming-meetings.scss';
 import { Meeting } from '../../../model/Meeting';
 import { AppStoreState } from '../../../data/app-store';
@@ -42,8 +40,6 @@ export const UpcomingMeetings = () => {
 
     return (
         <div className="UpcomingMeetings">
-            <CloseSite />
-            <DiversityIcon title="Anstehende Meetings" />
             <div className="UpcomingMeetings-container">
                 <h5 className="UpcomingMeetings-header">Deine Meetings</h5>
                 <h6 className="UpcomingMeetings-subheader">Anstehende Verabredungen</h6>

@@ -54,7 +54,7 @@ export const QuestionSite = () => {
     return (
         <div className="QuestionSite">
             <DiversityIcon />
-            <h4>{`Hallo ${firstName}`}</h4>
+            <h3>{`Hallo ${firstName}`}</h3>
             <ProfileForm initialProfile={profile} onSubmit={submit} checkValidity={isValidProfile} />
         </div>
     );

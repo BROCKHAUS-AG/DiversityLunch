@@ -7,17 +7,18 @@ import { AppStoreState } from '../../../data/app-store';
 import { Role } from '../../../model/Role';
 import { LoadingAnimation } from '../../components/loading-animation/loading-animation';
 import { UserVoucherIcon } from '../../components/user-voucher-icon/user-voucher-icon';
+import { Information } from '../information/information';
 
 export const Dashboard = () => {
     const accountState = useSelector((state: AppStoreState) => state.account);
-    let account : Account;
+    let account: Account;
 
     if (accountState.status === 'OK') {
         account = accountState.accountData;
     } else {
         return <LoadingAnimation />;
     }
-    const isAdmin : boolean = account.role === Role.ADMIN || account.role === Role.AZURE_ADMIN;
+    const isAdmin: boolean = account.role === Role.ADMIN || account.role === Role.AZURE_ADMIN;
 
     return (
         <div className="Dashboard">
@@ -26,10 +27,43 @@ export const Dashboard = () => {
                 <UserVoucherIcon />
             </div>
 
-            <div className="Dashboard-tiles-container">
+            <div className="Dashboard-container">
                 <h1>Frohe Feiertage!</h1>
-            </div>
+                <div className="row">
+                    <div className="column">
+                        <div className="card">
+                            <div className="image" />
+                            <div className="body">
+                                <h2>1.</h2>
+                                <h4>Profil ausfüllen und unseren Algorythmus füttern.</h4>
+                                <button>Jetzt füttern</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="column">
+                        <div className="card">
+                            <div className="image" />
+                            <div className="body">
+                                <h2>2.</h2>
+                                <h4>Möglichen Termin angeben</h4>
+                                <button>Termine finden</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="column">
+                        <div className="card">
+                            <div className="image" />
+                            <div className="body">
+                                <h2>3.</h2>
+                                <h4>Viel Spaß bei deinem Diversity-Match!</h4>
+                                <button>Matches anzeigen</button>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
+            </div>
+            <Information />
         </div>
     );
 };
