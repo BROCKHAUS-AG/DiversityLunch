@@ -41,7 +41,7 @@ export const Navbar = () => {
                         {NavbarData.map((item, index) => (
                             <li key={index} className={item.cName}>
                                 <Link to={item.path}>
-                                    <img alt="TileIconLink Icon" className="Tile-icon" src={item.icon} />
+                                    <TileIcon title="" icon={item.icon} />
                                     <span>{item.title}</span>
                                 </Link>
                             </li>

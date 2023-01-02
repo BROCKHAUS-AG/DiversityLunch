@@ -1,8 +1,14 @@
-.Multi-select-label {
-}
+
 
 .ProfileForm{
   margin-bottom: 10rem;
+  margin-left: 20px;
+}
+
+@media screen and (min-width: 900px) {
+  .ProfileForm{
+    margin-left: 320px;
+  }
 }
 
 
@@ -26,6 +32,7 @@
       color: rgba(0, 0, 0, 0.54);
       font-size: .8rem;
     }
+
 
   }
 
@@ -57,6 +64,10 @@
     width: 100%;
     color:lightgrey;
     font-size: 16px;
+  }
+
+  fieldset{
+    margin-left: 2rem;
   }
 
 }

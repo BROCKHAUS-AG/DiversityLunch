@@ -1,3 +1,12 @@
+@media screen and (min-width: 450px) {
+
+
+}
+
+@media screen and (min-width: 850px) {
+
+
+
 .Dashboard {
   max-width: 1180px;
   margin-left: auto;
@@ -23,14 +32,13 @@
   /* Float four columns side by side */
   .column {
     float: left;
-    width: 25%;
+    width: 30%;
     padding: 0 10px;
   }
 
   /* Remove extra left and right margins, due to padding in columns */
   .row {
-    width: 100vw;
-    margin-left: 640px;
+
   }
 
   /* Clear floats after the columns */
@@ -71,3 +79,4 @@ p {
 
 }
 
+}
