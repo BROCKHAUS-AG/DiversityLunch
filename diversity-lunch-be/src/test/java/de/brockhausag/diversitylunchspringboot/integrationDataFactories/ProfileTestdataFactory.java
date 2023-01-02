@@ -4,6 +4,7 @@ import com.nimbusds.jose.util.Base64URL;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.junit.jupiter.api.Test;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.Mac;
@@ -12,9 +13,16 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 @Component
 @RequiredArgsConstructor
 public class ProfileTestdataFactory {
+
+    @Test
+    void testFalse(){
+        assertFalse(true);
+    }
 /*
     private final CountryService countryService;
     private final DietService dietService;

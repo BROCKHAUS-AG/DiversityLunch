@@ -16,7 +16,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class GenericBasicDimensionServiceTest {/*
+public class GenericBasicDimensionServiceTest {
+
+    @Test
+    void testFalse(){
+        assertFalse(true);
+    }
+
+    /*
     private BaseModelTestDataFactory factory;
     @Mock
     private TestRepositoryType testRepository;

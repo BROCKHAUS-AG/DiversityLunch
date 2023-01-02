@@ -26,6 +26,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
@@ -79,6 +80,10 @@ class ProfileControllerIT {
         profileService.createProfile(otherProfileEntity, otherAccountEntity.getId()).orElseThrow();*/
     }
 
+    @Test
+    void testFalse(){
+        assertFalse(true);
+    }
 /*
     @Test
     void testGetProfile_withValidId_thenOKWithExpectedProfile() throws Exception {

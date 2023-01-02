@@ -20,7 +20,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class GenericDefaultDimensionModelControllerTest {/*
+public class GenericDefaultDimensionModelControllerTest {
+    @Test
+    void testFalse(){
+        assertFalse(true);
+    }
+    /*
     private BaseModelTestDataFactory factory;
     @Mock
     private DimensionMapper<TestDefaultDimensionDto, TestBasicDimension> dimensionMapper;

@@ -105,6 +105,10 @@ class MatchingServiceIT {
         assertMeetingIsEqual(expectedForCase0, result.get(0), 21);
     }
 
+    @Test
+    void testFalse(){
+        assertFalse(true);
+    }
     /*@Test
     void testMatchingServiceUnmatched() {
         LocalDateTime proposedDateTime = LocalDateTime.of(2022, 4, 5, 13, 30);

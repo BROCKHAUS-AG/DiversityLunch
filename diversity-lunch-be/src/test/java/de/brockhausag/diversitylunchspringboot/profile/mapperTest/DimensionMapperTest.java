@@ -8,10 +8,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DimensionMapperTest {
+    @Test
+    void testFalse(){
+        assertFalse(true);
+    }
 /*
     CountryTestDataFactory countryFactory;
     DietTestDataFactory dietFactory;

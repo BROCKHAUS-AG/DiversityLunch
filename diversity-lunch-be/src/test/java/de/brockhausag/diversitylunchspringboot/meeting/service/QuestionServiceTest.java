@@ -38,6 +38,6 @@ class QuestionServiceTest {
 
         // Assert
         assertEquals(0, actual.size());
-        verify(categoryRepository, times(1)).getDimensionCategoryByDescription(any());
+        verify(questionRepository, times(1)).getAllByCategoryId(any());
     }
 }

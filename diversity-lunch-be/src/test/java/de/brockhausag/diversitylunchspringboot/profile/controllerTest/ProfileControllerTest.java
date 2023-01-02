@@ -13,12 +13,15 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ProfileControllerTest {
+    @Test
+    void testFalse(){
+        assertFalse(true);
+    }
 /*
     private final ProfileTestdataFactory factory = new ProfileTestdataFactory();
     private final Long accountId = 5L;
