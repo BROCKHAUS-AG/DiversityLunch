@@ -4,6 +4,7 @@ import de.brockhausag.diversitylunchspringboot.dataFactories.MeetingTestdataFact
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.QuestionTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategoryRepository;
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
 import de.brockhausag.diversitylunchspringboot.match.model.Matching;
 import de.brockhausag.diversitylunchspringboot.match.records.ScoreAndCategory;
@@ -13,9 +14,9 @@ import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposa
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MsTeamsService;
 import de.brockhausag.diversitylunchspringboot.meeting.service.QuestionService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -36,6 +37,8 @@ class MatchingServiceTest {
     @Mock
     MsTeamsService msTeamsService;
     @Mock
+    DimensionCategoryRepository categoryRepository;
+    @Mock
     private MeetingProposalRepository meetingProposalRepository;
     @Mock
     private MeetingRepository meetingRepository;
@@ -43,10 +46,21 @@ class MatchingServiceTest {
     private MatchingService matchingServiceMock;
     @Mock
     private QuestionService questionService;
-    @InjectMocks
-    private MatchingService matchingService;
     @Mock
     private Matching matching;
+    private MatchingService matchingService;
+
+    @BeforeEach
+    void setUp(){
+        this.matchingService = spy(new MatchingService(
+                meetingProposalRepository,
+                meetingRepository,
+                categoryRepository,
+                mockedEMailService,
+                msTeamsService,
+                questionService
+        ));
+    }
 
     @Test
     void testMatching_moreThen7DaysUntilMeeting_shouldCallExecuteMatchingWithGivenTimeAnd21ScoreToBeat() {
@@ -92,6 +106,8 @@ class MatchingServiceTest {
         when(questionService.getQuestionsForCategory(any())).thenReturn(List.of(questionTestDataFactory.buildEntity("Q1"), questionTestDataFactory.buildEntity("Q2")));
         when(matchingService.createMatching(any(MeetingProposalEntity.class), any(MeetingProposalEntity.class))).thenReturn(matching);
         when(matching.getStats()).thenReturn(new ScoreAndCategory(19, DimensionCategory.builder().build()));
+        when(matching.getFirstProposal()).thenReturn(list.get(0));
+        when(matching.getSecondProposal()).thenReturn(list.get(1));
 
         // Act
         matchingService.executeMatching(time, 0);
