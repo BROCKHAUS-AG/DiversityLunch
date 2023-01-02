@@ -1,13 +1,13 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.*;
-import de.brockhausag.diversitylunchspringboot.dimensions.basicDimension.BasicDimension;
-import de.brockhausag.diversitylunchspringboot.dimensions.basicDimension.BasicDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.multiselectDimension.MultiselectDimension;
-import de.brockhausag.diversitylunchspringboot.dimensions.multiselectDimension.MultiselectDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.multiselectDimension.ProfileEntitySelectedMultiselectValue;
-import de.brockhausag.diversitylunchspringboot.dimensions.weightedDimension.WeightedDimension;
-import de.brockhausag.diversitylunchspringboot.dimensions.weightedDimension.WeightedDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimension;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimension;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.ProfileEntitySelectedMultiselectValue;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimension;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 
 import java.util.HashMap;

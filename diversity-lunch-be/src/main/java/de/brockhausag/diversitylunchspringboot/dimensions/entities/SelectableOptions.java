@@ -1,6 +1,6 @@
-package de.brockhausag.diversitylunchspringboot.dimensions._interfaces.baseModel;
+package de.brockhausag.diversitylunchspringboot.dimensions.entities;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
 
 public interface SelectableOptions {
     Long getId();

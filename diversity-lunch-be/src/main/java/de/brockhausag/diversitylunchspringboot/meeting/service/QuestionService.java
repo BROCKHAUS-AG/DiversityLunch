@@ -1,13 +1,12 @@
 package de.brockhausag.diversitylunchspringboot.meeting.service;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.QuestionEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

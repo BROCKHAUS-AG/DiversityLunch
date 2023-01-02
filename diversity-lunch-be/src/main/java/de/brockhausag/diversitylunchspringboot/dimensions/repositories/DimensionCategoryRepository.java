@@ -1,5 +1,6 @@
-package de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory;
+package de.brockhausag.diversitylunchspringboot.dimensions.repositories;
 
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

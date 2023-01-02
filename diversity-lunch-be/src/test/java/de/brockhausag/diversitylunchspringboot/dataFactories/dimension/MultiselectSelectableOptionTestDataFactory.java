@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
-import de.brockhausag.diversitylunchspringboot.dimensions.multiselectDimension.MultiselectDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimensionSelectableOption;
 
 import java.util.Set;
 import java.util.stream.Collectors;

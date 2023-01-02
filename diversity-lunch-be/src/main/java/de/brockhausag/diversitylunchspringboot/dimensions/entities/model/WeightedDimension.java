@@ -1,7 +1,6 @@
-package de.brockhausag.diversitylunchspringboot.dimensions.basicDimension;
+package de.brockhausag.diversitylunchspringboot.dimensions.entities.model;
 
-import de.brockhausag.diversitylunchspringboot.dimensions._interfaces.baseModel.Dimension;
-import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.Dimension;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -18,28 +17,29 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BasicDimension implements Dimension<BasicDimensionSelectableOption> {
+public class WeightedDimension implements Dimension<WeightedDimensionSelectableOption> {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
     @OneToOne
     private DimensionCategory dimensionCategory;
-    @OneToMany()
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "dimension_category_id")
     @Size(min = 1)
     @ToString.Exclude
-    private Set<BasicDimensionSelectableOption> selectableValues;
+    private Set<WeightedDimensionSelectableOption> selectableValues;
     @NotNull
     @OneToOne
     @ToString.Exclude
-    private BasicDimensionSelectableOption defaultValue;
+    private WeightedDimensionSelectableOption defaultValue;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        BasicDimension dimension = (BasicDimension) o;
+        WeightedDimension dimension = (WeightedDimension) o;
         return id != null && Objects.equals(id, dimension.id);
     }
 

@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.meeting.model;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
 import lombok.Data;
 
 import javax.persistence.*;

@@ -1,8 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.match.model;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
-import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
-import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategoryRepository;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.repositories.DimensionCategoryRepository;
 import de.brockhausag.diversitylunchspringboot.match.records.ScoreAndCategory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;

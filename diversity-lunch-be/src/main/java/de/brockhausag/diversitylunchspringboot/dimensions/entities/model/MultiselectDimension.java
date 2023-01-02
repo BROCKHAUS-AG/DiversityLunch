@@ -1,13 +1,14 @@
-package de.brockhausag.diversitylunchspringboot.dimensions.multiselectDimension;
+package de.brockhausag.diversitylunchspringboot.dimensions.entities.model;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.Dimension;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -16,22 +17,23 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MultiselectDimensionSelectableOption {
+public class MultiselectDimension implements Dimension<MultiselectDimensionSelectableOption> {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
     @NotNull
-    @NotBlank
-    private String value;
-    @NotNull
-    @ManyToOne
+    @OneToOne
     private DimensionCategory dimensionCategory;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "dimension_category_id")
+    @Size(min = 1)
+    private Set<MultiselectDimensionSelectableOption> selectableValues;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        MultiselectDimensionSelectableOption that = (MultiselectDimensionSelectableOption) o;
+        MultiselectDimension that = (MultiselectDimension) o;
         return id != null && Objects.equals(id, that.id);
     }
 

@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.QuestionEntity;
 
 public class QuestionTestDataFactory {

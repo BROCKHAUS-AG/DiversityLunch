@@ -1,14 +1,14 @@
 package de.brockhausag.diversitylunchspringboot.match.model;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.basicDimension.BasicDimension;
-import de.brockhausag.diversitylunchspringboot.dimensions.basicDimension.BasicDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
-import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategoryRepository;
-import de.brockhausag.diversitylunchspringboot.dimensions.multiselectDimension.MultiselectDimension;
-import de.brockhausag.diversitylunchspringboot.dimensions.multiselectDimension.MultiselectDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.multiselectDimension.ProfileEntitySelectedMultiselectValue;
-import de.brockhausag.diversitylunchspringboot.dimensions.weightedDimension.WeightedDimension;
-import de.brockhausag.diversitylunchspringboot.dimensions.weightedDimension.WeightedDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimension;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.repositories.DimensionCategoryRepository;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimension;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.ProfileEntitySelectedMultiselectValue;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimension;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.match.records.ScoreAndCategory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;

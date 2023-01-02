@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
-import de.brockhausag.diversitylunchspringboot.dimensions.weightedDimension.WeightedDimension;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimension;
 
 import java.util.Set;
 import java.util.stream.Collectors;

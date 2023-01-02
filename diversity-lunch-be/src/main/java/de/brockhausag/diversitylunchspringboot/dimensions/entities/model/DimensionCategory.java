@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory;
+package de.brockhausag.diversitylunchspringboot.dimensions.entities.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;

@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.meeting.service;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
-import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategoryRepository;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.repositories.DimensionCategoryRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.QuestionRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

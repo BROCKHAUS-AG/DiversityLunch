@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.match.service;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategory;
-import de.brockhausag.diversitylunchspringboot.dimensions.dimensionCategory.DimensionCategoryRepository;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.repositories.DimensionCategoryRepository;
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
 import de.brockhausag.diversitylunchspringboot.match.model.Matching;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
