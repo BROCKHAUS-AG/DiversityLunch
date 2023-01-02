@@ -92,10 +92,12 @@ class MatchingTest {
     }
 
     @Test
-    void testScoreAndCategory_withFullAndEmptyProfile_shouldReturnScore2AndCategoryDiet() {
+    void testScoreAndCategory_withFullAndEmptyProfile_shouldReturnScore1AndCategoryDiet() {
         profile2.setSelectedBasicValues(Collections.EMPTY_MAP);
         profile2.setSelectedWeightedValues(Collections.EMPTY_MAP);
         profile2.setSelectedMultiselectValues(Collections.EMPTY_MAP);
+        profile1.setBirthYear(2000);
+        profile2.setBirthYear(2000);
         match = new Matching(random, categoryRepository,
                 MeetingProposalEntity.builder()
                     .proposerProfile(profile1)
@@ -103,7 +105,7 @@ class MatchingTest {
                 MeetingProposalEntity.builder()
                     .proposerProfile(profile2)
                     .build());
-        ScoreAndCategory expected = new ScoreAndCategory(2,
+        ScoreAndCategory expected = new ScoreAndCategory(1,
                 DimensionCategory.builder()
                         .description("Ernährung")
                         .build());
