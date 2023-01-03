@@ -2,7 +2,7 @@ package de.brockhausag.diversitylunchspringboot.generics.defaultDimension;
 
 import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionModelController;
-import org.springframework.data.repository.CrudRepository;
+import de.brockhausag.diversitylunchspringboot.profile.data.DefaultDimensionRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class DefaultDimensionModelController<
         DtoType extends DefaultDimensionDto,
         EntityType extends DefaultDimensionEntity,
-        RepositoryType extends CrudRepository<EntityType, Long>,
+        RepositoryType extends DefaultDimensionRepository<EntityType>,
         ServiceType extends DefaultDimensionEntityService<EntityType, RepositoryType>,
         MapperType extends DimensionMapper<DtoType, EntityType>>
         extends DimensionModelController<

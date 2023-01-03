@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SexualOrientationService extends DefaultDimensionEntityService<SexualOrientationEntity, SexualOrientationRepository> {
-    public SexualOrientationService(SexualOrientationRepository repository) {
-        super(repository);
+    public SexualOrientationService(SexualOrientationRepository repository, ProfileService profileService) {
+        super(repository, profileService);
     }
 }

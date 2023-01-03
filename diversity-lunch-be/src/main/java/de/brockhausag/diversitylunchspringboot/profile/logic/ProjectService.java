@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProjectService extends DefaultDimensionEntityService<ProjectEntity, ProjectRepository> {
-    public ProjectService(ProjectRepository repository) {
-        super(repository);
+    public ProjectService(ProjectRepository repository, ProfileService profileService) {
+        super(repository, profileService);
     }
 }

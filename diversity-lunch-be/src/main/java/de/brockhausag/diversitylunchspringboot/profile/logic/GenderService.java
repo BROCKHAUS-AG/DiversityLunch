@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class GenderService extends DefaultDimensionEntityService<GenderEntity, GenderRepository> {
-    public GenderService(GenderRepository repository) {
-        super(repository);
+    public GenderService(GenderRepository repository, ProfileService profileService) {
+        super(repository, profileService);
     }
 }

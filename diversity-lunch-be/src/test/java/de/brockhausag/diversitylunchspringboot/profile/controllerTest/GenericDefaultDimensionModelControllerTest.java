@@ -6,13 +6,14 @@ import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.TestDefau
 import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionEntityService;
 import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionModelController;
 import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
+import de.brockhausag.diversitylunchspringboot.profile.data.DefaultDimensionRepository;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -169,12 +170,12 @@ public class GenericDefaultDimensionModelControllerTest {
         assertEquals(expected, actual);
     }
 
-    private interface TestRepositoryType extends CrudRepository<TestDefaultDimensionEntity, Long> {
+    private interface TestRepositoryType extends DefaultDimensionRepository<TestDefaultDimensionEntity> {
     }
 
     private static class TestServiceType extends DefaultDimensionEntityService<TestDefaultDimensionEntity, TestRepositoryType> {
-        public TestServiceType(TestRepositoryType repository) {
-            super(repository);
+        public TestServiceType(TestRepositoryType repository, ProfileService profileService) {
+            super(repository, profileService);
         }
     }
 

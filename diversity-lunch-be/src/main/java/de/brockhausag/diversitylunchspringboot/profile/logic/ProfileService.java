@@ -3,11 +3,12 @@ package de.brockhausag.diversitylunchspringboot.profile.logic;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionEntity;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +41,31 @@ public class ProfileService {
     }
 
    public List<ProfileEntity> getAllProfilesWithSelectedDimensionOption(DimensionEntity dimensionEntity) {
-       return null;
+       if (dimensionEntity instanceof CountryEntity) {
+           return repository.findAllByOriginCountry((CountryEntity) dimensionEntity);
+       } else if (dimensionEntity instanceof DietEntity) {
+           return repository.findAllByDiet((DietEntity) dimensionEntity);
+       } else if (dimensionEntity instanceof EducationEntity) {
+           return repository.findAllByEducation((EducationEntity) dimensionEntity);
+       } else if (dimensionEntity instanceof GenderEntity) {
+           return repository.findAllByGender((GenderEntity) dimensionEntity);
+       } else if (dimensionEntity instanceof HobbyEntity) {
+           return repository.findAllByHobby((HobbyEntity) dimensionEntity);
+       } else if (dimensionEntity instanceof LanguageEntity) {
+           return repository.findAllByMotherTongue((LanguageEntity) dimensionEntity);
+       } else if (dimensionEntity instanceof ProjectEntity) {
+           return repository.findAllByProject((ProjectEntity) dimensionEntity);
+       } else if (dimensionEntity instanceof ReligionEntity) {
+           return repository.findAllByReligion((ReligionEntity) dimensionEntity);
+       } else if (dimensionEntity instanceof SexualOrientationEntity) {
+           return repository.findAllBySexualOrientation((SexualOrientationEntity) dimensionEntity);
+       } else if (dimensionEntity instanceof SocialBackgroundDiscriminationEntity) {
+           return repository.findAllBySocialBackgroundDiscrimination((SocialBackgroundDiscriminationEntity) dimensionEntity);
+       } else if (dimensionEntity instanceof SocialBackgroundEntity) {
+           return repository.findAllBySocialBackground((SocialBackgroundEntity) dimensionEntity);
+       } else if (dimensionEntity instanceof WorkExperienceEntity) {
+           return repository.findAllByWorkExperience((WorkExperienceEntity) dimensionEntity);
+       }
+       return new ArrayList<>();
    }
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CountryService extends DefaultDimensionEntityService<CountryEntity, CountryRepository> {
-    public CountryService(CountryRepository repository) {
-        super(repository);
+    public CountryService(CountryRepository repository, ProfileService profileService) {
+        super(repository, profileService);
     }
 }

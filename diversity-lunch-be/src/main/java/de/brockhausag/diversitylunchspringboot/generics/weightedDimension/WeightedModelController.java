@@ -2,8 +2,7 @@ package de.brockhausag.diversitylunchspringboot.generics.weightedDimension;
 
 import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionModelController;
-import liquibase.pro.packaged.P;
-import org.springframework.data.repository.CrudRepository;
+import de.brockhausag.diversitylunchspringboot.profile.data.WeigthedDimensionRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class WeightedModelController<
         DtoType extends WeightedDto,
         EntityType extends WeightedEntity,
-        RepositoryType extends CrudRepository<EntityType, Long>,
+        RepositoryType extends WeigthedDimensionRepository<EntityType>,
         ServiceType extends WeightedEntityService<EntityType, RepositoryType>,
         MapperType extends DimensionMapper<DtoType, EntityType>>
         extends DimensionModelController<

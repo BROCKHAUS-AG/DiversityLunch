@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ReligionService extends DefaultDimensionEntityService<ReligionEntity, ReligionRepository> {
-    public ReligionService(ReligionRepository repository) {
-        super(repository);
+    public ReligionService(ReligionRepository repository, ProfileService profileService) {
+        super(repository, profileService);
     }
 }

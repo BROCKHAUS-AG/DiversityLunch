@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SocialBackgroundDiscriminationService extends DefaultDimensionEntityService<SocialBackgroundDiscriminationEntity, SocialBackgroundDiscriminationRepository> {
-    public SocialBackgroundDiscriminationService(SocialBackgroundDiscriminationRepository repository) {
-        super(repository);
+    public SocialBackgroundDiscriminationService(SocialBackgroundDiscriminationRepository repository, ProfileService profileService) {
+        super(repository, profileService);
     }
 }
 

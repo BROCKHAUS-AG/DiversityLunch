@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EducationService extends DefaultDimensionEntityService<EducationEntity, EducationRepository> {
-    public EducationService(EducationRepository repository) {
-        super(repository);
+    public EducationService(EducationRepository repository, ProfileService profileService) {
+        super(repository, profileService);
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DietService extends DefaultDimensionEntityService<DietEntity, DietRepository> {
-    public DietService(DietRepository repository) {
-        super(repository);
+    public DietService(DietRepository repository, ProfileService profileService) {
+        super(repository, profileService);
     }
 }

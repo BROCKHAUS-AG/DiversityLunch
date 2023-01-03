@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LanguageService extends DefaultDimensionEntityService<LanguageEntity, LanguageRepository> {
-    public LanguageService(LanguageRepository repository) {
-        super(repository);
+    public LanguageService(LanguageRepository repository, ProfileService profileService) {
+        super(repository, profileService);
     }
 }
