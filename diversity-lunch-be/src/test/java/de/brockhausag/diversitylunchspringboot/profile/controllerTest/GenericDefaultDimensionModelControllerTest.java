@@ -6,7 +6,7 @@ import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.TestDefau
 import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionEntityService;
 import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionModelController;
 import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
-import de.brockhausag.diversitylunchspringboot.profile.data.DefaultDimensionRepository;
+import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionRepository;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

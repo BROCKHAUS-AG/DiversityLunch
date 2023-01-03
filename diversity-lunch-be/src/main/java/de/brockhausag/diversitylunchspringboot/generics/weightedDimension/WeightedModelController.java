@@ -2,7 +2,6 @@ package de.brockhausag.diversitylunchspringboot.generics.weightedDimension;
 
 import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionModelController;
-import de.brockhausag.diversitylunchspringboot.profile.data.WeigthedDimensionRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,7 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.generics.defaultDimension;
 
 import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionEntityService;
-import de.brockhausag.diversitylunchspringboot.profile.data.DefaultDimensionRepository;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.*;
 

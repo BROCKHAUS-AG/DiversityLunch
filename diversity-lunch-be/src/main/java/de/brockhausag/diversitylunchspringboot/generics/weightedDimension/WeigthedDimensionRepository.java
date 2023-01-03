@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.profile.data;
+package de.brockhausag.diversitylunchspringboot.generics.weightedDimension;
 
 import de.brockhausag.diversitylunchspringboot.generics.weightedDimension.WeightedEntity;
 import org.springframework.data.repository.CrudRepository;
