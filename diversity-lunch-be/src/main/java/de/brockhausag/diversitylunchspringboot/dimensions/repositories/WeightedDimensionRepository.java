@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.dimensions.repositories;
 
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimension;
-import org.springframework.data.repository.CrudRepository;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimensionSelectableOption;
 
-public interface WeightedDimensionRepository extends CrudRepository<WeightedDimension, Long> {
+public interface WeightedDimensionRepository extends DimensionRepository<WeightedDimension, WeightedDimensionSelectableOption> {
 }

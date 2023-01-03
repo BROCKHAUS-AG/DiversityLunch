@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.dimensions.repositories;
 
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimension;
-import org.springframework.data.repository.CrudRepository;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
 
-public interface BasicDimensionRepository extends CrudRepository<BasicDimension, Long> {
+public interface BasicDimensionRepository extends DimensionRepository<BasicDimension, BasicDimensionSelectableOption> {
 }

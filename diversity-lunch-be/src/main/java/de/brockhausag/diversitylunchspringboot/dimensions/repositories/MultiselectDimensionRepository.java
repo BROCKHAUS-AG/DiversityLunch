@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.dimensions.repositories;
 
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimension;
-import org.springframework.data.repository.CrudRepository;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimensionSelectableOption;
 
-public interface MultiselectDimensionRepository extends CrudRepository<MultiselectDimension, Long> {
+public interface MultiselectDimensionRepository extends DimensionRepository<MultiselectDimension, MultiselectDimensionSelectableOption> {
 }
