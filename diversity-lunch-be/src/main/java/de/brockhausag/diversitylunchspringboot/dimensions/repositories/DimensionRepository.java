@@ -15,6 +15,3 @@ public interface DimensionRepository<DimensionType extends Dimension<Selectable>
     DimensionType getByDimensionCategory(DimensionCategory dimensionCategory);
 }
 
-public interface RepositoryThree extends CrudRepository<BasicDimension, Long>{
-    List<BasicDimension> get
-}

@@ -1,5 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.dimensions.services.model;
 
+import com.google.common.collect.Lists;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimensionSelectableOption;
@@ -41,20 +42,22 @@ public class MultiselectDimensionService implements DimensionService<Multiselect
 
     @Override
     public List<MultiselectDimensionSelectableOption> getSelectableOptionsOfCategory(Long categoryId) {
-        return repository.findAllById(categoryId);
+        return selectableRepository.getByDimensionCategory_Id(categoryId);
     }
 
     @Override
     public Long getDimensionCategoryIdByDescription(String categoryDescription) {
-        return null;
+
+        MultiselectDimension dimension =  repository.getByDimensionCategory_Description(categoryDescription);
+        return dimension.getDimensionCategory().getId();
     }
 
     @Override
     public MultiselectDimensionSelectableOption getSelectableOptionById(Long selectableOptionId) {
-        return null;
+        return selectableRepository.getById(selectableOptionId);
     }
 
     public List<MultiselectDimensionSelectableOption> getSelectableOptions(List<Long> ids) {
-        return null;
+       return Lists.newArrayList(selectableRepository.findAllById(ids));
     }
 }

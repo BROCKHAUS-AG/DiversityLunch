@@ -1,10 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.integrationstests;
 
 import de.brockhausag.diversitylunchspringboot.config.MsTeamsTestConfig;
-import de.brockhausag.diversitylunchspringboot.integrationDataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.match.service.MatchingService;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
-import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
@@ -45,8 +43,7 @@ class MatchingServiceIT {
     private MeetingProposalRepository meetingProposalRepository;
     @Autowired
     private ProfileRepository profileRepository;
-    @Autowired
-    private ProfileTestdataFactory profileFactory;
+    
 
     @Test
     void testMatchingServiceScore0() {

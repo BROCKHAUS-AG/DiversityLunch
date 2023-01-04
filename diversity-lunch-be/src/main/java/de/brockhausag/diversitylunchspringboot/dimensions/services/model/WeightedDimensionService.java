@@ -56,7 +56,7 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
     @Override
     public Long getDimensionCategoryIdByDescription(String categoryDescription) {
         var dimension = repository.getByDimensionCategory_Description(categoryDescription);
-        return dimension.getId();
+        return dimension.getDimensionCategory().getId();
     }
 
     @Override
