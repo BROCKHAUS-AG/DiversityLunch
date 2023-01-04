@@ -12,4 +12,10 @@ public interface DimensionService<DimensionType extends Dimension<Selectable>, S
     public boolean updateSelectableOption(Selectable option);
     public List<Selectable> getSelectableOptionsOfCategory(DimensionCategory category);
     public List<DimensionCategory> getAllCategoriesOfDimension();
+
+    public Long getDimensionCategoryIdByDescription(String categoryDescription);
+
+    public Selectable getSelectableOptionById(Long selectableOptionId);
+
+    public DimensionCategory getDimensionCategoryByDescription(String dimensionCategory);
 }
