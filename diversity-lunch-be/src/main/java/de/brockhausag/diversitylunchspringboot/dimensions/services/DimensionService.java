@@ -2,7 +2,9 @@ package de.brockhausag.diversitylunchspringboot.dimensions.services;
 
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.Dimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.SelectableOptions;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.repositories.DimensionRepository;
+import de.brockhausag.diversitylunchspringboot.dimensions.repositories.SelectableOptionsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -20,7 +22,7 @@ public interface DimensionService<
 
      Selectable updateSelectableOption(Selectable option);
 
-    public List<Selectable> getSelectableOptionsOfCategory(Long categoryId);
+     List<Selectable> getSelectableOptionsOfCategory(Long categoryId);
 
      Long getDimensionCategoryIdByDescription(String categoryDescription);
 

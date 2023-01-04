@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class BasicDimensionService implements DimensionService<
@@ -25,7 +26,6 @@ public class BasicDimensionService implements DimensionService<
         return repository.getByDimensionCategory(category);
     }
 
-    @Override
     public List<BasicDimension> getAllDimensions() {
 
         return Lists.newArrayList(repository.findAll());
@@ -42,17 +42,28 @@ public class BasicDimensionService implements DimensionService<
     }
 
     @Override
-    public boolean deleteSelectableOption(BasicDimensionSelectableOption option) {
-        return false;
-    }
-
-    @Override
     public BasicDimensionSelectableOption updateSelectableOption(BasicDimensionSelectableOption option) {
         return selectableRepository.save(option);
     }
 
     @Override
-    public List<BasicDimensionSelectableOption> getSelectableOptions(DimensionCategory category) {
-        return null;
+    public void deleteSelectableOptionById(Long selectableOptionId) {
+        selectableRepository.deleteById(selectableOptionId);
+    }
+
+    @Override
+    public List<BasicDimensionSelectableOption> getSelectableOptionsOfCategory(Long categoryId) {
+        return selectableRepository.getByDimensionCategory_Id(categoryId);
+    }
+
+    @Override
+    public Long getDimensionCategoryIdByDescription(String categoryDescription) {
+        var dimension = repository.getByDimensionCategory_Description(categoryDescription);
+        return dimension.getId();
+    }
+
+    @Override
+    public BasicDimensionSelectableOption getSelectableOptionById(Long selectableOptionId) {
+        return selectableRepository.getById(selectableOptionId);
     }
 }

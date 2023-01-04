@@ -1,5 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.oldStructure.mapper;
 
+import de.brockhausag.diversitylunchspringboot.dimensions.dtos.WeightedDimensionDto;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.*;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.BasicDimensionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.DimensionCategoryRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.MultiselectDimensionRepository;
@@ -11,13 +13,12 @@ import de.brockhausag.diversitylunchspringboot.profile.logic.*;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.*;
+import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.HobbyDto;
 import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.ProfileDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -65,6 +66,27 @@ public class ProfileMapper {
 
 
     public Optional<ProfileEntity> dtoToEntity(ProfileDto dto) {
+        Map<BasicDimension, BasicDimensionSelectableOption> selectedBasicOptions = new HashMap<>();
+        Map<WeightedDimension, WeightedDimensionSelectableOption> selectedWeightedOptions = new HashMap<>();
+        Map<MultiselectDimension, ProfileEntitySelectedMultiselectValue> selectedMultiselectOptions = new HashMap<>();
+
+        selectedWeightedOptions.put(weightedDimensionService.getDimension("Berufserfahrung"), weightedDimensionService.getSelectableOptionById(dto.getWorkExperience().getId()));
+        selectedMultiselectOptions.put(multiselectDimensionService.getDimension("Hobby"), List.of(multiselectDimensionService.getSelectableOptions(dto.getHobby().stream().map(HobbyDto::getId).collect(Collectors.toList())));
+
+        if (true) {
+            return Optional.of(ProfileEntity.builder()
+                    .id(dto.getId())
+                    .name(dto.getName())
+                    .email(dto.getEmail())
+                    .birthYear(dto.getBirthYear())
+                    .selectedBasicValues(selectedBasicOptions)
+                    .selectedWeightedValues(selectedWeightedOptions)
+                    .selectedMultiselectValues(selectedMultiselectOptions)
+                    .wasChangedByAdmin(false)
+                    .build());
+        }
+        return Optional.empty();
+/*
         Optional<CountryEntity> countryEntityOptional = this.countryService.getEntityById(dto.getOriginCountry().getId());
         Optional<DietEntity> dietEntityOptional = this.dietService.getEntityById(dto.getDiet().getId());
         Optional<EducationEntity> educationEntityOptional = this.educationService.getEntityById(dto.getEducation().getId());
@@ -76,8 +98,8 @@ public class ProfileMapper {
         Optional<WorkExperienceEntity> workExperienceEntityOptional = this.workExperienceService.getEntityById(dto.getWorkExperience().getId());
         Optional<SexualOrientationEntity> sexualOrientationEntityOptional = this.sexualOrientationService.getEntityById(dto.getSexualOrientation().getId());
         Optional<SocialBackgroundEntity> socialBackgroundEntityOptional = this.socialBackgroundService.getEntityById(dto.getSocialBackground().getId());
-        Optional<SocialBackgroundDiscriminationEntity> socialBackgroundDiscriminationEntityOptional = this.socialBackgroundDiscriminationService.getEntityById(dto.getSocialBackgroundDiscrimination().getId());
-
+        Optional<SocialBackgroundDiscriminationEntity> socialBackgroundDiscriminationEntityOptional = this.socialBackgroundDiscriminationService.getEntityById(dto.getSocialBackgroundDiscrimination().getId());*/
+/*
         if (this.allObjectWithIdsArePresent(countryEntityOptional, dietEntityOptional, educationEntityOptional,
                 genderEntityOptional, languageEntityOptional, projectEntityOptional,
                 religionEntityOptional, workExperienceEntityOptional, socialBackgroundEntityOptional))
@@ -103,8 +125,7 @@ public class ProfileMapper {
                             .socialBackgroundDiscrimination(socialBackgroundDiscriminationEntityOptional.orElseThrow())
                             .build()
             );
-        }
-        return Optional.empty();
+        }*/
     }
 
 

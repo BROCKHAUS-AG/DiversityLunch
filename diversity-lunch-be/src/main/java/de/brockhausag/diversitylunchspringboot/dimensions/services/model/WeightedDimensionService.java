@@ -1,8 +1,9 @@
 package de.brockhausag.diversitylunchspringboot.dimensions.services.model;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimension;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimensionSelectableOption;
+import com.google.common.collect.Lists;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.*;
+import de.brockhausag.diversitylunchspringboot.dimensions.repositories.BasicDimensionRepository;
+import de.brockhausag.diversitylunchspringboot.dimensions.repositories.BasicDimensionSelectableOptionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.WeightedDimensionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.WeightedDimensionSelectableOptionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.DimensionService;

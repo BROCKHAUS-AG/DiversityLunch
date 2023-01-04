@@ -53,4 +53,8 @@ public class MultiselectDimensionService implements DimensionService<Multiselect
     public MultiselectDimensionSelectableOption getSelectableOptionById(Long selectableOptionId) {
         return null;
     }
+
+    public List<MultiselectDimensionSelectableOption> getSelectableOptions(List<Long> ids) {
+        return null;
+    }
 }
