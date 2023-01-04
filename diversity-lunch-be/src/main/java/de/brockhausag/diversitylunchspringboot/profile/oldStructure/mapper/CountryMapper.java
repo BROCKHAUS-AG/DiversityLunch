@@ -16,8 +16,8 @@ public class CountryMapper implements DimensionMapper<CountryDto, BasicDimension
     @Override
     public CountryDto entityToDto(BasicDimensionSelectableOption entity) {
         CountryDto countryDto = new CountryDto();
-        countryDto.setId(entity.getDimensionCategory().getId());
-        countryDto.setDescriptor(entity.getDimensionCategory().getDescription());
+        countryDto.setId(entity.getId());
+        countryDto.setDescriptor(entity.getValue());
         return countryDto;
     }
 

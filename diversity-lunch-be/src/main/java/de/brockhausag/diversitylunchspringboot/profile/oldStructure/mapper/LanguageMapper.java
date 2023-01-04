@@ -16,8 +16,8 @@ public class LanguageMapper implements DimensionMapper<LanguageDto, BasicDimensi
     @Override
     public LanguageDto entityToDto(BasicDimensionSelectableOption entity) {
         LanguageDto LanguageDto = new LanguageDto();
-        LanguageDto.setId(entity.getDimensionCategory().getId());
-        LanguageDto.setDescriptor(entity.getDimensionCategory().getDescription());
+        LanguageDto.setId(entity.getId());
+        LanguageDto.setDescriptor(entity.getValue());
         return LanguageDto;
     }
 

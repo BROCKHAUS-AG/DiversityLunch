@@ -16,8 +16,8 @@ public class ProjectMapper implements DimensionMapper<ProjectDto, BasicDimension
     @Override
     public ProjectDto entityToDto(BasicDimensionSelectableOption entity) {
         ProjectDto ProjectDto = new ProjectDto();
-        ProjectDto.setId(entity.getDimensionCategory().getId());
-        ProjectDto.setDescriptor(entity.getDimensionCategory().getDescription());
+        ProjectDto.setId(entity.getId());
+        ProjectDto.setDescriptor(entity.getValue());
         return ProjectDto;
     }
 

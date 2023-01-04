@@ -16,8 +16,8 @@ public class GenderMapper implements DimensionMapper<GenderDto, BasicDimensionSe
     @Override
     public GenderDto entityToDto(BasicDimensionSelectableOption entity) {
         GenderDto GenderDto = new GenderDto();
-        GenderDto.setId(entity.getDimensionCategory().getId());
-        GenderDto.setDescriptor(entity.getDimensionCategory().getDescription());
+        GenderDto.setId(entity.getId());
+        GenderDto.setDescriptor(entity.getValue());
         return GenderDto;
     }
 

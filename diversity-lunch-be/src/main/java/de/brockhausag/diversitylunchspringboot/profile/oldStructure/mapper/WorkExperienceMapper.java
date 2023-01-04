@@ -16,8 +16,8 @@ public class WorkExperienceMapper implements DimensionMapper<WorkExperienceDto, 
     @Override
     public WorkExperienceDto entityToDto(WeightedDimensionSelectableOption entity) {
         WorkExperienceDto WorkExperienceDto = new WorkExperienceDto();
-        WorkExperienceDto.setId(entity.getDimensionCategory().getId());
-        WorkExperienceDto.setDescriptor(entity.getDimensionCategory().getDescription());
+        WorkExperienceDto.setId(entity.getId());
+        WorkExperienceDto.setDescriptor(entity.getValue());
         return WorkExperienceDto;
     }
 

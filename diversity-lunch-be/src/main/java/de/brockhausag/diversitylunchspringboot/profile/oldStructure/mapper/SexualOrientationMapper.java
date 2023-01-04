@@ -16,8 +16,8 @@ public class SexualOrientationMapper implements DimensionMapper<SexualOrientatio
     @Override
     public SexualOrientationDto entityToDto(BasicDimensionSelectableOption entity) {
         SexualOrientationDto SexualOrientationDto = new SexualOrientationDto();
-        SexualOrientationDto.setId(entity.getDimensionCategory().getId());
-        SexualOrientationDto.setDescriptor(entity.getDimensionCategory().getDescription());
+        SexualOrientationDto.setId(entity.getId());
+        SexualOrientationDto.setDescriptor(entity.getValue());
         return SexualOrientationDto;
     }
 

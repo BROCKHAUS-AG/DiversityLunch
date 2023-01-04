@@ -43,7 +43,7 @@ class MatchingServiceIT {
     private MeetingProposalRepository meetingProposalRepository;
     @Autowired
     private ProfileRepository profileRepository;
-    
+
 
     @Test
     void testMatchingServiceScore0() {

@@ -16,8 +16,8 @@ public class SocialBackgroundMapper implements DimensionMapper<SocialBackgroundD
     @Override
     public SocialBackgroundDto entityToDto(BasicDimensionSelectableOption entity) {
         SocialBackgroundDto SocialBackgroundDto = new SocialBackgroundDto();
-        SocialBackgroundDto.setId(entity.getDimensionCategory().getId());
-        SocialBackgroundDto.setDescriptor(entity.getDimensionCategory().getDescription());
+        SocialBackgroundDto.setId(entity.getId());
+        SocialBackgroundDto.setDescriptor(entity.getValue());
         return SocialBackgroundDto;
     }
 

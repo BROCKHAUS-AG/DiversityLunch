@@ -16,8 +16,8 @@ public class DietMapper implements DimensionMapper<DietDto, BasicDimensionSelect
     @Override
     public DietDto entityToDto(BasicDimensionSelectableOption entity) {
         DietDto DietDto = new DietDto();
-        DietDto.setId(entity.getDimensionCategory().getId());
-        DietDto.setDescriptor(entity.getDimensionCategory().getDescription());
+        DietDto.setId(entity.getId());
+        DietDto.setDescriptor(entity.getValue());
         return DietDto;
     }
 

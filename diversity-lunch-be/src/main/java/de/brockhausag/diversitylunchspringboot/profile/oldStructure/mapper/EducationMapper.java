@@ -16,8 +16,8 @@ public class EducationMapper implements DimensionMapper<EducationDto, BasicDimen
     @Override
     public EducationDto entityToDto(BasicDimensionSelectableOption entity) {
         EducationDto EducationDto = new EducationDto();
-        EducationDto.setId(entity.getDimensionCategory().getId());
-        EducationDto.setDescriptor(entity.getDimensionCategory().getDescription());
+        EducationDto.setId(entity.getId());
+        EducationDto.setDescriptor(entity.getValue());
         return EducationDto;
     }
 

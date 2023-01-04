@@ -16,8 +16,8 @@ public class HobbyMapper implements DimensionMapper<HobbyDto, MultiselectDimensi
     @Override
     public HobbyDto entityToDto(MultiselectDimensionSelectableOption entity) {
         HobbyDto HobbyDto = new HobbyDto();
-        HobbyDto.setId(entity.getDimensionCategory().getId());
-        HobbyDto.setDescriptor(entity.getDimensionCategory().getDescription());
+        HobbyDto.setId(entity.getId());
+        HobbyDto.setDescriptor(entity.getValue());
         return HobbyDto;
     }
 

@@ -16,8 +16,8 @@ public class ReligionMapper implements DimensionMapper<ReligionDto, BasicDimensi
     @Override
     public ReligionDto entityToDto(BasicDimensionSelectableOption entity) {
         ReligionDto ReligionDto = new ReligionDto();
-        ReligionDto.setId(entity.getDimensionCategory().getId());
-        ReligionDto.setDescriptor(entity.getDimensionCategory().getDescription());
+        ReligionDto.setId(entity.getId());
+        ReligionDto.setDescriptor(entity.getValue());
         return ReligionDto;
     }
 

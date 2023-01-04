@@ -16,8 +16,8 @@ public class SocialBackgroundDiscriminationMapper implements DimensionMapper<Soc
     @Override
     public SocialBackgroundDiscriminationDto entityToDto(BasicDimensionSelectableOption entity) {
         SocialBackgroundDiscriminationDto SocialBackgroundDiscriminationDto = new SocialBackgroundDiscriminationDto();
-        SocialBackgroundDiscriminationDto.setId(entity.getDimensionCategory().getId());
-        SocialBackgroundDiscriminationDto.setDescriptor(entity.getDimensionCategory().getDescription());
+        SocialBackgroundDiscriminationDto.setId(entity.getId());
+        SocialBackgroundDiscriminationDto.setDescriptor(entity.getValue());
         return SocialBackgroundDiscriminationDto;
     }
 
