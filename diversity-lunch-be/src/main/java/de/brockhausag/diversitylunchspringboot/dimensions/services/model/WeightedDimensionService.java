@@ -18,21 +18,6 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
     private final WeightedDimensionSelectableOptionRepository selectableRepository;
 
     @Override
-    public WeightedDimension getDimension(String categoryDescription) {
-        return null;
-    }
-
-    @Override
-    public WeightedDimension getDimension(DimensionCategory category) {
-        return null;
-    }
-
-    @Override
-    public List<WeightedDimension> getAllDimensions() {
-        return null;
-    }
-
-    @Override
     public boolean addSelectableOption(DimensionCategory category, WeightedDimensionSelectableOption option) {
         return false;
     }
@@ -48,7 +33,13 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
     }
 
     @Override
-    public List<WeightedDimensionSelectableOption> getSelectableOptions(DimensionCategory category) {
+    public List<WeightedDimensionSelectableOption> getSelectableOptionsOfCategory(DimensionCategory category) {
         return null;
     }
+
+    @Override
+    public List<DimensionCategory> getAllCategoriesOfDimension() {
+        return null;
+    }
+
 }
