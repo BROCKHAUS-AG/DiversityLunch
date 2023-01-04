@@ -6,5 +6,5 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
 public interface SelectableOptionsRepository<Selectable extends SelectableOptions> extends CrudRepository<Selectable, Long> {
-
+    Selectable findByDimensionCategory_Description(String categoryDescription);
 }
