@@ -23,6 +23,6 @@ public class WorkExperienceMapper implements DimensionMapper<WorkExperienceDto, 
 
     @Override
     public WeightedDimensionSelectableOption dtoToEntity(WorkExperienceDto dto) {
-        return repository.findByDimensionCategory_Description(dto.getDescriptor());
+        return repository.findByDimensionCategoryByDescription(dto.getDescriptor());
     }
 }

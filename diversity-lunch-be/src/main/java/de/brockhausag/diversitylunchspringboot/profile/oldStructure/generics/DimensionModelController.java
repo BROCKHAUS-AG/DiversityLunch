@@ -52,28 +52,24 @@ public class DimensionModelController<DtoType,
     @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).PROFILE_OPTION_WRITE)")
     public ResponseEntity<DtoType> postOne(@RequestBody DtoType dto) {
         Selectable selectable = mapper.dtoToEntity(dto);
-
-        var dimensionCategory = service.getDimensionCategoryByDescription(this.dimensionCategory);
-
-        selectable = service.addSelectableOption(dimensionCategory,selectable);
-
+        service.addSelectableOption(selectable);
         return ResponseEntity.ok(mapper.entityToDto((selectable)));
     }
 
     @PutMapping
     @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).PROFILE_OPTION_WRITE)")
     public ResponseEntity<DtoType> putOne(@RequestBody DtoType dto) {
-        Selectable entity = mapper.dtoToEntity(dto);
+        Selectable selectable = mapper.dtoToEntity(dto);
 
-        entity = service.updateOrCreateEntity(entity);
+        service.updateSelectableOption(selectable);
 
-        return ResponseEntity.ok(mapper.entityToDto((entity)));
+        return ResponseEntity.ok(mapper.entityToDto((selectable)));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).PROFILE_OPTION_WRITE)")
     public ResponseEntity<?> deleteOne(@PathVariable Long id) {
-        if (service.deleteEntityById(id)) return new ResponseEntity<>(HttpStatus.OK);
+        if (service.deleteSelectableOptionById(id)) return new ResponseEntity<>(HttpStatus.OK);
         else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 

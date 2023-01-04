@@ -23,6 +23,6 @@ public class ReligionMapper implements DimensionMapper<ReligionDto, BasicDimensi
 
     @Override
     public BasicDimensionSelectableOption dtoToEntity(ReligionDto dto) {
-        return repository.findByDimensionCategory_Description(dto.getDescriptor());
+        return repository.findByDimensionCategoryByDescription(dto.getDescriptor());
     }
 }

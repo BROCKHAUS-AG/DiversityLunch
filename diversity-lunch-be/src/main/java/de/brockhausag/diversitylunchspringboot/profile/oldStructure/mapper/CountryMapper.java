@@ -23,6 +23,6 @@ public class CountryMapper implements DimensionMapper<CountryDto, BasicDimension
 
     @Override
     public BasicDimensionSelectableOption dtoToEntity(CountryDto dto) {
-        return repository.findByDimensionCategory_Description(dto.getDescriptor());
+        return repository.findByDimensionCategoryByDescription(dto.getDescriptor());
     }
 }

@@ -23,6 +23,6 @@ public class SexualOrientationMapper implements DimensionMapper<SexualOrientatio
 
     @Override
     public BasicDimensionSelectableOption dtoToEntity(SexualOrientationDto dto) {
-        return repository.findByDimensionCategory_Description(dto.getDescriptor());
+        return repository.findByDimensionCategoryByDescription(dto.getDescriptor());
     }
 }

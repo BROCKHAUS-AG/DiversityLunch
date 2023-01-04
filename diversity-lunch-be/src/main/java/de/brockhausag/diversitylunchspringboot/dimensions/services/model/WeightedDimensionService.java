@@ -14,32 +14,53 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class WeightedDimensionService implements DimensionService<WeightedDimension, WeightedDimensionSelectableOption> {
-    private final WeightedDimensionRepository repository;
-    private final WeightedDimensionSelectableOptionRepository selectableRepository;
 
-    @Override
-    public boolean addSelectableOption(DimensionCategory category, WeightedDimensionSelectableOption option) {
-        return false;
+    private final BasicDimensionRepository repository;
+    private final BasicDimensionSelectableOptionRepository selectableRepository;
+
+    public BasicDimension getDimension(DimensionCategory category) {
+        return repository.getByDimensionCategory(category);
+    }
+
+    public List<BasicDimension> getAllDimensions() {
+
+        return Lists.newArrayList(repository.findAll());
     }
 
     @Override
-    public boolean deleteSelectableOption(WeightedDimensionSelectableOption option) {
-        return false;
+    public BasicDimension getDimension(String categoryDescription) {
+        return repository.getByDimensionCategory_Description(categoryDescription);
     }
 
     @Override
-    public boolean updateSelectableOption(WeightedDimensionSelectableOption option) {
-        return false;
+    public BasicDimensionSelectableOption addSelectableOption(BasicDimensionSelectableOption option) {
+        return selectableRepository.save(option);
     }
 
     @Override
-    public List<WeightedDimensionSelectableOption> getSelectableOptionsOfCategory(DimensionCategory category) {
-        return null;
+    public BasicDimensionSelectableOption updateSelectableOption(BasicDimensionSelectableOption option) {
+        return selectableRepository.save(option);
     }
 
     @Override
-    public List<DimensionCategory> getAllCategoriesOfDimension() {
-        return null;
+    public void deleteSelectableOptionById(Long selectableOptionId) {
+        selectableRepository.deleteById(selectableOptionId);
+    }
+
+    @Override
+    public List<BasicDimensionSelectableOption> getSelectableOptionsOfCategory(Long categoryId) {
+        return selectableRepository.getByDimensionCategory_Id(categoryId);
+    }
+
+    @Override
+    public Long getDimensionCategoryIdByDescription(String categoryDescription) {
+        var dimension = repository.getByDimensionCategory_Description(categoryDescription);
+        return dimension.getId();
+    }
+
+    @Override
+    public BasicDimensionSelectableOption getSelectableOptionById(Long selectableOptionId) {
+        return selectableRepository.getById(selectableOptionId);
     }
 
 }

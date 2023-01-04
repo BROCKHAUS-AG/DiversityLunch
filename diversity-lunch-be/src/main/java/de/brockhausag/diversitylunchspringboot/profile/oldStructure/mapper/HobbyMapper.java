@@ -23,6 +23,6 @@ public class HobbyMapper implements DimensionMapper<HobbyDto, MultiselectDimensi
 
     @Override
     public MultiselectDimensionSelectableOption dtoToEntity(HobbyDto dto) {
-        return repository.findByDimensionCategory_Description(dto.getDescriptor());
+        return repository.findByDimensionCategoryByDescription(dto.getDescriptor());
     }
 }

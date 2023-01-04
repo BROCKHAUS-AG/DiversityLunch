@@ -3,6 +3,8 @@ package de.brockhausag.diversitylunchspringboot.dimensions.services.model;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.repositories.BasicDimensionRepository;
+import de.brockhausag.diversitylunchspringboot.dimensions.repositories.BasicDimensionSelectableOptionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.MultiselectDimensionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.MultiselectDimensionSelectableOptionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.DimensionService;
@@ -19,36 +21,36 @@ public class MultiselectDimensionService implements DimensionService<Multiselect
 
     @Override
     public MultiselectDimension getDimension(String categoryDescription) {
+        return repository.getByDimensionCategory_Description(categoryDescription);
+    }
+
+    @Override
+    public MultiselectDimensionSelectableOption addSelectableOption(MultiselectDimensionSelectableOption option) {
+        return selectableRepository.save(option);
+    }
+
+    @Override
+    public void deleteSelectableOptionById(Long selectableOptionId) {
+        selectableRepository.deleteById(selectableOptionId);
+    }
+
+    @Override
+    public MultiselectDimensionSelectableOption updateSelectableOption(MultiselectDimensionSelectableOption option) {
+        return selectableRepository.save(option);
+    }
+
+    @Override
+    public List<MultiselectDimensionSelectableOption> getSelectableOptionsOfCategory(Long categoryId) {
+        return repository.findAllById(categoryId);
+    }
+
+    @Override
+    public Long getDimensionCategoryIdByDescription(String categoryDescription) {
         return null;
     }
 
     @Override
-    public MultiselectDimension getDimension(DimensionCategory category) {
-        return null;
-    }
-
-    @Override
-    public List<MultiselectDimension> getAllDimensions() {
-        return null;
-    }
-
-    @Override
-    public boolean addSelectableOption(DimensionCategory category, MultiselectDimensionSelectableOption option) {
-        return false;
-    }
-
-    @Override
-    public boolean deleteSelectableOption(MultiselectDimensionSelectableOption option) {
-        return false;
-    }
-
-    @Override
-    public boolean updateSelectableOption(MultiselectDimensionSelectableOption option) {
-        return false;
-    }
-
-    @Override
-    public List<MultiselectDimensionSelectableOption> getSelectableOptions(DimensionCategory category) {
+    public MultiselectDimensionSelectableOption getSelectableOptionById(Long selectableOptionId) {
         return null;
     }
 }
