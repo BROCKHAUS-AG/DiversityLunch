@@ -16,30 +16,29 @@ import java.util.List;
 @Service
 public class WeightedDimensionService implements DimensionService<WeightedDimension, WeightedDimensionSelectableOption> {
 
-    private final BasicDimensionRepository repository;
-    private final BasicDimensionSelectableOptionRepository selectableRepository;
+    private final WeightedDimensionRepository repository;
+    private final WeightedDimensionSelectableOptionRepository selectableRepository;
 
-    public BasicDimension getDimension(DimensionCategory category) {
+    public WeightedDimension getDimension(DimensionCategory category) {
         return repository.getByDimensionCategory(category);
     }
 
-    public List<BasicDimension> getAllDimensions() {
-
+    public List<WeightedDimension> getAllDimensions() {
         return Lists.newArrayList(repository.findAll());
     }
 
     @Override
-    public BasicDimension getDimension(String categoryDescription) {
+    public WeightedDimension getDimension(String categoryDescription) {
         return repository.getByDimensionCategory_Description(categoryDescription);
     }
 
     @Override
-    public BasicDimensionSelectableOption addSelectableOption(BasicDimensionSelectableOption option) {
+    public WeightedDimensionSelectableOption addSelectableOption(WeightedDimensionSelectableOption option) {
         return selectableRepository.save(option);
     }
 
     @Override
-    public BasicDimensionSelectableOption updateSelectableOption(BasicDimensionSelectableOption option) {
+    public WeightedDimensionSelectableOption updateSelectableOption(WeightedDimensionSelectableOption option) {
         return selectableRepository.save(option);
     }
 
@@ -49,7 +48,7 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
     }
 
     @Override
-    public List<BasicDimensionSelectableOption> getSelectableOptionsOfCategory(Long categoryId) {
+    public List<WeightedDimensionSelectableOption> getSelectableOptionsOfCategory(Long categoryId) {
         return selectableRepository.getByDimensionCategory_Id(categoryId);
     }
 
@@ -60,7 +59,7 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
     }
 
     @Override
-    public BasicDimensionSelectableOption getSelectableOptionById(Long selectableOptionId) {
+    public WeightedDimensionSelectableOption getSelectableOptionById(Long selectableOptionId) {
         return selectableRepository.getById(selectableOptionId);
     }
 

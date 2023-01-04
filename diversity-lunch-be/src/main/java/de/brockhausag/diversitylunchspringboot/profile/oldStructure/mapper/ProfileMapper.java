@@ -1,18 +1,10 @@
 package de.brockhausag.diversitylunchspringboot.profile.oldStructure.mapper;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.dtos.WeightedDimensionDto;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.*;
-import de.brockhausag.diversitylunchspringboot.dimensions.repositories.BasicDimensionRepository;
-import de.brockhausag.diversitylunchspringboot.dimensions.repositories.DimensionCategoryRepository;
-import de.brockhausag.diversitylunchspringboot.dimensions.repositories.MultiselectDimensionRepository;
-import de.brockhausag.diversitylunchspringboot.dimensions.repositories.WeightedDimensionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.model.MultiselectDimensionService;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.model.WeightedDimensionService;
-import de.brockhausag.diversitylunchspringboot.profile.logic.*;
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.*;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.HobbyDto;
 import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.ProfileDto;
 import lombok.RequiredArgsConstructor;
@@ -69,6 +61,8 @@ public class ProfileMapper {
         Map<BasicDimension, BasicDimensionSelectableOption> selectedBasicOptions = new HashMap<>();
         Map<WeightedDimension, WeightedDimensionSelectableOption> selectedWeightedOptions = new HashMap<>();
         Map<MultiselectDimension, ProfileEntitySelectedMultiselectValue> selectedMultiselectOptions = new HashMap<>();
+        ProfileEntitySelectedMultiselectValue selectedMultiselectValues = new ProfileEntitySelectedMultiselectValue();
+        selectedMultiselectValues.setSelectedOptions(Set.copyOf(multiselectDimensionService.getSelectableOptions(dto.getHobby().stream().map(HobbyDto::getId).collect(Collectors.toList()))));
 
         selectedBasicOptions.put(basicDimensionService.getDimension("Bildungsweg"), basicDimensionService.getSelectableOptionById(dto.getEducation().getId()));
         selectedBasicOptions.put(basicDimensionService.getDimension("Ernährung"), basicDimensionService.getSelectableOptionById(dto.getDiet().getId()));

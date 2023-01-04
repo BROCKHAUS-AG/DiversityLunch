@@ -23,6 +23,6 @@ public class GenderMapper implements DimensionMapper<GenderDto, BasicDimensionSe
 
     @Override
     public BasicDimensionSelectableOption dtoToEntity(GenderDto dto) {
-        return repository.findByDimensionCategoryByDescription(dto.getDescriptor());
+        return repository.getByDimensionCategory_Description(dto.getDescriptor());
     }
 }

@@ -23,6 +23,6 @@ public class DietMapper implements DimensionMapper<DietDto, BasicDimensionSelect
 
     @Override
     public BasicDimensionSelectableOption dtoToEntity(DietDto dto) {
-        return repository.findByDimensionCategoryByDescription(dto.getDescriptor());
+        return repository.getByDimensionCategory_Description(dto.getDescriptor());
     }
 }

@@ -23,6 +23,6 @@ public class LanguageMapper implements DimensionMapper<LanguageDto, BasicDimensi
 
     @Override
     public BasicDimensionSelectableOption dtoToEntity(LanguageDto dto) {
-        return repository.findByDimensionCategoryByDescription(dto.getDescriptor());
+        return repository.getByDimensionCategory_Description(dto.getDescriptor());
     }
 }

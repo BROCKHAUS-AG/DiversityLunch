@@ -5,10 +5,11 @@ import de.brockhausag.diversitylunchspringboot.dimensions.entities.SelectableOpt
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.List;
 
-
+@NoRepositoryBean
 public interface DimensionRepository<DimensionType extends Dimension<Selectable>, Selectable extends SelectableOptions> extends CrudRepository<DimensionType, Long> {
     DimensionType getByDimensionCategory_Description(String categoryDescription);
 
