@@ -70,8 +70,18 @@ public class ProfileMapper {
         Map<WeightedDimension, WeightedDimensionSelectableOption> selectedWeightedOptions = new HashMap<>();
         Map<MultiselectDimension, ProfileEntitySelectedMultiselectValue> selectedMultiselectOptions = new HashMap<>();
 
+        selectedBasicOptions.put(basicDimensionService.getDimension("Bildungsweg"), basicDimensionService.getSelectableOptionById(dto.getEducation().getId()));
+        selectedBasicOptions.put(basicDimensionService.getDimension("Ernährung"), basicDimensionService.getSelectableOptionById(dto.getDiet().getId()));
+        selectedBasicOptions.put(basicDimensionService.getDimension("Geschlechtliche Identität"), basicDimensionService.getSelectableOptionById(dto.getGender().getId()));
+        selectedBasicOptions.put(basicDimensionService.getDimension("Muttersprache"), basicDimensionService.getSelectableOptionById(dto.getMotherTongue().getId()));
+        selectedBasicOptions.put(basicDimensionService.getDimension("Ethnische Herkunft"), basicDimensionService.getSelectableOptionById(dto.getOriginCountry().getId()));
+        selectedBasicOptions.put(basicDimensionService.getDimension("Projekt"), basicDimensionService.getSelectableOptionById(dto.getProject().getId()));
+        selectedBasicOptions.put(basicDimensionService.getDimension("Religion"), basicDimensionService.getSelectableOptionById(dto.getReligion().getId()));
+        selectedBasicOptions.put(basicDimensionService.getDimension("Sexuelle Orientierung"), basicDimensionService.getSelectableOptionById(dto.getSexualOrientation().getId()));
+        selectedBasicOptions.put(basicDimensionService.getDimension("Soziale Herkunft"), basicDimensionService.getSelectableOptionById(dto.getSocialBackground().getId()));
+        selectedBasicOptions.put(basicDimensionService.getDimension("Diskriminierung aufgrund sozialer Herkunft"), basicDimensionService.getSelectableOptionById(dto.getSocialBackgroundDiscrimination().getId()));
         selectedWeightedOptions.put(weightedDimensionService.getDimension("Berufserfahrung"), weightedDimensionService.getSelectableOptionById(dto.getWorkExperience().getId()));
-        selectedMultiselectOptions.put(multiselectDimensionService.getDimension("Hobby"), List.of(multiselectDimensionService.getSelectableOptions(dto.getHobby().stream().map(HobbyDto::getId).collect(Collectors.toList())));
+        selectedMultiselectOptions.put(multiselectDimensionService.getDimension("Hobby"), selectedMultiselectValues);
 
         if (true) {
             return Optional.of(ProfileEntity.builder()

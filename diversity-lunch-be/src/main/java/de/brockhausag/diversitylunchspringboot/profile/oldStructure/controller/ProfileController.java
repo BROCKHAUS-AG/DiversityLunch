@@ -1,9 +1,9 @@
 package de.brockhausag.diversitylunchspringboot.profile.oldStructure.controller;
 
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
-import de.brockhausag.diversitylunchspringboot.profile.mapper.ProfileMapper;
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.ProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.oldStructure.mapper.ProfileMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
