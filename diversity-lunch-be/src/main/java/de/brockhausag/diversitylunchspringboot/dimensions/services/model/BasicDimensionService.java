@@ -47,6 +47,16 @@ public class BasicDimensionService implements DimensionService<
     }
 
     @Override
+    public List<BasicDimensionSelectableOption> getSelectableOptions(BasicDimension dimension) {
+        return selectableRepository.getByDimensionCategory_Id(dimension.getDimensionCategory().getId());
+    }
+
+    @Override
+    public BasicDimensionSelectableOption getSelectableOption(BasicDimension dimension, String optionName) {
+        return selectableRepository.getByDimensionCategory_IdAndValue(dimension.getDimensionCategory().getId(), optionName);
+    }
+
+    @Override
     public void deleteSelectableOptionById(Long selectableOptionId) {
         selectableRepository.deleteById(selectableOptionId);
     }

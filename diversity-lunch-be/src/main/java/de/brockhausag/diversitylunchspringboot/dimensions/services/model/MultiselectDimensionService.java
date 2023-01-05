@@ -12,6 +12,9 @@ import de.brockhausag.diversitylunchspringboot.dimensions.services.DimensionServ
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -23,6 +26,11 @@ public class MultiselectDimensionService implements DimensionService<Multiselect
     @Override
     public MultiselectDimension getDimension(String categoryDescription) {
         return repository.getByDimensionCategory_Description(categoryDescription);
+    }
+
+    @Override
+    public List<MultiselectDimension> getAllDimensions() {
+        return Lists.newArrayList(repository.findAll());
     }
 
     @Override
@@ -38,6 +46,16 @@ public class MultiselectDimensionService implements DimensionService<Multiselect
     @Override
     public MultiselectDimensionSelectableOption updateSelectableOption(MultiselectDimensionSelectableOption option) {
         return selectableRepository.save(option);
+    }
+
+    @Override
+    public List<MultiselectDimensionSelectableOption> getSelectableOptions(MultiselectDimension dimension) {
+        return selectableRepository.getByDimensionCategory_Id(dimension.getDimensionCategory().getId());
+    }
+
+    @Override
+    public MultiselectDimensionSelectableOption getSelectableOption(MultiselectDimension dimension, String optionName) {
+        return selectableRepository.getByDimensionCategory_IdAndValue(dimension.getDimensionCategory().getId(), optionName);
     }
 
     @Override

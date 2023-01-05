@@ -1,7 +1,13 @@
 package de.brockhausag.diversitylunchspringboot.integrationDataFactories;
 
 import com.nimbusds.jose.util.Base64URL;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.*;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.MultiselectDimensionService;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.WeightedDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -11,106 +17,105 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Component
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
+//@NoArgsConstructor
+//@AllArgsConstructor
 public class ProfileTestdataFactory {
 
     @Test
     void testFalse(){
         assertFalse(true);
     }
-/*
-    private final CountryService countryService;
-    private final DietService dietService;
-    private final EducationService educationService;
-    private final SexualOrientationService sexualOrientationService;
-    private final GenderService genderService;
-    private final HobbyService hobbyService;
-    private final LanguageService languageService;
-    private final ProjectService projectService;
-    private final ReligionService religionService;
-    private final WorkExperienceService workExperienceService;
-    private final SocialBackgroundService socialBackgroundService;
-    private final SocialBackgroundDiscriminationService socialBackgroundDiscriminationService;
-
+    @Autowired
+    private BasicDimensionService basicDimensionService;
+    @Autowired
+    private MultiselectDimensionService multiselectDimensionService;
+    @Autowired
+    private WeightedDimensionService weightedDimensionService;
 
     public ProfileEntity createNewMaxProfile() {
-        final Long id = 1L;
-        final String name = "Max";
-        final String email = "Max@Mustermann.de";
-        final int birthyear = 1996;
-        final CountryEntity originCountry = countryService.getAllEntities().get(0);
-        final DietEntity diet = dietService.getAllEntities().get(0);
-        final EducationEntity education = educationService.getAllEntities().get(0);
-        final GenderEntity gender = genderService.getAllEntities().get(0);
-        final LanguageEntity motherTongue = languageService.getAllEntities().get(0);
-        final ProjectEntity project = projectService.getAllEntities().get(0);
-        final ReligionEntity religion = religionService.getAllEntities().get(0);
-        final WorkExperienceEntity workExperience = workExperienceService.getAllEntities().get(0);
-        final List<HobbyEntity> hobby = hobbyService.getAllEntities().subList(0, 3);
-        final SexualOrientationEntity sexualOrientation = sexualOrientationService.getAllEntities().get(0);
-        final SocialBackgroundEntity socialBackground = socialBackgroundService.getAllEntities().get(0);
-        final SocialBackgroundDiscriminationEntity socialBackgroundDiscrimination = socialBackgroundDiscriminationService.getAllEntities().get(0);
+        Map<BasicDimension, BasicDimensionSelectableOption> selectedBasicValues = new HashMap<>();
+        basicDimensionService.getAllDimensions().forEach(
+                basicDimension -> {
+                    BasicDimensionSelectableOption option = basicDimensionService.getSelectableOptions(basicDimension).get(0);
+                    selectedBasicValues.put(basicDimension, option);
+                }
+        );
 
-        return new ProfileEntity(id,
-                name,
-                email,
-                birthyear,
-                originCountry,
-                diet,
-                education,
-                gender,
-                motherTongue,
-                project,
-                religion,
-                workExperience,
-                hobby,
-                sexualOrientation,
-                socialBackground,
-                socialBackgroundDiscrimination,
-                false);
+        Map<WeightedDimension, WeightedDimensionSelectableOption> selectedWeightedValues = new HashMap<>();
+        weightedDimensionService.getAllDimensions().forEach(
+                weightedDimension -> {
+                    WeightedDimensionSelectableOption option = weightedDimensionService.getSelectableOptions(weightedDimension).get(0);
+                    selectedWeightedValues.put(weightedDimension, option);
+                }
+        );
+
+        Map<MultiselectDimension, ProfileEntitySelectedMultiselectValue> selectedMultiselectValues = new HashMap<>();
+        multiselectDimensionService.getAllDimensions().forEach(
+                multiselectDimension -> {
+                    List<MultiselectDimensionSelectableOption> options = multiselectDimensionService.getSelectableOptions(multiselectDimension).subList(0, 2);
+                    ProfileEntitySelectedMultiselectValue profileOptions = new ProfileEntitySelectedMultiselectValue();
+                    profileOptions.setSelectedOptions(Set.copyOf(options));
+                    selectedMultiselectValues.put(multiselectDimension, profileOptions);
+                }
+        );
+
+        return ProfileEntity.builder()
+                .id(1L)
+                .name("Max Mustermann")
+                .email("Max@Mustermann.de")
+                .birthYear(1996)
+                .wasChangedByAdmin(false)
+                .selectedBasicValues(selectedBasicValues)
+                .selectedWeightedValues(selectedWeightedValues)
+                .selectedMultiselectValues(selectedMultiselectValues)
+                .build();
     }
 
-    public ProfileEntity createNewErikaProfile() {
-        final Long id = 2L;
-        final String name = "Erika";
-        final String email = "Erika@Mustermann.de";
-        final int birthyear = 1976;
-        final CountryEntity originCountry = countryService.getAllEntities().get(1);
-        final DietEntity diet = dietService.getAllEntities().get(1);
-        final EducationEntity education = educationService.getAllEntities().get(1);
-        final GenderEntity gender = genderService.getAllEntities().get(1);
-        final LanguageEntity motherTongue = languageService.getAllEntities().get(1);
-        final ProjectEntity project = projectService.getAllEntities().get(1);
-        final ReligionEntity religion = religionService.getAllEntities().get(1);
-        final WorkExperienceEntity workExperience = workExperienceService.getAllEntities().get(1);
-        final List<HobbyEntity> hobby = hobbyService.getAllEntities().subList(0, 3);
-        final SexualOrientationEntity sexualOrientation = sexualOrientationService.getAllEntities().get(1);
-        final SocialBackgroundEntity socialBackground = socialBackgroundService.getAllEntities().get(1);
-        final SocialBackgroundDiscriminationEntity socialBackgroundDiscrimination = socialBackgroundDiscriminationService.getAllEntities().get(1);
-
-        return new ProfileEntity(id,
-                name,
-                email,
-                birthyear,
-                originCountry,
-                diet,
-                education,
-                gender,
-                motherTongue,
-                project,
-                religion,
-                workExperience,
-                hobby,
-                sexualOrientation,
-                socialBackground,
-                socialBackgroundDiscrimination,
-                false);
-    }*/
+//    public ProfileEntity createNewErikaProfile() {
+//        final Long id = 2L;
+//        final String name = "Erika";
+//        final String email = "Erika@Mustermann.de";
+//        final int birthyear = 1976;
+//        final CountryEntity originCountry = countryService.getAllEntities().get(1);
+//        final DietEntity diet = dietService.getAllEntities().get(1);
+//        final EducationEntity education = educationService.getAllEntities().get(1);
+//        final GenderEntity gender = genderService.getAllEntities().get(1);
+//        final LanguageEntity motherTongue = languageService.getAllEntities().get(1);
+//        final ProjectEntity project = projectService.getAllEntities().get(1);
+//        final ReligionEntity religion = religionService.getAllEntities().get(1);
+//        final WorkExperienceEntity workExperience = workExperienceService.getAllEntities().get(1);
+//        final List<HobbyEntity> hobby = hobbyService.getAllEntities().subList(0, 3);
+//        final SexualOrientationEntity sexualOrientation = sexualOrientationService.getAllEntities().get(1);
+//        final SocialBackgroundEntity socialBackground = socialBackgroundService.getAllEntities().get(1);
+//        final SocialBackgroundDiscriminationEntity socialBackgroundDiscrimination = socialBackgroundDiscriminationService.getAllEntities().get(1);
+//
+//        return new ProfileEntity(id,
+//                name,
+//                email,
+//                birthyear,
+//                originCountry,
+//                diet,
+//                education,
+//                gender,
+//                motherTongue,
+//                project,
+//                religion,
+//                workExperience,
+//                hobby,
+//                sexualOrientation,
+//                socialBackground,
+//                socialBackgroundDiscrimination,
+//                false);
+//    }
 
     @SneakyThrows
     public String getTokenStringFromId(String id) {

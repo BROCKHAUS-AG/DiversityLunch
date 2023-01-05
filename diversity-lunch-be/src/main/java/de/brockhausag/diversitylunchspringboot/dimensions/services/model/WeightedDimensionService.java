@@ -43,6 +43,16 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
     }
 
     @Override
+    public List<WeightedDimensionSelectableOption> getSelectableOptions(WeightedDimension dimension) {
+        return selectableRepository.getByDimensionCategory_Id(dimension.getDimensionCategory().getId());
+    }
+
+    @Override
+    public WeightedDimensionSelectableOption getSelectableOption(WeightedDimension dimension, String optionName) {
+        return selectableRepository.getByDimensionCategory_IdAndValue(dimension.getDimensionCategory().getId(), optionName);
+    }
+
+    @Override
     public void deleteSelectableOptionById(Long selectableOptionId) {
         selectableRepository.deleteById(selectableOptionId);
     }

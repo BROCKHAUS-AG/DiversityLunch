@@ -16,15 +16,21 @@ public interface DimensionService<
 
     DimensionType getDimension(String categoryDescription);
 
+    List<DimensionType> getAllDimensions();
+
     Selectable addSelectableOption(Selectable option);
 
-     void deleteSelectableOptionById(Long selectableOptionId);
+    void deleteSelectableOptionById(Long selectableOptionId);
 
-     Selectable updateSelectableOption(Selectable option);
+    Selectable updateSelectableOption(Selectable option);
 
-     List<Selectable> getSelectableOptionsOfCategory(Long categoryId);
+    List<Selectable> getSelectableOptions(DimensionType dimension);
 
-     Long getDimensionCategoryIdByDescription(String categoryDescription);
+    Selectable getSelectableOption(DimensionType dimension, String optionName);
 
-     Selectable getSelectableOptionById(Long selectableOptionId);
+    List<Selectable> getSelectableOptionsOfCategory(Long categoryId);
+
+    Long getDimensionCategoryIdByDescription(String categoryDescription);
+
+    Selectable getSelectableOptionById(Long selectableOptionId);
 }
