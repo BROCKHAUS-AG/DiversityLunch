@@ -3,25 +3,29 @@ import { Account } from '../model/Account';
 import { Profile } from '../model/Profile';
 import { UserVoucher } from '../model/UserVoucher';
 
-export const categoryData = [{ id: 2, descriptor: 'Kreatives' }, { id: 1337, descriptor: 'Sport' }];
-export const countryData = [{ id: 9, descriptor: 'Bahamas' }, { id: 1337, descriptor: 'Deutschland' }];
-export const dietData = [{ id: 9, descriptor: 'Fleischesser' }, { id: 1337, descriptor: 'Frutarier' }];
-export const educationData = [{ id: 9, descriptor: 'Abitur' }, { id: 1337, descriptor: 'Doktor' }];
-export const genderData = [{ id: 9, descriptor: 'männlich' }, { id: 1337, descriptor: 'weiblich' }];
-export const languageData = [{ id: 9, descriptor: 'Deutsch' }, { id: 1337, descriptor: 'Französisch' }];
-export const projectData = [{ id: 9, descriptor: 'intern' }, { id: 1337, descriptor: 'extern' }];
-export const religionData = [{ id: 9, descriptor: 'katholisch' }, { id: 1337, descriptor: 'evangelisch' }];
-export const workExperienceData = [{ id: 9, descriptor: '0-4 Jahre' }, { id: 1337, descriptor: '4-10 Jahre' }];
-export const hobbyData = [{ id: 6, descriptor: 'DIY', category: { id: 2, descriptor: 'Kreatives' } },
-    { id: 7, descriptor: 'Fußball', category: { id: 1, descriptor: 'Sport' } }];
-export const sexualOrientationData = [{ id: 9, descriptor: 'Asexuell' }, { id: 1337, descriptor: 'Pansexuell' }];
+export const categoryData = [{ id: 2, descriptor: 'Kreatives', default: false }, { id: 1337, descriptor: 'Sport', default: false }];
+export const countryData = [{ id: 9, descriptor: 'Bahamas', default: false }, { id: 1337, descriptor: 'Deutschland', default: false }];
+export const dietData = [{ id: 9, descriptor: 'Fleischesser', default: false }, { id: 1337, descriptor: 'Frutarier', default: false }];
+export const educationData = [{ id: 9, descriptor: 'Abitur', default: false }, { id: 1337, descriptor: 'Doktor', default: false }];
+export const genderData = [{ id: 9, descriptor: 'männlich', default: false }, { id: 1337, descriptor: 'weiblich', default: false }];
+export const languageData = [{ id: 9, descriptor: 'Deutsch', default: false }, { id: 1337, descriptor: 'Französisch', default: false }];
+export const projectData = [{ id: 9, descriptor: 'intern', default: false }, { id: 1337, descriptor: 'extern', default: false }];
+export const religionData = [{ id: 9, descriptor: 'katholisch', default: false }, { id: 1337, descriptor: 'evangelisch', default: false }];
+export const workExperienceData = [{ id: 9, descriptor: '0-4 Jahre', default: false }, { id: 1337, descriptor: '4-10 Jahre', default: false }];
+export const hobbyData = [{
+    id: 6, descriptor: 'DIY', category: { id: 2, descriptor: 'Kreatives' }, default: false,
+},
+{
+    id: 7, descriptor: 'Fußball', category: { id: 1, descriptor: 'Sport' }, default: false,
+}];
+export const sexualOrientationData = [{ id: 9, descriptor: 'Asexuell', default: false }, { id: 1337, descriptor: 'Pansexuell', default: false }];
 export const socialBackgroundData = [
-    { id: 9, descriptor: 'Nichtakademisches Elternhaus' },
-    { id: 547, descriptor: 'Akademikerfamilie' },
-    { id: 234, descriptor: 'keine Angabe' },
+    { id: 9, descriptor: 'Nichtakademisches Elternhaus', default: false },
+    { id: 547, descriptor: 'Akademikerfamilie', default: false },
+    { id: 234, descriptor: 'keine Angabe', default: false },
 ];
-export const socialBackgroundDiscriminationData = [{ id: 9, descriptor: 'keine Angabe' },
-    { id: 1337, descriptor: 'ja' }, { id: 1337, descriptor: 'nein' }];
+export const socialBackgroundDiscriminationData = [{ id: 9, descriptor: 'keine Angabe', default: false },
+    { id: 1337, descriptor: 'ja', default: false }, { id: 1337, descriptor: 'nein', default: false }];
 
 export const profileData: Profile[] = [{
     id: 4,
