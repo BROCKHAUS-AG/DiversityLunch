@@ -93,7 +93,8 @@ ALTER TABLE profile_entity DROP COLUMN sexual_orientation_id;
 ALTER TABLE profile_entity DROP COLUMN social_background_id;
 ALTER TABLE profile_entity DROP COLUMN social_background_discrimination_id;
 
-ALTER TABLE profile_entity ADD COLUMN was_changed_by_admin boolean NOT NULL default false;
+UPDATE profile_entity SET was_changed_by_admin = false WHERE was_changed_by_admin IS NULL;
+ALTER TABLE profile_entity ALTER COLUMN was_changed_by_admin SET NOT NULL;
 
 DROP TABLE country_entity;
 DROP TABLE diet_entity;
