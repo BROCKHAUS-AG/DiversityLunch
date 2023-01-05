@@ -22,4 +22,7 @@ public class HobbyDto implements MultiDimensionDto {
     @NotNull
     @NotBlank
     private String descriptor;
+
+    @NotNull
+    private boolean isDefault;
 }

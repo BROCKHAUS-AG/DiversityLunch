@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @NoArgsConstructor
@@ -21,6 +22,9 @@ public class HobbyEntity implements MultiDimensionEntity {
     private Long id;
 
     private String descriptor;
+
+    @NotNull
+    private boolean isDefault;
 
     @Override
     public int hashCode() {
