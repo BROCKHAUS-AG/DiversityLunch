@@ -1,15 +1,9 @@
 DELETE FROM account_entity;
 DELETE FROM basic_dimension;
 DELETE FROM basic_dimension_selectable_option;
-DELETE FROM country_entity;
 DELETE FROM databasechangelog;
 DELETE FROM databasechangeloglock;
-DELETE FROM diet_entity;
 delete from dimension_category;
-delete from education_entity;
-delete from gender_entity;
-delete from hobby_entity;
-delete from language_entity;
 delete from meeting_entity;
 delete from meeting_proposal_entity;
 delete from multiselect_dimension;
@@ -19,5 +13,9 @@ delete from profile_entity_selected_basic_values;
 delete from profile_entity_selected_multiselect_value;
 delete from profile_entity_selected_multiselect_value_selected_options;
 delete from profile_entity_selected_weighted_values;
-delete from profile_hobby;
-delete from project_entity;
+delete from question_entity;
+delete from voucher_entity;
+delete from weighted_dimension;
+delete from weighted_dimension_selectable_option;
+
+-- TODO: check if everything needs to be deleted
