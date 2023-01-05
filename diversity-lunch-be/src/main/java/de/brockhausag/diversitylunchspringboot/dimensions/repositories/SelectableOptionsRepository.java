@@ -10,8 +10,9 @@ import java.util.List;
 
 @NoRepositoryBean
 public interface SelectableOptionsRepository<Selectable extends SelectableOptions> extends CrudRepository<Selectable, Long> {
-    Selectable getByDimensionCategory_Description(String categoryDescription);
+    List<Selectable> getByDimensionCategory_Description(String categoryDescription);
     List<Selectable> getByDimensionCategory_Id(Long categoryId);
+    Selectable getByDimensionCategory_IdAndValue(Long categoryId, String categoryDescription);
     Selectable getById(Long id);
 }
 

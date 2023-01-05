@@ -11,6 +11,7 @@ import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingReposit
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -46,6 +47,12 @@ class MatchingServiceIT {
     private MeetingProposalRepository meetingProposalRepository;
     @Autowired
     private ProfileRepository profileRepository;
+    private ProfileTestdataFactory profileFactory;
+
+    @BeforeEach
+    void setup() {
+        profileFactory = new ProfileTestdataFactory();
+    }
 
 
     @Test

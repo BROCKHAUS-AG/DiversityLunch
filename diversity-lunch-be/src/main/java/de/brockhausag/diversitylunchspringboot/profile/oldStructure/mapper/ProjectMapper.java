@@ -23,6 +23,6 @@ public class ProjectMapper implements DimensionMapper<ProjectDto, BasicDimension
 
     @Override
     public BasicDimensionSelectableOption dtoToEntity(ProjectDto dto) {
-        return repository.getByDimensionCategory_Description(dto.getDescriptor());
+        return repository.getById(dto.getId());
     }
 }

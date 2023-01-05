@@ -23,6 +23,6 @@ public class SocialBackgroundDiscriminationMapper implements DimensionMapper<Soc
 
     @Override
     public BasicDimensionSelectableOption dtoToEntity(SocialBackgroundDiscriminationDto dto) {
-        return repository.getByDimensionCategory_Description(dto.getDescriptor());
+        return repository.getById(dto.getId());
     }
 }

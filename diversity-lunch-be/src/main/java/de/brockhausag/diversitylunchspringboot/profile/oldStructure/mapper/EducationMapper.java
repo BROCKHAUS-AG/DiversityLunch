@@ -23,6 +23,6 @@ public class EducationMapper implements DimensionMapper<EducationDto, BasicDimen
 
     @Override
     public BasicDimensionSelectableOption dtoToEntity(EducationDto dto) {
-        return repository.getByDimensionCategory_Description(dto.getDescriptor());
+        return repository.getById(dto.getId());
     }
 }
