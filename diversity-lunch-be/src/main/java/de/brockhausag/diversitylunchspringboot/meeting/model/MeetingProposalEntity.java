@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Builder
 public class MeetingProposalEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne

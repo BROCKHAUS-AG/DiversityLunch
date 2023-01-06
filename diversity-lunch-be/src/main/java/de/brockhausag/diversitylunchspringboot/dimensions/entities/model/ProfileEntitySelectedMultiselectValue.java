@@ -15,7 +15,7 @@ public class ProfileEntitySelectedMultiselectValue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<MultiselectDimensionSelectableOption> selectedOptions;
 
     @Override

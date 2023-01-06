@@ -44,6 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @SqlGroup({
         @Sql(scripts = "classpath:integrationstests/insert_test_data.sql", executionPhase = BEFORE_TEST_METHOD),
+        @Sql(scripts = "classpath:integrationstests/insert_matching_test_data.sql", executionPhase = BEFORE_TEST_METHOD),
         @Sql(scripts = "classpath:integrationstests/delete_test_data.sql", executionPhase = AFTER_TEST_METHOD)
 })
 @ActiveProfiles("Test")
@@ -95,13 +96,13 @@ class MeetingControllerIT {
 
         when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
 
-        //profileMax = profileFactory.createNewMaxProfile();
-        //AccountEntity accountEntity = accountService.getOrCreateAccount(profileMax.getEmail());
-        //profileMax = profileService.createProfile(profileMax, accountEntity.getId()).orElseThrow();
+        profileMax = profileFactory.createNewMaxProfile();
+        AccountEntity accountEntity = accountService.getOrCreateAccount(profileMax.getEmail());
+        profileMax = profileService.createProfile(profileMax, accountEntity.getId()).orElseThrow();
 
-        //profileErika = profileFactory.createNewErikaProfile();
-        //AccountEntity accountEntity1 = accountService.getOrCreateAccount(profileErika.getEmail());
-        //profileErika = profileService.createProfile(profileErika, accountEntity1.getId()).orElseThrow();
+        profileErika = profileFactory.createNewErikaProfile();
+        AccountEntity accountEntity1 = accountService.getOrCreateAccount(profileErika.getEmail());
+        profileErika = profileService.createProfile(profileErika, accountEntity1.getId()).orElseThrow();
     }
 
     @AfterEach

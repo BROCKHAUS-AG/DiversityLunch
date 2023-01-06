@@ -1,9 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.integrationstests;
 
 import de.brockhausag.diversitylunchspringboot.config.MsTeamsTestConfig;
-import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
-import de.brockhausag.diversitylunchspringboot.dimensions.services.model.MultiselectDimensionService;
-import de.brockhausag.diversitylunchspringboot.dimensions.services.model.WeightedDimensionService;
 import de.brockhausag.diversitylunchspringboot.integrationDataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.match.service.MatchingService;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
@@ -13,7 +10,6 @@ import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingReposit
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -50,18 +46,7 @@ class MatchingServiceIT {
     @Autowired
     private ProfileRepository profileRepository;
     @Autowired
-    private BasicDimensionService basicDimensionService;
-    @Autowired
-    private MultiselectDimensionService multiselectDimensionService;
-    @Autowired
-    private WeightedDimensionService weightedDimensionService;
     private ProfileTestdataFactory profileFactory;
-
-    @BeforeEach
-    void setup() {
-        profileFactory = new ProfileTestdataFactory(basicDimensionService, multiselectDimensionService, weightedDimensionService);
-    }
-
 
     @Test
     void testMatchingServiceScore0() {
