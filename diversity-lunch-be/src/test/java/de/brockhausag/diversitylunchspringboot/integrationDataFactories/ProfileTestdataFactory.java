@@ -6,13 +6,10 @@ import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDi
 import de.brockhausag.diversitylunchspringboot.dimensions.services.model.MultiselectDimensionService;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.model.WeightedDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.Mac;
@@ -28,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @Slf4j
 @Component
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 //@NoArgsConstructor
 //@AllArgsConstructor
 public class ProfileTestdataFactory {
@@ -37,12 +34,9 @@ public class ProfileTestdataFactory {
     void testFalse(){
         assertFalse(true);
     }
-    @Autowired
-    private BasicDimensionService basicDimensionService;
-    @Autowired
-    private MultiselectDimensionService multiselectDimensionService;
-    @Autowired
-    private WeightedDimensionService weightedDimensionService;
+    private final BasicDimensionService basicDimensionService;
+    private final MultiselectDimensionService multiselectDimensionService;
+    private final WeightedDimensionService weightedDimensionService;
 
     public ProfileEntity createNewMaxProfile() {
         Map<BasicDimension, BasicDimensionSelectableOption> selectedBasicValues = new HashMap<>();

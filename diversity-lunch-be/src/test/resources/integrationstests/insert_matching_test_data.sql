@@ -22,38 +22,40 @@ WITH algeria AS (SELECT id FROM basic_dimension_selectable_option WHERE value='A
      heterosexual AS (SELECT id FROM basic_dimension_selectable_option WHERE value='Heterosexuell' LIMIT 1),
      academicFamily AS (SELECT id FROM basic_dimension_selectable_option WHERE value='Akademikerfamilie' LIMIT 1),
      yes AS (SELECT id FROM basic_dimension_selectable_option WHERE value='Ja' LIMIT 1),
+     diet AS (SELECT id FROM basic_dimension WHERE dimension_category_id=(SELECT id FROM dimension_category WHERE description='Ernährung')),
+     education AS (SELECT id FROM basic_dimension WHERE dimension_category_id=(SELECT id FROM dimension_category WHERE description='Bildungsweg')),
+     gender AS (SELECT id FROM basic_dimension WHERE dimension_category_id=(SELECT id FROM dimension_category WHERE description='Geschlechtliche Identität')),
      language AS (SELECT id FROM basic_dimension WHERE dimension_category_id=(SELECT id FROM dimension_category WHERE description='Muttersprache')),
-     diet AS (SELECT id FROM basic_dimension WHERE dimension_category_id=(SELECT id FROM dimension_category WHERE description='Ernährung'))
-
+     origin AS (SELECT id FROM basic_dimension WHERE dimension_category_id=(SELECT id FROM dimension_category WHERE description='Ethnische Herkunft')),
+     language AS (SELECT id FROM basic_dimension WHERE dimension_category_id=(SELECT id FROM dimension_category WHERE description='Muttersprache')),
+     project AS (SELECT id FROM basic_dimension WHERE dimension_category_id=(SELECT id FROM dimension_category WHERE description='Projekt')),
+     religion AS (SELECT id FROM basic_dimension WHERE dimension_category_id=(SELECT id FROM dimension_category WHERE description='Religion')),
+     sexual AS (SELECT id FROM basic_dimension WHERE dimension_category_id=(SELECT id FROM dimension_category WHERE description='Sexuelle Orientierung')),
+     social AS (SELECT id FROM basic_dimension WHERE dimension_category_id=(SELECT id FROM dimension_category WHERE description='Soziale Herkunft')),
+     discrimination AS (SELECT id FROM basic_dimension WHERE dimension_category_id=(SELECT id FROM dimension_category WHERE description='Diskriminierung aufgrund sozialer Herkunft'))
 INSERT INTO profile_entity_selected_basic_values (profile_entity_id, selected_basic_values_id, basic_dimension) VALUES
-    (1, meat, diet), (1, algeria, language),
-    (2, vegan, diet), (2, algeria, language),
-    (3, vegan, diet), (3, algeria, language),
-    (4, vegan, diet), (4, andorra, language),
-    (5, meat, diet), (5, algeria, language);
--- TODO: complete Profiles
--- (1, (SELECT * FROM meat), (SELECT * FROM study), (SELECT * FROM male), (SELECT * FROM german), (SELECT * FROM algeria), (SELECT * FROM internProject), (SELECT * FROM jewish),(SELECT * FROM lowExperience),(SELECT * FROM heterosexual), (SELECT * FROM academicFamily), (SELECT * FROM yes) ),
--- (2, (SELECT * FROM vegan), (SELECT * FROM study), (SELECT * FROM male), (SELECT * FROM german), (SELECT * FROM algeria), (SELECT * FROM internProject), (SELECT * FROM jewish),(SELECT * FROM lowExperience),(SELECT * FROM heterosexual), (SELECT * FROM academicFamily), (SELECT * FROM yes) ),
--- (3, (SELECT * FROM vegan), (SELECT * FROM training), (SELECT * FROM female), (SELECT * FROM german), (SELECT * FROM algeria), (SELECT * FROM internProject), (SELECT * FROM jewish),(SELECT * FROM lowExperience),(SELECT * FROM heterosexual), (SELECT * FROM academicFamily), (SELECT * FROM yes) ),
--- (4, (SELECT * FROM vegan), (SELECT * FROM training), (SELECT * FROM female), (SELECT * FROM english), (SELECT * FROM andorra), (SELECT * FROM externProject), (SELECT * FROM christian),(SELECT * FROM lowExperience),(SELECT * FROM heterosexual), (SELECT * FROM academicFamily), (SELECT * FROM yes) ),
--- (5, (SELECT * FROM meat), (SELECT * FROM study), (SELECT * FROM male), (SELECT * FROM german), (SELECT * FROM algeria), (SELECT * FROM internProject), (SELECT * FROM jewish),(SELECT * FROM lowExperience),(SELECT * FROM heterosexual), (SELECT * FROM academicFamily), (SELECT * FROM yes) );
+    (1, (SELECT * FROM meat), (SELECT * FROM diet)), (1, (SELECT * FROM study), (SELECT * FROM education)), (1, (SELECT * FROM german), (SELECT * FROM language)), (1, (SELECT * FROM algeria), (SELECT * FROM origin)), (1, (SELECT * FROM internProject), (SELECT * FROM project)), (1, (SELECT * FROM jewish), (SELECT * FROM religion)), (1, (SELECT * FROM heterosexual), (SELECT * FROM sexual)), (1, (SELECT * FROM academicFamily), (SELECT * FROM social)), (1, (SELECT * FROM yes), (SELECT * FROM discrimination)),
+    (2, (SELECT * FROM vegan), (SELECT * FROM diet)), (2, (SELECT * FROM study), (SELECT * FROM education)), (2, (SELECT * FROM german), (SELECT * FROM language)), (2, (SELECT * FROM algeria), (SELECT * FROM origin)), (2, (SELECT * FROM internProject), (SELECT * FROM project)), (2, (SELECT * FROM jewish), (SELECT * FROM religion)), (2, (SELECT * FROM heterosexual), (SELECT * FROM sexual)), (2, (SELECT * FROM academicFamily), (SELECT * FROM social)), (2, (SELECT * FROM yes), (SELECT * FROM discrimination)),
+    (3, (SELECT * FROM vegan), (SELECT * FROM diet)), (3, (SELECT * FROM training), (SELECT * FROM education)), (3, (SELECT * FROM german), (SELECT * FROM language)), (3, (SELECT * FROM algeria), (SELECT * FROM origin)), (3, (SELECT * FROM internProject), (SELECT * FROM project)), (3, (SELECT * FROM jewish), (SELECT * FROM religion)), (3, (SELECT * FROM heterosexual), (SELECT * FROM sexual)), (3, (SELECT * FROM academicFamily), (SELECT * FROM social)), (3, (SELECT * FROM yes), (SELECT * FROM discrimination)),
+    (4, (SELECT * FROM vegan), (SELECT * FROM diet)), (4, (SELECT * FROM training), (SELECT * FROM education)), (4, (SELECT * FROM english), (SELECT * FROM language)), (4, (SELECT * FROM andorra), (SELECT * FROM origin)), (4, (SELECT * FROM externProject), (SELECT * FROM project)), (4, (SELECT * FROM christian), (SELECT * FROM religion)), (4, (SELECT * FROM heterosexual), (SELECT * FROM sexual)), (4, (SELECT * FROM academicFamily), (SELECT * FROM social)), (4, (SELECT * FROM yes), (SELECT * FROM discrimination)),
+    (5, (SELECT * FROM meat), (SELECT * FROM diet)), (5, (SELECT * FROM study), (SELECT * FROM education)), (5, (SELECT * FROM german), (SELECT * FROM language)), (5, (SELECT * FROM algeria), (SELECT * FROM origin)), (5, (SELECT * FROM internProject), (SELECT * FROM project)), (5, (SELECT * FROM jewish), (SELECT * FROM religion)), (5, (SELECT * FROM heterosexual), (SELECT * FROM sexual)), (5, (SELECT * FROM academicFamily), (SELECT * FROM social)), (5, (SELECT * FROM yes), (SELECT * FROM discrimination));
 
 WITH lowExperience AS (SELECT id FROM weighted_dimension_selectable_option WHERE value='0-3 Jahre' LIMIT 1),
      workxp AS (SELECT id FROM weighted_dimension WHERE dimension_category_id=(SELECT id FROM dimension_category WHERE description='Berufserfahrung'))
 INSERT INTO profile_entity_selected_weighted_values (profile_entity_id, selected_weighted_values_id, weighted_dimension) VALUES
-    (1, lowExperience, workxp),
-    (2, lowExperience, workxp),
-    (3, lowExperience, workxp),
-    (4, lowExperience, workxp),
-    (5, lowExperience, workxp);
+    (1, (SELECT * FROM lowExperience), (SELECT * FROM workxp)),
+    (2, (SELECT * FROM lowExperience), (SELECT * FROM workxp)),
+    (3, (SELECT * FROM lowExperience), (SELECT * FROM workxp)),
+    (4, (SELECT * FROM lowExperience), (SELECT * FROM workxp)),
+    (5, (SELECT * FROM lowExperience), (SELECT * FROM workxp));
 
-WITH hobby AS (SELECT id FROM dimension_category WHERE description='Hobby')
+WITH hobby AS (SELECT id FROM multiselect_dimension WHERE dimension_category_id=(SELECT id FROM dimension_category WHERE description='Hobby'))
 INSERT INTO profile_entity_selected_multiselect_value (profile_id, multiselect_dimension) VALUES
-    (1, hobby),
-    (2, hobby),
-    (3, hobby),
-    (4, hobby),
-    (5, hobby);
+    (1, (SELECT * FROM hobby)),
+    (2, (SELECT * FROM hobby)),
+    (3, (SELECT * FROM hobby)),
+    (4, (SELECT * FROM hobby)),
+    (5, (SELECT * FROM hobby));
 
 WITH profile1_selected AS (SELECT id FROM profile_entity_selected_multiselect_value WHERE profile_id=1),
      profile2_selected AS (SELECT id FROM profile_entity_selected_multiselect_value WHERE profile_id=2),
@@ -64,14 +66,14 @@ WITH profile1_selected AS (SELECT id FROM profile_entity_selected_multiselect_va
      gaming AS (SELECT id FROM multiselect_dimension_selectable_option WHERE value='Gaming' LIMIT 1),
      hunting AS (SELECT id FROM multiselect_dimension_selectable_option WHERE value='Jagen' LIMIT 1)
 INSERT INTO profile_entity_selected_multiselect_value_selected_options (profile_entity_selected_multiselect_value_id, selected_options_id) VALUES
-    (profile1_selected, cooking),
-    (profile2_selected, cooking),
-    (profile3_selected, cooking),
-    (profile3_selected, hunting),
-    (profile3_selected, gaming),
-    (profile4_selected, gaming),
-    (profile4_selected, hunting),
-    (profile5_selected, cooking);
+    ((SELECT * FROM profile1_selected), (SELECT * FROM cooking)),
+    ((SELECT * FROM profile2_selected), (SELECT * FROM cooking)),
+    ((SELECT * FROM profile3_selected), (SELECT * FROM cooking)),
+    ((SELECT * FROM profile3_selected), (SELECT * FROM hunting)),
+    ((SELECT * FROM profile3_selected), (SELECT * FROM gaming)),
+    ((SELECT * FROM profile4_selected), (SELECT * FROM gaming)),
+    ((SELECT * FROM profile4_selected), (SELECT * FROM hunting)),
+    ((SELECT * FROM profile5_selected), (SELECT * FROM cooking));
 
 
 
