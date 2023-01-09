@@ -54,27 +54,25 @@ create table profile_entity_selected_basic_values
 (
     profile_entity_id        bigint ,
     selected_basic_values_id bigint ,
-    basic_dimension         bigint ,
-    primary key (profile_entity_id, basic_dimension)
+    primary key (profile_entity_id, selected_basic_values_id)
 );
 
-create table profile_entity_selected_multiselect_value
+create table profile_entity_selected_multiselect_values
 (
     id                 BIGSERIAL  primary key ,
-    profile_id         bigint    ,
-    multiselect_dimension bigint    
+    profile_id         bigint
 );
-create table profile_entity_selected_multiselect_value_selected_options
+create table profile_entity_selected_multiselect_values_selected_options
 (
-    profile_entity_selected_multiselect_value_id bigint ,
-    selected_options_id                          bigint
+    profile_entity_selected_multiselect_values_id bigint ,
+    selected_options_id                          bigint ,
+    primary key (profile_entity_selected_multiselect_values_id, selected_options_id)
 );
 create table profile_entity_selected_weighted_values
 (
     profile_entity_id           bigint ,
     selected_weighted_values_id bigint ,
-    weighted_dimension          bigint ,
-    primary key (profile_entity_id, weighted_dimension)
+    primary key (profile_entity_id, selected_weighted_values_id)
 );
 
 

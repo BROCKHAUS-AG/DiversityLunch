@@ -6,7 +6,7 @@ import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.Dimensi
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.DimensionCategoryRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.ProfileEntitySelectedMultiselectValue;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.ProfileEntitySelectedMultiselectValues;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.match.records.ScoreAndCategory;
@@ -135,8 +135,8 @@ public class Matching {
         Set<MultiselectDimension> multiselectDimensionSet = firstProfile.getSelectedMultiselectValues().keySet();
 
         for (MultiselectDimension dimension : multiselectDimensionSet) {
-            ProfileEntitySelectedMultiselectValue option1 = firstProfile.getSelectedMultiselectValues().get(dimension);
-            ProfileEntitySelectedMultiselectValue option2 = secondProfile.getSelectedMultiselectValues().get(dimension);
+            ProfileEntitySelectedMultiselectValues option1 = firstProfile.getSelectedMultiselectValues().get(dimension);
+            ProfileEntitySelectedMultiselectValues option2 = secondProfile.getSelectedMultiselectValues().get(dimension);
             if (option1 == null || option2 == null)
                 continue;
             Set<MultiselectDimensionSelectableOption> optionList1 = new HashSet<>(option1.getSelectedOptions());

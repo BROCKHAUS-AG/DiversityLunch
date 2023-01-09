@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
-import de.brockhausag.diversitylunchspringboot.config.MsTeamsTestConfig;
+import de.brockhausag.diversitylunchspringboot.config.SecurityConfig;
 import de.brockhausag.diversitylunchspringboot.integrationDataFactories.MeetingTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.integrationDataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.CreateMeetingProposalDto;
@@ -42,11 +42,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @SqlGroup({
         @Sql(scripts = "classpath:integrationstests/insert_test_data.sql", executionPhase = BEFORE_TEST_METHOD),
-        @Sql(scripts = "classpath:integrationstests/insert_matching_test_data.sql", executionPhase = BEFORE_TEST_METHOD),
         @Sql(scripts = "classpath:integrationstests/delete_test_data.sql", executionPhase = AFTER_TEST_METHOD)
 })
 @ActiveProfiles("Test")
-@Import(MsTeamsTestConfig.class)
+@Import(SecurityConfig.class)
 class MeetingControllerIT {
 
     @Autowired

@@ -4,7 +4,7 @@ package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimension;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.ProfileEntitySelectedMultiselectValue;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.ProfileEntitySelectedMultiselectValues;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimensionSelectableOption;
 import lombok.*;
@@ -40,20 +40,19 @@ public class ProfileEntity {
     private boolean wasChangedByAdmin;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @MapKeyJoinColumn(name = "basic_dimension", referencedColumnName = "id")
+    @MapKey(name = "id")
     @ToString.Exclude
     private Map<BasicDimension, BasicDimensionSelectableOption> selectedBasicValues;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @MapKeyJoinColumn(name = "weighted_dimension", referencedColumnName = "id")
+    @MapKey(name = "id")
     @ToString.Exclude
     private Map<WeightedDimension, WeightedDimensionSelectableOption> selectedWeightedValues;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "profile_id")
-    @MapKeyJoinColumn(name = "multiselect_dimension", referencedColumnName = "id")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "profile")
+    @MapKey(name = "id")
     @ToString.Exclude
-    private Map<MultiselectDimension, ProfileEntitySelectedMultiselectValue> selectedMultiselectValues;
+    private Map<MultiselectDimension, ProfileEntitySelectedMultiselectValues> selectedMultiselectValues;
 
     @Override
     public boolean equals(Object o) {

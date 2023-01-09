@@ -46,18 +46,18 @@ public class ProfileTestdataFactory {
                 }
         );
 
-        Map<MultiselectDimension, ProfileEntitySelectedMultiselectValue> selectedMultiselectValues = new HashMap<>();
+        Map<MultiselectDimension, ProfileEntitySelectedMultiselectValues> selectedMultiselectValues = new HashMap<>();
         multiselectDimensionService.getAllDimensions().forEach(
                 multiselectDimension -> {
                     List<MultiselectDimensionSelectableOption> options = multiselectDimensionService.getSelectableOptions(multiselectDimension).subList(0, 3);
-                    ProfileEntitySelectedMultiselectValue profileOptions = new ProfileEntitySelectedMultiselectValue();
+                    ProfileEntitySelectedMultiselectValues profileOptions = new ProfileEntitySelectedMultiselectValues();
                     profileOptions.setSelectedOptions(Set.copyOf(options));
                     selectedMultiselectValues.put(multiselectDimension, profileOptions);
                 }
         );
 
         return ProfileEntity.builder()
-                .id(6L)
+                .id(1L)
                 .name("Max Mustermann")
                 .email("Max@Mustermann.de")
                 .birthYear(1996)
@@ -85,11 +85,11 @@ public class ProfileTestdataFactory {
                 }
         );
 
-        Map<MultiselectDimension, ProfileEntitySelectedMultiselectValue> selectedMultiselectValues = new HashMap<>();
+        Map<MultiselectDimension, ProfileEntitySelectedMultiselectValues> selectedMultiselectValues = new HashMap<>();
         multiselectDimensionService.getAllDimensions().forEach(
                 multiselectDimension -> {
                     List<MultiselectDimensionSelectableOption> options = multiselectDimensionService.getSelectableOptions(multiselectDimension).subList(0, 3);
-                    ProfileEntitySelectedMultiselectValue profileOptions = new ProfileEntitySelectedMultiselectValue();
+                    ProfileEntitySelectedMultiselectValues profileOptions = new ProfileEntitySelectedMultiselectValues();
                     profileOptions.setId(2L);
                     profileOptions.setSelectedOptions(Set.copyOf(options));
                     selectedMultiselectValues.put(multiselectDimension, profileOptions);
@@ -97,7 +97,7 @@ public class ProfileTestdataFactory {
         );
 
         return ProfileEntity.builder()
-                .id(7L)
+                .id(2L)
                 .name("Erika Mustermann")
                 .email("Erika@Mustermann.de")
                 .birthYear(1976)

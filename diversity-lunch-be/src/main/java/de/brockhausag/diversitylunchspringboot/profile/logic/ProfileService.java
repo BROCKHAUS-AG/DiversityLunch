@@ -29,6 +29,7 @@ public class ProfileService {
 
 
         ProfileEntity profile = repository.save(profileEntity);
+
         accountService.updateAccount(profile, accountId);
 
         return Optional.of(profile);

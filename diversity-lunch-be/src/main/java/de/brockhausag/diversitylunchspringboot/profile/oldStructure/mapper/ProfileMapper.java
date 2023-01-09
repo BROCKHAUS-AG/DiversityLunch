@@ -62,9 +62,9 @@ public class ProfileMapper {
 
         Map<WeightedDimension, WeightedDimensionSelectableOption> selectedWeightedOptions = new HashMap<>();
 
-        Map<MultiselectDimension, ProfileEntitySelectedMultiselectValue> selectedMultiselectOptions = new HashMap<>();
+        Map<MultiselectDimension, ProfileEntitySelectedMultiselectValues> selectedMultiselectOptions = new HashMap<>();
 
-        ProfileEntitySelectedMultiselectValue selectedMultiselectValues = new ProfileEntitySelectedMultiselectValue();
+        ProfileEntitySelectedMultiselectValues selectedMultiselectValues = new ProfileEntitySelectedMultiselectValues();
         selectedMultiselectValues.setSelectedOptions(Set.copyOf(multiselectDimensionService.getSelectableOptions(
                 dto.getHobby().stream().map(HobbyDto::getId).collect(Collectors.toList()))));
 
