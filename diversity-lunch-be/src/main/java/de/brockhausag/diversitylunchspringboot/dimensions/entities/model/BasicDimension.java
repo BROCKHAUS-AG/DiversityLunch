@@ -3,6 +3,8 @@ package de.brockhausag.diversitylunchspringboot.dimensions.entities.model;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.Dimension;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,6 +25,7 @@ public class BasicDimension implements Dimension<BasicDimensionSelectableOption>
     private Long id;
     @NotNull
     @OneToOne(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private DimensionCategory dimensionCategory;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "dimension_category_id")
@@ -30,7 +33,7 @@ public class BasicDimension implements Dimension<BasicDimensionSelectableOption>
     @ToString.Exclude
     private Set<BasicDimensionSelectableOption> selectableValues;
     @NotNull
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @ToString.Exclude
     private BasicDimensionSelectableOption defaultValue;
 

@@ -16,6 +16,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"value", "dimension_category_id"}))
 public class BasicDimensionSelectableOption implements SelectableOptions {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

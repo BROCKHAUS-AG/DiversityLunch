@@ -3,12 +3,14 @@
 -- changeset dfuerst:v18-1
 ALTER TABLE  dimension_category ALTER COLUMN description SET NOT NULL;
 ALTER TABLE  dimension_category ALTER COLUMN profile_question SET NOT NULL;
+ALTER TABLE  dimension_category ADD CONSTRAINT category_unique UNIQUE (description);
 
 ALTER TABLE  basic_dimension_selectable_option ALTER COLUMN value SET NOT NULL;
 ALTER TABLE  basic_dimension_selectable_option ALTER COLUMN ignore_in_scoring SET NOT NULL;
 ALTER TABLE  basic_dimension_selectable_option
     ADD CONSTRAINT fk_category_id FOREIGN KEY(dimension_category_id)
     REFERENCES dimension_category(id) ON DELETE CASCADE;
+ALTER TABLE  basic_dimension_selectable_option ADD CONSTRAINT basic_dimension_unique UNIQUE (value, dimension_category_id);
 
 ALTER TABLE  basic_dimension
     ADD CONSTRAINT fk_category_id FOREIGN KEY(dimension_category_id)
@@ -25,6 +27,7 @@ ALTER TABLE  multiselect_dimension_selectable_option ALTER COLUMN value SET NOT 
 ALTER TABLE  multiselect_dimension_selectable_option
     ADD CONSTRAINT fk_category_id FOREIGN KEY(dimension_category_id)
         REFERENCES dimension_category(id) ON DELETE CASCADE;
+ALTER TABLE  multiselect_dimension_selectable_option ADD CONSTRAINT multiselect_dimension_unique UNIQUE (value, dimension_category_id);
 
 ALTER TABLE  profile_entity_selected_basic_values
     ADD CONSTRAINT fk_selected_basic_values FOREIGN KEY(selected_basic_values_id)
@@ -56,6 +59,7 @@ ALTER TABLE  weighted_dimension_selectable_option ALTER COLUMN value SET NOT NUL
 ALTER TABLE  weighted_dimension_selectable_option
     ADD CONSTRAINT fk_category_id FOREIGN KEY(dimension_category_id)
         REFERENCES dimension_category(id) ON DELETE CASCADE;
+ALTER TABLE  weighted_dimension_selectable_option ADD CONSTRAINT weighted_dimension_unique UNIQUE (value, dimension_category_id);
 
 ALTER TABLE  profile_entity_selected_weighted_values
     ADD CONSTRAINT fk_profile_id FOREIGN KEY(profile_entity_id)
