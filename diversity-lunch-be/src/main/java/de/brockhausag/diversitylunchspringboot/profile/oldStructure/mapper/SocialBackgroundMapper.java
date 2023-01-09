@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.oldStructure.mapper;
 
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.repositories.BasicDimensionSelectableOptionRepository;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.SocialBackgroundDto;
 import de.brockhausag.diversitylunchspringboot.profile.oldStructure.generics.DimensionMapper;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SocialBackgroundMapper implements DimensionMapper<SocialBackgroundDto, BasicDimensionSelectableOption> {
 
-    private final BasicDimensionSelectableOptionRepository repository;
+    private final BasicDimensionService dimensionService;
 
     @Override
     public SocialBackgroundDto entityToDto(BasicDimensionSelectableOption entity) {
@@ -23,6 +23,11 @@ public class SocialBackgroundMapper implements DimensionMapper<SocialBackgroundD
 
     @Override
     public BasicDimensionSelectableOption dtoToEntity(SocialBackgroundDto dto) {
-        return repository.getById(dto.getId());
+        return BasicDimensionSelectableOption.builder()
+                .id(dto.getId())
+                .value(dto.getDescriptor())
+                .ignoreInScoring(false)
+                .dimensionCategory(dimensionService.getDimension("Soziale Herkunft").getDimensionCategory())
+                .build();
     }
 }

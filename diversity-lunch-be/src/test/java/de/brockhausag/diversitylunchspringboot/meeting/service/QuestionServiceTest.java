@@ -9,10 +9,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 
@@ -30,14 +29,14 @@ class QuestionServiceTest {
     @Test
     void getQuestionForCategory_returnsEmptyListIfNoCategoryIsFound() {
         // Arrange
-        DimensionCategory input = new DimensionCategory();
-        when(categoryRepository.getDimensionCategoryByDescription(any())).thenReturn(Optional.empty());
+        DimensionCategory input = DimensionCategory.builder().id(99L).build();
+        when(questionRepository.getAllByCategoryId(anyLong())).thenReturn(Collections.emptyList());
 
         // Act
         var actual = questionService.getQuestionsForCategory(input);
 
         // Assert
         assertEquals(0, actual.size());
-        verify(questionRepository, times(1)).getAllByCategoryId(any());
+        verify(questionRepository, times(1)).getAllByCategoryId(anyLong());
     }
 }

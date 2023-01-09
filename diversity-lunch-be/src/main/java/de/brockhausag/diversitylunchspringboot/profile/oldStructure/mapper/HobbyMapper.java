@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.oldStructure.mapper;
 
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.repositories.MultiselectDimensionSelectableOptionRepository;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.MultiselectDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.HobbyDto;
 import de.brockhausag.diversitylunchspringboot.profile.oldStructure.generics.DimensionMapper;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class HobbyMapper implements DimensionMapper<HobbyDto, MultiselectDimensionSelectableOption> {
 
-    private final MultiselectDimensionSelectableOptionRepository repository;
+    private final MultiselectDimensionService dimensionService;
 
     @Override
     public HobbyDto entityToDto(MultiselectDimensionSelectableOption entity) {
@@ -23,6 +23,10 @@ public class HobbyMapper implements DimensionMapper<HobbyDto, MultiselectDimensi
 
     @Override
     public MultiselectDimensionSelectableOption dtoToEntity(HobbyDto dto) {
-        return repository.getById(dto.getId());
+        return MultiselectDimensionSelectableOption.builder()
+                .id(dto.getId())
+                .value(dto.getDescriptor())
+                .dimensionCategory(dimensionService.getDimension("Hobby").getDimensionCategory())
+                .build();
     }
 }

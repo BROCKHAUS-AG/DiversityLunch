@@ -51,14 +51,13 @@ public class ProfileTestdataFactory {
                 multiselectDimension -> {
                     List<MultiselectDimensionSelectableOption> options = multiselectDimensionService.getSelectableOptions(multiselectDimension).subList(0, 3);
                     ProfileEntitySelectedMultiselectValue profileOptions = new ProfileEntitySelectedMultiselectValue();
-                    profileOptions.setId(1L);
                     profileOptions.setSelectedOptions(Set.copyOf(options));
                     selectedMultiselectValues.put(multiselectDimension, profileOptions);
                 }
         );
 
         return ProfileEntity.builder()
-                .id(1L)
+                .id(6L)
                 .name("Max Mustermann")
                 .email("Max@Mustermann.de")
                 .birthYear(1996)
@@ -98,7 +97,7 @@ public class ProfileTestdataFactory {
         );
 
         return ProfileEntity.builder()
-                .id(2L)
+                .id(7L)
                 .name("Erika Mustermann")
                 .email("Erika@Mustermann.de")
                 .birthYear(1976)

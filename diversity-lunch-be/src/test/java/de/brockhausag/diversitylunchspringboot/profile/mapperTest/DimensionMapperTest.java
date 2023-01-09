@@ -8,9 +8,9 @@ import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDi
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.repositories.BasicDimensionSelectableOptionRepository;
-import de.brockhausag.diversitylunchspringboot.dimensions.repositories.MultiselectDimensionSelectableOptionRepository;
-import de.brockhausag.diversitylunchspringboot.dimensions.repositories.WeightedDimensionSelectableOptionRepository;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.MultiselectDimensionService;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.WeightedDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.*;
 import de.brockhausag.diversitylunchspringboot.profile.oldStructure.mapper.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,21 +35,21 @@ public class DimensionMapperTest {
 
     //MultiselectDimension
     @Mock
-    private MultiselectDimensionSelectableOptionRepository multiselectDimensionSelectableOptionRepository;
+    private MultiselectDimensionService multiselectDimensionService;
     private MultiselectSelectableOptionTestDataFactory multiselectDimensionFactory;
     private HobbyMapper hobbyMapper;
 
 
     //WeightedDimension
     @Mock
-    private WeightedDimensionSelectableOptionRepository weightedDimensionSelectableOptionRepository;
+    private WeightedDimensionService weightedDimensionService;
     private WeightedSelectableOptionTestDataFactory weightedDimensionFactory;
     private WorkExperienceMapper workExperienceMapper;
 
 
     //BasicDimension
     @Mock
-    private BasicDimensionSelectableOptionRepository basicDimensionSelectableOptionRepository;
+    private BasicDimensionService basicDimensionService;
     private BasicSelectableOptionTestDataFactory basicDimensionFactory;
     private CountryMapper countryMapper;
     private DietMapper dietMapper;
@@ -72,23 +72,23 @@ public class DimensionMapperTest {
         this.dimensionDtoDataFactory = new DimensionDtoDataFactory();
 
         this.multiselectDimensionFactory = new MultiselectSelectableOptionTestDataFactory();
-        this.hobbyMapper = new HobbyMapper(multiselectDimensionSelectableOptionRepository);
+        this.hobbyMapper = new HobbyMapper(multiselectDimensionService);
 
         this.weightedDimensionFactory = new WeightedSelectableOptionTestDataFactory();
-        this.workExperienceMapper = new WorkExperienceMapper(weightedDimensionSelectableOptionRepository);
+        this.workExperienceMapper = new WorkExperienceMapper(weightedDimensionService);
 
 
         this.basicDimensionFactory = new BasicSelectableOptionTestDataFactory();
-        this.countryMapper = new CountryMapper(basicDimensionSelectableOptionRepository);
-        this.dietMapper = new DietMapper(basicDimensionSelectableOptionRepository);
-        this.educationMapper = new EducationMapper(basicDimensionSelectableOptionRepository);
-        this.genderMapper = new GenderMapper(basicDimensionSelectableOptionRepository);
-        this.languageMapper = new LanguageMapper(basicDimensionSelectableOptionRepository);
-        this.projectMapper = new ProjectMapper(basicDimensionSelectableOptionRepository);
-        this.religionMapper = new ReligionMapper(basicDimensionSelectableOptionRepository);
-        this.sexualOrientationMapper = new SexualOrientationMapper(basicDimensionSelectableOptionRepository);
-        this.socialBackgroundDiscriminationMapper = new SocialBackgroundDiscriminationMapper(basicDimensionSelectableOptionRepository);
-        this.socialBackgroundMapper = new SocialBackgroundMapper(basicDimensionSelectableOptionRepository);
+        this.countryMapper = new CountryMapper(basicDimensionService);
+        this.dietMapper = new DietMapper(basicDimensionService);
+        this.educationMapper = new EducationMapper(basicDimensionService);
+        this.genderMapper = new GenderMapper(basicDimensionService);
+        this.languageMapper = new LanguageMapper(basicDimensionService);
+        this.projectMapper = new ProjectMapper(basicDimensionService);
+        this.religionMapper = new ReligionMapper(basicDimensionService);
+        this.sexualOrientationMapper = new SexualOrientationMapper(basicDimensionService);
+        this.socialBackgroundDiscriminationMapper = new SocialBackgroundDiscriminationMapper(basicDimensionService);
+        this.socialBackgroundMapper = new SocialBackgroundMapper(basicDimensionService);
 
     }
 

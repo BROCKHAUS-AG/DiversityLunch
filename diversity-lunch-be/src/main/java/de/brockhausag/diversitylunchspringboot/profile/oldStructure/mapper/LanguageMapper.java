@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.oldStructure.mapper;
 
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.repositories.BasicDimensionSelectableOptionRepository;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.LanguageDto;
 import de.brockhausag.diversitylunchspringboot.profile.oldStructure.generics.DimensionMapper;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LanguageMapper implements DimensionMapper<LanguageDto, BasicDimensionSelectableOption> {
 
-    private final BasicDimensionSelectableOptionRepository repository;
+    private final BasicDimensionService dimensionService;
 
     @Override
     public LanguageDto entityToDto(BasicDimensionSelectableOption entity) {
@@ -23,6 +23,11 @@ public class LanguageMapper implements DimensionMapper<LanguageDto, BasicDimensi
 
     @Override
     public BasicDimensionSelectableOption dtoToEntity(LanguageDto dto) {
-        return repository.getById(dto.getId());
+        return BasicDimensionSelectableOption.builder()
+                .id(dto.getId())
+                .value(dto.getDescriptor())
+                .ignoreInScoring(false)
+                .dimensionCategory(dimensionService.getDimension("Muttersprache").getDimensionCategory())
+                .build();
     }
 }

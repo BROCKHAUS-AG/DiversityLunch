@@ -1,7 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.oldStructure.mapper;
 
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.repositories.BasicDimensionSelectableOptionRepository;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.DietDto;
 import de.brockhausag.diversitylunchspringboot.profile.oldStructure.generics.DimensionMapper;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DietMapper implements DimensionMapper<DietDto, BasicDimensionSelectableOption> {
 
-    private final BasicDimensionSelectableOptionRepository repository;
+    private final BasicDimensionService dimensionService;
 
     @Override
     public DietDto entityToDto(BasicDimensionSelectableOption entity) {
@@ -23,6 +23,11 @@ public class DietMapper implements DimensionMapper<DietDto, BasicDimensionSelect
 
     @Override
     public BasicDimensionSelectableOption dtoToEntity(DietDto dto) {
-        return repository.getById(dto.getId());
+        return BasicDimensionSelectableOption.builder()
+                .id(dto.getId())
+                .value(dto.getDescriptor())
+                .ignoreInScoring(false)
+                .dimensionCategory(dimensionService.getDimension("Ernährung").getDimensionCategory())
+                .build();
     }
 }

@@ -26,6 +26,7 @@ public class BasicDimensionService implements DimensionService<
         return repository.getByDimensionCategory(category);
     }
 
+    @Override
     public List<BasicDimension> getAllDimensions() {
 
         return Lists.newArrayList(repository.findAll());

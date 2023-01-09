@@ -14,7 +14,6 @@ import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,6 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
@@ -104,18 +102,13 @@ class MeetingControllerIT {
         AccountEntity accountEntity1 = accountService.getOrCreateAccount(profileErika.getEmail());
         profileErika = profileService.createProfile(profileErika, accountEntity1.getId()).orElseThrow();
     }
-
+/*
     @AfterEach
     void after() {
         accountRepository.deleteAll();
         meetingProposalRepository.deleteAll();
         profileRepository.deleteAll();
-    }
-
-    @Test
-    void testFalse(){
-        assertFalse(true);
-    }
+    }*/
 
     @Test
     void testGetMeetingProposalByUser_withWrongId_thenForbidden() throws Exception {

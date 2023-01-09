@@ -1,4 +1,4 @@
 package de.brockhausag.diversitylunchspringboot.dimensions.dtos;
 
-public class WeightedDimensionDto {
+public interface DimensionDto {
 }

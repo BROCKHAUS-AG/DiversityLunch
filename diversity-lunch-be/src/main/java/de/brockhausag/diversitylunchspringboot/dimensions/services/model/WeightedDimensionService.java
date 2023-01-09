@@ -1,9 +1,9 @@
 package de.brockhausag.diversitylunchspringboot.dimensions.services.model;
 
 import com.google.common.collect.Lists;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.*;
-import de.brockhausag.diversitylunchspringboot.dimensions.repositories.BasicDimensionRepository;
-import de.brockhausag.diversitylunchspringboot.dimensions.repositories.BasicDimensionSelectableOptionRepository;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimension;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.WeightedDimensionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.WeightedDimensionSelectableOptionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.DimensionService;
@@ -23,6 +23,7 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
         return repository.getByDimensionCategory(category);
     }
 
+    @Override
     public List<WeightedDimension> getAllDimensions() {
         return Lists.newArrayList(repository.findAll());
     }
