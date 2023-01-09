@@ -9,11 +9,10 @@ import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.Profile
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.*;
+import liquibase.pro.packaged.E;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class ProfileTestdataFactory {
 
@@ -66,6 +65,92 @@ public class ProfileTestdataFactory {
                         .selectedWeightedValues(getWeightedSelectedOptions(setNumber))
                         .selectedMultiselectValues(getMultiselectSelectedOptions(setNumber))
                         .wasChangedByAdmin(false)
+                        .build();
+        }
+        return result;
+    }
+
+    public ProfileDto buildDto(int setNumber) {
+        ProfileDto result;
+        switch (setNumber) {
+            case 1:
+                result = ProfileDto.builder()
+                        .id(1L)
+                        .name("First User")
+                        .email("first.mail@some.tld")
+                        .birthYear(1957)
+                        .originCountry(new CountryDto(1L, "Option1"))
+                        .diet(new DietDto(1L, "Option2"))
+                        .education(new EducationDto(1L, "Option1"))
+                        .gender(new GenderDto(1L, "Option1"))
+                        .hobby(List.of(new HobbyDto(1L, "Option1"), new HobbyDto(2L, "Option2"), new HobbyDto(3L, "Option3")))
+                        .motherTongue(new LanguageDto(1L, "Option1"))
+                        .project(new ProjectDto(1L, "Option1"))
+                        .religion(new ReligionDto(1L, "Option1"))
+                        .sexualOrientation(new SexualOrientationDto(1L, "Option1"))
+                        .socialBackgroundDiscrimination(new SocialBackgroundDiscriminationDto(1L, "Option1"))
+                        .socialBackground(new SocialBackgroundDto(1L, "Option1"))
+                        .workExperience(new WorkExperienceDto(1L, "Option1"))
+                        .build();
+                break;
+            case 2:
+                result = ProfileDto.builder()
+                        .id(2L)
+                        .name("Third User")
+                        .email("third.mail@some.tld")
+                        .birthYear(1969)
+                        .originCountry(new CountryDto(3L, "Option3"))
+                        .diet(new DietDto(3L, "Option3"))
+                        .education(new EducationDto(3L, "Option3"))
+                        .gender(new GenderDto(3L, "Option3"))
+                        .hobby(List.of(new HobbyDto(4L, "Option4"), new HobbyDto(5L, "Option5"), new HobbyDto(6L, "Option6")))
+                        .motherTongue(new LanguageDto(3L, "Option3"))
+                        .project(new ProjectDto(3L, "Option3"))
+                        .religion(new ReligionDto(3L, "Option3"))
+                        .sexualOrientation(new SexualOrientationDto(3L, "Option3"))
+                        .socialBackgroundDiscrimination(new SocialBackgroundDiscriminationDto(3L, "Option3"))
+                        .socialBackground(new SocialBackgroundDto(3L, "Option3"))
+                        .workExperience(new WorkExperienceDto(3L, "Option3"))
+                        .build();
+                break;
+            case 3:
+                result = ProfileDto.builder()
+                        .id(3L)
+                        .name("Second User")
+                        .email("second.mail@some.tld")
+                        .birthYear(2001)
+                        .originCountry(new CountryDto(10L, "DefaultOption"))
+                        .diet(new DietDto(1L, "Option1"))
+                        .education(new EducationDto(2L, "Option2"))
+                        .gender(new GenderDto(3L, "Option3"))
+                        .hobby(List.of(new HobbyDto(3L, "Option3"), new HobbyDto(4L, "Option4"), new HobbyDto(5L, "Option5")))
+                        .motherTongue(new LanguageDto(10L, "DefaultOption"))
+                        .project(new ProjectDto(1L, "Option1"))
+                        .religion(new ReligionDto(2L, "Option2"))
+                        .sexualOrientation(new SexualOrientationDto(3L, "Option3"))
+                        .socialBackgroundDiscrimination(new SocialBackgroundDiscriminationDto(10L, "DefaultOption"))
+                        .socialBackground(new SocialBackgroundDto(1L, "Option1"))
+                        .workExperience(new WorkExperienceDto(1L, "Option1"))
+                        .build();
+                break;
+            default:
+                result = ProfileDto.builder()
+                        .id(10L)
+                        .name("Default User")
+                        .email("default.mail@some.tld")
+                        .birthYear(2000)
+                        .originCountry(new CountryDto(10L, "DefaultOption"))
+                        .diet(new DietDto(10L, "DefaultOption"))
+                        .education(new EducationDto(10L, "DefaultOption"))
+                        .gender(new GenderDto(10L, "DefaultOption"))
+                        .hobby(new ArrayList<>())
+                        .motherTongue(new LanguageDto(10L, "DefaultOption"))
+                        .project(new ProjectDto(10L, "DefaultOption"))
+                        .religion(new ReligionDto(10L, "DefaultOption"))
+                        .sexualOrientation(new SexualOrientationDto(10L, "DefaultOption"))
+                        .socialBackgroundDiscrimination(new SocialBackgroundDiscriminationDto(10L, "DefaultOption"))
+                        .socialBackground(new SocialBackgroundDto(10L, "DefaultOption"))
+                        .workExperience(new WorkExperienceDto(10L, "DefaultOption"))
                         .build();
         }
         return result;

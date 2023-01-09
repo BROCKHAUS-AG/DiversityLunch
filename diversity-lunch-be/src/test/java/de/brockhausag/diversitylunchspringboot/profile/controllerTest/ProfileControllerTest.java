@@ -3,6 +3,9 @@ package de.brockhausag.diversitylunchspringboot.profile.controllerTest;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.oldStructure.controller.ProfileController;
+import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.ProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.oldStructure.mapper.ProfileMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,11 +21,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ProfileControllerTest {
-    @Test
-    void testFalse(){
-        assertFalse(true);
-    }
-/*
+
     private final ProfileTestdataFactory factory = new ProfileTestdataFactory();
     private final Long accountId = 5L;
     @Mock
@@ -143,6 +142,6 @@ class ProfileControllerTest {
 
         //Assert
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }*/
+    }
 }
 
