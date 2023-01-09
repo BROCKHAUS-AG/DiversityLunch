@@ -22,9 +22,9 @@ public class MultiselectDimension implements Dimension<MultiselectDimensionSelec
     @GeneratedValue
     private Long id;
     @NotNull
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private DimensionCategory dimensionCategory;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "dimension_category_id")
     @Size(min = 1)
     private Set<MultiselectDimensionSelectableOption> selectableValues;

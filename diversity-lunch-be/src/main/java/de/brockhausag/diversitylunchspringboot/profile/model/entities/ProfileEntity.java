@@ -39,19 +39,17 @@ public class ProfileEntity {
     @NotNull
     private boolean wasChangedByAdmin;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @MapKeyJoinColumn(name = "basic_dimension", referencedColumnName = "id")
     @ToString.Exclude
     private Map<BasicDimension, BasicDimensionSelectableOption> selectedBasicValues;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @MapKeyJoinColumn(name = "weighted_dimension", referencedColumnName = "id")
     @ToString.Exclude
     private Map<WeightedDimension, WeightedDimensionSelectableOption> selectedWeightedValues;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {
-            CascadeType.ALL
-    })
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id")
     @MapKeyJoinColumn(name = "multiselect_dimension", referencedColumnName = "id")
     @ToString.Exclude

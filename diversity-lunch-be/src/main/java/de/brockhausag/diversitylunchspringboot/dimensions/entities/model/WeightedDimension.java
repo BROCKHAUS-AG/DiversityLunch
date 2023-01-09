@@ -23,9 +23,9 @@ public class WeightedDimension implements Dimension<WeightedDimensionSelectableO
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private DimensionCategory dimensionCategory;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "dimension_category_id")
     @Size(min = 1)
     @ToString.Exclude

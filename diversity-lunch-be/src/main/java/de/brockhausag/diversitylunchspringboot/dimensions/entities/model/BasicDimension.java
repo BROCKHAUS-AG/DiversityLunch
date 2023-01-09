@@ -22,9 +22,9 @@ public class BasicDimension implements Dimension<BasicDimensionSelectableOption>
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private DimensionCategory dimensionCategory;
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "dimension_category_id")
     @Size(min = 1)
     @ToString.Exclude
