@@ -1,3 +1,19 @@
+.diversitylunch-logo{
+  justify-content: center;
+}
+
+
+
+.IconHeader-diversity-logo-container{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  color: #b81f40;
+  margin-left: 135px;
+}
+
 @media screen and (max-width: 900px) {
   .IconHeader-diversity-logo-container{
     display: flex;

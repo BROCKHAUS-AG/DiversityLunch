@@ -48,20 +48,22 @@
       width: 30vw;
     }
 
+
     .inLineToggle{
       display: inline-block;
-      width: 15vw;
+      width: 100%;
       margin-right: 1rem;
       vertical-align: top;
     }
+
     .inLineToggleHelper{
       display: inline-block;
       margin-left: 2rem;
     }
     .MuiAutocomplete-root.MuiAutocomplete-hasClearIcon.MuiAutocomplete-hasPopupIcon, .MuiFormControl-root{
       display: inline-block;
-      width: 30vw;
-      margin-left: 2rem;
+      width:90%;
+      margin-left: .2rem;
       vertical-align: middle;
     }
 
@@ -74,6 +76,19 @@
       }
       .MuiAutocomplete-root.MuiAutocomplete-hasClearIcon.MuiAutocomplete-hasPopupIcon{
         display: block;
+      }
+    }
+
+    @media screen and (min-width: 993px){
+      .inLineToggle{
+        width: 15vw;
+      }
+
+      .MuiAutocomplete-root.MuiAutocomplete-hasClearIcon.MuiAutocomplete-hasPopupIcon, .MuiFormControl-root{
+        display: inline-block;
+        width: 30vw;
+        margin-left: 2rem;
+        vertical-align: middle;
       }
     }
   }

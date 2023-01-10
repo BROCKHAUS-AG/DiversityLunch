@@ -3,13 +3,62 @@
 }
 
 .navbar {
-  background-color: var(--navBg);
-  height: 80px;
+  height: 0px;
   display: flex;
   justify-content: start;
   align-items: center;
   z-index: 99999;
 }
+
+@media screen and (min-width: 992px) {
+  .navbar {
+    background-color: var(--navBg);
+    height: 80px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    z-index: 99999;
+  }
+}
+
+.hamburg {
+  display: block;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 4px;
+}
+
+.line {
+  position: absolute;
+  left: 10px;
+  height: 4px;
+  width: 55px;
+  background: red;
+  border-radius: 2px;
+  display: block;
+  transition: 0.5s;
+  transform-origin: center;
+}
+
+@media screen and (min-width: 700px) {
+  .line {
+    background: #fff;
+  }
+}
+
+.line:nth-child(1) {
+  top: 12px;
+}
+
+.line:nth-child(2) {
+  top: 24px;
+}
+
+.line:nth-child(3) {
+  top: 36px;
+}
+
 
 .navbar-l .header {
   .IconHeader-icon-voucher-percent {
@@ -29,9 +78,9 @@
 .navbar-l .ClickIcon-Wrapper .Tile-icon {
   filter: brightness(0) saturate(100%) invert(95%) sepia(100%) saturate(20%) hue-rotate(317deg) brightness(106%) contrast(106%);
 
-    width: 25px;
-    height: auto;
-    margin: 10px;
+  width: 25px;
+  height: auto;
+  margin: 10px;
 
 }
 
@@ -103,7 +152,7 @@ span {
   margin-left: 16px;
 }
 
-@media (min-width: 0px) {
+@media screen and (min-width: 0px) {
   .navbar-mobile {
     display: block;
   }

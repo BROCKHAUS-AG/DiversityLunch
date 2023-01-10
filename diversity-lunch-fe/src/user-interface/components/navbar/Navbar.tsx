@@ -26,7 +26,13 @@ export const Navbar = () => {
             <div className="navbar-mobile">
                 <div className="navbar">
                     <Link to="#" className="menu-bars">
-                        <p onClick={showSidebar}>MOBILE</p>
+                        <div onClick={showSidebar} className="row">
+                            <div className="hamburg">
+                                <span className="line" />
+                                <span className="line" />
+                                <span className="line" />
+                            </div>
+                        </div>
                     </Link>
                     <CloseSite />
                 </div>

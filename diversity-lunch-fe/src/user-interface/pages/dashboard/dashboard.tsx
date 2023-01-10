@@ -18,6 +18,7 @@ export const Dashboard = () => {
     } else {
         return <LoadingAnimation />;
     }
+
     const isAdmin: boolean = account.role === Role.ADMIN || account.role === Role.AZURE_ADMIN;
 
     return (

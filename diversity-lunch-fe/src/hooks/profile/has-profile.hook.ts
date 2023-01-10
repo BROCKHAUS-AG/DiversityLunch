@@ -22,7 +22,6 @@ export const useHasProfile = () => {
             } else {
                 const { profileId } = accountState.accountData;
                 dispatch(loadProfile(profileId));
-                console.log('Marker01 ', profileStatus);
             }
         }
     }, [profileStatus, dispatch, authenticationState, accountState]);
