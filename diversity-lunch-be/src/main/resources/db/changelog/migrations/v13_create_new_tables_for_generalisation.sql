@@ -62,7 +62,7 @@ create table profile_entity_selected_multiselect_value
 (
     id                 BIGSERIAL  primary key ,
     profile_id         bigint    ,
-    multiselect_dimension bigint    
+    multiselect_dimension_id bigint
 );
 create table profile_entity_selected_multiselect_value_selected_options
 (

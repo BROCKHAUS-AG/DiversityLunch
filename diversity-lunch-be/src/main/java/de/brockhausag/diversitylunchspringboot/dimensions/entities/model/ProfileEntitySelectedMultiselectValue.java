@@ -1,6 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.dimensions.entities.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -17,6 +19,9 @@ public class ProfileEntitySelectedMultiselectValue {
     private Long id;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<MultiselectDimensionSelectableOption> selectedOptions;
+
+    @OneToOne
+    private MultiselectDimension multiselectDimension;
 
     @Override
     public boolean equals(Object o) {

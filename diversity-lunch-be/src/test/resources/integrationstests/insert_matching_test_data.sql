@@ -50,7 +50,7 @@ INSERT INTO profile_entity_selected_weighted_values (profile_entity_id, selected
     (5, (SELECT * FROM lowExperience), (SELECT * FROM workxp));
 
 WITH hobby AS (SELECT id FROM multiselect_dimension WHERE dimension_category_id=(SELECT id FROM dimension_category WHERE description='Hobby'))
-INSERT INTO profile_entity_selected_multiselect_value (profile_id, multiselect_dimension) VALUES
+INSERT INTO profile_entity_selected_multiselect_value (profile_id, multiselect_dimension_id) VALUES
     (1, (SELECT * FROM hobby)),
     (2, (SELECT * FROM hobby)),
     (3, (SELECT * FROM hobby)),

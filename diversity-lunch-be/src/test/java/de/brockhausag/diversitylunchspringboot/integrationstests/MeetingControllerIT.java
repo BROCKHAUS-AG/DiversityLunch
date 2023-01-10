@@ -2,15 +2,12 @@ package de.brockhausag.diversitylunchspringboot.integrationstests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
-import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.config.MsTeamsTestConfig;
 import de.brockhausag.diversitylunchspringboot.integrationDataFactories.MeetingTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.integrationDataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.CreateMeetingProposalDto;
-import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
-import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +39,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @SqlGroup({
         @Sql(scripts = "classpath:integrationstests/insert_test_data.sql", executionPhase = BEFORE_TEST_METHOD),
-        @Sql(scripts = "classpath:integrationstests/insert_matching_test_data.sql", executionPhase = BEFORE_TEST_METHOD),
         @Sql(scripts = "classpath:integrationstests/delete_test_data.sql", executionPhase = AFTER_TEST_METHOD)
 })
 @ActiveProfiles("Test")
@@ -70,15 +66,6 @@ class MeetingControllerIT {
     @Autowired
     private WebApplicationContext appContext;
 
-    @Autowired
-    private AccountRepository accountRepository;
-
-    @Autowired
-    private ProfileRepository profileRepository;
-
-    @Autowired
-    private MeetingProposalRepository meetingProposalRepository;
-
     private MockMvc mockMvc;
 
     private ProfileEntity profileMax;
@@ -102,13 +89,6 @@ class MeetingControllerIT {
         AccountEntity accountEntity1 = accountService.getOrCreateAccount(profileErika.getEmail());
         profileErika = profileService.createProfile(profileErika, accountEntity1.getId()).orElseThrow();
     }
-/*
-    @AfterEach
-    void after() {
-        accountRepository.deleteAll();
-        meetingProposalRepository.deleteAll();
-        profileRepository.deleteAll();
-    }*/
 
     @Test
     void testGetMeetingProposalByUser_withWrongId_thenForbidden() throws Exception {

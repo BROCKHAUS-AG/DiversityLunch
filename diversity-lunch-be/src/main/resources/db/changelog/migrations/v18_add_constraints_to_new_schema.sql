@@ -43,7 +43,7 @@ ALTER TABLE  profile_entity_selected_multiselect_value
     ADD CONSTRAINT fk_profile_id FOREIGN KEY(profile_id)
         REFERENCES profile_entity(id) ON DELETE CASCADE;
 ALTER TABLE  profile_entity_selected_multiselect_value
-    ADD CONSTRAINT fk_multi_dimension FOREIGN KEY(multiselect_dimension)
+    ADD CONSTRAINT fk_multi_dimension FOREIGN KEY(multiselect_dimension_id)
         REFERENCES multiselect_dimension(id) ON DELETE CASCADE;
 
 

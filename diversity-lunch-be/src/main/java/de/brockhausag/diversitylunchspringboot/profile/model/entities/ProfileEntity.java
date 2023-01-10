@@ -51,7 +51,7 @@ public class ProfileEntity {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id")
-    @MapKeyJoinColumn(name = "multiselect_dimension", referencedColumnName = "id")
+    @MapKeyJoinColumn(name = "multiselect_dimension_id", referencedColumnName = "id")
     @ToString.Exclude
     private Map<MultiselectDimension, ProfileEntitySelectedMultiselectValue> selectedMultiselectValues;
 
