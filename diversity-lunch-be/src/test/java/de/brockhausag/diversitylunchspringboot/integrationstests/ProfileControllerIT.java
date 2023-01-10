@@ -4,10 +4,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.config.SecurityConfig;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.MultiselectDimensionService;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.WeightedDimensionService;
 import de.brockhausag.diversitylunchspringboot.integrationDataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.ProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.oldStructure.mapper.ProfileMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -26,7 +32,6 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
@@ -52,14 +57,20 @@ class ProfileControllerIT {
     private ProfileEntity myProfileEntity;
     private AccountEntity myAccountEntity;
     private AccountEntity otherAccountEntity;
-    //@Autowired
-    //private ProfileMapper profileMapper;
+    @Autowired
+    private ProfileMapper profileMapper;
     @Autowired
     private WebApplicationContext appContext;
     @Autowired
     private AccountService accountService;
     @Autowired
     private ProfileService profileService;
+    @Autowired
+    private BasicDimensionService basicDimensionService;
+    @Autowired
+    private WeightedDimensionService weightedDimensionService;
+    @Autowired
+    private MultiselectDimensionService multiselectDimensionService;
     @Mock
     private MicrosoftGraphService microsoftGraphService;
 
@@ -69,7 +80,7 @@ class ProfileControllerIT {
                 .apply(springSecurity())
                 .build();
 
-        /*myProfileEntity = profileFactory.createNewMaxProfile();
+        myProfileEntity = profileFactory.createNewMaxProfile();
         ProfileEntity otherProfileEntity = profileFactory.createNewErikaProfile();
         myAccountEntity = accountService.getOrCreateAccount(myProfileEntity.getEmail());
         otherAccountEntity = accountService.getOrCreateAccount(otherProfileEntity.getEmail());
@@ -77,14 +88,9 @@ class ProfileControllerIT {
         when(microsoftGraphService.getGroups()).thenReturn(Optional.of(new ArrayList<>()));
 
         myProfileEntity = profileService.createProfile(myProfileEntity, myAccountEntity.getId()).orElseThrow();
-        profileService.createProfile(otherProfileEntity, otherAccountEntity.getId()).orElseThrow();*/
+        profileService.createProfile(otherProfileEntity, otherAccountEntity.getId()).orElseThrow();
     }
 
-    @Test
-    void testFalse(){
-        assertFalse(true);
-    }
-/*
     @Test
     void testGetProfile_withValidId_thenOKWithExpectedProfile() throws Exception {
         this.mockMvc
@@ -96,17 +102,20 @@ class ProfileControllerIT {
                 .andExpect(jsonPath("$.name").value(myProfileEntity.getName()))
                 .andExpect(jsonPath("$.email").value(myProfileEntity.getEmail()))
                 .andExpect(jsonPath("$.birthYear").value(myProfileEntity.getBirthYear()))
-                .andExpect(jsonPath("$.project.descriptor").value(myProfileEntity.getProject().getDescriptor()))
-                .andExpect(jsonPath("$.diet.descriptor").value(myProfileEntity.getDiet().getDescriptor()))
-                .andExpect(jsonPath("$.education.descriptor").value(myProfileEntity.getEducation().getDescriptor()))
-                .andExpect(jsonPath("$.gender.descriptor").value(myProfileEntity.getGender().getDescriptor()))
-                .andExpect(jsonPath("$.hobby[0].descriptor").value(myProfileEntity.getHobby().get(0).getDescriptor()))
-                .andExpect(jsonPath("$.hobby[1].descriptor").value(myProfileEntity.getHobby().get(1).getDescriptor()))
-                .andExpect(jsonPath("$.hobby[2].descriptor").value(myProfileEntity.getHobby().get(2).getDescriptor()))
-                .andExpect(jsonPath("$.motherTongue.descriptor").value(myProfileEntity.getMotherTongue().getDescriptor()))
-                .andExpect(jsonPath("$.originCountry.descriptor").value(myProfileEntity.getOriginCountry().getDescriptor()))
-                .andExpect(jsonPath("$.religion.descriptor").value(myProfileEntity.getReligion().getDescriptor()))
-                .andExpect(jsonPath("$.workExperience.descriptor").value(myProfileEntity.getWorkExperience().getDescriptor()));
+                .andExpect(jsonPath("$.project.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Projekt")).getValue()))
+                .andExpect(jsonPath("$.diet.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Ernährung")).getValue()))
+                .andExpect(jsonPath("$.education.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Bildungsweg")).getValue()))
+                .andExpect(jsonPath("$.gender.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Geschlechtliche Identität")).getValue()))
+                .andExpect(jsonPath("$.hobby[0].descriptor").value(getSelectedMultiselect("Hobby", 0).getValue()))
+                .andExpect(jsonPath("$.hobby[1].descriptor").value(getSelectedMultiselect("Hobby", 1).getValue()))
+                .andExpect(jsonPath("$.hobby[2].descriptor").value(getSelectedMultiselect("Hobby", 2).getValue()))
+                .andExpect(jsonPath("$.motherTongue.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Muttersprache")).getValue()))
+                .andExpect(jsonPath("$.originCountry.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Ethnische Herkunft")).getValue()))
+                .andExpect(jsonPath("$.religion.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Religion")).getValue()))
+                .andExpect(jsonPath("$.sexualOrientation.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Sexuelle Orientierung")).getValue()))
+                .andExpect(jsonPath("$.socialBackground.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Soziale Herkunft")).getValue()))
+                .andExpect(jsonPath("$.socialBackgroundDiscrimination.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Diskriminierung aufgrund sozialer Herkunft")).getValue()))
+                .andExpect(jsonPath("$.workExperience.descriptor").value(myProfileEntity.getSelectedWeightedValues().get(weightedDimensionService.getDimension("Berufserfahrung")).getValue()));
     }
 
     @Test
@@ -166,5 +175,14 @@ class ProfileControllerIT {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(profileJSON)
                 ).andExpect(status().isForbidden());
-    }*/
+    }
+
+    MultiselectDimensionSelectableOption getSelectedMultiselect(String dimensionName, int selected) {
+        var options = myProfileEntity.getSelectedMultiselectValues().get(multiselectDimensionService.getDimension(dimensionName)).getSelectedOptions().iterator();
+        MultiselectDimensionSelectableOption result = options.next();
+        while(selected-- > 0 && options.hasNext()) {
+            result = options.next();
+        }
+        return result;
+    }
 }
