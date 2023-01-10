@@ -3,6 +3,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  .FAQ-title {
+    cursor: pointer;
+  }
 }
 
 .Information-info-text {

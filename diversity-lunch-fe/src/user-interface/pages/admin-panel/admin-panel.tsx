@@ -49,16 +49,46 @@ export const AdminPanel: FC = () => {
     };
     return (
         <section className="view">
+
+            <div className="adminPanelContainer">
+                <div className="header">
+                    <CloseSite />
+                    <DiversityIcon title="ADMIN PANEL" />
+                </div>
+
+                <div className="bottom">
+                    <UserList />
+
+                    <div className="optionsListContainer">
+                        <div>
+                            <details>
+                                <summary className="editListTitle">
+                                    Profilangaben
+                                </summary>
+                                <section>
+                                    <IdentifiableOptionsList
+                                        state={projectState}
+                                        fetch={projectFetch}
+                                        title="Projektliste anpassen"
+                                        header="Frage: In welchem Projekt arbeitest du derzeit?"
+                                        addButtonLabel="Projekt hinzufügen"
+                                    />
+                                </section>
+                            </details>
+                        </div>
+                    </div>
             <CloseSite />
             <UserList />
             <IdentifiableOptionsList state={projectState} fetch={projectFetch} title="Projektliste anpassen" addButtonLabel="Projekt hinzufügen" />
 
             <VoucherUpload />
 
-            <div className="customContainer">
-                <button className="testmailButton" onClick={sendTestmail}>Testmail verschicken</button>
+                    <div className="testMailContainer">
+                        <button className="testmailButton" onClick={sendTestmail}>Testmail verschicken</button>
+                    </div>
+                    {emailSuccess && <PopUp onButtonClick={() => { setEmailSuccess(false); }} message="Testmail gesendet" buttonText="Okay" />}
+                </div>
             </div>
-            {emailSuccess && <PopUp onButtonClick={() => { setEmailSuccess(false); }} message="Testmail gesendet" buttonText="Okay" />}
         </section>
 
     );

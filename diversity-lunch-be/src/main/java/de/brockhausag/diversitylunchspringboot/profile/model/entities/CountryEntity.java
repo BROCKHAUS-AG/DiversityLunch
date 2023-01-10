@@ -40,6 +40,7 @@ public class CountryEntity implements DefaultDimensionEntity {
         return other.id.equals(this.id) && other.descriptor.equals(this.descriptor);
     }
 
+    @Override
     public Category getQuestionCategory() {
         return Category.COUNTRY_OF_ORIGIN;
     }

@@ -1,5 +1,6 @@
 import React from 'react';
 import './information.scss';
+import Faq from '../../components/faq/faq';
 
 export const Information = () => (
     <div className="Information">
@@ -28,6 +29,8 @@ export const Information = () => (
             <br />
             Das Diversity-Team der BROCKHAUS AG
         </p>
+
+        <Faq />
 
     </div>
 );

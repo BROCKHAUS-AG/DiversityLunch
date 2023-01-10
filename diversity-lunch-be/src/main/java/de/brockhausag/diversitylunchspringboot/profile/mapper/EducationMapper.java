@@ -2,11 +2,11 @@ package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.EducationDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.EducationEntity;
-import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EducationMapper implements Mapper<EducationDto, EducationEntity> {
+public class EducationMapper implements DimensionMapper<EducationDto, EducationEntity> {
     @Override
     public EducationDto entityToDto(EducationEntity entity) {
         EducationDto educationDto = new EducationDto();

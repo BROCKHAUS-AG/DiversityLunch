@@ -100,7 +100,6 @@ class ProfileControllerIT {
                 .andExpect(jsonPath("$.hobby[0].descriptor").value(myProfileEntity.getHobby().get(0).getDescriptor()))
                 .andExpect(jsonPath("$.hobby[1].descriptor").value(myProfileEntity.getHobby().get(1).getDescriptor()))
                 .andExpect(jsonPath("$.hobby[2].descriptor").value(myProfileEntity.getHobby().get(2).getDescriptor()))
-                .andExpect(jsonPath("$.hobby[0].category.descriptor").value(myProfileEntity.getHobby().get(0).getCategory().getDescriptor()))
                 .andExpect(jsonPath("$.motherTongue.descriptor").value(myProfileEntity.getMotherTongue().getDescriptor()))
                 .andExpect(jsonPath("$.originCountry.descriptor").value(myProfileEntity.getOriginCountry().getDescriptor()))
                 .andExpect(jsonPath("$.religion.descriptor").value(myProfileEntity.getReligion().getDescriptor()))

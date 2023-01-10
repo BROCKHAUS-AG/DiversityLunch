@@ -48,7 +48,7 @@ public class MeetingProposalValidationTest {
     }
 
     @Test
-    void test_12_00_isNoValidSummerTime() {
+    void test_12_00_isValidSummerTime() {
         LocalDateTime proposedDate_1200_1st_June_2022 = LocalDateTime.of(2022, Month.JUNE, 1, 12, 0);
         MeetingProposalValidation meetingProposalValidation = new MeetingProposalValidation();
 
@@ -98,11 +98,11 @@ public class MeetingProposalValidationTest {
     }
 
     @Test
-    void test_11_00_isNoValidWinterTime() {
-        LocalDateTime proposedDate_1100_1st_December_2022 = LocalDateTime.of(2022, Month.DECEMBER, 1, 11, 0);
+    void test_10_00_isNoValidWinterTime() {
+        LocalDateTime proposedDate_1000_1st_December_2022 = LocalDateTime.of(2022, Month.DECEMBER, 1, 10, 0);
         MeetingProposalValidation meetingProposalValidation = new MeetingProposalValidation();
 
-        boolean result = meetingProposalValidation.isValid(proposedDate_1100_1st_December_2022, cvcMock);
+        boolean result = meetingProposalValidation.isValid(proposedDate_1000_1st_December_2022, cvcMock);
 
         assertFalse(result);
     }

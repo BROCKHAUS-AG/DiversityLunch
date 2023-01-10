@@ -1,8 +1,6 @@
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import {
-    fireEvent, render, screen,
-} from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import React, { FC } from 'react';
 import { APP_STORE, AppStoreState } from '../../../data/app-store';
 import { projectFetch } from '../../../data/project/project-fetch';
@@ -22,6 +20,7 @@ const WrapperComponent: FC = () => {
             state={projectState}
             fetch={projectFetch}
             title="Projektliste anpassen"
+            header="Frage: In welchem Projekt arbeitest du derzeit?"
             addButtonLabel={addButtonLabel}
         />
     );
@@ -46,6 +45,11 @@ describe('OptionsList', () => {
 
     it('should render the correct title', async () => {
         const result = await screen.queryByText('Projektliste anpassen');
+        expect(result).toBeInTheDocument();
+    });
+
+    it('should render the correct header', async () => {
+        const result = await screen.queryByText('Frage: In welchem Projekt arbeitest du derzeit?');
         expect(result).toBeInTheDocument();
     });
 
