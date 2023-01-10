@@ -1,7 +1,0 @@
-package de.brockhausag.diversitylunchspringboot.dimensions.repositories;
-
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.ProfileEntitySelectedMultiselectValues;
-import org.springframework.data.repository.CrudRepository;
-
-public interface ProfileEntitySelectedMultiselectValueRepository extends CrudRepository<ProfileEntitySelectedMultiselectValues, Long> {
-}

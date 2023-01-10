@@ -5,11 +5,12 @@ import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDi
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.ProfileEntitySelectedMultiselectValues;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.ProfileEntitySelectedMultiselectValue;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.*;
+import liquibase.pro.packaged.E;
 
 import java.util.*;
 
@@ -204,11 +205,11 @@ public class ProfileTestdataFactory {
         }
         return result;
     }
-    private Map<MultiselectDimension, ProfileEntitySelectedMultiselectValues> getMultiselectSelectedOptions(int setNumber) {
+    private Map<MultiselectDimension, ProfileEntitySelectedMultiselectValue> getMultiselectSelectedOptions(int setNumber) {
         MultiselectDimensionTestDataFactory MultiselectFactory = new MultiselectDimensionTestDataFactory();
         MultiselectSelectableOptionTestDataFactory MultiselectSelectableFactory = new MultiselectSelectableOptionTestDataFactory();
         Set<MultiselectDimension> MultiselectDimensions = MultiselectFactory.buildEntities(2);
-        Map<MultiselectDimension, ProfileEntitySelectedMultiselectValues> result = new HashMap<>();
+        Map<MultiselectDimension, ProfileEntitySelectedMultiselectValue> result = new HashMap<>();
 
         for (MultiselectDimension d : MultiselectDimensions) {
             Set<MultiselectDimensionSelectableOption> selectedOptions = new HashSet<>();
@@ -230,7 +231,7 @@ public class ProfileTestdataFactory {
                     break;
                 default:
             }
-            ProfileEntitySelectedMultiselectValues selectedMultiselectValue = new ProfileEntitySelectedMultiselectValues();
+            ProfileEntitySelectedMultiselectValue selectedMultiselectValue = new ProfileEntitySelectedMultiselectValue();
             selectedMultiselectValue.setSelectedOptions(selectedOptions);
             result.put(d, selectedMultiselectValue);
         }
