@@ -79,7 +79,7 @@ export const AdminPanel: FC = () => {
                     </div>
             <CloseSite />
             <UserList />
-            <IdentifiableOptionsList state={projectState} fetch={projectFetch} title="Projektliste anpassen" addButtonLabel="Projekt hinzufügen" />
+            <IdentifiableOptionsList state={projectState} fetch={projectFetch} title="Projektliste anpassen" addButtonLabel="Projekt hinzufügen"  header="Projekte"/>
 
             <VoucherUpload />
 
