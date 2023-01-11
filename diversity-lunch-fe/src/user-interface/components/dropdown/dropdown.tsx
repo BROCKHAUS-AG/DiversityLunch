@@ -34,6 +34,7 @@ export const Dropdown = <T extends Identifiable>({
                 }
                 onChange={callOnChange}
                 defaultValue={currentValue}
+                value={currentValue}
                 getOptionSelected={(option, value) => option.id === value.id}
             />
         </div>
