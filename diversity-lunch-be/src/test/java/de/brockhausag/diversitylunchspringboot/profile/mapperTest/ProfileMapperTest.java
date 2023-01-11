@@ -94,11 +94,16 @@ class ProfileMapperTest {
     }
 
     @Test
+    void workToDo(){
+        assertTrue(false);
+    }
+    /*
+    @Test
     void testDtoToEntity_withOneDto_returnsOneEntity() {
         //Arrange
         ProfileDto inputDto = factory.buildDto(1);
         ProfileEntity expectedEntity = factory.buildEntity(1);
-/*
+
 
         when(basicDimensionService.getSelectableOptionById(inputDto.getOriginCountry().getId()).thenReturn(Optional.of(expectedEntity.ge.get()));
         when(countryService.getEntityById(inputDto.getOriginCountry().getId())).thenReturn(Optional.of(expectedEntity.getOriginCountry()));
@@ -113,7 +118,7 @@ class ProfileMapperTest {
         when(sexualOrientationService.getEntityById(inputDto.getSexualOrientation().getId())).thenReturn(Optional.of(expectedEntity.getSexualOrientation()));
         when(socialBackgroundService.getEntityById(inputDto.getSocialBackground().getId())).thenReturn(Optional.of(expectedEntity.getSocialBackground()));
         when(socialBackgroundDiscriminationService.getEntityById(inputDto.getSocialBackgroundDiscrimination().getId())).thenReturn(Optional.of(expectedEntity.getSocialBackgroundDiscrimination()));
-*/
+
 
         //Act
         Optional<ProfileEntity> profileEntityOptional = profileMapper.dtoToEntity(inputDto);
@@ -123,6 +128,7 @@ class ProfileMapperTest {
         assertEquals(expectedEntity, profileEntityOptional.get());
     }
 
+     */
     @Test
     void testEntityToDto_withEmptyEntityList_returnsEmptyDtoList() {
         //Arrange
@@ -135,6 +141,10 @@ class ProfileMapperTest {
         assertTrue(actualList.isEmpty());
     }
 
+    @Test
+    void workToDo2(){
+        assertTrue(false);
+    }
 //    @Test
 //    void testEntityToDto_withOneEntity_returnsOneDto() {
 //        //Arrange

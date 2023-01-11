@@ -249,4 +249,24 @@ public class DimensionMapperTest {
         assertTrue(actualSocialBackgroundDto.isEmpty());
         assertTrue(actualWorkExperienceDto.isEmpty());
     }
+
+    @Test
+    void workToDo(){
+        assertTrue(false);
+    }
+
+//    @Test
+//    void testDtoToEntity_withEmptyDtoList_returnsEmptyEntityList() {
+//
+//    }
+//
+//    @Test
+//    void testDtoToEntity_withOneDto_returnsOneEntity() {
+//
+//    }
+//
+//    @Test
+//    void testDtoToEntity_withListOfTwoDtos_returnsListOfTwoEntity() {
+//
+//    }
 }

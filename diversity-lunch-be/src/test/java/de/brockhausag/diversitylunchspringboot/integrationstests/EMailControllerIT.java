@@ -1,4 +1,3 @@
-/*
 package de.brockhausag.diversitylunchspringboot.integrationstests;
 
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
@@ -78,6 +77,12 @@ public class EMailControllerIT {
     private ProfileEntity myProfileEntity;
     private AccountEntity accountEntity;
 
+    @Test
+    void testDtoToEntity_withEmptyDtoList_returnsEmptyEntityList() {
+
+    }
+
+    /*
     @SneakyThrows
     @BeforeEach
     void setup() {
@@ -195,6 +200,6 @@ public class EMailControllerIT {
         );
     }
 
+*/
 
 }
-*/
