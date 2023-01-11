@@ -1,3 +1,13 @@
+.card {
+  .image {
+    .icon {
+      height: auto;
+      width: 80px;
+    }
+  }
+}
+
+
 @media screen and (min-width: 450px) {
 
 
@@ -5,78 +15,88 @@
 
 @media screen and (min-width: 850px) {
 
+  .Dashboard {
+    max-width: 1180px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
+    .Dashboard-container {
+      margin-bottom: 3rem;
+      .card {
+        .image {
+          height: 40%;
+          width: auto;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
 
-.Dashboard {
-  max-width: 1180px;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+        .body {
+          margin-top: 1rem;
 
-  .Dashboard-container{
-    .card{
-      .image{
-        background-color: gray;
-        height: 40%;
-        width: auto;
-      }
-      .body{
-
+          button{
+            margin-top: 2rem;
+          }
+        }
       }
     }
-  }
 
 
-  /* Float four columns side by side */
-  .column {
-    float: left;
-    width: 30%;
-    padding: 0 10px;
-  }
-
-  /* Remove extra left and right margins, due to padding in columns */
-  .row {
-
-  }
-
-  /* Clear floats after the columns */
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-
-  /* Style the counter cards */
-  .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
-    padding: 16px;
-    text-align: center;
-    background-color: #f1f1f1;
-    height: 30vh;
-  }
-
-  /* Responsive columns - one column layout (vertical) on small screens */
-  @media screen and (max-width: 600px) {
+    /* Float four columns side by side */
     .column {
-      width: 100%;
-      display: block;
-      margin-bottom: 20px;
+      float: left;
+      width: 30%;
+      padding: 0 10px;
+    }
+
+    /* Remove extra left and right margins, due to padding in columns */
+    .row {
+
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    /* Style the counter cards */
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+      padding: 16px;
+      text-align: center;
+      background-color: #f1f1f1;
+      height: 30vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: normal;
+      align-items: center;
+    }
+
+    /* Responsive columns - one column layout (vertical) on small screens */
+    @media screen and (max-width: 600px) {
+      .column {
+        width: 100%;
+        display: block;
+        margin-bottom: 20px;
+      }
     }
   }
-}
 
-p {
-  font-family: SourceSansProRegular, sans-serif;
-}
+  p {
+    font-family: SourceSansProRegular, sans-serif;
+  }
 
-@media screen and (min-width: 450px) {
+  @media screen and (min-width: 450px) {
 
-}
+  }
 
-@media screen and (min-width: 850px) {
+  @media screen and (min-width: 850px) {
 
-}
+  }
 
 }
