@@ -3,10 +3,17 @@
 
 .UpcomingMeetings{
   width: 100%;
-
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+@media screen and (min-width: 997px){
+  .UpcomingMeetings{
+    width: 100%;
+    display: block;
+  }
+
 }
 
 .UpcomingMeetings-container{

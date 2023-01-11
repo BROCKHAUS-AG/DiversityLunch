@@ -6,7 +6,7 @@ type AccountStateOkAction = {
 };
 
 type AccountStateGeneralAction = {
-  type: 'ACCOUNT_ERROR' | 'ACCOUNT_LOADING' | 'ACCOUNT_PENDING',
+  type: 'ACCOUNT_ERROR' | 'ACCOUNT_LOADING' | 'ACCOUNT_PENDING'| 'ACCOUNT_OFFLINE',
 };
 
 export type AccountStateAction =

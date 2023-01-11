@@ -13,7 +13,7 @@ import { APP_STORE } from './data/app-store';
 import { AuthenticationCheck } from './user-interface/components/authentication-check/authentication-check';
 
 // SET TRUE FOR OFFLINE USE DEBUG
-const isOffline = false;
+const isOffline = true;
 
 export const OffMode = () => (isOffline ? <App /> : <AuthenticationCheck />);
 

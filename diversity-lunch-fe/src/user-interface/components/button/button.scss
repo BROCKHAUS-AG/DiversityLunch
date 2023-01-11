@@ -11,6 +11,13 @@
   }
 }
 
+@media screen and (min-width: 997px){
+  .CustomButton-container{
+    padding: 5px;
+    display: block;
+  }
+}
+
 .bagBtn{
   background-image: repeating-linear-gradient(1deg, #333333, #333333 20px, transparent 20px, transparent 38px, #333333 38px), repeating-linear-gradient(91deg, #333333, #333333 20px, transparent 20px, transparent 38px, #333333 38px), repeating-linear-gradient(181deg, #333333, #333333 20px, transparent 20px, transparent 38px, #333333 38px), repeating-linear-gradient(271deg, #333333, #333333 20px, transparent 20px, transparent 38px, #333333 38px);
   background-size: 2px 100%, 100% 2px, 2px 100% , 100% 2px;
@@ -27,7 +34,7 @@
     background-position: 0 0, 0 0, 100% 0, 0 100%;
     background-repeat: no-repeat;
     width: 20vw;
-    margin-left: 19vw;
+    margin-left: 0;
   }
 }
 

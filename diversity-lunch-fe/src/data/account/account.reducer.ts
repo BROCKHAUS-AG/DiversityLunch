@@ -1,6 +1,7 @@
 import { Reducer } from 'redux';
 import { AccountState } from './account-state.type';
 import { AccountStateAction } from './account-state-action.type';
+import { Role } from '../../model/Role';
 
 const initialState: AccountState = {
     status: 'PENDING',
@@ -31,6 +32,16 @@ export const accountReducer: Reducer<AccountState, AccountStateAction> = (
             return {
                 status: 'OK',
                 accountData: action.payload,
+            };
+        }
+        case 'ACCOUNT_OFFLINE': {
+            return {
+                status: 'OFFLINE',
+                accountData: {
+                    id: 0,
+                    profileId: 0,
+                    role: Role.ADMIN,
+                },
             };
         }
         default: {
