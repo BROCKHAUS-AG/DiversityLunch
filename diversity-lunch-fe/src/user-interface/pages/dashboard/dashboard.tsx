@@ -8,9 +8,9 @@ import { Role } from '../../../model/Role';
 import { LoadingAnimation } from '../../components/loading-animation/loading-animation';
 import { UserVoucherIcon } from '../../components/user-voucher-icon/user-voucher-icon';
 import { Information } from '../information/information';
-import editIcon from '../../../resources/icons/Edit.svg';
-import appointmentIcon from '../../../resources/icons/Appointment.svg';
-import matchIcon from '../../../resources/icons/Match.svg';
+import profileIcon from '../../../resources/icons/icon-profil.svg';
+import upComMeeting from '../../../resources/icons/icon-anstehende-termine.svg';
+import chooseDateIcon from '../../../resources/icons/icon-termin-auswählen.svg';
 
 export const Dashboard = () => {
     const accountState = useSelector((state: AppStoreState) => state.account);
@@ -38,21 +38,23 @@ export const Dashboard = () => {
                         <div className="card">
                             <div className="image">
                                 <div className="icon">
-                                    <img alt="TileIconLink Icon" className="Tile-icon" src={editIcon} />
+                                    <img alt="TileIconLink Icon" className="Tile-icon" src={profileIcon} />
                                 </div>
                             </div>
                             <div className="body">
                                 <h2>1.</h2>
-                                <h4>Profil ausfüllen und unseren Algorythmus füttern.</h4>
+                                <h4>Profil ausfüllen und unseren Algorithmus füttern.</h4>
                                 <button>Jetzt füttern</button>
                             </div>
+
                         </div>
+                        <button className="btnMobileBag">Jetzt füttern</button>
                     </div>
                     <div className="column">
                         <div className="card">
                             <div className="image">
                                 <div className="icon">
-                                    <img alt="TileIconLink Icon" className="Tile-icon" src={appointmentIcon} />
+                                    <img alt="TileIconLink Icon" className="Tile-icon" src={chooseDateIcon} />
                                 </div>
                             </div>
                             <div className="body">
@@ -61,12 +63,13 @@ export const Dashboard = () => {
                                 <button>Termine finden</button>
                             </div>
                         </div>
+                        <button className="btnMobileBag">Termine finden</button>
                     </div>
                     <div className="column">
                         <div className="card">
                             <div className="image">
                                 <div className="icon">
-                                    <img alt="TileIconLink Icon" className="Tile-icon" src={matchIcon} />
+                                    <img alt="TileIconLink Icon" className="Tile-icon" src={upComMeeting} />
                                 </div>
                             </div>
                             <div className="body">
@@ -75,6 +78,7 @@ export const Dashboard = () => {
                                 <button>Matches anzeigen</button>
                             </div>
                         </div>
+                        <button className="btnMobileBag">Matches anzeigen</button>
                     </div>
 
                 </div>

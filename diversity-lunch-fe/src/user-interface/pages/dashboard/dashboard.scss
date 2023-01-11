@@ -1,11 +1,51 @@
+
 .card {
   .image {
     .icon {
       height: auto;
-      width: 80px;
+      width: 40px;
     }
   }
 }
+.App h2 {
+  font-family: GilroyLight, sans-serif;
+  color: #b81f40;
+  font-size: 2rem;
+  margin-right: 0.5rem;
+}
+
+.row{
+  .column{
+    margin: 2rem 0;
+    .card {
+      display: flex;
+      .image {
+        height: 20%;
+        width: auto;
+        margin-right: 2rem;
+      }
+
+      .body {
+        margin-top: 1rem;
+        display: flex;
+
+        button{
+          margin-top: 1rem;
+          border: solid black 1px;
+          display: none;
+        }
+
+      }
+    }
+    .btnMobileBag{
+      display: block;
+      margin-top: 1rem;
+      border: solid black 1px;
+    }
+  }
+}
+
+
 
 
 @media screen and (min-width: 450px) {
@@ -15,6 +55,13 @@
 
 @media screen and (min-width: 850px) {
 
+  .App h2 {
+    font-family: GilroyLight, sans-serif;
+    color: #b81f40;
+    font-size: 2rem;
+    margin-right: 0;
+  }
+
   .Dashboard {
     max-width: 1180px;
     margin-left: auto;
@@ -22,6 +69,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
 
     .Dashboard-container {
       margin-bottom: 3rem;
@@ -32,15 +80,28 @@
           display: flex;
           justify-content: center;
           align-items: center;
+          margin-right: 0;
+          .icon {
+            height: auto;
+            width: 80px;
+          }
         }
 
         .body {
           margin-top: 1rem;
-
+display: block;
           button{
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
             margin-top: 2rem;
+            border: solid black 1px;
           }
+
         }
+      }
+      .btnMobileBag{
+        display: none;
       }
     }
 

@@ -12,6 +12,24 @@
   height: 100%;
   color: #b81f40;
   margin-left: 135px;
+
+  .App h4 {
+    font-family: GilroyRegular, sans-serif;
+    color: #b81f40;
+    font-weight: bold;
+    font-size: .7rem;
+    height: 1rem;
+  }
+  .IconHeader-title-powered-by-container {
+    display: flex;
+    justify-content: flex-end;
+    font-size: .6rem;
+  }
+}
+
+.IconHeader-diversity-icon {
+  height: 3rem;
+  width: auto;
 }
 
 @media screen and (max-width: 900px) {

@@ -20,6 +20,13 @@ html {
   display: none;
 }
 
+  .bodyContainer {
+    /* width: calc(100% - 300px);*/
+    margin-left: 3rem;
+    margin-bottom: 2rem;
+    margin-top: 6rem;
+  }
+
 @media (min-width: 992px){
   .bodyContainer {
   /* width: calc(100% - 300px);*/
