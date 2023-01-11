@@ -88,8 +88,10 @@ public class ProfileMapper {
                 basicDimensionService.getSelectableOptionById(dto.getSocialBackground().getId()));
         selectedBasicOptions.put(basicDimensionService.getDimension("Diskriminierung aufgrund sozialer Herkunft"),
                 basicDimensionService.getSelectableOptionById(dto.getSocialBackgroundDiscrimination().getId()));
+
         selectedWeightedOptions.put(weightedDimensionService.getDimension("Berufserfahrung"),
                 weightedDimensionService.getSelectableOptionById(dto.getWorkExperience().getId()));
+
         selectedMultiselectOptions.put(multiselectDimensionService.getDimension("Hobby"),
                 selectedMultiselectValues);
 
