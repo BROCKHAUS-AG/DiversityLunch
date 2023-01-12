@@ -15,28 +15,28 @@ public class WeightedSelectableOptionTestDataFactory {
     public WeightedDimensionSelectableOption buildEntity(DimensionCategory category, int setNumber) {
         return switch (setNumber) {
             case 1 -> WeightedDimensionSelectableOption.builder()
-                    .id(1L)
+                    .id((long) setNumber)
                     .value("Option1")
                     .ignoreInScoring(false)
                     .dimensionCategory(category)
                     .weight(1)
                     .build();
             case 2 -> WeightedDimensionSelectableOption.builder()
-                    .id(2L)
+                    .id((long) setNumber)
                     .value("Option2")
                     .ignoreInScoring(false)
                     .dimensionCategory(category)
                     .weight(2)
                     .build();
             case 3 -> WeightedDimensionSelectableOption.builder()
-                    .id(3L)
+                    .id((long) setNumber)
                     .value("Option3")
                     .ignoreInScoring(false)
                     .dimensionCategory(category)
                     .weight(3)
                     .build();
             default -> WeightedDimensionSelectableOption.builder()
-                    .id(10L)
+                    .id((long) WEIGHTED_OPTIONS_SET_SIZE)
                     .value("DefaultOption")
                     .ignoreInScoring(true)
                     .dimensionCategory(category)

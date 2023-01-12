@@ -14,7 +14,7 @@ public class MultiselectSelectableOptionTestDataFactory {
 
     public MultiselectDimensionSelectableOption buildEntity(DimensionCategory category, int setNumber) {
         return MultiselectDimensionSelectableOption.builder()
-                .id((long) Math.abs(setNumber))
+                .id((long) setNumber)
                 .value("Option" + Math.abs(setNumber))
                 .dimensionCategory(category)
                 .build();

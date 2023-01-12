@@ -15,25 +15,25 @@ public class BasicSelectableOptionTestDataFactory {
     public BasicDimensionSelectableOption buildEntity(DimensionCategory category, int setNumber) {
         return switch (setNumber) {
             case 1 -> BasicDimensionSelectableOption.builder()
-                    .id(1L)
+                    .id((category.getId() - 1) * BASIC_OPTIONS_SET_SIZE + setNumber)
                     .value("Option1")
                     .ignoreInScoring(false)
                     .dimensionCategory(category)
                     .build();
             case 2 -> BasicDimensionSelectableOption.builder()
-                    .id(2L)
+                    .id((category.getId() - 1) * BASIC_OPTIONS_SET_SIZE + setNumber)
                     .value("Option2")
                     .ignoreInScoring(false)
                     .dimensionCategory(category)
                     .build();
             case 3 -> BasicDimensionSelectableOption.builder()
-                    .id(3L)
+                    .id((category.getId() - 1) * BASIC_OPTIONS_SET_SIZE + setNumber)
                     .value("Option3")
                     .ignoreInScoring(false)
                     .dimensionCategory(category)
                     .build();
             default -> BasicDimensionSelectableOption.builder()
-                    .id(10L)
+                    .id(category.getId() * BASIC_OPTIONS_SET_SIZE)
                     .value("DefaultOption")
                     .ignoreInScoring(true)
                     .dimensionCategory(category)
