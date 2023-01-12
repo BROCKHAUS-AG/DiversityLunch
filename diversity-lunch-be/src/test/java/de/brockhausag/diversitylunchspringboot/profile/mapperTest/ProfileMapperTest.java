@@ -1,6 +1,10 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapperTest;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.BasicDimensionTestDataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.MultiselectDimensionTestDataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.WeightedDimensionTestDataFactory;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimensionSelectableOption;
@@ -10,7 +14,7 @@ import de.brockhausag.diversitylunchspringboot.dimensions.services.model.Weighte
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.HobbyDto;
 import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.ProfileDto;
-import de.brockhausag.diversitylunchspringboot.profile.oldStructure.mapper.ProfileMapper;
+import de.brockhausag.diversitylunchspringboot.profile.oldStructure.mapper.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,41 +41,49 @@ class ProfileMapperTest {
     @Mock
     private WeightedDimensionService weightedDimService;
 
-//    @Mock
-//    private CountryMapper countryMapper;
-//    @Mock
-//    private DietMapper dietMapper;
-//    @Mock
-//    private EducationMapper educationMapper;
-//    @Mock
-//    private GenderMapper genderMapper;
-//    @Mock
-//    private HobbyMapper hobbyMapper;
-//    @Mock
-//    private LanguageMapper languageMapper;
-//    @Mock
-//    private ProjectMapper projectMapper;
-//    @Mock
-//    private ReligionMapper religionMapper;
-//    @Mock
-//    private SexualOrientationMapper sexualOrientationMapper;
-//    @Mock
-//    private WorkExperienceMapper workExperienceMapper;
-//    @Mock
-//    private SocialBackgroundMapper socialBackgroundMapper;
-//    @Mock
-//    private SocialBackgroundDiscriminationMapper socialBackgroundDiscriminationMapper;
+    @Mock
+    private CountryMapper countryMapper;
+    @Mock
+    private DietMapper dietMapper;
+    @Mock
+    private EducationMapper educationMapper;
+    @Mock
+    private GenderMapper genderMapper;
+    @Mock
+    private HobbyMapper hobbyMapper;
+    @Mock
+    private LanguageMapper languageMapper;
+    @Mock
+    private ProjectMapper projectMapper;
+    @Mock
+    private ReligionMapper religionMapper;
+    @Mock
+    private SexualOrientationMapper sexualOrientationMapper;
+    @Mock
+    private WorkExperienceMapper workExperienceMapper;
+    @Mock
+    private SocialBackgroundMapper socialBackgroundMapper;
+    @Mock
+    private SocialBackgroundDiscriminationMapper socialBackgroundDiscriminationMapper;
 
     @InjectMocks
     private ProfileMapper profileMapper;
     private ProfileTestdataFactory factory;
+
+    private BasicDimensionTestDataFactory basicDimensionTestDataFactory;
     private ProfileDto profileDto;
     private ProfileEntity profileEntity;
+    private WeightedDimensionTestDataFactory weightedDimensionTestDataFactory;
+    private MultiselectDimensionTestDataFactory multiselectDimensionTestDataFactory;
 
     @BeforeEach
     void setup() {
-         this.profileDto = factory.buildDto(1);
-         this.profileEntity = factory.buildEntity(1);
+        this.factory = new ProfileTestdataFactory();
+        this.basicDimensionTestDataFactory = new BasicDimensionTestDataFactory();
+        this.weightedDimensionTestDataFactory = new WeightedDimensionTestDataFactory();
+        this.multiselectDimensionTestDataFactory = new MultiselectDimensionTestDataFactory();
+        this.profileDto = factory.buildDto(1);
+        this.profileEntity = factory.buildEntity(1);
     }
 
     @Test
@@ -82,67 +94,44 @@ class ProfileMapperTest {
     void testDtoToEntity_withOneDto_returnsOneEntity() {
         //Arrange
 
-        BasicDimensionSelectableOption educationSelectable = new BasicDimensionSelectableOption();
-        educationSelectable.setId(profileDto.getEducation().getId());
-        educationSelectable.setValue(profileDto.getEducation().getDescriptor());
+        when(basicDimensionService.getSelectableOptionById(profileDto.getProject().getId()))
+                .thenReturn(profileEntity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(1)));
+        when(basicDimensionService.getSelectableOptionById(profileDto.getGender().getId()))
+                .thenReturn(profileEntity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(2)));
+        when(basicDimensionService.getSelectableOptionById(profileDto.getOriginCountry().getId()))
+                .thenReturn(profileEntity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(3)));
+        when(basicDimensionService.getSelectableOptionById(profileDto.getReligion().getId()))
+                .thenReturn(profileEntity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(4)));
+        when(basicDimensionService.getSelectableOptionById(profileDto.getMotherTongue().getId()))
+                .thenReturn(profileEntity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(5)));
 
-        BasicDimensionSelectableOption countrySelectable = new BasicDimensionSelectableOption();
-        countrySelectable.setId(profileDto.getOriginCountry().getId());
-        countrySelectable.setValue(profileDto.getOriginCountry().getDescriptor());
+        when(basicDimensionService.getSelectableOptionById(profileDto.getEducation().getId()))
+                .thenReturn(profileEntity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(6)));
 
-        BasicDimensionSelectableOption religionSelectable = new BasicDimensionSelectableOption();
-        religionSelectable.setId(profileDto.getReligion().getId());
-        religionSelectable.setValue(profileDto.getReligion().getDescriptor());
+        when(basicDimensionService.getSelectableOptionById(profileDto.getDiet().getId()))
+                .thenReturn(profileEntity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(7)));
 
-        BasicDimensionSelectableOption projectSelectable = new BasicDimensionSelectableOption();
-        projectSelectable.setId(profileDto.getOriginCountry().getId());
-        projectSelectable.setValue(profileDto.getOriginCountry().getDescriptor());
+        when(basicDimensionService.getSelectableOptionById(profileDto.getSocialBackground().getId()))
+                .thenReturn(profileEntity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(8)));
 
-        BasicDimensionSelectableOption languageSelectable = new BasicDimensionSelectableOption();
-        languageSelectable.setId(profileDto.getMotherTongue().getId());
-        languageSelectable.setValue(profileDto.getMotherTongue().getDescriptor());
+        when(basicDimensionService.getSelectableOptionById(profileDto.getSocialBackgroundDiscrimination().getId()))
+                .thenReturn(profileEntity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(9)));
 
-        BasicDimensionSelectableOption genderSelectables = new BasicDimensionSelectableOption();
-        genderSelectables.setId(profileDto.getGender().getId());
-        genderSelectables.setValue(profileDto.getGender().getDescriptor());
+        when(basicDimensionService.getSelectableOptionById(profileDto.getSexualOrientation().getId()))
+                .thenReturn(profileEntity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(10)));
 
-        BasicDimensionSelectableOption dietSelectable = new BasicDimensionSelectableOption();
-        dietSelectable.setId(profileDto.getEducation().getId());
-        dietSelectable.setValue(profileDto.getEducation().getDescriptor());
+        when(weightedDimService.getSelectableOptionById(profileDto.getWorkExperience().getId()))
+                .thenReturn(profileEntity.getSelectedWeightedValues().get(weightedDimensionTestDataFactory.buildEntity(1)));
 
-        WeightedDimensionSelectableOption workExperienceSelectable = new WeightedDimensionSelectableOption();
-        educationSelectable.setId(profileDto.getEducation().getId());
-        educationSelectable.setValue(profileDto.getEducation().getDescriptor());
-
-
-       MultiselectDimensionSelectableOption m1 =  new MultiselectDimensionSelectableOption();
-       m1.setId(1L);
-       m1.setValue("Option 1");
-
-        MultiselectDimensionSelectableOption m2 =  new MultiselectDimensionSelectableOption();
-        m2.setId(2L);
-        m2.setValue("Option 2");
-
-        MultiselectDimensionSelectableOption m3 =  new MultiselectDimensionSelectableOption();
-        m3.setId(3L);
-        m3.setValue("Option 3");
-
-        List<MultiselectDimensionSelectableOption> hobbySelectables = List.of(m1, m2,m3);
-
-
-        when(basicDimensionService.getSelectableOptionById(profileDto.getOriginCountry().getId()).thenReturn(Optional.of(profileEntity.getSelectedBasicValues().));
-        when(sexualOrientationService.getEntityById(profileDto.getSexualOrientation().getId())).thenReturn(Optional.of(profileEntity.getSexualOrientation()));
-        when(socialBackgroundService.getEntityById(profileDto.getSocialBackground().getId())).thenReturn(Optional.of(profileEntity.getSocialBackground()));
-        when(socialBackgroundDiscriminationService.getEntityById(profileDto.getSocialBackgroundDiscrimination().getId())).thenReturn(Optional.of(profileEntity.getSocialBackgroundDiscrimination()));
-
-        when(basicDimensionService.getSelectableOptionById(profileDto.getEducation().getId())).thenReturn(educationSelectable);
+        when(multiselectDimService.getSelectableOptions(profileDto.getHobby().stream().map(HobbyDto::getId).collect(Collectors.toList())))
+                .thenReturn(profileEntity.getSelectedMultiselectValues().get(multiselectDimensionTestDataFactory.buildEntity(1)).getSelectedOptions().stream().toList());
 
 
         //Act
         Optional<ProfileEntity> profileEntityOptional = profileMapper.dtoToEntity(profileDto);
 
         //Assert
-        assertTrue(profileEntityOptional.isPresent());
+
         assertEquals(profileEntity, profileEntityOptional.get());
     }
 

@@ -80,7 +80,7 @@ public class ProfileTestdataFactory {
                         .email("first.mail@some.tld")
                         .birthYear(1957)
                         .originCountry(new CountryDto(1L, "Option1"))
-                        .diet(new DietDto(1L, "Option2"))
+                        .diet(new DietDto(1L, "Option1"))
                         .education(new EducationDto(1L, "Option1"))
                         .gender(new GenderDto(1L, "Option1"))
                         .hobby(List.of(new HobbyDto(1L, "Option1"), new HobbyDto(2L, "Option2"), new HobbyDto(3L, "Option3")))

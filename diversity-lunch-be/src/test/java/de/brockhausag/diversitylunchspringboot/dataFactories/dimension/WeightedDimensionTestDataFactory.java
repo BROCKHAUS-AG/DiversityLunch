@@ -42,12 +42,12 @@ public class WeightedDimensionTestDataFactory {
                 break;
             default:
                 category = DimensionCategory.builder()
-                        .id(11L)
+                        .id(110L)
                         .description("Default")
                         .profileQuestion("Default?")
                         .build();
                 result = WeightedDimension.builder()
-                        .id(10L)
+                        .id(110L)
                         .dimensionCategory(category)
                         .selectableValues(selectableFactory.buildEntities(category, 4))
                         .defaultValue(selectableFactory.buildEntity(category, 0))
