@@ -49,14 +49,14 @@ class MatchingTest {
 
     @ParameterizedTest
     @CsvSource({
-            "1, 2, 19, Geschlecht", // Different profiles
-            "2, 1, 19, Geschlecht", // Different order of profiles
+            "1, 2, 38, Projekt",    // Different profiles
+            "2, 1, 38, Projekt",    // Different order of profiles
             "0, 1, 3, Alter",       // Using default profile
             "1, 0, 3, Alter",       // Using default profile as second
-            "1, 3, 10, Projekt",    // Profiles with similarities
+            "1, 3, 19, Geschlechtliche Identität",    // Profiles with similarities
             "1, 1, 1, Ernährung"    // Same Profiles
     })
-    void testScoreAndCategory_withDifferentProfiles_shouldReturnScore16AndCategoryGender(int firstProfile, int secondProfile, int expectedScore, String expectedCategory) {
+    void testScoreAndCategory_withDifferentProfiles_shouldReturnSpecifiedScoreAndCategory(int firstProfile, int secondProfile, int expectedScore, String expectedCategory) {
         // Arrange
         List<ProfileEntity> profiles = new ArrayList<>();
         profiles.add(this.profileDefault);

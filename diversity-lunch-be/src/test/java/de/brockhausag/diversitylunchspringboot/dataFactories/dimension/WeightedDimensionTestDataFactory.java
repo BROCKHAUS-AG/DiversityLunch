@@ -5,9 +5,12 @@ import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.Weighte
 
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class WeightedDimensionTestDataFactory {
+
+    public static final int WEIGHTED_SET_SIZE = 1;
 
     public WeightedDimension buildEntity(int setNumber) {
         WeightedSelectableOptionTestDataFactory selectableFactory = new WeightedSelectableOptionTestDataFactory();
@@ -16,27 +19,14 @@ public class WeightedDimensionTestDataFactory {
         switch (setNumber) {
             case 1:
                 category = DimensionCategory.builder()
-                        .id(3L)
-                        .description("Arbeitserfahrung")
-                        .profileQuestion("Arbeitserfahrung?")
+                        .id(11L)
+                        .description("Berufserfahrung")
+                        .profileQuestion("Berufserfahrung?")
                         .build();
                 result = WeightedDimension.builder()
                         .id(1L)
                         .dimensionCategory(category)
-                        .selectableValues(selectableFactory.buildEntities(category, 4))
-                        .defaultValue(selectableFactory.buildEntity(category, 0))
-                        .build();
-                break;
-            case 2:
-                category = DimensionCategory.builder()
-                        .id(4L)
-                        .description("Arbeitszeit")
-                        .profileQuestion("Arbeitszeit?")
-                        .build();
-                result = WeightedDimension.builder()
-                        .id(2L)
-                        .dimensionCategory(category)
-                        .selectableValues(selectableFactory.buildEntities(category, 4))
+                        .selectableValues(selectableFactory.buildEntities(category, WeightedSelectableOptionTestDataFactory.WEIGHTED_OPTIONS_SET_SIZE))
                         .defaultValue(selectableFactory.buildEntity(category, 0))
                         .build();
                 break;
@@ -49,7 +39,7 @@ public class WeightedDimensionTestDataFactory {
                 result = WeightedDimension.builder()
                         .id(110L)
                         .dimensionCategory(category)
-                        .selectableValues(selectableFactory.buildEntities(category, 4))
+                        .selectableValues(selectableFactory.buildEntities(category, WeightedSelectableOptionTestDataFactory.WEIGHTED_OPTIONS_SET_SIZE))
                         .defaultValue(selectableFactory.buildEntity(category, 0))
                         .build();
         }
@@ -57,6 +47,6 @@ public class WeightedDimensionTestDataFactory {
     }
 
     public Set<WeightedDimension> buildEntities(int amount) {
-        return Stream.of(1, 2).map(this::buildEntity).limit(amount).collect(Collectors.toSet());
+        return IntStream.range(1, WEIGHTED_SET_SIZE + 1).boxed().limit(amount).map(this::buildEntity).collect(Collectors.toSet());
     }
 }

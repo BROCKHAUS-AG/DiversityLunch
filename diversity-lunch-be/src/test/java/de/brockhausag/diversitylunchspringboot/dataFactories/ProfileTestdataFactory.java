@@ -159,7 +159,7 @@ public class ProfileTestdataFactory {
     private Map<BasicDimension, BasicDimensionSelectableOption> getBasicSelectedOptions(int setNumber) {
         BasicDimensionTestDataFactory basicFactory = new BasicDimensionTestDataFactory();
         BasicSelectableOptionTestDataFactory basicSelectableFactory = new BasicSelectableOptionTestDataFactory();
-        Set<BasicDimension> basicDimensions = basicFactory.buildEntities(2);
+        Set<BasicDimension> basicDimensions = basicFactory.buildEntities(BasicDimensionTestDataFactory.BASIC_SET_SIZE);
         Map<BasicDimension, BasicDimensionSelectableOption> result = new HashMap<>();
         int selectedValue = 0;
 
@@ -172,6 +172,7 @@ public class ProfileTestdataFactory {
                     selectedValue = 3;
                     break;
                 case 3:
+                    selectedValue %= 2;
                     selectedValue++;
                     break;
                 default:
@@ -184,7 +185,7 @@ public class ProfileTestdataFactory {
     private Map<WeightedDimension, WeightedDimensionSelectableOption> getWeightedSelectedOptions(int setNumber) {
         WeightedDimensionTestDataFactory WeightedFactory = new WeightedDimensionTestDataFactory();
         WeightedSelectableOptionTestDataFactory WeightedSelectableFactory = new WeightedSelectableOptionTestDataFactory();
-        Set<WeightedDimension> WeightedDimensions = WeightedFactory.buildEntities(2);
+        Set<WeightedDimension> WeightedDimensions = WeightedFactory.buildEntities(WeightedDimensionTestDataFactory.WEIGHTED_SET_SIZE);
         Map<WeightedDimension, WeightedDimensionSelectableOption> result = new HashMap<>();
         int selectedValue = 0;
 
@@ -197,6 +198,7 @@ public class ProfileTestdataFactory {
                     selectedValue = 3;
                     break;
                 case 3:
+                    selectedValue %= 2;
                     selectedValue++;
                     break;
                 default:
@@ -208,7 +210,7 @@ public class ProfileTestdataFactory {
     private Map<MultiselectDimension, ProfileEntitySelectedMultiselectValue> getMultiselectSelectedOptions(int setNumber) {
         MultiselectDimensionTestDataFactory MultiselectFactory = new MultiselectDimensionTestDataFactory();
         MultiselectSelectableOptionTestDataFactory MultiselectSelectableFactory = new MultiselectSelectableOptionTestDataFactory();
-        Set<MultiselectDimension> MultiselectDimensions = MultiselectFactory.buildEntities(2);
+        Set<MultiselectDimension> MultiselectDimensions = MultiselectFactory.buildEntities(MultiselectDimensionTestDataFactory.MULTISELECT_SET_SIZE);
         Map<MultiselectDimension, ProfileEntitySelectedMultiselectValue> result = new HashMap<>();
 
         for (MultiselectDimension d : MultiselectDimensions) {

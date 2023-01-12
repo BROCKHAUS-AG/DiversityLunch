@@ -36,7 +36,7 @@ public class Matching {
 
         int currentScore = 0;
         //First: Score Default Entities
-        currentScore += getScoreFromDefaultDimensions(potentialQuestionsCategories);
+        currentScore += getScoreFromBasicDimensions(potentialQuestionsCategories);
         //Second: Score Weighted Entities
         currentScore += getScoreFromWeightedDimensions(potentialQuestionsCategories);
         //Third: Score Multiselect Entities
@@ -58,7 +58,7 @@ public class Matching {
         stats = new ScoreAndCategory(currentScore, category);
     }
 
-    private int getScoreFromDefaultDimensions(List<DimensionCategory> potentialQuestionsCategories) {
+    private int getScoreFromBasicDimensions(List<DimensionCategory> potentialQuestionsCategories) {
         int currentScore = 0;
         ProfileEntity firstProfile = firstProposal.getProposerProfile();
         ProfileEntity secondProfile = secondProposal.getProposerProfile();

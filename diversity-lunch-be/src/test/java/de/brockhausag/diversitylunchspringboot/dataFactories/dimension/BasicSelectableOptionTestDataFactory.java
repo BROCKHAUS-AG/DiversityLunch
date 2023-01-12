@@ -5,9 +5,12 @@ import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.Dimensi
 
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class BasicSelectableOptionTestDataFactory {
+
+    public static final int BASIC_OPTIONS_SET_SIZE = 4;
 
     public BasicDimensionSelectableOption buildEntity(DimensionCategory category, int setNumber) {
         return switch (setNumber) {
@@ -39,6 +42,6 @@ public class BasicSelectableOptionTestDataFactory {
     }
 
     public Set<BasicDimensionSelectableOption> buildEntities(DimensionCategory category, int amount) {
-        return Stream.of(0, 1, 2, 3).map((setNumber) -> buildEntity(category, setNumber)).limit(amount).collect(Collectors.toSet());
+        return IntStream.range(0, BASIC_OPTIONS_SET_SIZE).boxed().limit(amount).map((setNumber) -> buildEntity(category, setNumber)).collect(Collectors.toSet());
     }
 }

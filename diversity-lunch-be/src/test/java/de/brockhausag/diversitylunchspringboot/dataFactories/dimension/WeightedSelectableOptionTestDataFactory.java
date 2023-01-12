@@ -5,9 +5,12 @@ import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.Weighte
 
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class WeightedSelectableOptionTestDataFactory {
+
+    public static final int WEIGHTED_OPTIONS_SET_SIZE = 4;
 
     public WeightedDimensionSelectableOption buildEntity(DimensionCategory category, int setNumber) {
         return switch (setNumber) {
@@ -43,6 +46,6 @@ public class WeightedSelectableOptionTestDataFactory {
     }
 
     public Set<WeightedDimensionSelectableOption> buildEntities(DimensionCategory category, int amount) {
-        return Stream.of(0, 1, 2, 3).map((setNumber) -> buildEntity(category, setNumber)).limit(amount).collect(Collectors.toSet());
+        return IntStream.range(0, WEIGHTED_OPTIONS_SET_SIZE).boxed().limit(amount).map((setNumber) -> buildEntity(category, setNumber)).collect(Collectors.toSet());
     }
 }
