@@ -20,31 +20,17 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class DimensionMapperTest {
 
     private DimensionDtoDataFactory dimensionDtoDataFactory;
-    private final DimensionCategory category = new DimensionCategory(1L,"test", "test failed ?" );
-    private final BasicDimension basicDimension = BasicDimension.builder()
-            .id(1L)
-            .dimensionCategory(category)
-            .build();
-    private final MultiselectDimension multiselectDimension = MultiselectDimension.builder()
-            .id(2L)
-            .dimensionCategory(category)
-            .build();
-    private final  WeightedDimension weightedDimension = WeightedDimension.builder()
-            .id(3L)
-            .dimensionCategory(category)
-            .build();
 
     //MultiselectDimension
     @Mock
     private MultiselectDimensionService multiselectDimensionService;
-    private MultiselectSelectableOptionTestDataFactory multiselectDimensionFactory;
+    private MultiselectDimensionTestDataFactory multiselectDimensionTestDataFactory;
     @InjectMocks
     private HobbyMapper hobbyMapper;
 
@@ -52,7 +38,7 @@ public class DimensionMapperTest {
     //WeightedDimension
     @Mock
     private WeightedDimensionService weightedDimensionService;
-    private WeightedSelectableOptionTestDataFactory weightedDimensionFactory;
+    private WeightedDimensionTestDataFactory weightedDimensionTestDataFactory;
     @InjectMocks
     private WorkExperienceMapper workExperienceMapper;
 
@@ -61,7 +47,6 @@ public class DimensionMapperTest {
     @Mock
     private BasicDimensionService basicDimensionService;
     private BasicDimensionTestDataFactory basicDimensionTestDataFactory;
-    private BasicSelectableOptionTestDataFactory basicDimensionFactory;
     @InjectMocks
     private CountryMapper countryMapper;
     @InjectMocks
@@ -93,14 +78,13 @@ public class DimensionMapperTest {
         this.basicDimensionTestDataFactory = new BasicDimensionTestDataFactory();
         this.dimensionDtoDataFactory = new DimensionDtoDataFactory();
 
-        this.multiselectDimensionFactory = new MultiselectSelectableOptionTestDataFactory();
+        this.multiselectDimensionTestDataFactory = new MultiselectDimensionTestDataFactory();
         this.hobbyMapper = new HobbyMapper(multiselectDimensionService);
 
-        this.weightedDimensionFactory = new WeightedSelectableOptionTestDataFactory();
+        this.weightedDimensionTestDataFactory = new WeightedDimensionTestDataFactory();
         this.workExperienceMapper = new WorkExperienceMapper(weightedDimensionService);
 
 
-        this.basicDimensionFactory = new BasicSelectableOptionTestDataFactory();
         this.countryMapper = new CountryMapper(basicDimensionService);
         this.dietMapper = new DietMapper(basicDimensionService);
         this.educationMapper = new EducationMapper(basicDimensionService);
@@ -117,18 +101,18 @@ public class DimensionMapperTest {
     @Test
     void testEntityToDto_withOneEntity_returnsOneDto() {
         // Arrange
-        BasicDimensionSelectableOption inputCountryEntity = basicDimensionTestDataFactory.buildEntity(3).getSelectableValues().iterator().next();
-        BasicDimensionSelectableOption inputDietEntity = basicDimensionFactory.buildEntity(category,1);
-        BasicDimensionSelectableOption inputEducationEntity = basicDimensionFactory.buildEntity(category,1);
-        BasicDimensionSelectableOption inputGenderEntity = basicDimensionFactory.buildEntity(category,1);
-        BasicDimensionSelectableOption inputLanguageEntity = basicDimensionFactory.buildEntity(category,1);
-        BasicDimensionSelectableOption inputProjectEntity = basicDimensionFactory.buildEntity(category,1);
-        BasicDimensionSelectableOption inputReligionEntity = basicDimensionFactory.buildEntity(category,1);
-        BasicDimensionSelectableOption inputSexualOrientationEntity = basicDimensionFactory.buildEntity(category,1);
-        BasicDimensionSelectableOption inputSocialBackgroundDiscriminationEntity = basicDimensionFactory.buildEntity(category,1);
-        BasicDimensionSelectableOption inputSocialBackgroundEntity = basicDimensionFactory.buildEntity(category,1);
-        MultiselectDimensionSelectableOption inputHobbyEntity = multiselectDimensionFactory.buildEntity(category, 1);
-        WeightedDimensionSelectableOption inputWorkExperienceEntity = weightedDimensionFactory.buildEntity(category, 1);
+        BasicDimensionSelectableOption inputCountryEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(3).getSelectableValues()).get(1);
+        BasicDimensionSelectableOption inputDietEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(7).getSelectableValues()).get(1);
+        BasicDimensionSelectableOption inputEducationEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(6).getSelectableValues()).get(1);
+        BasicDimensionSelectableOption inputGenderEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(2).getSelectableValues()).get(1);
+        BasicDimensionSelectableOption inputLanguageEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(5).getSelectableValues()).get(1);
+        BasicDimensionSelectableOption inputProjectEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(1).getSelectableValues()).get(1);
+        BasicDimensionSelectableOption inputReligionEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(4).getSelectableValues()).get(1);
+        BasicDimensionSelectableOption inputSexualOrientationEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(10).getSelectableValues()).get(1);
+        BasicDimensionSelectableOption inputSocialBackgroundDiscriminationEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(9).getSelectableValues()).get(1);
+        BasicDimensionSelectableOption inputSocialBackgroundEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(8).getSelectableValues()).get(1);
+        MultiselectDimensionSelectableOption inputHobbyEntity = List.copyOf(multiselectDimensionTestDataFactory.buildEntity(1).getSelectableValues()).get(0);
+        WeightedDimensionSelectableOption inputWorkExperienceEntity = List.copyOf(weightedDimensionTestDataFactory.buildEntity(1).getSelectableValues()).get(1);
 
         CountryDto expectedCountryDto = dimensionDtoDataFactory.buildCountryDto(1);
         DietDto expectedDietDto = dimensionDtoDataFactory.buildDietDto(1);
@@ -177,9 +161,18 @@ public class DimensionMapperTest {
 
     @Test
     void testEntityToDto_withListOfTwoEntities_returnsListOfTwoDtos() {
-        List<BasicDimensionSelectableOption> inputBasicSelectableOptionEntities = Stream.of(1, 2).map(value -> basicDimensionFactory.buildEntity(category, value)).toList();
-        List<MultiselectDimensionSelectableOption> inputMultiSelectableOptionEntities = Stream.of(1, 2).map(value -> multiselectDimensionFactory.buildEntity(category, value)).toList();
-        List<WeightedDimensionSelectableOption> inputWeightedSelectableOptionEntities = Stream.of(1, 2).map(value -> weightedDimensionFactory.buildEntity(category, value)).toList();
+        List<BasicDimensionSelectableOption> inputCountryEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(3).getSelectableValues()).subList(1, 3);
+        List<BasicDimensionSelectableOption> inputDietEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(7).getSelectableValues()).subList(1, 3);
+        List<BasicDimensionSelectableOption> inputEducationEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(6).getSelectableValues()).subList(1, 3);
+        List<BasicDimensionSelectableOption> inputGenderEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(2).getSelectableValues()).subList(1, 3);
+        List<BasicDimensionSelectableOption> inputLanguageEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(5).getSelectableValues()).subList(1, 3);
+        List<BasicDimensionSelectableOption> inputProjectEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(1).getSelectableValues()).subList(1, 3);
+        List<BasicDimensionSelectableOption> inputReligionEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(4).getSelectableValues()).subList(1, 3);
+        List<BasicDimensionSelectableOption> inputSexualOrientationEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(10).getSelectableValues()).subList(1, 3);
+        List<BasicDimensionSelectableOption> inputSocialBackgroundDiscriminationEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(9).getSelectableValues()).subList(1, 3);
+        List<BasicDimensionSelectableOption> inputSocialBackgroundEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(8).getSelectableValues()).subList(1, 3);
+        List<MultiselectDimensionSelectableOption> inputHobbyEntity = List.copyOf(multiselectDimensionTestDataFactory.buildEntity(1).getSelectableValues()).subList(0, 2);
+        List<WeightedDimensionSelectableOption> inputWorkExperienceEntity = List.copyOf(weightedDimensionTestDataFactory.buildEntity(1).getSelectableValues()).subList(1, 3);
 
 
         List<CountryDto> expectedCountryDtos = Stream.of(1, 2).map(dimensionDtoDataFactory::buildCountryDto).toList();
@@ -196,20 +189,20 @@ public class DimensionMapperTest {
         List<WorkExperienceDto> expectedWorkExperienceDtos = Stream.of(1, 2).map(dimensionDtoDataFactory::buildWorkExperienceDto).toList();
 
         // Act
-        List<HobbyDto> actualHobbyDtos = hobbyMapper.entityToDto(inputMultiSelectableOptionEntities);
+        List<HobbyDto> actualHobbyDtos = hobbyMapper.entityToDto(inputHobbyEntity);
 
-        List<WorkExperienceDto> actualWorkExperienceDtos = workExperienceMapper.entityToDto(inputWeightedSelectableOptionEntities);
+        List<WorkExperienceDto> actualWorkExperienceDtos = workExperienceMapper.entityToDto(inputWorkExperienceEntity);
 
-        List<CountryDto> actualCountryDtos = countryMapper.entityToDto(inputBasicSelectableOptionEntities);
-        List<DietDto> actualDietDtos = dietMapper.entityToDto(inputBasicSelectableOptionEntities);
-        List<EducationDto> actualEducationDtos = educationMapper.entityToDto(inputBasicSelectableOptionEntities);
-        List<GenderDto> actualGenderDtos = genderMapper.entityToDto(inputBasicSelectableOptionEntities);
-        List<LanguageDto> actualLanguageDtos = languageMapper.entityToDto(inputBasicSelectableOptionEntities);
-        List<ProjectDto> actualProjectDtos = projectMapper.entityToDto(inputBasicSelectableOptionEntities);
-        List<ReligionDto> actualReligionDtos = religionMapper.entityToDto(inputBasicSelectableOptionEntities);
-        List<SexualOrientationDto> actualSexualOrientationDtos = sexualOrientationMapper.entityToDto(inputBasicSelectableOptionEntities);
-        List<SocialBackgroundDiscriminationDto> actualSocialBackgroundDiscriminationDtos = socialBackgroundDiscriminationMapper.entityToDto(inputBasicSelectableOptionEntities);
-        List<SocialBackgroundDto> actualSocialBackgroundDtos = socialBackgroundMapper.entityToDto(inputBasicSelectableOptionEntities);
+        List<CountryDto> actualCountryDtos = countryMapper.entityToDto(inputCountryEntity);
+        List<DietDto> actualDietDtos = dietMapper.entityToDto(inputDietEntity);
+        List<EducationDto> actualEducationDtos = educationMapper.entityToDto(inputEducationEntity);
+        List<GenderDto> actualGenderDtos = genderMapper.entityToDto(inputGenderEntity);
+        List<LanguageDto> actualLanguageDtos = languageMapper.entityToDto(inputLanguageEntity);
+        List<ProjectDto> actualProjectDtos = projectMapper.entityToDto(inputProjectEntity);
+        List<ReligionDto> actualReligionDtos = religionMapper.entityToDto(inputReligionEntity);
+        List<SexualOrientationDto> actualSexualOrientationDtos = sexualOrientationMapper.entityToDto(inputSexualOrientationEntity);
+        List<SocialBackgroundDiscriminationDto> actualSocialBackgroundDiscriminationDtos = socialBackgroundDiscriminationMapper.entityToDto(inputSocialBackgroundDiscriminationEntity);
+        List<SocialBackgroundDto> actualSocialBackgroundDtos = socialBackgroundMapper.entityToDto(inputSocialBackgroundEntity);
 
 
         // Assert
@@ -351,14 +344,21 @@ public class DimensionMapperTest {
         SexualOrientationDto inputSexualOrientationDto = dimensionDtoDataFactory.buildSexualOrientationDto(1);
         SocialBackgroundDiscriminationDto inputSocialBackgroundDiscriminationDto = dimensionDtoDataFactory.buildSocialBackgroundDiscriminationDto(1);
         SocialBackgroundDto inputSocialBackgroundDto = dimensionDtoDataFactory.buildSocialBackgroundDto(1);
+        
+        BasicDimensionSelectableOption expectedCountryEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(3).getSelectableValues()).get(1);
+        BasicDimensionSelectableOption expectedDietEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(7).getSelectableValues()).get(1);
+        BasicDimensionSelectableOption expectedEducationEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(6).getSelectableValues()).get(1);
+        BasicDimensionSelectableOption expectedGenderEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(2).getSelectableValues()).get(1);
+        BasicDimensionSelectableOption expectedLanguageEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(5).getSelectableValues()).get(1);
+        BasicDimensionSelectableOption expectedProjectEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(1).getSelectableValues()).get(1);
+        BasicDimensionSelectableOption expectedReligionEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(4).getSelectableValues()).get(1);
+        BasicDimensionSelectableOption expectedSexualOrientationEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(10).getSelectableValues()).get(1);
+        BasicDimensionSelectableOption expectedSocialBackgroundDiscriminationEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(9).getSelectableValues()).get(1);
+        BasicDimensionSelectableOption expectedSocialBackgroundEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(8).getSelectableValues()).get(1);
+        MultiselectDimensionSelectableOption expectedHobbyEntity = List.copyOf(multiselectDimensionTestDataFactory.buildEntity(1).getSelectableValues()).get(0);
+        WeightedDimensionSelectableOption expectedWorkExperienceEntity = List.copyOf(weightedDimensionTestDataFactory.buildEntity(1).getSelectableValues()).get(1);
 
-        BasicDimensionSelectableOption expectedBasicSelectableOptionEntity = basicDimensionFactory.buildEntity(category, 1);
-        MultiselectDimensionSelectableOption expectedMultiSelectableOptionEntity = multiselectDimensionFactory.buildEntity(category, 1);
-        WeightedDimensionSelectableOption expectedWeightedSelectableOptionEntity = weightedDimensionFactory.buildEntity(category, 1);
-
-        when(multiselectDimensionService.getDimension(anyString())).thenReturn(multiselectDimension);
-        when(weightedDimensionService.getDimension(anyString())).thenReturn(weightedDimension);
-        when(basicDimensionService.getDimension(anyString())).thenReturn(basicDimension);
+        serviceGetDimensionMock();
 
         //Act
         MultiselectDimensionSelectableOption actualHobbyMapperOutput = hobbyMapper.dtoToEntity(inputHobbyDto);
@@ -379,20 +379,20 @@ public class DimensionMapperTest {
 
         //Assert
 
-        assertEquals(expectedMultiSelectableOptionEntity, actualHobbyMapperOutput);
+        assertEquals(expectedHobbyEntity, actualHobbyMapperOutput);
 
-        assertEquals(expectedWeightedSelectableOptionEntity, actualWorkExperienceMapperOutput);
+        assertEquals(expectedWorkExperienceEntity, actualWorkExperienceMapperOutput);
 
-        assertEquals(expectedBasicSelectableOptionEntity, actualCountryMapperOutput);
-        assertEquals(expectedBasicSelectableOptionEntity, actualDietMapperOutput);
-        assertEquals(expectedBasicSelectableOptionEntity, actualEducationMapperOutput);
-        assertEquals(expectedBasicSelectableOptionEntity, actualGenderMapperOutput);
-        assertEquals(expectedBasicSelectableOptionEntity, actualLanguageMapperOutput);
-        assertEquals(expectedBasicSelectableOptionEntity, actualProjectMapperOutput);
-        assertEquals(expectedBasicSelectableOptionEntity, actualReligionMapperOutput);
-        assertEquals(expectedBasicSelectableOptionEntity, actualSexualOrientationMapperOutput);
-        assertEquals(expectedBasicSelectableOptionEntity, actualSocialBackgroundDiscriminationMapperOutput);
-        assertEquals(expectedBasicSelectableOptionEntity, actualSocialBackgroundMapperOutput);
+        assertEquals(expectedCountryEntity, actualCountryMapperOutput);
+        assertEquals(expectedDietEntity, actualDietMapperOutput);
+        assertEquals(expectedEducationEntity, actualEducationMapperOutput);
+        assertEquals(expectedGenderEntity, actualGenderMapperOutput);
+        assertEquals(expectedLanguageEntity, actualLanguageMapperOutput);
+        assertEquals(expectedProjectEntity, actualProjectMapperOutput);
+        assertEquals(expectedReligionEntity, actualReligionMapperOutput);
+        assertEquals(expectedSexualOrientationEntity, actualSexualOrientationMapperOutput);
+        assertEquals(expectedSocialBackgroundDiscriminationEntity, actualSocialBackgroundDiscriminationMapperOutput);
+        assertEquals(expectedSocialBackgroundEntity, actualSocialBackgroundMapperOutput);
     }
 
     @Test
@@ -413,13 +413,20 @@ public class DimensionMapperTest {
         List<SocialBackgroundDiscriminationDto> inputSocialBackgroundDiscriminationList = Stream.of(1, 2).map(dimensionDtoDataFactory::buildSocialBackgroundDiscriminationDto).toList();
         List<SocialBackgroundDto> inputSocialBackgroundList = Stream.of(1, 2).map(dimensionDtoDataFactory::buildSocialBackgroundDto).toList();
 
-        List<BasicDimensionSelectableOption> expectedBasicSelectableOptionEntities = Stream.of(1, 2).map(value -> basicDimensionFactory.buildEntity(category, value)).toList();
-        List<MultiselectDimensionSelectableOption> expectedMultiSelectableOptionEntities = Stream.of(1, 2).map(value -> multiselectDimensionFactory.buildEntity(category, value)).toList();
-        List<WeightedDimensionSelectableOption> expectedWeightedSelectableOptionEntities = Stream.of(1, 2).map(value -> weightedDimensionFactory.buildEntity(category, value)).toList();
-
-        when(multiselectDimensionService.getDimension(anyString())).thenReturn(multiselectDimension);
-        when(weightedDimensionService.getDimension(anyString())).thenReturn(weightedDimension);
-        when(basicDimensionService.getDimension(anyString())).thenReturn(basicDimension);
+        List<BasicDimensionSelectableOption> expectedCountryEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(3).getSelectableValues()).subList(1, 3);
+        List<BasicDimensionSelectableOption> expectedDietEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(7).getSelectableValues()).subList(1, 3);
+        List<BasicDimensionSelectableOption> expectedEducationEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(6).getSelectableValues()).subList(1, 3);
+        List<BasicDimensionSelectableOption> expectedGenderEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(2).getSelectableValues()).subList(1, 3);
+        List<BasicDimensionSelectableOption> expectedLanguageEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(5).getSelectableValues()).subList(1, 3);
+        List<BasicDimensionSelectableOption> expectedProjectEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(1).getSelectableValues()).subList(1, 3);
+        List<BasicDimensionSelectableOption> expectedReligionEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(4).getSelectableValues()).subList(1, 3);
+        List<BasicDimensionSelectableOption> expectedSexualOrientationEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(10).getSelectableValues()).subList(1, 3);
+        List<BasicDimensionSelectableOption> expectedSocialBackgroundDiscriminationEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(9).getSelectableValues()).subList(1, 3);
+        List<BasicDimensionSelectableOption> expectedSocialBackgroundEntity = List.copyOf(basicDimensionTestDataFactory.buildEntity(8).getSelectableValues()).subList(1, 3);
+        List<MultiselectDimensionSelectableOption> expectedHobbyEntity = List.copyOf(multiselectDimensionTestDataFactory.buildEntity(1).getSelectableValues()).subList(0, 2);
+        List<WeightedDimensionSelectableOption> expectedWorkExperienceEntity = List.copyOf(weightedDimensionTestDataFactory.buildEntity(1).getSelectableValues()).subList(1, 3);
+        
+        serviceGetDimensionMock();
 
         //Act
         List<MultiselectDimensionSelectableOption> actualHobbyMapperOutput = hobbyMapper.dtoToEntity(inputHobbyList);
@@ -454,19 +461,36 @@ public class DimensionMapperTest {
         assertEquals(2, actualSocialBackgroundDiscriminationMapperOutput.size());
         assertEquals(2, actualSocialBackgroundDiscriminationMapperOutput.size());
 
-        assertEquals(expectedMultiSelectableOptionEntities, actualHobbyMapperOutput);
+        assertEquals(expectedHobbyEntity, actualHobbyMapperOutput);
 
-        assertEquals(expectedWeightedSelectableOptionEntities, actualWorkExperienceMapperOutput);
+        assertEquals(expectedWorkExperienceEntity, actualWorkExperienceMapperOutput);
 
-        assertEquals(expectedBasicSelectableOptionEntities, actualCountryMapperOutput);
-        assertEquals(expectedBasicSelectableOptionEntities, actualDietMapperOutput);
-        assertEquals(expectedBasicSelectableOptionEntities, actualEducationMapperOutput);
-        assertEquals(expectedBasicSelectableOptionEntities, actualGenderMapperOutput);
-        assertEquals(expectedBasicSelectableOptionEntities, actualLanguageMapperOutput);
-        assertEquals(expectedBasicSelectableOptionEntities, actualProjectMapperOutput);
-        assertEquals(expectedBasicSelectableOptionEntities, actualReligionMapperOutput);
-        assertEquals(expectedBasicSelectableOptionEntities, actualSexualOrientationMapperOutput);
-        assertEquals(expectedBasicSelectableOptionEntities, actualSocialBackgroundDiscriminationMapperOutput);
-        assertEquals(expectedBasicSelectableOptionEntities, actualSocialBackgroundMapperOutput);
+        assertEquals(expectedCountryEntity, actualCountryMapperOutput);
+        assertEquals(expectedDietEntity, actualDietMapperOutput);
+        assertEquals(expectedEducationEntity, actualEducationMapperOutput);
+        assertEquals(expectedGenderEntity, actualGenderMapperOutput);
+        assertEquals(expectedLanguageEntity, actualLanguageMapperOutput);
+        assertEquals(expectedProjectEntity, actualProjectMapperOutput);
+        assertEquals(expectedReligionEntity, actualReligionMapperOutput);
+        assertEquals(expectedSexualOrientationEntity, actualSexualOrientationMapperOutput);
+        assertEquals(expectedSocialBackgroundDiscriminationEntity, actualSocialBackgroundDiscriminationMapperOutput);
+        assertEquals(expectedSocialBackgroundEntity, actualSocialBackgroundMapperOutput);
+    }
+
+    void serviceGetDimensionMock() {
+        when(basicDimensionService.getDimension("Projekt")).thenReturn(basicDimensionTestDataFactory.buildEntity(1));
+        when(basicDimensionService.getDimension("Geschlechtliche Identität")).thenReturn(basicDimensionTestDataFactory.buildEntity(2));
+        when(basicDimensionService.getDimension("Ethnische Herkunft")).thenReturn(basicDimensionTestDataFactory.buildEntity(3));
+        when(basicDimensionService.getDimension("Religion")).thenReturn(basicDimensionTestDataFactory.buildEntity(4));
+        when(basicDimensionService.getDimension("Muttersprache")).thenReturn(basicDimensionTestDataFactory.buildEntity(5));
+        when(basicDimensionService.getDimension("Bildungsweg")).thenReturn(basicDimensionTestDataFactory.buildEntity(6));
+        when(basicDimensionService.getDimension("Ernährung")).thenReturn(basicDimensionTestDataFactory.buildEntity(7));
+        when(basicDimensionService.getDimension("Soziale Herkunft")).thenReturn(basicDimensionTestDataFactory.buildEntity(8));
+        when(basicDimensionService.getDimension("Diskriminierung aufgrund sozialer Herkunft")).thenReturn(basicDimensionTestDataFactory.buildEntity(9));
+        when(basicDimensionService.getDimension("Sexuelle Orientierung")).thenReturn(basicDimensionTestDataFactory.buildEntity(10));
+
+        when(weightedDimensionService.getDimension("Berufserfahrung")).thenReturn(weightedDimensionTestDataFactory.buildEntity(1));
+
+        when(multiselectDimensionService.getDimension("Hobby")).thenReturn(multiselectDimensionTestDataFactory.buildEntity(1));
     }
 }

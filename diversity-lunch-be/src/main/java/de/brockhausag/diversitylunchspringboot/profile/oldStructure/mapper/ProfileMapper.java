@@ -57,7 +57,7 @@ public class ProfileMapper {
     }
 
 
-    public Optional<ProfileEntity> dtoToEntity(ProfileDto dto) {
+    public ProfileEntity dtoToEntity(ProfileDto dto) {
         Map<BasicDimension, BasicDimensionSelectableOption> selectedBasicOptions = new HashMap<>();
 
         Map<WeightedDimension, WeightedDimensionSelectableOption> selectedWeightedOptions = new HashMap<>();
@@ -95,7 +95,7 @@ public class ProfileMapper {
         selectedMultiselectOptions.put(multiselectDimensionService.getDimension("Hobby"),
                 selectedMultiselectValues);
 
-        return Optional.of(ProfileEntity.builder()
+        return ProfileEntity.builder()
                 .id(dto.getId())
                 .name(dto.getName())
                 .email(dto.getEmail())
@@ -104,7 +104,7 @@ public class ProfileMapper {
                 .selectedWeightedValues(selectedWeightedOptions)
                 .selectedMultiselectValues(selectedMultiselectOptions)
                 .wasChangedByAdmin(false)
-                .build());
+                .build();
     }
 
 

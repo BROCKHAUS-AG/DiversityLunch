@@ -1,7 +1,9 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapperTest;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
-import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.*;
+import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.BasicDimensionTestDataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.MultiselectDimensionTestDataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.WeightedDimensionTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.model.MultiselectDimensionService;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.model.WeightedDimensionService;
@@ -21,7 +23,6 @@ import org.mockito.quality.Strictness;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -74,21 +75,15 @@ class ProfileMapperTest {
     private ProfileDto profileDto;
     private ProfileEntity profileEntity;
     private BasicDimensionTestDataFactory basicDimensionTestDataFactory;
-    private BasicSelectableOptionTestDataFactory basicSelectableOptionTestDataFactory;
     private WeightedDimensionTestDataFactory weightedDimensionTestDataFactory;
-    private WeightedSelectableOptionTestDataFactory weightedSelectableOptionTestDataFactory;
     private MultiselectDimensionTestDataFactory multiselectDimensionTestDataFactory;
-    private MultiselectSelectableOptionTestDataFactory multiselectSelectableOptionTestDataFactory;
 
     @BeforeEach
     void setup() {
         this.factory = new ProfileTestdataFactory();
         this.basicDimensionTestDataFactory = new BasicDimensionTestDataFactory();
-        this.basicSelectableOptionTestDataFactory = new BasicSelectableOptionTestDataFactory();
         this.weightedDimensionTestDataFactory = new WeightedDimensionTestDataFactory();
-        this.weightedSelectableOptionTestDataFactory = new WeightedSelectableOptionTestDataFactory();
         this.multiselectDimensionTestDataFactory = new MultiselectDimensionTestDataFactory();
-        this.multiselectSelectableOptionTestDataFactory = new MultiselectSelectableOptionTestDataFactory();
         this.profileDto = factory.buildDto(1);
         this.profileEntity = factory.buildEntity(1);
     }
@@ -103,11 +98,11 @@ class ProfileMapperTest {
         serviceGetDimensionMock();
 
         //Act
-        Optional<ProfileEntity> profileEntityOptional = profileMapper.dtoToEntity(profileDto);
+        ProfileEntity profileEntityOptional = profileMapper.dtoToEntity(profileDto);
 
         //Assert
 
-        assertEquals(profileEntity, profileEntityOptional.get());
+        assertEquals(profileEntity, profileEntityOptional);
     }
 
     @Test
