@@ -1,20 +1,15 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.*;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimension;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimension;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.ProfileEntitySelectedMultiselectValue;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimension;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.*;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
-import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.*;
-import liquibase.pro.packaged.E;
+import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.ProfileDto;
 
 import java.util.*;
 
 public class ProfileTestdataFactory {
+
+    private final DimensionDtoDataFactory dtoDataFactory = new DimensionDtoDataFactory();
 
     public ProfileEntity buildEntity(int setNumber) {
         ProfileEntity result;
@@ -80,58 +75,58 @@ public class ProfileTestdataFactory {
                         .name("First User")
                         .email("first.mail@some.tld")
                         .birthYear(1957)
-                        .originCountry(new CountryDto(1L, "Option1"))
-                        .diet(new DietDto(1L, "Option1"))
-                        .education(new EducationDto(1L, "Option1"))
-                        .gender(new GenderDto(1L, "Option1"))
-                        .hobby(List.of(new HobbyDto(1L, "Option1"), new HobbyDto(2L, "Option2"), new HobbyDto(3L, "Option3")))
-                        .motherTongue(new LanguageDto(1L, "Option1"))
-                        .project(new ProjectDto(1L, "Option1"))
-                        .religion(new ReligionDto(1L, "Option1"))
-                        .sexualOrientation(new SexualOrientationDto(1L, "Option1"))
-                        .socialBackgroundDiscrimination(new SocialBackgroundDiscriminationDto(1L, "Option1"))
-                        .socialBackground(new SocialBackgroundDto(1L, "Option1"))
-                        .workExperience(new WorkExperienceDto(1L, "Option1"))
+                        .originCountry(dtoDataFactory.buildCountryDto(1))
+                        .diet(dtoDataFactory.buildDietDto(1))
+                        .education(dtoDataFactory.buildEducationDto(1))
+                        .gender(dtoDataFactory.buildGenderDto(1))
+                        .hobby(dtoDataFactory.buildHobbyDtos(List.of(1, 2, 3)))
+                        .motherTongue(dtoDataFactory.buildLanguageDto(1))
+                        .project(dtoDataFactory.buildProjectDto(1))
+                        .religion(dtoDataFactory.buildReligionDto(1))
+                        .sexualOrientation(dtoDataFactory.buildSexualOrientationDto(1))
+                        .socialBackgroundDiscrimination(dtoDataFactory.buildSocialBackgroundDiscriminationDto(1))
+                        .socialBackground(dtoDataFactory.buildSocialBackgroundDto(1))
+                        .workExperience(dtoDataFactory.buildWorkExperienceDto(1))
                         .build();
                 break;
             case 2:
                 result = ProfileDto.builder()
                         .id(2L)
-                        .name("Third User")
-                        .email("third.mail@some.tld")
-                        .birthYear(1969)
-                        .originCountry(new CountryDto(3L, "Option3"))
-                        .diet(new DietDto(3L, "Option3"))
-                        .education(new EducationDto(3L, "Option3"))
-                        .gender(new GenderDto(3L, "Option3"))
-                        .hobby(List.of(new HobbyDto(4L, "Option4"), new HobbyDto(5L, "Option5"), new HobbyDto(6L, "Option6")))
-                        .motherTongue(new LanguageDto(3L, "Option3"))
-                        .project(new ProjectDto(3L, "Option3"))
-                        .religion(new ReligionDto(3L, "Option3"))
-                        .sexualOrientation(new SexualOrientationDto(3L, "Option3"))
-                        .socialBackgroundDiscrimination(new SocialBackgroundDiscriminationDto(3L, "Option3"))
-                        .socialBackground(new SocialBackgroundDto(3L, "Option3"))
-                        .workExperience(new WorkExperienceDto(3L, "Option3"))
+                        .name("Second User")
+                        .email("second.mail@some.tld")
+                        .birthYear(2001)
+                        .originCountry(dtoDataFactory.buildCountryDto(3))
+                        .diet(dtoDataFactory.buildDietDto(3))
+                        .education(dtoDataFactory.buildEducationDto(3))
+                        .gender(dtoDataFactory.buildGenderDto(3))
+                        .hobby(dtoDataFactory.buildHobbyDtos(List.of(4, 5, 6)))
+                        .motherTongue(dtoDataFactory.buildLanguageDto(3))
+                        .project(dtoDataFactory.buildProjectDto(3))
+                        .religion(dtoDataFactory.buildReligionDto(3))
+                        .sexualOrientation(dtoDataFactory.buildSexualOrientationDto(3))
+                        .socialBackgroundDiscrimination(dtoDataFactory.buildSocialBackgroundDiscriminationDto(3))
+                        .socialBackground(dtoDataFactory.buildSocialBackgroundDto(3))
+                        .workExperience(dtoDataFactory.buildWorkExperienceDto(3))
                         .build();
                 break;
             case 3:
                 result = ProfileDto.builder()
                         .id(3L)
-                        .name("Second User")
-                        .email("second.mail@some.tld")
-                        .birthYear(2001)
-                        .originCountry(new CountryDto(10L, "DefaultOption"))
-                        .diet(new DietDto(1L, "Option1"))
-                        .education(new EducationDto(2L, "Option2"))
-                        .gender(new GenderDto(3L, "Option3"))
-                        .hobby(List.of(new HobbyDto(3L, "Option3"), new HobbyDto(4L, "Option4"), new HobbyDto(5L, "Option5")))
-                        .motherTongue(new LanguageDto(10L, "DefaultOption"))
-                        .project(new ProjectDto(1L, "Option1"))
-                        .religion(new ReligionDto(2L, "Option2"))
-                        .sexualOrientation(new SexualOrientationDto(3L, "Option3"))
-                        .socialBackgroundDiscrimination(new SocialBackgroundDiscriminationDto(10L, "DefaultOption"))
-                        .socialBackground(new SocialBackgroundDto(1L, "Option1"))
-                        .workExperience(new WorkExperienceDto(1L, "Option1"))
+                        .name("Third User")
+                        .email("third.mail@some.tld")
+                        .birthYear(1969)
+                        .originCountry(dtoDataFactory.buildCountryDto(1))
+                        .diet(dtoDataFactory.buildDietDto(1))
+                        .education(dtoDataFactory.buildEducationDto(2))
+                        .gender(dtoDataFactory.buildGenderDto(2))
+                        .hobby(dtoDataFactory.buildHobbyDtos(List.of(3, 4, 5)))
+                        .motherTongue(dtoDataFactory.buildLanguageDto(1))
+                        .project(dtoDataFactory.buildProjectDto(1))
+                        .religion(dtoDataFactory.buildReligionDto(2))
+                        .sexualOrientation(dtoDataFactory.buildSexualOrientationDto(2))
+                        .socialBackgroundDiscrimination(dtoDataFactory.buildSocialBackgroundDiscriminationDto(1))
+                        .socialBackground(dtoDataFactory.buildSocialBackgroundDto(2))
+                        .workExperience(dtoDataFactory.buildWorkExperienceDto(1))
                         .build();
                 break;
             default:
@@ -140,18 +135,18 @@ public class ProfileTestdataFactory {
                         .name("Default User")
                         .email("default.mail@some.tld")
                         .birthYear(2000)
-                        .originCountry(new CountryDto(10L, "DefaultOption"))
-                        .diet(new DietDto(10L, "DefaultOption"))
-                        .education(new EducationDto(10L, "DefaultOption"))
-                        .gender(new GenderDto(10L, "DefaultOption"))
-                        .hobby(new ArrayList<>())
-                        .motherTongue(new LanguageDto(10L, "DefaultOption"))
-                        .project(new ProjectDto(10L, "DefaultOption"))
-                        .religion(new ReligionDto(10L, "DefaultOption"))
-                        .sexualOrientation(new SexualOrientationDto(10L, "DefaultOption"))
-                        .socialBackgroundDiscrimination(new SocialBackgroundDiscriminationDto(10L, "DefaultOption"))
-                        .socialBackground(new SocialBackgroundDto(10L, "DefaultOption"))
-                        .workExperience(new WorkExperienceDto(10L, "DefaultOption"))
+                        .originCountry(dtoDataFactory.buildCountryDto(0))
+                        .diet(dtoDataFactory.buildDietDto(0))
+                        .education(dtoDataFactory.buildEducationDto(0))
+                        .gender(dtoDataFactory.buildGenderDto(0))
+                        .hobby(dtoDataFactory.buildHobbyDtos(Collections.emptyList()))
+                        .motherTongue(dtoDataFactory.buildLanguageDto(0))
+                        .project(dtoDataFactory.buildProjectDto(0))
+                        .religion(dtoDataFactory.buildReligionDto(0))
+                        .sexualOrientation(dtoDataFactory.buildSexualOrientationDto(0))
+                        .socialBackgroundDiscrimination(dtoDataFactory.buildSocialBackgroundDiscriminationDto(0))
+                        .socialBackground(dtoDataFactory.buildSocialBackgroundDto(0))
+                        .workExperience(dtoDataFactory.buildWorkExperienceDto(0))
                         .build();
         }
         return result;

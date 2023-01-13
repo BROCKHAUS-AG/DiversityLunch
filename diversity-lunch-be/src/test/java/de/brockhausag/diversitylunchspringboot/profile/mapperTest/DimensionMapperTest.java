@@ -1,9 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapperTest;
 
-import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.BasicSelectableOptionTestDataFactory;
-import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.DimensionDtoDataFactory;
-import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.MultiselectSelectableOptionTestDataFactory;
-import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.WeightedSelectableOptionTestDataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.*;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.*;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.model.MultiselectDimensionService;
@@ -63,6 +60,7 @@ public class DimensionMapperTest {
     //BasicDimension
     @Mock
     private BasicDimensionService basicDimensionService;
+    private BasicDimensionTestDataFactory basicDimensionTestDataFactory;
     private BasicSelectableOptionTestDataFactory basicDimensionFactory;
     @InjectMocks
     private CountryMapper countryMapper;
@@ -92,6 +90,7 @@ public class DimensionMapperTest {
     @BeforeEach
     void setup()
     {
+        this.basicDimensionTestDataFactory = new BasicDimensionTestDataFactory();
         this.dimensionDtoDataFactory = new DimensionDtoDataFactory();
 
         this.multiselectDimensionFactory = new MultiselectSelectableOptionTestDataFactory();
@@ -115,13 +114,21 @@ public class DimensionMapperTest {
 
     }
 
-
     @Test
     void testEntityToDto_withOneEntity_returnsOneDto() {
         // Arrange
-        BasicDimensionSelectableOption inputBasicSelectableOptionEntity = basicDimensionFactory.buildEntity(category,1);
-        MultiselectDimensionSelectableOption inputMultiSelectableOptionEntity = multiselectDimensionFactory.buildEntity(category, 1);
-        WeightedDimensionSelectableOption inputWeightedSelectableOptionEntity = weightedDimensionFactory.buildEntity(category, 1);
+        BasicDimensionSelectableOption inputCountryEntity = basicDimensionTestDataFactory.buildEntity(3).getSelectableValues().iterator().next();
+        BasicDimensionSelectableOption inputDietEntity = basicDimensionFactory.buildEntity(category,1);
+        BasicDimensionSelectableOption inputEducationEntity = basicDimensionFactory.buildEntity(category,1);
+        BasicDimensionSelectableOption inputGenderEntity = basicDimensionFactory.buildEntity(category,1);
+        BasicDimensionSelectableOption inputLanguageEntity = basicDimensionFactory.buildEntity(category,1);
+        BasicDimensionSelectableOption inputProjectEntity = basicDimensionFactory.buildEntity(category,1);
+        BasicDimensionSelectableOption inputReligionEntity = basicDimensionFactory.buildEntity(category,1);
+        BasicDimensionSelectableOption inputSexualOrientationEntity = basicDimensionFactory.buildEntity(category,1);
+        BasicDimensionSelectableOption inputSocialBackgroundDiscriminationEntity = basicDimensionFactory.buildEntity(category,1);
+        BasicDimensionSelectableOption inputSocialBackgroundEntity = basicDimensionFactory.buildEntity(category,1);
+        MultiselectDimensionSelectableOption inputHobbyEntity = multiselectDimensionFactory.buildEntity(category, 1);
+        WeightedDimensionSelectableOption inputWorkExperienceEntity = weightedDimensionFactory.buildEntity(category, 1);
 
         CountryDto expectedCountryDto = dimensionDtoDataFactory.buildCountryDto(1);
         DietDto expectedDietDto = dimensionDtoDataFactory.buildDietDto(1);
@@ -137,20 +144,20 @@ public class DimensionMapperTest {
         WorkExperienceDto expectedWorkExperienceDto = dimensionDtoDataFactory.buildWorkExperienceDto(1);
 
         // Act
-        HobbyDto actualHobbyDto = hobbyMapper.entityToDto(inputMultiSelectableOptionEntity);
+        HobbyDto actualHobbyDto = hobbyMapper.entityToDto(inputHobbyEntity);
 
-        WorkExperienceDto actualWorkExperienceDto = workExperienceMapper.entityToDto(inputWeightedSelectableOptionEntity);
+        WorkExperienceDto actualWorkExperienceDto = workExperienceMapper.entityToDto(inputWorkExperienceEntity);
 
-        CountryDto actualCountryDto = countryMapper.entityToDto(inputBasicSelectableOptionEntity);
-        DietDto actualDietDto = dietMapper.entityToDto(inputBasicSelectableOptionEntity);
-        EducationDto actualEducationDto = educationMapper.entityToDto(inputBasicSelectableOptionEntity);
-        GenderDto actualGenderDto = genderMapper.entityToDto(inputBasicSelectableOptionEntity);
-        LanguageDto actualLanguageDto = languageMapper.entityToDto(inputBasicSelectableOptionEntity);
-        ProjectDto actualProjectDto = projectMapper.entityToDto(inputBasicSelectableOptionEntity);
-        ReligionDto actualReligionDto = religionMapper.entityToDto(inputBasicSelectableOptionEntity);
-        SexualOrientationDto actualSexualOrientationDto = sexualOrientationMapper.entityToDto(inputBasicSelectableOptionEntity);
-        SocialBackgroundDiscriminationDto actualSocialBackgroundDiscriminationDto = socialBackgroundDiscriminationMapper.entityToDto(inputBasicSelectableOptionEntity);
-        SocialBackgroundDto actualSocialBackgroundDto = socialBackgroundMapper.entityToDto(inputBasicSelectableOptionEntity);
+        CountryDto actualCountryDto = countryMapper.entityToDto(inputCountryEntity);
+        DietDto actualDietDto = dietMapper.entityToDto(inputDietEntity);
+        EducationDto actualEducationDto = educationMapper.entityToDto(inputEducationEntity);
+        GenderDto actualGenderDto = genderMapper.entityToDto(inputGenderEntity);
+        LanguageDto actualLanguageDto = languageMapper.entityToDto(inputLanguageEntity);
+        ProjectDto actualProjectDto = projectMapper.entityToDto(inputProjectEntity);
+        ReligionDto actualReligionDto = religionMapper.entityToDto(inputReligionEntity);
+        SexualOrientationDto actualSexualOrientationDto = sexualOrientationMapper.entityToDto(inputSexualOrientationEntity);
+        SocialBackgroundDiscriminationDto actualSocialBackgroundDiscriminationDto = socialBackgroundDiscriminationMapper.entityToDto(inputSocialBackgroundDiscriminationEntity);
+        SocialBackgroundDto actualSocialBackgroundDto = socialBackgroundMapper.entityToDto(inputSocialBackgroundEntity);
 
 
         // Assert

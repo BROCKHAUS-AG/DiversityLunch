@@ -2,10 +2,6 @@ package de.brockhausag.diversitylunchspringboot.profile.mapperTest;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.*;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimension;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.model.MultiselectDimensionService;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.model.WeightedDimensionService;
@@ -22,16 +18,15 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import org.springframework.data.util.StreamUtils;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -99,16 +94,13 @@ class ProfileMapperTest {
     }
 
     @Test
-    void workToDo(){
-        assertTrue(false);
-    }
-    @Test
     void testDtoToEntity_withOneDto_returnsOneEntity() {
         //Arrange
         ProfileEntity expected = profileEntity;
         ProfileDto input = profileDto;
 
-        serviceMockHelper(input, expected);
+        serviceGetSelectableOptionMock(input, expected);
+        serviceGetDimensionMock();
 
         //Act
         Optional<ProfileEntity> profileEntityOptional = profileMapper.dtoToEntity(profileDto);
@@ -131,16 +123,12 @@ class ProfileMapperTest {
     }
 
     @Test
-    void workToDo2(){
-        assertTrue(false);
-    }
-    @Test
     void testEntityToDto_withOneEntity_returnsOneDto() {
         //Arrange
         ProfileDto expectedDto = profileDto;
         ProfileEntity inputEntity = profileEntity;
 
-        serviceMockHelper(expectedDto, inputEntity);
+        serviceGetDimensionMock();
 
         //Act
         ProfileDto actualDto = this.profileMapper.entityToDto(inputEntity);
@@ -152,10 +140,14 @@ class ProfileMapperTest {
     @Test
     void testEntityToDto_withListOfThreeEntities_returnsListOfThreeDtos() {
         //Arrange
-        List<ProfileEntity> inputEntities = Stream.of(1, 2, 3).map(this.factory::buildEntity).toList();
-        List<ProfileDto> expectedDtos = Stream.of(1, 2, 3).map(this.factory::buildDto).toList();
+        int range = 3;
+        List<ProfileEntity> inputEntities = IntStream.range(1, range + 1).boxed().map(this.factory::buildEntity).toList();
+        List<ProfileDto> expectedDtos = IntStream.range(1, range + 1).boxed().map(this.factory::buildDto).toList();
 
-
+        serviceGetDimensionMock();
+        for(int i = 0; i < range; i++) {
+            serviceGetSelectableOptionMock(expectedDtos.get(i), inputEntities.get(i));
+        }
 
         //Act
         List<ProfileDto> actualDtos = this.profileMapper.entityToDto(inputEntities);
@@ -165,8 +157,24 @@ class ProfileMapperTest {
         assertEquals(expectedDtos, actualDtos);
     }
     
-    void serviceMockHelper(ProfileDto dto, ProfileEntity entity) {
+    void serviceGetDimensionMock() {
+        when(basicDimensionService.getDimension("Projekt")).thenReturn(basicDimensionTestDataFactory.buildEntity(1));
+        when(basicDimensionService.getDimension("Geschlechtliche Identität")).thenReturn(basicDimensionTestDataFactory.buildEntity(2));
+        when(basicDimensionService.getDimension("Ethnische Herkunft")).thenReturn(basicDimensionTestDataFactory.buildEntity(3));
+        when(basicDimensionService.getDimension("Religion")).thenReturn(basicDimensionTestDataFactory.buildEntity(4));
+        when(basicDimensionService.getDimension("Muttersprache")).thenReturn(basicDimensionTestDataFactory.buildEntity(5));
+        when(basicDimensionService.getDimension("Bildungsweg")).thenReturn(basicDimensionTestDataFactory.buildEntity(6));
+        when(basicDimensionService.getDimension("Ernährung")).thenReturn(basicDimensionTestDataFactory.buildEntity(7));
+        when(basicDimensionService.getDimension("Soziale Herkunft")).thenReturn(basicDimensionTestDataFactory.buildEntity(8));
+        when(basicDimensionService.getDimension("Diskriminierung aufgrund sozialer Herkunft")).thenReturn(basicDimensionTestDataFactory.buildEntity(9));
+        when(basicDimensionService.getDimension("Sexuelle Orientierung")).thenReturn(basicDimensionTestDataFactory.buildEntity(10));
 
+        when(weightedDimService.getDimension("Berufserfahrung")).thenReturn(weightedDimensionTestDataFactory.buildEntity(1));
+
+        when(multiselectDimService.getDimension("Hobby")).thenReturn(multiselectDimensionTestDataFactory.buildEntity(1));
+    }
+
+    void serviceGetSelectableOptionMock(ProfileDto dto, ProfileEntity entity) {
         when(basicDimensionService.getSelectableOptionById(dto.getProject().getId()))
                 .thenReturn(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(1)));
         when(basicDimensionService.getSelectableOptionById(dto.getGender().getId()))
@@ -193,20 +201,5 @@ class ProfileMapperTest {
 
         when(multiselectDimService.getSelectableOptions(dto.getHobby().stream().map(HobbyDto::getId).collect(Collectors.toList())))
                 .thenReturn(entity.getSelectedMultiselectValues().get(multiselectDimensionTestDataFactory.buildEntity(1)).getSelectedOptions().stream().toList());
-
-        when(basicDimensionService.getDimension("Projekt")).thenReturn(basicDimensionTestDataFactory.buildEntity(1));
-        when(basicDimensionService.getDimension("Geschlechtliche Identität")).thenReturn(basicDimensionTestDataFactory.buildEntity(2));
-        when(basicDimensionService.getDimension("Ethnische Herkunft")).thenReturn(basicDimensionTestDataFactory.buildEntity(3));
-        when(basicDimensionService.getDimension("Religion")).thenReturn(basicDimensionTestDataFactory.buildEntity(4));
-        when(basicDimensionService.getDimension("Muttersprache")).thenReturn(basicDimensionTestDataFactory.buildEntity(5));
-        when(basicDimensionService.getDimension("Bildungsweg")).thenReturn(basicDimensionTestDataFactory.buildEntity(6));
-        when(basicDimensionService.getDimension("Ernährung")).thenReturn(basicDimensionTestDataFactory.buildEntity(7));
-        when(basicDimensionService.getDimension("Soziale Herkunft")).thenReturn(basicDimensionTestDataFactory.buildEntity(8));
-        when(basicDimensionService.getDimension("Diskriminierung aufgrund sozialer Herkunft")).thenReturn(basicDimensionTestDataFactory.buildEntity(9));
-        when(basicDimensionService.getDimension("Sexuelle Orientierung")).thenReturn(basicDimensionTestDataFactory.buildEntity(10));
-
-        when(weightedDimService.getDimension("Berufserfahrung")).thenReturn(weightedDimensionTestDataFactory.buildEntity(1));
-
-        when(multiselectDimService.getDimension("Hobby")).thenReturn(multiselectDimensionTestDataFactory.buildEntity(1));
     }
 }
