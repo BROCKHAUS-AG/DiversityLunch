@@ -33,7 +33,7 @@ export const App = () => (
                 <div className="bodyContainer">
                     <Switch>
                         <Route exact path="/">
-                            <HasProfileCheck />
+                            <Redirect to="/profile-check" />
                         </Route>
 
                         <Route path="/admin-panel">

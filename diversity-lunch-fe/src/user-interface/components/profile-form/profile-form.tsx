@@ -176,7 +176,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                         <legend>Hobbies</legend>
                         <Multiselect
                             showCheckbox
-                            selectedValues={profile.hobby || undefined}
+                            selectedValues={profile.hobby || null as any}
                             options={sortOptions(hobbies)}
                             placeholder={hobbiesCounterToString()}
                             onSelect={increaseCounter} // Function will trigger on select event

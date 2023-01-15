@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { TileIconLink } from '../../components/tile-icon-link/tile-icon-link';
 import { DiversityIcon } from '../../components/diversity-icon/diversity-icon';
@@ -27,7 +27,6 @@ export const Dashboard = () => {
     let account: Account;
     const profileState = useSelector((state: AppStoreState) => state.profile);
     const [isChange, setIsChange] = useState(false);
-    let account : Account;
     const profile: Profile = (profileState as ProfileStateOk).profileData;
 
     const createPopUpIfWasChangedByAdmin = () => {
