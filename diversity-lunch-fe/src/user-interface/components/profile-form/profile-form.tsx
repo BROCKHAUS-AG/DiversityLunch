@@ -149,33 +149,45 @@ export const ProfileForm: FC<ProfileFormProps> = ({
     return (
         <form onSubmit={formSubmitted} className="ProfileForm">
             <div className="DropdownQuestion">
-                <p className="DropdownQuestion-question">
-                    {profileFormQuestion.age}
-                </p>
-                <TextField
-                    id="birth_year"
-                    label="Geburtsjahr"
-                    variant="outlined"
-                    type="number"
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => updateProfile('birthYear', e.target.valueAsNumber)}
-                    InputProps={{ inputProps: { min: 1900, max: 2022 } }}
-                    defaultValue={profile.birthYear}
-                />
+                <div className="inLineToggle">
+                    <p className="DropdownQuestion-question">
+                        {profileFormQuestion.age}
+                    </p>
+                </div>
+                <div className="inLineToggleHelper">
+                    <TextField
+                        id="birth_year"
+                        label="Geburtsjahr"
+                        variant="outlined"
+                        type="number"
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => updateProfile('birthYear', e.target.valueAsNumber)}
+                        InputProps={{ inputProps: { min: 1900, max: 2022 } }}
+                        defaultValue={profile.birthYear}
+                    />
+                </div>
             </div>
-            <div className="Multi-select-container">
-                <p className="Multi-select-label">{profileFormQuestion.hobby}</p>
-                <span className="labelWrapper"><label>Hobbies</label></span>
-                <Multiselect
-                    selectedValues={profile.hobby || undefined}
-                    options={sortOptions(hobbies)}
-                    placeholder={hobbiesCounterToString()}
-                    onSelect={increaseCounter} // Function will trigger on select event
-                    onRemove={decreaseCounter} // Function will trigger on remove event
-                    displayValue="descriptor"
-                    selectionLimit={3}
-                    closeIcon="cancel"
-                    ref={multiselectRef}
-                />
+            <div className="Multi-select-container DropdownQuestion">
+
+                <div className="inLineToggle">
+                    <p className="Multi-select-label">{profileFormQuestion.hobby}</p>
+                </div>
+                <div className="inLineToggleHelper">
+                    <fieldset>
+                        <legend>Hobbies</legend>
+                        <Multiselect
+                            showCheckbox
+                            selectedValues={profile.hobby || undefined}
+                            options={sortOptions(hobbies)}
+                            placeholder={hobbiesCounterToString()}
+                            onSelect={increaseCounter} // Function will trigger on select event
+                            onRemove={decreaseCounter} // Function will trigger on remove event
+                            displayValue="descriptor"
+                            selectionLimit={3}
+                            closeIcon="cancel"
+                            ref={multiselectRef}
+                        />
+                    </fieldset>
+                </div>
             </div>
             <Dropdown
                 options={sortOptions(project)}

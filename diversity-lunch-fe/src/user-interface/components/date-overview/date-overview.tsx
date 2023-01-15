@@ -27,10 +27,6 @@ export const DateOverview = (props: DateOverviewProps) => {
 
     return (
         <div className="DateOverview">
-            <div className="DateOverview-logo-container">
-                <CloseSite />
-                <DiversityIcon />
-            </div>
             <div className="DateOverview-info-text-container">
                 <p className="DateOverview-info-text">
                     Vielen Dank! Die Informationen wurden erfolgreich an uns übermittelt und wir arbeiten daran,

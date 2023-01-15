@@ -20,5 +20,6 @@ export const HasProfileCheck: React.FC = () => {
         return <Redirect to="/questions" />;
     }
 
-    return <LoadingAnimation size="block-app" />;
+    return <SessionStorageRedirection />;
+    // return <LoadingAnimation size="block-app" />;
 };

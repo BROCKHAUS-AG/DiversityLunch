@@ -1,10 +1,19 @@
-.Multi-select-label {
+
+
+.ProfileForm{
+  margin-bottom: 10rem;
+  margin-left: 20px;
 }
 
+@media screen and (min-width: 900px) {
+  .ProfileForm{
+    margin-left: 320px;
+  }
+}
+
+
+
 .Multi-select-container {
-  width: 80%;
-  padding: 5%;
-  margin: 3%;
 
   .labelWrapper {
     background-color: #f0f0f0;
@@ -51,7 +60,14 @@
 
   input::placeholder {
     width: 100%;
+    color:lightgrey;
+    font-size: 16px;
   }
+
+  fieldset{
+    margin-left: 2rem;
+  }
+
 }
 
 
@@ -84,7 +100,7 @@
 
 .searchWrapper {
   border: 1px solid #b9b9b9;
-  border-radius: 0;
+  border-radius: 0px;
   min-height: 22px;
   padding: 5px;
   position: relative;

@@ -1,6 +1,5 @@
 .SelectMeetingData {
 
-  background-color: #f0f0f0;
   width: 100%;
   max-width: 700px;
 
@@ -9,10 +8,29 @@
   align-items: center;
 }
 
+@media screen and (min-width: 997px){
+  .SelectMeetingData {
+
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: normal;
+  }
+}
+
 .ChooseDate-infoText {
   margin: 10%;
   font-size: 1.2em;
   text-align: center;
+}
+
+@media screen and (min-width: 997px){
+  .ChooseDate-infoText {
+    margin: 1.5rem 0;
+    font-size: 1.2rem;
+    text-align: left;
+  }
 }
 
 .ChooseDate-date-text {
@@ -34,6 +52,14 @@
   justify-content: center;
   align-items: center;
   margin-top: 5%;
+}
+
+@media screen and (min-width: 997px){
+  .ChooseTime-segment-control {
+    width: 100%;
+    display: block;
+    margin-top: 2rem;
+  }
 }
 
 .ChooseTime-segment-control-segment {

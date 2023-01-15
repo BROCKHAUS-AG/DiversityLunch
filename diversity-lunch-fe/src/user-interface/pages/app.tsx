@@ -16,66 +16,80 @@ import { BookingError } from './booking-error/booking-error';
 import { AdminPanel } from './admin-panel/admin-panel';
 import { VoucherPanel } from './voucher-panel/voucher-panel';
 import { UserVoucherList } from './user-voucher-list/user-voucher-list';
+import { AppHeader } from '../components/header/header';
+import { Navbar } from '../components/navbar/Navbar';
+import { CloseSite } from '../components/close-site/close-site';
 
 export const App = () => (
     <div className="App">
         <div className="Screen">
+            <AppHeader />
             <BrowserRouter>
-                <Switch>
-                    <Route exact path="/">
-                        <Redirect to="/profile-check" />
-                    </Route>
+                <Navbar />
+                <div className="toggleStyle">
+                    <CloseSite />
+                </div>
 
-                    <Route path="/admin-panel">
-                        <AdminPanel />
-                    </Route>
+                <div className="bodyContainer">
+                    <Switch>
+                        <Route exact path="/">
+                            <HasProfileCheck />
+                        </Route>
 
-                    <Route path="/profile-check">
-                        <HasProfileCheck />
-                    </Route>
+                        <Route path="/admin-panel">
+                            <AdminPanel />
+                        </Route>
 
-                    <Route path="/dashboard">
-                        <Dashboard />
-                    </Route>
+                        <Route path="/profile-check">
+                            <HasProfileCheck />
+                        </Route>
 
-                    <Route path="/profile">
-                        <ProfileOverviewLoader />
-                    </Route>
+                        <Route path="/dashboard">
+                            <Dashboard />
+                        </Route>
 
-                    <Route path="/add+meetings">
-                        <AddMeetings />
-                    </Route>
+                        <Route exact path="/profile">
+                            <ProfileOverviewLoader />
+                        </Route>
 
-                    <Route path="/upcoming+meetings">
-                        <UpcomingMeetings />
-                    </Route>
+                        <Route path="/add+meetings">
+                            <AddMeetings />
+                        </Route>
 
-                    <Route path="/questions">
-                        <QuestionSite />
-                    </Route>
+                        <Route path="/upcoming+meetings">
+                            <UpcomingMeetings />
+                        </Route>
 
-                    <Route path="/information">
-                        <Information />
-                    </Route>
+                        <Route path="/questions">
+                            <QuestionSite />
+                        </Route>
 
-                    <Route path="/meetingAlreadyBooked">
-                        <MeetingAlreadyBooked />
-                    </Route>
+                        <Route path="/information">
+                            <Information />
+                        </Route>
 
-                    <Route path="/bookingError">
-                        <BookingError />
-                    </Route>
+                        <Route path="/meetingAlreadyBooked">
+                            <MeetingAlreadyBooked />
+                        </Route>
 
-                    <Route path="/voucherClaim/:meetingId">
-                        <VoucherPanel />
-                    </Route>
+                        <Route path="/bookingError">
+                            <BookingError />
+                        </Route>
 
-                    <Route path="/myVouchers">
-                        <UserVoucherList />
-                    </Route>
+                        <Route path="/voucherClaim/:meetingId">
+                            <VoucherPanel />
+                        </Route>
 
-                    <Route path="/" render={() => <GenericErrorPage errorMessage="ERROR 404 - THIS SITE DOES NOT EXIST" />} />
-                </Switch>
+                        <Route path="/myVouchers">
+                            <UserVoucherList />
+                        </Route>
+
+                        <Route
+                            path="/"
+                            render={() => <GenericErrorPage errorMessage="ERROR 404 - THIS SITE DOES NOT EXIST" />}
+                        />
+                    </Switch>
+                </div>
             </BrowserRouter>
         </div>
     </div>

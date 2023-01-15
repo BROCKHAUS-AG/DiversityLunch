@@ -1,47 +1,163 @@
-  .Dashboard{
-  width:100%;
-  height: 100vh;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.card {
+  .image {
+    .icon {
+      height: auto;
+      width: 40px;
+    }
+  }
+}
+.App h2 {
+  font-family: GilroyLight, sans-serif;
+  color: #b81f40;
+  font-size: 2rem;
+  margin-right: 0.5rem;
 }
 
-.Dashboard-logo-container{
-  width: 100%;
-  height: 50vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.row{
+  .column{
+    margin: 2rem 0;
+    .card {
+      display: flex;
+      .image {
+        height: 20%;
+        width: auto;
+        margin-right: 2rem;
+      }
+
+      .body {
+        margin-top: 1rem;
+        display: flex;
+
+        button{
+          margin-top: 1rem;
+          border: solid black 1px;
+          display: none;
+        }
+
+      }
+    }
+    .btnMobileBag{
+      display: block;
+      margin-top: 1rem;
+      border: solid black 1px;
+    }
+  }
+}
+
+
+
+
+@media screen and (min-width: 450px) {
+
 
 }
 
-.Dashboard-icon-container{
-  width: 100%;
-  max-width: 600px;
+@media screen and (min-width: 850px) {
 
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  .App h2 {
+    font-family: GilroyLight, sans-serif;
+    color: #b81f40;
+    font-size: 2rem;
+    margin-right: 0;
+  }
 
-}
+  .Dashboard {
+    max-width: 1180px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-.Dashboard-icons{
-  max-width: 8%;
-  margin: 5%;
-}
+
+    .Dashboard-container {
+      margin-bottom: 3rem;
+      .card {
+        .image {
+          height: 40%;
+          width: auto;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right: 0;
+          .icon {
+            height: auto;
+            width: 80px;
+          }
+        }
+
+        .body {
+          margin-top: 1rem;
+display: block;
+          button{
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            margin-top: 2rem;
+            border: solid black 1px;
+          }
+
+        }
+      }
+      .btnMobileBag{
+        display: none;
+      }
+    }
 
 
-.Dashboard-tiles-container{
-  width: 100%;
-  height:50vh;
+    /* Float four columns side by side */
+    .column {
+      float: left;
+      width: 30%;
+      padding: 0 10px;
+    }
 
-  display: grid;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: 50% 50%;
-}
+    /* Remove extra left and right margins, due to padding in columns */
+    .row {
 
-p {
-  font-family: SourceSansProRegular, sans-serif;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    /* Style the counter cards */
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+      padding: 16px;
+      text-align: center;
+      background-color: #f1f1f1;
+      height: 30vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: normal;
+      align-items: center;
+    }
+
+    /* Responsive columns - one column layout (vertical) on small screens */
+    @media screen and (max-width: 600px) {
+      .column {
+        width: 100%;
+        display: block;
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  p {
+    font-family: SourceSansProRegular, sans-serif;
+  }
+
+  @media screen and (min-width: 450px) {
+
+  }
+
+  @media screen and (min-width: 850px) {
+
+  }
+
 }
