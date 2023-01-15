@@ -25,23 +25,23 @@ export const Dashboard = () => {
     let account : Account;
     const profile: Profile = (profileState as ProfileStateOk).profileData;
 
+    const createPopUpIfWasChangedByAdmin = () => {
+        if (profile?.wasChangedByAdmin) {
+            setIsChange(true);
+        }
+    };
+
     useEffect(() => {
         createPopUpIfWasChangedByAdmin();
-    }, []);
+    }, [profile?.wasChangedByAdmin]);
 
-    if (accountState.status === 'OK') {
+    if (accountState?.status === 'OK') {
         account = accountState.accountData;
     } else {
         return <LoadingAnimation />;
     }
 
     const isAdmin : boolean = account.role === Role.ADMIN || account.role === Role.AZURE_ADMIN;
-
-    const createPopUpIfWasChangedByAdmin = () => {
-        if (profile.wasChangedByAdmin) {
-            setIsChange(true);
-        }
-    };
 
     const wasChangeByAdminToFalse = async () => {
         const { profileId } = account;

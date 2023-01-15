@@ -182,42 +182,42 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 placeholder={profileFormQuestion.project}
                 onChange={(value) => updateProfile('project', value)}
                 label="Projekt"
-                currentValue={profile.project || undefined}
+                currentValue={profile.project || null as any}
             />
             <Dropdown
                 options={sortOptions(genders)}
                 placeholder={profileFormQuestion.gender}
                 onChange={(value) => updateProfile('gender', value)}
                 label="Geschlechtliche Identität"
-                currentValue={profile.gender || undefined}
+                currentValue={profile.gender || null as any}
             />
             <Dropdown
                 options={sortOptions(countries)}
                 placeholder={profileFormQuestion.country}
                 onChange={(value) => updateProfile('originCountry', value)}
                 label="Ethnische Herkunft"
-                currentValue={profile.originCountry || undefined}
+                currentValue={profile.originCountry || null as any}
             />
             <Dropdown
                 options={sortOptions(languages)}
                 placeholder={profileFormQuestion.language}
                 onChange={(value) => updateProfile('motherTongue', value)}
                 label="Muttersprache"
-                currentValue={profile.motherTongue || undefined}
+                currentValue={profile.motherTongue || null as any}
             />
             <Dropdown
                 options={sortOptions(religions)}
                 placeholder={profileFormQuestion.religion}
                 onChange={(value) => updateProfile('religion', value)}
                 label="Religion"
-                currentValue={profile.religion || undefined}
+                currentValue={profile.religion || null as any}
             />
             <Dropdown
                 options={sortOptions(workExperience)}
                 placeholder={profileFormQuestion.workExperience}
                 onChange={(value) => updateProfile('workExperience', value)}
                 label="Berufserfahrung"
-                currentValue={profile.workExperience || undefined}
+                currentValue={profile.workExperience || null as any}
             />
 
             <Dropdown
@@ -225,35 +225,35 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 placeholder={profileFormQuestion.education}
                 onChange={(value) => updateProfile('education', value)}
                 label="Bildungsweg"
-                currentValue={profile.education || undefined}
+                currentValue={profile.education || null as any}
             />
             <Dropdown
                 options={sortOptions(diets)}
                 placeholder={profileFormQuestion.diet}
                 onChange={(value) => updateProfile('diet', value)}
                 label="Ernährung"
-                currentValue={profile.diet || undefined}
+                currentValue={profile.diet || null as any}
             />
             <Dropdown
                 options={sortOptions(sexualOrientation)}
                 placeholder={profileFormQuestion.sexualOrientation}
                 onChange={(value) => updateProfile('sexualOrientation', value)}
                 label="Sexualität"
-                currentValue={profile.sexualOrientation || undefined}
+                currentValue={profile.sexualOrientation || null as any}
             />
             <Dropdown
                 options={sortOptions(socialBackground)}
                 placeholder={profileFormQuestion.socialBackground}
                 onChange={(value) => updateProfile('socialBackground', value)}
                 label="Soziale Herkunft"
-                currentValue={profile.socialBackground || undefined}
+                currentValue={profile.socialBackground || null as any}
             />
             <Dropdown
                 options={sortOptions(socialBackgroundDiscrimination)}
                 placeholder={profileFormQuestion.socialBackgroundDiscrimination}
                 onChange={(value) => updateProfile('socialBackgroundDiscrimination', value)}
                 label="Ausgrenzung?"
-                currentValue={profile.socialBackgroundDiscrimination || undefined}
+                currentValue={profile.socialBackgroundDiscrimination || null as any}
             />
             <Button
                 disabled={!isValid}
