@@ -75,6 +75,7 @@ class ProfileServiceTest {
     void testUpdateProfile() {
         ProfileEntity updateEntity = this.factory.buildEntity(1);
 
+        when(this.profileRepository.existsById(updateEntity.getId())).thenReturn(true);
         when(this.profileRepository.save(updateEntity)).thenReturn(updateEntity);
 
         Optional<ProfileEntity> entity = this.service.updateProfile(updateEntity);
