@@ -2,6 +2,8 @@ package de.brockhausag.diversitylunchspringboot.meeting.model;
 
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,6 +18,7 @@ public class QuestionEntity {
 
     @NotNull
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private DimensionCategory category;
 
     @NotNull

@@ -79,3 +79,8 @@ ALTER TABLE  weighted_dimension
 ALTER TABLE  weighted_dimension
     ADD CONSTRAINT fk_default_value_id FOREIGN KEY(default_value_id)
         REFERENCES weighted_dimension_selectable_option(id);
+
+ALTER TABLE question_entity
+    DROP CONSTRAINT question_entity_category_id_fkey,
+    ADD CONSTRAINT question_entity_category_id_fkey FOREIGN KEY(category_id)
+    REFERENCES dimension_category(id) ON DELETE CASCADE;
