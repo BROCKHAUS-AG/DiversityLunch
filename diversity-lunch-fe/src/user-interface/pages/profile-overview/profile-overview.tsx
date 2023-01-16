@@ -27,11 +27,14 @@ export const ProfileOverview = () => {
 
     return (
         <section className="view">
-            <div className="Profile-name-container">
-                <h3>{`${profile.name}`}</h3>
+            <div className="profile-overview-wrapper">
+                <div className="Profile-name-container">
+                    <h3>{`${profile.name}`}</h3>
+                </div>
+                {profile.name !== ''
+                    && <ProfileForm initialProfile={profile} onSubmit={submit} checkValidity={isUpdated} />}
             </div>
-            {profile.name !== ''
-                && <ProfileForm initialProfile={profile} onSubmit={submit} checkValidity={isUpdated} />}
+
         </section>
     );
 };

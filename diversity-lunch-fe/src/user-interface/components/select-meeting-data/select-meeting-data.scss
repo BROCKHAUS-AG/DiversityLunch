@@ -2,21 +2,10 @@
 
   width: 100%;
   max-width: 700px;
-
+  margin:auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-@media screen and (min-width: 997px){
-  .SelectMeetingData {
-
-    width: 100%;
-    max-width: 700px;
-    display: flex;
-    flex-direction: column;
-    align-items: normal;
-  }
 }
 
 .ChooseDate-infoText {
@@ -26,11 +15,28 @@
 }
 
 @media screen and (min-width: 997px){
+  .SelectMeetingData {
+
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .ChooseDate-infoText {
     margin: 1.5rem 0;
     font-size: 1.2rem;
     text-align: left;
   }
+
+    .ChooseTime-segment-control {
+      width: 100%;
+      display: block;
+      margin-top: 2rem;
+    }
+
+
 }
 
 .ChooseDate-date-text {
@@ -54,13 +60,7 @@
   margin-top: 5%;
 }
 
-@media screen and (min-width: 997px){
-  .ChooseTime-segment-control {
-    width: 100%;
-    display: block;
-    margin-top: 2rem;
-  }
-}
+
 
 .ChooseTime-segment-control-segment {
   border: solid 2px;
