@@ -31,7 +31,7 @@ ALTER TABLE  multiselect_dimension_selectable_option ADD CONSTRAINT multiselect_
 
 ALTER TABLE  profile_entity_selected_basic_values
     ADD CONSTRAINT fk_selected_basic_values FOREIGN KEY(selected_basic_values_id)
-        REFERENCES basic_dimension_selectable_option(id);
+        REFERENCES basic_dimension_selectable_option(id) ON DELETE CASCADE;
 ALTER TABLE  profile_entity_selected_basic_values
     ADD CONSTRAINT fk_basic_dimensions FOREIGN KEY(basic_dimension)
         REFERENCES basic_dimension(id) ON DELETE CASCADE;
@@ -68,7 +68,7 @@ ALTER TABLE  profile_entity_selected_weighted_values
         REFERENCES profile_entity(id) ON DELETE CASCADE;
 ALTER TABLE  profile_entity_selected_weighted_values
     ADD CONSTRAINT fk_selected_weighted_values FOREIGN KEY(selected_weighted_values_id)
-        REFERENCES weighted_dimension_selectable_option(id);
+        REFERENCES weighted_dimension_selectable_option(id) ON DELETE CASCADE;
 ALTER TABLE  profile_entity_selected_weighted_values
     ADD CONSTRAINT fk_weighted_dimension FOREIGN KEY(weighted_dimension)
         REFERENCES weighted_dimension(id) ON DELETE CASCADE;
