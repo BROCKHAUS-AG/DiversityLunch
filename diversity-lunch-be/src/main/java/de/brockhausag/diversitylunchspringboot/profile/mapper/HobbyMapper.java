@@ -15,7 +15,6 @@ public class HobbyMapper implements DimensionMapper<HobbyDto, HobbyEntity> {
         HobbyDto dto = new HobbyDto();
         dto.setId(entity.getId());
         dto.setDescriptor(entity.getDescriptor());
-        dto.setDefault(entity.isDefault());
         return dto;
     }
 
@@ -24,7 +23,6 @@ public class HobbyMapper implements DimensionMapper<HobbyDto, HobbyEntity> {
         HobbyEntity entity = new HobbyEntity();
         entity.setId(dto.getId());
         entity.setDescriptor(dto.getDescriptor());
-        entity.setDefault(dto.isDefault());
         return entity;
     }
 }

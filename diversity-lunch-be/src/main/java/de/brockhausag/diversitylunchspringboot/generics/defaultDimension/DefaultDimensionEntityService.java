@@ -52,33 +52,34 @@ public class DefaultDimensionEntityService<
                 return false;
             }
             List<ProfileEntity> affectedProfiles = profileService.getAllProfilesWithSelectedDimensionOption(entity);
-            EntityType targetEntity = repository.findByIsDefaultIsTrue().iterator().next();
-            affectedProfiles.forEach((profile) -> {
-                if (targetEntity instanceof CountryEntity) {
-                    profile.setOriginCountry((CountryEntity) targetEntity);
-                } else if (targetEntity instanceof DietEntity) {
-                    profile.setDiet((DietEntity) targetEntity);
-                } else if (targetEntity instanceof EducationEntity) {
-                    profile.setEducation((EducationEntity) targetEntity);
-                } else if (targetEntity instanceof GenderEntity) {
-                    profile.setGender((GenderEntity) targetEntity);
-                } else if (targetEntity instanceof LanguageEntity) {
-                    profile.setMotherTongue((LanguageEntity) targetEntity);
-                } else if (targetEntity instanceof ProjectEntity) {
-                    profile.setProject((ProjectEntity) targetEntity);
-                } else if (targetEntity instanceof ReligionEntity) {
-                    profile.setReligion((ReligionEntity) targetEntity);
-                } else if (targetEntity instanceof SexualOrientationEntity) {
-                    profile.setSexualOrientation((SexualOrientationEntity) targetEntity);
-                } else if (targetEntity instanceof SocialBackgroundDiscriminationEntity) {
-                    profile.setSocialBackgroundDiscrimination((SocialBackgroundDiscriminationEntity) targetEntity);
-                } else if (targetEntity instanceof SocialBackgroundEntity) {
-                    profile.setSocialBackground((SocialBackgroundEntity) targetEntity);
-                }
-                profile.setWasChangedByAdmin(true);
-                profileService.updateProfile(profile);
-            });
-
+            if (!affectedProfiles.isEmpty()) {
+                EntityType targetEntity = repository.findByIsDefaultIsTrue().iterator().next();
+                affectedProfiles.forEach((profile) -> {
+                    if (targetEntity instanceof CountryEntity) {
+                        profile.setOriginCountry((CountryEntity) targetEntity);
+                    } else if (targetEntity instanceof DietEntity) {
+                        profile.setDiet((DietEntity) targetEntity);
+                    } else if (targetEntity instanceof EducationEntity) {
+                        profile.setEducation((EducationEntity) targetEntity);
+                    } else if (targetEntity instanceof GenderEntity) {
+                        profile.setGender((GenderEntity) targetEntity);
+                    } else if (targetEntity instanceof LanguageEntity) {
+                        profile.setMotherTongue((LanguageEntity) targetEntity);
+                    } else if (targetEntity instanceof ProjectEntity) {
+                        profile.setProject((ProjectEntity) targetEntity);
+                    } else if (targetEntity instanceof ReligionEntity) {
+                        profile.setReligion((ReligionEntity) targetEntity);
+                    } else if (targetEntity instanceof SexualOrientationEntity) {
+                        profile.setSexualOrientation((SexualOrientationEntity) targetEntity);
+                    } else if (targetEntity instanceof SocialBackgroundDiscriminationEntity) {
+                        profile.setSocialBackgroundDiscrimination((SocialBackgroundDiscriminationEntity) targetEntity);
+                    } else if (targetEntity instanceof SocialBackgroundEntity) {
+                        profile.setSocialBackground((SocialBackgroundEntity) targetEntity);
+                    }
+                    profile.setWasChangedByAdmin(true);
+                    profileService.updateProfile(profile);
+                });
+            }
             repository.deleteById(id);
             return true;
         }
