@@ -33,14 +33,15 @@ public class MultiDimensionEntityService<
         if (repository.existsById(id)) {
             EntityType entity = repository.findById(id).orElseThrow();
             List<ProfileEntity> affectedProfiles = profileService.getAllProfilesWithSelectedDimensionOption(entity);
-            affectedProfiles.forEach((profile) -> {
-                List<HobbyEntity> hobbies = profile.getHobby();
-                hobbies.remove(entity);
-                profile.setHobby(hobbies);
-                profile.setWasChangedByAdmin(true);
-                profileService.updateProfile(profile);
-            });
-
+            if (!affectedProfiles.isEmpty()) {
+                affectedProfiles.forEach((profile) -> {
+                    List<HobbyEntity> hobbies = profile.getHobby();
+                    hobbies.remove(entity);
+                    profile.setHobby(hobbies);
+                    profile.setWasChangedByAdmin(true);
+                    profileService.updateProfile(profile);
+                });
+            }
             repository.deleteById(id);
             return true;
         }
