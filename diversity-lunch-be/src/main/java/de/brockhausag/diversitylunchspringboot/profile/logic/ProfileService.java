@@ -26,8 +26,6 @@ public class ProfileService {
     }
 
     public Optional<ProfileEntity> createProfile(ProfileEntity profileEntity, Long accountId) {
-
-
         ProfileEntity profile = repository.save(profileEntity);
         accountService.updateAccount(profile, accountId);
 
@@ -35,6 +33,9 @@ public class ProfileService {
     }
 
     public Optional<ProfileEntity> updateProfile(ProfileEntity updateEntity) {
+
+
+        if(!repository.existsById(updateEntity.getId())){return Optional.empty();}
         return Optional.of(repository.save(updateEntity));
     }
 

@@ -67,6 +67,8 @@ public class ProfileMapper {
         ProfileEntitySelectedMultiselectValue selectedMultiselectValues = new ProfileEntitySelectedMultiselectValue();
         selectedMultiselectValues.setSelectedOptions(Set.copyOf(multiselectDimensionService.getSelectableOptions(
                 dto.getHobby().stream().map(HobbyDto::getId).collect(Collectors.toList()))));
+        selectedMultiselectValues.setMultiselectDimension(multiselectDimensionService.getDimension("Hobby"));
+
 
         selectedBasicOptions.put(basicDimensionService.getDimension("Bildungsweg"),
                 basicDimensionService.getSelectableOptionById(dto.getEducation().getId()));

@@ -39,6 +39,8 @@ Alter TABLE profile_entity_selected_basic_values
     ADD CONSTRAINT fk_profile_entity FOREIGN KEY(profile_entity_id)
         REFERENCES profile_entity(id)  ON DELETE CASCADE;
 
+
+ALTER TABLE  profile_entity_selected_multiselect_value ALTER COLUMN multiselect_dimension_id SET NOT NULL;
 ALTER TABLE  profile_entity_selected_multiselect_value
     ADD CONSTRAINT fk_profile_id FOREIGN KEY(profile_id)
         REFERENCES profile_entity(id) ON DELETE CASCADE;
@@ -46,7 +48,8 @@ ALTER TABLE  profile_entity_selected_multiselect_value
     ADD CONSTRAINT fk_multi_dimension FOREIGN KEY(multiselect_dimension_id)
         REFERENCES multiselect_dimension(id) ON DELETE CASCADE;
 
-
+ALTER TABLE  profile_entity_selected_multiselect_value_selected_options ALTER COLUMN selected_options_id SET NOT NULL;
+ALTER TABLE  profile_entity_selected_multiselect_value_selected_options ALTER COLUMN profile_entity_selected_multiselect_value_id SET NOT NULL;
 ALTER TABLE  profile_entity_selected_multiselect_value_selected_options
     ADD CONSTRAINT fk_multiselect_value_id FOREIGN KEY(profile_entity_selected_multiselect_value_id)
         REFERENCES profile_entity_selected_multiselect_value(id) ON DELETE CASCADE;

@@ -4,8 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.Set;
 
@@ -21,7 +24,10 @@ public class ProfileEntitySelectedMultiselectValue {
     private Set<MultiselectDimensionSelectableOption> selectedOptions;
 
     @OneToOne
+    @NotNull
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private MultiselectDimension multiselectDimension;
+
 
     @Override
     public boolean equals(Object o) {
