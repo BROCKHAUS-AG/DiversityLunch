@@ -29,7 +29,7 @@ export const ProfileOverview = () => {
         <section className="view">
             <div className="profile-overview-wrapper">
                 <div className="Profile-name-container">
-                    <h3>{`Hallo ${profile.name}`}</h3>
+                    <h3>{`${profile.name}`}</h3>
                 </div>
                 {profile.name !== ''
                     && <ProfileForm initialProfile={profile} onSubmit={submit} checkValidity={isUpdated} />}
