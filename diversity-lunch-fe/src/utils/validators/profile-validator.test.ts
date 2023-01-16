@@ -111,7 +111,7 @@ describe('isUpdatedProfile', () => {
         Object.entries(currentProfile).forEach(([key]) => {
             const updatedProfile : Profile = JSON.parse(JSON.stringify(currentProfile));
             if (key === 'birthYear') updatedProfile[key] += 1;
-            else if (key === 'id' || key === 'name' || key === 'email' || key === 'hobby') return;
+            else if (key === 'id' || key === 'name' || key === 'wasChangedByAdmin' || key === 'email' || key === 'hobby') return;
             else {
                 // @ts-ignore
                 updatedProfile[key].id += 1; // Element implicitly has an 'any' type, type 'string' can't be used to index type 'Profile'
