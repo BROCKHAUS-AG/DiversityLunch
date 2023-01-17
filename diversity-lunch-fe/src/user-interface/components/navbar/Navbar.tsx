@@ -34,14 +34,14 @@ export const Navbar = () => {
                 <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
                     <ul className="nav-menu-items">
                         <li className="navbar-toggle">
-                            <Link to="/#" className="menu-bars">
+                            <Link to="/#" className="menu-bars" onClick={showSidebar}>
                                 X
                             </Link>
                         </li>
 
                         {NavbarData.map((item) => (
                             <li key={item.id} className={item.cName}>
-                                <Link to={item.path}>
+                                <Link to={item.path} onClick={showSidebar}>
                                     <TileIcon title="" icon={item.icon} />
                                     <span>{item.title}</span>
                                 </Link>
