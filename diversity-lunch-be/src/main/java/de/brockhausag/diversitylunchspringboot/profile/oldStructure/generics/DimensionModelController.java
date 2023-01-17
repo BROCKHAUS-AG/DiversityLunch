@@ -69,8 +69,11 @@ public class DimensionModelController<DtoType,
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).PROFILE_OPTION_WRITE)")
     public ResponseEntity<?> deleteOne(@PathVariable Long id) {
-        service.deleteSelectableOptionById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (service.deleteSelectableOptionById(id)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

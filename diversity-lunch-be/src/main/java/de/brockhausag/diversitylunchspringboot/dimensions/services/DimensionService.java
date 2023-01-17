@@ -20,7 +20,7 @@ public interface DimensionService<
 
     Selectable addSelectableOption(Selectable option);
 
-    void deleteSelectableOptionById(Long selectableOptionId);
+    boolean deleteSelectableOptionById(Long selectableOptionId);
 
     Selectable updateSelectableOption(Selectable option);
 

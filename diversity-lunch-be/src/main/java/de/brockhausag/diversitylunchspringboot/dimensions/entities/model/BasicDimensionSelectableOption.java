@@ -3,6 +3,8 @@ package de.brockhausag.diversitylunchspringboot.dimensions.entities.model;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.SelectableOptions;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -28,6 +30,7 @@ public class BasicDimensionSelectableOption implements SelectableOptions {
     private boolean ignoreInScoring;
     @NotNull
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private DimensionCategory dimensionCategory;
 
     @Override

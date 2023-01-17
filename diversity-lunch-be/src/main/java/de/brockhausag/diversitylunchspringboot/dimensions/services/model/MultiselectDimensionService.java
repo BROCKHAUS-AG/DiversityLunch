@@ -39,8 +39,12 @@ public class MultiselectDimensionService implements DimensionService<Multiselect
     }
 
     @Override
-    public void deleteSelectableOptionById(Long selectableOptionId) {
+    public boolean deleteSelectableOptionById(Long selectableOptionId) {
+        if (!selectableRepository.existsById(selectableOptionId)) {
+            return false;
+        }
         selectableRepository.deleteById(selectableOptionId);
+        return !selectableRepository.existsById(selectableOptionId);
     }
 
     @Override
