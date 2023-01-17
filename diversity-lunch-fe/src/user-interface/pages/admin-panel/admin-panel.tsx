@@ -1,8 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { CloseSite } from '../../components/close-site/close-site';
-import { DiversityIcon } from '../../components/diversity-icon/diversity-icon';
 import { AppStoreState } from '../../../data/app-store';
 import { Role } from '../../../model/Role';
 import { IdentifiableOptionsList } from '../../components/identifiable-options-list/identifiable-options-list';
@@ -25,8 +23,11 @@ import { countryFetch } from '../../../data/country/fetch-country';
 import {
     socialBackgroundDiscriminationFetch,
 } from '../../../data/social-background-discrimination/social-background-discrimination-fetch';
+import { profileFormQuestion } from '../../../globals/profile-form-question';
+import { LoadingAnimation } from '../../components/loading-animation/loading-animation';
 
 export const AdminPanel: FC = () => {
+    const profileState = useSelector((state: AppStoreState) => state.profile);
     const accountState = useSelector((store: AppStoreState) => store.account);
     const hobbyState = useSelector((store: AppStoreState) => store.hobby);
     const projectState = useSelector((store: AppStoreState) => store.project);
@@ -42,11 +43,26 @@ export const AdminPanel: FC = () => {
     const socialBackgroundDiscriminationState = useSelector((store: AppStoreState) => store.socialBackgroundDiscrimination);
     const [emailSuccess, setEmailSuccess] = useState(false);
     const dispatch = useDispatch();
+
     useEffect(() => {
         // TODO: Handle network and http errors properly tgohlisch 17.11.2022
-        dispatch(projectFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(countryFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(dietFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(educationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(genderFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(hobbyFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(languageFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(projectFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(religionFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(workExperienceFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(sexualOrientationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(socialBackgroundFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
+        dispatch(socialBackgroundDiscriminationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
     }, []);
+
+    if (profileState.status !== 'OK') {
+        return <LoadingAnimation />;
+    }
 
     if (accountState.status === 'OK') {
         if (accountState.accountData.role !== Role.ADMIN && accountState.accountData.role !== Role.AZURE_ADMIN) {
@@ -71,13 +87,7 @@ export const AdminPanel: FC = () => {
     };
     return (
         <section className="view">
-
             <div className="adminPanelContainer">
-                <div className="header">
-                    <CloseSite />
-                    <DiversityIcon title="ADMIN PANEL" />
-                </div>
-
                 <div className="bottom">
                     <UserList />
 
@@ -92,86 +102,84 @@ export const AdminPanel: FC = () => {
                                         state={hobbyState}
                                         fetch={hobbyFetch}
                                         title="Hobbies anpassen"
-                                        header="Frage: Was sind deine Hobbies?"
+                                        header={`Frage: ${profileFormQuestion.hobby}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={projectState}
                                         fetch={projectFetch}
                                         title="Projektliste anpassen"
-                                        header="Frage: In welchem Projekt arbeitest du derzeit?"
+                                        header={`Frage: ${profileFormQuestion.project}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={genderState}
                                         fetch={genderFetch}
                                         title="Geschlechtliche Identität anpassen"
-                                        header="Frage: Was ist deine geschlechtliche Identität?"
+                                        header={`Frage: ${profileFormQuestion.gender}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={countryState}
                                         fetch={countryFetch}
                                         title="Ethnische Herkunft anpassen"
-                                        header="Frage: Was ist deine ethnische Herkunft?"
+                                        header={`Frage: ${profileFormQuestion.country}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={languageState}
                                         fetch={languageFetch}
                                         title="Muttersprache anpassen"
-                                        header="Frage: Was ist deine Muttersprache?"
+                                        header={`Frage: ${profileFormQuestion.language}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={religionState}
                                         fetch={religionFetch}
                                         title="Religion anpassen"
-                                        header="Frage: An welche Religion glaubst du?"
+                                        header={`Frage: ${profileFormQuestion.religion}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={workExperienceState}
                                         fetch={workExperienceFetch}
                                         title="Berufserfahrung anpassen"
-                                        header="Frage: Wie viele Jahre Berufserfahrung hast du schon gesammelt?"
+                                        header={`Frage: ${profileFormQuestion.workExperience}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={educationState}
                                         fetch={educationFetch}
                                         title="Bildungsweg anpassen"
-                                        header="Frage: Welchen Bildungsweg hast du bisher bestritten?"
+                                        header={`Frage: ${profileFormQuestion.education}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={dietState}
                                         fetch={dietFetch}
                                         title="Ernährung anpassen"
-                                        header="Frage: Wie ernährst du dich?"
+                                        header={`Frage: ${profileFormQuestion.diet}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={sexualOrientationState}
                                         fetch={sexualOrientationFetch}
                                         title="Sexuelle Orientierung anpassen"
-                                        header="Frage: Was ist deine sexuelle Orientierung?"
+                                        header={`Frage: ${profileFormQuestion.sexualOrientation}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={socialBackgroundState}
                                         fetch={socialBackgroundFetch}
                                         title="Soziale Herkunft anpassen"
-                                        header="Frage: Bist du ein Akademikerkind, oder eher die erste Person in der Familie,
-                                                die studiert oder ihr Abitur gemacht hat?"
+                                        header={`Frage: ${profileFormQuestion.socialBackground}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                     <IdentifiableOptionsList
                                         state={socialBackgroundDiscriminationState}
                                         fetch={socialBackgroundDiscriminationFetch}
                                         title="Ausgrenzung anpassen"
-                                        header="Frage: Wurdest du jemals aufgrund deiner sozialen Herkunft Vorurteilen ausgesetzt,
-                                                herabwürdigend behandelt, benachteiligt oder ausgeschlossen?"
+                                        header={`Frage: ${profileFormQuestion.socialBackgroundDiscrimination}`}
                                         addButtonLabel="Hinzufügen"
                                     />
                                 </section>
@@ -179,8 +187,15 @@ export const AdminPanel: FC = () => {
                         </div>
                     </div>
 
+                    <UserList />
+                    <IdentifiableOptionsList
+                        state={projectState}
+                        fetch={projectFetch}
+                        title="Projektliste anpassen"
+                        addButtonLabel="Projekt hinzufügen"
+                        header="Projekte"
+                    />
                     <VoucherUpload />
-
                     <div className="testMailContainer">
                         <button className="testmailButton" onClick={sendTestmail}>Testmail verschicken</button>
                     </div>

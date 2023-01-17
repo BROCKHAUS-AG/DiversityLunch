@@ -22,4 +22,8 @@ public class WorkExperienceDto implements DimensionDto {
     @NotBlank
     private String descriptor;
 
+    @NotNull
+    @Schema(description = "Default value for the given dimension")
+    private boolean isDefault;
+
 }

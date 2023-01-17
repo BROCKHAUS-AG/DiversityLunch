@@ -1,13 +1,9 @@
 import React from 'react';
-import { DiversityIcon } from '../../components/diversity-icon/diversity-icon';
-import { CloseSite } from '../../components/close-site/close-site';
 import './information.scss';
 import Faq from '../../components/faq/faq';
 
 export const Information = () => (
     <div className="Information">
-        <CloseSite />
-        <DiversityIcon title="INFORMATIONEN" />
         <p className="Information-info-text">
             Die Diversity Lunch App ist der Beitrag der BROCKHAUS AG zur Diversity Challenge 2021 des
             Charta der Vielfalt e. V.

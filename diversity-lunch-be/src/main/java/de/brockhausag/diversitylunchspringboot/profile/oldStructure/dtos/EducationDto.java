@@ -23,12 +23,8 @@ public class EducationDto implements DimensionDto {
     @NotBlank
     private String descriptor;
 
-    @Override
-    public EducationDto clone() {
-        try {
-            return (EducationDto) super.clone();
-        } catch (CloneNotSupportedException e) {
-            return new EducationDto(this.id, this.descriptor);
-        }
-    }
+    @NotNull
+    @Schema(description = "Default value for the given dimension")
+    private boolean isDefault;
+
 }

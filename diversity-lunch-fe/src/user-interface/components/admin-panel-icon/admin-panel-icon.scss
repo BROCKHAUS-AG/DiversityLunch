@@ -7,9 +7,17 @@
 }
 
 .icon-container{
-  display: flex;
+  display: none;
   flex-direction: row;
   align-self: flex-end;
+}
+
+@media screen and (min-width: 997px){
+  .icon-container {
+    display: flex;
+    flex-direction: row;
+    align-self: flex-end;
+  }
 }
 
 .IconHeader-admin-icon{

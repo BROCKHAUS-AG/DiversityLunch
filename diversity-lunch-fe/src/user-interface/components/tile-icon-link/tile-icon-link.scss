@@ -13,8 +13,13 @@
 }
 
 .Tile-icon{
-  max-width: 30%;
-  margin: 5%;
+  width: 40px;
+  height: auto;
+  margin: 10px;
+}
+
+.Tile-title-hide{
+  display: none;
 }
 
 .Tile-title{

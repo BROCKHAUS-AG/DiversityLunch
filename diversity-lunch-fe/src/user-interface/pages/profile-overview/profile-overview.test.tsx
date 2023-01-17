@@ -50,23 +50,6 @@ describe('ProfileOverview', () => {
             ({ container } = render(Container));
         });
 
-        it('render content when profile data is loaded', async () => {
-            const result = await screen.findByAltText('diversity icon');
-            expect(result)
-                .toBeInTheDocument();
-        });
-
-        it('profile edit form diversity logo space', () => {
-            const logoElement = container.children.item(0)
-                ?.children
-                .item(0);
-            expect(logoElement)
-                .not
-                .toBe(null);
-            expect(logoElement)
-                .toHaveClass('Profile-logo-container');
-        });
-
         it('correct name is shown in the greeting on top of the page', async () => {
             const result = await screen.findByText(profileData[0].name);
 

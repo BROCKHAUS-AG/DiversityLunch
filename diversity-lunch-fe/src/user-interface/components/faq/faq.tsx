@@ -3,7 +3,7 @@ import './faq.scss';
 
 const Faq = () => (
     <div className="FAQ">
-        <h4>FAQ</h4>
+        <h2>FAQ</h2>
         <details className="FAQ-expandable">
             <summary className="FAQ-title">
                 Wie funktioniert die Diversity Lunch App?

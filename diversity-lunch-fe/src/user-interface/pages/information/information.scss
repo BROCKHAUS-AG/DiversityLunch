@@ -9,8 +9,15 @@
 }
 
 .Information-info-text {
-  max-width: 90%;
   margin-top: 10%;
   line-height: 18px;
-  margin-bottom: 5%;
+  margin-bottom: 4rem;
+}
+
+@media screen and (min-width: 997px){
+  .Information-info-text {
+    margin-top: .5rem;
+    line-height: 18px;
+    margin-bottom: 5rem;
+  }
 }

@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { CloseSite } from '../close-site/close-site';
-import { DiversityIcon } from '../diversity-icon/diversity-icon';
 import './date-overview.scss';
 import iconFood from '../../../resources/icons/icon-hamburger.svg';
 import { CreateMeeting } from '../../../model/Meeting';
@@ -27,10 +25,6 @@ export const DateOverview = (props: DateOverviewProps) => {
 
     return (
         <div className="DateOverview">
-            <div className="DateOverview-logo-container">
-                <CloseSite />
-                <DiversityIcon />
-            </div>
             <div className="DateOverview-info-text-container">
                 <p className="DateOverview-info-text">
                     Vielen Dank! Die Informationen wurden erfolgreich an uns übermittelt und wir arbeiten daran,

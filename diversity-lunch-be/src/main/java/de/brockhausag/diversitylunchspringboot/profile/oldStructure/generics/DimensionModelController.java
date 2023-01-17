@@ -48,7 +48,7 @@ public class DimensionModelController<DtoType,
         );
     }
 
-    @PostMapping
+    @PostMapping("/")
     @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).PROFILE_OPTION_WRITE)")
     public ResponseEntity<DtoType> postOne(@RequestBody DtoType dto) {
         Selectable selectable = mapper.dtoToEntity(dto);
@@ -56,7 +56,7 @@ public class DimensionModelController<DtoType,
         return ResponseEntity.ok(mapper.entityToDto((selectable)));
     }
 
-    @PutMapping
+    @PutMapping("/")
     @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).PROFILE_OPTION_WRITE)")
     public ResponseEntity<DtoType> putOne(@RequestBody DtoType dto) {
         Selectable selectable = mapper.dtoToEntity(dto);

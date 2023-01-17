@@ -35,11 +35,13 @@ const FetchingTestComponent = ({ actionThunk }: FetchingTestComponentProps) => {
 const data = {
     id: 2,
     descriptor: 'Deutschland',
+    default: false,
 };
 
 const initialData = {
     id: 1,
     descriptor: 'Frankreich',
+    default: false,
 };
 
 const countryResponseThunk = async () => (new Response(JSON.stringify(data)));
@@ -111,6 +113,7 @@ describe('GenericFetch Integrationtests', () => {
         const updatedData = {
             id: 1,
             descriptor: 'Ungarn',
+            default: false,
         };
         const updateCountryResponse = async () => new Response(JSON.stringify(updatedData));
         jest.spyOn(fetcher, 'authenticatedFetchPut').mockReturnValue(updateCountryResponse());

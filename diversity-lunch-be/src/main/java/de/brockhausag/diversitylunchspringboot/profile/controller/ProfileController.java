@@ -89,6 +89,8 @@ public class ProfileController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+        createEntityOptional.get().setWasChangedByAdmin(false);
+
         Optional<ProfileEntity> optionalEntity = this.profileService.createProfile(createEntityOptional.get(), accountId);
 
         if (optionalEntity.isEmpty()) {
@@ -138,5 +140,25 @@ public class ProfileController {
         ProfileDto dto = this.profileMapper.entityToDto(entity.get());
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
+
+    @Operation(summary = "Bestätigt, dass der User die Änderung seines Profils wahrgenommen hat")
+    @PutMapping("/{id}/profilechangeAccepted")
+    @PreAuthorize("isProfileOwner(#id)")
+    public ResponseEntity<Void> setWasChangedByAdminFlagToFalse(@PathVariable Long id){
+        Optional<ProfileEntity> profile = profileService.getProfile(id);
+
+        if(profile.isEmpty()){
+            log.warn("Profile with id %d not found".formatted(id));
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        profile.get().setWasChangedByAdmin(false);
+        var changedProfile = profileService.updateProfile(profile.get());
+        if (!changedProfile.equals(profile)){
+            log.error("Profile could not be updated");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return  new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
 */
