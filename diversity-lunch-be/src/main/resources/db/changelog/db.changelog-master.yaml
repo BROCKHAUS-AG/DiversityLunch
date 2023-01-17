@@ -30,14 +30,16 @@ databaseChangeLog:
   - include:
       file: /db/changelog/migrations/v12_db_add_isDefault_Column_to_entities.sql
   - include:
-      file: /db/changelog/migrations/v13_create_new_tables_for_generalisation.sql
+      file: /db/changelog/migrations/v13_db_alter_hobby_entity_add_column_is_default.sql
   - include:
-      file: /db/changelog/migrations/v14_migrate_basic_dimensions_to_new_schema.sql
+      file: /db/changelog/migrations/v14_create_new_tables_for_generalisation.sql
   - include:
-      file: /db/changelog/migrations/v15_migrate_weighted_dimensions_to_new_schema.sql
+      file: /db/changelog/migrations/v15_migrate_basic_dimensions_to_new_schema.sql
   - include:
-      file: /db/changelog/migrations/v16_migrate_multi_dimensions_to_new_schema.sql
+      file: /db/changelog/migrations/v16_migrate_weighted_dimensions_to_new_schema.sql
   - include:
-      file: /db/changelog/migrations/v17_migrate_dimensions_from_profile.sql
+      file: /db/changelog/migrations/v17_migrate_multi_dimensions_to_new_schema.sql
   - include:
-      file: /db/changelog/migrations/v18_add_constraints_to_new_schema.sql
+      file: /db/changelog/migrations/v18_migrate_dimensions_from_profile.sql
+  - include:
+      file: /db/changelog/migrations/v19_add_constraints_to_new_schema.sql
