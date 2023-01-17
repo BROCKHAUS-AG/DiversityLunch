@@ -13,6 +13,7 @@ public class SocialBackgroundDiscriminationMapper implements DimensionMapper<Soc
         SocialBackgroundDiscriminationDto discriminationDto = new SocialBackgroundDiscriminationDto();
         discriminationDto.setId(entity.getId());
         discriminationDto.setDescriptor(entity.getDescriptor());
+        discriminationDto.setDefault(entity.isDefault());
         return discriminationDto;
     }
 
@@ -21,6 +22,7 @@ public class SocialBackgroundDiscriminationMapper implements DimensionMapper<Soc
         SocialBackgroundDiscriminationEntity discriminationEntity = new SocialBackgroundDiscriminationEntity();
         discriminationEntity.setId(dto.getId());
         discriminationEntity.setDescriptor(dto.getDescriptor());
+        discriminationEntity.setDefault(dto.isDefault());
         return discriminationEntity;
     }
 }

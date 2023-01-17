@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapperTest;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.*;
+import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.*;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.*;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.*;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.*;

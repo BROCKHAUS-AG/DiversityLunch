@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.dataFactories;
+package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.SocialBackgroundDiscriminationDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.SocialBackgroundDiscriminationEntity;
@@ -11,17 +11,17 @@ public class SocialBackgroundDiscriminationTestDataFactory {
 
     public SocialBackgroundDiscriminationDto buildDto(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new SocialBackgroundDiscriminationDto(ids[setNumber], descriptors[setNumber]);
+            return new SocialBackgroundDiscriminationDto(ids[setNumber], descriptors[setNumber], false);
         }
-        return new SocialBackgroundDiscriminationDto(ids[1], descriptors[1]);
+        return new SocialBackgroundDiscriminationDto(ids[1], descriptors[1], false);
     }
 
 
     public SocialBackgroundDiscriminationEntity buildEntity(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new SocialBackgroundDiscriminationEntity(ids[setNumber], descriptors[setNumber]);
+            return new SocialBackgroundDiscriminationEntity(ids[setNumber], descriptors[setNumber], false);
         }
-        return new SocialBackgroundDiscriminationEntity(ids[1], descriptors[1]);
+        return new SocialBackgroundDiscriminationEntity(ids[1], descriptors[1], false);
     }
 
     public SocialBackgroundDiscriminationEntity buildEntityWithoutId() {

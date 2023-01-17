@@ -12,6 +12,7 @@ public class WorkExperienceMapper implements DimensionMapper<WorkExperienceDto, 
         WorkExperienceDto workExperienceDto = new WorkExperienceDto();
         workExperienceDto.setId(entity.getId());
         workExperienceDto.setDescriptor(entity.getDescriptor());
+        workExperienceDto.setDefault(entity.isDefault());
         return workExperienceDto;
     }
 
@@ -20,6 +21,7 @@ public class WorkExperienceMapper implements DimensionMapper<WorkExperienceDto, 
         WorkExperienceEntity workExperienceEntity = new WorkExperienceEntity();
         workExperienceEntity.setId(dto.getId());
         workExperienceEntity.setDescriptor(dto.getDescriptor());
+        workExperienceEntity.setDefault(dto.isDefault());
         return workExperienceEntity;
     }
 }

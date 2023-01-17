@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { CloseSite } from '../close-site/close-site';
 import { CreateMeeting } from '../../../model/Meeting';
-import { DiversityIcon } from '../diversity-icon/diversity-icon';
 import iconFood from '../../../resources/icons/icon-hamburger.svg';
 import { createMeetings, loadMeetings } from '../../../data/meeting/meetings.actions';
 
@@ -125,8 +123,7 @@ export const SelectMeetingData = (props: SelectMeetingDataProps) => {
     && t1.toMinute === t2.toMinute);
     return (
         <div className="SelectMeetingData">
-            <CloseSite />
-            <DiversityIcon title="TERMIN WÄHLEN" />
+            <h3>Wunsch-Termin wählen:</h3>
 
             <p className="ChooseDate-infoText">An welchem Tag möchtest du dein Diversity Lunch haben?</p>
             <Calendar

@@ -11,10 +11,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
+@Data
 @Builder
 public class ProfileDto {
     private Long id;
@@ -28,6 +25,9 @@ public class ProfileDto {
     @Min(value = 1900, message = "year of birth must be greater than or equal to 1900")
     @Max(value = 2022, message = "year of birth must be smaller than or equal to 2022")
     private int birthYear;
+
+    @Schema(description = "indicates whether admin changed profile")
+    private boolean wasChangedByAdmin;
     @NotNull
     private CountryDto originCountry;
     @NotNull

@@ -2,17 +2,18 @@ package de.brockhausag.diversitylunchspringboot.profile.controllerTest;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.BaseModelTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.TestDefaultDimensionDto;
-import de.brockhausag.diversitylunchspringboot.dataFactories.TestDefaultDimensionEntity;
+import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.TestDefaultDimensionEntity;
 import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionEntityService;
 import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionModelController;
 import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
+import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionRepository;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -149,6 +150,7 @@ public class GenericDefaultDimensionModelControllerTest {
     void testDeleteOne_serviceDeleteByIdReturnTrue_returnStatusCodeOk() {
         final Long someIdThatExists = 1337L;
         when(service.deleteEntityById(someIdThatExists)).thenReturn(true);
+        when(service.getEntityById(someIdThatExists)).thenReturn(Optional.of(new TestDefaultDimensionEntity()));
         var expected = HttpStatus.OK;
 
         var actual = controller.deleteOne(someIdThatExists).getStatusCode();
@@ -159,7 +161,8 @@ public class GenericDefaultDimensionModelControllerTest {
     @Test
     void testDeleteOne_serviceDeleteByIdReturnFalse_returnStatusCodeNotFound() {
         final Long someNotExistingId = 1337L;
-        when(service.deleteEntityById(someNotExistingId)).thenReturn(false);
+        when(service.getEntityById(someNotExistingId)).thenReturn(Optional.empty());
+
         var expected = HttpStatus.NOT_FOUND;
 
         var actual = controller.deleteOne(someNotExistingId).getStatusCode();
@@ -167,12 +170,12 @@ public class GenericDefaultDimensionModelControllerTest {
         assertEquals(expected, actual);
     }
 
-    private interface TestRepositoryType extends CrudRepository<TestDefaultDimensionEntity, Long> {
+    private interface TestRepositoryType extends DefaultDimensionRepository<TestDefaultDimensionEntity> {
     }
 
     private static class TestServiceType extends DefaultDimensionEntityService<TestDefaultDimensionEntity, TestRepositoryType> {
-        public TestServiceType(TestRepositoryType repository) {
-            super(repository);
+        public TestServiceType(TestRepositoryType repository, ProfileService profileService) {
+            super(repository, profileService);
         }
     }
 

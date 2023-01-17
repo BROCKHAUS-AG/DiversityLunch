@@ -26,6 +26,9 @@ public class WorkExperienceEntity implements WeightedEntity {
 
     private int weight;
 
+    private boolean isDefault;
+
+
     @Override
     public int hashCode() {
         String hashString = this.id.toString() + this.descriptor;

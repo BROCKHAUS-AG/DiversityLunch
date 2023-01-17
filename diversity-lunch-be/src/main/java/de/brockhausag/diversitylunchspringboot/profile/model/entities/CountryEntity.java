@@ -25,6 +25,8 @@ public class CountryEntity implements DefaultDimensionEntity {
 
     private String descriptor;
 
+    private boolean isDefault;
+
     @Override
     public int hashCode() {
         String hashString = this.id.toString() + this.descriptor;

@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.dataFactories;
+package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.WorkExperienceDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.WorkExperienceEntity;
@@ -13,17 +13,17 @@ public class WorkExperienceTestDataFactory {
 
     public WorkExperienceDto buildDto(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new WorkExperienceDto(ids[setNumber], descriptors[setNumber]);
+            return new WorkExperienceDto(ids[setNumber], descriptors[setNumber], false);
         }
-        return new WorkExperienceDto(ids[1], descriptors[1]);
+        return new WorkExperienceDto(ids[1], descriptors[1], false);
     }
 
 
     public WorkExperienceEntity buildEntity(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new WorkExperienceEntity(ids[setNumber], descriptors[setNumber], weights[setNumber]);
+            return new WorkExperienceEntity(ids[setNumber], descriptors[setNumber], weights[setNumber], false);
         }
-        return new WorkExperienceEntity(ids[1], descriptors[1], weights[1]);
+        return new WorkExperienceEntity(ids[1], descriptors[1], weights[1], false);
     }
 
     public WorkExperienceEntity buildEntityWithoutId() {

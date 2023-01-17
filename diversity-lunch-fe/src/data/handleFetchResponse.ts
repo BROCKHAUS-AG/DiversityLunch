@@ -5,7 +5,6 @@ export async function handleFetchResponse(onGoingFetch: Promise<Response>, onSuc
     try {
         const response = await onGoingFetch;
         const statusCode: StatusCode = response.status.toString() as StatusCode;
-
         if (response.ok) {
             onSuccess(response);
         } else if (callbacks.statusCodeHandlers[statusCode]) {

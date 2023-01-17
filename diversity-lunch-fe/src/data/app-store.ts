@@ -1,4 +1,4 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { authenticationReducer } from './authentication/authentication.reducer';
@@ -26,6 +26,7 @@ import workExperienceReducer from './work-experience/work-experience-reducer';
 import { profilesReducer } from './profiles/profiles-reducer';
 import socialBackgroundDiscriminationReducer
     from './social-background-discrimination/social-background-discrimination-reducer';
+import wasChangedByAdminGenericReducer from './was-changed-by-admin/was-changed-by-admin-reducer';
 
 const reducers = {
     account: accountReducer,
@@ -52,6 +53,7 @@ const reducers = {
     socialBackground: socialBackgroundReducer,
     workExperience: workExperienceReducer,
     socialBackgroundDiscrimination: socialBackgroundDiscriminationReducer,
+    wasChangedByAdmin: wasChangedByAdminGenericReducer,
 };
 
 const rootReducer = combineReducers(reducers);

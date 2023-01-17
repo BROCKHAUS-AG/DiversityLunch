@@ -4,81 +4,66 @@ html {
 
 //Übergeordneter Container in dem alle Components liegen
 .App {
-  background-color: darkgray;
-  display: flex;
-  justify-content: center;
-  min-height: 100vh;
-  height: 100%;
+
   font-family: SourceSansProRegular, sans-serif;
   font-weight: 400;
   font-size: 1rem;
   letter-spacing: 0;
-  line-height: 100%;
-}
 
 //Die Mobile View, die auf jedem Gerät angezeigt wird
 .Screen {
-  width: 100%;
-  max-width: 700px;
-  min-height: 100vh;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  background-color: #f0f0f0;
+
+  background-color: #ffffff;
+}
+
+.toggleStyle{
+  display: none;
+}
+
+  .bodyContainer {
+    /* width: calc(100% - 300px);*/
+    margin-left: 3rem;
+    margin-bottom: 2rem;
+    margin-top: 6rem;
+  }
+
+@media (min-width: 992px){
+  .bodyContainer {
+  /* width: calc(100% - 300px);*/
+    margin-bottom: 10rem;
+    margin-left: 20rem;
+    margin-top: 1rem;
+  }
+
+  .toggleStyle{
+    display: block;
+  }
 }
 
 h1 {
   font-family: GilroyLight, sans-serif;
-  text-transform: uppercase;
-  font-size: 61px !important;
-  letter-spacing: -0.015em;
-  line-height: 140%;
   color: #b81f40;
+  font-size: 2.5rem;
 }
 
 h2 {
   font-family: GilroyLight, sans-serif;
-  text-transform: uppercase;
-  font-size: 49px !important;
-  letter-spacing: -0.005em;
-  line-height: 140%;
   color: #b81f40;
+  font-size: 2rem;
 }
 
 h3 {
   font-family: GilroyRegular, sans-serif;
-  text-transform: uppercase;
-  font-size: 39px !important;
-  letter-spacing: 0;
-  line-height: 140%;
   color: #b81f40;
+  font-size: 1.5rem;
 }
 
 h4 {
   font-family: GilroyRegular, sans-serif;
-  text-transform: uppercase;
-  font-size: 31px !important;
-  letter-spacing: 0.0025em;
-  line-height: 140%;
   color: #b81f40;
-}
-
-h5 {
-  font-family: GilroyRegular, sans-serif;
-  text-transform: uppercase;
-  font-size: 25px !important;
-  letter-spacing: 0;
-  line-height: 140%;
-  color: #b81f40;
-}
-
-h6 {
-  font-family: GilroyMedium, sans-serif;
-  text-transform: uppercase;
-  font-size: 20px !important;
-  letter-spacing: 0.0015em;
-  line-height: 140%;
-  color: #b81f40;
+  font-weight: bold;
+  font-size: 1rem;
+  height: 1.4rem;
 }
 
 p {
@@ -109,10 +94,9 @@ text {
   --border-radius-rounded: 0.15em;
 
 }
-
+}
 
 Button {
-  background-color: #ffffff;
   white-space: nowrap;
   padding: 14px;
   border: 1px solid #F8E9EC;
@@ -125,19 +109,27 @@ Button {
   font-size: 16px;
 }
 
-Button:hover:enabled{
+Button:hover:enabled {
   background-color: whitesmoke;
   border: 1px solid #F1D2D9;
   color: #931933;
 }
 
-Button:active:enabled{
+Button:active:enabled {
   background-color: darkgray;
   border: 1px solid #E3A4B3;
   color: #6E1326;
 }
 
-Button:disabled{
+Button:disabled {
   border: 1px solid #F3F3F3;
   color: #575756;
+}
+
+//reset the stroke Button style from above.
+.MuiButtonBase-root.MuiIconButton-root.MuiAutocomplete-popupIndicator, .MuiButtonBase-root.MuiIconButton-root.MuiAutocomplete-clearIndicator.MuiAutocomplete-clearIndicatorDirty{
+  background-image: none;
+  background-size: 2px 100%, 100% 2px, 2px 100% , 100% 2px;
+  background-position: 0 0, 0 0, 100% 0, 0 100%;
+  background-repeat: no-repeat;
 }

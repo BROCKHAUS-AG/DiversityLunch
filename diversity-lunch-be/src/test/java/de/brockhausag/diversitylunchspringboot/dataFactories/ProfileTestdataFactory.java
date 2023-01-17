@@ -1,5 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
+import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.*;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 
@@ -13,6 +14,7 @@ public class ProfileTestdataFactory {
     private static final String[] emails = {"incomplete.mail@some.tdl", "first.mail@some.tld", "second.mail@some.tld", "third.mail@some.tld"};
     private static final int[] birthYears = {1901, 1957, 1930, 2001};
 
+    private static final boolean wasChangedByAdmin = false;
 
     private final CountryTestDataFactory countryFactory = new CountryTestDataFactory();
     private final DietTestDataFactory dietFactory = new DietTestDataFactory();
@@ -42,13 +44,14 @@ public class ProfileTestdataFactory {
                 List.of(hobbyFactory.buildEntity(actualSetNumber)),
                 sexualOrientationFactory.buildEntity(actualSetNumber),
                 socialBackgroundFactory.buildEntity(actualSetNumber),
-                socialBackgroundDiscriminationFactory.buildEntity(actualSetNumber));
+                socialBackgroundDiscriminationFactory.buildEntity(actualSetNumber),
+                false);
     }
 
     public ProfileDto buildDto(int setNumber) {
         int actualSetNumber = (setNumber >= 1) && (setNumber <= numberOfCompleteSets) ? setNumber : 1;
         return new ProfileDto(
-                ids[actualSetNumber], names[actualSetNumber], emails[actualSetNumber], birthYears[actualSetNumber],
+                ids[actualSetNumber], names[actualSetNumber], emails[actualSetNumber], birthYears[actualSetNumber], wasChangedByAdmin,
                 countryFactory.buildDto(actualSetNumber),
                 dietFactory.buildDto(actualSetNumber),
                 educationFactory.buildDto(actualSetNumber),

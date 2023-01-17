@@ -3,6 +3,7 @@ package de.brockhausag.diversitylunchspringboot.profile.serviceTest;
 import de.brockhausag.diversitylunchspringboot.dataFactories.HobbyTestDataFactory;
 import de.brockhausag.diversitylunchspringboot.profile.data.HobbyRepository;
 import de.brockhausag.diversitylunchspringboot.profile.logic.HobbyService;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,6 +26,8 @@ public class HobbyServiceTest {
     private HobbyTestDataFactory factory;
     @Mock
     private HobbyRepository repository;
+    @Mock
+    ProfileService profileService;
     @InjectMocks
     private HobbyService service;
 
@@ -35,12 +39,14 @@ public class HobbyServiceTest {
     @Test
     void testDeleteEntityById_withExistingId_returnsTrue() {
         //Arrange
-        Long existingId = 42L;
+        HobbyEntity entity = factory.buildEntity(1);
 
-        when(repository.existsById(existingId)).thenReturn(true);
+        when(repository.existsById(entity.getId())).thenReturn(true);
+        when(repository.findById(entity.getId())).thenReturn(Optional.of(entity));
+        when(profileService.getAllProfilesWithSelectedDimensionOption(entity)).thenReturn(Collections.emptyList());
 
         //Act
-        boolean actual = service.deleteEntityById(existingId);
+        boolean actual = service.deleteEntityById(entity.getId());
 
         //Assert
         assertTrue(actual);

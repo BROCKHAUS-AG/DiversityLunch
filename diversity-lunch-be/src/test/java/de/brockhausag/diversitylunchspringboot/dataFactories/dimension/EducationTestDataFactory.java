@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.dataFactories;
+package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.EducationDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.EducationEntity;
@@ -11,17 +11,17 @@ public class EducationTestDataFactory {
 
     public EducationDto buildDto(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new EducationDto(ids[setNumber], descriptors[setNumber]);
+            return new EducationDto(ids[setNumber], descriptors[setNumber], false);
         }
-        return new EducationDto(ids[1], descriptors[1]);
+        return new EducationDto(ids[1], descriptors[1], false);
     }
 
 
     public EducationEntity buildEntity(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new EducationEntity(ids[setNumber], descriptors[setNumber]);
+            return new EducationEntity(ids[setNumber], descriptors[setNumber], false);
         }
-        return new EducationEntity(ids[1], descriptors[1]);
+        return new EducationEntity(ids[1], descriptors[1], false);
     }
 
     public EducationEntity buildEntityWithoutId() {

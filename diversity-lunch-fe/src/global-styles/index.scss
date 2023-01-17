@@ -103,10 +103,14 @@ input:focus {
 }
 
 .optionsListContainer .customizeCSVUpload .customizeCSVUploadHeader {
-  padding-bottom: 2.5%;
+  padding-bottom: 1rem;
 }
 
 .optionsListContainer {
+  padding: 20px 20px;
+}
+
+.optionsListInOptionsListContainer {
   padding: 20px 20px;
 }
 

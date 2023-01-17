@@ -1,6 +1,5 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
-import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionEntity;
 import de.brockhausag.diversitylunchspringboot.generics.multiDimension.MultiDimensionEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import lombok.AllArgsConstructor;
@@ -8,7 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 @NoArgsConstructor
@@ -21,6 +23,7 @@ public class HobbyEntity implements MultiDimensionEntity {
     private Long id;
 
     private String descriptor;
+
 
     @Override
     public int hashCode() {

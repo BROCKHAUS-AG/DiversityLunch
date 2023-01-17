@@ -13,6 +13,7 @@ public class GenderMapper implements DimensionMapper<GenderDto, GenderEntity> {
         GenderDto genderDto = new GenderDto();
         genderDto.setId(entity.getId());
         genderDto.setDescriptor(entity.getDescriptor());
+        genderDto.setDefault(entity.isDefault());
         return genderDto;
     }
 
@@ -21,6 +22,7 @@ public class GenderMapper implements DimensionMapper<GenderDto, GenderEntity> {
         GenderEntity genderEntity = new GenderEntity();
         genderEntity.setId(dto.getId());
         genderEntity.setDescriptor(dto.getDescriptor());
+        genderEntity.setDefault(dto.isDefault());
         return genderEntity;
     }
 }

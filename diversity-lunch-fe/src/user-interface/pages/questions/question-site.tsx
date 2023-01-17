@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { DiversityIcon } from '../../components/diversity-icon/diversity-icon';
 
 import { AppStoreState } from '../../../data/app-store';
 import './question-site.scss';
@@ -53,8 +52,7 @@ export const QuestionSite = () => {
     };
     return (
         <div className="QuestionSite">
-            <DiversityIcon />
-            <h4>{`Hallo ${firstName}`}</h4>
+            <h3>{`Hallo ${firstName}`}</h3>
             <ProfileForm initialProfile={profile} onSubmit={submit} checkValidity={isValidProfile} />
         </div>
     );

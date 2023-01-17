@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class WorkExperienceService extends WeightedEntityService<WorkExperienceEntity, WorkExperienceRepository> {
-    public WorkExperienceService(WorkExperienceRepository repository) {
-        super(repository);
+    public WorkExperienceService(WorkExperienceRepository repository, ProfileService profileService) {
+        super(repository, profileService);
     }
 }

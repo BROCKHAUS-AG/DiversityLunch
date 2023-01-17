@@ -1,28 +1,36 @@
 package de.brockhausag.diversitylunchspringboot.profile.serviceTest;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.BaseModelTestDataFactory;
-import de.brockhausag.diversitylunchspringboot.dataFactories.TestDefaultDimensionEntity;
+import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.TestDefaultDimensionEntity;
 import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionEntityService;
+import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionRepository;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class GenericDefaultDimensionEntityServiceTest {
+
+    private interface TestRepositoryType extends DefaultDimensionRepository<TestDefaultDimensionEntity> {
+    }
+
     private BaseModelTestDataFactory factory;
     @Mock
     private TestRepositoryType testRepository;
+    @Mock
+    private ProfileService profileService;
     @InjectMocks
     private DefaultDimensionEntityService<TestDefaultDimensionEntity, TestRepositoryType> service;
 
@@ -34,12 +42,15 @@ public class GenericDefaultDimensionEntityServiceTest {
     @Test
     void testDeleteEntityById_withExistingId_returnsTrue() {
         //Arrange
-        Long existingId = 666L;
+        TestDefaultDimensionEntity entity = factory.buildEntity(1);
 
-        when(testRepository.existsById(existingId)).thenReturn(true);
+
+        when(testRepository.existsById(entity.getId())).thenReturn(true);
+        when(testRepository.findById(entity.getId())).thenReturn(Optional.of(entity));
+        when(profileService.getAllProfilesWithSelectedDimensionOption(entity)).thenReturn(Collections.emptyList());
 
         //Act
-        boolean actual = service.deleteEntityById(existingId);
+        boolean actual = service.deleteEntityById(entity.getId());
 
         //Assert
         assertTrue(actual);
@@ -84,9 +95,6 @@ public class GenericDefaultDimensionEntityServiceTest {
 
         //Assert
         assertEquals(expectedList, actualList);
-    }
-
-    private interface TestRepositoryType extends CrudRepository<TestDefaultDimensionEntity, Long> {
     }
 
 }

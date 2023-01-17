@@ -13,6 +13,7 @@ public class SexualOrientationMapper implements DimensionMapper<SexualOrientatio
         SexualOrientationDto sexualOrientationDto = new SexualOrientationDto();
         sexualOrientationDto.setId(entity.getId());
         sexualOrientationDto.setDescriptor(entity.getDescriptor());
+        sexualOrientationDto.setDefault(entity.isDefault());
         return sexualOrientationDto;
     }
 
@@ -21,6 +22,7 @@ public class SexualOrientationMapper implements DimensionMapper<SexualOrientatio
         SexualOrientationEntity sexualOrientationEntity = new SexualOrientationEntity();
         sexualOrientationEntity.setId(dto.getId());
         sexualOrientationEntity.setDescriptor(dto.getDescriptor());
+        sexualOrientationEntity.setDefault(dto.isDefault());
         return sexualOrientationEntity;
     }
 }

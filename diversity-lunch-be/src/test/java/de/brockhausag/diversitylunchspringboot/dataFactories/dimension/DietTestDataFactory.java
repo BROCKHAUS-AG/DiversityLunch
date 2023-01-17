@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.dataFactories;
+package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.DietDto;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.DietEntity;
@@ -11,17 +11,17 @@ public class DietTestDataFactory {
 
     public DietDto buildDto(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new DietDto(ids[setNumber], descriptors[setNumber]);
+            return new DietDto(ids[setNumber], descriptors[setNumber], false);
         }
-        return new DietDto(ids[1], descriptors[1]);
+        return new DietDto(ids[1], descriptors[1], false);
     }
 
 
     public DietEntity buildEntity(int setNumber) {
         if ((setNumber >= 1) && setNumber <= numberOfCompleteSets) {
-            return new DietEntity(ids[setNumber], descriptors[setNumber]);
+            return new DietEntity(ids[setNumber], descriptors[setNumber], false);
         }
-        return new DietEntity(ids[1], descriptors[1]);
+        return new DietEntity(ids[1], descriptors[1], false);
     }
 
     public DietEntity buildEntityWithoutId() {

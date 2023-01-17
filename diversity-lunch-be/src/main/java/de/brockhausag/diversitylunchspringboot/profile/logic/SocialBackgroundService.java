@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SocialBackgroundService extends DefaultDimensionEntityService<SocialBackgroundEntity, SocialBackgroundRepository> {
-    public SocialBackgroundService(SocialBackgroundRepository repository) {
-        super(repository);
+    public SocialBackgroundService(SocialBackgroundRepository repository, ProfileService profileService) {
+        super(repository, profileService);
     }
 }
 

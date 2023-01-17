@@ -1,24 +1,30 @@
 import { Account } from '../../model/Account';
 
 export type AccountStateOk = {
-  status: 'OK',
-  accountData: Account,
+    status: 'OK',
+    accountData: Account,
 };
 
 export type AccountStateError = {
-  status: 'ERROR',
+    status: 'ERROR',
 };
 
 export type AccountStateLoading = {
-  status: 'LOADING',
+    status: 'LOADING',
 };
 
 export type AccountStatePending = {
-  status: 'PENDING',
+    status: 'PENDING',
+};
+
+export type AccountStateOffline = {
+    status: 'OFFLINE',
+    accountData: Account,
 };
 
 export type AccountState =
-  | AccountStateOk
-  | AccountStateError
-  | AccountStateLoading
-  | AccountStatePending;
+    | AccountStateOk
+    | AccountStateError
+    | AccountStateLoading
+    | AccountStateOffline
+    | AccountStatePending;

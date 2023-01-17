@@ -13,6 +13,7 @@ public class CountryMapper implements DimensionMapper<CountryDto, CountryEntity>
         CountryDto countryDto = new CountryDto();
         countryDto.setId(entity.getId());
         countryDto.setDescriptor(entity.getDescriptor());
+        countryDto.setDefault(entity.isDefault());
         return countryDto;
     }
 
@@ -21,6 +22,7 @@ public class CountryMapper implements DimensionMapper<CountryDto, CountryEntity>
         CountryEntity countryEntity = new CountryEntity();
         countryEntity.setId(dto.getId());
         countryEntity.setDescriptor(dto.getDescriptor());
+        countryEntity.setDefault(dto.isDefault());
         return countryEntity;
     }
 }
