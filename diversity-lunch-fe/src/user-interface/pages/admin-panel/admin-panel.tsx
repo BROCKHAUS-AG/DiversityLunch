@@ -1,8 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { CloseSite } from '../../components/close-site/close-site';
-import { DiversityIcon } from '../../components/diversity-icon/diversity-icon';
 import { AppStoreState } from '../../../data/app-store';
 import { Role } from '../../../model/Role';
 import { IdentifiableOptionsList } from '../../components/identifiable-options-list/identifiable-options-list';
@@ -89,13 +87,7 @@ export const AdminPanel: FC = () => {
     };
     return (
         <section className="view">
-
             <div className="adminPanelContainer">
-                <div className="header">
-                    <CloseSite />
-                    <DiversityIcon title="ADMIN PANEL" />
-                </div>
-
                 <div className="bottom">
                     <UserList />
 
@@ -194,7 +186,7 @@ export const AdminPanel: FC = () => {
                             </details>
                         </div>
                     </div>
-                    <CloseSite />
+
                     <UserList />
                     <IdentifiableOptionsList
                         state={projectState}
@@ -204,7 +196,6 @@ export const AdminPanel: FC = () => {
                         header="Projekte"
                     />
                     <VoucherUpload />
-
                     <div className="testMailContainer">
                         <button className="testmailButton" onClick={sendTestmail}>Testmail verschicken</button>
                     </div>
