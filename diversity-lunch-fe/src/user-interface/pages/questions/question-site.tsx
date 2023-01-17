@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { DiversityIcon } from '../../components/diversity-icon/diversity-icon';
 
 import { AppStoreState } from '../../../data/app-store';
 import './question-site.scss';

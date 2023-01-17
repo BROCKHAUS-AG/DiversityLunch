@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TileIcon } from '../tile-icon/tile-icon';
-import iconProfile from '../../../resources/icons/icon-profil.svg';
-import iconCalendar from '../../../resources/icons/icon-termin-auswählen.svg';
-import iconMeeting from '../../../resources/icons/icon-anstehende-termine.svg';
-import iconInfo from '../../../resources/icons/icon-info.svg';
 
 // ROUTING
-
 // DATA FILE
 import { NavbarData } from './NavbarData';
 

@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { TileIconLink } from '../../components/tile-icon-link/tile-icon-link';
-import { DiversityIcon } from '../../components/diversity-icon/diversity-icon';
 import './dashboard.scss';
-import iconInfo from '../../../resources/icons/icon-info.svg';
-import iconProfile from '../../../resources/icons/icon-profil.svg';
-import iconMeeting from '../../../resources/icons/icon-anstehende-termine.svg';
-import iconCalendar from '../../../resources/icons/icon-termin-auswählen.svg';
+import profileIcon from '../../../resources/icons/icon-profil.svg';
+import upComMeeting from '../../../resources/icons/icon-anstehende-termine.svg';
 import { AdminPanelIcon } from '../../components/admin-panel-icon/admin-panel-icon';
 import { Account } from '../../../model/Account';
 import { AppStoreState } from '../../../data/app-store';
@@ -18,8 +14,6 @@ import { Profile } from '../../../model/Profile';
 import { ProfileStateOk } from '../../../data/profile/profile-state.type';
 import { authenticatedFetchPut } from '../../../utils/fetch.utils';
 import { Information } from '../information/information';
-import profileIcon from '../../../resources/icons/icon-profil.svg';
-import upComMeeting from '../../../resources/icons/icon-anstehende-termine.svg';
 import chooseDateIcon from '../../../resources/icons/icon-termin-auswählen.svg';
 
 export const Dashboard = () => {

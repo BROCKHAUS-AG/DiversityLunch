@@ -1,6 +1,5 @@
 import React from 'react';
 import './diversity-icon.scss';
-import { logDOM } from '@testing-library/react';
 import iconDiversity from '../../../resources/icons/icon-diversity-logo-mit-rahmen.svg';
 
 type DiversityIconContainerProps = {
