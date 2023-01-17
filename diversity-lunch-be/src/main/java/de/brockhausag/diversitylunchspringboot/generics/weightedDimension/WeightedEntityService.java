@@ -21,15 +21,15 @@ public class WeightedEntityService<
 
     public boolean setAsDefault(Long id) {
         var entity = repository.findById(id);
-        boolean success = false;
-        if(entity.isPresent()) {
-            var newDefault = entity.get();
-            var oldDefault = getCurrentDefaultEntity().orElseThrow();
-            newDefault.setDefault(true);
-            oldDefault.setDefault(false);
-            repository.saveAll(List.of(newDefault, oldDefault));
+        if(entity.isEmpty()) {
+            return false;
         }
-        return success;
+        var newDefault = entity.get();
+        var oldDefault = getCurrentDefaultEntity().orElseThrow();
+        newDefault.setDefault(true);
+        oldDefault.setDefault(false);
+        repository.saveAll(List.of(newDefault, oldDefault));
+        return true;
     }
 
     private Optional<EntityType> getCurrentDefaultEntity() {

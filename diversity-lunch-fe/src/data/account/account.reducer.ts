@@ -38,8 +38,8 @@ export const accountReducer: Reducer<AccountState, AccountStateAction> = (
             return {
                 status: 'OFFLINE',
                 accountData: {
-                    id: 0,
-                    profileId: 0,
+                    id: 1,
+                    profileId: 1,
                     role: Role.ADMIN,
                 },
             };
