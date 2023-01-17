@@ -7,11 +7,10 @@
 
 @media screen and (min-width: 900px) {
   .ProfileForm{
-    margin-left: 320px;
+    margin-left: 200px;
+    margin-top: 3rem;
   }
 }
-
-
 
 .Multi-select-container {
 
@@ -33,7 +32,6 @@
       font-size: .8rem;
     }
   }
-
 
   .chip {
     align-items: center;
@@ -69,7 +67,6 @@
   }
 
 }
-
 
 .highlightOption {
   background: rgba(0, 0, 0, 0.08);

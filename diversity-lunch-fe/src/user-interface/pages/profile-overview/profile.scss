@@ -10,10 +10,6 @@
   margin-left: 10rem;
 }
 
-.profile-overview-wrapper{
-  margin:auto;
-}
-
 .Profile-settings-container{
   width: 100%;
 
@@ -48,9 +44,14 @@
   }
 
   .DropdownQuestion{
+    .MuiTextField-root{
+      .MuiInputBase-root{
+        width: 30vw;
+      }
+    }
 
     input {
-      width: 30vw;
+
     }
 
 
@@ -102,5 +103,64 @@
 
 .multiselect-container.multiSelectContainer .searchWrapper {
   border-radius: 0px;
+
+}
+
+
+.Multi-select-container {
+
+  .labelWrapper {
+    background-color: #f0f0f0;
+    padding: .3rem;
+    width: 70%;
+    top: 8px;
+    left: 8px;
+    position: relative;
+    z-index: 999;
+
+    label {
+      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 0.00938em;
+      color: rgba(0, 0, 0, 0.54);
+      font-size: .8rem;
+    }
+  }
+
+
+  .chip {
+    align-items: center;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 11px;
+    color: black;
+    display: inline-flex;
+    font-size: 13px;
+    line-height: 19px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    padding: 4px 10px;
+    font-family: SourceSansProRegular, sans-serif;
+  }
+
+  input {
+    background: transparent;
+    border: none;
+    margin-top: 3px;
+    max-height: 42px;
+    color: currentColor;
+    font: inherit;
+  }
+
+  input::placeholder {
+    width: 100%;
+    color:lightgrey;
+    font-size: 16px;
+  }
+
+  fieldset{
+    margin-left: 2rem;
+    width: 30vw;
+  }
 
 }
