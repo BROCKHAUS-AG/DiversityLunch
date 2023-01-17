@@ -6,30 +6,35 @@ import home from '../../../resources/icons/home.svg';
 
 export const NavbarData = [
     {
+        id: 1,
         title: 'Home',
         path: '/dashboard',
         cName: 'nav-text',
         icon: home,
     },
     {
+        id: 2,
         title: 'Dein Profil',
         path: '/profile',
         cName: 'nav-text',
         icon: iconProfile,
     },
     {
+        id: 3,
         title: 'Termin wählen',
         path: '/add+meetings/choose+date',
         cName: 'nav-text',
         icon: iconCalendar,
     },
     {
+        id: 4,
         title: 'Anstehende Meetings',
         path: '/upcoming+meetings',
         cName: 'nav-text',
         icon: iconMeeting,
     },
     {
+        id: 5,
         title: 'Informationen',
         path: '/information',
         cName: 'nav-text',

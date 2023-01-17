@@ -20,27 +20,27 @@ export const Navbar = () => {
         <div>
             <div className="navbar-mobile">
                 <div className="navbar">
-                    <Link to="#" className="menu-bars">
-                        <div onClick={showSidebar} className="row">
+                    <Link to="/#" className="menu-bars">
+                        <button onClick={showSidebar} className="row">
                             <div className="hamburg">
                                 <span className="line" />
                                 <span className="line" />
                                 <span className="line" />
                             </div>
-                        </div>
+                        </button>
                     </Link>
                     <CloseSite />
                 </div>
                 <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-                    <ul className="nav-menu-items" onClick={showSidebar}>
+                    <ul className="nav-menu-items">
                         <li className="navbar-toggle">
-                            <Link to="#" className="menu-bars">
+                            <Link to="/#" className="menu-bars">
                                 X
                             </Link>
                         </li>
 
-                        {NavbarData.map((item, index) => (
-                            <li key={index} className={item.cName}>
+                        {NavbarData.map((item) => (
+                            <li key={item.id} className={item.cName}>
                                 <Link to={item.path}>
                                     <TileIcon title="" icon={item.icon} />
                                     <span>{item.title}</span>
@@ -53,14 +53,14 @@ export const Navbar = () => {
 
             <div className="navbar-l">
                 <nav className="nav-menu active">
-                    <ul className="nav-menu-items" onClick={showSidebar}>
+                    <ul className="nav-menu-items">
                         <div className="header">
                             <li className="navbar-toggle">
                                 <UserVoucherIcon />
                             </li>
                         </div>
-                        {NavbarData.map((item, index) => (
-                            <li key={index} className={item.cName}>
+                        {NavbarData.map((item) => (
+                            <li key={item.id} className={item.cName}>
                                 <Link to={item.path}>
                                     <TileIcon title="" icon={item.icon} />
                                     <span>{item.title}</span>
