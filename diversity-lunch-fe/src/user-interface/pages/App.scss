@@ -22,12 +22,10 @@ html {
 
   .bodyContainer {
     /* width: calc(100% - 300px);*/
-    margin-left: 3rem;
-    margin-bottom: 2rem;
-    margin-top: 6rem;
+    margin: 4rem 1.5rem 2rem;
   }
 
-@media (min-width: 992px){
+@media (min-width: 997px){
   .bodyContainer {
   /* width: calc(100% - 300px);*/
     margin-bottom: 10rem;
@@ -37,6 +35,12 @@ html {
 
   .toggleStyle{
     display: block;
+  }
+}
+
+@media (min-width: 1650px){
+  .bodyContainer {
+    margin-left: 21vw;
   }
 }
 

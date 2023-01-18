@@ -1,12 +1,23 @@
-
-
 .ProfileForm{
   margin-bottom: 10rem;
 }
 
-@media screen and (min-width: 900px) {
+.multiSelectContainer {
+  position: relative;
+  text-align: left;
+  width: 89vw;
+  margin-left: 0.4rem;
+}
+
+@media screen and (min-width: 997px) {
   .ProfileForm{
     margin-top: 3rem;
+  }
+  .multiSelectContainer {
+    position: relative;
+    text-align: left;
+    width: 30vw;
+    margin-left: 2rem;
   }
 }
 
@@ -61,7 +72,7 @@
   }
 
   fieldset{
-    margin-left: 2rem;
+
   }
 
 }

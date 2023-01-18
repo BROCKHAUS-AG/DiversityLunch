@@ -45,11 +45,6 @@
   }
 }
 
-@media screen and (min-width: 450px) {
-
-
-}
-
 .smallBagBtn{
   border: solid #b81f40 1px;
 }
@@ -57,7 +52,7 @@
   text-decoration: none;
 }
 
-@media screen and (min-width: 850px) {
+@media screen and (min-width: 997px) {
 
   .App h2 {
     font-family: GilroyLight, sans-serif;
@@ -161,18 +156,4 @@ display: block;
     font-family: SourceSansProRegular, sans-serif;
   }
 
-  @media screen and (min-width: 450px) {
-
-  }
-
-  @media screen and (min-width: 850px) {
-
-  }
-
-}
-
-@media screen and (min-width: 1650px) {
-  .Dashboard {
-    margin-left: 6%;
-  }
 }

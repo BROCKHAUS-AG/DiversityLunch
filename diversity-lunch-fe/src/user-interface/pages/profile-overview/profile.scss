@@ -6,9 +6,15 @@
 .Profile-name-container{
   display: flex;
   margin-bottom: 4rem;
-  margin-right: 16.5rem;
+  margin-right: 0;
   text-align: center;
   justify-content: center;
+}
+
+@media screen and (min-width: 997px) {
+  .Profile-name-container {
+    margin-right: 15.5rem;
+  }
 }
 
 .Profile-settings-container{
@@ -47,14 +53,13 @@
   .DropdownQuestion{
     .MuiTextField-root{
       .MuiInputBase-root{
-        width: 30vw;
+        width: 89vw;
       }
     }
 
     input {
 
     }
-
 
     .inLineToggle{
       display: inline-block;
@@ -63,14 +68,10 @@
       vertical-align: top;
     }
 
-    .inLineToggleHelper{
-      display: inline-block;
-      margin-left: 2rem;
-    }
     .MuiAutocomplete-root.MuiAutocomplete-hasClearIcon.MuiAutocomplete-hasPopupIcon, .MuiFormControl-root{
       display: inline-block;
       width:90%;
-      margin-left: .2rem;
+      margin-left: 0.2rem;
       vertical-align: middle;
     }
 
@@ -86,9 +87,20 @@
       }
     }
 
-    @media screen and (min-width: 993px){
+    @media screen and (min-width: 997px){
       .inLineToggle{
         width: 15vw;
+      }
+
+      .MuiTextField-root{
+        .MuiInputBase-root{
+          width: 30vw;
+        }
+      }
+
+      .inLineToggleHelper{
+        display: inline-block;
+        margin-left: 2rem;
       }
 
       .MuiAutocomplete-root.MuiAutocomplete-hasClearIcon.MuiAutocomplete-hasPopupIcon, .MuiFormControl-root{
@@ -103,7 +115,7 @@
 }
 
 .multiselect-container.multiSelectContainer .searchWrapper {
-  border-radius: 0px;
+  border-radius: 0;
 
 }
 
@@ -160,7 +172,6 @@
   }
 
   fieldset{
-    margin-left: 2rem;
     width: 30vw;
   }
 

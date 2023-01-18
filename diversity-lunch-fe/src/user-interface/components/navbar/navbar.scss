@@ -16,7 +16,7 @@
 .nav-title{
   margin-left: 1rem;
 }
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 997px) {
   .navbar {
     background-color: var(--navBg);
     height: 80px;
@@ -48,7 +48,7 @@
   transform-origin: center;
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 997px) {
   .line {
     background: #fff;
   }
@@ -167,16 +167,15 @@
   align-items: center;
 }
 
-@media screen and (min-width: 0px) {
-  .navbar-mobile {
-    display: block;
-  }
-  .navbar-l {
-    display: none;
-  }
+.navbar-mobile {
+  display: block;
+}
+.navbar-l {
+  display: none;
 }
 
-@media (min-width: 992px) {
+
+@media (min-width: 997px) {
   .navbar-mobile {
     display: none;
   }
