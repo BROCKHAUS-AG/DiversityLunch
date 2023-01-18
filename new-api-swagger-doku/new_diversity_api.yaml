@@ -119,6 +119,174 @@ paths:
           description: unauthorized
         '500':
           description: internal server error
+  /basicdimension/selectableoption/{optionId}:
+    delete:
+      tags:
+        - BasicDimension
+      summary: Delete selectable option on any basic dimension by optionId.
+      parameters:
+        - name: optionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: removed selectalbe option
+        '400':
+          description: selectable option is default value
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+  /basicdimension/selectableoption:
+    post:
+      tags:
+        - BasicDimension
+      summary: Create selectable option.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SelectedBasicOption'
+      responses:
+        '200':
+          description: selectable option created
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+    put:
+      tags:
+        - BasicDimension
+      summary: Edit selectable option.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BasicDimensionSelectableOption'
+      responses:
+        '200':
+          description: selectable option edited
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+  /weighteddimension/selectableoption/{optionId}:
+    delete:
+      tags:
+        - WeightedDimension
+      summary: Delete selectable option on any weighted dimension by optionId.
+      parameters:
+        - name: optionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: removed selectalbe option
+        '400':
+          description: selectable option is default value
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+  /weighteddimension/selectableoption:
+    post:
+      tags:
+        - WeightedDimension
+      summary: Create selectable option.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SelectedWeightedOption'
+      responses:
+        '200':
+          description: selectable option created
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+    put:
+      tags:
+        - WeightedDimension
+      summary: Edit selectable option.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WeightedDimensionSelectableOption'
+      responses:
+        '200':
+          description: selectable option edited
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+  /multiselectdimension/selectableoption/{optionId}:
+    delete:
+      tags:
+        - MultiselectDimension
+      summary: Delete selectable option on any multiselect dimension by optionId.
+      parameters:
+        - name: optionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: removed selectalbe option
+        '400':
+          description: selectable option is default value
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+  /multiselectdimension/selectableoption:
+    post:
+      tags:
+        - MultiselectDimension
+      summary: Create selectable option.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SelectedMultiselectOption'
+      responses:
+        '200':
+          description: selectable option created
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+    put:
+      tags:
+        - MultiselectDimension
+      summary: Edit selectable option.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MultiselectDimensionSelectableOption'
+      responses:
+        '200':
+          description: selectable option edited
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
 components:
   schemas:
     Category:
@@ -158,7 +326,7 @@ components:
           $ref: '#/components/schemas/Category'
         selectable_options:
           type: array
-          items: 
+          items:
             $ref: '#/components/schemas/BasicDimensionSelectableOption'
         default_value:
           $ref: '#/components/schemas/BasicDimensionSelectableOption'
@@ -190,7 +358,7 @@ components:
           $ref: '#/components/schemas/Category'
         selectable_options:
           type: array
-          items: 
+          items:
             $ref: '#/components/schemas/WeightedDimensionSelectableOption'
         default_value:
           $ref: '#/components/schemas/WeightedDimensionSelectableOption'
@@ -215,7 +383,7 @@ components:
           $ref: '#/components/schemas/Category'
         selectable_options:
           type: array
-          items: 
+          items:
             $ref: '#/components/schemas/MultiselectDimensionSelectableOption'
     Profile:
       type: object
