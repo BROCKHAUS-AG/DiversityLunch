@@ -7,6 +7,8 @@ import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.Weighte
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.WeightedDimensionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.WeightedDimensionSelectableOptionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.DimensionService;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
 
     private final WeightedDimensionRepository repository;
     private final WeightedDimensionSelectableOptionRepository selectableRepository;
+    private final ProfileService profileService;
 
     public WeightedDimension getDimension(DimensionCategory category) {
         return repository.getByDimensionCategory(category);
@@ -58,6 +61,18 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
         if (!selectableRepository.existsById(selectableOptionId)) {
             return false;
         }
+        WeightedDimensionSelectableOption option = selectableRepository.getById(selectableOptionId);
+        WeightedDimension dimension = getDimension(option.getDimensionCategory());
+        WeightedDimensionSelectableOption defaultOption = dimension.getDefaultValue();
+        if (option == defaultOption) {
+            return false;
+        }
+        List<ProfileEntity> affectedProfiles = profileService.getAllProfilesWithSelectedWeightedOption(option);
+        affectedProfiles.forEach(profile -> {
+            profile.getSelectedWeightedValues().replace(dimension, defaultOption);
+            profile.setWasChangedByAdmin(true);
+            profileService.updateProfile(profile);
+        });
         selectableRepository.deleteById(selectableOptionId);
         return !selectableRepository.existsById(selectableOptionId);
     }

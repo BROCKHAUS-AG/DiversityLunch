@@ -2,9 +2,7 @@ package de.brockhausag.diversitylunchspringboot.dimensions.services;
 
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.Dimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.SelectableOptions;
-import de.brockhausag.diversitylunchspringboot.dimensions.repositories.DimensionRepository;
-import de.brockhausag.diversitylunchspringboot.dimensions.repositories.SelectableOptionsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
 
 import java.util.List;
 
@@ -15,6 +13,7 @@ public interface DimensionService<
 {
 
     DimensionType getDimension(String categoryDescription);
+    DimensionType getDimension(DimensionCategory category);
 
     List<DimensionType> getAllDimensions();
 

@@ -2,6 +2,8 @@ package de.brockhausag.diversitylunchspringboot.profile.logic;
 
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.RequiredArgsConstructor;
@@ -35,13 +37,19 @@ public class ProfileService {
     }
 
     public Optional<ProfileEntity> updateProfile(ProfileEntity updateEntity) {
-
-
         if(!repository.existsById(updateEntity.getId())){return Optional.empty();}
         return Optional.of(repository.save(updateEntity));
     }
 
    public List<ProfileEntity> getAllProfilesWithSelectedBasicOption(BasicDimensionSelectableOption option) {
-        return repository.findALLBySelectedBasicValuesId(option.getId());
+        return repository.findALLBySelectedBasicValues(option);
    }
+
+    public List<ProfileEntity> getAllProfilesWithSelectedWeightedOption(WeightedDimensionSelectableOption option) {
+        return repository.findALLBySelectedWeightedValues(option);
+    }
+
+    public List<ProfileEntity> getAllProfilesWithSelectedMultiselectOption(MultiselectDimensionSelectableOption option) {
+        return repository.findALLBySelectedMultiselectValues(option);
+    }
 }

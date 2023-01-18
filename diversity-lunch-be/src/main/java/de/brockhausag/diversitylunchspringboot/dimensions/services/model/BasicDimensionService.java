@@ -7,6 +7,8 @@ import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.Dimensi
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.BasicDimensionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.BasicDimensionSelectableOptionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.DimensionService;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,7 @@ public class BasicDimensionService implements DimensionService<
 
     private final BasicDimensionRepository repository;
     private final BasicDimensionSelectableOptionRepository selectableRepository;
+    private final ProfileService profileService;
 
     public BasicDimension getDimension(DimensionCategory category) {
         return repository.getByDimensionCategory(category);
@@ -62,7 +65,17 @@ public class BasicDimensionService implements DimensionService<
             return false;
         }
         BasicDimensionSelectableOption option = selectableRepository.getById(selectableOptionId);
-
+        BasicDimension dimension = getDimension(option.getDimensionCategory());
+        BasicDimensionSelectableOption defaultOption = dimension.getDefaultValue();
+        if (option == defaultOption) {
+            return false;
+        }
+        List<ProfileEntity> affectedProfiles = profileService.getAllProfilesWithSelectedBasicOption(option);
+        affectedProfiles.forEach(profile -> {
+            profile.getSelectedBasicValues().replace(dimension, defaultOption);
+            profile.setWasChangedByAdmin(true);
+            profileService.updateProfile(profile);
+        });
         selectableRepository.deleteById(selectableOptionId);
         return !selectableRepository.existsById(selectableOptionId);
     }

@@ -4,17 +4,14 @@ import com.google.common.collect.Lists;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.repositories.BasicDimensionRepository;
-import de.brockhausag.diversitylunchspringboot.dimensions.repositories.BasicDimensionSelectableOptionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.MultiselectDimensionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.MultiselectDimensionSelectableOptionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.DimensionService;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,10 +19,16 @@ import java.util.List;
 public class MultiselectDimensionService implements DimensionService<MultiselectDimension, MultiselectDimensionSelectableOption> {
     private final MultiselectDimensionRepository repository;
     private final MultiselectDimensionSelectableOptionRepository selectableRepository;
+    private final ProfileService profileService;
 
     @Override
     public MultiselectDimension getDimension(String categoryDescription) {
         return repository.getByDimensionCategory_Description(categoryDescription);
+    }
+
+    @Override
+    public MultiselectDimension getDimension(DimensionCategory category) {
+        return repository.getByDimensionCategory(category);
     }
 
     @Override
@@ -43,6 +46,14 @@ public class MultiselectDimensionService implements DimensionService<Multiselect
         if (!selectableRepository.existsById(selectableOptionId)) {
             return false;
         }
+        MultiselectDimensionSelectableOption option = selectableRepository.getById(selectableOptionId);
+        MultiselectDimension dimension = getDimension(option.getDimensionCategory());
+        List<ProfileEntity> affectedProfiles = profileService.getAllProfilesWithSelectedMultiselectOption(option);
+        affectedProfiles.forEach(profile -> {
+            profile.getSelectedMultiselectValues().get(dimension).getSelectedOptions().remove(option);
+            profile.setWasChangedByAdmin(true);
+            profileService.updateProfile(profile);
+        });
         selectableRepository.deleteById(selectableOptionId);
         return !selectableRepository.existsById(selectableOptionId);
     }

@@ -1,12 +1,9 @@
 package de.brockhausag.diversitylunchspringboot.config;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
 import de.brockhausag.diversitylunchspringboot.match.service.MatchingService;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MeetingService;
-import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +25,7 @@ public class SchedulingConfig {
     private final MeetingProposalRepository meetingProposalRepository;
     private final MeetingService meetingService;
     //private final MicrosoftGraphService microsoftGraphService;
-    private final ProfileService profileService;
+    //private final ProfileService profileService;
 
     // Note: Cronjob naming scheme https://spring.io/blog/2020/11/10/new-in-spring-5-3-improved-cron-expressions
     @Scheduled(cron = "${diversity.settings.scheduling.matchingCronJob}") // Every Day at 02:00
@@ -59,7 +56,7 @@ public class SchedulingConfig {
 
     @Scheduled(cron = "0/5 * * * * *")
     public void test() {
-        BasicDimensionSelectableOption option = BasicDimensionSelectableOption.builder()
+        /*BasicDimensionSelectableOption option = BasicDimensionSelectableOption.builder()
                 .id(1L)
                 .value("Algerien")
                 .dimensionCategory(DimensionCategory.builder()
@@ -70,6 +67,6 @@ public class SchedulingConfig {
                 .build();
         profileService.getAllProfilesWithSelectedBasicOption(option).forEach((profile) -> {
             log.warn(profile.toString());
-        });
+        });*/
     }
 }
