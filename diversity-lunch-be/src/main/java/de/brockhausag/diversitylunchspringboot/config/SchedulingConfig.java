@@ -1,5 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.config;
 
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
 import de.brockhausag.diversitylunchspringboot.match.service.MatchingService;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
@@ -57,9 +59,17 @@ public class SchedulingConfig {
 
     @Scheduled(cron = "0/5 * * * * *")
     public void test() {
-        /*profileService.getAllProfiles().forEach(profile -> {
-            log.warn("\nWeighted:" + profile.getSelectedWeightedValues().toString() +
-                    "\nMulti:" +  profile.getSelectedMultiselectValues().toString());
-        });*/
+        BasicDimensionSelectableOption option = BasicDimensionSelectableOption.builder()
+                .id(1L)
+                .value("Algerien")
+                .dimensionCategory(DimensionCategory.builder()
+                    .id(4L)
+                    .description("Ethnische Herkunft")
+                    .profileQuestion("Was ist deine ethnische Herkunft?")
+                    .build())
+                .build();
+        profileService.getAllProfilesWithSelectedBasicOption(option).forEach((profile) -> {
+            log.warn(profile.toString());
+        });
     }
 }

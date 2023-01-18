@@ -61,6 +61,8 @@ public class BasicDimensionService implements DimensionService<
         if (!selectableRepository.existsById(selectableOptionId)) {
             return false;
         }
+        BasicDimensionSelectableOption option = selectableRepository.getById(selectableOptionId);
+
         selectableRepository.deleteById(selectableOptionId);
         return !selectableRepository.existsById(selectableOptionId);
     }
