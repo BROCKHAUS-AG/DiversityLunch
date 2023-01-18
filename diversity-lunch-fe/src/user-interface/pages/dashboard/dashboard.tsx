@@ -58,14 +58,14 @@ export const Dashboard = () => {
                                 <h2>1.</h2>
                                 <h4>Profil ausfüllen und unseren Algorithmus füttern.</h4>
                                 <div>
-                                    <Link to="/profile">
+                                    <Link className="link-container" to="/profile">
                                         <button>Jetzt füttern</button>
                                     </Link>
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <Link to="/profile">
+                            <Link className="link-container" to="/profile">
                                 <button className="btnMobileBag">Jetzt füttern</button>
                             </Link>
                         </div>
@@ -81,14 +81,14 @@ export const Dashboard = () => {
                                 <h2>2.</h2>
                                 <h4>Möglichen Termin angeben</h4>
                                 <div>
-                                    <Link to="/add+meetings">
+                                    <Link className="link-container" to="/add+meetings">
                                         <button>Termine finden</button>
                                     </Link>
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <Link to="/add+meetings">
+                            <Link className="link-container" to="/add+meetings">
                                 <button className="btnMobileBag">Termine finden</button>
                             </Link>
                         </div>
@@ -104,14 +104,14 @@ export const Dashboard = () => {
                                 <h2>3.</h2>
                                 <h4>Viel Spaß bei deinem Diversity-Match!</h4>
                                 <div>
-                                    <Link to="/upcoming+meetings">
+                                    <Link className="link-container" to="/upcoming+meetings">
                                         <button className="btnMobileBag">Matches anzeigen</button>
                                     </Link>
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <Link to="/upcoming+meetings">
+                            <Link className="link-container" to="/upcoming+meetings">
                                 <button className="btnMobileBag">Matches anzeigen</button>
                             </Link>
                         </div>

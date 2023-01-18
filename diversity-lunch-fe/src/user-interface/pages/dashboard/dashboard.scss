@@ -50,6 +50,13 @@
 
 }
 
+.smallBagBtn{
+  border: solid #b81f40 1px;
+}
+.link-container{
+  text-decoration: none;
+}
+
 @media screen and (min-width: 850px) {
 
   .App h2 {
@@ -88,7 +95,16 @@ display: block;
             margin-right: auto;
             display: block;
             margin-top: 2rem;
-            border: solid black 1px;
+            border: solid #b81f40 1px;
+          }
+
+          button:hover{
+            background: none;
+            border-color: #931933;
+          }
+
+          button:active{
+            border-color: #6e1326;
           }
 
         }
