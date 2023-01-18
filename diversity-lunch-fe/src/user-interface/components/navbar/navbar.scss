@@ -8,6 +8,9 @@
   justify-content: flex-start;
   align-items: center;
   z-index: 99999;
+  .row{
+    padding: 0;
+  }
 }
 
 @media screen and (min-width: 992px) {
