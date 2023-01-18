@@ -4,14 +4,11 @@
 }
 
 .Profile-name-container{
-  width: 100%;
   display: flex;
   margin-bottom: 4rem;
-  margin-left: 10rem;
-}
-
-.profile-overview-wrapper{
-  margin:auto;
+  margin-right: 16.5rem;
+  text-align: center;
+  justify-content: center;
 }
 
 .Profile-settings-container{
@@ -64,6 +61,7 @@
     .inLineToggleHelper{
       display: inline-block;
       margin-left: 2rem;
+      width: 30vw;
     }
     .MuiAutocomplete-root.MuiAutocomplete-hasClearIcon.MuiAutocomplete-hasPopupIcon, .MuiFormControl-root{
       display: inline-block;
@@ -101,6 +99,6 @@
 }
 
 .multiselect-container.multiSelectContainer .searchWrapper {
-  border-radius: 0px;
+  border-radius: 0;
 
 }
