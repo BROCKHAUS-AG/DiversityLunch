@@ -67,7 +67,7 @@ export const Navbar = () => {
                                         <li key={item.id} className={item.cName}>
                                             <Link to={item.path} onClick={showSidebar}>
                                                 <TileIcon title="" icon={item.icon} />
-                                                <span>{item.title}</span>
+                                                <span className="nav-title">{item.title}</span>
                                             </Link>
                                         </li>
                                     ))}
@@ -94,7 +94,7 @@ export const Navbar = () => {
                                         <li key={item.id} className={item.cName}>
                                             <Link to={item.path}>
                                                 <TileIcon title="" icon={item.icon} />
-                                                <span>{item.title}</span>
+                                                <span className="nav-title">{item.title}</span>
                                             </Link>
                                         </li>
                                     ))}

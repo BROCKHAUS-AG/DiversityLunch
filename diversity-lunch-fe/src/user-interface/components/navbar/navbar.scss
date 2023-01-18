@@ -11,8 +11,11 @@
   .row{
     padding: 0;
   }
-}
 
+}
+.nav-title{
+  margin-left: 1rem;
+}
 @media screen and (min-width: 992px) {
   .navbar {
     background-color: var(--navBg);
@@ -162,10 +165,6 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-}
-
-span {
-  margin-left: 16px;
 }
 
 @media screen and (min-width: 0px) {
