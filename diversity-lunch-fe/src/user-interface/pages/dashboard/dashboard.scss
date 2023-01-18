@@ -45,20 +45,8 @@
   }
 }
 
-
-
-
 @media screen and (min-width: 450px) {
 
-
-}
-
-@media screen and (min-width: 1650px) {
-  .Dashboard {
-
-    margin-left: 6% !important;
-
-  }
 
 }
 
@@ -73,15 +61,11 @@
 
   .Dashboard {
     max-width: 1180px;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 
 
     .Dashboard-container {
-      margin-bottom: 3rem;
+      width: 90%;
+      margin: auto;
       .card {
         .image {
           height: 40%;
@@ -169,4 +153,10 @@ display: block;
 
   }
 
+}
+
+@media screen and (min-width: 1650px) {
+  .Dashboard {
+    margin-left: 6%;
+  }
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { TileIcon } from '../tile-icon/tile-icon';
+import { useSelector } from 'react-redux';
 
 // ROUTING
 // DATA FILE
@@ -10,11 +10,28 @@ import { NavbarData } from './NavbarData';
 import './navbar.scss';
 import { UserVoucherIcon } from '../user-voucher-icon/user-voucher-icon';
 import { CloseSite } from '../close-site/close-site';
+import { AdminPanelIcon } from '../admin-panel-icon/admin-panel-icon';
+import { TileIcon } from '../tile-icon/tile-icon';
+import { Role } from '../../../model/Role';
+
+import { AppStoreState } from '../../../data/app-store';
+import { Account } from '../../../model/Account';
+import { LoadingAnimation } from '../loading-animation/loading-animation';
 
 export const Navbar = () => {
     const [sidebar, setSidebar] = useState(false);
+    const accountState = useSelector((state: AppStoreState) => state.account);
+    let account: Account;
 
     const showSidebar = () => setSidebar(!sidebar);
+
+    if (accountState?.status === 'OK') {
+        account = accountState.accountData;
+    } else {
+        return <LoadingAnimation />;
+    }
+
+    const isAdmin: boolean = account.role === Role.ADMIN || account.role === Role.AZURE_ADMIN;
 
     return (
         <div>
@@ -55,9 +72,16 @@ export const Navbar = () => {
                 <nav className="nav-menu active">
                     <ul className="nav-menu-items">
                         <div className="header">
-                            <li className="navbar-toggle">
-                                <UserVoucherIcon />
-                            </li>
+                            <div className="flex-container">
+                                {isAdmin && (
+                                    <li className="navbar-toggle">
+                                        <AdminPanelIcon />
+                                    </li>
+                                )}
+                                <li className="navbar-toggle">
+                                    <UserVoucherIcon />
+                                </li>
+                            </div>
                         </div>
                         {NavbarData.map((item) => (
                             <li key={item.id} className={item.cName}>

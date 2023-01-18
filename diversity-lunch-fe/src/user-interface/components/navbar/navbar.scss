@@ -63,14 +63,22 @@
   top: 36px;
 }
 
+.header {
+  .flex-container {
+    display: flex;
+
+  }
+}
+
+
 
 .navbar-l .header {
-  .IconHeader-icon-voucher-percent {
+  .IconHeader-icon-voucher-percent, .IconHeader-admin-icon {
     filter: brightness(0) saturate(100%) invert(95%) sepia(100%) saturate(20%) hue-rotate(317deg) brightness(106%) contrast(106%);
 
   }
 
-  .IconHeader-icon-voucher-percent:hover {
+  .IconHeader-icon-voucher-percent:hover, .IconHeader-admin-icon:hover {
     filter: brightness(0) saturate(100%) invert(12%) sepia(87%) saturate(2635%) hue-rotate(332deg) brightness(94%) contrast(96%);
 
   }
