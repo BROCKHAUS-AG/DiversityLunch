@@ -10,7 +10,7 @@ export const CloseSite = () => {
 
     return (
         <div className="IconHeader">
-            {location.pathname !== '/dashboard'
+            {(location.pathname !== '/dashboard' && location.pathname !== '/questions')
                 && (
                     <Link to="/dashboard">
                         <img alt="logout icon" className="IconHeader-leave-icon" src={iconClose} />
