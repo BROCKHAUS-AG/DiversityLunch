@@ -1,4 +1,4 @@
-package de.brockhausag.diversitylunchspringboot.dimensions.dtos.model;
+package de.brockhausag.diversitylunchspringboot.dimensions.dtos.model.BasicDimension;
 
 import de.brockhausag.diversitylunchspringboot.dimensions.dtos.SelectableOptionDto;
 

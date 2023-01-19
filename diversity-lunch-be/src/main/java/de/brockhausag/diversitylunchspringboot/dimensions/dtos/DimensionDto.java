@@ -1,4 +1,5 @@
 package de.brockhausag.diversitylunchspringboot.dimensions.dtos;
 
-public interface DimensionDto {
+
+public interface DimensionDto{
 }
