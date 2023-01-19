@@ -17,7 +17,7 @@ import { Role } from '../../../model/Role';
 import { AppStoreState } from '../../../data/app-store';
 import { Account } from '../../../model/Account';
 import { LoadingAnimation } from '../loading-animation/loading-animation';
-import iconClose from '../../../resources/icons/icon-close.svg';
+import iconMenu from '../../../resources/icons/icon-menu.svg';
 
 export const Navbar = () => {
     const [sidebar, setSidebar] = useState(false);
@@ -44,15 +44,11 @@ export const Navbar = () => {
                     <div>
                         <div className="navbar-mobile">
                             <div className="navbar">
-                                <Link to="/#" className="menu-bars">
-                                    <button onClick={showSidebar} className="row">
-                                        <div className="hamburg">
-                                            <span className="line" />
-                                            <span className="line" />
-                                            <span className="line" />
-                                        </div>
-                                    </button>
-                                </Link>
+                                <div className="hamburg">
+                                    <Link to="/#" className="menu-bars" onClick={showSidebar}>
+                                        <img alt="icon menu" className="icon-menu" src={iconMenu} />
+                                    </Link>
+                                </div>
                                 <CloseSite />
                             </div>
                             <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>

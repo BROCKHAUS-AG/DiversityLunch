@@ -30,10 +30,14 @@
 .hamburg {
   display: block;
   position: relative;
-  margin-left: auto;
-  margin-right: auto;
   border-radius: 4px;
-  top: -70px;
+  top: -60px;
+  left: -1.5rem;
+}
+
+.icon-menu {
+  width: 3.5rem;
+  height: 3.5rem;
 }
 
 .line {
