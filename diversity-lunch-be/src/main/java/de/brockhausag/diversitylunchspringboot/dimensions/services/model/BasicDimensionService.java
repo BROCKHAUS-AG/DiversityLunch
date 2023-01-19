@@ -10,8 +10,10 @@ import de.brockhausag.diversitylunchspringboot.dimensions.services.DimensionServ
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -40,13 +42,23 @@ public class BasicDimensionService implements DimensionService<
     }
 
     @Override
-    public BasicDimensionSelectableOption addSelectableOption(BasicDimensionSelectableOption option) {
-         return selectableRepository.save(option);
+    public boolean addSelectableOption(BasicDimensionSelectableOption option) {
+        try {
+            selectableRepository.save(option);
+            return true;
+        } catch (DataIntegrityViolationException | ConstraintViolationException ex) {
+            return false;
+        }
     }
 
     @Override
-    public BasicDimensionSelectableOption updateSelectableOption(BasicDimensionSelectableOption option) {
-        return selectableRepository.save(option);
+    public boolean updateSelectableOption(BasicDimensionSelectableOption option) {
+        if (selectableRepository.findById(option.getId()).isEmpty()) {
+            return false;
+        } else {
+            selectableRepository.save(option);
+            return true;
+        }
     }
 
     @Override

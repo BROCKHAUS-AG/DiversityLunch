@@ -10,8 +10,10 @@ import de.brockhausag.diversitylunchspringboot.dimensions.services.DimensionServ
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -37,8 +39,13 @@ public class MultiselectDimensionService implements DimensionService<Multiselect
     }
 
     @Override
-    public MultiselectDimensionSelectableOption addSelectableOption(MultiselectDimensionSelectableOption option) {
-        return selectableRepository.save(option);
+    public boolean addSelectableOption(MultiselectDimensionSelectableOption option) {
+        try {
+            selectableRepository.save(option);
+            return true;
+        } catch (DataIntegrityViolationException | ConstraintViolationException ex) {
+            return false;
+        }
     }
 
     @Override
@@ -59,8 +66,17 @@ public class MultiselectDimensionService implements DimensionService<Multiselect
     }
 
     @Override
-    public MultiselectDimensionSelectableOption updateSelectableOption(MultiselectDimensionSelectableOption option) {
-        return selectableRepository.save(option);
+    public boolean updateSelectableOption(MultiselectDimensionSelectableOption option) {
+        try {
+            if (selectableRepository.findById(option.getId()).isEmpty()) {
+                return false;
+            } else {
+                selectableRepository.save(option);
+                return true;
+            }
+        } catch (DataIntegrityViolationException | ConstraintViolationException ex) {
+            return false;
+        }
     }
 
     @Override

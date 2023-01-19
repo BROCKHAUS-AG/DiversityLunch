@@ -10,8 +10,10 @@ import de.brockhausag.diversitylunchspringboot.dimensions.services.DimensionServ
 import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -37,13 +39,23 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
     }
 
     @Override
-    public WeightedDimensionSelectableOption addSelectableOption(WeightedDimensionSelectableOption option) {
-        return selectableRepository.save(option);
+    public boolean addSelectableOption(WeightedDimensionSelectableOption option) {
+        try {
+            selectableRepository.save(option);
+            return true;
+        } catch (DataIntegrityViolationException | ConstraintViolationException ex) {
+            return false;
+        }
     }
 
     @Override
-    public WeightedDimensionSelectableOption updateSelectableOption(WeightedDimensionSelectableOption option) {
-        return selectableRepository.save(option);
+    public boolean updateSelectableOption(WeightedDimensionSelectableOption option) {
+        if (selectableRepository.findById(option.getId()).isEmpty()) {
+            return false;
+        } else {
+            selectableRepository.save(option);
+            return true;
+        }
     }
 
     @Override

@@ -52,18 +52,22 @@ public class DimensionModelController<DtoType,
     @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).PROFILE_OPTION_WRITE)")
     public ResponseEntity<DtoType> postOne(@RequestBody DtoType dto) {
         Selectable selectable = mapper.dtoToEntity(dto);
-        service.addSelectableOption(selectable);
-        return ResponseEntity.ok(mapper.entityToDto((selectable)));
+        if (service.addSelectableOption(selectable)) {
+            return ResponseEntity.ok(mapper.entityToDto((selectable)));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("/")
     @PreAuthorize("hasAccountPermission(T(de.brockhausag.diversitylunchspringboot.security.AccountPermission).PROFILE_OPTION_WRITE)")
     public ResponseEntity<DtoType> putOne(@RequestBody DtoType dto) {
         Selectable selectable = mapper.dtoToEntity(dto);
-
-        service.updateSelectableOption(selectable);
-
-        return ResponseEntity.ok(mapper.entityToDto((selectable)));
+        if (service.updateSelectableOption(selectable)) {
+            return ResponseEntity.ok(mapper.entityToDto((selectable)));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @DeleteMapping("/{id}")

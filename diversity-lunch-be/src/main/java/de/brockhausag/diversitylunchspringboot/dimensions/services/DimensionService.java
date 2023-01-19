@@ -17,11 +17,11 @@ public interface DimensionService<
 
     List<DimensionType> getAllDimensions();
 
-    Selectable addSelectableOption(Selectable option);
+    boolean addSelectableOption(Selectable option);
 
     boolean deleteSelectableOptionById(Long selectableOptionId);
 
-    Selectable updateSelectableOption(Selectable option);
+    boolean updateSelectableOption(Selectable option);
 
     List<Selectable> getSelectableOptions(DimensionType dimension);
 

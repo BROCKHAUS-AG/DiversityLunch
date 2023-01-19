@@ -1,8 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.dimensions.repositories;
 
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.SelectableOptions;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimension;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
