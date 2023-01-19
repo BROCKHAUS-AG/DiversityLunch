@@ -76,11 +76,11 @@ export const Navbar = () => {
                                 <ul className="nav-menu-items">
                                     <div className="header">
                                         <div className="flex-container">
-                                            {isAdmin && (
-                                                <li className="navbar-toggle">
+                                            <li className="navbar-toggle">
+                                                {isAdmin && (
                                                     <AdminPanelIcon />
-                                                </li>
-                                            )}
+                                                )}
+                                            </li>
                                             <li className="navbar-toggle">
                                                 <UserVoucherIcon />
                                             </li>

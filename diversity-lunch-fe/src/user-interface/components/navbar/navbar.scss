@@ -164,7 +164,7 @@
 
 .navbar-toggle {
   background-color: var(--navBg);
-  width: 100%;
+  min-width: 60px;
   height: 80px;
   display: flex;
   justify-content: flex-start;
