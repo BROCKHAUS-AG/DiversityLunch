@@ -1,9 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.dimensions.services.model;
 
 import com.google.common.collect.Lists;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimension;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.*;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.WeightedDimensionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.WeightedDimensionSelectableOptionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.DimensionService;
@@ -15,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolationException;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -24,8 +23,8 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
     private final WeightedDimensionSelectableOptionRepository selectableRepository;
     private final ProfileService profileService;
 
-    public WeightedDimension getDimension(DimensionCategory category) {
-        return repository.getByDimensionCategory(category);
+    public Optional<WeightedDimension> getDimension(DimensionCategory category) {
+        return repository.findByDimensionCategory(category);
     }
 
     @Override
@@ -34,8 +33,8 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
     }
 
     @Override
-    public WeightedDimension getDimension(String categoryDescription) {
-        return repository.getByDimensionCategory_Description(categoryDescription);
+    public Optional<WeightedDimension> getDimension(String categoryDescription) {
+        return repository.findByDimensionCategory_Description(categoryDescription);
     }
 
     @Override
@@ -60,49 +59,71 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
 
     @Override
     public List<WeightedDimensionSelectableOption> getSelectableOptions(WeightedDimension dimension) {
-        return selectableRepository.getByDimensionCategory_Id(dimension.getDimensionCategory().getId());
+        return selectableRepository.getByDimensionCategory(dimension.getDimensionCategory());
     }
 
     @Override
-    public WeightedDimensionSelectableOption getSelectableOption(WeightedDimension dimension, String optionName) {
-        return selectableRepository.getByDimensionCategory_IdAndValue(dimension.getDimensionCategory().getId(), optionName);
+    public Optional<WeightedDimensionSelectableOption> getSelectableOption(WeightedDimension dimension, String optionName) {
+        return selectableRepository.findByDimensionCategoryAndValue(dimension.getDimensionCategory(), optionName);
     }
 
     @Override
     public boolean deleteSelectableOptionById(Long selectableOptionId) {
-        if (!selectableRepository.existsById(selectableOptionId)) {
+        var selectableOptionOptional = selectableRepository.findById(selectableOptionId);
+        if (selectableOptionOptional.isEmpty()) {
             return false;
         }
-        WeightedDimensionSelectableOption option = selectableRepository.getById(selectableOptionId);
-        WeightedDimension dimension = getDimension(option.getDimensionCategory());
-        WeightedDimensionSelectableOption defaultOption = dimension.getDefaultValue();
-        if (option == defaultOption) {
-            return false;
+
+        boolean result = false;
+        WeightedDimensionSelectableOption option = selectableOptionOptional.get();
+        WeightedDimensionSelectableOption defaultOption = getDefaultOption(option);
+
+        if (option != defaultOption) {
+            resetProfileOption(option, defaultOption);
+            result = deleteOption(option);
         }
-        List<ProfileEntity> affectedProfiles = profileService.getAllProfilesWithSelectedWeightedOption(option);
+        return result;
+    }
+
+    @Override
+    public List<WeightedDimensionSelectableOption> getSelectableOptionsByCategory(DimensionCategory categoryId) {
+        return selectableRepository.getByDimensionCategory(categoryId);
+    }
+
+    @Override
+    public Optional<DimensionCategory> getDimensionCategoryByDescription(String categoryDescription) {
+        var dimension = repository.findByDimensionCategory_Description(categoryDescription);
+        if (dimension.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(dimension.get().getDimensionCategory());
+    }
+
+    @Override
+    public Optional<WeightedDimensionSelectableOption> getSelectableOptionById(Long selectableOptionId) {
+        return selectableRepository.findById(selectableOptionId);
+    }
+
+    /* Returns the default option of the same category as the given option.
+     * Requires existing selectable Option.
+     * */
+    private WeightedDimensionSelectableOption getDefaultOption(WeightedDimensionSelectableOption selectableOption) {
+        WeightedDimension dimension = getDimension(selectableOption.getDimensionCategory()).get();
+        return dimension.getDefaultValue();
+    }
+
+    private void resetProfileOption(WeightedDimensionSelectableOption currentOption, WeightedDimensionSelectableOption targetOption) {
+        WeightedDimension dimension = getDimension(currentOption.getDimensionCategory()).get();
+        List<ProfileEntity> affectedProfiles = profileService.getAllProfilesWithSelectedWeightedOption(currentOption);
         affectedProfiles.forEach(profile -> {
-            profile.getSelectedWeightedValues().replace(dimension, defaultOption);
+            profile.getSelectedWeightedValues().replace(dimension, targetOption);
             profile.setWasChangedByAdmin(true);
             profileService.updateProfile(profile);
         });
-        selectableRepository.deleteById(selectableOptionId);
-        return !selectableRepository.existsById(selectableOptionId);
     }
 
-    @Override
-    public List<WeightedDimensionSelectableOption> getSelectableOptionsOfCategory(Long categoryId) {
-        return selectableRepository.getByDimensionCategory_Id(categoryId);
+    private boolean deleteOption(WeightedDimensionSelectableOption selectableOption) {
+        selectableRepository.deleteById(selectableOption.getId());
+        return !selectableRepository.existsById(selectableOption.getId());
     }
-
-    @Override
-    public Long getDimensionCategoryIdByDescription(String categoryDescription) {
-        var dimension = repository.getByDimensionCategory_Description(categoryDescription);
-        return dimension.getDimensionCategory().getId();
-    }
-
-    @Override
-    public WeightedDimensionSelectableOption getSelectableOptionById(Long selectableOptionId) {
-        return selectableRepository.getById(selectableOptionId);
-    }
-
 }

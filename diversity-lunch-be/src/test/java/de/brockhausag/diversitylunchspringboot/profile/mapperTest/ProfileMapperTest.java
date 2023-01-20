@@ -23,6 +23,7 @@ import org.mockito.quality.Strictness;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -153,46 +154,46 @@ class ProfileMapperTest {
     }
     
     void serviceGetDimensionMock() {
-        when(basicDimensionService.getDimension("Projekt")).thenReturn(basicDimensionTestDataFactory.buildEntity(1));
-        when(basicDimensionService.getDimension("Geschlechtliche Identität")).thenReturn(basicDimensionTestDataFactory.buildEntity(2));
-        when(basicDimensionService.getDimension("Ethnische Herkunft")).thenReturn(basicDimensionTestDataFactory.buildEntity(3));
-        when(basicDimensionService.getDimension("Religion")).thenReturn(basicDimensionTestDataFactory.buildEntity(4));
-        when(basicDimensionService.getDimension("Muttersprache")).thenReturn(basicDimensionTestDataFactory.buildEntity(5));
-        when(basicDimensionService.getDimension("Bildungsweg")).thenReturn(basicDimensionTestDataFactory.buildEntity(6));
-        when(basicDimensionService.getDimension("Ernährung")).thenReturn(basicDimensionTestDataFactory.buildEntity(7));
-        when(basicDimensionService.getDimension("Soziale Herkunft")).thenReturn(basicDimensionTestDataFactory.buildEntity(8));
-        when(basicDimensionService.getDimension("Diskriminierung aufgrund sozialer Herkunft")).thenReturn(basicDimensionTestDataFactory.buildEntity(9));
-        when(basicDimensionService.getDimension("Sexuelle Orientierung")).thenReturn(basicDimensionTestDataFactory.buildEntity(10));
+        when(basicDimensionService.getDimension("Projekt")).thenReturn(Optional.of(basicDimensionTestDataFactory.buildEntity(1)));
+        when(basicDimensionService.getDimension("Geschlechtliche Identität")).thenReturn(Optional.of(basicDimensionTestDataFactory.buildEntity(2)));
+        when(basicDimensionService.getDimension("Ethnische Herkunft")).thenReturn(Optional.of(basicDimensionTestDataFactory.buildEntity(3)));
+        when(basicDimensionService.getDimension("Religion")).thenReturn(Optional.of(basicDimensionTestDataFactory.buildEntity(4)));
+        when(basicDimensionService.getDimension("Muttersprache")).thenReturn(Optional.of(basicDimensionTestDataFactory.buildEntity(5)));
+        when(basicDimensionService.getDimension("Bildungsweg")).thenReturn(Optional.of(basicDimensionTestDataFactory.buildEntity(6)));
+        when(basicDimensionService.getDimension("Ernährung")).thenReturn(Optional.of(basicDimensionTestDataFactory.buildEntity(7)));
+        when(basicDimensionService.getDimension("Soziale Herkunft")).thenReturn(Optional.of(basicDimensionTestDataFactory.buildEntity(8)));
+        when(basicDimensionService.getDimension("Diskriminierung aufgrund sozialer Herkunft")).thenReturn(Optional.of(basicDimensionTestDataFactory.buildEntity(9)));
+        when(basicDimensionService.getDimension("Sexuelle Orientierung")).thenReturn(Optional.of(basicDimensionTestDataFactory.buildEntity(10)));
 
-        when(weightedDimService.getDimension("Berufserfahrung")).thenReturn(weightedDimensionTestDataFactory.buildEntity(1));
+        when(weightedDimService.getDimension("Berufserfahrung")).thenReturn(Optional.of(weightedDimensionTestDataFactory.buildEntity(1)));
 
-        when(multiselectDimService.getDimension("Hobby")).thenReturn(multiselectDimensionTestDataFactory.buildEntity(1));
+        when(multiselectDimService.getDimension("Hobby")).thenReturn(Optional.of(multiselectDimensionTestDataFactory.buildEntity(1)));
     }
 
     void serviceGetSelectableOptionMock(ProfileDto dto, ProfileEntity entity) {
         when(basicDimensionService.getSelectableOptionById(dto.getProject().getId()))
-                .thenReturn(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(1)));
+                .thenReturn(Optional.of(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(1))));
         when(basicDimensionService.getSelectableOptionById(dto.getGender().getId()))
-                .thenReturn(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(2)));
+                .thenReturn(Optional.of(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(2))));
         when(basicDimensionService.getSelectableOptionById(dto.getOriginCountry().getId()))
-                .thenReturn(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(3)));
+                .thenReturn(Optional.of(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(3))));
         when(basicDimensionService.getSelectableOptionById(dto.getReligion().getId()))
-                .thenReturn(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(4)));
+                .thenReturn(Optional.of(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(4))));
         when(basicDimensionService.getSelectableOptionById(dto.getMotherTongue().getId()))
-                .thenReturn(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(5)));
+                .thenReturn(Optional.of(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(5))));
         when(basicDimensionService.getSelectableOptionById(dto.getEducation().getId()))
-                .thenReturn(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(6)));
+                .thenReturn(Optional.of(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(6))));
         when(basicDimensionService.getSelectableOptionById(dto.getDiet().getId()))
-                .thenReturn(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(7)));
+                .thenReturn(Optional.of(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(7))));
         when(basicDimensionService.getSelectableOptionById(dto.getSocialBackground().getId()))
-                .thenReturn(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(8)));
+                .thenReturn(Optional.of(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(8))));
         when(basicDimensionService.getSelectableOptionById(dto.getSocialBackgroundDiscrimination().getId()))
-                .thenReturn(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(9)));
+                .thenReturn(Optional.of(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(9))));
         when(basicDimensionService.getSelectableOptionById(dto.getSexualOrientation().getId()))
-                .thenReturn(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(10)));
+                .thenReturn(Optional.of(entity.getSelectedBasicValues().get(basicDimensionTestDataFactory.buildEntity(10))));
 
         when(weightedDimService.getSelectableOptionById(dto.getWorkExperience().getId()))
-                .thenReturn(entity.getSelectedWeightedValues().get(weightedDimensionTestDataFactory.buildEntity(1)));
+                .thenReturn(Optional.of(entity.getSelectedWeightedValues().get(weightedDimensionTestDataFactory.buildEntity(1))));
 
         when(multiselectDimService.getSelectableOptions(dto.getHobby().stream().map(HobbyDto::getId).collect(Collectors.toList())))
                 .thenReturn(entity.getSelectedMultiselectValues().get(multiselectDimensionTestDataFactory.buildEntity(1)).getSelectedOptions().stream().toList());

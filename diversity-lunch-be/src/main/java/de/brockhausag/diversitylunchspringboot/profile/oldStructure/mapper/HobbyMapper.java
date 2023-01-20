@@ -26,7 +26,7 @@ public class HobbyMapper implements DimensionMapper<HobbyDto, MultiselectDimensi
         return MultiselectDimensionSelectableOption.builder()
                 .id(dto.getId())
                 .value(dto.getDescriptor())
-                .dimensionCategory(dimensionService.getDimension("Hobby").getDimensionCategory())
+                .dimensionCategory(dimensionService.getDimension("Hobby").get().getDimensionCategory())
                 .build();
     }
 }

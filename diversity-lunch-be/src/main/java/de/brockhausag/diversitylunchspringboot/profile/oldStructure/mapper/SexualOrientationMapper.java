@@ -27,7 +27,7 @@ public class SexualOrientationMapper implements DimensionMapper<SexualOrientatio
                 .id(dto.getId())
                 .value(dto.getDescriptor())
                 .ignoreInScoring(false)
-                .dimensionCategory(dimensionService.getDimension("Sexuelle Orientierung").getDimensionCategory())
+                .dimensionCategory(dimensionService.getDimension("Sexuelle Orientierung").get().getDimensionCategory())
                 .build();
     }
 }

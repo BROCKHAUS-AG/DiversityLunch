@@ -27,7 +27,7 @@ public class SocialBackgroundMapper implements DimensionMapper<SocialBackgroundD
                 .id(dto.getId())
                 .value(dto.getDescriptor())
                 .ignoreInScoring(false)
-                .dimensionCategory(dimensionService.getDimension("Soziale Herkunft").getDimensionCategory())
+                .dimensionCategory(dimensionService.getDimension("Soziale Herkunft").get().getDimensionCategory())
                 .build();
     }
 }

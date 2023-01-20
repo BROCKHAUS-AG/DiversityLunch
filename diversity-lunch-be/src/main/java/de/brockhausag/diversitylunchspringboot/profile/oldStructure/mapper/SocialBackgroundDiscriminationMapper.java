@@ -27,7 +27,7 @@ public class SocialBackgroundDiscriminationMapper implements DimensionMapper<Soc
                 .id(dto.getId())
                 .value(dto.getDescriptor())
                 .ignoreInScoring(false)
-                .dimensionCategory(dimensionService.getDimension("Diskriminierung aufgrund sozialer Herkunft").getDimensionCategory())
+                .dimensionCategory(dimensionService.getDimension("Diskriminierung aufgrund sozialer Herkunft").get().getDimensionCategory())
                 .build();
     }
 }

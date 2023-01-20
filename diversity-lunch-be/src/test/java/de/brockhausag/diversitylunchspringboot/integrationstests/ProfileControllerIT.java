@@ -102,20 +102,20 @@ class ProfileControllerIT {
                 .andExpect(jsonPath("$.name").value(myProfileEntity.getName()))
                 .andExpect(jsonPath("$.email").value(myProfileEntity.getEmail()))
                 .andExpect(jsonPath("$.birthYear").value(myProfileEntity.getBirthYear()))
-                .andExpect(jsonPath("$.project.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Projekt")).getValue()))
-                .andExpect(jsonPath("$.diet.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Ernährung")).getValue()))
-                .andExpect(jsonPath("$.education.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Bildungsweg")).getValue()))
-                .andExpect(jsonPath("$.gender.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Geschlechtliche Identität")).getValue()))
+                .andExpect(jsonPath("$.project.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Projekt").get()).getValue()))
+                .andExpect(jsonPath("$.diet.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Ernährung").get()).getValue()))
+                .andExpect(jsonPath("$.education.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Bildungsweg").get()).getValue()))
+                .andExpect(jsonPath("$.gender.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Geschlechtliche Identität").get()).getValue()))
                 .andExpect(jsonPath("$.hobby[0].descriptor").value(getSelectedMultiselect("Hobby", 0).getValue()))
                 .andExpect(jsonPath("$.hobby[1].descriptor").value(getSelectedMultiselect("Hobby", 1).getValue()))
                 .andExpect(jsonPath("$.hobby[2].descriptor").value(getSelectedMultiselect("Hobby", 2).getValue()))
-                .andExpect(jsonPath("$.motherTongue.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Muttersprache")).getValue()))
-                .andExpect(jsonPath("$.originCountry.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Ethnische Herkunft")).getValue()))
-                .andExpect(jsonPath("$.religion.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Religion")).getValue()))
-                .andExpect(jsonPath("$.sexualOrientation.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Sexuelle Orientierung")).getValue()))
-                .andExpect(jsonPath("$.socialBackground.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Soziale Herkunft")).getValue()))
-                .andExpect(jsonPath("$.socialBackgroundDiscrimination.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Diskriminierung aufgrund sozialer Herkunft")).getValue()))
-                .andExpect(jsonPath("$.workExperience.descriptor").value(myProfileEntity.getSelectedWeightedValues().get(weightedDimensionService.getDimension("Berufserfahrung")).getValue()));
+                .andExpect(jsonPath("$.motherTongue.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Muttersprache").get()).getValue()))
+                .andExpect(jsonPath("$.originCountry.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Ethnische Herkunft").get()).getValue()))
+                .andExpect(jsonPath("$.religion.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Religion").get()).getValue()))
+                .andExpect(jsonPath("$.sexualOrientation.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Sexuelle Orientierung").get()).getValue()))
+                .andExpect(jsonPath("$.socialBackground.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Soziale Herkunft").get()).getValue()))
+                .andExpect(jsonPath("$.socialBackgroundDiscrimination.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Diskriminierung aufgrund sozialer Herkunft").get()).getValue()))
+                .andExpect(jsonPath("$.workExperience.descriptor").value(myProfileEntity.getSelectedWeightedValues().get(weightedDimensionService.getDimension("Berufserfahrung").get()).getValue()));
     }
 
     @Test
@@ -178,7 +178,7 @@ class ProfileControllerIT {
     }
 
     MultiselectDimensionSelectableOption getSelectedMultiselect(String dimensionName, int selected) {
-        var options = myProfileEntity.getSelectedMultiselectValues().get(multiselectDimensionService.getDimension(dimensionName)).getSelectedOptions().iterator();
+        var options = myProfileEntity.getSelectedMultiselectValues().get(multiselectDimensionService.getDimension(dimensionName).get()).getSelectedOptions().iterator();
         MultiselectDimensionSelectableOption result = options.next();
         while(selected-- > 0 && options.hasNext()) {
             result = options.next();

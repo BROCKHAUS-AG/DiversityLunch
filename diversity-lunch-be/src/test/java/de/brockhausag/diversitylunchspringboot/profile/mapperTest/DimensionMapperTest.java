@@ -16,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -478,19 +479,19 @@ public class DimensionMapperTest {
     }
 
     void serviceGetDimensionMock() {
-        when(basicDimensionService.getDimension("Projekt")).thenReturn(basicDimensionTestDataFactory.buildEntity(1));
-        when(basicDimensionService.getDimension("Geschlechtliche Identität")).thenReturn(basicDimensionTestDataFactory.buildEntity(2));
-        when(basicDimensionService.getDimension("Ethnische Herkunft")).thenReturn(basicDimensionTestDataFactory.buildEntity(3));
-        when(basicDimensionService.getDimension("Religion")).thenReturn(basicDimensionTestDataFactory.buildEntity(4));
-        when(basicDimensionService.getDimension("Muttersprache")).thenReturn(basicDimensionTestDataFactory.buildEntity(5));
-        when(basicDimensionService.getDimension("Bildungsweg")).thenReturn(basicDimensionTestDataFactory.buildEntity(6));
-        when(basicDimensionService.getDimension("Ernährung")).thenReturn(basicDimensionTestDataFactory.buildEntity(7));
-        when(basicDimensionService.getDimension("Soziale Herkunft")).thenReturn(basicDimensionTestDataFactory.buildEntity(8));
-        when(basicDimensionService.getDimension("Diskriminierung aufgrund sozialer Herkunft")).thenReturn(basicDimensionTestDataFactory.buildEntity(9));
-        when(basicDimensionService.getDimension("Sexuelle Orientierung")).thenReturn(basicDimensionTestDataFactory.buildEntity(10));
+        when(basicDimensionService.getDimension("Projekt")).thenReturn(Optional.of(basicDimensionTestDataFactory.buildEntity(1)));
+        when(basicDimensionService.getDimension("Geschlechtliche Identität")).thenReturn(Optional.of(basicDimensionTestDataFactory.buildEntity(2)));
+        when(basicDimensionService.getDimension("Ethnische Herkunft")).thenReturn(Optional.of(basicDimensionTestDataFactory.buildEntity(3)));
+        when(basicDimensionService.getDimension("Religion")).thenReturn(Optional.of(basicDimensionTestDataFactory.buildEntity(4)));
+        when(basicDimensionService.getDimension("Muttersprache")).thenReturn(Optional.of(basicDimensionTestDataFactory.buildEntity(5)));
+        when(basicDimensionService.getDimension("Bildungsweg")).thenReturn(Optional.of(basicDimensionTestDataFactory.buildEntity(6)));
+        when(basicDimensionService.getDimension("Ernährung")).thenReturn(Optional.of(basicDimensionTestDataFactory.buildEntity(7)));
+        when(basicDimensionService.getDimension("Soziale Herkunft")).thenReturn(Optional.of(basicDimensionTestDataFactory.buildEntity(8)));
+        when(basicDimensionService.getDimension("Diskriminierung aufgrund sozialer Herkunft")).thenReturn(Optional.of(basicDimensionTestDataFactory.buildEntity(9)));
+        when(basicDimensionService.getDimension("Sexuelle Orientierung")).thenReturn(Optional.of(basicDimensionTestDataFactory.buildEntity(10)));
 
-        when(weightedDimensionService.getDimension("Berufserfahrung")).thenReturn(weightedDimensionTestDataFactory.buildEntity(1));
+        when(weightedDimensionService.getDimension("Berufserfahrung")).thenReturn(Optional.of(weightedDimensionTestDataFactory.buildEntity(1)));
 
-        when(multiselectDimensionService.getDimension("Hobby")).thenReturn(multiselectDimensionTestDataFactory.buildEntity(1));
+        when(multiselectDimensionService.getDimension("Hobby")).thenReturn(Optional.of(multiselectDimensionTestDataFactory.buildEntity(1)));
     }
 }

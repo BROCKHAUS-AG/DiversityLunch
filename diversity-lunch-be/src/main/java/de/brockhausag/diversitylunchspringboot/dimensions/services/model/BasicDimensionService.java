@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolationException;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -27,8 +28,8 @@ public class BasicDimensionService implements DimensionService<
     private final BasicDimensionSelectableOptionRepository selectableRepository;
     private final ProfileService profileService;
 
-    public BasicDimension getDimension(DimensionCategory category) {
-        return repository.getByDimensionCategory(category);
+    public Optional<BasicDimension> getDimension(DimensionCategory category) {
+        return repository.findByDimensionCategory(category);
     }
 
     @Override
@@ -37,8 +38,8 @@ public class BasicDimensionService implements DimensionService<
     }
 
     @Override
-    public BasicDimension getDimension(String categoryDescription) {
-        return repository.getByDimensionCategory_Description(categoryDescription);
+    public Optional<BasicDimension> getDimension(String categoryDescription) {
+        return repository.findByDimensionCategory_Description(categoryDescription);
     }
 
     @Override
@@ -63,48 +64,71 @@ public class BasicDimensionService implements DimensionService<
 
     @Override
     public List<BasicDimensionSelectableOption> getSelectableOptions(BasicDimension dimension) {
-        return selectableRepository.getByDimensionCategory_Id(dimension.getDimensionCategory().getId());
+        return selectableRepository.getByDimensionCategory(dimension.getDimensionCategory());
     }
 
     @Override
-    public BasicDimensionSelectableOption getSelectableOption(BasicDimension dimension, String optionName) {
-        return selectableRepository.getByDimensionCategory_IdAndValue(dimension.getDimensionCategory().getId(), optionName);
+    public Optional<BasicDimensionSelectableOption> getSelectableOption(BasicDimension dimension, String optionName) {
+        return selectableRepository.findByDimensionCategoryAndValue(dimension.getDimensionCategory(), optionName);
     }
 
     @Override
     public boolean deleteSelectableOptionById(Long selectableOptionId) {
-        if (!selectableRepository.existsById(selectableOptionId)) {
+        var selectableOptionOptional = selectableRepository.findById(selectableOptionId);
+        if (selectableOptionOptional.isEmpty()) {
             return false;
         }
-        BasicDimensionSelectableOption option = selectableRepository.getById(selectableOptionId);
-        BasicDimension dimension = getDimension(option.getDimensionCategory());
-        BasicDimensionSelectableOption defaultOption = dimension.getDefaultValue();
-        if (option == defaultOption) {
-            return false;
+
+        boolean result = false;
+        BasicDimensionSelectableOption option = selectableOptionOptional.get();
+        BasicDimensionSelectableOption defaultOption = getDefaultOption(option);
+
+        if (option != defaultOption) {
+            resetProfileOption(option, defaultOption);
+            result = deleteOption(option);
         }
-        List<ProfileEntity> affectedProfiles = profileService.getAllProfilesWithSelectedBasicOption(option);
+        return result;
+    }
+
+    @Override
+    public List<BasicDimensionSelectableOption> getSelectableOptionsByCategory(DimensionCategory category) {
+        return selectableRepository.getByDimensionCategory(category);
+    }
+
+    @Override
+    public Optional<DimensionCategory> getDimensionCategoryByDescription(String categoryDescription) {
+        var dimension = repository.findByDimensionCategory_Description(categoryDescription);
+        if (dimension.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(dimension.get().getDimensionCategory());
+    }
+
+    @Override
+    public Optional<BasicDimensionSelectableOption> getSelectableOptionById(Long selectableOptionId) {
+        return selectableRepository.findById(selectableOptionId);
+    }
+
+    /* Returns the default option of the same category as the given option.
+     * Requires existing selectable Option.
+     * */
+    private BasicDimensionSelectableOption getDefaultOption(BasicDimensionSelectableOption selectableOption) {
+        BasicDimension dimension = getDimension(selectableOption.getDimensionCategory()).get();
+        return dimension.getDefaultValue();
+    }
+
+    private void resetProfileOption(BasicDimensionSelectableOption currentOption, BasicDimensionSelectableOption targetOption) {
+        BasicDimension dimension = getDimension(currentOption.getDimensionCategory()).get();
+        List<ProfileEntity> affectedProfiles = profileService.getAllProfilesWithSelectedBasicOption(currentOption);
         affectedProfiles.forEach(profile -> {
-            profile.getSelectedBasicValues().replace(dimension, defaultOption);
+            profile.getSelectedBasicValues().replace(dimension, targetOption);
             profile.setWasChangedByAdmin(true);
             profileService.updateProfile(profile);
         });
-        selectableRepository.deleteById(selectableOptionId);
-        return !selectableRepository.existsById(selectableOptionId);
     }
 
-    @Override
-    public List<BasicDimensionSelectableOption> getSelectableOptionsOfCategory(Long categoryId) {
-        return selectableRepository.getByDimensionCategory_Id(categoryId);
-    }
-
-    @Override
-    public Long getDimensionCategoryIdByDescription(String categoryDescription) {
-        var dimension = repository.getByDimensionCategory_Description(categoryDescription);
-        return dimension.getDimensionCategory().getId();
-    }
-
-    @Override
-    public BasicDimensionSelectableOption getSelectableOptionById(Long selectableOptionId) {
-        return selectableRepository.getById(selectableOptionId);
+    private boolean deleteOption(BasicDimensionSelectableOption selectableOption) {
+        selectableRepository.deleteById(selectableOption.getId());
+        return !selectableRepository.existsById(selectableOption.getId());
     }
 }

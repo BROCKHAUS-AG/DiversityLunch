@@ -27,7 +27,7 @@ public class GenderMapper implements DimensionMapper<GenderDto, BasicDimensionSe
                 .id(dto.getId())
                 .value(dto.getDescriptor())
                 .ignoreInScoring(false)
-                .dimensionCategory(dimensionService.getDimension("Geschlechtliche Identität").getDimensionCategory())
+                .dimensionCategory(dimensionService.getDimension("Geschlechtliche Identität").get().getDimensionCategory())
                 .build();
     }
 }

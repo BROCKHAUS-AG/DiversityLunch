@@ -1,9 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.dimensions.services.model;
 
 import com.google.common.collect.Lists;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimension;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.*;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.MultiselectDimensionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.MultiselectDimensionSelectableOptionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.DimensionService;
@@ -15,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolationException;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -24,13 +23,13 @@ public class MultiselectDimensionService implements DimensionService<Multiselect
     private final ProfileService profileService;
 
     @Override
-    public MultiselectDimension getDimension(String categoryDescription) {
-        return repository.getByDimensionCategory_Description(categoryDescription);
+    public Optional<MultiselectDimension> getDimension(String categoryDescription) {
+        return repository.findByDimensionCategory_Description(categoryDescription);
     }
 
     @Override
-    public MultiselectDimension getDimension(DimensionCategory category) {
-        return repository.getByDimensionCategory(category);
+    public Optional<MultiselectDimension> getDimension(DimensionCategory category) {
+        return repository.findByDimensionCategory(category);
     }
 
     @Override
@@ -50,19 +49,15 @@ public class MultiselectDimensionService implements DimensionService<Multiselect
 
     @Override
     public boolean deleteSelectableOptionById(Long selectableOptionId) {
-        if (!selectableRepository.existsById(selectableOptionId)) {
+        Optional<MultiselectDimensionSelectableOption> selectableOptionOptional = selectableRepository.findById(selectableOptionId);
+        if (selectableOptionOptional.isEmpty()) {
             return false;
         }
-        MultiselectDimensionSelectableOption option = selectableRepository.getById(selectableOptionId);
-        MultiselectDimension dimension = getDimension(option.getDimensionCategory());
-        List<ProfileEntity> affectedProfiles = profileService.getAllProfilesWithSelectedMultiselectOption(option);
-        affectedProfiles.forEach(profile -> {
-            profile.getSelectedMultiselectValues().get(dimension).getSelectedOptions().remove(option);
-            profile.setWasChangedByAdmin(true);
-            profileService.updateProfile(profile);
-        });
-        selectableRepository.deleteById(selectableOptionId);
-        return !selectableRepository.existsById(selectableOptionId);
+
+        MultiselectDimensionSelectableOption option = selectableOptionOptional.get();
+
+        removeOptionInProfile(option);
+        return deleteOption(option);
     }
 
     @Override
@@ -81,32 +76,49 @@ public class MultiselectDimensionService implements DimensionService<Multiselect
 
     @Override
     public List<MultiselectDimensionSelectableOption> getSelectableOptions(MultiselectDimension dimension) {
-        return selectableRepository.getByDimensionCategory_Id(dimension.getDimensionCategory().getId());
+        return selectableRepository.getByDimensionCategory(dimension.getDimensionCategory());
     }
 
     @Override
-    public MultiselectDimensionSelectableOption getSelectableOption(MultiselectDimension dimension, String optionName) {
-        return selectableRepository.getByDimensionCategory_IdAndValue(dimension.getDimensionCategory().getId(), optionName);
+    public Optional<MultiselectDimensionSelectableOption> getSelectableOption(MultiselectDimension dimension, String optionName) {
+        return selectableRepository.findByDimensionCategoryAndValue(dimension.getDimensionCategory(), optionName);
     }
 
     @Override
-    public List<MultiselectDimensionSelectableOption> getSelectableOptionsOfCategory(Long categoryId) {
-        return selectableRepository.getByDimensionCategory_Id(categoryId);
+    public List<MultiselectDimensionSelectableOption> getSelectableOptionsByCategory(DimensionCategory category) {
+        return selectableRepository.getByDimensionCategory(category);
     }
 
     @Override
-    public Long getDimensionCategoryIdByDescription(String categoryDescription) {
-
-        MultiselectDimension dimension =  repository.getByDimensionCategory_Description(categoryDescription);
-        return dimension.getDimensionCategory().getId();
+    public Optional<DimensionCategory> getDimensionCategoryByDescription(String categoryDescription) {
+        var dimension = repository.findByDimensionCategory_Description(categoryDescription);
+        if (dimension.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(dimension.get().getDimensionCategory());
     }
 
     @Override
-    public MultiselectDimensionSelectableOption getSelectableOptionById(Long selectableOptionId) {
-        return selectableRepository.getById(selectableOptionId);
+    public Optional<MultiselectDimensionSelectableOption> getSelectableOptionById(Long selectableOptionId) {
+        return selectableRepository.findById(selectableOptionId);
     }
 
     public List<MultiselectDimensionSelectableOption> getSelectableOptions(List<Long> ids) {
        return Lists.newArrayList(selectableRepository.findAllById(ids));
+    }
+
+    private void removeOptionInProfile(MultiselectDimensionSelectableOption selectableOption) {
+        MultiselectDimension dimension = getDimension(selectableOption.getDimensionCategory()).get();
+        List<ProfileEntity> affectedProfiles = profileService.getAllProfilesWithSelectedMultiselectOption(selectableOption);
+        affectedProfiles.forEach(profile -> {
+            profile.getSelectedMultiselectValues().get(dimension).getSelectedOptions().remove(selectableOption);
+            profile.setWasChangedByAdmin(true);
+            profileService.updateProfile(profile);
+        });
+    }
+
+    private boolean deleteOption(MultiselectDimensionSelectableOption selectableOption) {
+        selectableRepository.deleteById(selectableOption.getId());
+        return !selectableRepository.existsById(selectableOption.getId());
     }
 }

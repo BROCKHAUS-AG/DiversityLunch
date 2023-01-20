@@ -27,7 +27,7 @@ public class CountryMapper implements DimensionMapper<CountryDto, BasicDimension
                 .id(dto.getId())
                 .value(dto.getDescriptor())
                 .ignoreInScoring(false)
-                .dimensionCategory(dimensionService.getDimension("Ethnische Herkunft").getDimensionCategory())
+                .dimensionCategory(dimensionService.getDimension("Ethnische Herkunft").get().getDimensionCategory())
                 .build();
     }
 }

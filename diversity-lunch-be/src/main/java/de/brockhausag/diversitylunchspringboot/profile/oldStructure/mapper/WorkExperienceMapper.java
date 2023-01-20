@@ -27,7 +27,7 @@ public class WorkExperienceMapper implements DimensionMapper<WorkExperienceDto, 
                 .id(dto.getId())
                 .value(dto.getDescriptor())
                 .ignoreInScoring(false)
-                .dimensionCategory(dimensionService.getDimension("Berufserfahrung").getDimensionCategory())
+                .dimensionCategory(dimensionService.getDimension("Berufserfahrung").get().getDimensionCategory())
                 .build();
     }
 }

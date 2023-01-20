@@ -27,7 +27,7 @@ public class LanguageMapper implements DimensionMapper<LanguageDto, BasicDimensi
                 .id(dto.getId())
                 .value(dto.getDescriptor())
                 .ignoreInScoring(false)
-                .dimensionCategory(dimensionService.getDimension("Muttersprache").getDimensionCategory())
+                .dimensionCategory(dimensionService.getDimension("Muttersprache").get().getDimensionCategory())
                 .build();
     }
 }

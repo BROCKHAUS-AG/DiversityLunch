@@ -27,7 +27,7 @@ public class ReligionMapper implements DimensionMapper<ReligionDto, BasicDimensi
                 .id(dto.getId())
                 .value(dto.getDescriptor())
                 .ignoreInScoring(false)
-                .dimensionCategory(dimensionService.getDimension("Religion").getDimensionCategory())
+                .dimensionCategory(dimensionService.getDimension("Religion").get().getDimensionCategory())
                 .build();
     }
 }

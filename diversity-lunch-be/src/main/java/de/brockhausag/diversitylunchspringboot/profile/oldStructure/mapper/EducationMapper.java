@@ -27,7 +27,7 @@ public class EducationMapper implements DimensionMapper<EducationDto, BasicDimen
                 .id(dto.getId())
                 .value(dto.getDescriptor())
                 .ignoreInScoring(false)
-                .dimensionCategory(dimensionService.getDimension("Bildungsweg").getDimensionCategory())
+                .dimensionCategory(dimensionService.getDimension("Bildungsweg").get().getDimensionCategory())
                 .build();
     }
 }

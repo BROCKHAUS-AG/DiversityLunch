@@ -5,6 +5,7 @@ import de.brockhausag.diversitylunchspringboot.dimensions.entities.SelectableOpt
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface DimensionService<
         DimensionType extends Dimension<Selectable>,
@@ -12,8 +13,8 @@ public interface DimensionService<
 >
 {
 
-    DimensionType getDimension(String categoryDescription);
-    DimensionType getDimension(DimensionCategory category);
+    Optional<DimensionType> getDimension(String categoryDescription);
+    Optional<DimensionType> getDimension(DimensionCategory category);
 
     List<DimensionType> getAllDimensions();
 
@@ -25,11 +26,11 @@ public interface DimensionService<
 
     List<Selectable> getSelectableOptions(DimensionType dimension);
 
-    Selectable getSelectableOption(DimensionType dimension, String optionName);
+    Optional<Selectable> getSelectableOption(DimensionType dimension, String optionName);
 
-    List<Selectable> getSelectableOptionsOfCategory(Long categoryId);
+    List<Selectable> getSelectableOptionsByCategory(DimensionCategory categoryId);
 
-    Long getDimensionCategoryIdByDescription(String categoryDescription);
+    Optional<DimensionCategory> getDimensionCategoryByDescription(String categoryDescription);
 
-    Selectable getSelectableOptionById(Long selectableOptionId);
+    Optional<Selectable> getSelectableOptionById(Long selectableOptionId);
 }

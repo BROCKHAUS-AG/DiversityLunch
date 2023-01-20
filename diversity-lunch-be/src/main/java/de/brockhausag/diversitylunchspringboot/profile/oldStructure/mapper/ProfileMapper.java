@@ -39,18 +39,18 @@ public class ProfileMapper {
         dto.setName(entity.getName());
         dto.setEmail(entity.getEmail());
         dto.setBirthYear(entity.getBirthYear());
-        dto.setEducation(educationMapper.entityToDto(entity.getSelectedBasicValues().get(basicDimensionService.getDimension("Bildungsweg"))));
-        dto.setDiet(dietMapper.entityToDto(entity.getSelectedBasicValues().get(basicDimensionService.getDimension("Ernährung"))));
-        dto.setGender(genderMapper.entityToDto(entity.getSelectedBasicValues().get(basicDimensionService.getDimension("Geschlechtliche Identität"))));
-        dto.setHobby(hobbyMapper.entityToDto(List.copyOf(entity.getSelectedMultiselectValues().get(multiselectDimensionService.getDimension("Hobby")).getSelectedOptions())));
-        dto.setMotherTongue(languageMapper.entityToDto(entity.getSelectedBasicValues().get(basicDimensionService.getDimension("Muttersprache"))));
-        dto.setOriginCountry(countryMapper.entityToDto(entity.getSelectedBasicValues().get(basicDimensionService.getDimension("Ethnische Herkunft"))));
-        dto.setProject(projectMapper.entityToDto(entity.getSelectedBasicValues().get(basicDimensionService.getDimension("Projekt"))));
-        dto.setReligion(religionMapper.entityToDto(entity.getSelectedBasicValues().get(basicDimensionService.getDimension("Religion"))));
-        dto.setSexualOrientation(sexualOrientationMapper.entityToDto(entity.getSelectedBasicValues().get(basicDimensionService.getDimension("Sexuelle Orientierung"))));
-        dto.setSocialBackground(socialBackgroundMapper.entityToDto(entity.getSelectedBasicValues().get(basicDimensionService.getDimension("Soziale Herkunft"))));
-        dto.setSocialBackgroundDiscrimination(socialBackgroundDiscriminationMapper.entityToDto(entity.getSelectedBasicValues().get(basicDimensionService.getDimension("Diskriminierung aufgrund sozialer Herkunft"))));
-        dto.setWorkExperience(workExperienceMapper.entityToDto(entity.getSelectedWeightedValues().get(weightedDimensionService.getDimension("Berufserfahrung"))));
+        dto.setEducation(educationMapper.entityToDto(entity.getSelectedBasicValues().get(basicDimensionService.getDimension("Bildungsweg").get())));
+        dto.setDiet(dietMapper.entityToDto(entity.getSelectedBasicValues().get(basicDimensionService.getDimension("Ernährung").get())));
+        dto.setGender(genderMapper.entityToDto(entity.getSelectedBasicValues().get(basicDimensionService.getDimension("Geschlechtliche Identität").get())));
+        dto.setHobby(hobbyMapper.entityToDto(List.copyOf(entity.getSelectedMultiselectValues().get(multiselectDimensionService.getDimension("Hobby").get()).getSelectedOptions())));
+        dto.setMotherTongue(languageMapper.entityToDto(entity.getSelectedBasicValues().get(basicDimensionService.getDimension("Muttersprache").get())));
+        dto.setOriginCountry(countryMapper.entityToDto(entity.getSelectedBasicValues().get(basicDimensionService.getDimension("Ethnische Herkunft").get())));
+        dto.setProject(projectMapper.entityToDto(entity.getSelectedBasicValues().get(basicDimensionService.getDimension("Projekt").get())));
+        dto.setReligion(religionMapper.entityToDto(entity.getSelectedBasicValues().get(basicDimensionService.getDimension("Religion").get())));
+        dto.setSexualOrientation(sexualOrientationMapper.entityToDto(entity.getSelectedBasicValues().get(basicDimensionService.getDimension("Sexuelle Orientierung").get())));
+        dto.setSocialBackground(socialBackgroundMapper.entityToDto(entity.getSelectedBasicValues().get(basicDimensionService.getDimension("Soziale Herkunft").get())));
+        dto.setSocialBackgroundDiscrimination(socialBackgroundDiscriminationMapper.entityToDto(entity.getSelectedBasicValues().get(basicDimensionService.getDimension("Diskriminierung aufgrund sozialer Herkunft").get())));
+        dto.setWorkExperience(workExperienceMapper.entityToDto(entity.getSelectedWeightedValues().get(weightedDimensionService.getDimension("Berufserfahrung").get())));
 
 
         return dto;
@@ -67,34 +67,33 @@ public class ProfileMapper {
         ProfileEntitySelectedMultiselectValue selectedMultiselectValues = new ProfileEntitySelectedMultiselectValue();
         selectedMultiselectValues.setSelectedOptions(Set.copyOf(multiselectDimensionService.getSelectableOptions(
                 dto.getHobby().stream().map(HobbyDto::getId).collect(Collectors.toList()))));
-        selectedMultiselectValues.setMultiselectDimension(multiselectDimensionService.getDimension("Hobby"));
+        selectedMultiselectValues.setMultiselectDimension(multiselectDimensionService.getDimension("Hobby").get());
 
+        BasicDimension basicDimension = basicDimensionService.getDimension("Bildungsweg").get();
+        selectedBasicOptions.put(basicDimension, getBasicSelectableOptionOrDefault(basicDimension, dto.getEducation().getId()));
+        basicDimension = basicDimensionService.getDimension("Ernährung").get();
+        selectedBasicOptions.put(basicDimension, getBasicSelectableOptionOrDefault(basicDimension, dto.getDiet().getId()));
+        basicDimension = basicDimensionService.getDimension("Geschlechtliche Identität").get();
+        selectedBasicOptions.put(basicDimension, getBasicSelectableOptionOrDefault(basicDimension, dto.getGender().getId()));
+        basicDimension = basicDimensionService.getDimension("Muttersprache").get();
+        selectedBasicOptions.put(basicDimension, getBasicSelectableOptionOrDefault(basicDimension, dto.getMotherTongue().getId()));
+        basicDimension = basicDimensionService.getDimension("Ethnische Herkunft").get();
+        selectedBasicOptions.put(basicDimension, getBasicSelectableOptionOrDefault(basicDimension, dto.getOriginCountry().getId()));
+        basicDimension = basicDimensionService.getDimension("Projekt").get();
+        selectedBasicOptions.put(basicDimension, getBasicSelectableOptionOrDefault(basicDimension, dto.getProject().getId()));
+        basicDimension = basicDimensionService.getDimension("Religion").get();
+        selectedBasicOptions.put(basicDimension, getBasicSelectableOptionOrDefault(basicDimension, dto.getReligion().getId()));
+        basicDimension = basicDimensionService.getDimension("Sexuelle Orientierung").get();
+        selectedBasicOptions.put(basicDimension, getBasicSelectableOptionOrDefault(basicDimension, dto.getSexualOrientation().getId()));
+        basicDimension = basicDimensionService.getDimension("Soziale Herkunft").get();
+        selectedBasicOptions.put(basicDimension, getBasicSelectableOptionOrDefault(basicDimension, dto.getSocialBackground().getId()));
+        basicDimension = basicDimensionService.getDimension("Diskriminierung aufgrund sozialer Herkunft").get();
+        selectedBasicOptions.put(basicDimension, getBasicSelectableOptionOrDefault(basicDimension, dto.getSocialBackgroundDiscrimination().getId()));
 
-        selectedBasicOptions.put(basicDimensionService.getDimension("Bildungsweg"),
-                basicDimensionService.getSelectableOptionById(dto.getEducation().getId()));
-        selectedBasicOptions.put(basicDimensionService.getDimension("Ernährung"),
-                basicDimensionService.getSelectableOptionById(dto.getDiet().getId()));
-        selectedBasicOptions.put(basicDimensionService.getDimension("Geschlechtliche Identität"),
-                basicDimensionService.getSelectableOptionById(dto.getGender().getId()));
-        selectedBasicOptions.put(basicDimensionService.getDimension("Muttersprache"),
-                basicDimensionService.getSelectableOptionById(dto.getMotherTongue().getId()));
-        selectedBasicOptions.put(basicDimensionService.getDimension("Ethnische Herkunft"),
-                basicDimensionService.getSelectableOptionById(dto.getOriginCountry().getId()));
-        selectedBasicOptions.put(basicDimensionService.getDimension("Projekt"),
-                basicDimensionService.getSelectableOptionById(dto.getProject().getId()));
-        selectedBasicOptions.put(basicDimensionService.getDimension("Religion"),
-                basicDimensionService.getSelectableOptionById(dto.getReligion().getId()));
-        selectedBasicOptions.put(basicDimensionService.getDimension("Sexuelle Orientierung"),
-                basicDimensionService.getSelectableOptionById(dto.getSexualOrientation().getId()));
-        selectedBasicOptions.put(basicDimensionService.getDimension("Soziale Herkunft"),
-                basicDimensionService.getSelectableOptionById(dto.getSocialBackground().getId()));
-        selectedBasicOptions.put(basicDimensionService.getDimension("Diskriminierung aufgrund sozialer Herkunft"),
-                basicDimensionService.getSelectableOptionById(dto.getSocialBackgroundDiscrimination().getId()));
+        WeightedDimension weightedDimension = weightedDimensionService.getDimension("Berufserfahrung").get();
+        selectedWeightedOptions.put(weightedDimension, getWeightedSelectableOptionOrDefault(weightedDimension, dto.getWorkExperience().getId()));
 
-        selectedWeightedOptions.put(weightedDimensionService.getDimension("Berufserfahrung"),
-                weightedDimensionService.getSelectableOptionById(dto.getWorkExperience().getId()));
-
-        selectedMultiselectOptions.put(multiselectDimensionService.getDimension("Hobby"),
+        selectedMultiselectOptions.put(multiselectDimensionService.getDimension("Hobby").get(),
                 selectedMultiselectValues);
 
         return ProfileEntity.builder()
@@ -108,7 +107,22 @@ public class ProfileMapper {
                 .wasChangedByAdmin(false)
                 .build();
     }
-
+    
+    private BasicDimensionSelectableOption getBasicSelectableOptionOrDefault(BasicDimension dimension, Long selectableId) {
+        var selectableOption = basicDimensionService.getSelectableOptionById(selectableId);
+        if (selectableOption.isPresent() && dimension.getDimensionCategory() == selectableOption.get().getDimensionCategory()) {
+            return selectableOption.get();
+        }
+        return dimension.getDefaultValue();
+    }
+    
+    private WeightedDimensionSelectableOption getWeightedSelectableOptionOrDefault(WeightedDimension dimension, Long selectableId) {
+        var selectableOption = weightedDimensionService.getSelectableOptionById(selectableId);
+        if (selectableOption.isPresent() && dimension.getDimensionCategory() == selectableOption.get().getDimensionCategory()) {
+            return selectableOption.get();
+        }
+        return dimension.getDefaultValue();
+    }
 
     private boolean allObjectWithIdsArePresent(Optional<?>... optionals) {
         return Arrays.stream(optionals).allMatch(Optional::isPresent);

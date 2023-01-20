@@ -27,7 +27,7 @@ public class ProjectMapper implements DimensionMapper<ProjectDto, BasicDimension
                 .id(dto.getId())
                 .value(dto.getDescriptor())
                 .ignoreInScoring(false)
-                .dimensionCategory(dimensionService.getDimension("Projekt").getDimensionCategory())
+                .dimensionCategory(dimensionService.getDimension("Projekt").get().getDimensionCategory())
                 .build();
     }
 }

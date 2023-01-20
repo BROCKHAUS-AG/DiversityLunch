@@ -27,7 +27,7 @@ public class DietMapper implements DimensionMapper<DietDto, BasicDimensionSelect
                 .id(dto.getId())
                 .value(dto.getDescriptor())
                 .ignoreInScoring(false)
-                .dimensionCategory(dimensionService.getDimension("Ernährung").getDimensionCategory())
+                .dimensionCategory(dimensionService.getDimension("Ernährung").get().getDimensionCategory())
                 .build();
     }
 }
