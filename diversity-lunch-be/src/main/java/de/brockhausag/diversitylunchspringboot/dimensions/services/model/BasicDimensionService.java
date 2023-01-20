@@ -44,22 +44,29 @@ public class BasicDimensionService implements DimensionService<
 
     @Override
     public boolean addSelectableOption(BasicDimensionSelectableOption option) {
+        boolean saved = false;
         try {
-            selectableRepository.save(option);
-            return true;
-        } catch (DataIntegrityViolationException | ConstraintViolationException ex) {
-            return false;
+            if(!selectableRepository.existsById(option.getId())) {
+                selectableRepository.save(option);
+                saved = true;
+            }
+        } catch (DataIntegrityViolationException | ConstraintViolationException ignored) {
+
         }
+        return saved;
     }
 
     @Override
     public boolean updateSelectableOption(BasicDimensionSelectableOption option) {
-        if (selectableRepository.findById(option.getId()).isEmpty()) {
-            return false;
-        } else {
-            selectableRepository.save(option);
-            return true;
+        boolean updated = false;
+        try {
+            if (!selectableRepository.existsById(option.getId())) {
+                selectableRepository.save(option);
+                updated = true;
+            }
+        } catch (DataIntegrityViolationException | ConstraintViolationException ignored) {
         }
+        return updated;
     }
 
     @Override
@@ -84,7 +91,7 @@ public class BasicDimensionService implements DimensionService<
         BasicDimensionSelectableOption defaultOption = getDefaultOption(option);
 
         if (option != defaultOption) {
-            resetProfileOption(option, defaultOption);
+            replaceSelectedOptionInProfiles(option, defaultOption);
             result = deleteOption(option);
         }
         return result;
@@ -117,7 +124,7 @@ public class BasicDimensionService implements DimensionService<
         return dimension.getDefaultValue();
     }
 
-    private void resetProfileOption(BasicDimensionSelectableOption currentOption, BasicDimensionSelectableOption targetOption) {
+    private void replaceSelectedOptionInProfiles(BasicDimensionSelectableOption currentOption, BasicDimensionSelectableOption targetOption) {
         BasicDimension dimension = getDimension(currentOption.getDimensionCategory()).get();
         List<ProfileEntity> affectedProfiles = profileService.getAllProfilesWithSelectedBasicOption(currentOption);
         affectedProfiles.forEach(profile -> {

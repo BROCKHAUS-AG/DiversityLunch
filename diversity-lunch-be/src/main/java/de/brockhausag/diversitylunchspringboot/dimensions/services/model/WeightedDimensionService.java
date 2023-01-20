@@ -39,22 +39,28 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
 
     @Override
     public boolean addSelectableOption(WeightedDimensionSelectableOption option) {
+        boolean saved = false;
         try {
-            selectableRepository.save(option);
-            return true;
-        } catch (DataIntegrityViolationException | ConstraintViolationException ex) {
-            return false;
+            if (!selectableRepository.existsById(option.getId())) {
+                selectableRepository.save(option);
+                saved = true;
+            }
+        } catch (DataIntegrityViolationException | ConstraintViolationException ignored) {
         }
+        return saved;
     }
 
     @Override
     public boolean updateSelectableOption(WeightedDimensionSelectableOption option) {
-        if (selectableRepository.findById(option.getId()).isEmpty()) {
-            return false;
-        } else {
-            selectableRepository.save(option);
-            return true;
+        boolean updated = false;
+        try {
+            if (selectableRepository.existsById(option.getId())) {
+                selectableRepository.save(option);
+                updated = true;
+            }
+        } catch (DataIntegrityViolationException | ConstraintViolationException ignored) {
         }
+        return updated;
     }
 
     @Override
@@ -79,7 +85,7 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
         WeightedDimensionSelectableOption defaultOption = getDefaultOption(option);
 
         if (option != defaultOption) {
-            resetProfileOption(option, defaultOption);
+            replaceSelectedOptionInProfiles(option, defaultOption); //replaceSelectedOptionInProfiles
             result = deleteOption(option);
         }
         return result;
@@ -112,7 +118,7 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
         return dimension.getDefaultValue();
     }
 
-    private void resetProfileOption(WeightedDimensionSelectableOption currentOption, WeightedDimensionSelectableOption targetOption) {
+    private void replaceSelectedOptionInProfiles(WeightedDimensionSelectableOption currentOption, WeightedDimensionSelectableOption targetOption) {
         WeightedDimension dimension = getDimension(currentOption.getDimensionCategory()).get();
         List<ProfileEntity> affectedProfiles = profileService.getAllProfilesWithSelectedWeightedOption(currentOption);
         affectedProfiles.forEach(profile -> {

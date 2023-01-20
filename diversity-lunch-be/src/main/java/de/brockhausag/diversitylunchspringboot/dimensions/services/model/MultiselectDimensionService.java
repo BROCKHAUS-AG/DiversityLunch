@@ -39,12 +39,15 @@ public class MultiselectDimensionService implements DimensionService<Multiselect
 
     @Override
     public boolean addSelectableOption(MultiselectDimensionSelectableOption option) {
+        boolean saved = false;
         try {
-            selectableRepository.save(option);
-            return true;
-        } catch (DataIntegrityViolationException | ConstraintViolationException ex) {
-            return false;
+            if(!selectableRepository.existsById(option.getId())) {
+                selectableRepository.save(option);
+                saved = true;
+            }
+        } catch (DataIntegrityViolationException | ConstraintViolationException ignored) {
         }
+        return saved;
     }
 
     @Override
@@ -62,16 +65,15 @@ public class MultiselectDimensionService implements DimensionService<Multiselect
 
     @Override
     public boolean updateSelectableOption(MultiselectDimensionSelectableOption option) {
+        boolean updated = false;
         try {
-            if (selectableRepository.findById(option.getId()).isEmpty()) {
-                return false;
-            } else {
+            if (selectableRepository.existsById(option.getId())) {
                 selectableRepository.save(option);
-                return true;
+                updated = true;
             }
-        } catch (DataIntegrityViolationException | ConstraintViolationException ex) {
-            return false;
+        } catch (DataIntegrityViolationException | ConstraintViolationException ignored) {
         }
+        return updated;
     }
 
     @Override
