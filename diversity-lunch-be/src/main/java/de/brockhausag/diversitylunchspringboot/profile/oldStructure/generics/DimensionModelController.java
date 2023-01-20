@@ -46,10 +46,10 @@ public class DimensionModelController<DtoType,
 
     @GetMapping("/{id}")
     public ResponseEntity<DtoType> getOne(@PathVariable Long id) {
-        var selectable = dimensionService.getSelectableOptionById(id);
-        if (selectable.isPresent()) {
+        var selectableOptional = dimensionService.getSelectableOptionById(id);
+        if (selectableOptional.isPresent()) {
             return new ResponseEntity<>(
-                    dimensionMapper.entityToDto(selectable.get()),
+                    dimensionMapper.entityToDto(selectableOptional.get()),
                     HttpStatus.OK
             );
         }

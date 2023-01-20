@@ -29,7 +29,7 @@ class ProfileServiceTest {
     private ProfileService service;
 
     @Test
-    void testProfileNonexistent() {
+    void testGetProfile_withNotExistingProfile_shouldReturnEmptyOptional() {
         //Assemble
         Long id = 15L;
         when(profileRepository.findById(id)).thenReturn(Optional.empty());
@@ -42,7 +42,7 @@ class ProfileServiceTest {
     }
 
     @Test
-    void testGetProfile() {
+    void testGetProfile_withExistingProfile_shouldReturnProfile() {
         //Assemble
         ProfileEntity entity = this.factory.buildEntity(1);
         long id = entity.getId();
@@ -57,7 +57,7 @@ class ProfileServiceTest {
     }
 
     @Test
-    void testCreateProfile() {
+    void testCreateProfile_withCompleteProfile_shouldReturnProfile() {
         ProfileEntity expected = this.factory.buildEntity(1);
         ProfileEntity createEntity = this.factory.buildEntity(1);
 
@@ -72,7 +72,7 @@ class ProfileServiceTest {
     }
 
     @Test
-    void testUpdateProfile() {
+    void testUpdateProfile_withCompleteAndExistingProfile_shouldReturnProfile() {
         ProfileEntity updateEntity = this.factory.buildEntity(1);
 
         when(this.profileRepository.existsById(updateEntity.getId())).thenReturn(true);
@@ -82,7 +82,5 @@ class ProfileServiceTest {
 
         assertTrue(entity.isPresent());
         assertEquals(updateEntity, entity.get());
-
-
     }
 }

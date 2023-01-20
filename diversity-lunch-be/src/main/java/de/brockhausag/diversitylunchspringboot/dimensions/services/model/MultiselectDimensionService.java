@@ -54,7 +54,7 @@ public class MultiselectDimensionService implements DimensionService<Multiselect
     public boolean deleteSelectableOptionById(Long selectableOptionId) {
         Optional<MultiselectDimensionSelectableOption> selectableOptionOptional = selectableRepository.findById(selectableOptionId);
         if (selectableOptionOptional.isEmpty()) {
-            return false;
+            return true;
         }
 
         MultiselectDimensionSelectableOption option = selectableOptionOptional.get();
@@ -93,11 +93,8 @@ public class MultiselectDimensionService implements DimensionService<Multiselect
 
     @Override
     public Optional<DimensionCategory> getDimensionCategoryByDescription(String categoryDescription) {
-        var dimension = repository.findByDimensionCategory_Description(categoryDescription);
-        if (dimension.isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(dimension.get().getDimensionCategory());
+        Optional<MultiselectDimension> dimensionOptional = repository.findByDimensionCategory_Description(categoryDescription);
+        return dimensionOptional.map(MultiselectDimension::getDimensionCategory);
     }
 
     @Override
@@ -110,6 +107,7 @@ public class MultiselectDimensionService implements DimensionService<Multiselect
     }
 
     private void removeOptionInProfile(MultiselectDimensionSelectableOption selectableOption) {
+        // selectableOption should have been checked before and must have a category
         MultiselectDimension dimension = getDimension(selectableOption.getDimensionCategory()).get();
         List<ProfileEntity> affectedProfiles = profileService.getAllProfilesWithSelectedMultiselectOption(selectableOption);
         affectedProfiles.forEach(profile -> {

@@ -77,7 +77,7 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
     public boolean deleteSelectableOptionById(Long selectableOptionId) {
         var selectableOptionOptional = selectableRepository.findById(selectableOptionId);
         if (selectableOptionOptional.isEmpty()) {
-            return false;
+            return true;
         }
 
         boolean result = false;
@@ -98,11 +98,8 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
 
     @Override
     public Optional<DimensionCategory> getDimensionCategoryByDescription(String categoryDescription) {
-        var dimension = repository.findByDimensionCategory_Description(categoryDescription);
-        if (dimension.isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(dimension.get().getDimensionCategory());
+        Optional<WeightedDimension> dimensionOptional = repository.findByDimensionCategory_Description(categoryDescription);
+        return dimensionOptional.map(WeightedDimension::getDimensionCategory);
     }
 
     @Override
@@ -114,11 +111,13 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
      * Requires existing selectable Option.
      * */
     private WeightedDimensionSelectableOption getDefaultOption(WeightedDimensionSelectableOption selectableOption) {
+        // selectableOption should have been checked before and must have a category
         WeightedDimension dimension = getDimension(selectableOption.getDimensionCategory()).get();
         return dimension.getDefaultValue();
     }
 
     private void replaceSelectedOptionInProfiles(WeightedDimensionSelectableOption currentOption, WeightedDimensionSelectableOption targetOption) {
+        // selectableOption should have been checked before and must have a category
         WeightedDimension dimension = getDimension(currentOption.getDimensionCategory()).get();
         List<ProfileEntity> affectedProfiles = profileService.getAllProfilesWithSelectedWeightedOption(currentOption);
         affectedProfiles.forEach(profile -> {

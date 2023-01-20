@@ -60,7 +60,7 @@ public class BasicDimensionService implements DimensionService<
     public boolean updateSelectableOption(BasicDimensionSelectableOption option) {
         boolean updated = false;
         try {
-            if (!selectableRepository.existsById(option.getId())) {
+            if (selectableRepository.existsById(option.getId())) {
                 selectableRepository.save(option);
                 updated = true;
             }
@@ -83,7 +83,7 @@ public class BasicDimensionService implements DimensionService<
     public boolean deleteSelectableOptionById(Long selectableOptionId) {
         var selectableOptionOptional = selectableRepository.findById(selectableOptionId);
         if (selectableOptionOptional.isEmpty()) {
-            return false;
+            return true;
         }
 
         boolean result = false;
@@ -104,11 +104,8 @@ public class BasicDimensionService implements DimensionService<
 
     @Override
     public Optional<DimensionCategory> getDimensionCategoryByDescription(String categoryDescription) {
-        var dimension = repository.findByDimensionCategory_Description(categoryDescription);
-        if (dimension.isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(dimension.get().getDimensionCategory());
+        Optional<BasicDimension> dimensionOptional = repository.findByDimensionCategory_Description(categoryDescription);
+        return dimensionOptional.map(BasicDimension::getDimensionCategory);
     }
 
     @Override
@@ -120,11 +117,13 @@ public class BasicDimensionService implements DimensionService<
      * Requires existing selectable Option.
      * */
     private BasicDimensionSelectableOption getDefaultOption(BasicDimensionSelectableOption selectableOption) {
+        // selectableOption should have been checked before and must have a category
         BasicDimension dimension = getDimension(selectableOption.getDimensionCategory()).get();
         return dimension.getDefaultValue();
     }
 
     private void replaceSelectedOptionInProfiles(BasicDimensionSelectableOption currentOption, BasicDimensionSelectableOption targetOption) {
+        // selectableOption should have been checked before and must have a category
         BasicDimension dimension = getDimension(currentOption.getDimensionCategory()).get();
         List<ProfileEntity> affectedProfiles = profileService.getAllProfilesWithSelectedBasicOption(currentOption);
         affectedProfiles.forEach(profile -> {
