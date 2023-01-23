@@ -13,7 +13,7 @@ tags:
   - name: MultiselectDimension
   - name: Profile
 paths:
-  /basicdimension/all:
+  /basicdimensions:
     get:
       tags:
         - BasicDimension
@@ -31,7 +31,114 @@ paths:
           description: unauthorized
         '500':
           description: internal server error
-  /weighteddimension/all:
+  /basicdimensions/{dimensionId}:
+    get:
+      tags:
+        - BasicDimension
+      summary: Get one basic dimensions by id.
+      parameters:
+        - name: dimensionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BasicDimension'
+        '400':
+          description: dimension does not exist
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+  /basicdimensions/{dimensionId}/selectableoptions/{optionId}:
+    delete:
+      tags:
+        - BasicDimension
+      summary: Delete selectable option on any basic dimension by optionId.
+      parameters:
+        - name: dimensionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: optionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: removed selectalbe option
+        '400':
+          description: selectable option is default value or dimension does not exist
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+  /basicdimensions/{dimensionId}/selectableoptions:
+    post:
+      tags:
+        - BasicDimension
+      summary: Create selectable option.
+      parameters:
+        - name: dimensionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BasicDimensionSelectableOption'
+      responses:
+        '200':
+          description: selectable option created
+        '400':
+          description: dimension does not exist or selectable option already exist
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+    put:
+      tags:
+        - BasicDimension
+      summary: Edit selectable option.
+      parameters:
+        - name: dimensionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BasicDimensionSelectableOption'
+      responses:
+        '200':
+          description: selectable option edited
+        '400':
+          description: dimension or selectable option does not exist or new name already exist
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+  /weighteddimensions:
     get:
       tags:
         - WeightedDimension
@@ -49,7 +156,34 @@ paths:
           description: unauthorized
         '500':
           description: internal server error
-  /multiselectdimension/all:
+  /weighteddimensions/{dimensionId}:
+    get:
+      tags:
+        - WeightedDimension
+      summary: Get one weighted dimensions by id.
+      parameters:
+        - name: dimensionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WeightedDimension'
+        '400':
+          description: dimension does not exist
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+  /multiselectdimensions:
     get:
       tags:
         - MultiselectDimension
@@ -63,6 +197,193 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/MultiselectDimension'
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+  /weighteddimensions/{dimensionId}/selectableoptions/{optionId}:
+    delete:
+      tags:
+        - WeightedDimension
+      summary: Delete selectable option on any weighted dimension by optionId.
+      parameters:
+        - name: dimensionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: optionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: removed selectalbe option
+        '400':
+          description: selectable option is default value or dimension does not exist
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+  /weighteddimensions/{dimensionId}/selectableoptions:
+    post:
+      tags:
+        - WeightedDimension
+      summary: Create selectable option.
+      parameters:
+        - name: dimensionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WeightedDimensionSelectableOption'
+      responses:
+        '200':
+          description: selectable option created
+        '400':
+          description: dimension does not exist or selectable option already exist
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+    put:
+      tags:
+        - WeightedDimension
+      summary: Edit selectable option.
+      parameters:
+        - name: dimensionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WeightedDimensionSelectableOption'
+      responses:
+        '200':
+          description: selectable option edited
+        '400':
+          description: dimension or selectable option does not exist or new name already exist
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+  /multiselectdimensions/{dimensionId}:
+    get:
+      tags:
+        - MultiselectDimension
+      summary: Get one multiselect dimensions by id.
+      parameters:
+        - name: dimensionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MultiselectDimension'
+        '400':
+          description: dimension does not exist
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+  /multiselectdimensions/{dimensionId}/selectableoption/{optionId}:
+    delete:
+      tags:
+        - MultiselectDimension
+      summary: Delete selectable option on any multiselect dimension by optionId.
+      parameters:
+        - name: dimensionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: optionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: removed selectalbe option
+        '400':
+          description: selectable option is default value or dimension does not exist
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+  /multiselectdimensions/{dimensionId}/selectableoptions:
+    post:
+      tags:
+        - MultiselectDimension
+      summary: Create selectable option.
+      parameters:
+        - name: dimensionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MultiselectDimensionSelectableOption'
+      responses:
+        '200':
+          description: selectable option created
+        '400':
+          description: dimension does not exist or selectable option already exist
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+    put:
+      tags:
+        - MultiselectDimension
+      summary: Edit selectable option.
+      parameters:
+        - name: dimensionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MultiselectDimensionSelectableOption'
+      responses:
+        '200':
+          description: selectable option edited
+        '400':
+          description: dimension or selectable option does not exist or new name already exist
         '401':
           description: unauthorized
         '500':
@@ -98,6 +419,8 @@ paths:
       responses:
         '200':
           description: saved changes
+        '400':
+          description: profile does not exist
         '401':
           description: unauthorized
         '500':
@@ -115,174 +438,8 @@ paths:
       responses:
         '200':
           description: profile created
-        '401':
-          description: unauthorized
-        '500':
-          description: internal server error
-  /basicdimension/selectableoption/{optionId}:
-    delete:
-      tags:
-        - BasicDimension
-      summary: Delete selectable option on any basic dimension by optionId.
-      parameters:
-        - name: optionId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: removed selectalbe option
         '400':
-          description: selectable option is default value
-        '401':
-          description: unauthorized
-        '500':
-          description: internal server error
-  /basicdimension/selectableoption:
-    post:
-      tags:
-        - BasicDimension
-      summary: Create selectable option.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SelectedBasicOption'
-      responses:
-        '200':
-          description: selectable option created
-        '401':
-          description: unauthorized
-        '500':
-          description: internal server error
-    put:
-      tags:
-        - BasicDimension
-      summary: Edit selectable option.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BasicDimensionSelectableOption'
-      responses:
-        '200':
-          description: selectable option edited
-        '401':
-          description: unauthorized
-        '500':
-          description: internal server error
-  /weighteddimension/selectableoption/{optionId}:
-    delete:
-      tags:
-        - WeightedDimension
-      summary: Delete selectable option on any weighted dimension by optionId.
-      parameters:
-        - name: optionId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: removed selectalbe option
-        '400':
-          description: selectable option is default value
-        '401':
-          description: unauthorized
-        '500':
-          description: internal server error
-  /weighteddimension/selectableoption:
-    post:
-      tags:
-        - WeightedDimension
-      summary: Create selectable option.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SelectedWeightedOption'
-      responses:
-        '200':
-          description: selectable option created
-        '401':
-          description: unauthorized
-        '500':
-          description: internal server error
-    put:
-      tags:
-        - WeightedDimension
-      summary: Edit selectable option.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/WeightedDimensionSelectableOption'
-      responses:
-        '200':
-          description: selectable option edited
-        '401':
-          description: unauthorized
-        '500':
-          description: internal server error
-  /multiselectdimension/selectableoption/{optionId}:
-    delete:
-      tags:
-        - MultiselectDimension
-      summary: Delete selectable option on any multiselect dimension by optionId.
-      parameters:
-        - name: optionId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: removed selectalbe option
-        '400':
-          description: selectable option is default value
-        '401':
-          description: unauthorized
-        '500':
-          description: internal server error
-  /multiselectdimension/selectableoption:
-    post:
-      tags:
-        - MultiselectDimension
-      summary: Create selectable option.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SelectedMultiselectOption'
-      responses:
-        '200':
-          description: selectable option created
-        '401':
-          description: unauthorized
-        '500':
-          description: internal server error
-    put:
-      tags:
-        - MultiselectDimension
-      summary: Edit selectable option.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/MultiselectDimensionSelectableOption'
-      responses:
-        '200':
-          description: selectable option edited
+          description: profile already exists
         '401':
           description: unauthorized
         '500':
@@ -388,10 +545,6 @@ components:
     Profile:
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
-          example: 1
         name:
           type: string
           example: Max Mustermann
