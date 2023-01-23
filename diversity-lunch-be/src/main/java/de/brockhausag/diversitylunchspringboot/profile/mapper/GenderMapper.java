@@ -1,28 +1,34 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.GenderDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.GenderEntity;
-import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
+import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionMapper;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GenderMapper implements DimensionMapper<GenderDto, GenderEntity> {
+@RequiredArgsConstructor
+public class GenderMapper implements DimensionMapper<GenderDto, BasicDimensionSelectableOption> {
+
+    private final BasicDimensionService dimensionService;
 
     @Override
-    public GenderDto entityToDto(GenderEntity entity) {
-        GenderDto genderDto = new GenderDto();
-        genderDto.setId(entity.getId());
-        genderDto.setDescriptor(entity.getDescriptor());
-        genderDto.setDefault(entity.isDefault());
-        return genderDto;
+    public GenderDto entityToDto(BasicDimensionSelectableOption entity) {
+        GenderDto GenderDto = new GenderDto();
+        GenderDto.setId(entity.getId());
+        GenderDto.setDescriptor(entity.getValue());
+        return GenderDto;
     }
 
     @Override
-    public GenderEntity dtoToEntity(GenderDto dto) {
-        GenderEntity genderEntity = new GenderEntity();
-        genderEntity.setId(dto.getId());
-        genderEntity.setDescriptor(dto.getDescriptor());
-        genderEntity.setDefault(dto.isDefault());
-        return genderEntity;
+    public BasicDimensionSelectableOption dtoToEntity(GenderDto dto) {
+        return BasicDimensionSelectableOption.builder()
+                .id(dto.getId())
+                .value(dto.getDescriptor())
+                .ignoreInScoring(false)
+                .dimensionCategory(dimensionService.getDimension("Geschlechtliche Identität").get().getDimensionCategory())
+                .build();
     }
 }

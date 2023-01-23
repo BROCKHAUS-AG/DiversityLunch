@@ -3,7 +3,7 @@ package de.brockhausag.diversitylunchspringboot.voucher.service;
 import com.google.common.collect.Iterables;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
-import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
+import de.brockhausag.diversitylunchspringboot.profile.repository.ProfileRepository;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.voucher.exception.ForbiddenVoucherClaim;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;

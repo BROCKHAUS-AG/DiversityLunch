@@ -3,16 +3,20 @@ package de.brockhausag.diversitylunchspringboot.match.service;
 import de.brockhausag.diversitylunchspringboot.dataFactories.MeetingTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.QuestionTestDataFactory;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
+import de.brockhausag.diversitylunchspringboot.dimensions.repositories.DimensionCategoryRepository;
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
+import de.brockhausag.diversitylunchspringboot.match.model.Matching;
+import de.brockhausag.diversitylunchspringboot.match.records.ScoreAndCategory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MsTeamsService;
 import de.brockhausag.diversitylunchspringboot.meeting.service.QuestionService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -33,6 +37,8 @@ class MatchingServiceTest {
     @Mock
     MsTeamsService msTeamsService;
     @Mock
+    DimensionCategoryRepository categoryRepository;
+    @Mock
     private MeetingProposalRepository meetingProposalRepository;
     @Mock
     private MeetingRepository meetingRepository;
@@ -40,8 +46,21 @@ class MatchingServiceTest {
     private MatchingService matchingServiceMock;
     @Mock
     private QuestionService questionService;
-    @InjectMocks
+    @Mock
+    private Matching matching;
     private MatchingService matchingService;
+
+    @BeforeEach
+    void setUp(){
+        this.matchingService = spy(new MatchingService(
+                meetingProposalRepository,
+                meetingRepository,
+                categoryRepository,
+                mockedEMailService,
+                msTeamsService,
+                questionService
+        ));
+    }
 
     @Test
     void testMatching_moreThen7DaysUntilMeeting_shouldCallExecuteMatchingWithGivenTimeAnd21ScoreToBeat() {
@@ -80,22 +99,37 @@ class MatchingServiceTest {
 
     @Test
     void testExecuteMatching_MatchProposal_MeetingShouldBeCreated() {
+        // Arrange
         LocalDateTime time = LocalDateTime.of(2022, 3, 3, 12, 30, 0);
         List<MeetingProposalEntity> list = meetingTestdataFactory.newMeetingProposalList_withMatchingScore29(time);
         when(meetingProposalRepository.findMeetingProposalEntitiesByProposedDateTimeAndMatchedFalse(any())).thenReturn(list);
         when(questionService.getQuestionsForCategory(any())).thenReturn(List.of(questionTestDataFactory.buildEntity("Q1"), questionTestDataFactory.buildEntity("Q2")));
+        when(matchingService.createMatching(any(MeetingProposalEntity.class), any(MeetingProposalEntity.class))).thenReturn(matching);
+        when(matching.getStats()).thenReturn(new ScoreAndCategory(19, DimensionCategory.builder().build()));
+        when(matching.getFirstProposal()).thenReturn(list.get(0));
+        when(matching.getSecondProposal()).thenReturn(list.get(1));
 
+        // Act
         matchingService.executeMatching(time, 0);
+
+        // Assert
         verify(meetingRepository, times(1)).save(any());
         verify(meetingProposalRepository, times(2)).save(any());
     }
 
     @Test
     void testExecuteMatching_MatchProposalScoreToLow_MeetingShouldNotBeCreated() {
+        // Arrange
         LocalDateTime time = LocalDateTime.of(2022, 3, 3, 0, 0, 0);
         List<MeetingProposalEntity> list = meetingTestdataFactory.newMeetingProposalList_withMatchingScore1(time);
         when(meetingProposalRepository.findMeetingProposalEntitiesByProposedDateTimeAndMatchedFalse(any())).thenReturn(list);
+        when(matchingService.createMatching(any(MeetingProposalEntity.class), any(MeetingProposalEntity.class))).thenReturn(matching);
+        when(matching.getStats()).thenReturn(new ScoreAndCategory(8, DimensionCategory.builder().build()));
+
+        // Act
         matchingService.executeMatching(time, 9);
+
+        // Assert
         verify(meetingRepository, times(0)).save(any());
         verify(meetingProposalRepository, times(0)).save(any());
     }
@@ -128,7 +162,4 @@ class MatchingServiceTest {
                 .sendEmail(any(), any(), any(), any());
 
     }
-
-
-
 }

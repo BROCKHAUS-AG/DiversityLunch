@@ -1,29 +1,34 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
-
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.LanguageDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.LanguageEntity;
-import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
+import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionMapper;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LanguageMapper implements DimensionMapper<LanguageDto, LanguageEntity> {
+@RequiredArgsConstructor
+public class LanguageMapper implements DimensionMapper<LanguageDto, BasicDimensionSelectableOption> {
+
+    private final BasicDimensionService dimensionService;
 
     @Override
-    public LanguageDto entityToDto(LanguageEntity entity) {
-        LanguageDto languageDto = new LanguageDto();
-        languageDto.setId(entity.getId());
-        languageDto.setDescriptor(entity.getDescriptor());
-        languageDto.setDefault(entity.isDefault());
-        return languageDto;
+    public LanguageDto entityToDto(BasicDimensionSelectableOption entity) {
+        LanguageDto LanguageDto = new LanguageDto();
+        LanguageDto.setId(entity.getId());
+        LanguageDto.setDescriptor(entity.getValue());
+        return LanguageDto;
     }
 
     @Override
-    public LanguageEntity dtoToEntity(LanguageDto dto) {
-        LanguageEntity languageEntity = new LanguageEntity();
-        languageEntity.setId(dto.getId());
-        languageEntity.setDescriptor(dto.getDescriptor());
-        languageEntity.setDefault(dto.isDefault());
-        return languageEntity;
+    public BasicDimensionSelectableOption dtoToEntity(LanguageDto dto) {
+        return BasicDimensionSelectableOption.builder()
+                .id(dto.getId())
+                .value(dto.getDescriptor())
+                .ignoreInScoring(false)
+                .dimensionCategory(dimensionService.getDimension("Muttersprache").get().getDimensionCategory())
+                .build();
     }
 }

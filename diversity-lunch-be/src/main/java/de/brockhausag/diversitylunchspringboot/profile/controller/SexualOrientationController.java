@@ -1,19 +1,24 @@
 package de.brockhausag.diversitylunchspringboot.profile.controller;
 
-import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionModelController;
-import de.brockhausag.diversitylunchspringboot.profile.data.SexualOrientationRepository;
-import de.brockhausag.diversitylunchspringboot.profile.logic.SexualOrientationService;
-import de.brockhausag.diversitylunchspringboot.profile.mapper.SexualOrientationMapper;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimension;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.SexualOrientationDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.SexualOrientationEntity;
+import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionModelController;
+import de.brockhausag.diversitylunchspringboot.profile.mapper.SexualOrientationMapper;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/sexuality")
 @RestController
-public class SexualOrientationController extends DefaultDimensionModelController<
-        SexualOrientationDto, SexualOrientationEntity, SexualOrientationRepository, SexualOrientationService, SexualOrientationMapper> {
-    public SexualOrientationController(SexualOrientationMapper mapper, SexualOrientationService service) {
-        super(mapper, service);
+public class SexualOrientationController extends DimensionModelController<
+        SexualOrientationDto,
+        BasicDimensionSelectableOption,
+        BasicDimension,
+        BasicDimensionService,
+        SexualOrientationMapper> {
+    public SexualOrientationController(SexualOrientationMapper mapper, BasicDimensionService service) {
+        super(mapper, service,"Sexuelle Orientierung");
     }
 }

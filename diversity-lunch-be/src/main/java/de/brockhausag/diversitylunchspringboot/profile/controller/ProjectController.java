@@ -1,19 +1,24 @@
 package de.brockhausag.diversitylunchspringboot.profile.controller;
 
-import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionModelController;
-import de.brockhausag.diversitylunchspringboot.profile.data.ProjectRepository;
-import de.brockhausag.diversitylunchspringboot.profile.logic.ProjectService;
-import de.brockhausag.diversitylunchspringboot.profile.mapper.ProjectMapper;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimension;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProjectDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProjectEntity;
+import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionModelController;
+import de.brockhausag.diversitylunchspringboot.profile.mapper.ProjectMapper;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/project")
 @RestController
-public class ProjectController extends DefaultDimensionModelController<
-        ProjectDto, ProjectEntity, ProjectRepository, ProjectService, ProjectMapper> {
-    public ProjectController(ProjectMapper mapper, ProjectService service) {
-        super(mapper, service);
+public class ProjectController extends DimensionModelController<
+        ProjectDto,
+        BasicDimensionSelectableOption,
+        BasicDimension,
+        BasicDimensionService,
+        ProjectMapper> {
+    public ProjectController(ProjectMapper mapper, BasicDimensionService service) {
+        super(mapper, service, "Projekt");
     }
 }

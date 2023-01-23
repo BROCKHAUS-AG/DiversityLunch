@@ -1,28 +1,34 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.CountryDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.CountryEntity;
-import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
+import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionMapper;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CountryMapper implements DimensionMapper<CountryDto, CountryEntity> {
+@RequiredArgsConstructor
+public class CountryMapper implements DimensionMapper<CountryDto, BasicDimensionSelectableOption> {
+
+    private final BasicDimensionService dimensionService;
 
     @Override
-    public CountryDto entityToDto(CountryEntity entity) {
+    public CountryDto entityToDto(BasicDimensionSelectableOption entity) {
         CountryDto countryDto = new CountryDto();
         countryDto.setId(entity.getId());
-        countryDto.setDescriptor(entity.getDescriptor());
-        countryDto.setDefault(entity.isDefault());
+        countryDto.setDescriptor(entity.getValue());
         return countryDto;
     }
 
     @Override
-    public CountryEntity dtoToEntity(CountryDto dto) {
-        CountryEntity countryEntity = new CountryEntity();
-        countryEntity.setId(dto.getId());
-        countryEntity.setDescriptor(dto.getDescriptor());
-        countryEntity.setDefault(dto.isDefault());
-        return countryEntity;
+    public BasicDimensionSelectableOption dtoToEntity(CountryDto dto) {
+        return BasicDimensionSelectableOption.builder()
+                .id(dto.getId())
+                .value(dto.getDescriptor())
+                .ignoreInScoring(false)
+                .dimensionCategory(dimensionService.getDimension("Ethnische Herkunft").get().getDimensionCategory())
+                .build();
     }
 }

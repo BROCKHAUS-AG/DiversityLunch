@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class MeetingEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotNull
