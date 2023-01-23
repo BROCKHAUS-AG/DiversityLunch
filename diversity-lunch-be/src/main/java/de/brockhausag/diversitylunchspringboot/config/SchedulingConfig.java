@@ -24,8 +24,6 @@ public class SchedulingConfig {
     private final MatchingService matchingService;
     private final MeetingProposalRepository meetingProposalRepository;
     private final MeetingService meetingService;
-    //private final MicrosoftGraphService microsoftGraphService;
-    //private final ProfileService profileService;
 
     // Note: Cronjob naming scheme https://spring.io/blog/2020/11/10/new-in-spring-5-3-improved-cron-expressions
     @Scheduled(cron = "${diversity.settings.scheduling.matchingCronJob}") // Every Day at 02:00
@@ -56,17 +54,5 @@ public class SchedulingConfig {
 
     @Scheduled(cron = "0/5 * * * * *")
     public void test() {
-        /*BasicDimensionSelectableOption option = BasicDimensionSelectableOption.builder()
-                .id(1L)
-                .value("Algerien")
-                .dimensionCategory(DimensionCategory.builder()
-                    .id(4L)
-                    .description("Ethnische Herkunft")
-                    .profileQuestion("Was ist deine ethnische Herkunft?")
-                    .build())
-                .build();
-        profileService.getAllProfilesWithSelectedBasicOption(option).forEach((profile) -> {
-            log.warn(profile.toString());
-        });*/
     }
 }

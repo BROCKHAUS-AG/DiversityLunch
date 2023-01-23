@@ -7,9 +7,10 @@ import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.WeightedD
 import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.model.MultiselectDimensionService;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.model.WeightedDimensionService;
+import de.brockhausag.diversitylunchspringboot.profile.mapper.*;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
-import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.HobbyDto;
-import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.ProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
 import de.brockhausag.diversitylunchspringboot.profile.oldStructure.mapper.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

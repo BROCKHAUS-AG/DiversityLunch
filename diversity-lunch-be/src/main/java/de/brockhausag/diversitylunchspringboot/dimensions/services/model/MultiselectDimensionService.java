@@ -1,15 +1,16 @@
 package de.brockhausag.diversitylunchspringboot.dimensions.services.model;
 
-import com.google.common.collect.Lists;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.*;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.MultiselectDimensionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.MultiselectDimensionSelectableOptionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.DimensionService;
-import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.services.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import com.google.common.collect.Lists;
 
 import javax.validation.ConstraintViolationException;
 import java.util.List;

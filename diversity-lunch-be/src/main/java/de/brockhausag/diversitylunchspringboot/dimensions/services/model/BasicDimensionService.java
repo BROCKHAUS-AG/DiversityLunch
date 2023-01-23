@@ -7,8 +7,9 @@ import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.Dimensi
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.BasicDimensionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.BasicDimensionSelectableOptionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.DimensionService;
-import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.services.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,6 @@ import java.util.Optional;
 public class BasicDimensionService implements DimensionService<
         BasicDimension,
         BasicDimensionSelectableOption> {
-
-
     private final BasicDimensionRepository repository;
     private final BasicDimensionSelectableOptionRepository selectableRepository;
     private final ProfileService profileService;
@@ -51,7 +50,6 @@ public class BasicDimensionService implements DimensionService<
                 saved = true;
             }
         } catch (DataIntegrityViolationException | ConstraintViolationException ignored) {
-
         }
         return saved;
     }
@@ -88,7 +86,7 @@ public class BasicDimensionService implements DimensionService<
 
         boolean result = false;
         BasicDimensionSelectableOption option = selectableOptionOptional.get();
-        BasicDimensionSelectableOption defaultOption = getDefaultOption(option);
+        BasicDimensionSelectableOption defaultOption = getDefaultOptionOfSameCategory(option);
 
         if (option != defaultOption) {
             replaceSelectedOptionInProfiles(option, defaultOption);
@@ -113,10 +111,10 @@ public class BasicDimensionService implements DimensionService<
         return selectableRepository.findById(selectableOptionId);
     }
 
-    /* Returns the default option of the same category as the given option.
-     * Requires existing selectable Option.
-     * */
-    private BasicDimensionSelectableOption getDefaultOption(BasicDimensionSelectableOption selectableOption) {
+    /** Returns the default option of the same category as the given option.
+      * Requires existing selectable Option.
+      */
+    private BasicDimensionSelectableOption getDefaultOptionOfSameCategory(BasicDimensionSelectableOption selectableOption) {
         // selectableOption should have been checked before and must have a category
         BasicDimension dimension = getDimension(selectableOption.getDimensionCategory()).get();
         return dimension.getDefaultValue();

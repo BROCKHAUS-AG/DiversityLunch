@@ -1,5 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.*;
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.dtos.*;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.dtos.*;
 import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.*;
 
 import java.util.List;

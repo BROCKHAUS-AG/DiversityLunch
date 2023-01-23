@@ -1,6 +1,5 @@
 package de.brockhausag.diversitylunchspringboot.dimensions.dtos.model.MultiSelectDimension;
 
-
 import lombok.Getter;
 import lombok.Setter;
 

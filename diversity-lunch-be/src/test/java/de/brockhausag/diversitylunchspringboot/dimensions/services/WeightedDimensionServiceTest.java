@@ -7,7 +7,7 @@ import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.Weighte
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.WeightedDimensionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.WeightedDimensionSelectableOptionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.model.WeightedDimensionService;
-import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.services.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

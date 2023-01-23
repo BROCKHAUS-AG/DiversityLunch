@@ -1,5 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.meeting.service;
 
+import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMsTeamsProperties;
+
 import com.azure.identity.ClientSecretCredential;
 import com.azure.identity.ClientSecretCredentialBuilder;
 import com.azure.spring.autoconfigure.aad.AADAuthenticationProperties;
@@ -8,7 +10,6 @@ import com.microsoft.graph.models.*;
 import com.microsoft.graph.requests.EventCollectionPage;
 import com.microsoft.graph.requests.GraphServiceClient;
 import com.microsoft.graph.requests.GroupCollectionPage;
-import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMsTeamsProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Request;
@@ -112,7 +113,9 @@ public class MicrosoftGraphService {
         return groupCollectionPage != null ? Optional.of(groupCollectionPage.getCurrentPage()) : Optional.empty();
     }
 
-/* TODO test with correct permissions    public void test() {
+/* TODO test with correct permissions
+
+    public void test() {
         GraphServiceClient<Request> graphClient = setUpGraphClient();
         String userId = "c5b1bdf1-f22e-49ad-bbac-db73e31340a4";
 

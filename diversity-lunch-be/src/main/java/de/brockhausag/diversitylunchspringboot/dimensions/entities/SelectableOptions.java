@@ -14,6 +14,4 @@ public interface SelectableOptions {
     DimensionCategory getDimensionCategory();
 
     void setDimensionCategory(DimensionCategory dimensionCategory);
-
-
 }

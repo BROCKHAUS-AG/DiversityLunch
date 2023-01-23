@@ -26,7 +26,6 @@ public class ProfileEntitySelectedMultiselectValue {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private MultiselectDimension multiselectDimension;
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

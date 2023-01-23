@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.dimensions.entities.model;
 
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.SelectableOptions;
+
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.OnDelete;

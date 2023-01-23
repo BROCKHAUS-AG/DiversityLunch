@@ -7,7 +7,7 @@ import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.Multise
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.MultiselectDimensionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.MultiselectDimensionSelectableOptionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.model.MultiselectDimensionService;
-import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.services.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

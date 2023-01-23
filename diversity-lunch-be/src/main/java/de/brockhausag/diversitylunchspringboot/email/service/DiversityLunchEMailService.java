@@ -2,7 +2,7 @@ package de.brockhausag.diversitylunchspringboot.email.service;
 
 import com.nimbusds.jose.util.StandardCharset;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
-import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.services.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchApplicationSettingsProperties;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMailProperties;

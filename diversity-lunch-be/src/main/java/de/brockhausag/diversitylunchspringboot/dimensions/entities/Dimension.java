@@ -19,6 +19,4 @@ public interface Dimension<
     Set<Selectables> getSelectableValues();
 
     void setSelectableValues(Set<Selectables> selectableValues);
-
-
 }

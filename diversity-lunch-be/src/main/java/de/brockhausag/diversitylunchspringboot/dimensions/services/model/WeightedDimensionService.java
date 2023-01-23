@@ -1,15 +1,16 @@
 package de.brockhausag.diversitylunchspringboot.dimensions.services.model;
 
-import com.google.common.collect.Lists;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.*;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.WeightedDimensionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.repositories.WeightedDimensionSelectableOptionRepository;
 import de.brockhausag.diversitylunchspringboot.dimensions.services.DimensionService;
-import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.services.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import com.google.common.collect.Lists;
 
 import javax.validation.ConstraintViolationException;
 import java.util.List;
@@ -82,10 +83,10 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
 
         boolean result = false;
         WeightedDimensionSelectableOption option = selectableOptionOptional.get();
-        WeightedDimensionSelectableOption defaultOption = getDefaultOption(option);
+        WeightedDimensionSelectableOption defaultOption = getDefaultOptionOfSameCategory(option);
 
         if (option != defaultOption) {
-            replaceSelectedOptionInProfiles(option, defaultOption); //replaceSelectedOptionInProfiles
+            replaceSelectedOptionInProfiles(option, defaultOption);
             result = deleteOption(option);
         }
         return result;
@@ -107,10 +108,10 @@ public class WeightedDimensionService implements DimensionService<WeightedDimens
         return selectableRepository.findById(selectableOptionId);
     }
 
-    /* Returns the default option of the same category as the given option.
-     * Requires existing selectable Option.
-     * */
-    private WeightedDimensionSelectableOption getDefaultOption(WeightedDimensionSelectableOption selectableOption) {
+    /** Returns the default option of the same category as the given option.
+      * Requires existing selectable Option.
+      */
+    private WeightedDimensionSelectableOption getDefaultOptionOfSameCategory(WeightedDimensionSelectableOption selectableOption) {
         // selectableOption should have been checked before and must have a category
         WeightedDimension dimension = getDimension(selectableOption.getDimensionCategory()).get();
         return dimension.getDefaultValue();

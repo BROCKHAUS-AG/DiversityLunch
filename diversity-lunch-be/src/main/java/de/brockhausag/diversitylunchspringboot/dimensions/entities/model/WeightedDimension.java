@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.dimensions.entities.model;
 
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.Dimension;
+
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.OnDelete;
@@ -20,7 +21,6 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 public class WeightedDimension implements Dimension<WeightedDimensionSelectableOption> {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -1,12 +1,12 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
-
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.ProfileEntitySelectedMultiselectValue;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimensionSelectableOption;
+
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -24,7 +24,6 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 public class ProfileEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -68,4 +67,3 @@ public class ProfileEntity {
         return getClass().hashCode();
     }
 }
-

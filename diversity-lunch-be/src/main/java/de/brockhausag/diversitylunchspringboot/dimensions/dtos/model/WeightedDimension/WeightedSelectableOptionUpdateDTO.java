@@ -7,11 +7,11 @@ import lombok.Setter;
 @Setter
 public class WeightedSelectableOptionUpdateDTO {
 
-    private  Long id;
+    private Long id;
 
     private String name;
 
-    private  Boolean ignoreInScoring;
+    private Boolean ignoreInScoring;
 
     private int weight;
 }

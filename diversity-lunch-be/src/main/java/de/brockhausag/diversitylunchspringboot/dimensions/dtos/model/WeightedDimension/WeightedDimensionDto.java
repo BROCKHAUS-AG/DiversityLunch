@@ -2,6 +2,7 @@ package de.brockhausag.diversitylunchspringboot.dimensions.dtos.model.WeightedDi
 
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimensionSelectableOption;
+
 import lombok.Getter;
 import lombok.Setter;
 

@@ -12,6 +12,7 @@ import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.Weighte
 import de.brockhausag.diversitylunchspringboot.match.records.ScoreAndCategory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,6 @@ import java.util.*;
 @RequiredArgsConstructor
 @Getter
 public class Matching {
-
     private static final int STANDARD_SCORE_BY_DIFFERENCE = 3;
     private static final int EQUAL_SCORE = 0;
     private final Random random;

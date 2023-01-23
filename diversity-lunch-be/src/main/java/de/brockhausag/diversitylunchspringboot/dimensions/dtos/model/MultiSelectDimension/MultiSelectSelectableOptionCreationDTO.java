@@ -3,6 +3,7 @@ package de.brockhausag.diversitylunchspringboot.dimensions.dtos.model.MultiSelec
 
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimensionSelectableOption;
+
 import lombok.Getter;
 import lombok.Setter;
 
