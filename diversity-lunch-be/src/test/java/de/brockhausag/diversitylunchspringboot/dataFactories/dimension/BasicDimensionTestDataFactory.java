@@ -2,13 +2,11 @@ package de.brockhausag.diversitylunchspringboot.dataFactories.dimension;
 
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimension;
 import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
-import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.*;
 
-import java.util.List;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class BasicDimensionTestDataFactory {
 

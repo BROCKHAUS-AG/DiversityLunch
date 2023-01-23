@@ -7,10 +7,7 @@ import de.brockhausag.diversitylunchspringboot.dimensions.services.model.Multise
 import de.brockhausag.diversitylunchspringboot.dimensions.services.model.WeightedDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.*;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.*;
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.dtos.*;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.dtos.*;
-import de.brockhausag.diversitylunchspringboot.profile.oldStructure.dtos.*;
-import de.brockhausag.diversitylunchspringboot.profile.oldStructure.mapper.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
