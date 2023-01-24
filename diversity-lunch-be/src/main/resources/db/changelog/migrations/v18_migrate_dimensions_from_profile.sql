@@ -17,8 +17,8 @@ INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_bas
             (SELECT b.id FROM basic_dimension b WHERE b.dimension_category_id = bdso.dimension_category_id)
      FROM basic_dimension_selectable_option bdso
               JOIN education_entity de ON bdso.value = de.descriptor AND bdso.dimension_category_id = (SELECT dc.id
-                                                                                                  FROM dimension_category dc
-                                                                                                  WHERE dc.description = 'Bildungsweg')
+                                                                                                       FROM dimension_category dc
+                                                                                                       WHERE dc.description = 'Bildungsweg')
               JOIN profile_entity p ON de.id = p.education_id);
 --------------------------------------
 INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
@@ -27,8 +27,8 @@ INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_bas
             (SELECT b.id FROM basic_dimension b WHERE b.dimension_category_id = bdso.dimension_category_id)
      FROM basic_dimension_selectable_option bdso
               JOIN gender_entity de ON bdso.value = de.descriptor AND bdso.dimension_category_id = (SELECT dc.id
-                                                                                                  FROM dimension_category dc
-                                                                                                  WHERE dc.description = 'Geschlechtliche Identität')
+                                                                                                    FROM dimension_category dc
+                                                                                                    WHERE dc.description = 'Geschlechtliche Identität')
               JOIN profile_entity p ON de.id = p.gender_id);
 --------------------------------------
 INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
@@ -37,8 +37,8 @@ INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_bas
             (SELECT b.id FROM basic_dimension b WHERE b.dimension_category_id = bdso.dimension_category_id)
      FROM basic_dimension_selectable_option bdso
               JOIN language_entity de ON bdso.value = de.descriptor AND bdso.dimension_category_id = (SELECT dc.id
-                                                                                                  FROM dimension_category dc
-                                                                                                  WHERE dc.description = 'Muttersprache')
+                                                                                                      FROM dimension_category dc
+                                                                                                      WHERE dc.description = 'Muttersprache')
               JOIN profile_entity p ON de.id = p.mother_tongue_id);--------------------------------------
 INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
     (SELECT p.id,
@@ -46,8 +46,8 @@ INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_bas
             (SELECT b.id FROM basic_dimension b WHERE b.dimension_category_id = bdso.dimension_category_id)
      FROM basic_dimension_selectable_option bdso
               JOIN country_entity de ON bdso.value = de.descriptor AND bdso.dimension_category_id = (SELECT dc.id
-                                                                                                  FROM dimension_category dc
-                                                                                                  WHERE dc.description = 'Ethnische Herkunft')
+                                                                                                     FROM dimension_category dc
+                                                                                                     WHERE dc.description = 'Ethnische Herkunft')
               JOIN profile_entity p ON de.id = p.origin_country_id);--------------------------------------
 INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
     (SELECT p.id,
@@ -55,8 +55,8 @@ INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_bas
             (SELECT b.id FROM basic_dimension b WHERE b.dimension_category_id = bdso.dimension_category_id)
      FROM basic_dimension_selectable_option bdso
               JOIN project_entity de ON bdso.value = de.descriptor AND bdso.dimension_category_id = (SELECT dc.id
-                                                                                                  FROM dimension_category dc
-                                                                                                  WHERE dc.description = 'Projekt')
+                                                                                                     FROM dimension_category dc
+                                                                                                     WHERE dc.description = 'Projekt')
               JOIN profile_entity p ON de.id = p.project_id);--------------------------------------
 INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
     (SELECT p.id,
@@ -64,17 +64,18 @@ INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_bas
             (SELECT b.id FROM basic_dimension b WHERE b.dimension_category_id = bdso.dimension_category_id)
      FROM basic_dimension_selectable_option bdso
               JOIN religion_entity de ON bdso.value = de.descriptor AND bdso.dimension_category_id = (SELECT dc.id
-                                                                                                  FROM dimension_category dc
-                                                                                                  WHERE dc.description = 'Religion')
+                                                                                                      FROM dimension_category dc
+                                                                                                      WHERE dc.description = 'Religion')
               JOIN profile_entity p ON de.id = p.religion_id);--------------------------------------
 INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
     (SELECT p.id,
             bdso.id,
             (SELECT b.id FROM basic_dimension b WHERE b.dimension_category_id = bdso.dimension_category_id)
      FROM basic_dimension_selectable_option bdso
-              JOIN sexual_orientation_entity de ON bdso.value = de.descriptor AND bdso.dimension_category_id = (SELECT dc.id
-                                                                                                  FROM dimension_category dc
-                                                                                                  WHERE dc.description = 'Sexuelle Orientierung')
+              JOIN sexual_orientation_entity de
+                   ON bdso.value = de.descriptor AND bdso.dimension_category_id = (SELECT dc.id
+                                                                                   FROM dimension_category dc
+                                                                                   WHERE dc.description = 'Sexuelle Orientierung')
               JOIN profile_entity p ON de.id = p.sexual_orientation_id);
 --------------------------------------
 INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
@@ -82,9 +83,10 @@ INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_bas
             bdso.id,
             (SELECT b.id FROM basic_dimension b WHERE b.dimension_category_id = bdso.dimension_category_id)
      FROM basic_dimension_selectable_option bdso
-              JOIN social_background_entity de ON bdso.value = de.descriptor AND bdso.dimension_category_id = (SELECT dc.id
-                                                                                                  FROM dimension_category dc
-                                                                                                  WHERE dc.description = 'Soziale Herkunft')
+              JOIN social_background_entity de
+                   ON bdso.value = de.descriptor AND bdso.dimension_category_id = (SELECT dc.id
+                                                                                   FROM dimension_category dc
+                                                                                   WHERE dc.description = 'Soziale Herkunft')
               JOIN profile_entity p ON de.id = p.social_background_id);
 --------------------------------------
 INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_basic_values_id, basic_dimension)
@@ -92,9 +94,10 @@ INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_bas
             bdso.id,
             (SELECT b.id FROM basic_dimension b WHERE b.dimension_category_id = bdso.dimension_category_id)
      FROM basic_dimension_selectable_option bdso
-              JOIN social_background_discrimination_entity de ON bdso.value = de.descriptor AND bdso.dimension_category_id = (SELECT dc.id
-                                                                                                  FROM dimension_category dc
-                                                                                                  WHERE dc.description = 'Diskriminierung aufgrund sozialer Herkunft')
+              JOIN social_background_discrimination_entity de
+                   ON bdso.value = de.descriptor AND bdso.dimension_category_id = (SELECT dc.id
+                                                                                   FROM dimension_category dc
+                                                                                   WHERE dc.description = 'Diskriminierung aufgrund sozialer Herkunft')
               JOIN profile_entity p ON de.id = p.social_background_discrimination_id);
 --------------------------------------
 
@@ -102,13 +105,14 @@ INSERT INTO profile_entity_selected_basic_values(profile_entity_id, selected_bas
 --------------------------------------
 INSERT INTO profile_entity_selected_weighted_values(profile_entity_id, selected_weighted_values_id, weighted_dimension)
     (SELECT p.id,
-        wdso.id,
-        (SELECT b.id FROM weighted_dimension b WHERE b.dimension_category_id = wdso.dimension_category_id)
-    FROM weighted_dimension_selectable_option wdso
-        JOIN work_experience_entity de ON wdso.value = de.descriptor AND wdso.dimension_category_id = (SELECT dc.id
-        FROM dimension_category dc
-        WHERE dc.description = 'Berufserfahrung')
-        JOIN profile_entity p ON de.id = p.work_experience_id);
+            wdso.id,
+            (SELECT b.id FROM weighted_dimension b WHERE b.dimension_category_id = wdso.dimension_category_id)
+     FROM weighted_dimension_selectable_option wdso
+              JOIN work_experience_entity de
+                   ON wdso.value = de.descriptor AND wdso.dimension_category_id = (SELECT dc.id
+                                                                                   FROM dimension_category dc
+                                                                                   WHERE dc.description = 'Berufserfahrung')
+              JOIN profile_entity p ON de.id = p.work_experience_id);
 --------------------------------------
 
 -- changeset dfuerst:v17-3
@@ -122,10 +126,13 @@ INSERT INTO profile_entity_selected_multiselect_value(profile_id, multiselect_di
 
 
 INSERT INTO profile_entity_selected_multiselect_value_selected_options(profile_entity_selected_multiselect_value_id, selected_options_id)
-    (SELECT a.id, b.hobby_id
-     FROM profile_entity p
-              JOIN profile_entity_selected_multiselect_value a on p.id = a.profile_id
-              JOIN profile_hobby b on p.id = b.profile_id);
+    (SELECT pesmv.id, mdso.id
+     FROM multiselect_dimension_selectable_option mdso
+              JOIN hobby_entity he ON mdso.value = he.descriptor AND mdso.dimension_category_id = (SELECT dc.id
+                                                                                                   FROM dimension_category dc
+                                                                                                   WHERE dc.description = 'Hobby')
+              JOIN profile_hobby ph ON he.id = ph.hobby_id
+              JOIN profile_entity_selected_multiselect_value pesmv ON pesmv.profile_id = ph.profile_id);
 
 -- changeset dfuerst v17-4
 ALTER TABLE profile_entity
