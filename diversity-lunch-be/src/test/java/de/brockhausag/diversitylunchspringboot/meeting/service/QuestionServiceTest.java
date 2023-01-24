@@ -1,17 +1,16 @@
 package de.brockhausag.diversitylunchspringboot.meeting.service;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
-import de.brockhausag.diversitylunchspringboot.dimensions.repositories.DimensionCategoryRepository;
-import de.brockhausag.diversitylunchspringboot.meeting.repository.QuestionRepository;
+import de.brockhausag.diversitylunchspringboot.generics.dimensionCategory.DimensionCategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Collections;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 
@@ -19,24 +18,18 @@ import static org.mockito.Mockito.*;
 class QuestionServiceTest {
 
     @Mock
-    private QuestionRepository questionRepository;
-    @InjectMocks
-    private QuestionService questionService;
-    @Mock
     private DimensionCategoryRepository categoryRepository;
 
+    @InjectMocks
+    private QuestionService questionService;
 
     @Test
     void getQuestionForCategory_returnsEmptyListIfNoCategoryIsFound() {
-        // Arrange
-        DimensionCategory input = DimensionCategory.builder().id(99L).build();
-        when(questionRepository.getAllByCategoryId(anyLong())).thenReturn(Collections.emptyList());
+        when(categoryRepository.getDimensionCategoryEntityByDescriptor(any())).thenReturn(Optional.empty());
 
-        // Act
-        var actual = questionService.getQuestionsForCategory(input);
+        var actual = questionService.getQuestionsForCategory("");
 
-        // Assert
         assertEquals(0, actual.size());
-        verify(questionRepository, times(1)).getAllByCategoryId(anyLong());
+        verify(categoryRepository, times(1)).getDimensionCategoryEntityByDescriptor(any());
     }
 }

@@ -1,7 +1,5 @@
 package de.brockhausag.diversitylunchspringboot.meeting.service;
 
-import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMsTeamsProperties;
-
 import com.azure.identity.ClientSecretCredential;
 import com.azure.identity.ClientSecretCredentialBuilder;
 import com.azure.spring.autoconfigure.aad.AADAuthenticationProperties;
@@ -10,8 +8,8 @@ import com.microsoft.graph.models.*;
 import com.microsoft.graph.requests.EventCollectionPage;
 import com.microsoft.graph.requests.GraphServiceClient;
 import com.microsoft.graph.requests.GroupCollectionPage;
+import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMsTeamsProperties;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import okhttp3.Request;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +22,6 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class MicrosoftGraphService {
 
 
@@ -59,7 +56,7 @@ public class MicrosoftGraphService {
 
         String userId = diversityLunchMsTeamsProperties.getDiversityLunchUserId();
 
-        return graphClient.users("5f75da21-86f9-434a-bc0b-bddf6e1a36e1").events().buildRequest().post(event);
+        return graphClient.users(userId).events().buildRequest().post(event);
     }
 
     public void cancelEvent(String eventId, String cancellationMessage)
@@ -112,25 +109,4 @@ public class MicrosoftGraphService {
         GroupCollectionPage groupCollectionPage = graphClient.groups().buildRequest().get();
         return groupCollectionPage != null ? Optional.of(groupCollectionPage.getCurrentPage()) : Optional.empty();
     }
-
-/* TODO test with correct permissions
-
-    public void test() {
-        GraphServiceClient<Request> graphClient = setUpGraphClient();
-        String userId = "c5b1bdf1-f22e-49ad-bbac-db73e31340a4";
-
-        LocalDateTime dateTime = LocalDateTime.now();
-        String dateTimeString = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-        EventCollectionPage eventCollectionPage = graphClient.users(userId)
-                .calendar()
-                .events()
-                .buildRequest()
-                .filter("start/dateTime ge '" + dateTimeString +"'")
-                .top(10)
-                .get();
-        for (Event event : eventCollectionPage.getCurrentPage()) {
-            log.info(event.subject);
-        }
-    }*/
 }

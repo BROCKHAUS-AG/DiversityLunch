@@ -1,34 +1,27 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.EducationDto;
-import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionMapper;
-
-import lombok.RequiredArgsConstructor;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.EducationEntity;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
-public class EducationMapper implements DimensionMapper<EducationDto, BasicDimensionSelectableOption> {
-
-    private final BasicDimensionService dimensionService;
-
+public class EducationMapper implements DimensionMapper<EducationDto, EducationEntity> {
     @Override
-    public EducationDto entityToDto(BasicDimensionSelectableOption entity) {
-        EducationDto EducationDto = new EducationDto();
-        EducationDto.setId(entity.getId());
-        EducationDto.setDescriptor(entity.getValue());
-        return EducationDto;
+    public EducationDto entityToDto(EducationEntity entity) {
+        EducationDto educationDto = new EducationDto();
+        educationDto.setId(entity.getId());
+        educationDto.setDescriptor(entity.getDescriptor());
+        educationDto.setDefault(entity.isDefault());
+        return educationDto;
     }
 
     @Override
-    public BasicDimensionSelectableOption dtoToEntity(EducationDto dto) {
-        return BasicDimensionSelectableOption.builder()
-                .id(dto.getId())
-                .value(dto.getDescriptor())
-                .ignoreInScoring(false)
-                .dimensionCategory(dimensionService.getDimension("Bildungsweg").get().getDimensionCategory())
-                .build();
+    public EducationEntity dtoToEntity(EducationDto dto) {
+        EducationEntity educationEntity = new EducationEntity();
+        educationEntity.setId(dto.getId());
+        educationEntity.setDescriptor(dto.getDescriptor());
+        educationEntity.setDefault(dto.isDefault());
+        return educationEntity;
     }
 }

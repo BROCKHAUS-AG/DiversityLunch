@@ -1,34 +1,28 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.SocialBackgroundDiscriminationDto;
-import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionMapper;
-
-import lombok.RequiredArgsConstructor;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.SocialBackgroundDiscriminationEntity;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
-public class SocialBackgroundDiscriminationMapper implements DimensionMapper<SocialBackgroundDiscriminationDto, BasicDimensionSelectableOption> {
-
-    private final BasicDimensionService dimensionService;
+public class SocialBackgroundDiscriminationMapper implements DimensionMapper<SocialBackgroundDiscriminationDto, SocialBackgroundDiscriminationEntity> {
 
     @Override
-    public SocialBackgroundDiscriminationDto entityToDto(BasicDimensionSelectableOption entity) {
-        SocialBackgroundDiscriminationDto SocialBackgroundDiscriminationDto = new SocialBackgroundDiscriminationDto();
-        SocialBackgroundDiscriminationDto.setId(entity.getId());
-        SocialBackgroundDiscriminationDto.setDescriptor(entity.getValue());
-        return SocialBackgroundDiscriminationDto;
+    public SocialBackgroundDiscriminationDto entityToDto(SocialBackgroundDiscriminationEntity entity) {
+        SocialBackgroundDiscriminationDto discriminationDto = new SocialBackgroundDiscriminationDto();
+        discriminationDto.setId(entity.getId());
+        discriminationDto.setDescriptor(entity.getDescriptor());
+        discriminationDto.setDefault(entity.isDefault());
+        return discriminationDto;
     }
 
     @Override
-    public BasicDimensionSelectableOption dtoToEntity(SocialBackgroundDiscriminationDto dto) {
-        return BasicDimensionSelectableOption.builder()
-                .id(dto.getId())
-                .value(dto.getDescriptor())
-                .ignoreInScoring(false)
-                .dimensionCategory(dimensionService.getDimension("Diskriminierung aufgrund sozialer Herkunft").get().getDimensionCategory())
-                .build();
+    public SocialBackgroundDiscriminationEntity dtoToEntity(SocialBackgroundDiscriminationDto dto) {
+        SocialBackgroundDiscriminationEntity discriminationEntity = new SocialBackgroundDiscriminationEntity();
+        discriminationEntity.setId(dto.getId());
+        discriminationEntity.setDescriptor(dto.getDescriptor());
+        discriminationEntity.setDefault(dto.isDefault());
+        return discriminationEntity;
     }
 }
