@@ -4,6 +4,7 @@ import Faq from '../../components/faq/faq';
 
 export const Information = () => (
     <div className="Information">
+        <h2>Informationen</h2>
         <p className="Information-info-text">
             Die Diversity Lunch App ist der Beitrag der BROCKHAUS AG zur Diversity Challenge 2021 des
             Charta der Vielfalt e. V.
