@@ -2,8 +2,8 @@ package de.brockhausag.diversitylunchspringboot.profile.serviceTest;
 
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
-import de.brockhausag.diversitylunchspringboot.profile.repository.ProfileRepository;
-import de.brockhausag.diversitylunchspringboot.profile.services.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +29,7 @@ class ProfileServiceTest {
     private ProfileService service;
 
     @Test
-    void testGetProfile_withNotExistingProfile_shouldReturnEmptyOptional() {
+    void testProfileNonexistent() {
         //Assemble
         Long id = 15L;
         when(profileRepository.findById(id)).thenReturn(Optional.empty());
@@ -42,7 +42,7 @@ class ProfileServiceTest {
     }
 
     @Test
-    void testGetProfile_withExistingProfile_shouldReturnProfile() {
+    void testGetProfile() {
         //Assemble
         ProfileEntity entity = this.factory.buildEntity(1);
         long id = entity.getId();
@@ -57,7 +57,7 @@ class ProfileServiceTest {
     }
 
     @Test
-    void testCreateProfile_withCompleteProfile_shouldReturnProfile() {
+    void testCreateProfile() {
         ProfileEntity expected = this.factory.buildEntity(1);
         ProfileEntity createEntity = this.factory.buildEntity(1);
 
@@ -72,15 +72,16 @@ class ProfileServiceTest {
     }
 
     @Test
-    void testUpdateProfile_withCompleteAndExistingProfile_shouldReturnProfile() {
+    void testUpdateProfile() {
         ProfileEntity updateEntity = this.factory.buildEntity(1);
 
-        when(this.profileRepository.existsById(updateEntity.getId())).thenReturn(true);
         when(this.profileRepository.save(updateEntity)).thenReturn(updateEntity);
 
         Optional<ProfileEntity> entity = this.service.updateProfile(updateEntity);
 
         assertTrue(entity.isPresent());
         assertEquals(updateEntity, entity.get());
+
+
     }
 }

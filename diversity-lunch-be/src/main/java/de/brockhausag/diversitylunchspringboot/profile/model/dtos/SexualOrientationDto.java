@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.dtos;
 
-import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionDto;
+import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -10,10 +10,8 @@ import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
-public class SexualOrientationDto implements DimensionDto {
+@Data
+public class SexualOrientationDto implements DefaultDimensionDto {
     private Long id;
     @Schema(description = "The sexuality of a Person", example = "Asexual")
     @Size(min = 2, max = 100, message = "Sexuality (descriptor) must be between 2 and 100 chars long")

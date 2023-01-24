@@ -1,34 +1,28 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.DietDto;
-import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionMapper;
-
-import lombok.RequiredArgsConstructor;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.DietEntity;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
-public class DietMapper implements DimensionMapper<DietDto, BasicDimensionSelectableOption> {
-
-    private final BasicDimensionService dimensionService;
+public class DietMapper implements DimensionMapper<DietDto, DietEntity> {
 
     @Override
-    public DietDto entityToDto(BasicDimensionSelectableOption entity) {
-        DietDto DietDto = new DietDto();
-        DietDto.setId(entity.getId());
-        DietDto.setDescriptor(entity.getValue());
-        return DietDto;
+    public DietDto entityToDto(DietEntity entity) {
+        DietDto dietDto = new DietDto();
+        dietDto.setId(entity.getId());
+        dietDto.setDescriptor(entity.getDescriptor());
+        dietDto.setDefault(entity.isDefault());
+        return dietDto;
     }
 
     @Override
-    public BasicDimensionSelectableOption dtoToEntity(DietDto dto) {
-        return BasicDimensionSelectableOption.builder()
-                .id(dto.getId())
-                .value(dto.getDescriptor())
-                .ignoreInScoring(false)
-                .dimensionCategory(dimensionService.getDimension("Ernährung").get().getDimensionCategory())
-                .build();
+    public DietEntity dtoToEntity(DietDto dto) {
+        DietEntity dietEntity = new DietEntity();
+        dietEntity.setId(dto.getId());
+        dietEntity.setDescriptor(dto.getDescriptor());
+        dietEntity.setDefault(dto.isDefault());
+        return dietEntity;
     }
 }

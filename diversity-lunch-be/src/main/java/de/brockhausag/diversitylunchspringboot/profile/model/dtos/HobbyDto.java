@@ -1,8 +1,10 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.dtos;
 
-import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionDto;
+import de.brockhausag.diversitylunchspringboot.generics.multiDimension.MultiDimensionDto;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -10,10 +12,8 @@ import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
-public class HobbyDto implements DimensionDto {
+@Data
+public class HobbyDto implements MultiDimensionDto {
 
     private Long id;
 
@@ -22,4 +22,5 @@ public class HobbyDto implements DimensionDto {
     @NotNull
     @NotBlank
     private String descriptor;
+
 }

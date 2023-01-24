@@ -1,9 +1,9 @@
 package de.brockhausag.diversitylunchspringboot.profile.controller;
 
-import de.brockhausag.diversitylunchspringboot.profile.services.ProfileService;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.ProfileMapper;
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -81,9 +81,16 @@ public class ProfileController {
     ) {
         log.debug("CREATE PROFILE OF USER: " + accountId);
 
-        ProfileEntity createEntityOptional = this.profileMapper.dtoToEntity(createProfileDto);
+        Optional<ProfileEntity> createEntityOptional = this.profileMapper.dtoToEntity(createProfileDto);
 
-        Optional<ProfileEntity> optionalEntity = this.profileService.createProfile(createEntityOptional, accountId);
+        if (createEntityOptional.isEmpty()) {
+            log.error("Create profile failed for account " + accountId);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        createEntityOptional.get().setWasChangedByAdmin(false);
+
+        Optional<ProfileEntity> optionalEntity = this.profileService.createProfile(createEntityOptional.get(), accountId);
 
         if (optionalEntity.isEmpty()) {
             log.error("Create profile failed for account " + accountId);
@@ -114,9 +121,13 @@ public class ProfileController {
         }
 
         log.info("UPDATE PROFILE " + updateProfileDto);
-        ProfileEntity updateEntityOptional = this.profileMapper.dtoToEntity(updateProfileDto);
+        Optional<ProfileEntity> updateEntityOptional = this.profileMapper.dtoToEntity(updateProfileDto);
+        if (updateEntityOptional.isEmpty()) {
+            log.error("Update profile failed.");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
-        Optional<ProfileEntity> entity = this.profileService.updateProfile(updateEntityOptional);
+        Optional<ProfileEntity> entity = this.profileService.updateProfile(updateEntityOptional.get());
 
         if (entity.isEmpty()) {
             log.info("Update profile failed.");
@@ -128,4 +139,24 @@ public class ProfileController {
         ProfileDto dto = this.profileMapper.entityToDto(entity.get());
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
+
+    @Operation(summary = "Bestätigt, dass der User die Änderung seines Profils wahrgenommen hat")
+    @PutMapping("/{id}/profilechangeAccepted")
+    @PreAuthorize("isProfileOwner(#id)")
+    public ResponseEntity<Void> setWasChangedByAdminFlagToFalse(@PathVariable Long id){
+        Optional<ProfileEntity> profile = profileService.getProfile(id);
+
+        if(profile.isEmpty()){
+            log.warn("Profile with id %d not found".formatted(id));
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        profile.get().setWasChangedByAdmin(false);
+        var changedProfile = profileService.updateProfile(profile.get());
+        if (!changedProfile.equals(profile)){
+            log.error("Profile could not be updated");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return  new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

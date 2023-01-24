@@ -1,24 +1,19 @@
 package de.brockhausag.diversitylunchspringboot.profile.controller;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimension;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.SocialBackgroundDiscriminationDto;
-import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionModelController;
+import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionModelController;
+import de.brockhausag.diversitylunchspringboot.profile.data.SocialBackgroundDiscriminationRepository;
+import de.brockhausag.diversitylunchspringboot.profile.logic.SocialBackgroundDiscriminationService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.SocialBackgroundDiscriminationMapper;
-
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.SocialBackgroundDiscriminationDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.SocialBackgroundDiscriminationEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/social-background-discrimination")
 @RestController
-public class SocialBackgroundDiscriminationController extends DimensionModelController<
-        SocialBackgroundDiscriminationDto,
-        BasicDimensionSelectableOption,
-        BasicDimension,
-        BasicDimensionService,
-        SocialBackgroundDiscriminationMapper> {
-    public SocialBackgroundDiscriminationController(SocialBackgroundDiscriminationMapper mapper, BasicDimensionService service) {
-        super(mapper, service, "Diskriminierung aufgrund sozialer Herkunft");
+public class SocialBackgroundDiscriminationController extends DefaultDimensionModelController<
+        SocialBackgroundDiscriminationDto, SocialBackgroundDiscriminationEntity, SocialBackgroundDiscriminationRepository, SocialBackgroundDiscriminationService, SocialBackgroundDiscriminationMapper> {
+    public SocialBackgroundDiscriminationController(SocialBackgroundDiscriminationMapper mapper, SocialBackgroundDiscriminationService service) {
+        super(mapper, service);
     }
 }

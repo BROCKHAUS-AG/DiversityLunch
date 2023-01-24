@@ -1,34 +1,30 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.SocialBackgroundDto;
-import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionMapper;
-
-import lombok.RequiredArgsConstructor;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.SocialBackgroundEntity;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
-@RequiredArgsConstructor
-public class SocialBackgroundMapper implements DimensionMapper<SocialBackgroundDto, BasicDimensionSelectableOption> {
-
-    private final BasicDimensionService dimensionService;
-
+public class SocialBackgroundMapper implements DimensionMapper<SocialBackgroundDto, SocialBackgroundEntity> {
     @Override
-    public SocialBackgroundDto entityToDto(BasicDimensionSelectableOption entity) {
-        SocialBackgroundDto SocialBackgroundDto = new SocialBackgroundDto();
-        SocialBackgroundDto.setId(entity.getId());
-        SocialBackgroundDto.setDescriptor(entity.getValue());
-        return SocialBackgroundDto;
+    public SocialBackgroundDto entityToDto(SocialBackgroundEntity entity) {
+        SocialBackgroundDto socialBackgroundDto = new SocialBackgroundDto();
+        socialBackgroundDto.setId(entity.getId());
+        socialBackgroundDto.setDescriptor(entity.getDescriptor());
+        socialBackgroundDto.setDefault(entity.isDefault());
+        return socialBackgroundDto;
     }
 
     @Override
-    public BasicDimensionSelectableOption dtoToEntity(SocialBackgroundDto dto) {
-        return BasicDimensionSelectableOption.builder()
-                .id(dto.getId())
-                .value(dto.getDescriptor())
-                .ignoreInScoring(false)
-                .dimensionCategory(dimensionService.getDimension("Soziale Herkunft").get().getDimensionCategory())
-                .build();
+    public SocialBackgroundEntity dtoToEntity(SocialBackgroundDto dto) {
+        SocialBackgroundEntity socialBackgroundEntity = new SocialBackgroundEntity();
+        socialBackgroundEntity.setId(dto.getId());
+        socialBackgroundEntity.setDescriptor(dto.getDescriptor());
+        socialBackgroundEntity.setDefault(dto.isDefault());
+        return socialBackgroundEntity;
     }
 }

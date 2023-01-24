@@ -1,34 +1,28 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProjectDto;
-import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionMapper;
-
-import lombok.RequiredArgsConstructor;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProjectEntity;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
-public class ProjectMapper implements DimensionMapper<ProjectDto, BasicDimensionSelectableOption> {
-
-    private final BasicDimensionService dimensionService;
+public class ProjectMapper implements DimensionMapper<ProjectDto, ProjectEntity> {
 
     @Override
-    public ProjectDto entityToDto(BasicDimensionSelectableOption entity) {
-        ProjectDto ProjectDto = new ProjectDto();
-        ProjectDto.setId(entity.getId());
-        ProjectDto.setDescriptor(entity.getValue());
-        return ProjectDto;
+    public ProjectDto entityToDto(ProjectEntity entity) {
+        ProjectDto projectDto = new ProjectDto();
+        projectDto.setId(entity.getId());
+        projectDto.setDescriptor(entity.getDescriptor());
+        projectDto.setDefault(entity.isDefault());
+        return projectDto;
     }
 
     @Override
-    public BasicDimensionSelectableOption dtoToEntity(ProjectDto dto) {
-        return BasicDimensionSelectableOption.builder()
-                .id(dto.getId())
-                .value(dto.getDescriptor())
-                .ignoreInScoring(false)
-                .dimensionCategory(dimensionService.getDimension("Projekt").get().getDimensionCategory())
-                .build();
+    public ProjectEntity dtoToEntity(ProjectDto dto) {
+        ProjectEntity projectEntity = new ProjectEntity();
+        projectEntity.setId(dto.getId());
+        projectEntity.setDescriptor(dto.getDescriptor());
+        projectEntity.setDefault(dto.isDefault());
+        return projectEntity;
     }
 }

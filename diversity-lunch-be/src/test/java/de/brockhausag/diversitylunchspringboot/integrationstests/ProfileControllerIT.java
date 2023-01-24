@@ -4,16 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.config.SecurityConfig;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
-import de.brockhausag.diversitylunchspringboot.dimensions.services.model.MultiselectDimensionService;
-import de.brockhausag.diversitylunchspringboot.dimensions.services.model.WeightedDimensionService;
 import de.brockhausag.diversitylunchspringboot.integrationDataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
-import de.brockhausag.diversitylunchspringboot.profile.services.ProfileService;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.ProfileMapper;
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -65,12 +61,6 @@ class ProfileControllerIT {
     private AccountService accountService;
     @Autowired
     private ProfileService profileService;
-    @Autowired
-    private BasicDimensionService basicDimensionService;
-    @Autowired
-    private WeightedDimensionService weightedDimensionService;
-    @Autowired
-    private MultiselectDimensionService multiselectDimensionService;
     @Mock
     private MicrosoftGraphService microsoftGraphService;
 
@@ -91,6 +81,7 @@ class ProfileControllerIT {
         profileService.createProfile(otherProfileEntity, otherAccountEntity.getId()).orElseThrow();
     }
 
+
     @Test
     void testGetProfile_withValidId_thenOKWithExpectedProfile() throws Exception {
         this.mockMvc
@@ -102,20 +93,17 @@ class ProfileControllerIT {
                 .andExpect(jsonPath("$.name").value(myProfileEntity.getName()))
                 .andExpect(jsonPath("$.email").value(myProfileEntity.getEmail()))
                 .andExpect(jsonPath("$.birthYear").value(myProfileEntity.getBirthYear()))
-                .andExpect(jsonPath("$.project.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Projekt").get()).getValue()))
-                .andExpect(jsonPath("$.diet.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Ernährung").get()).getValue()))
-                .andExpect(jsonPath("$.education.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Bildungsweg").get()).getValue()))
-                .andExpect(jsonPath("$.gender.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Geschlechtliche Identität").get()).getValue()))
-                .andExpect(jsonPath("$.hobby[0].descriptor").value(getSelectedMultiselect("Hobby", 0).getValue()))
-                .andExpect(jsonPath("$.hobby[1].descriptor").value(getSelectedMultiselect("Hobby", 1).getValue()))
-                .andExpect(jsonPath("$.hobby[2].descriptor").value(getSelectedMultiselect("Hobby", 2).getValue()))
-                .andExpect(jsonPath("$.motherTongue.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Muttersprache").get()).getValue()))
-                .andExpect(jsonPath("$.originCountry.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Ethnische Herkunft").get()).getValue()))
-                .andExpect(jsonPath("$.religion.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Religion").get()).getValue()))
-                .andExpect(jsonPath("$.sexualOrientation.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Sexuelle Orientierung").get()).getValue()))
-                .andExpect(jsonPath("$.socialBackground.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Soziale Herkunft").get()).getValue()))
-                .andExpect(jsonPath("$.socialBackgroundDiscrimination.descriptor").value(myProfileEntity.getSelectedBasicValues().get(basicDimensionService.getDimension("Diskriminierung aufgrund sozialer Herkunft").get()).getValue()))
-                .andExpect(jsonPath("$.workExperience.descriptor").value(myProfileEntity.getSelectedWeightedValues().get(weightedDimensionService.getDimension("Berufserfahrung").get()).getValue()));
+                .andExpect(jsonPath("$.project.descriptor").value(myProfileEntity.getProject().getDescriptor()))
+                .andExpect(jsonPath("$.diet.descriptor").value(myProfileEntity.getDiet().getDescriptor()))
+                .andExpect(jsonPath("$.education.descriptor").value(myProfileEntity.getEducation().getDescriptor()))
+                .andExpect(jsonPath("$.gender.descriptor").value(myProfileEntity.getGender().getDescriptor()))
+                .andExpect(jsonPath("$.hobby[0].descriptor").value(myProfileEntity.getHobby().get(0).getDescriptor()))
+                .andExpect(jsonPath("$.hobby[1].descriptor").value(myProfileEntity.getHobby().get(1).getDescriptor()))
+                .andExpect(jsonPath("$.hobby[2].descriptor").value(myProfileEntity.getHobby().get(2).getDescriptor()))
+                .andExpect(jsonPath("$.motherTongue.descriptor").value(myProfileEntity.getMotherTongue().getDescriptor()))
+                .andExpect(jsonPath("$.originCountry.descriptor").value(myProfileEntity.getOriginCountry().getDescriptor()))
+                .andExpect(jsonPath("$.religion.descriptor").value(myProfileEntity.getReligion().getDescriptor()))
+                .andExpect(jsonPath("$.workExperience.descriptor").value(myProfileEntity.getWorkExperience().getDescriptor()));
     }
 
     @Test
@@ -175,14 +163,5 @@ class ProfileControllerIT {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(profileJSON)
                 ).andExpect(status().isForbidden());
-    }
-
-    MultiselectDimensionSelectableOption getSelectedMultiselect(String dimensionName, int selected) {
-        var options = myProfileEntity.getSelectedMultiselectValues().get(multiselectDimensionService.getDimension(dimensionName).get()).getSelectedOptions().iterator();
-        MultiselectDimensionSelectableOption result = options.next();
-        while(selected-- > 0 && options.hasNext()) {
-            result = options.next();
-        }
-        return result;
     }
 }
