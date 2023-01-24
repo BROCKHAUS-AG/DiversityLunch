@@ -81,7 +81,7 @@ export const Dashboard = () => {
                                 <h2>2.</h2>
                                 <h4>Möglichen Termin angeben</h4>
                                 <div>
-                                    <Link className="link-container" to="/add+meetings">
+                                    <Link className="link-container" to="/add+meetings/choose+date">
                                         <button>Termine finden</button>
                                     </Link>
                                 </div>
