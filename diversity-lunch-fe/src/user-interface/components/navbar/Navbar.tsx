@@ -9,7 +9,6 @@ import { NavbarData } from './NavbarData';
 // STYLES
 import './navbar.scss';
 import { UserVoucherIcon } from '../user-voucher-icon/user-voucher-icon';
-import { CloseSite } from '../close-site/close-site';
 import { AdminPanelIcon } from '../admin-panel-icon/admin-panel-icon';
 import { TileIcon } from '../tile-icon/tile-icon';
 import { Role } from '../../../model/Role';
@@ -49,7 +48,6 @@ export const Navbar = () => {
                                         <img alt="icon menu" className="icon-menu" src={iconMenu} />
                                     </Link>
                                 </div>
-                                <CloseSite />
                             </div>
                             <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
                                 <ul className="nav-menu-items">
