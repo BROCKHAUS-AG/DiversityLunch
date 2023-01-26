@@ -12,6 +12,7 @@
   .UpcomingMeetings{
     width: 100%;
     display: block;
+    text-align: center;
   }
 
 }
@@ -30,4 +31,6 @@
 .UpcomingMeetings-subheader{
   font-size: 1.2em;
   margin-top:5%;
+  color: #575756;
+  font-family: SourceSansProRegular, sans-serif;
 }

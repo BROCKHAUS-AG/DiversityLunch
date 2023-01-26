@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './profile.scss';
 import { Profile } from '../../../model/Profile';
-import { isValidProfile, isUpdatedProfile } from '../../../utils/validators/profile-validator';
+import { isUpdatedProfile, isValidProfile } from '../../../utils/validators/profile-validator';
 import { ProfileForm } from '../../components/profile-form/profile-form';
 import { AppStoreState } from '../../../data/app-store';
 import { updateProfile } from '../../../data/profile/profile.actions';
@@ -29,7 +29,7 @@ export const ProfileOverview = () => {
         <section className="view">
             <div className="profile-overview-wrapper">
                 <div className="Profile-name-container">
-                    <h3>{`${profile.name}`}</h3>
+                    <h2>{`${profile.name}`}</h2>
                 </div>
                 {profile.name !== ''
                     && <ProfileForm initialProfile={profile} onSubmit={submit} checkValidity={isUpdated} />}

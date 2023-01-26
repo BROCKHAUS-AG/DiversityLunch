@@ -44,7 +44,7 @@ export const Dashboard = () => {
 
     return (
         <div className="Dashboard">
-            <h1>Willkommen!</h1>
+            <h1>WILKOMMEN</h1>
             <div className="Dashboard-container">
                 <div className="row">
                     <div className="column">

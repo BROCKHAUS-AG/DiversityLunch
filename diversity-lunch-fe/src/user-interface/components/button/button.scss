@@ -5,6 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border: solid white;
 
   .CustomButton{
     width: 100%;
@@ -17,6 +18,7 @@
   .CustomButton-container{
     padding: 5px;
     display: block;
+    border: solid white;
   }
 }
 
