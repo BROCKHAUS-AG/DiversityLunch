@@ -1,0 +1,183 @@
+package de.brockhausag.diversitylunchspringboot.profile.controllerTest;
+
+import de.brockhausag.diversitylunchspringboot.dataFactories.BaseModelTestDataFactory;
+import de.brockhausag.diversitylunchspringboot.dataFactories.TestDefaultDimensionDto;
+import de.brockhausag.diversitylunchspringboot.dataFactories.dimension.TestDefaultDimensionEntity;
+import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionEntityService;
+import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionModelController;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
+import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionRepository;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+public class GenericDefaultDimensionModelControllerTest {
+    private BaseModelTestDataFactory factory;
+    @Mock
+    private DimensionMapper<TestDefaultDimensionDto, TestDefaultDimensionEntity> dimensionMapper;
+    @Mock
+    private TestServiceType service;
+    @InjectMocks
+    private DefaultDimensionModelController<TestDefaultDimensionDto, TestDefaultDimensionEntity,
+            TestRepositoryType, TestServiceType, DimensionMapper<TestDefaultDimensionDto, TestDefaultDimensionEntity>> controller;
+
+    @BeforeEach
+    void setup() {
+        this.factory = new BaseModelTestDataFactory();
+    }
+
+    @Test
+    void testGetOne_withExistingId_returnsOkWithTestBaseDto() {
+        //Arrange
+        TestDefaultDimensionDto expectedDto = factory.buildDto(1);
+        TestDefaultDimensionEntity existingEntity = factory.buildEntity(1);
+        ResponseEntity<TestDefaultDimensionDto> expectedResponse = new ResponseEntity<>(expectedDto, HttpStatus.OK);
+
+        when(service.getEntityById(existingEntity.getId())).thenReturn(Optional.of(existingEntity));
+        when(dimensionMapper.entityToDto(existingEntity)).thenReturn(expectedDto);
+
+        //Act
+        ResponseEntity<?> actualResponse = controller.getOne(existingEntity.getId());
+
+        //Assert
+        assertEquals(expectedResponse.getStatusCode(), actualResponse.getStatusCode());
+        assertEquals(expectedResponse.getBody(), actualResponse.getBody());
+    }
+
+    @Test
+    void testGetOne_withNotExistingId_returnsNotFound() {
+        //Arrange
+        Long notExistingId = 666L;
+
+        when(service.getEntityById(notExistingId)).thenReturn(Optional.empty());
+
+        //Act
+        ResponseEntity<?> actualResponse = controller.getOne(notExistingId);
+
+        //Assert
+        assertFalse(actualResponse.hasBody());
+        assertEquals(HttpStatus.NOT_FOUND, actualResponse.getStatusCode());
+    }
+
+    @Test
+    void testGetAll_withNoEntitiesInRepository_returnsEmptyList() {
+        //Arrange
+        List<TestDefaultDimensionDto> emptyDtoList = Collections.emptyList();
+        List<TestDefaultDimensionEntity> emptyEntityList = Collections.emptyList();
+        ResponseEntity<List<TestDefaultDimensionDto>> expectedResponse = new ResponseEntity<>(
+                emptyDtoList,
+                HttpStatus.OK
+        );
+
+        when(service.getAllEntities()).thenReturn(emptyEntityList);
+        when(dimensionMapper.entityToDto(emptyEntityList)).thenReturn(emptyDtoList);
+        //Act
+        ResponseEntity<List<TestDefaultDimensionDto>> actualResponse = controller.getAll();
+
+        //Assert
+        assertEquals(expectedResponse.getBody(), actualResponse.getBody());
+        assertEquals(expectedResponse.getStatusCode(), actualResponse.getStatusCode());
+    }
+
+    @Test
+    void testGetAllCountries_withThreeEntitiesInRepository_returnsListOfThreeTestBaseEntities() {
+        //Arrange
+        List<TestDefaultDimensionEntity> entityList = Arrays.asList(factory.buildEntity(1),
+                factory.buildEntity(2), factory.buildEntity(3));
+        List<TestDefaultDimensionDto> dtoList = Arrays.asList(factory.buildDto(1),
+                factory.buildDto(2), factory.buildDto(3));
+
+        ResponseEntity<List<TestDefaultDimensionDto>> expectedResponse = new ResponseEntity<>(
+                dtoList,
+                HttpStatus.OK
+        );
+
+        when(service.getAllEntities()).thenReturn(entityList);
+        when(dimensionMapper.entityToDto(entityList)).thenReturn(dtoList);
+        //Arrange
+        ResponseEntity<List<TestDefaultDimensionDto>> actualResponse = controller.getAll();
+
+        //Assert
+        assertEquals(expectedResponse.getBody(), actualResponse.getBody());
+        assertEquals(expectedResponse.getStatusCode(), actualResponse.getStatusCode());
+    }
+
+    @Test
+    void testPostOne_calledThreeTimesWithSameDto_callCreateEntityThreeTimesWithMappedEntity() {
+        TestDefaultDimensionDto dto = factory.buildDto(1);
+        TestDefaultDimensionEntity entity = dimensionMapper.dtoToEntity(dto);
+        when(service.createEntity(entity)).thenReturn(entity);
+        final int AMOUNT = 3;
+
+        for (int i = 0; i < AMOUNT; ++i) {
+            controller.postOne(dto);
+        }
+
+        verify(service, times(AMOUNT)).createEntity(entity);
+    }
+
+    @Test
+    void testPutOne_calledThreeTimesWithSameDto_callCreateOrUpdateEntityThreeTimesWithMappedEntity() {
+        TestDefaultDimensionDto dto = factory.buildDto(1);
+        TestDefaultDimensionEntity entity = dimensionMapper.dtoToEntity(dto);
+        when(service.updateOrCreateEntity(entity)).thenReturn(entity);
+        final int AMOUNT = 3;
+
+        for (int i = 0; i < AMOUNT; ++i) {
+            controller.putOne(dto);
+        }
+
+        verify(service, times(AMOUNT)).updateOrCreateEntity(entity);
+    }
+
+    @Test
+    void testDeleteOne_serviceDeleteByIdReturnTrue_returnStatusCodeOk() {
+        final Long someIdThatExists = 1337L;
+        when(service.deleteEntityById(someIdThatExists)).thenReturn(true);
+        when(service.getEntityById(someIdThatExists)).thenReturn(Optional.of(new TestDefaultDimensionEntity()));
+        var expected = HttpStatus.OK;
+
+        var actual = controller.deleteOne(someIdThatExists).getStatusCode();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testDeleteOne_serviceDeleteByIdReturnFalse_returnStatusCodeNotFound() {
+        final Long someNotExistingId = 1337L;
+        when(service.getEntityById(someNotExistingId)).thenReturn(Optional.empty());
+
+        var expected = HttpStatus.NOT_FOUND;
+
+        var actual = controller.deleteOne(someNotExistingId).getStatusCode();
+
+        assertEquals(expected, actual);
+    }
+
+    private interface TestRepositoryType extends DefaultDimensionRepository<TestDefaultDimensionEntity> {
+    }
+
+    private static class TestServiceType extends DefaultDimensionEntityService<TestDefaultDimensionEntity, TestRepositoryType> {
+        public TestServiceType(TestRepositoryType repository, ProfileService profileService) {
+            super(repository, profileService);
+        }
+    }
+
+
+}

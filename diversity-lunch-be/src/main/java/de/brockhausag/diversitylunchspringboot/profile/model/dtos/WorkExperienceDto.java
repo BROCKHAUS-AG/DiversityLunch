@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.dtos;
 
-import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionDto;
+import de.brockhausag.diversitylunchspringboot.generics.weightedDimension.WeightedDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -10,10 +10,8 @@ import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
-public class WorkExperienceDto implements DimensionDto {
+@Data
+public class WorkExperienceDto implements WeightedDto {
     private Long id;
 
     @Schema(description = "Your workExperience in years", example = "2 Jahre")

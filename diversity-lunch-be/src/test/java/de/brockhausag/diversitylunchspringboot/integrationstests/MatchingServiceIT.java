@@ -7,7 +7,7 @@ import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
-import de.brockhausag.diversitylunchspringboot.profile.repository.ProfileRepository;
+import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -75,7 +75,7 @@ class MatchingServiceIT {
         ProfileEntity proposer = profileRepository.findById(3L).orElseThrow();
         MeetingEntity expectedForCase9 = MeetingEntity.builder()
                 .fromDateTime(proposedDateTime)
-                .score(9)
+                .score(12)
                 .partner(partner)
                 .proposer(proposer)
                 .build();
@@ -92,9 +92,9 @@ class MatchingServiceIT {
         LocalDateTime proposedDateTime = LocalDateTime.of(2022, 4, 5, 13, 30);
         ProfileEntity partner = profileRepository.findById(1L).orElseThrow();
         ProfileEntity proposer = profileRepository.findById(4L).orElseThrow();
-        MeetingEntity expectedForCase21 = MeetingEntity.builder()
+        MeetingEntity expectedForCase0 = MeetingEntity.builder()
                 .fromDateTime(proposedDateTime)
-                .score(21)
+                .score(24)
                 .partner(partner)
                 .proposer(proposer)
                 .build();
@@ -102,7 +102,7 @@ class MatchingServiceIT {
         List<MeetingEntity> result = meetingRepository.findAll();
         log.info("MEETING_ENTITY 0: " + result);
         assertFalse(result.isEmpty());
-        assertMeetingIsEqual(expectedForCase21, result.get(0), 21);
+        assertMeetingIsEqual(expectedForCase0, result.get(0), 21);
     }
 
     @Test

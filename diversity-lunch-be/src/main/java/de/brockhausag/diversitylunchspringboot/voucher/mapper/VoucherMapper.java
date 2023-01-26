@@ -1,8 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.voucher.mapper;
 
 import de.brockhausag.diversitylunchspringboot.meeting.service.MeetingService;
-import de.brockhausag.diversitylunchspringboot.profile.services.ProfileService;
-import de.brockhausag.diversitylunchspringboot.utils.Mapper;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
 import de.brockhausag.diversitylunchspringboot.voucher.model.AdminVoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class VoucherMapper implements Mapper<VoucherDto, VoucherEntity> {
+public class VoucherMapper implements DimensionMapper<VoucherDto, VoucherEntity> {
 
     private final ProfileService profileService;
     private final MeetingService meetingService;

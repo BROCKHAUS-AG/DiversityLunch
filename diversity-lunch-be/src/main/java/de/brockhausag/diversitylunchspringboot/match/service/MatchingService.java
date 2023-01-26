@@ -1,9 +1,10 @@
 package de.brockhausag.diversitylunchspringboot.match.service;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
-import de.brockhausag.diversitylunchspringboot.dimensions.repositories.DimensionCategoryRepository;
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
-import de.brockhausag.diversitylunchspringboot.match.model.Matching;
+import de.brockhausag.diversitylunchspringboot.match.records.Match;
+import de.brockhausag.diversitylunchspringboot.match.records.ScoreAndCategory;
+import de.brockhausag.diversitylunchspringboot.match.utils.MatchingUtils;
+import de.brockhausag.diversitylunchspringboot.meeting.model.Category;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.QuestionEntity;
@@ -29,7 +30,6 @@ public class MatchingService {
     private static final Random random = new Random();
     private final MeetingProposalRepository meetingProposalRepository;
     private final MeetingRepository meetingRepository;
-    private final DimensionCategoryRepository categoryRepository;
     private final DiversityLunchEMailService eMailService;
     private final MsTeamsService msTeamsService;
     private final QuestionService questionService;
@@ -58,53 +58,57 @@ public class MatchingService {
 
             if (firstMeetingProposal.isMatched()) continue;
 
-            List<Matching> matchList = new LinkedList<>();
+            List<Match> matchList = new LinkedList<>();
 
             for (int j = i + 1; j < meetingProposals.size(); j++) {
                 secondMeetingProposal = meetingProposals.get(j);
-                Matching scoredMatch = createMatching(firstMeetingProposal, secondMeetingProposal);
-                if (scoredMatch.getStats().currentScore() >= scoreToBeat) matchList.add(scoredMatch);
+                Match scoredMatch = getScoredMatch(firstMeetingProposal, secondMeetingProposal);
+                if (scoredMatch.score() >= scoreToBeat) matchList.add(scoredMatch);
             }
 
             if (!matchList.isEmpty()) {
-                Matching bestMatch = Collections.max(matchList, Comparator.comparingInt((match) -> match.getStats().currentScore()));
+                Match bestMatch = Collections.max(matchList, Comparator.comparingInt(Match::score));
                 arrangeTeamsMeeting(bestMatch);
             }
         }
     }
 
-    protected Matching createMatching(MeetingProposalEntity firstProposal, MeetingProposalEntity secondProposal) {
-        return new Matching(random, categoryRepository, firstProposal, secondProposal);
-    }
-
-    private void arrangeTeamsMeeting(Matching bestMatch) {
+    private void arrangeTeamsMeeting(Match bestMatch) {
         String onlineMeetingId = msTeamsService.createMsTeamsMeeting(bestMatch);
         arrangeMeeting(bestMatch, onlineMeetingId);
     }
 
-    private void arrangeMeeting(Matching bestMatch, String onlineMeetingId) {
-        bestMatch.getFirstProposal().setMatched(true);
-        bestMatch.getSecondProposal().setMatched(true);
+    private Match getScoredMatch(MeetingProposalEntity firstMeetingProposal, MeetingProposalEntity secondMeetingProposal) {
+        ScoreAndCategory scoreAndCategory = MatchingUtils.getCurrentScore(firstMeetingProposal.getProposerProfile(),
+                secondMeetingProposal.getProposerProfile());
+
+        return new Match(firstMeetingProposal, secondMeetingProposal,
+                scoreAndCategory.currentScore(), scoreAndCategory.category());
+    }
+
+    private void arrangeMeeting(Match bestMatch, String onlineMeetingId) {
+        bestMatch.proposalOne().setMatched(true);
+        bestMatch.proposalTwo().setMatched(true);
         meetingRepository.save(MeetingEntity.builder()
                 .id(0)
-                .fromDateTime(bestMatch.getFirstProposal().getProposedDateTime())
-                .partner(bestMatch.getFirstProposal().getProposerProfile())
-                .proposer(bestMatch.getSecondProposal().getProposerProfile())
+                .fromDateTime(bestMatch.proposalOne().getProposedDateTime())
+                .partner(bestMatch.proposalOne().getProposerProfile())
+                .proposer(bestMatch.proposalTwo().getProposerProfile())
                 .createdAt(LocalDateTime.now())
-                .score(bestMatch.getStats().currentScore())
-                .question(getRandomQuestionFromCategory(bestMatch.getStats().category()))
+                .score(bestMatch.score())
+                .question(getRandomQuestionFromCategory(bestMatch.category()))
                 .msTeamsMeetingId(onlineMeetingId)
                 .build()
         );
-        meetingProposalRepository.save(bestMatch.getFirstProposal());
-        meetingProposalRepository.save(bestMatch.getSecondProposal());
+        meetingProposalRepository.save(bestMatch.proposalOne());
+        meetingProposalRepository.save(bestMatch.proposalTwo());
     }
 
-    private QuestionEntity getRandomQuestionFromCategory(DimensionCategory category) throws NoSuchElementException {
-        List<QuestionEntity> questions = questionService.getQuestionsForCategory(category);
+    private QuestionEntity getRandomQuestionFromCategory(Category category) throws NoSuchElementException {
+        List<QuestionEntity> questions = questionService.getQuestionsForCategory(category.getKind());
         if (questions.size() == 0) {
-            log.error("Could not find any question for category %s.".formatted(category.getDescription()));
-            throw new NoSuchElementException("Could not find any question for category %s.".formatted(category.getDescription()));
+            log.error("Could not find any question for category %s.".formatted(category.getKind()));
+            throw new NoSuchElementException("Could not find any question for category %s.".formatted(category.getKind()));
         } else {
             int randomIndex = random.nextInt(questions.size());
             return questions.get(randomIndex);

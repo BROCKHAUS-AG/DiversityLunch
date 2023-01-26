@@ -1,33 +1,29 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.services.model.MultiselectDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.HobbyDto;
-import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionMapper;
-
-import lombok.RequiredArgsConstructor;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.HobbyEntity;
+import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
-public class HobbyMapper implements DimensionMapper<HobbyDto, MultiselectDimensionSelectableOption> {
-
-    private final MultiselectDimensionService dimensionService;
+@AllArgsConstructor
+public class HobbyMapper implements DimensionMapper<HobbyDto, HobbyEntity> {
 
     @Override
-    public HobbyDto entityToDto(MultiselectDimensionSelectableOption entity) {
-        HobbyDto HobbyDto = new HobbyDto();
-        HobbyDto.setId(entity.getId());
-        HobbyDto.setDescriptor(entity.getValue());
-        return HobbyDto;
+    public HobbyDto entityToDto(HobbyEntity entity) {
+        HobbyDto dto = new HobbyDto();
+        dto.setId(entity.getId());
+        dto.setDescriptor(entity.getDescriptor());
+        return dto;
     }
 
     @Override
-    public MultiselectDimensionSelectableOption dtoToEntity(HobbyDto dto) {
-        return MultiselectDimensionSelectableOption.builder()
-                .id(dto.getId())
-                .value(dto.getDescriptor())
-                .dimensionCategory(dimensionService.getDimension("Hobby").get().getDimensionCategory())
-                .build();
+    public HobbyEntity dtoToEntity(HobbyDto dto) {
+        HobbyEntity entity = new HobbyEntity();
+        entity.setId(dto.getId());
+        entity.setDescriptor(dto.getDescriptor());
+        return entity;
     }
 }
+

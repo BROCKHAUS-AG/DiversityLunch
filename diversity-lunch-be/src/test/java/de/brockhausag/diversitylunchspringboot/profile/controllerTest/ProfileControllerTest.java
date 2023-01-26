@@ -1,11 +1,11 @@
 package de.brockhausag.diversitylunchspringboot.profile.controllerTest;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
-import de.brockhausag.diversitylunchspringboot.profile.services.ProfileService;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.profile.controller.ProfileController;
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.ProfileMapper;
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProfileDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,7 +16,8 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -71,7 +72,7 @@ class ProfileControllerTest {
         ProfileDto expectedDto = this.factory.buildDto(1);
 
 
-        when(mapper.dtoToEntity(inputDto)).thenReturn(profileEntity);
+        when(mapper.dtoToEntity(inputDto)).thenReturn(Optional.of(profileEntity));
         when(profileService.createProfile(profileEntity, accountId)).thenReturn(Optional.of(profileEntity));
         when(mapper.entityToDto(profileEntity)).thenReturn(expectedDto);
 
@@ -89,7 +90,7 @@ class ProfileControllerTest {
         ProfileDto inputDto = this.factory.buildDto(1);
         ProfileEntity profileEntity = this.factory.buildEntity(1);
 
-        when(mapper.dtoToEntity(inputDto)).thenReturn(profileEntity);
+        when(mapper.dtoToEntity(inputDto)).thenReturn(Optional.of(profileEntity));
         when(profileService.createProfile(profileEntity, accountId)).thenReturn(Optional.empty());
 
         //Act
@@ -105,7 +106,7 @@ class ProfileControllerTest {
         ProfileDto inputDto = this.factory.buildDto(1);
         ProfileEntity profileEntity = this.factory.buildEntity(1);
 
-        when(mapper.dtoToEntity(inputDto)).thenReturn(profileEntity);
+        when(mapper.dtoToEntity(inputDto)).thenReturn(Optional.of(profileEntity));
         when(profileService.updateProfile(profileEntity)).thenReturn(Optional.of(profileEntity));
 
         //Act
@@ -134,7 +135,7 @@ class ProfileControllerTest {
         ProfileEntity profileEntity = factory.buildEntity(1);
         ProfileDto inputDto = factory.buildDto(1);
 
-        when(mapper.dtoToEntity(inputDto)).thenReturn(profileEntity);
+        when(mapper.dtoToEntity(inputDto)).thenReturn(Optional.of(profileEntity));
         when(profileService.updateProfile(profileEntity)).thenReturn(Optional.empty());
 
         //Act

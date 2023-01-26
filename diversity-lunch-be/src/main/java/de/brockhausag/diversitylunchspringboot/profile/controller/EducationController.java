@@ -1,25 +1,19 @@
 package de.brockhausag.diversitylunchspringboot.profile.controller;
 
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimension;
-import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
-import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
-import de.brockhausag.diversitylunchspringboot.profile.model.dtos.EducationDto;
-import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionModelController;
+import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionModelController;
+import de.brockhausag.diversitylunchspringboot.profile.data.EducationRepository;
+import de.brockhausag.diversitylunchspringboot.profile.logic.EducationService;
 import de.brockhausag.diversitylunchspringboot.profile.mapper.EducationMapper;
-
+import de.brockhausag.diversitylunchspringboot.profile.model.dtos.EducationDto;
+import de.brockhausag.diversitylunchspringboot.profile.model.entities.EducationEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/education")
 @RestController
-public class EducationController extends DimensionModelController<
-        EducationDto,
-        BasicDimensionSelectableOption,
-        BasicDimension,
-        BasicDimensionService,
-        EducationMapper> {
-    public EducationController(EducationMapper mapper, BasicDimensionService service) {
-
-        super(mapper, service, "Bildungsweg");
+public class EducationController extends DefaultDimensionModelController<
+        EducationDto, EducationEntity, EducationRepository, EducationService, EducationMapper> {
+    public EducationController(EducationMapper mapper, EducationService service) {
+        super(mapper, service);
     }
 }
