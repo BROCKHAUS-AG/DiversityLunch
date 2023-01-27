@@ -5,13 +5,15 @@
   .AppHeader-Wrapper{
     .flexBox{
       display: flex;
-      justify-content: center;
+      justify-content: left;
       position: relative;
       left: -70px;
+
     }
-    @media screen and (min-width: 997px){
+    @media screen and (max-width: 997px){
       .flexBox{
-        justify-content: left;
+        justify-content: center;
+        width: 130%;
       }
     }
   }
