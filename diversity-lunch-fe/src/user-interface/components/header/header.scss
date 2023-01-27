@@ -1,14 +1,14 @@
 .AppHeader{
   background-color: #efefef;
-  padding: 1rem;
+  padding: 1rem 0rem 1rem;
+
   .AppHeader-Wrapper{
     .flexBox{
       display: flex;
       justify-content: center;
       position: relative;
-      left: -70px;
     }
-    @media screen and (min-width: 700px){
+    @media screen and (min-width: 997px){
       .flexBox{
         justify-content: left;
       }

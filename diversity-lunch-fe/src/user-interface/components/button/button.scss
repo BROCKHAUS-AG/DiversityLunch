@@ -5,6 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border: solid white;
 
   .CustomButton{
     width: 100%;
@@ -17,6 +18,7 @@
   .CustomButton-container{
     padding: 5px;
     display: block;
+    border: solid white;
   }
 }
 
@@ -26,17 +28,16 @@
   background-position: 0 0, 0 0, 100% 0, 0 100%;
   background-repeat: no-repeat;
   width: 66vw;
-  margin:auto;
+  margin-top: 5rem;
+  margin-left: 0.4rem;
 }
 
-@media screen and (min-width: 992px){
+@media screen and (min-width: 997px){
   .bagBtn{
     background-image: repeating-linear-gradient(1deg, #333333, #333333 20px, transparent 20px, transparent 38px, #333333 38px), repeating-linear-gradient(91deg, #333333, #333333 20px, transparent 20px, transparent 38px, #333333 38px), repeating-linear-gradient(181deg, #333333, #333333 20px, transparent 20px, transparent 38px, #333333 38px), repeating-linear-gradient(271deg, #333333, #333333 20px, transparent 20px, transparent 38px, #333333 38px);
     background-size: 2px 100%, 100% 2px, 2px 100% , 100% 2px;
     background-position: 0 0, 0 0, 100% 0, 0 100%;
     background-repeat: no-repeat;
     width: 20vw;
-    margin:auto;
   }
 }
-

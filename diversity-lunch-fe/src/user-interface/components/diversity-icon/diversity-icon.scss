@@ -10,7 +10,7 @@
   align-items: center;
   height: 100%;
   color: #b81f40;
-  margin-left: 135px;
+
 
   .App h4 {
     font-family: GilroyRegular, sans-serif;
@@ -22,28 +22,23 @@
   .IconHeader-title-powered-by-container {
     display: flex;
     justify-content: flex-end;
-    font-size: .6rem;
+    font-size: .8rem;
   }
 }
 
 .IconHeader-diversity-icon {
-  height: 3rem;
+  height: 8rem;
   width: auto;
 }
 
-@media screen and (max-width: 900px) {
-  .IconHeader-diversity-logo-container{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-    color: #b81f40;
-    margin-left: 135px;
-  }
 
+@media screen and (max-width: 500px) {
+  .IconHeader-diversity-logo-container {
+    margin-left: 2rem;
+  }
 }
-@media screen and (min-width: 900px) {
+
+@media screen and (min-width: 997px) {
 
 
 .diversitylunch-logo{
@@ -58,15 +53,16 @@
   align-items: center;
   height: 100%;
   color: #b81f40;
-  margin-left: 200px;
+  margin-left: 250px;
 }
 
 .IconHeader-title-container{
   text-align: right;
+  font-size: 1000px;
 }
 
 .IconHeader-diversity-icon {
-  height: 6rem;
+  height: 8rem;
   width: auto;
 }
 

@@ -186,15 +186,6 @@ export const AdminPanel: FC = () => {
                             </details>
                         </div>
                     </div>
-
-                    <UserList />
-                    <IdentifiableOptionsList
-                        state={projectState}
-                        fetch={projectFetch}
-                        title="Projektliste anpassen"
-                        addButtonLabel="Projekt hinzufügen"
-                        header="Projekte"
-                    />
                     <VoucherUpload />
                     <div className="testMailContainer">
                         <button className="testmailButton" onClick={sendTestmail}>Testmail verschicken</button>

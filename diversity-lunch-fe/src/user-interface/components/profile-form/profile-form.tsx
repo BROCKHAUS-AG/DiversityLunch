@@ -166,16 +166,14 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                     />
                 </div>
             </div>
-            <div className="Multi-select-container DropdownQuestion">
-
+            <div className="DropdownQuestion Multi-select-container">
                 <div className="inLineToggle">
                     <p className="Multi-select-label">{profileFormQuestion.hobby}</p>
                 </div>
                 <div className="inLineToggleHelper">
                     <fieldset>
-                        <legend>Hobbies</legend>
+                        <legend />
                         <Multiselect
-                            showCheckbox
                             selectedValues={profile.hobby || null as any}
                             options={sortOptions(hobbies)}
                             placeholder={hobbiesCounterToString()}

@@ -1,17 +1,26 @@
-
-
 .ProfileForm{
+  margin-top: 2rem;
   margin-bottom: 10rem;
-  margin-left: 20px;
 }
 
-@media screen and (min-width: 900px) {
+.multiSelectContainer {
+  position: relative;
+  text-align: left;
+  width: 89vw;
+  margin-left: 0.4rem;
+}
+
+@media screen and (min-width: 997px) {
   .ProfileForm{
-    margin-left: 320px;
+    margin-top: 3rem;
+  }
+  .multiSelectContainer {
+    position: relative;
+    text-align: left;
+    width: 30vw;
+    margin-left: 2rem;
   }
 }
-
-
 
 .Multi-select-container {
 
@@ -33,7 +42,6 @@
       font-size: .8rem;
     }
   }
-
 
   .chip {
     align-items: center;
@@ -64,12 +72,7 @@
     font-size: 16px;
   }
 
-  fieldset{
-    margin-left: 2rem;
-  }
-
 }
-
 
 .highlightOption {
   background: rgba(0, 0, 0, 0.08);
@@ -99,8 +102,8 @@
 }
 
 .searchWrapper {
-  border: 1px solid #b9b9b9;
-  border-radius: 0px;
+  border: 1px solid #c4c4c4;
+  border-radius: 0;
   min-height: 22px;
   padding: 5px;
   position: relative;

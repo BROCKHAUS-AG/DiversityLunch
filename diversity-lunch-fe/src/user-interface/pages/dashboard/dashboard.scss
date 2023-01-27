@@ -26,7 +26,7 @@
       }
 
       .body {
-        margin-top: 1rem;
+        margin-top: 0.2rem;
         display: flex;
 
         button{
@@ -40,20 +40,19 @@
     .btnMobileBag{
       display: block;
       margin-top: 1rem;
-      border: solid black 1px;
+      border: solid #b81f40 1px;
     }
   }
 }
 
-
-
-
-@media screen and (min-width: 450px) {
-
-
+.smallBagBtn{
+  border: solid #b81f40 1px;
+}
+.link-container{
+  text-decoration: none;
 }
 
-@media screen and (min-width: 850px) {
+@media screen and (min-width: 997px) {
 
   .App h2 {
     font-family: GilroyLight, sans-serif;
@@ -64,15 +63,11 @@
 
   .Dashboard {
     max-width: 1180px;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 
 
     .Dashboard-container {
-      margin-bottom: 3rem;
+      width: 100%;
+      margin: auto;
       .card {
         .image {
           height: 40%;
@@ -95,7 +90,16 @@ display: block;
             margin-right: auto;
             display: block;
             margin-top: 2rem;
-            border: solid black 1px;
+            border: solid #b81f40 1px;
+          }
+
+          button:hover{
+            background: none;
+            border-color: #931933;
+          }
+
+          button:active{
+            border-color: #6e1326;
           }
 
         }
@@ -131,7 +135,7 @@ display: block;
       padding: 16px;
       text-align: center;
       background-color: #f1f1f1;
-      height: 30vh;
+      height: 15rem;
       display: flex;
       flex-direction: column;
       justify-content: normal;
@@ -150,14 +154,6 @@ display: block;
 
   p {
     font-family: SourceSansProRegular, sans-serif;
-  }
-
-  @media screen and (min-width: 450px) {
-
-  }
-
-  @media screen and (min-width: 850px) {
-
   }
 
 }

@@ -12,6 +12,7 @@
   .UpcomingMeetings{
     width: 100%;
     display: block;
+    text-align: center;
   }
 
 }
@@ -19,17 +20,17 @@
 .UpcomingMeetings-container{
   width: 80%;
   max-width: 700px;
-  margin: auto;
   padding-bottom: 2em;
 }
 
 .UpcomingMeetings-header{
   font-size: 1.6em;
-  margin: 10% 0 5% 10%;
+  margin-top: 3rem;
 }
 
 .UpcomingMeetings-subheader{
   font-size: 1.2em;
-  margin-left: 10%;
   margin-top:5%;
+  color: #575756;
+  font-family: SourceSansProRegular, sans-serif;
 }

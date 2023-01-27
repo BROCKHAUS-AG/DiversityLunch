@@ -123,7 +123,7 @@ export const SelectMeetingData = (props: SelectMeetingDataProps) => {
     && t1.toMinute === t2.toMinute);
     return (
         <div className="SelectMeetingData">
-            <h3>Wunsch-Termin wählen:</h3>
+            <h2>WUNSCH-TERMIN WÄHLEN</h2>
 
             <p className="ChooseDate-infoText">An welchem Tag möchtest du dein Diversity Lunch haben?</p>
             <Calendar
