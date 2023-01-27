@@ -1,10 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.dtos;
 
-import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionDto;
+import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionDto;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -12,8 +10,10 @@ import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class GenderDto implements DefaultDimensionDto {
+@Getter
+@Setter
+@EqualsAndHashCode
+public class GenderDto implements DimensionDto {
 
     private Long id;
 

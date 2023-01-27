@@ -2,7 +2,7 @@ package de.brockhausag.diversitylunchspringboot.email.service;
 
 import com.nimbusds.jose.util.StandardCharset;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
-import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.services.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchApplicationSettingsProperties;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMailProperties;
@@ -69,7 +69,7 @@ public class DiversityLunchEMailService {
                     new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), StandardCharset.UTF_8);
             String claimLink = settingsProperties.getBaseUrl() + "/voucherClaim/" + meeting.getId();
             return String.format(emailText, recipient.getName(), otherParticipant.getName(),
-                    meeting.getQuestion().getCategory().getDescriptor(), meeting.getQuestion().getQuestionText(), claimLink);
+                    meeting.getQuestion().getCategory().getProfileQuestion(), meeting.getQuestion().getQuestionText(), claimLink);
         } catch (Exception e) {
             log.error(String.format("Failed to read Resource: %s", resource.getPath()), e);
         }
@@ -81,7 +81,7 @@ public class DiversityLunchEMailService {
             String emailText =
                     new String(FileCopyUtils.copyToByteArray(resource.getInputStream()), StandardCharset.UTF_8);
             return String.format(emailText, recipient.getName(), otherParticipant.getName(),
-                    meeting.getQuestion().getCategory().getDescriptor(), meeting.getQuestion().getQuestionText());
+                    meeting.getQuestion().getCategory().getProfileQuestion(), meeting.getQuestion().getQuestionText());
         } catch (Exception e) {
             log.error(String.format("Failed to read Resource: %s", resource.getPath()), e);
         }

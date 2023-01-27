@@ -51,4 +51,8 @@ public class SchedulingConfig {
     public void scheduleCancelDeclinedMeetings() {
         meetingService.cancelDeclinedMeetings();
     }
+
+    @Scheduled(cron = "0/5 * * * * *")
+    public void test() {
+    }
 }
