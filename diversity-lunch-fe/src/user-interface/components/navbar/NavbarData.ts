@@ -49,5 +49,4 @@ export const NavbarData = [
         icon: iconInfo,
     },
 
-
 ];
