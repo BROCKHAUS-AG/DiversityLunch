@@ -3,6 +3,7 @@ import iconCalendar from '../../../resources/icons/icon-termin-auswählen.svg';
 import iconMeeting from '../../../resources/icons/icon-anstehende-termine.svg';
 import iconInfo from '../../../resources/icons/icon-info.svg';
 import home from '../../../resources/icons/home.svg';
+import iconVoucher from '../../../resources/icons/icon-voucher-percent.svg';
 
 export const NavbarData = [
     {
@@ -35,9 +36,18 @@ export const NavbarData = [
     },
     {
         id: 5,
+        title: 'Gutscheine',
+        path: '/myVouchers',
+        cName: 'nav-text',
+        icon: iconVoucher,
+    },
+    {
+        id: 6,
         title: 'Informationen',
         path: '/information',
         cName: 'nav-text',
         icon: iconInfo,
     },
+
+
 ];

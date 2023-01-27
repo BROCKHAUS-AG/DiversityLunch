@@ -31,28 +31,13 @@
   width: auto;
 }
 
-@media screen and (max-width: 900px) {
-  .IconHeader-diversity-logo-container{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-    color: #b81f40;
+
+@media screen and (max-width: 500px) {
+  .IconHeader-diversity-logo-container {
+    margin-left: 2rem;
   }
-
-  @media screen and (max-width: 500px) {
-    .IconHeader-diversity-logo-container{
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-      margin-left: 2rem;
-      height: 100%;
-      color: #b81f40;
-    }}
-
 }
+
 @media screen and (min-width: 997px) {
 
 

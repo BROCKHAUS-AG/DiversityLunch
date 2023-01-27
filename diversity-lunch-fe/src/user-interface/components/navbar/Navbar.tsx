@@ -8,8 +8,7 @@ import { NavbarData } from './NavbarData';
 
 // STYLES
 import './navbar.scss';
-import { UserVoucherIcon } from '../user-voucher-icon/user-voucher-icon';
-import { AdminPanelIcon } from '../admin-panel-icon/admin-panel-icon';
+import iconAdmin from '../../../resources/icons/icon-admin.svg';
 import { TileIcon } from '../tile-icon/tile-icon';
 import { Role } from '../../../model/Role';
 
@@ -65,6 +64,14 @@ export const Navbar = () => {
                                             </Link>
                                         </li>
                                     ))}
+                                    {isAdmin && (
+                                        <li className="nav-text">
+                                            <Link to="admin-panel" onClick={showSidebar}>
+                                                <TileIcon title="" icon={iconAdmin} />
+                                                <span className="nav-title">Admin</span>
+                                            </Link>
+                                        </li>
+                                    )}
                                 </ul>
                             </nav>
                         </div>
@@ -72,18 +79,7 @@ export const Navbar = () => {
                         <div className="navbar-l">
                             <nav className="nav-menu active">
                                 <ul className="nav-menu-items">
-                                    <div className="header">
-                                        <div className="flex-container">
-                                            <li className="navbar-toggle">
-                                                {isAdmin && (
-                                                    <AdminPanelIcon />
-                                                )}
-                                            </li>
-                                            <li className="navbar-toggle">
-                                                <UserVoucherIcon />
-                                            </li>
-                                        </div>
-                                    </div>
+
                                     {NavbarData.map((item) => (
                                         <li key={item.id} className={item.cName}>
                                             <Link to={item.path}>
@@ -92,6 +88,15 @@ export const Navbar = () => {
                                             </Link>
                                         </li>
                                     ))}
+
+                                    {isAdmin && (
+                                        <li className="nav-text">
+                                            <Link to="admin-panel" onClick={showSidebar}>
+                                                <TileIcon title="" icon={iconAdmin} />
+                                                <span className="nav-title">Admin</span>
+                                            </Link>
+                                        </li>
+                                    )}
                                 </ul>
                             </nav>
                         </div>

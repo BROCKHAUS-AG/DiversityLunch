@@ -78,6 +78,22 @@
   }
 }
 
+.navbar-mobile .header {
+  .IconHeader-icon-voucher-percent, .IconHeader-admin-icon {
+    filter: brightness(0) saturate(100%) invert(95%) sepia(100%) saturate(20%) hue-rotate(317deg) brightness(106%) contrast(106%);
+
+  }
+
+  .IconHeader-icon-voucher-percent:hover, .IconHeader-admin-icon:hover {
+    filter: brightness(0) saturate(100%) invert(12%) sepia(87%) saturate(2635%) hue-rotate(332deg) brightness(94%) contrast(96%);
+
+  }
+
+  background-color: #b81f40;
+  width: 80%;
+
+}
+
 
 
 .navbar-l .header {
@@ -97,6 +113,15 @@
 }
 
 .navbar-l .ClickIcon-Wrapper .Tile-icon {
+  filter: brightness(0) saturate(100%) invert(95%) sepia(100%) saturate(20%) hue-rotate(317deg) brightness(106%) contrast(106%);
+
+  width: 25px;
+  height: auto;
+  margin: 10px;
+
+}
+
+.navbar-mobile .ClickIcon-Wrapper .Tile-icon {
   filter: brightness(0) saturate(100%) invert(95%) sepia(100%) saturate(20%) hue-rotate(317deg) brightness(106%) contrast(106%);
 
   width: 25px;
@@ -160,6 +185,9 @@
 
 .nav-menu-items {
   padding: 0;
+}
+.navbar-l .nav-menu-items {
+  margin-top: 50px;
 }
 
 .navbar-toggle {
