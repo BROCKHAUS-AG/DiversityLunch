@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.dataFactories;
 
-import de.brockhausag.diversitylunchspringboot.generics.dimensionCategory.DimensionCategoryEntity;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.QuestionEntity;
 
 public class QuestionTestDataFactory {
@@ -8,7 +8,7 @@ public class QuestionTestDataFactory {
         return buildEntity("Test-Question");
     }
 
-    public QuestionEntity buildEntity(String questionText, DimensionCategoryEntity dimensionCategory) {
+    public QuestionEntity buildEntity(String questionText, DimensionCategory dimensionCategory) {
         var question = new QuestionEntity();
 
         question.setId(1L);
@@ -19,18 +19,17 @@ public class QuestionTestDataFactory {
     }
 
     public QuestionEntity buildEntity(String questionText) {
-        var dimensionCategory = new DimensionCategoryEntity();
-        dimensionCategory.setDescriptor("Test-Category");
+        var dimensionCategory = DimensionCategory.builder().id(1L).description("test-category").profileQuestion("test-question").build();
 
         return buildEntity(questionText, dimensionCategory);
     }
 
-    public QuestionEntity buildEntity(DimensionCategoryEntity dimensionCategory) {
+    public QuestionEntity buildEntity(DimensionCategory dimensionCategory) {
         return buildEntity("Test-Question", dimensionCategory);
     }
 
     public QuestionEntity buildEntity(String questionText, String dimensionCategory) {
-        DimensionCategoryEntity category = new DimensionCategoryTestDataFactory().buildEntity(dimensionCategory);
+        DimensionCategory category = DimensionCategory.builder().id(1L).description("dimensionCategory").profileQuestion(dimensionCategory + "?").build();
         return buildEntity(questionText, category);
     }
 }

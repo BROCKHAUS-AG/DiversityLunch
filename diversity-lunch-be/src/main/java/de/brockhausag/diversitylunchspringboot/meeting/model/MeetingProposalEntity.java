@@ -1,6 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.meeting.model;
 
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,18 +18,13 @@ import java.time.LocalDateTime;
 @Builder
 public class MeetingProposalEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     @ManyToOne
     private ProfileEntity proposerProfile;
-
     private LocalDateTime proposedDateTime;
-
     private boolean matched;
-
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
-
 }
