@@ -2,19 +2,15 @@ package de.brockhausag.diversitylunchspringboot.integrationstests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.brockhausag.diversitylunchspringboot.account.model.AccountEntity;
-import de.brockhausag.diversitylunchspringboot.account.repository.AccountRepository;
 import de.brockhausag.diversitylunchspringboot.account.service.AccountService;
 import de.brockhausag.diversitylunchspringboot.config.MsTeamsTestConfig;
 import de.brockhausag.diversitylunchspringboot.integrationDataFactories.MeetingTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.integrationDataFactories.ProfileTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.meeting.model.CreateMeetingProposalDto;
-import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.service.MicrosoftGraphService;
-import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
-import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
+import de.brockhausag.diversitylunchspringboot.profile.services.ProfileService;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,15 +66,6 @@ class MeetingControllerIT {
     @Autowired
     private WebApplicationContext appContext;
 
-    @Autowired
-    private AccountRepository accountRepository;
-
-    @Autowired
-    private ProfileRepository profileRepository;
-
-    @Autowired
-    private MeetingProposalRepository meetingProposalRepository;
-
     private MockMvc mockMvc;
 
     private ProfileEntity profileMax;
@@ -101,13 +88,6 @@ class MeetingControllerIT {
         profileErika = profileFactory.createNewErikaProfile();
         AccountEntity accountEntity1 = accountService.getOrCreateAccount(profileErika.getEmail());
         profileErika = profileService.createProfile(profileErika, accountEntity1.getId()).orElseThrow();
-    }
-
-    @AfterEach
-    void after() {
-        accountRepository.deleteAll();
-        meetingProposalRepository.deleteAll();
-        profileRepository.deleteAll();
     }
 
     @Test

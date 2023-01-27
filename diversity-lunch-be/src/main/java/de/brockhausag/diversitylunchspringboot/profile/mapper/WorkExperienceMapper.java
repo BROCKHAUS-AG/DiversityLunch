@@ -1,27 +1,34 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.WeightedDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.WorkExperienceDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.WorkExperienceEntity;
-import de.brockhausag.diversitylunchspringboot.generics.dimension.DimensionMapper;
+import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionMapper;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-public class WorkExperienceMapper implements DimensionMapper<WorkExperienceDto, WorkExperienceEntity> {
+@RequiredArgsConstructor
+public class WorkExperienceMapper implements DimensionMapper<WorkExperienceDto, WeightedDimensionSelectableOption> {
+
+    private final WeightedDimensionService dimensionService;
+
     @Override
-    public WorkExperienceDto entityToDto(WorkExperienceEntity entity) {
-        WorkExperienceDto workExperienceDto = new WorkExperienceDto();
-        workExperienceDto.setId(entity.getId());
-        workExperienceDto.setDescriptor(entity.getDescriptor());
-        workExperienceDto.setDefault(entity.isDefault());
-        return workExperienceDto;
+    public WorkExperienceDto entityToDto(WeightedDimensionSelectableOption entity) {
+        WorkExperienceDto WorkExperienceDto = new WorkExperienceDto();
+        WorkExperienceDto.setId(entity.getId());
+        WorkExperienceDto.setDescriptor(entity.getValue());
+        return WorkExperienceDto;
     }
 
     @Override
-    public WorkExperienceEntity dtoToEntity(WorkExperienceDto dto) {
-        WorkExperienceEntity workExperienceEntity = new WorkExperienceEntity();
-        workExperienceEntity.setId(dto.getId());
-        workExperienceEntity.setDescriptor(dto.getDescriptor());
-        workExperienceEntity.setDefault(dto.isDefault());
-        return workExperienceEntity;
+    public WeightedDimensionSelectableOption dtoToEntity(WorkExperienceDto dto) {
+        return WeightedDimensionSelectableOption.builder()
+                .id(dto.getId())
+                .value(dto.getDescriptor())
+                .ignoreInScoring(false)
+                .dimensionCategory(dimensionService.getDimension("Berufserfahrung").get().getDimensionCategory())
+                .build();
     }
 }
