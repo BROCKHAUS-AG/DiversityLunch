@@ -266,11 +266,14 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                     label="Ausgrenzung?"
                     currentValue={profile.socialBackgroundDiscrimination || null as any}
                 />
-                <Button
-                    disabled={!isValid}
-                    label={buttonText || 'Speichern'}
-                    type="submit"
-                />
+                <div className="profile-form-button-container">
+                    <Button
+                        disabled={!isValid}
+                        label={buttonText || 'Speichern'}
+                        type="submit"
+                    />
+                </div>
+
             </div>
         </form>
     );
