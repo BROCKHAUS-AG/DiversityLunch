@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    BrowserRouter, Redirect, Route, Switch,
+    BrowserRouter, Redirect, Route, Switch, useLocation,
 } from 'react-router-dom';
 import { Dashboard } from './dashboard/dashboard';
 import { UpcomingMeetings } from './upcoming-meetings/upcoming-meetings';
@@ -23,14 +23,13 @@ import { CloseSite } from '../components/close-site/close-site';
 export const App = () => (
     <div className="App">
         <div className="Screen">
-            <AppHeader />
             <BrowserRouter>
+                <AppHeader />
                 <Navbar />
                 <div className="toggleStyle">
                     <CloseSite />
                 </div>
-
-                <div className="bodyContainer">
+                <div className={useLocation().pathname === '/questions' ? 'bodyContainer questions' : 'bodyContainer'}>
                     <Switch>
                         <Route exact path="/">
                             <Redirect to="/profile-check" />

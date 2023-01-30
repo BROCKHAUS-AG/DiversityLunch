@@ -1,5 +1,6 @@
 import React from 'react';
 import './diversity-icon.scss';
+import { useLocation } from 'react-router-dom';
 import iconDiversity from '../../../resources/icons/icon-diversity-logo-mit-rahmen.svg';
 
 type DiversityIconContainerProps = {
@@ -15,9 +16,12 @@ export const DiversityIcon = (props: DiversityIconContainerProps) => {
         poweredBy,
     } = props;
 
+    const location = useLocation();
+
     return (
         <div className="diversitylunch-logo">
-            <div className="IconHeader-diversity-logo-container">
+            {/* eslint-disable-next-line max-len */}
+            <div className={location.pathname === '/questions' ? 'IconHeader-diversity-logo-container questions' : 'IconHeader-diversity-logo-container'}>
                 <div className="diversitylunch-logo-wrapper">
                     <img alt="diversity icon" className="IconHeader-diversity-icon" src={iconDiversity} />
                     <div className="IconHeader-title-container">
