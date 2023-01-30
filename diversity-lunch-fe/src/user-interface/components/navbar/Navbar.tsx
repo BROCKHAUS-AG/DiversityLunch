@@ -43,7 +43,8 @@ export const Navbar = () => {
                         <div className="navbar-mobile">
                             <div className="navbar">
                                 <div className="hamburg">
-                                    <Link to="/#" className="menu-bars" onClick={showSidebar}>
+                                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                                    <Link to="#" className="menu-bars" onClick={showSidebar}>
                                         <img alt="icon menu" className="icon-menu" src={iconMenu} />
                                     </Link>
                                 </div>
