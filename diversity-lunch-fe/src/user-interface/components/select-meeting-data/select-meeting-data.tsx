@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { CloseSite } from '../close-site/close-site';
-// eslint-disable-next-line import/no-named-as-default
 import { CreateMeeting } from '../../../model/Meeting';
-import { DiversityIcon } from '../diversity-icon/diversity-icon';
 import iconFood from '../../../resources/icons/icon-hamburger.svg';
 import { createMeetings, loadMeetings } from '../../../data/meeting/meetings.actions';
 
@@ -21,7 +18,6 @@ import { useGetAccountInformation } from '../../../hooks/account/account.hook';
 import { Button } from '../button/button';
 
 type SelectMeetingDataProps = {
-  // eslint-disable-next-line no-unused-vars
   onAddMeeting(meeting: CreateMeeting): void;
 }
 
@@ -42,19 +38,26 @@ export const SelectMeetingData = (props: SelectMeetingDataProps) => {
         {
             id: 1,
             fromHour: 12,
+            fromMinute: 0,
+            toHour: 12,
+            toMinute: 30,
+        },
+        {
+            id: 2,
+            fromHour: 12,
             fromMinute: 30,
             toHour: 13,
             toMinute: 0,
         },
         {
-            id: 2,
+            id: 3,
             fromHour: 13,
             fromMinute: 0,
             toHour: 13,
             toMinute: 30,
         },
         {
-            id: 3,
+            id: 4,
             fromHour: 13,
             fromMinute: 30,
             toHour: 14,
@@ -64,13 +67,13 @@ export const SelectMeetingData = (props: SelectMeetingDataProps) => {
 
     const [currentDate, setCurrentDate] = useState<Date>(nextDay);
     const [currentTime, setCurrentTime] = useState<MeetingTimespan>({
-        id: 4,
+        id: 5,
         fromHour: 12,
-        fromMinute: 30,
-        toHour: 13,
-        toMinute: 0,
+        fromMinute: 0,
+        toHour: 12,
+        toMinute: 30,
     });
-    const [currentTimeLabel, setCurrentTimeLabel] = useState<string>('12:30 - 13:00');
+    const [currentTimeLabel, setCurrentTimeLabel] = useState<string>('12:00 - 12:30');
     const history = useHistory();
 
     const onDateChange = (date: Date | Date[]) => {
@@ -120,8 +123,7 @@ export const SelectMeetingData = (props: SelectMeetingDataProps) => {
     && t1.toMinute === t2.toMinute);
     return (
         <div className="SelectMeetingData">
-            <CloseSite />
-            <DiversityIcon title="TERMIN WÄHLEN" />
+            <h2>WUNSCH-TERMIN WÄHLEN</h2>
 
             <p className="ChooseDate-infoText">An welchem Tag möchtest du dein Diversity Lunch haben?</p>
             <Calendar

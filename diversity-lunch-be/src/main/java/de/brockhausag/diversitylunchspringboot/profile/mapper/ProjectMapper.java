@@ -1,26 +1,34 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ProjectDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProjectEntity;
-import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
+import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionMapper;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProjectMapper implements Mapper<ProjectDto, ProjectEntity> {
+@RequiredArgsConstructor
+public class ProjectMapper implements DimensionMapper<ProjectDto, BasicDimensionSelectableOption> {
+
+    private final BasicDimensionService dimensionService;
 
     @Override
-    public ProjectDto entityToDto(ProjectEntity entity) {
-        ProjectDto projectDto = new ProjectDto();
-        projectDto.setId(entity.getId());
-        projectDto.setDescriptor(entity.getDescriptor());
-        return projectDto;
+    public ProjectDto entityToDto(BasicDimensionSelectableOption entity) {
+        ProjectDto ProjectDto = new ProjectDto();
+        ProjectDto.setId(entity.getId());
+        ProjectDto.setDescriptor(entity.getValue());
+        return ProjectDto;
     }
 
     @Override
-    public ProjectEntity dtoToEntity(ProjectDto dto) {
-        ProjectEntity projectEntity = new ProjectEntity();
-        projectEntity.setId(dto.getId());
-        projectEntity.setDescriptor(dto.getDescriptor());
-        return projectEntity;
+    public BasicDimensionSelectableOption dtoToEntity(ProjectDto dto) {
+        return BasicDimensionSelectableOption.builder()
+                .id(dto.getId())
+                .value(dto.getDescriptor())
+                .ignoreInScoring(false)
+                .dimensionCategory(dimensionService.getDimension("Projekt").get().getDimensionCategory())
+                .build();
     }
 }

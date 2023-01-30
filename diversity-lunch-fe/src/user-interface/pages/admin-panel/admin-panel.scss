@@ -3,9 +3,22 @@
   justify-self: center;
   padding: 1em;
 }
-.customContainer{
+.testMailContainer{
   display: flex;
   justify-content: center;
   margin-bottom: 2em;
+  margin-top: 20px;
 }
 
+.adminPanelContainer {
+
+}
+
+.adminPanelContainer .header {
+  margin-bottom: 5%;
+}
+
+.adminPanelContainer .bottom {
+  margin-left:3%;
+  margin-right:3%;
+}

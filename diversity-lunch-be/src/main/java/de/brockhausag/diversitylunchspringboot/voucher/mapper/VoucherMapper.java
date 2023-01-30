@@ -1,8 +1,8 @@
 package de.brockhausag.diversitylunchspringboot.voucher.mapper;
 
 import de.brockhausag.diversitylunchspringboot.meeting.service.MeetingService;
-import de.brockhausag.diversitylunchspringboot.profile.logic.ProfileService;
-import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
+import de.brockhausag.diversitylunchspringboot.profile.services.ProfileService;
+import de.brockhausag.diversitylunchspringboot.utils.Mapper;
 import de.brockhausag.diversitylunchspringboot.voucher.model.AdminVoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherDto;
 import de.brockhausag.diversitylunchspringboot.voucher.model.VoucherEntity;

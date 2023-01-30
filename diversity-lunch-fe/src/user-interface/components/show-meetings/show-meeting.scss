@@ -1,13 +1,13 @@
 @import "src/global-styles/reset";
 
 .ShowMeeting{
-  background-color: #c8c8c8;
+  background-color: #efefef;
 
   width: 76%;
   margin: 5% 0 5% 10%;
   padding: 2%;
 
-  border: 1px solid black;
+  border: 1px solid #a0a096;
 
   display: flex;
 }
@@ -15,6 +15,7 @@
 
 .ShowMeeting-text-container{
   width: 70%;
+  text-align: left;
 }
 
 .ShowMeeting-icon-container{

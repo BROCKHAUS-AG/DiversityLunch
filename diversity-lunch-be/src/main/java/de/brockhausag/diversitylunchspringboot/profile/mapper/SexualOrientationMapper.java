@@ -1,26 +1,34 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.SexualOrientationDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.SexualOrientationEntity;
-import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
+import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionMapper;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-
 @Component
-public class SexualOrientationMapper implements Mapper<SexualOrientationDto, SexualOrientationEntity> {
+@RequiredArgsConstructor
+public class SexualOrientationMapper implements DimensionMapper<SexualOrientationDto, BasicDimensionSelectableOption> {
+
+    private final BasicDimensionService dimensionService;
+
     @Override
-    public SexualOrientationDto entityToDto(SexualOrientationEntity entity) {
-        SexualOrientationDto sexualOrientationDto = new SexualOrientationDto();
-        sexualOrientationDto.setId(entity.getId());
-        sexualOrientationDto.setDescriptor(entity.getDescriptor());
-        return sexualOrientationDto;
+    public SexualOrientationDto entityToDto(BasicDimensionSelectableOption entity) {
+        SexualOrientationDto SexualOrientationDto = new SexualOrientationDto();
+        SexualOrientationDto.setId(entity.getId());
+        SexualOrientationDto.setDescriptor(entity.getValue());
+        return SexualOrientationDto;
     }
 
     @Override
-    public SexualOrientationEntity dtoToEntity(SexualOrientationDto dto) {
-        SexualOrientationEntity sexualOrientationEntity = new SexualOrientationEntity();
-        sexualOrientationEntity.setId(dto.getId());
-        sexualOrientationEntity.setDescriptor(dto.getDescriptor());
-        return sexualOrientationEntity;
+    public BasicDimensionSelectableOption dtoToEntity(SexualOrientationDto dto) {
+        return BasicDimensionSelectableOption.builder()
+                .id(dto.getId())
+                .value(dto.getDescriptor())
+                .ignoreInScoring(false)
+                .dimensionCategory(dimensionService.getDimension("Sexuelle Orientierung").get().getDimensionCategory())
+                .build();
     }
 }

@@ -24,7 +24,9 @@ export const Dropdown = <T extends Identifiable>({
 
     return (
         <div className="DropdownQuestion">
-            <p className="DropdownQuestion-question">{placeholder}</p>
+            <div className="inLineToggle">
+                <p className="DropdownQuestion-question">{placeholder}</p>
+            </div>
             <Autocomplete
                 options={options}
                 getOptionLabel={(o) => o.descriptor}
@@ -34,6 +36,7 @@ export const Dropdown = <T extends Identifiable>({
                 }
                 onChange={callOnChange}
                 defaultValue={currentValue}
+                value={currentValue}
                 getOptionSelected={(option, value) => option.id === value.id}
             />
         </div>

@@ -1,26 +1,34 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.ReligionDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.ReligionEntity;
-import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
+import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionMapper;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ReligionMapper implements Mapper<ReligionDto, ReligionEntity> {
+@RequiredArgsConstructor
+public class ReligionMapper implements DimensionMapper<ReligionDto, BasicDimensionSelectableOption> {
+
+    private final BasicDimensionService dimensionService;
 
     @Override
-    public ReligionDto entityToDto(ReligionEntity entity) {
-        ReligionDto religionDto = new ReligionDto();
-        religionDto.setId(entity.getId());
-        religionDto.setDescriptor(entity.getDescriptor());
-        return religionDto;
+    public ReligionDto entityToDto(BasicDimensionSelectableOption entity) {
+        ReligionDto ReligionDto = new ReligionDto();
+        ReligionDto.setId(entity.getId());
+        ReligionDto.setDescriptor(entity.getValue());
+        return ReligionDto;
     }
 
     @Override
-    public ReligionEntity dtoToEntity(ReligionDto dto) {
-        ReligionEntity religionEntity = new ReligionEntity();
-        religionEntity.setId(dto.getId());
-        religionEntity.setDescriptor(dto.getDescriptor());
-        return religionEntity;
+    public BasicDimensionSelectableOption dtoToEntity(ReligionDto dto) {
+        return BasicDimensionSelectableOption.builder()
+                .id(dto.getId())
+                .value(dto.getDescriptor())
+                .ignoreInScoring(false)
+                .dimensionCategory(dimensionService.getDimension("Religion").get().getDimensionCategory())
+                .build();
     }
 }

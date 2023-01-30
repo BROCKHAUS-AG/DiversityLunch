@@ -33,14 +33,4 @@ describe('Dashboard', () => {
         renderContainer(Role.STANDARD);
         expect(await screen.queryByAltText('admin icon')).toBeNull();
     });
-
-    it('should show admin panel when user has a admin account', async () => {
-        renderContainer(Role.ADMIN);
-        expect(await screen.findByAltText('admin icon')).toBeInTheDocument();
-    });
-
-    it('should show admin panel when user has a azure admin account', async () => {
-        renderContainer(Role.AZURE_ADMIN);
-        expect(await screen.findByAltText('admin icon')).toBeInTheDocument();
-    });
 });

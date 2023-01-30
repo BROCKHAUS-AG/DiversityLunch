@@ -1,0 +1,26 @@
+.FAQ {
+  align-self: flex-start;
+}
+
+.FAQ-expandable {
+  margin-top: 1.5rem;
+}
+
+.FAQ-title {
+  font-weight: 500;
+  font-size: 1.3rem;
+}
+
+.FAQ-question{
+  position: relative;
+  top: -1.25rem;
+  left: 1.2rem;
+}
+
+.FAQ-text {
+  margin-top: 2%;
+  line-height: 18px;
+  margin-left: 18px;
+  hyphens: auto;
+  text-align: justify
+}

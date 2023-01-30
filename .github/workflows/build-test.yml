@@ -90,18 +90,3 @@ jobs:
       - name: Test frontend
         run: npm run lint
         working-directory: ./diversity-lunch-fe
-
-  notify:
-    runs-on: ubuntu-latest
-    if: always()
-    needs: [test-backend, build-backend, test-frontend, build-frontend, lint-frontend]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Teams Notification
-        uses: skitionek/notify-microsoft-teams@master
-        if: always()
-        with:
-          webhook_url: ${{ secrets.TEAMS_WEBHOOK }}
-          needs: ${{ toJson(needs) }}
-          job: ${{ toJson(job) }}
-          steps: ${{ toJson(steps) }}

@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.dtos;
 
-import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionDto;
+import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class EducationDto implements DefaultDimensionDto {
+public class EducationDto implements DimensionDto {
 
     private Long id;
 
@@ -23,12 +23,8 @@ public class EducationDto implements DefaultDimensionDto {
     @NotBlank
     private String descriptor;
 
-    @Override
-    public EducationDto clone() {
-        try {
-            return (EducationDto) super.clone();
-        } catch (CloneNotSupportedException e) {
-            return new EducationDto(this.id, this.descriptor);
-        }
-    }
+    @NotNull
+    @Schema(description = "Default value for the given dimension")
+    private boolean isDefault;
+
 }

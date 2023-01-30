@@ -1,96 +1,69 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.entities;
 
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimension;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.MultiselectDimension;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.ProfileEntitySelectedMultiselectValue;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimension;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.WeightedDimensionSelectableOption;
 
-import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionEntity;
-import de.brockhausag.diversitylunchspringboot.generics.weightedDimension.WeightedEntity;
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Map;
+import java.util.Objects;
 
+@ToString
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Builder
 public class ProfileEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
+    @NotBlank
     private String name;
+    @NotNull
+    @NotBlank
     private String email;
+    @NotNull
     private int birthYear;
+    @NotNull
+    private boolean wasChangedByAdmin;
 
-    @ManyToOne
-    private CountryEntity originCountry;
-    @ManyToOne
-    private DietEntity diet;
-    @ManyToOne
-    private EducationEntity education;
-    @ManyToOne
-    private GenderEntity gender;
-    @ManyToOne
-    private LanguageEntity motherTongue;
-    @ManyToOne
-    private ProjectEntity project;
-    @ManyToOne
-    private ReligionEntity religion;
-    @ManyToOne
-    private WorkExperienceEntity workExperience;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @MapKeyJoinColumn(name = "basic_dimension", referencedColumnName = "id")
+    @ToString.Exclude
+    private Map<BasicDimension, BasicDimensionSelectableOption> selectedBasicValues;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "profile_hobby",
-            joinColumns = { @JoinColumn(name = "profile_id") },
-            inverseJoinColumns = { @JoinColumn(name = "hobby_id") }
-    )
-    private List<HobbyEntity> hobby;
-    @ManyToOne
-    private SexualOrientationEntity sexualOrientation;
-    @ManyToOne
-    private SocialBackgroundEntity socialBackground;
-    @ManyToOne
-    private SocialBackgroundDiscriminationEntity socialBackgroundDiscrimination;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @MapKeyJoinColumn(name = "weighted_dimension", referencedColumnName = "id")
+    @ToString.Exclude
+    private Map<WeightedDimension, WeightedDimensionSelectableOption> selectedWeightedValues;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "profile_id")
+    @MapKeyJoinColumn(name = "multiselect_dimension_id", referencedColumnName = "id")
+    @ToString.Exclude
+    private Map<MultiselectDimension, ProfileEntitySelectedMultiselectValue> selectedMultiselectValues;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        ProfileEntity that = (ProfileEntity) o;
+        return id != null && Objects.equals(id, that.id);
+    }
 
     @Override
     public int hashCode() {
-        String hashString = this.id.toString() + this.name + this.email + this.birthYear;
-        return hashString.hashCode();
+        return getClass().hashCode();
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if ((obj == null) || (obj.getClass() != this.getClass())) {
-            return false;
-        }
-        final ProfileEntity other = (ProfileEntity) obj;
-        return other.id.equals(this.id) && other.name.equals(this.name) &&
-                other.email.equals(this.email) && (other.birthYear == this.birthYear);
-    }
-
-    public List<DefaultDimensionEntity> getDefaultEntities() {
-        List<DefaultDimensionEntity> baseEntities = new ArrayList<>();
-        baseEntities.add(originCountry);
-        baseEntities.add(diet);
-        baseEntities.add(education);
-        baseEntities.add(gender);
-        baseEntities.add(motherTongue);
-        baseEntities.add(project);
-        baseEntities.add(religion);
-        baseEntities.add(sexualOrientation);
-        baseEntities.add(socialBackground);
-        baseEntities.add(socialBackgroundDiscrimination);
-        return baseEntities;
-    }
-
-    public List<WeightedEntity> getWeightedEntities() {
-        List<WeightedEntity> weightedEntitites = new ArrayList<>();
-        weightedEntitites.add(workExperience);
-        return weightedEntitites;
-    }
-
 }

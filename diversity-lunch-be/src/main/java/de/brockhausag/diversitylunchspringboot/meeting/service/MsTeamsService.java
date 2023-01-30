@@ -1,9 +1,7 @@
 package de.brockhausag.diversitylunchspringboot.meeting.service;
 
-import com.microsoft.graph.models.Attendee;
 import com.microsoft.graph.models.Event;
-import com.microsoft.graph.models.ResponseType;
-import de.brockhausag.diversitylunchspringboot.match.records.Match;
+import de.brockhausag.diversitylunchspringboot.match.model.Matching;
 import de.brockhausag.diversitylunchspringboot.meeting.mapper.MsTeamsMapper;
 import de.brockhausag.diversitylunchspringboot.meeting.model.DeclinedMeeting;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
@@ -27,9 +25,9 @@ public class MsTeamsService {
     private final MicrosoftGraphService microsoftGraphService;
     private final MeetingRepository meetingRepository;
 
-    public String createMsTeamsMeeting(Match matchEntity) {
-        MeetingProposalEntity meetingProposalEntityOne = matchEntity.proposalOne();
-        MeetingProposalEntity meetingProposalEntityTwo = matchEntity.proposalTwo();
+    public String createMsTeamsMeeting(Matching matchEntity) {
+        MeetingProposalEntity meetingProposalEntityOne = matchEntity.getFirstProposal();
+        MeetingProposalEntity meetingProposalEntityTwo = matchEntity.getSecondProposal();
 
         Event event = msTeamsMapper.convertToMicrosoftEventModel(meetingProposalEntityOne, meetingProposalEntityTwo);
         Event result = microsoftGraphService.createEvent(event);

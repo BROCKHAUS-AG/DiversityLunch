@@ -5,8 +5,6 @@ import { AccountState, AccountStateOk } from '../../../data/account/account-stat
 import { AppStoreState } from '../../../data/app-store';
 import { Account } from '../../../model/Account';
 import { authenticatedFetchGet } from '../../../utils/fetch.utils';
-import { DiversityIcon } from '../../components/diversity-icon/diversity-icon';
-import { CloseSite } from '../../components/close-site/close-site';
 import { UserVoucher } from '../../../model/UserVoucher';
 
 export const UserVoucherList = () => {
@@ -28,8 +26,7 @@ export const UserVoucherList = () => {
 
     return (
         <div className="ShowVouchers">
-            <CloseSite />
-            <DiversityIcon title="GUTSCHEINE" />
+            <h2>GUTSCHEINE</h2>
             <p className="ShowVoucher-text">Hier findest du deine persönlichen Gutscheine</p>
             <ul className="ShowVoucherList">
                 {voucherList.map((voucher: UserVoucher) => (

@@ -7,7 +7,7 @@ import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
-import de.brockhausag.diversitylunchspringboot.profile.data.ProfileRepository;
+import de.brockhausag.diversitylunchspringboot.profile.repository.ProfileRepository;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -65,7 +65,7 @@ class MatchingServiceIT {
         log.info("MEETING_ENTITY 21: " + result);
         assertFalse(result.isEmpty());
         assertMeetingIsEqual(expectedForCase21First, result.get(0), 0);
-        assertFalse(result.get(0).getQuestion().getKind().isEmpty());
+        assertFalse(result.get(0).getQuestion().getQuestionText().isEmpty());
     }
 
     @Test
@@ -75,7 +75,7 @@ class MatchingServiceIT {
         ProfileEntity proposer = profileRepository.findById(3L).orElseThrow();
         MeetingEntity expectedForCase9 = MeetingEntity.builder()
                 .fromDateTime(proposedDateTime)
-                .score(12)
+                .score(9)
                 .partner(partner)
                 .proposer(proposer)
                 .build();
@@ -84,7 +84,7 @@ class MatchingServiceIT {
         log.info("MEETING_ENTITY 9: " + result);
         assertFalse(result.isEmpty());
         assertMeetingIsEqual(expectedForCase9, result.get(0), 9);
-        assertFalse(result.get(0).getQuestion().getKind().isEmpty());
+        assertFalse(result.get(0).getQuestion().getQuestionText().isEmpty());
     }
 
     @Test
@@ -92,9 +92,9 @@ class MatchingServiceIT {
         LocalDateTime proposedDateTime = LocalDateTime.of(2022, 4, 5, 13, 30);
         ProfileEntity partner = profileRepository.findById(1L).orElseThrow();
         ProfileEntity proposer = profileRepository.findById(4L).orElseThrow();
-        MeetingEntity expectedForCase0 = MeetingEntity.builder()
+        MeetingEntity expectedForCase21 = MeetingEntity.builder()
                 .fromDateTime(proposedDateTime)
-                .score(24)
+                .score(21)
                 .partner(partner)
                 .proposer(proposer)
                 .build();
@@ -102,7 +102,7 @@ class MatchingServiceIT {
         List<MeetingEntity> result = meetingRepository.findAll();
         log.info("MEETING_ENTITY 0: " + result);
         assertFalse(result.isEmpty());
-        assertMeetingIsEqual(expectedForCase0, result.get(0), 21);
+        assertMeetingIsEqual(expectedForCase21, result.get(0), 21);
     }
 
     @Test

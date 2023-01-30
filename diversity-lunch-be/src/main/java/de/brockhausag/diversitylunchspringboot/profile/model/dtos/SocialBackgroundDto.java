@@ -1,6 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.profile.model.dtos;
 
-import de.brockhausag.diversitylunchspringboot.generics.defaultDimension.DefaultDimensionDto;
+import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class SocialBackgroundDto implements DefaultDimensionDto {
+public class SocialBackgroundDto implements DimensionDto {
     private Long id;
 
     @Schema(description = "Your socialBackground in years", example = "2 Jahre")
@@ -21,4 +21,8 @@ public class SocialBackgroundDto implements DefaultDimensionDto {
     @NotNull
     @NotBlank
     private String descriptor;
+
+    @NotNull
+    @Schema(description = "Default value for the given dimension")
+    private boolean isDefault;
 }

@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class MeetingEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotNull
@@ -37,8 +37,8 @@ public class MeetingEntity {
     private int score;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    private Question question;
+    @ManyToOne
+    private QuestionEntity question;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)

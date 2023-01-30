@@ -1,25 +1,34 @@
 package de.brockhausag.diversitylunchspringboot.profile.mapper;
 
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.BasicDimensionSelectableOption;
+import de.brockhausag.diversitylunchspringboot.dimensions.services.model.BasicDimensionService;
 import de.brockhausag.diversitylunchspringboot.profile.model.dtos.EducationDto;
-import de.brockhausag.diversitylunchspringboot.profile.model.entities.EducationEntity;
-import de.brockhausag.diversitylunchspringboot.utils.mapper.Mapper;
+import de.brockhausag.diversitylunchspringboot.profile.generics.DimensionMapper;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EducationMapper implements Mapper<EducationDto, EducationEntity> {
+@RequiredArgsConstructor
+public class EducationMapper implements DimensionMapper<EducationDto, BasicDimensionSelectableOption> {
+
+    private final BasicDimensionService dimensionService;
+
     @Override
-    public EducationDto entityToDto(EducationEntity entity) {
-        EducationDto educationDto = new EducationDto();
-        educationDto.setId(entity.getId());
-        educationDto.setDescriptor(entity.getDescriptor());
-        return educationDto;
+    public EducationDto entityToDto(BasicDimensionSelectableOption entity) {
+        EducationDto EducationDto = new EducationDto();
+        EducationDto.setId(entity.getId());
+        EducationDto.setDescriptor(entity.getValue());
+        return EducationDto;
     }
 
     @Override
-    public EducationEntity dtoToEntity(EducationDto dto) {
-        EducationEntity educationEntity = new EducationEntity();
-        educationEntity.setId(dto.getId());
-        educationEntity.setDescriptor(dto.getDescriptor());
-        return educationEntity;
+    public BasicDimensionSelectableOption dtoToEntity(EducationDto dto) {
+        return BasicDimensionSelectableOption.builder()
+                .id(dto.getId())
+                .value(dto.getDescriptor())
+                .ignoreInScoring(false)
+                .dimensionCategory(dimensionService.getDimension("Bildungsweg").get().getDimensionCategory())
+                .build();
     }
 }

@@ -2,12 +2,10 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './profile.scss';
 import { Profile } from '../../../model/Profile';
-import { isValidProfile, isUpdatedProfile } from '../../../utils/validators/profile-validator';
+import { isUpdatedProfile, isValidProfile } from '../../../utils/validators/profile-validator';
 import { ProfileForm } from '../../components/profile-form/profile-form';
 import { AppStoreState } from '../../../data/app-store';
 import { updateProfile } from '../../../data/profile/profile.actions';
-import { CloseSite } from '../../components/close-site/close-site';
-import { DiversityIcon } from '../../components/diversity-icon/diversity-icon';
 import { ProfileStateOk } from '../../../data/profile/profile-state.type';
 import { LoadingAnimation } from '../../components/loading-animation/loading-animation';
 
@@ -29,16 +27,14 @@ export const ProfileOverview = () => {
 
     return (
         <section className="view">
-            <div className="Profile-logo-container">
-                <CloseSite />
-                <DiversityIcon title="DEIN PROFIL" />
+            <div className="profile-overview-wrapper">
+                <div className="Profile-name-container">
+                    <h2>{`${profile.name}`}</h2>
+                </div>
+                {profile.name !== ''
+                    && <ProfileForm initialProfile={profile} onSubmit={submit} checkValidity={isUpdated} />}
             </div>
 
-            <div className="Profile-name-container">
-                <h5 className="Profile-user-name">{profile.name}</h5>
-            </div>
-            {profile.name !== ''
-                && <ProfileForm initialProfile={profile} onSubmit={submit} checkValidity={isUpdated} />}
         </section>
     );
 };

@@ -51,12 +51,13 @@ input:focus {
 .editListTitle {
   font-weight: 500;
   font-size: 1.3rem;
+  cursor: pointer;
 }
 
 .usersList{
   display: grid;
   grid-template-columns: 65% 25% 10%;
-  gap: 0px 0px;
+  gap: 0px;
 
   letter-spacing: 0.015em;
   font-family: GilroyLight, sans-serif;
@@ -82,17 +83,39 @@ input:focus {
 }
 
 .CSVUploadContainer {
-  padding: 20px;
+  padding: 15px 20px;
 }
 
 .CSVUploadContainer div{
-  margin: 20px;
+  margin: 25px;
+}
+
+.CSVUploadContainer .voucherCountState {
+  padding-bottom: 2%;
+}
+
+.optionsListContainer .customizeDimensionHeader {
+  padding: 1%;
+}
+
+.optionsListContainer .customizeCSVUpload {
+  padding: 20px 20px;
+}
+
+.optionsListContainer .customizeCSVUpload .customizeCSVUploadHeader {
+  padding-bottom: 1rem;
 }
 
 .optionsListContainer {
-  padding: 20px;
+  padding: 20px 20px;
+}
+
+.optionsListInOptionsListContainer {
+  padding: 20px 20px;
 }
 
 .optionsListContainer div {
-  margin: 20px;
+
 }
+
+

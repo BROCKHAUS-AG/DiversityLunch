@@ -1,6 +1,9 @@
 .QuestionSite {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
+  .flexContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }

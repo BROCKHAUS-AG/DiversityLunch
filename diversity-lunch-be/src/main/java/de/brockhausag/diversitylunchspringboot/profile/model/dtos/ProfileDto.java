@@ -3,15 +3,15 @@ package de.brockhausag.diversitylunchspringboot.profile.model.dtos;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
+@Data
 @Builder
 public class ProfileDto {
     private Long id;
@@ -25,6 +25,9 @@ public class ProfileDto {
     @Min(value = 1900, message = "year of birth must be greater than or equal to 1900")
     @Max(value = 2022, message = "year of birth must be smaller than or equal to 2022")
     private int birthYear;
+
+    @Schema(description = "indicates whether admin changed profile")
+    private boolean wasChangedByAdmin;
     @NotNull
     private CountryDto originCountry;
     @NotNull

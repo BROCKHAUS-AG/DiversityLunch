@@ -27,5 +27,6 @@ export interface Profile {
     workExperience: WorkExperience,
     sexualOrientation: SexualOrientation,
     socialBackground: SocialBackground,
-    socialBackgroundDiscrimination: SocialBackgroundDiscrimination
+    socialBackgroundDiscrimination: SocialBackgroundDiscrimination,
+    wasChangedByAdmin: boolean
 }

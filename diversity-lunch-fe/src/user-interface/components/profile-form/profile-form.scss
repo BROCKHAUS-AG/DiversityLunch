@@ -1,15 +1,42 @@
-.Multi-select-label {
+.ProfileForm{
+  margin-top: 2rem;
+  margin-bottom: 10rem;
+}
+
+.profile-form-button-container{
+  max-width: 500px;
+  margin:auto;
+}
+
+.multiSelectContainer {
+  position: relative;
+  text-align: left;
+  width: 89vw;
+  margin-left: 0.4rem;
+}
+
+@media screen and (min-width: 997px) {
+  .QuestionContainer{
+    width: 80%;
+    margin:auto;
+  }
+  .ProfileForm{
+    margin-top: 3rem;
+  }
+  .multiSelectContainer {
+    position: relative;
+    text-align: left;
+    width: 30vw;
+    margin-left: 2rem;
+  }
 }
 
 .Multi-select-container {
-  width: 80%;
-  padding: 5%;
-  margin: 3%;
 
   .labelWrapper {
     background-color: #f0f0f0;
     padding: .3rem;
-    width: 100%;
+    width: 70%;
     top: 8px;
     left: 8px;
     position: relative;
@@ -24,7 +51,6 @@
       font-size: .8rem;
     }
   }
-
 
   .chip {
     align-items: center;
@@ -51,9 +77,11 @@
 
   input::placeholder {
     width: 100%;
+    color:lightgrey;
+    font-size: 16px;
   }
-}
 
+}
 
 .highlightOption {
   background: rgba(0, 0, 0, 0.08);
@@ -83,7 +111,7 @@
 }
 
 .searchWrapper {
-  border: 1px solid #b9b9b9;
+  border: 1px solid #c4c4c4;
   border-radius: 0;
   min-height: 22px;
   padding: 5px;
