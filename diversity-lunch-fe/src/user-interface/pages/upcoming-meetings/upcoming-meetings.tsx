@@ -62,8 +62,9 @@ export const UpcomingMeetings = () => {
                             )
                         : <LoadingAnimation />
                 }
+
+                <Button label="Weiteren Termin buchen" onClick={() => history.push('/add+meetings/choose+date')} />
             </div>
-            <Button label="Weiteren Termin buchen" onClick={() => history.push('/add+meetings/choose+date')} />
         </div>
     );
 };
