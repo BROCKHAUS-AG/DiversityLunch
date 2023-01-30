@@ -6,7 +6,7 @@ const Faq = () => (
         <h2>FAQ</h2>
         <details className="FAQ-expandable">
             <summary className="FAQ-title">
-                Wie funktioniert die Diversity Lunch App?
+                <p className="FAQ-question"> Wie funktioniert die Diversity Lunch App?</p>
             </summary>
             <p className="FAQ-text">
                 Fülle im ersten Schritt dein persönliches Profil möglichst vollständig aus. Buche anschließend mind.
@@ -22,7 +22,7 @@ const Faq = () => (
         </details>
         <details className="FAQ-expandable">
             <summary className="FAQ-title">
-                Wie wähle ich einen Termin für das gemeinsame Mittagessen aus?
+                <p className="FAQ-question">Wie wähle ich einen Termin für das gemeinsame Mittagessen aus?</p>
             </summary>
             <p className="FAQ-text">
                 Über den Bereich &quot;Termin wählen&quot; kannst du Termine innerhalb der nächsten 2 Wochen buchen.
@@ -30,7 +30,7 @@ const Faq = () => (
         </details>
         <details className="FAQ-expandable">
             <summary className="FAQ-title">
-                Wie finde ich eine*n Lunch-Partner*in?
+                <p className="FAQ-question">  Wie finde ich eine*n Lunch-Partner*in?</p>
             </summary>
             <p className="FAQ-text">
                 Unser Diversity Lunch App weist dir eine*n Lunch-Partner*in zu.
@@ -42,7 +42,7 @@ const Faq = () => (
         </details>
         <details className="FAQ-expandable">
             <summary className="FAQ-title">
-                Wie kann ich ein Termin absagen?
+                <p className="FAQ-question">Wie kann ich ein Termin absagen?</p>
             </summary>
             <p className="FAQ-text">
                 Ein Termin kann über die App sowie in Teams abgesagt werden.
@@ -51,7 +51,7 @@ const Faq = () => (
         </details>
         <details className="FAQ-expandable">
             <summary className="FAQ-title">
-                Einige Fragen sind mir zu heikel, was kann ich tun?
+                <p className="FAQ-question"> Einige Fragen sind mir zu heikel, was kann ich tun?</p>
             </summary>
             <p className="FAQ-text">
                 Bei jeder Frage gibt es die Möglichkeit &quot;Keine Angabe&quot; auszuwählen.
@@ -61,7 +61,7 @@ const Faq = () => (
         </details>
         <details className="FAQ-expandable">
             <summary className="FAQ-title">
-                Wem kann ich Feedback senden?
+                <p className="FAQ-question"> Wem kann ich Feedback senden?</p>
             </summary>
             <p className="FAQ-text">
                 Feedback und Bugs kannst du uns per Mail an
