@@ -3,6 +3,8 @@
   margin-bottom: 10rem;
 }
 
+
+
 .multiSelectContainer {
   position: relative;
   text-align: left;
@@ -11,6 +13,10 @@
 }
 
 @media screen and (min-width: 997px) {
+  .QuestionContainer{
+    width: 80%;
+    margin:auto;
+  }
   .ProfileForm{
     margin-top: 3rem;
   }
