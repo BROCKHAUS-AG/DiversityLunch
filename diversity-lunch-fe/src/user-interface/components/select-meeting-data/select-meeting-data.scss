@@ -1,10 +1,11 @@
 .SelectMeetingData {
   width: 100%;
-  max-width: 700px;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  margin:auto;
 }
 
 .ChooseDate-infoText {
@@ -15,7 +16,6 @@
 
 @media screen and (min-width: 997px){
   .SelectMeetingData {
-
     width: 100%;
     max-width: 700px;
     display: flex;
