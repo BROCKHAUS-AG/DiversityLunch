@@ -1,6 +1,8 @@
+@import "src/global-styles/index";
+
 .AppHeader{
   background-color: #efefef;
-  padding: 1rem 0rem 1rem;
+  padding: 1rem 0 1rem;
 
   .AppHeader-Wrapper{
     .flexBox{
@@ -8,7 +10,7 @@
       justify-content: center;
       position: relative;
     }
-    @media screen and (min-width: 997px){
+    @media screen and (min-width: $screen-large){
       .flexBox{
         justify-content: left;
       }

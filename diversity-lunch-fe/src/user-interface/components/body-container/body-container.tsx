@@ -15,15 +15,9 @@ import { BookingError } from '../../pages/booking-error/booking-error';
 import { VoucherPanel } from '../../pages/voucher-panel/voucher-panel';
 import { UserVoucherList } from '../../pages/user-voucher-list/user-voucher-list';
 import './body-container.scss';
+import { GenericErrorPage } from '../../pages/generic-error-page/generic-error-page';
 
-interface BodyContainerParams {
-    render: () => JSX.Element;
-}
-
-export const BodyContainer = (props: BodyContainerParams) => {
-    const {
-        render,
-    } = props;
+export const BodyContainer = () => {
     const location = useLocation();
     return (
         <div className={location.pathname === '/questions' ? 'bodyContainer questions' : 'bodyContainer'}>
@@ -82,7 +76,11 @@ export const BodyContainer = (props: BodyContainerParams) => {
 
                 <Route
                     path="/"
-                    render={render}
+                    render={() => (
+                        <GenericErrorPage
+                            errorMessage="ERROR 404 - THIS SITE DOES NOT EXIST"
+                        />
+                    )}
                 />
             </Switch>
         </div>

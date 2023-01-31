@@ -1,5 +1,6 @@
+@import "src/global-styles/index";
+
 .ProfileForm{
-  margin-top: 2rem;
   margin-bottom: 10rem;
 }
 
@@ -13,13 +14,10 @@
   text-align: left;
 }
 
-@media screen and (min-width: 997px) {
+@media screen and (min-width: $screen-large) {
   .QuestionContainer{
     width: 80%;
     margin:auto;
-  }
-  .ProfileForm{
-    margin-top: 3rem;
   }
   .multiSelectContainer {
     position: relative;
@@ -28,7 +26,6 @@
 }
 
 .Multi-select-container {
-
   .labelWrapper {
     background-color: #f0f0f0;
     padding: .3rem;

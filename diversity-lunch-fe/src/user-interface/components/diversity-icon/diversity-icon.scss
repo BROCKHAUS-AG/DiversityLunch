@@ -1,3 +1,5 @@
+@import "src/global-styles/index";
+
 .diversitylunch-logo{
   justify-content: center;
   margin: auto;
@@ -9,16 +11,16 @@
   flex-direction: column;
   align-items: center;
   height: 100%;
-  color: #b81f40;
-
+  color: $brockhaus-red;
 
   .App h4 {
     font-family: GilroyRegular, sans-serif;
-    color: #b81f40;
+    color: $brockhaus-red;
     font-weight: bold;
     font-size: .7rem;
     height: 1rem;
   }
+
   .IconHeader-title-powered-by-container {
     display: flex;
     justify-content: flex-end;
@@ -32,13 +34,13 @@
 }
 
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: $screen-medium) {
   .IconHeader-diversity-logo-container {
     margin-left: 2rem;
   }
 }
 
-@media screen and (min-width: 997px) {
+@media screen and (min-width: $screen-large) {
   .diversitylunch-logo{
     height: 100%;
     width: 100%;
@@ -50,7 +52,7 @@
     flex-direction: column;
     align-items: center;
     height: 100%;
-    color: #b81f40;
+    color: $brockhaus-red;
     margin-left: 250px;
   }
 

@@ -1,3 +1,4 @@
+@import "src/global-styles/index";
 
 .card {
   .image {
@@ -9,7 +10,7 @@
 }
 .App h2 {
   font-family: GilroyLight, sans-serif;
-  color: #b81f40;
+  color: $brockhaus-red;
   font-size: 2rem;
   margin-right: 0.5rem;
 }
@@ -34,36 +35,35 @@
           border: solid black 1px;
           display: none;
         }
-
       }
     }
     .btnMobileBag{
       display: block;
       margin-top: 1rem;
-      border: solid #b81f40 1px;
+      border: solid $brockhaus-red 1px;
     }
   }
 }
 
 .smallBagBtn{
-  border: solid #b81f40 1px;
+  border: solid $brockhaus-red 1px;
 }
+
 .link-container{
   text-decoration: none;
 }
 
-@media screen and (min-width: 997px) {
-
+@media screen and (min-width: $screen-large) {
   .App h2 {
     font-family: GilroyLight, sans-serif;
-    color: #b81f40;
+    color: $brockhaus-red;
     font-size: 2rem;
     margin-right: 0;
   }
 
   .Dashboard {
     max-width: 1180px;
-  margin:auto;
+    margin:auto;
 
     .Dashboard-container {
       width: 100%;
@@ -84,13 +84,13 @@
 
         .body {
           margin-top: 1rem;
-display: block;
+          display: block;
           button{
             margin-left: auto;
             margin-right: auto;
             display: block;
             margin-top: 2rem;
-            border: solid #b81f40 1px;
+            border: solid $brockhaus-red 1px;
           }
 
           button:hover{
@@ -108,7 +108,6 @@ display: block;
         display: none;
       }
     }
-
 
     /* Float four columns side by side */
     .column {
@@ -143,7 +142,7 @@ display: block;
     }
 
     /* Responsive columns - one column layout (vertical) on small screens */
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: $screen-medium) {
       .column {
         width: 100%;
         display: block;
@@ -155,5 +154,4 @@ display: block;
   p {
     font-family: SourceSansProRegular, sans-serif;
   }
-
 }
