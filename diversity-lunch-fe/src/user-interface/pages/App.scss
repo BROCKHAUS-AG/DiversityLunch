@@ -20,32 +20,6 @@ html {
   display: none;
 }
 
-.bodyContainer {
-  /* width: calc(100% - 300px);*/
-  margin: 2rem 1.5rem 2rem;
-}
-
-@media (min-width: 997px){
-  .bodyContainer {
-  /* width: calc(100% - 300px);*/
-    margin: 2rem 1rem 10rem 18rem;
-  }
-
-  .bodyContainer.questions {
-    margin-left: 2rem;
-  }
-
-  .toggleStyle{
-    display: block;
-  }
-}
-
-@media (min-width: 1650px){
-  .bodyContainer {
-    margin-left: 250px;
-  }
-}
-
 h1 {
   font-family: GilroyLight, sans-serif;
   color: #b81f40;
