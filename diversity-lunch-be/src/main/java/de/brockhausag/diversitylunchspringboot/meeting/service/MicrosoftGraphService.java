@@ -116,24 +116,4 @@ public class MicrosoftGraphService {
         return groupCollectionPage != null ? Optional.of(groupCollectionPage.getCurrentPage()) : Optional.empty();
     }
 
-/* TODO test with correct permissions
-
-    public void test() {
-        GraphServiceClient<Request> graphClient = setUpGraphClient();
-        String userId = "c5b1bdf1-f22e-49ad-bbac-db73e31340a4";
-
-        LocalDateTime dateTime = LocalDateTime.now();
-        String dateTimeString = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-        EventCollectionPage eventCollectionPage = graphClient.users(userId)
-                .calendar()
-                .events()
-                .buildRequest()
-                .filter("start/dateTime ge '" + dateTimeString +"'")
-                .top(10)
-                .get();
-        for (Event event : eventCollectionPage.getCurrentPage()) {
-            log.info(event.subject);
-        }
-    }*/
 }
