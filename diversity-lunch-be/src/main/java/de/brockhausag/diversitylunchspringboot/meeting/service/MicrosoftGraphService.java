@@ -56,9 +56,7 @@ public class MicrosoftGraphService {
 
     public Event createEvent(Event event) {
         GraphServiceClient<Request> graphClient = setUpGraphClient();
-
-        String userId = diversityLunchMsTeamsProperties.getDiversityLunchUserId();
-
+        //String userId = diversityLunchMsTeamsProperties.getDiversityLunchUserId();
         return graphClient.users("57daea79-1c84-41ba-8632-ee596423a836").events().buildRequest().post(event);
     }
 
@@ -69,7 +67,12 @@ public class MicrosoftGraphService {
         EventCancelParameterSet cancelMessage = EventCancelParameterSet.newBuilder()
                 .withComment(cancellationMessage)
                 .build();
-        graphClient.users(userId).events(eventId).cancel(cancelMessage).buildRequest().post();
+
+       graphClient.users(userId).events(eventId)
+                .cancel(cancelMessage)
+                .buildRequest()
+                .post();
+
     }
 
     public List<Event> getAllFutureEvents() {
