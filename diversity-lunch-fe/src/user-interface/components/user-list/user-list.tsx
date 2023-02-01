@@ -45,7 +45,7 @@ export const UserList: FC = () => {
         // TODO: Handle network and http errors properly tgohlisch 17.11.2022
         dispatch(getAllAccounts({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(getAllProfiles({ onNetworkError: console.error, statusCodeHandlers: {} }));
-    }, []);
+    });
 
     if (!accountsState.fetched || !profilesState.fetched) {
         return <LoadingAnimation />;

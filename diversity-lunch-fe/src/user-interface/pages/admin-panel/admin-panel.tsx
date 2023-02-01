@@ -41,7 +41,7 @@ export const AdminPanel: FC = () => {
     const sexualOrientationState = useSelector((store: AppStoreState) => store.sexualOrientation);
     const socialBackgroundState = useSelector((store: AppStoreState) => store.socialBackground);
     const socialBackgroundDiscriminationState = useSelector((store: AppStoreState) => store.socialBackgroundDiscrimination);
-    const [emailSuccess, setEmailSuccess] = useState(false);
+    const [didSendEmailSuccessfully, setDidSendEmailSuccessfully] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -58,7 +58,7 @@ export const AdminPanel: FC = () => {
         dispatch(sexualOrientationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(socialBackgroundFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(socialBackgroundDiscriminationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
-    }, []);
+    });
 
     if (profileState.status !== 'OK') {
         return <LoadingAnimation />;
@@ -83,7 +83,7 @@ export const AdminPanel: FC = () => {
     }
     const sendTestmail = async () => {
         const result: Response = await authenticatedFetchPost(`/api/mailing/sendTestMailToUser/${accountState.accountData.profileId}`, '');
-        setEmailSuccess(result.status === 200);
+        setDidSendEmailSuccessfully(result.status === 200);
     };
     return (
         <section className="view">
@@ -190,7 +190,13 @@ export const AdminPanel: FC = () => {
                     <div className="testMailContainer">
                         <button className="testmailButton" onClick={sendTestmail}>Testmail verschicken</button>
                     </div>
-                    {emailSuccess && <PopUp onButtonClick={() => { setEmailSuccess(false); }} message="Testmail gesendet" buttonText="Okay" />}
+                    {didSendEmailSuccessfully && (
+                        <PopUp
+                            onButtonClick={() => { setDidSendEmailSuccessfully(false); }}
+                            message="Testmail gesendet"
+                            buttonText="Okay"
+                        />
+                    )}
                 </div>
             </div>
         </section>

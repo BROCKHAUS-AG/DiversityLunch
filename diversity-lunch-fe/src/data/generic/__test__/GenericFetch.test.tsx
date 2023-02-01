@@ -23,7 +23,7 @@ const FetchingTestComponent = ({ actionThunk }: FetchingTestComponentProps) => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(actionThunk);
-    }, []);
+    });
 
     return (
         <section>
