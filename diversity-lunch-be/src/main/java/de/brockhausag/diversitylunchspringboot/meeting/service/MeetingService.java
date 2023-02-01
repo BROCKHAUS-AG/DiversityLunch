@@ -183,7 +183,9 @@ public class MeetingService {
     void cancelAndDeleteMeeting(MeetingEntity meeting) {
     try {
         msTeamsService.cancelMsTeamsMeeting(meeting);
+        log.info(String.format("Succesfully deleted Teams Meeting with id %s", meeting.getMsTeamsMeetingId()));
     }catch (GraphServiceException e){
+        log.error(e.toString());
         log.error(e.toString());
         log.info("Could not delete Teams Meeting it may already be deleted via Teams");
 
