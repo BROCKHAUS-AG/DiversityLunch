@@ -13,7 +13,7 @@ const WrapperComponent: FC = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(loadAccount);
-    });
+    }, []);
     return <UserVoucherList />;
 };
 

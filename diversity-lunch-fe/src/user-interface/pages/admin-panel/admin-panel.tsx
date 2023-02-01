@@ -58,7 +58,7 @@ export const AdminPanel: FC = () => {
         dispatch(sexualOrientationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(socialBackgroundFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(socialBackgroundDiscriminationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
-    });
+    }, []);
 
     if (profileState.status !== 'OK') {
         return <LoadingAnimation />;
@@ -200,6 +200,5 @@ export const AdminPanel: FC = () => {
                 </div>
             </div>
         </section>
-
     );
 };

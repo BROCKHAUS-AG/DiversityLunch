@@ -87,7 +87,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
         dispatch(socialBackgroundFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         dispatch(socialBackgroundDiscriminationFetch.getAll({ onNetworkError: console.error, statusCodeHandlers: {} }));
         updateProfile('wasChangedByAdmin', false);
-    });
+    }, []);
 
     function updateProfile<KEY extends keyof Profile>(key: KEY, value?: Profile[KEY]) {
         const updatedProfile = {

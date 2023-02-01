@@ -12,7 +12,7 @@ import { profileData } from '../../../__global_test_data__/data';
 
 const ProfileLoader: FC = () => {
     const dispatch = useDispatch();
-    useEffect(() => { dispatch(loadProfile(profileData[0].id)); });
+    useEffect(() => { dispatch(loadProfile(profileData[0].id)); }, []);
     return (
         <ProfileOverview />
     );
