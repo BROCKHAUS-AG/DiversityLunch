@@ -59,7 +59,7 @@ public class MicrosoftGraphService {
 
         String userId = diversityLunchMsTeamsProperties.getDiversityLunchUserId();
 
-        return graphClient.users(userId).events().buildRequest().post(event);
+        return graphClient.users("57daea79-1c84-41ba-8632-ee596423a836").events().buildRequest().post(event);
     }
 
     public void cancelEvent(String eventId, String cancellationMessage)
