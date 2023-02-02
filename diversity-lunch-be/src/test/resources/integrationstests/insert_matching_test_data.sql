@@ -3,7 +3,11 @@ INSERT INTO profile_entity(id, birth_year, email, name, was_changed_by_admin) VA
     (2, 1999, 'second.profile@some.tdl', 'second', false),
     (3, 1990, 'third.profile@some.tdl', 'third', false),
     (4, 1974, 'fourth.profile@some.tdl', 'fourth', false),
-    (5, 1998, 'copyOfFirst.profile@some.tdl', 'copyOfFirst', false);
+    (5, 1998, 'copyOfFirst.profile@some.tdl', 'copyOfFirst', false),
+    (6, 1991, 'sixth.profile@some.tdl', 'sixth', false),
+    (7, 1992, 'seventh.profile@some.tdl', 'seventh', false),
+    (8, 1993, 'eighth.profile@some.tdl', 'eighth', false),
+    (9, 1994, 'nineth.profile@some.tdl', 'nineth', false);
 
 WITH algeria AS (SELECT id FROM basic_dimension_selectable_option WHERE value='Algerien' LIMIT 1),
      andorra AS (SELECT id FROM basic_dimension_selectable_option WHERE value='Andorra' LIMIT 1),
@@ -33,12 +37,17 @@ WITH algeria AS (SELECT id FROM basic_dimension_selectable_option WHERE value='A
      sexual AS (SELECT id FROM basic_dimension WHERE dimension_category_id=(SELECT id FROM dimension_category WHERE description='Sexuelle Orientierung')),
      social AS (SELECT id FROM basic_dimension WHERE dimension_category_id=(SELECT id FROM dimension_category WHERE description='Soziale Herkunft')),
      discrimination AS (SELECT id FROM basic_dimension WHERE dimension_category_id=(SELECT id FROM dimension_category WHERE description='Diskriminierung aufgrund sozialer Herkunft'))
-INSERT INTO profile_entity_selected_basic_values (profile_entity_id, selected_basic_values_id, basic_dimension) VALUES
+
+                                                       INSERT INTO profile_entity_selected_basic_values (profile_entity_id, selected_basic_values_id, basic_dimension) VALUES
     (1, (SELECT * FROM meat), (SELECT * FROM diet)), (1, (SELECT * FROM study), (SELECT * FROM education)), (1, (SELECT * FROM german), (SELECT * FROM language)), (1, (SELECT * FROM algeria), (SELECT * FROM origin)), (1, (SELECT * FROM internProject), (SELECT * FROM project)), (1, (SELECT * FROM jewish), (SELECT * FROM religion)), (1, (SELECT * FROM heterosexual), (SELECT * FROM sexual)), (1, (SELECT * FROM academicFamily), (SELECT * FROM social)), (1, (SELECT * FROM yes), (SELECT * FROM discrimination)),
     (2, (SELECT * FROM vegan), (SELECT * FROM diet)), (2, (SELECT * FROM study), (SELECT * FROM education)), (2, (SELECT * FROM german), (SELECT * FROM language)), (2, (SELECT * FROM algeria), (SELECT * FROM origin)), (2, (SELECT * FROM internProject), (SELECT * FROM project)), (2, (SELECT * FROM jewish), (SELECT * FROM religion)), (2, (SELECT * FROM heterosexual), (SELECT * FROM sexual)), (2, (SELECT * FROM academicFamily), (SELECT * FROM social)), (2, (SELECT * FROM yes), (SELECT * FROM discrimination)),
     (3, (SELECT * FROM vegan), (SELECT * FROM diet)), (3, (SELECT * FROM training), (SELECT * FROM education)), (3, (SELECT * FROM german), (SELECT * FROM language)), (3, (SELECT * FROM algeria), (SELECT * FROM origin)), (3, (SELECT * FROM internProject), (SELECT * FROM project)), (3, (SELECT * FROM jewish), (SELECT * FROM religion)), (3, (SELECT * FROM heterosexual), (SELECT * FROM sexual)), (3, (SELECT * FROM academicFamily), (SELECT * FROM social)), (3, (SELECT * FROM yes), (SELECT * FROM discrimination)),
     (4, (SELECT * FROM vegan), (SELECT * FROM diet)), (4, (SELECT * FROM training), (SELECT * FROM education)), (4, (SELECT * FROM english), (SELECT * FROM language)), (4, (SELECT * FROM andorra), (SELECT * FROM origin)), (4, (SELECT * FROM externProject), (SELECT * FROM project)), (4, (SELECT * FROM christian), (SELECT * FROM religion)), (4, (SELECT * FROM heterosexual), (SELECT * FROM sexual)), (4, (SELECT * FROM academicFamily), (SELECT * FROM social)), (4, (SELECT * FROM yes), (SELECT * FROM discrimination)),
-    (5, (SELECT * FROM meat), (SELECT * FROM diet)), (5, (SELECT * FROM study), (SELECT * FROM education)), (5, (SELECT * FROM german), (SELECT * FROM language)), (5, (SELECT * FROM algeria), (SELECT * FROM origin)), (5, (SELECT * FROM internProject), (SELECT * FROM project)), (5, (SELECT * FROM jewish), (SELECT * FROM religion)), (5, (SELECT * FROM heterosexual), (SELECT * FROM sexual)), (5, (SELECT * FROM academicFamily), (SELECT * FROM social)), (5, (SELECT * FROM yes), (SELECT * FROM discrimination));
+    (5, (SELECT * FROM meat), (SELECT * FROM diet)), (5, (SELECT * FROM study), (SELECT * FROM education)), (5, (SELECT * FROM german), (SELECT * FROM language)), (5, (SELECT * FROM algeria), (SELECT * FROM origin)), (5, (SELECT * FROM internProject), (SELECT * FROM project)), (5, (SELECT * FROM jewish), (SELECT * FROM religion)), (5, (SELECT * FROM heterosexual), (SELECT * FROM sexual)), (5, (SELECT * FROM academicFamily), (SELECT * FROM social)), (5, (SELECT * FROM yes), (SELECT * FROM discrimination)),
+    (6, (SELECT * FROM vegan), (SELECT * FROM diet)), (6, (SELECT * FROM study), (SELECT * FROM education)), (6, (SELECT * FROM german), (SELECT * FROM language)), (6, (SELECT * FROM algeria), (SELECT * FROM origin)), (6, (SELECT * FROM internProject), (SELECT * FROM project)), (6, (SELECT * FROM jewish), (SELECT * FROM religion)), (6, (SELECT * FROM heterosexual), (SELECT * FROM sexual)), (6, (SELECT * FROM academicFamily), (SELECT * FROM social)), (6, (SELECT * FROM yes), (SELECT * FROM discrimination)),
+    (7, (SELECT * FROM vegan), (SELECT * FROM diet)), (7, (SELECT * FROM training), (SELECT * FROM education)), (7, (SELECT * FROM german), (SELECT * FROM language)), (7, (SELECT * FROM algeria), (SELECT * FROM origin)), (7, (SELECT * FROM internProject), (SELECT * FROM project)), (7, (SELECT * FROM jewish), (SELECT * FROM religion)), (7, (SELECT * FROM heterosexual), (SELECT * FROM sexual)), (7, (SELECT * FROM academicFamily), (SELECT * FROM social)), (7, (SELECT * FROM yes), (SELECT * FROM discrimination)),
+    (8, (SELECT * FROM vegan), (SELECT * FROM diet)), (8, (SELECT * FROM training), (SELECT * FROM education)), (8, (SELECT * FROM english), (SELECT * FROM language)), (8, (SELECT * FROM andorra), (SELECT * FROM origin)), (8, (SELECT * FROM externProject), (SELECT * FROM project)), (8, (SELECT * FROM christian), (SELECT * FROM religion)), (8, (SELECT * FROM heterosexual), (SELECT * FROM sexual)), (8, (SELECT * FROM academicFamily), (SELECT * FROM social)), (8, (SELECT * FROM yes), (SELECT * FROM discrimination)),
+    (9, (SELECT * FROM meat), (SELECT * FROM diet)), (9, (SELECT * FROM study), (SELECT * FROM education)), (9, (SELECT * FROM german), (SELECT * FROM language)), (9, (SELECT * FROM algeria), (SELECT * FROM origin)), (9, (SELECT * FROM internProject), (SELECT * FROM project)), (9, (SELECT * FROM jewish), (SELECT * FROM religion)), (9, (SELECT * FROM heterosexual), (SELECT * FROM sexual)), (9, (SELECT * FROM academicFamily), (SELECT * FROM social)), (9, (SELECT * FROM yes), (SELECT * FROM discrimination));
 
 WITH lowExperience AS (SELECT id FROM weighted_dimension_selectable_option WHERE value='0-3 Jahre' LIMIT 1),
      workxp AS (SELECT id FROM weighted_dimension WHERE dimension_category_id=(SELECT id FROM dimension_category WHERE description='Berufserfahrung'))
@@ -47,7 +56,11 @@ INSERT INTO profile_entity_selected_weighted_values (profile_entity_id, selected
     (2, (SELECT * FROM lowExperience), (SELECT * FROM workxp)),
     (3, (SELECT * FROM lowExperience), (SELECT * FROM workxp)),
     (4, (SELECT * FROM lowExperience), (SELECT * FROM workxp)),
-    (5, (SELECT * FROM lowExperience), (SELECT * FROM workxp));
+    (5, (SELECT * FROM lowExperience), (SELECT * FROM workxp)),
+    (6, (SELECT * FROM lowExperience), (SELECT * FROM workxp)),
+    (7, (SELECT * FROM lowExperience), (SELECT * FROM workxp)),
+    (8, (SELECT * FROM lowExperience), (SELECT * FROM workxp)),
+    (9, (SELECT * FROM lowExperience), (SELECT * FROM workxp));
 
 WITH hobby AS (SELECT id FROM multiselect_dimension WHERE dimension_category_id=(SELECT id FROM dimension_category WHERE description='Hobby'))
 INSERT INTO profile_entity_selected_multiselect_value (profile_id, multiselect_dimension_id) VALUES
@@ -55,13 +68,21 @@ INSERT INTO profile_entity_selected_multiselect_value (profile_id, multiselect_d
     (2, (SELECT * FROM hobby)),
     (3, (SELECT * FROM hobby)),
     (4, (SELECT * FROM hobby)),
-    (5, (SELECT * FROM hobby));
+    (5, (SELECT * FROM hobby)),
+    (6, (SELECT * FROM hobby)),
+    (7, (SELECT * FROM hobby)),
+    (8, (SELECT * FROM hobby)),
+    (9, (SELECT * FROM hobby));
 
 WITH profile1_selected AS (SELECT id FROM profile_entity_selected_multiselect_value WHERE profile_id=1),
      profile2_selected AS (SELECT id FROM profile_entity_selected_multiselect_value WHERE profile_id=2),
      profile3_selected AS (SELECT id FROM profile_entity_selected_multiselect_value WHERE profile_id=3),
      profile4_selected AS (SELECT id FROM profile_entity_selected_multiselect_value WHERE profile_id=4),
      profile5_selected AS (SELECT id FROM profile_entity_selected_multiselect_value WHERE profile_id=5),
+     profile6_selected AS (SELECT id FROM profile_entity_selected_multiselect_value WHERE profile_id=6),
+     profile7_selected AS (SELECT id FROM profile_entity_selected_multiselect_value WHERE profile_id=7),
+     profile8_selected AS (SELECT id FROM profile_entity_selected_multiselect_value WHERE profile_id=8),
+     profile9_selected AS (SELECT id FROM profile_entity_selected_multiselect_value WHERE profile_id=9),
      cooking AS (SELECT id FROM multiselect_dimension_selectable_option WHERE value='Kochen' LIMIT 1),
      gaming AS (SELECT id FROM multiselect_dimension_selectable_option WHERE value='Gaming' LIMIT 1),
      hunting AS (SELECT id FROM multiselect_dimension_selectable_option WHERE value='Jagen' LIMIT 1)
@@ -73,13 +94,18 @@ INSERT INTO profile_entity_selected_multiselect_value_selected_options (profile_
     ((SELECT * FROM profile3_selected), (SELECT * FROM gaming)),
     ((SELECT * FROM profile4_selected), (SELECT * FROM gaming)),
     ((SELECT * FROM profile4_selected), (SELECT * FROM hunting)),
-    ((SELECT * FROM profile5_selected), (SELECT * FROM cooking));
+    ((SELECT * FROM profile5_selected), (SELECT * FROM cooking)),
+    ((SELECT * FROM profile6_selected), (SELECT * FROM gaming)),
+    ((SELECT * FROM profile7_selected), (SELECT * FROM gaming)),
+    ((SELECT * FROM profile8_selected), (SELECT * FROM hunting)),
+    ((SELECT * FROM profile9_selected), (SELECT * FROM cooking));
 
 
 
 /*Score under 9, matching algorithm at date 26.09.2022 gives a score of 4*/
 INSERT INTO meeting_proposal_entity VALUES (1, '2022-03-16 16:23:53.786276', false, '2022-03-18 12:30:00.000000', 1),
             (2, '2022-03-16 16:23:53.786276', false, '2022-03-18 12:30:00.000000', 2);
+
 
 /*Score between 9 and 21, matching algorithm at date 26.09.2022 gives a score of 11*/
 INSERT INTO meeting_proposal_entity VALUES (3, '2022-03-16 16:23:53.786276', false, '2022-03-18 11:30:00.000000', 1),
@@ -91,3 +117,14 @@ INSERT INTO meeting_proposal_entity VALUES (5, '2022-03-16 16:23:53.786276', fal
 
 /*unmatched*/
 INSERT INTO meeting_proposal_entity VALUES (7, '2022-03-16 16:23:53.786276', false, '2022-04-05 13:30:00.000000', 5);
+
+/*multiple matching bug on the same day with same timeslot*/
+INSERT INTO meeting_proposal_entity VALUES (8, '2022-03-16 16:23:53.786276', false, '2022-03-18 12:00:00.000000', 1),
+                                           (9, '2022-03-16 16:23:53.786276', false, '2022-03-18 12:00:00.000000', 2),
+                                         (10, '2022-03-16 16:23:53.786276', false, '2022-03-18 12:00:00.000000', 3),
+                                           (11, '2022-03-16 16:23:53.786276', false, '2022-03-18 12:00:00.000000', 4),
+                                             (12, '2022-03-16 16:23:53.786276', false, '2022-03-18 12:00:00.000000', 5),
+                                           (13, '2022-03-16 16:23:53.786276', false, '2022-03-18 12:00:00.000000', 6),
+                                         (14, '2022-03-16 16:23:53.786276', false, '2022-03-18 12:00:00.000000', 7),
+                                           (15, '2022-03-16 16:23:53.786276', false, '2022-03-18 12:00:00.000000', 8),
+                                           (16, '2022-03-16 16:23:53.786276', false, '2022-03-18 12:00:00.000000', 9);
