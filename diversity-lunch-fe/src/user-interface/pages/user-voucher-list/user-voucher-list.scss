@@ -1,4 +1,4 @@
-@import "src/global-styles/reset";
+@import "src/global-styles/index";
 
 .ShowVouchers{
   background-color: #f0f0f0;
@@ -27,7 +27,7 @@
   font-size: 2.2em;
   border: solid;
   width: 70%;
-  color: #b81f40;
+  color: $brockhaus-red;
   overflow-y: auto;
   height: 40%;
 }

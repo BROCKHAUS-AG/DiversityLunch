@@ -1,28 +1,32 @@
 import React from 'react';
 import './diversity-icon.scss';
+import { useLocation } from 'react-router-dom';
 import iconDiversity from '../../../resources/icons/icon-diversity-logo-mit-rahmen.svg';
 
 type DiversityIconContainerProps = {
     title?: string;
     subtitle?: string;
-    poweredBy?: boolean;
+    isPoweredBy?: boolean;
 }
 
 export const DiversityIcon = (props: DiversityIconContainerProps) => {
     const {
         title,
         subtitle,
-        poweredBy,
+        isPoweredBy,
     } = props;
+
+    const location = useLocation();
 
     return (
         <div className="diversitylunch-logo">
-            <div className="IconHeader-diversity-logo-container">
+            {/* eslint-disable-next-line max-len */}
+            <div className={location.pathname === '/questions' ? 'IconHeader-diversity-logo-container questions' : 'IconHeader-diversity-logo-container'}>
                 <div className="diversitylunch-logo-wrapper">
                     <img alt="diversity icon" className="IconHeader-diversity-icon" src={iconDiversity} />
                     <div className="IconHeader-title-container">
                         <h4 className="IconHeader-title">{title}</h4>
-                        {poweredBy && (
+                        {isPoweredBy && (
                             <div className="IconHeader-title-powered-by-container">
                                 <p className="IconHeader-title-powered-by">powered by</p>
                                 <p className="IconHeader-title-brockhaus-ag">
@@ -42,5 +46,5 @@ export const DiversityIcon = (props: DiversityIconContainerProps) => {
 DiversityIcon.defaultProps = {
     title: '',
     subtitle: '',
-    poweredBy: '',
+    isPoweredBy: '',
 };

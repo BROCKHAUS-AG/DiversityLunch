@@ -1,10 +1,12 @@
+@import "src/global-styles/index";
+
 .MeetingTimeButton {
   width: 100%;
   margin: 1%;
 }
 
 .MeetingTimeButton-is-active {
-  border: solid 1px #B81F40;
+  border: solid 1px $brockhaus-red;
   width: 100%;
   margin: 1%;
 }

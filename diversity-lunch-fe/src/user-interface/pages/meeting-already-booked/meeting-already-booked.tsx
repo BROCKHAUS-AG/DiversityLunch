@@ -1,7 +1,5 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { DiversityIcon } from '../../components/diversity-icon/diversity-icon';
-import { CloseSite } from '../../components/close-site/close-site';
 import '../information/information.scss';
 import { Button } from '../../components/button/button';
 
@@ -14,8 +12,7 @@ export const MeetingAlreadyBooked = () => {
 
     return (
         <div className="Information">
-            <CloseSite />
-            <DiversityIcon title="INFORMATION" />
+            <h3>INFORMATION</h3>
             <p className="Information-info-text">
                 Diesen Termin hast du bereits gebucht.
             </p>

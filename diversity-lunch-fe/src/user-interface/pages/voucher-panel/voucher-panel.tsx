@@ -8,7 +8,7 @@ import { GetVoucher } from '../../components/get-voucher/get-voucher';
 
 export const VoucherPanel = () => {
     const [isError, setError] = useState(false);
-    const [vouchersEmpty, setVouchersEmpty] = useState(false);
+    const [isVouchersEmpty, setIsVouchersEmpty] = useState(false);
 
     useEffect(() => {
         checkIfVouchersAvailable();
@@ -16,7 +16,7 @@ export const VoucherPanel = () => {
 
     const checkIfVouchersAvailable = async () => {
         const responseAmount = await authenticatedFetchGet('/api/voucher/amount?claimed=false');
-        setVouchersEmpty(await responseAmount.text() === '0');
+        setIsVouchersEmpty(await responseAmount.text() === '0');
     };
     return (
         <section className="view">
@@ -24,7 +24,7 @@ export const VoucherPanel = () => {
             <div className="ShowVoucher">
                 <DiversityIcon title="GUTSCHEIN" />
                 {
-                    vouchersEmpty
+                    isVouchersEmpty
                         ? (
                             <p className="ShowVoucher-text">Die Gutscheinaktion ist ausgelaufen</p>
                         )

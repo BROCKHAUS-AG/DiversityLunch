@@ -5,14 +5,14 @@ import { VoucherList } from '../voucher-list/voucher-list';
 
 export const VoucherUpload: FC = () => {
     const [selectedCsvFile, setSelectedCsvFile] = useState();
-    const [uploadSuccess, setUploadSuccess] = useState(false);
+    const [didUploadSuccessfully, setDidUploadSuccessfully] = useState(false);
     const [voucherCountState, setVoucherCountState] = useState('');
     const [voucherList, setVoucherList] = useState<[]>([]);
 
     useEffect(() => {
         UpdateVoucherAmount();
         toggleVoucherList();
-    }, [uploadSuccess]);
+    }, [didUploadSuccessfully]);
 
     const uploadCSVToFrontend = (event: any) => {
         setSelectedCsvFile(event.target.files[0]);
@@ -25,9 +25,9 @@ export const VoucherUpload: FC = () => {
         formData.append('file', selectedCsvFile);
         const result: Response = await authenticatedFetchPostCsv('/api/voucher/upload', formData);
         if (result.status === 200) {
-            setUploadSuccess(true);
+            setDidUploadSuccessfully(true);
         } else {
-            setUploadSuccess(false);
+            setDidUploadSuccessfully(false);
         }
     };
 
@@ -91,12 +91,12 @@ export const VoucherUpload: FC = () => {
                             </label>
                         </div>
                         {
-                            uploadSuccess
+                            didUploadSuccessfully
                 && (
                     <PopUp
                         message="Der Upload war erfolgreich!"
                         buttonText="Okay"
-                        onButtonClick={() => setUploadSuccess(false)}
+                        onButtonClick={() => setDidUploadSuccessfully(false)}
                     />
                 )
                         }

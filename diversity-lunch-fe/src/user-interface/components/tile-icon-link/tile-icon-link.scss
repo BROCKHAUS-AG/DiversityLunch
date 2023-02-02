@@ -1,3 +1,5 @@
+@import "src/global-styles/index";
+
 .Tile{
   display: flex;
   flex-direction: column;
@@ -28,5 +30,5 @@
   text-decoration: none;
   font-weight: bold;
   font-size: 0.9em;
-  color: #b81f40;
+  color: $brockhaus-red;
 }
