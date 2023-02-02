@@ -1,7 +1,47 @@
 @import "src/global-styles/index";
 
-.ProfileForm{
+.ProfileForm {
   margin-bottom: 10rem;
+  .DropdownQuestion{
+    input{
+      background: #ffffff;
+    }
+    input::placeholder{
+
+    }
+  }
+
+  .DropdownQuestion{
+    @media screen and (min-width: $screen-large){
+      display: flex;
+      justify-content: space-between;
+
+      .MuiTextField-root{
+        .MuiInputBase-root{
+          width: 100%;
+        }
+      }
+
+      .inLineToggle{
+        width: 75%;
+        max-width: 21rem;
+        padding-right: 1rem;
+        vertical-align: top;
+      }
+
+      .inLineToggleHelper{
+        float: right;
+        width: 100%;
+        position: relative;
+      }
+
+      .MuiAutocomplete-root.MuiAutocomplete-hasClearIcon.MuiAutocomplete-hasPopupIcon, .MuiFormControl-root{
+        width: 100%;
+        vertical-align: middle;
+        position: relative;
+      }
+    }
+  }
 }
 
 .profile-form-button-container{
@@ -12,6 +52,12 @@
 .multiSelectContainer {
   position: relative;
   text-align: left;
+
+  li:hover {
+    background: whitesmoke;
+    color: black;
+    cursor: pointer;
+  }
 }
 
 @media screen and (min-width: $screen-large) {
@@ -23,6 +69,10 @@
     position: relative;
     text-align: left;
   }
+}
+
+.multiselect-container.multiSelectContainer .searchWrapper {
+  border-radius: 0;
 }
 
 .Multi-select-container {
@@ -54,7 +104,8 @@
     font-size: 13px;
     line-height: 19px;
     margin-bottom: 5px;
-    margin-right: 5px;
+    margin-right: 0;
+    margin-left: 5px;
     padding: 4px 10px;
     font-family: SourceSansProRegular, sans-serif;
   }
@@ -62,7 +113,9 @@
   input {
     background: transparent;
     border: none;
-    margin-top: 3px;
+    margin-top: 5px;
+    margin-left: 0;
+    padding-left: 10px;
     max-height: 42px;
     color: currentColor;
     font: inherit;
@@ -70,8 +123,13 @@
 
   input::placeholder {
     width: 100%;
-    color:lightgrey;
-    font-size: 16px;
+    color: rgba(0, 0, 0, 0.54);
+    font: inherit;
+    font-size: 1rem;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0.00938em;
   }
 
 }
@@ -79,12 +137,6 @@
 .highlightOption {
   background: rgba(0, 0, 0, 0.08);
   color: black;
-}
-
-.multiSelectContainer li:hover {
-  background: whitesmoke;
-  color: black;
-  cursor: pointer;
 }
 
 .closeIcon {
