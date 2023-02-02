@@ -1,5 +1,6 @@
 package de.brockhausag.diversitylunchspringboot.meeting.service;
 
+import com.microsoft.graph.http.GraphServiceException;
 import de.brockhausag.diversitylunchspringboot.meeting.mapper.MeetingMapper;
 import de.brockhausag.diversitylunchspringboot.meeting.model.DeclinedMeeting;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingDto;
@@ -136,8 +137,8 @@ public class MeetingService {
         boolean success = meetingProposals.stream().allMatch(Optional::isPresent);
 
         if (success) {
-            deleteMeetingProposals(meetingProposals.stream().filter(Optional::isPresent).map(Optional::get).toList());
             cancelAndDeleteMeeting(declinedMeeting.meetingEntity());
+            deleteMeetingProposals(meetingProposals.stream().filter(Optional::isPresent).map(Optional::get).toList());
             log.info("Deleted Meeting-Proposals for Meeting with id " + declinedMeeting.meetingEntity().getId());
         } else {
             log.warn("Tried to delete both MeetingProposals of a matching Meeting, but could not find all Proposals!");
@@ -153,8 +154,8 @@ public class MeetingService {
         boolean success = meetingProposalDecliner.isPresent() && meetingProposalPartner.isPresent();
 
         if (success) {
-            deleteMeetingProposals(List.of(meetingProposalDecliner.get()));
             cancelAndDeleteMeeting(meeting);
+            deleteMeetingProposals(List.of(meetingProposalDecliner.get()));
             meetingProposalPartner.get().setMatched(false);
             meetingProposalRepository.save(meetingProposalPartner.get());
             log.info("Deleted Meeting-Proposal for Decliner and enabled Meeting-Proposal for Partner (Meeting-Id: %d)".formatted(meeting.getId()));
@@ -180,9 +181,17 @@ public class MeetingService {
     }
 
     void cancelAndDeleteMeeting(MeetingEntity meeting) {
+    try {
         msTeamsService.cancelMsTeamsMeeting(meeting);
+        log.info(String.format("Succesfully deleted Teams Meeting with id %s", meeting.getMsTeamsMeetingId()));
+    }catch (GraphServiceException e){
+        log.error(e.toString());
+        log.error(e.toString());
+        log.info("Could not delete Teams Meeting it may already be deleted via Teams");
+
+    }
         meetingRepository.delete(meeting);
-        log.info("Deleted MeetingEntity and canceled MsTeamsMeeting for Meeting with id " + meeting.getId());
+        log.info("Deleted MeetingEntity for Meeting with id " + meeting.getId());
     }
 
     public int cancelDeclinedMeetings() {

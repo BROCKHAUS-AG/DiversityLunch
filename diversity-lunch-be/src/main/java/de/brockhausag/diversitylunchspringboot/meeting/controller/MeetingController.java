@@ -104,6 +104,7 @@ public class MeetingController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (NoSuchElementException e)
         {
+            log.error(e.toString());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
