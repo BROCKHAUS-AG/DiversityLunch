@@ -24,6 +24,12 @@
   font-weight: normal;
 }
 
+$brockhaus-red: #B81F40;
+$screen-extra-large: 1650px;
+$screen-large: 997px;
+$screen-medium: 600px;
+$screen-small: 300px;
+
 .view {
   width: 100%;
   display: flex;
@@ -57,7 +63,7 @@ input:focus {
 .usersList{
   display: grid;
   grid-template-columns: 65% 25% 10%;
-  gap: 0px;
+  gap: 0;
 
   letter-spacing: 0.015em;
   font-family: GilroyLight, sans-serif;

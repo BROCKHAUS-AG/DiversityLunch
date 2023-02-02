@@ -1,3 +1,5 @@
+@import "src/global-styles/index";
+
 .IconHeader{
 }
 
@@ -11,7 +13,7 @@
   align-self: flex-end;
 }
 
-@media screen and (min-width: 997px){
+@media screen and (min-width: $screen-large){
   .icon-container {
     display: flex;
     flex-direction: row;

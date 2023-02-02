@@ -18,13 +18,13 @@ import { LoadingAnimation } from '../loading-animation/loading-animation';
 import iconMenu from '../../../resources/icons/icon-menu.svg';
 
 export const Navbar = () => {
-    const [sidebar, setSidebar] = useState(false);
+    const [hasSidebar, setHasSidebar] = useState(false);
     const accountState = useSelector((state: AppStoreState) => state.account);
     let account: Account;
 
     const location = useLocation();
 
-    const showSidebar = () => setSidebar(!sidebar);
+    const showSidebar = () => setHasSidebar(!hasSidebar);
 
     if (accountState?.status === 'OK') {
         account = accountState.accountData;
@@ -49,7 +49,7 @@ export const Navbar = () => {
                                     </Link>
                                 </div>
                             </div>
-                            <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
+                            <nav className={hasSidebar ? 'nav-menu active' : 'nav-menu'}>
                                 <ul className="nav-menu-items">
                                     <li className="navbar-toggle">
                                         <Link to="/#" className="menu-bars" onClick={showSidebar}>

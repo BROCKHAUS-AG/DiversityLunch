@@ -29,7 +29,7 @@ export const Dashboard = () => {
 
     useEffect(() => {
         createPopUpIfWasChangedByAdmin();
-    }, [profile?.wasChangedByAdmin]);
+    }, [createPopUpIfWasChangedByAdmin, profile?.wasChangedByAdmin]);
 
     if (accountState?.status === 'OK') {
         account = accountState.accountData;
@@ -44,7 +44,7 @@ export const Dashboard = () => {
 
     return (
         <div className="Dashboard">
-            <h1>WILKOMMEN</h1>
+            <h1>WILLKOMMEN</h1>
             <div className="Dashboard-container">
                 <div className="row">
                     <div className="column">
@@ -88,7 +88,7 @@ export const Dashboard = () => {
                             </div>
                         </div>
                         <div>
-                            <Link className="link-container" to="/add+meetings">
+                            <Link className="link-container" to="/add+meetings/choose+date">
                                 <button className="btnMobileBag">Termine finden</button>
                             </Link>
                         </div>
@@ -123,11 +123,11 @@ export const Dashboard = () => {
             {
                 isChange && (
                     <PopUp
-                        onButtonClick={() => {
+                        onButtonClick={async () => {
                             setIsChange(false);
-                            wasChangeByAdminToFalse();
+                            await wasChangeByAdminToFalse();
                         }}
-                        message="Deine Profilangaben haben sich geändert, bitte kontrolliere diese auf richtigkeit!"
+                        message="Deine Profilangaben haben sich geändert, bitte kontrolliere diese auf Richtigkeit!"
                         buttonText="Okay"
                     />
                 )

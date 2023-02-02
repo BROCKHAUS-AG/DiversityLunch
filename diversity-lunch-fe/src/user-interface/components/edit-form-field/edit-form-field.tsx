@@ -9,20 +9,20 @@ interface AdminPanelListItemProp<T extends Identifiable> {
 
 export const EditFormField = <T extends Identifiable>({ item, onEditClicked, onRemoveClicked }: AdminPanelListItemProp<T>) => {
     const [input, setInput] = useState(item.descriptor);
-    const [saveButtonActive, setSaveButtonActive] = useState(false);
-    const [defaultValue, setDefaultValue] = useState(false);
+    const [isButtonActive, setIsButtonActive] = useState(false);
+    const [isDefaultValue, setIsDefaultValue] = useState(false);
 
     useEffect(() => {
         // TODO: "keine Angabe" zu z.B. item.default ändern, warten auf BE - fabio 21.12.2022
         if (item.descriptor.toLowerCase() === 'keine angabe') {
-            setDefaultValue(true);
+            setIsDefaultValue(true);
         }
-        setSaveButtonActive(false);
+        setIsButtonActive(false);
         setInput(item.descriptor);
     }, [item.descriptor]);
 
     const inputChangedHandler = (e : ChangeEvent<HTMLInputElement>) => {
-        setSaveButtonActive(e.target.value !== item.descriptor);
+        setIsButtonActive(e.target.value !== item.descriptor);
         setInput(e.target.value);
     };
 
@@ -33,14 +33,14 @@ export const EditFormField = <T extends Identifiable>({ item, onEditClicked, onR
     return (
         <article>
             {
-                defaultValue
+                isDefaultValue
                     ? (
                         <input type="text" value={input} />
                     )
                     : (
                         <>
                             <input type="text" value={input} onChange={inputChangedHandler} data-testid={`${item.id}`} />
-                            {saveButtonActive && (
+                            {isButtonActive && (
                                 <button type="button" onClick={updateClickHandler}>Speichern</button>
                             )}
 

@@ -4,13 +4,13 @@ import './button.scss';
 type ButtonProps = {
     label: string;
     onClick?: () => void;
-    disabled?: boolean;
+    isDisabled?: boolean;
     type?: 'submit' | 'reset' | 'button';
 };
 
 export const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
     const {
-        disabled,
+        isDisabled,
         label,
         onClick,
         type,
@@ -27,14 +27,14 @@ export const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
         <div className="bagBtn">
             <div className="CustomButton-container">
                 {/* eslint-disable-next-line react/button-has-type */}
-                <button className="CustomButton" type={type} onClick={handleClick} disabled={disabled}>{label}</button>
+                <button className="CustomButton" type={type} onClick={handleClick} disabled={isDisabled}>{label}</button>
             </div>
         </div>
     );
 };
 
 Button.defaultProps = {
-    disabled: false,
+    isDisabled: false,
     onClick: () => {
     },
     type: 'button',
