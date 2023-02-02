@@ -5,9 +5,9 @@ describe('isValidProfile', () => {
     it('should return false if all keys are undefined', () => {
         const profile: Partial<Profile> = {};
 
-        const result: boolean = isValidProfile(profile);
+        const isValid: boolean = isValidProfile(profile);
 
-        expect(result).toBe(false);
+        expect(isValid).toBe(false);
     });
 
     it('should return true if all keys are set to non falsy value', () => {
@@ -31,9 +31,9 @@ describe('isValidProfile', () => {
             wasChangedByAdmin: false,
         };
 
-        const result: boolean = isValidProfile(profile);
+        const isValid: boolean = isValidProfile(profile);
 
-        expect(result).toBe(true);
+        expect(isValid).toBe(true);
     });
 
     it('truthy', () => {
@@ -83,8 +83,8 @@ describe('isUpdatedProfile', () => {
             wasChangedByAdmin: false,
         };
 
-        const result : boolean = isUpdatedProfile(currentProfile, updatedProfile);
-        expect(result).toBe(false);
+        const isUpdated: boolean = isUpdatedProfile(currentProfile, updatedProfile);
+        expect(isUpdated).toBe(false);
     });
 
     it('returns true if at least one attribute of updatedProfile is different from current profile', () => {
@@ -116,8 +116,8 @@ describe('isUpdatedProfile', () => {
                 // @ts-ignore
                 updatedProfile[key].id += 1; // Element implicitly has an 'any' type, type 'string' can't be used to index type 'Profile'
             }
-            const result : boolean = isUpdatedProfile(currentProfile, updatedProfile);
-            expect(result).toBe(true);
+            const isUpdated : boolean = isUpdatedProfile(currentProfile, updatedProfile);
+            expect(isUpdated).toBe(true);
         });
     });
 });

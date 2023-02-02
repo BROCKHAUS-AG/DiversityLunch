@@ -149,6 +149,9 @@ export const ProfileForm: FC<ProfileFormProps> = ({
     return (
         <form onSubmit={formSubmitted} className="ProfileForm">
             <div className="QuestionContainer">
+                <div className="Profile-name-container">
+                    <h2>{`Hallo ${profile.name}`}</h2>
+                </div>
                 <div className="DropdownQuestion">
                     <div className="inLineToggle">
                         <p className="DropdownQuestion-question">
@@ -169,7 +172,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 </div>
                 <div className="DropdownQuestion Multi-select-container">
                     <div className="inLineToggle">
-                        <p className="Multi-select-label">{profileFormQuestion.hobby}</p>
+                        <p className="DropdownQuestion-question">{profileFormQuestion.hobby}</p>
                     </div>
                     <div className="inLineToggleHelper">
                         <fieldset>
@@ -268,7 +271,7 @@ export const ProfileForm: FC<ProfileFormProps> = ({
                 />
                 <div className="profile-form-button-container">
                     <Button
-                        disabled={!isValid}
+                        isDisabled={!isValid}
                         label={buttonText || 'Speichern'}
                         type="submit"
                     />

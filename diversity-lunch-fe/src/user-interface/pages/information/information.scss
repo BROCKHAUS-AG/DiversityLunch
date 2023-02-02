@@ -1,8 +1,9 @@
+@import "src/global-styles/index";
+
 .Information {
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin-top: 2rem;
   margin:auto;
   .FAQ-title {
     cursor: pointer;
@@ -17,7 +18,7 @@
   text-align: justify;
 }
 
-@media screen and (min-width: 997px){
+@media screen and (min-width: $screen-large){
   .Information-info-text {
     margin-top: 1.5rem;
     line-height: 18px;
@@ -25,4 +26,5 @@
   }
   .Information {
     width: 90%;
-  }}
+  }
+}
