@@ -7,8 +7,8 @@ import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingProposalEntity;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingProposalRepository;
 import de.brockhausag.diversitylunchspringboot.meeting.repository.MeetingRepository;
-import de.brockhausag.diversitylunchspringboot.profile.repository.ProfileRepository;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
+import de.brockhausag.diversitylunchspringboot.profile.repository.ProfileRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,12 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.util.AssertionErrors.assertEquals;
@@ -66,6 +69,27 @@ class MatchingServiceIT {
         assertFalse(result.isEmpty());
         assertMeetingIsEqual(expectedForCase21First, result.get(0), 0);
         assertFalse(result.get(0).getQuestion().getQuestionText().isEmpty());
+    }
+
+    @Test
+    void testMultipleProposalsAtSameTimeslot(){
+        log.info("DB: " + meetingProposalRepository.findAll());
+        LocalDateTime proposedDateTime = LocalDateTime.of(2022, 3, 18, 12, 0);
+        matchingService.matching(proposedDateTime, proposedDateTime.minusDays(1));
+        List<MeetingEntity> result = meetingRepository.findAll();
+        Set<Integer> participants = new HashSet<>();
+        for (MeetingEntity m : result){
+            log.info("Meeting: " + m.getPartner().getName() + "   " + m.getProposer().getName());
+            var wasInsertedNewlyProposer = participants.add(Math.toIntExact(m.getProposer().getId()));
+            var wasInsertedNewlyPartner = participants.add(Math.toIntExact(m.getPartner().getId()));
+
+            // no one should match more than once
+            assertTrue(wasInsertedNewlyProposer);
+            assertTrue(wasInsertedNewlyPartner);
+
+        }
+
+
     }
 
     @Test

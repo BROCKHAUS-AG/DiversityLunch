@@ -62,6 +62,7 @@ public class MatchingService {
 
             for (int j = i + 1; j < meetingProposals.size(); j++) {
                 secondMeetingProposal = meetingProposals.get(j);
+                if (secondMeetingProposal.isMatched()) continue;
                 Matching scoredMatch = createMatching(firstMeetingProposal, secondMeetingProposal);
                 if (scoredMatch.getStats().currentScore() >= scoreToBeat) matchList.add(scoredMatch);
             }
