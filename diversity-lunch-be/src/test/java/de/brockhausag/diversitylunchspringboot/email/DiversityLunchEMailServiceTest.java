@@ -2,8 +2,10 @@ package de.brockhausag.diversitylunchspringboot.email;
 
 import de.brockhausag.diversitylunchspringboot.dataFactories.MeetingTestdataFactory;
 import de.brockhausag.diversitylunchspringboot.dataFactories.ProfileTestdataFactory;
+import de.brockhausag.diversitylunchspringboot.dimensions.entities.model.DimensionCategory;
 import de.brockhausag.diversitylunchspringboot.email.service.DiversityLunchEMailService;
 import de.brockhausag.diversitylunchspringboot.meeting.model.MeetingEntity;
+import de.brockhausag.diversitylunchspringboot.meeting.model.QuestionEntity;
 import de.brockhausag.diversitylunchspringboot.profile.model.entities.ProfileEntity;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchApplicationSettingsProperties;
 import de.brockhausag.diversitylunchspringboot.properties.DiversityLunchMailProperties;
@@ -120,6 +122,54 @@ class DiversityLunchEMailServiceTest {
         String email = diversityLunchEMailService.createEmailTemplateHTML(proposer, partner, meeting);
 
         assertTrue(email.contains(name));
+
+    }
+
+    @Test
+    void testCreateEmailTemplateHTML_sendsEmailWithCategory() {
+        when(voucherService.getAmountOfStoredVouchers()).thenReturn(0);
+
+        String category = String.format("Projekt", meeting.getQuestion().getCategory());
+        String email = diversityLunchEMailService.createEmailTemplateHTML(proposer, partner, meeting);
+
+        assertTrue(email.contains(category));
+
+    }
+
+    @Test
+    void testCreateEmailTemplateHTML_sendsEmailWithAnotherCategory() {
+        meeting = meetingTestdataFactory.matchedAnotherMeeting(proposer, partner);
+
+        when(voucherService.getAmountOfStoredVouchers()).thenReturn(0);
+
+        String category = String.format("Berufserfahrung", meeting.getQuestion().getCategory());
+        String email = diversityLunchEMailService.createEmailTemplateHTML(proposer, partner, meeting);
+
+        assertTrue(email.contains(category));
+
+    }
+
+    @Test
+    void testCreateEmailTemplatePlain_sendsEmailWithCategory() {
+        when(voucherService.getAmountOfStoredVouchers()).thenReturn(0);
+
+        String category = String.format("Projekt", meeting.getQuestion().getCategory());
+        String email = diversityLunchEMailService.createEmailTemplatePlain(proposer, partner, meeting);
+
+        assertTrue(email.contains(category));
+
+    }
+
+    @Test
+    void testCreateEmailTemplatePlain_sendsEmailWithAnotherCategory() {
+        meeting = meetingTestdataFactory.matchedAnotherMeeting(proposer, partner);
+
+        when(voucherService.getAmountOfStoredVouchers()).thenReturn(0);
+
+        String category = String.format("Berufserfahrung", meeting.getQuestion().getCategory());
+        String email = diversityLunchEMailService.createEmailTemplatePlain(proposer, partner, meeting);
+
+        assertTrue(email.contains(category));
 
     }
 }

@@ -73,6 +73,13 @@ public class MeetingTestdataFactory {
         return new MeetingEntity(1L, date, partnerEntity, proposerEntity, 1, question, date, "");
     }
 
+    public MeetingEntity matchedAnotherMeeting(ProfileEntity proposerEntity, ProfileEntity partnerEntity) {
+        LocalDateTime date = LocalDateTime.of(2011, 11, 11, 11, 11);
+        DimensionCategory category = DimensionCategory.builder().id(1L).description("Berufserfahrung").profileQuestion("Berufserfahrung?").build();
+        QuestionEntity question = new QuestionTestDataFactory().buildEntity(category);
+        return new MeetingEntity(1L, date, partnerEntity, proposerEntity, 1, question, date, "");
+    }
+
     public List<MeetingProposalEntity> newMeetingProposalList_withMatchingScore29(LocalDateTime time) {
         ProfileEntity secondProposer = new ProfileTestdataFactory().buildEntity(2);
         MeetingProposalEntity meetingProposal = entityBuilder().proposedDateTime(time).build();
