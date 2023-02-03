@@ -67,7 +67,7 @@ export const Navbar = () => {
                                     ))}
                                     {isAdmin && (
                                         <li className="nav-text">
-                                            <Link to="admin-panel" onClick={showSidebar}>
+                                            <Link to="/admin-panel" onClick={showSidebar}>
                                                 <TileIcon title="" icon={iconAdmin} />
                                                 <span className="nav-title">Admin</span>
                                             </Link>
@@ -92,7 +92,7 @@ export const Navbar = () => {
 
                                     {isAdmin && (
                                         <li className="nav-text">
-                                            <Link to="admin-panel" onClick={showSidebar}>
+                                            <Link to="/admin-panel" onClick={showSidebar}>
                                                 <TileIcon title="" icon={iconAdmin} />
                                                 <span className="nav-title">Admin</span>
                                             </Link>
