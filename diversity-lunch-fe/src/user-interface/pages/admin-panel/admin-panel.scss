@@ -1,5 +1,6 @@
 .testmailButton{
   width: 50%;
+  min-width: min-content;
   justify-self: center;
   padding: 1em;
 }
@@ -16,9 +17,4 @@
 
 .adminPanelContainer .header {
   margin-bottom: 5%;
-}
-
-.adminPanelContainer .bottom {
-  margin-left:3%;
-  margin-right:3%;
 }

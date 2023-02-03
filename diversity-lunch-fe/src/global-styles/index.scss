@@ -27,7 +27,7 @@
 $brockhaus-red: #B81F40;
 $screen-extra-large: 1650px;
 $screen-large: 997px;
-$screen-medium: 600px;
+$screen-medium: 500px;
 $screen-small: 300px;
 
 .view {
@@ -58,29 +58,7 @@ input:focus {
   font-weight: 500;
   font-size: 1.3rem;
   cursor: pointer;
-}
-
-.usersList{
-  display: grid;
-  grid-template-columns: 65% 25% 10%;
-  gap: 0;
-
-  letter-spacing: 0.015em;
-  font-family: GilroyLight, sans-serif;
-  font-style: normal;
-  font-size: 16px;
-}
-
-.usersList span{
-  background-color: #ffffff;
-  padding: 14px;
-  min-width: 110px;
-  margin: 5px;
-  border: 1px solid #F8E9EC;
-}
-.usersList button{
-  margin: 5px;
-  font-weight: bolder;
+  padding: 20px 0 20px 0;
 }
 
 .CSVUploadTitle{
@@ -113,15 +91,9 @@ input:focus {
 }
 
 .optionsListContainer {
-  padding: 20px 20px;
-}
-
-.optionsListInOptionsListContainer {
-  padding: 20px 20px;
-}
-
-.optionsListContainer div {
-
+  section {
+    padding-left: 20px;
+  }
 }
 
 

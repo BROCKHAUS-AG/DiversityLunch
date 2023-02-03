@@ -1,10 +1,22 @@
+@import "src/global-styles/index";
+
 .editListOptions {
   display: flex;
   align-items: center;
+
+  @media screen and (max-width: $screen-medium){
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
 }
 
 .editListOptions .MuiFormControl-root {
   width: 100%;
+  margin: 5px;
+}
+
+.editListTitle.userList {
+  padding-bottom: 20px;
 }
 
 .sortWrapper {
@@ -15,7 +27,7 @@
     position: absolute;
     z-index: 1;
     left: 1.6em;
-    top: 0.6ex;
+    top: 0;
     background-color: white;
     padding: 0 5px;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
@@ -29,7 +41,7 @@
   .sortContent {
     border: 1px solid rgba(185, 185, 185, 255);
     border-radius: 4px;
-    margin: 10px;
+    margin: 5px;
     padding: 0.5em 0.6em;
     display: flex;
     justify-content: center;
@@ -46,5 +58,41 @@
     font-size: large;
     padding: 7px;
     margin-left: 10px;
+  }
+}
+
+.usersList{
+  display: flex;
+
+  letter-spacing: 0.015em;
+  font-family: GilroyLight, sans-serif;
+  font-style: normal;
+  font-size: 16px;
+
+  @media screen and (max-width: $screen-medium) {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  span{
+    background-color: #ffffff;
+    padding: 14px;
+    min-width: 110px;
+    margin: 5px;
+    border: 1px solid #F8E9EC;
+    position: relative;
+    float: right;
+  }
+
+  .userEmail {
+    width: 100%;
+    min-width: 200px;
+  }
+
+  button{
+    margin: 5px;
+    font-weight: bolder;
+    position: relative;
+    float: right;
   }
 }
