@@ -78,16 +78,29 @@ input:focus {
   padding-bottom: 2%;
 }
 
-.optionsListContainer .customizeDimensionHeader {
+#CSVUploadArea {
+  display: flex;
+  flex-wrap: wrap;
+
+  p {
+    width: 100%;
+  }
+
+  input {
+    min-width: min-content;
+    margin-left: 0;
+  }
+
+  button {
+    position: relative;
+    float: right;
+    width: min-content;
+    margin: 5px 5px 5px 0;
+  }
+}
+
+.customizeDimensionHeader {
   padding: 1%;
-}
-
-.optionsListContainer .customizeCSVUpload {
-  padding: 20px 20px;
-}
-
-.optionsListContainer .customizeCSVUpload .customizeCSVUploadHeader {
-  padding-bottom: 1rem;
 }
 
 .optionsListContainer {

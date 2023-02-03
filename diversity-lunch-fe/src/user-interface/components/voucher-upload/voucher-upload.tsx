@@ -83,24 +83,21 @@ export const VoucherUpload: FC = () => {
                             </details>
                         </div>
 
-                        <div>
-                            <label>
-                                <p>Zum Uploaden ziehe .csv Files im Standardformat in das Upload Fenster</p>
-                                <input type="file" accept=".csv" onChange={uploadCSVToFrontend} />
-                                <button onClick={uploadCSVFile}>Upload</button>
-                            </label>
+                        <div id="CSVUploadArea">
+                            <p>Zum Uploaden ziehe .csv Files im Standardformat in das Upload Fenster</p>
+                            <input type="file" id="CSVUploadInput" accept=".csv" onChange={uploadCSVToFrontend} />
+                            <button type="button" onClick={uploadCSVFile}>Upload</button>
                         </div>
-                        {
-                            didUploadSuccessfully
-                && (
-                    <PopUp
-                        message="Der Upload war erfolgreich!"
-                        buttonText="Okay"
-                        onButtonClick={() => setDidUploadSuccessfully(false)}
-                    />
-                )
-                        }
 
+                        {
+                            didUploadSuccessfully && (
+                                <PopUp
+                                    message="Der Upload war erfolgreich!"
+                                    buttonText="Okay"
+                                    onButtonClick={() => setDidUploadSuccessfully(false)}
+                                />
+                            )
+                        }
                     </div>
                 </section>
             </details>
