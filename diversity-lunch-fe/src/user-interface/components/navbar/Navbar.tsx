@@ -52,9 +52,9 @@ export const Navbar = () => {
                             <nav className={hasSidebar ? 'nav-menu active' : 'nav-menu'}>
                                 <ul className="nav-menu-items">
                                     <li className="navbar-toggle">
-                                        <Link to="/#" className="menu-bars" onClick={showSidebar}>
+                                        <button type="button" className="menu-bars" onClick={showSidebar}>
                                             X
-                                        </Link>
+                                        </button>
                                     </li>
 
                                     {NavbarData.map((item) => (
