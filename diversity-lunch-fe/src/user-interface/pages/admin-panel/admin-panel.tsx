@@ -88,116 +88,111 @@ export const AdminPanel: FC = () => {
     return (
         <section className="view">
             <div className="adminPanelContainer">
-                <div className="bottom">
-                    <UserList />
-
-                    <div className="optionsListContainer">
-                        <div>
-                            <details>
-                                <summary className="editListTitle">
-                                    Profilangaben
-                                </summary>
-                                <section>
-                                    <IdentifiableOptionsList
-                                        state={hobbyState}
-                                        fetch={hobbyFetch}
-                                        title="Hobbies anpassen"
-                                        header={`Frage: ${profileFormQuestion.hobby}`}
-                                        addButtonLabel="Hinzufügen"
-                                    />
-                                    <IdentifiableOptionsList
-                                        state={projectState}
-                                        fetch={projectFetch}
-                                        title="Projektliste anpassen"
-                                        header={`Frage: ${profileFormQuestion.project}`}
-                                        addButtonLabel="Hinzufügen"
-                                    />
-                                    <IdentifiableOptionsList
-                                        state={genderState}
-                                        fetch={genderFetch}
-                                        title="Geschlechtliche Identität anpassen"
-                                        header={`Frage: ${profileFormQuestion.gender}`}
-                                        addButtonLabel="Hinzufügen"
-                                    />
-                                    <IdentifiableOptionsList
-                                        state={countryState}
-                                        fetch={countryFetch}
-                                        title="Ethnische Herkunft anpassen"
-                                        header={`Frage: ${profileFormQuestion.country}`}
-                                        addButtonLabel="Hinzufügen"
-                                    />
-                                    <IdentifiableOptionsList
-                                        state={languageState}
-                                        fetch={languageFetch}
-                                        title="Muttersprache anpassen"
-                                        header={`Frage: ${profileFormQuestion.language}`}
-                                        addButtonLabel="Hinzufügen"
-                                    />
-                                    <IdentifiableOptionsList
-                                        state={religionState}
-                                        fetch={religionFetch}
-                                        title="Religion anpassen"
-                                        header={`Frage: ${profileFormQuestion.religion}`}
-                                        addButtonLabel="Hinzufügen"
-                                    />
-                                    <IdentifiableOptionsList
-                                        state={workExperienceState}
-                                        fetch={workExperienceFetch}
-                                        title="Berufserfahrung anpassen"
-                                        header={`Frage: ${profileFormQuestion.workExperience}`}
-                                        addButtonLabel="Hinzufügen"
-                                    />
-                                    <IdentifiableOptionsList
-                                        state={educationState}
-                                        fetch={educationFetch}
-                                        title="Bildungsweg anpassen"
-                                        header={`Frage: ${profileFormQuestion.education}`}
-                                        addButtonLabel="Hinzufügen"
-                                    />
-                                    <IdentifiableOptionsList
-                                        state={dietState}
-                                        fetch={dietFetch}
-                                        title="Ernährung anpassen"
-                                        header={`Frage: ${profileFormQuestion.diet}`}
-                                        addButtonLabel="Hinzufügen"
-                                    />
-                                    <IdentifiableOptionsList
-                                        state={sexualOrientationState}
-                                        fetch={sexualOrientationFetch}
-                                        title="Sexuelle Orientierung anpassen"
-                                        header={`Frage: ${profileFormQuestion.sexualOrientation}`}
-                                        addButtonLabel="Hinzufügen"
-                                    />
-                                    <IdentifiableOptionsList
-                                        state={socialBackgroundState}
-                                        fetch={socialBackgroundFetch}
-                                        title="Soziale Herkunft anpassen"
-                                        header={`Frage: ${profileFormQuestion.socialBackground}`}
-                                        addButtonLabel="Hinzufügen"
-                                    />
-                                    <IdentifiableOptionsList
-                                        state={socialBackgroundDiscriminationState}
-                                        fetch={socialBackgroundDiscriminationFetch}
-                                        title="Ausgrenzung anpassen"
-                                        header={`Frage: ${profileFormQuestion.socialBackgroundDiscrimination}`}
-                                        addButtonLabel="Hinzufügen"
-                                    />
-                                </section>
-                            </details>
-                        </div>
-                    </div>
-                    <VoucherUpload />
-                    <div className="testMailContainer">
-                        <button className="testmailButton" onClick={sendTestmail}>Testmail verschicken</button>
-                    </div>
-                    {didSendEmailSuccessfully && (
-                        <PopUp
-                            onButtonClick={() => { setDidSendEmailSuccessfully(false); }}
-                            message="Testmail gesendet"
-                            buttonText="Okay"
-                        />
-                    )}
+                <UserList />
+                <div className="optionsListContainer">
+                    <details>
+                        <summary className="editListTitle">
+                            Profilangaben
+                        </summary>
+                        <section>
+                            <IdentifiableOptionsList
+                                state={hobbyState}
+                                fetch={hobbyFetch}
+                                title="Hobbies anpassen"
+                                header={`Frage: ${profileFormQuestion.hobby}`}
+                                addButtonLabel="Hinzufügen"
+                            />
+                            <IdentifiableOptionsList
+                                state={projectState}
+                                fetch={projectFetch}
+                                title="Projektliste anpassen"
+                                header={`Frage: ${profileFormQuestion.project}`}
+                                addButtonLabel="Hinzufügen"
+                            />
+                            <IdentifiableOptionsList
+                                state={genderState}
+                                fetch={genderFetch}
+                                title="Geschlechtliche Identität anpassen"
+                                header={`Frage: ${profileFormQuestion.gender}`}
+                                addButtonLabel="Hinzufügen"
+                            />
+                            <IdentifiableOptionsList
+                                state={countryState}
+                                fetch={countryFetch}
+                                title="Ethnische Herkunft anpassen"
+                                header={`Frage: ${profileFormQuestion.country}`}
+                                addButtonLabel="Hinzufügen"
+                            />
+                            <IdentifiableOptionsList
+                                state={languageState}
+                                fetch={languageFetch}
+                                title="Muttersprache anpassen"
+                                header={`Frage: ${profileFormQuestion.language}`}
+                                addButtonLabel="Hinzufügen"
+                            />
+                            <IdentifiableOptionsList
+                                state={religionState}
+                                fetch={religionFetch}
+                                title="Religion anpassen"
+                                header={`Frage: ${profileFormQuestion.religion}`}
+                                addButtonLabel="Hinzufügen"
+                            />
+                            <IdentifiableOptionsList
+                                state={workExperienceState}
+                                fetch={workExperienceFetch}
+                                title="Berufserfahrung anpassen"
+                                header={`Frage: ${profileFormQuestion.workExperience}`}
+                                addButtonLabel="Hinzufügen"
+                            />
+                            <IdentifiableOptionsList
+                                state={educationState}
+                                fetch={educationFetch}
+                                title="Bildungsweg anpassen"
+                                header={`Frage: ${profileFormQuestion.education}`}
+                                addButtonLabel="Hinzufügen"
+                            />
+                            <IdentifiableOptionsList
+                                state={dietState}
+                                fetch={dietFetch}
+                                title="Ernährung anpassen"
+                                header={`Frage: ${profileFormQuestion.diet}`}
+                                addButtonLabel="Hinzufügen"
+                            />
+                            <IdentifiableOptionsList
+                                state={sexualOrientationState}
+                                fetch={sexualOrientationFetch}
+                                title="Sexuelle Orientierung anpassen"
+                                header={`Frage: ${profileFormQuestion.sexualOrientation}`}
+                                addButtonLabel="Hinzufügen"
+                            />
+                            <IdentifiableOptionsList
+                                state={socialBackgroundState}
+                                fetch={socialBackgroundFetch}
+                                title="Soziale Herkunft anpassen"
+                                header={`Frage: ${profileFormQuestion.socialBackground}`}
+                                addButtonLabel="Hinzufügen"
+                            />
+                            <IdentifiableOptionsList
+                                state={socialBackgroundDiscriminationState}
+                                fetch={socialBackgroundDiscriminationFetch}
+                                title="Ausgrenzung anpassen"
+                                header={`Frage: ${profileFormQuestion.socialBackgroundDiscrimination}`}
+                                addButtonLabel="Hinzufügen"
+                            />
+                        </section>
+                    </details>
                 </div>
+                <VoucherUpload />
+                <div className="testMailContainer">
+                    <button type="button" className="testmailButton" onClick={sendTestmail}>Testmail verschicken</button>
+                </div>
+                {didSendEmailSuccessfully && (
+                    <PopUp
+                        onButtonClick={() => { setDidSendEmailSuccessfully(false); }}
+                        message="Testmail gesendet"
+                        buttonText="Okay"
+                    />
+                )}
             </div>
         </section>
     );

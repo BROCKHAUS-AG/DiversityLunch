@@ -27,7 +27,7 @@
 $brockhaus-red: #B81F40;
 $screen-extra-large: 1650px;
 $screen-large: 997px;
-$screen-medium: 600px;
+$screen-medium: 500px;
 $screen-small: 300px;
 
 .view {
@@ -58,29 +58,7 @@ input:focus {
   font-weight: 500;
   font-size: 1.3rem;
   cursor: pointer;
-}
-
-.usersList{
-  display: grid;
-  grid-template-columns: 65% 25% 10%;
-  gap: 0;
-
-  letter-spacing: 0.015em;
-  font-family: GilroyLight, sans-serif;
-  font-style: normal;
-  font-size: 16px;
-}
-
-.usersList span{
-  background-color: #ffffff;
-  padding: 14px;
-  min-width: 110px;
-  margin: 5px;
-  border: 1px solid #F8E9EC;
-}
-.usersList button{
-  margin: 5px;
-  font-weight: bolder;
+  padding: 20px 0 20px 0;
 }
 
 .CSVUploadTitle{
@@ -100,28 +78,35 @@ input:focus {
   padding-bottom: 2%;
 }
 
-.optionsListContainer .customizeDimensionHeader {
+#CSVUploadArea {
+  display: flex;
+  flex-wrap: wrap;
+
+  p {
+    width: 100%;
+  }
+
+  input {
+    min-width: min-content;
+    margin-left: 0;
+  }
+
+  button {
+    position: relative;
+    float: right;
+    width: min-content;
+    margin: 5px 5px 5px 0;
+  }
+}
+
+.customizeDimensionHeader {
   padding: 1%;
 }
 
-.optionsListContainer .customizeCSVUpload {
-  padding: 20px 20px;
-}
-
-.optionsListContainer .customizeCSVUpload .customizeCSVUploadHeader {
-  padding-bottom: 1rem;
-}
-
 .optionsListContainer {
-  padding: 20px 20px;
-}
-
-.optionsListInOptionsListContainer {
-  padding: 20px 20px;
-}
-
-.optionsListContainer div {
-
+  section {
+    padding-left: 20px;
+  }
 }
 
 

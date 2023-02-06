@@ -16,7 +16,7 @@ export const MeetingAlreadyBooked = () => {
             <p className="Information-info-text">
                 Diesen Termin hast du bereits gebucht.
             </p>
-            <Button label="Termin buchen" onClick={terminBuchen} />
+            <Button label="Zurück zur Terminauswahl" onClick={terminBuchen} />
         </div>
     );
 };

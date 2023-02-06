@@ -24,7 +24,17 @@
   .IconHeader-title-powered-by-container {
     display: flex;
     justify-content: flex-end;
-    font-size: .8rem;
+    font-size: 0.7rem;
+  }
+
+  .IconHeader-title-powered-by{
+    margin-top: 1%;
+    color: black;
+  }
+
+  .IconHeader-title-brockhaus-ag{
+    margin-top: 1%;
+    color: #575757;
   }
 }
 
@@ -47,12 +57,6 @@
   }
 
   .IconHeader-diversity-logo-container{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-    color: $brockhaus-red;
     margin-left: 250px;
   }
 
@@ -73,26 +77,5 @@
   .IconHeader-title{
     font-size: 2em;
     margin-top:2%;
-  }
-
-  .IconHeader-title-powered-by-container{
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  .IconHeader-title-powered-by{
-    font-size: 0.7em;
-    margin-top: 1%;
-    color: black;
-  }
-
-  .IconHeader-title-brockhaus-ag{
-    font-size: 0.7em;
-    margin-top: 1%;
-    color: #575757;
-  }
-
-  .IconHeader-subtitle{
-
   }
 }

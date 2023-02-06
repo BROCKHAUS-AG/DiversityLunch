@@ -120,37 +120,36 @@ export const UserList: FC = () => {
 
     const generateAdminListButton = (user: User) => {
         if (user.account.role === Role.ADMIN) {
-            return <button onClick={() => revokeAdmin(user.account.id)}>-</button>;
+            return <button type="button" onClick={() => revokeAdmin(user.account.id)}>-</button>;
         }
         if (user.account.role === Role.STANDARD) {
-            return <button onClick={() => assignAdmin(user.account.id)}>+</button>;
+            return <button type="button" onClick={() => assignAdmin(user.account.id)}>+</button>;
         }
         return (
-            <button disabled><img alt="TileIconLink Icon" src={azureAdminLogo} height="20em" /></button>
+            <button type="button" disabled><img alt="TileIconLink Icon" src={azureAdminLogo} height="20em" /></button>
         );
     };
 
     const dynamicSearch = () => (mapAccountAndProfileToUser()
         .filter(((user) => user.profile.email.toLowerCase().includes(searchState.toLowerCase()))).map((user) => (
-            <section className="usersList" key={user.account.profileId}>
-                <span>
+            <div className="usersList" key={user.account.profileId}>
+                <span className="userEmail">
                     {user.profile.email}
                 </span>
                 <span>
                     {user.account.role}
                 </span>
                 {generateAdminListButton(user)}
-            </section>
+            </div>
         )));
     const UserListContainer = dynamicSearch();
     return (
         <div className="optionsListContainer">
-            <div>
-                <details>
-                    <summary className="editListTitle">
-                        Userrechte vergeben
-                    </summary>
-                    <br />
+            <details>
+                <summary className="editListTitle userList">
+                    Userrechte vergeben
+                </summary>
+                <section>
                     <div className="editListOptions">
                         <TextField
                             id="user_search"
@@ -175,17 +174,15 @@ export const UserList: FC = () => {
                                     <ToggleButton value="name">Name</ToggleButton>
                                     <ToggleButton value="role">Rolle</ToggleButton>
                                 </ToggleButtonGroup>
-                                <button className="sortButton" onClick={() => setSortState(toggleSortOrder())}>
+                                <button type="button" className="sortButton" onClick={() => setSortState(toggleSortOrder())}>
                                     {sortState.sortOrder === SortOrder.ASCENDING ? '↓' : '↑'}
                                 </button>
                             </div>
                         </div>
                     </div>
-                    <section id="searchContainer">
-                        {UserListContainer}
-                    </section>
-                </details>
-            </div>
+                    {UserListContainer}
+                </section>
+            </details>
         </div>
     );
 };
