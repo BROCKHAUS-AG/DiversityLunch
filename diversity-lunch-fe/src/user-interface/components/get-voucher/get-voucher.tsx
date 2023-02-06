@@ -17,7 +17,7 @@ type GetVoucherProps = {
 }
 
 export const GetVoucher = ({ setError } : GetVoucherProps) => {
-    const [revealed, setRevealed] = useState(false);
+    const [isRevealed, setIsRevealed] = useState(false);
     const [voucherCode, setVoucherCode] = useState('empty');
     const accountState: AccountState = useSelector((store: AppStoreState) => store.account);
 
@@ -35,7 +35,7 @@ export const GetVoucher = ({ setError } : GetVoucherProps) => {
         if (response.ok) {
             const voucher = await response.json();
             setVoucherCode(voucher.voucherCode);
-            setRevealed(true);
+            setIsRevealed(true);
         } else {
             setError(true);
         }
@@ -46,7 +46,7 @@ export const GetVoucher = ({ setError } : GetVoucherProps) => {
 
     return (
 
-        revealed
+        isRevealed
             ? (
                 <>
                     <p className="ShowVoucher-text">Dein persönlicher Gutschein-Code</p>

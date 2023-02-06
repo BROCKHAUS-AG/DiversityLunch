@@ -1,6 +1,4 @@
-:root {
-  --navBg: #b81f40;
-}
+@import "src/global-styles/index";
 
 .navbar {
   height: 0;
@@ -11,14 +9,15 @@
   .row{
     padding: 0;
   }
-
 }
+
 .nav-title{
   margin-left: 1rem;
 }
-@media screen and (min-width: 997px) {
+
+@media screen and (min-width: $screen-large) {
   .navbar {
-    background-color: var(--navBg);
+    background-color: $brockhaus-red;
     height: 80px;
     display: flex;
     justify-content: flex-start;
@@ -45,14 +44,14 @@
   left: 10px;
   height: 4px;
   width: 55px;
-  background: red;
+  background: $brockhaus-red;
   border-radius: 2px;
   display: block;
   transition: 0.5s;
   transform-origin: center;
 }
 
-@media screen and (min-width: 997px) {
+@media screen and (min-width: $screen-large) {
   .line {
     background: #fff;
   }
@@ -89,27 +88,21 @@
 
   }
 
-  background-color: #b81f40;
+  background-color: $brockhaus-red;
   width: 80%;
-
 }
-
-
 
 .navbar-l .header {
   .IconHeader-icon-voucher-percent, .IconHeader-admin-icon {
     filter: brightness(0) saturate(100%) invert(95%) sepia(100%) saturate(20%) hue-rotate(317deg) brightness(106%) contrast(106%);
-
   }
 
   .IconHeader-icon-voucher-percent:hover, .IconHeader-admin-icon:hover {
     filter: brightness(0) saturate(100%) invert(12%) sepia(87%) saturate(2635%) hue-rotate(332deg) brightness(94%) contrast(96%);
-
   }
 
-  background-color: #b81f40;
+  background-color: $brockhaus-red;
   width: 80%;
-
 }
 
 .navbar-l .ClickIcon-Wrapper .Tile-icon {
@@ -118,7 +111,6 @@
   width: 25px;
   height: auto;
   margin: 10px;
-
 }
 
 .navbar-mobile .ClickIcon-Wrapper .Tile-icon {
@@ -127,7 +119,6 @@
   width: 25px;
   height: auto;
   margin: 10px;
-
 }
 
 .menu-bars {
@@ -136,10 +127,11 @@
   background: none;
   color: white;
   text-decoration: none;
+  border: none;
 }
 
 .nav-menu {
-  background-color: var(--navBg);
+  background-color: $brockhaus-red;
   width: 250px;
   height: 100vh;
   display: flex;
@@ -186,12 +178,13 @@
 .nav-menu-items {
   padding: 0;
 }
+
 .navbar-l .nav-menu-items {
   margin-top: 50px;
 }
 
 .navbar-toggle {
-  background-color: var(--navBg);
+  background-color: $brockhaus-red;
   min-width: 60px;
   height: 80px;
   display: flex;
@@ -202,15 +195,16 @@
 .navbar-mobile {
   display: block;
 }
+
 .navbar-l {
   display: none;
 }
 
-
-@media (min-width: 997px) {
+@media (min-width: $screen-large) {
   .navbar-mobile {
     display: none;
   }
+
   .navbar-l {
     display: block;
   }

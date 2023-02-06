@@ -5,14 +5,14 @@ import { VoucherList } from '../voucher-list/voucher-list';
 
 export const VoucherUpload: FC = () => {
     const [selectedCsvFile, setSelectedCsvFile] = useState();
-    const [uploadSuccess, setUploadSuccess] = useState(false);
+    const [didUploadSuccessfully, setDidUploadSuccessfully] = useState(false);
     const [voucherCountState, setVoucherCountState] = useState('');
     const [voucherList, setVoucherList] = useState<[]>([]);
 
     useEffect(() => {
         UpdateVoucherAmount();
         toggleVoucherList();
-    }, [uploadSuccess]);
+    }, [didUploadSuccessfully]);
 
     const uploadCSVToFrontend = (event: any) => {
         setSelectedCsvFile(event.target.files[0]);
@@ -25,9 +25,9 @@ export const VoucherUpload: FC = () => {
         formData.append('file', selectedCsvFile);
         const result: Response = await authenticatedFetchPostCsv('/api/voucher/upload', formData);
         if (result.status === 200) {
-            setUploadSuccess(true);
+            setDidUploadSuccessfully(true);
         } else {
-            setUploadSuccess(false);
+            setDidUploadSuccessfully(false);
         }
     };
 
@@ -83,24 +83,21 @@ export const VoucherUpload: FC = () => {
                             </details>
                         </div>
 
-                        <div>
-                            <label>
-                                <p>Zum Uploaden ziehe .csv Files im Standardformat in das Upload Fenster</p>
-                                <input type="file" accept=".csv" onChange={uploadCSVToFrontend} />
-                                <button onClick={uploadCSVFile}>Upload</button>
-                            </label>
+                        <div id="CSVUploadArea">
+                            <p>Zum Uploaden ziehe .csv Files im Standardformat in das Upload Fenster</p>
+                            <input type="file" id="CSVUploadInput" accept=".csv" onChange={uploadCSVToFrontend} />
+                            <button type="button" onClick={uploadCSVFile}>Upload</button>
                         </div>
-                        {
-                            uploadSuccess
-                && (
-                    <PopUp
-                        message="Der Upload war erfolgreich!"
-                        buttonText="Okay"
-                        onButtonClick={() => setUploadSuccess(false)}
-                    />
-                )
-                        }
 
+                        {
+                            didUploadSuccessfully && (
+                                <PopUp
+                                    message="Der Upload war erfolgreich!"
+                                    buttonText="Okay"
+                                    onButtonClick={() => setDidUploadSuccessfully(false)}
+                                />
+                            )
+                        }
                     </div>
                 </section>
             </details>

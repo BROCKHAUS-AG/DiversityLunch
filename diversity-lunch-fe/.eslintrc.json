@@ -19,6 +19,7 @@
         "ecmaFeatures": {
             "jsx": true
         },
+        "project": "./tsconfig.json",
         "ecmaVersion": 12,
         "sourceType": "module"
     },
@@ -51,7 +52,22 @@
         "@typescript-eslint/no-shadow": ["error"],
         "react/button-has-type": "warn",
         "jsx-a11y/label-has-associated-control": "warn",
-        "camelcase": "error"
+        "camelcase": "error",
+        "@typescript-eslint/naming-convention": [
+            "error",
+            {
+                "selector": "variable",
+                "types": [
+                    "boolean"
+                ],
+                "format": [
+                    "PascalCase"
+                ],
+                "prefix": [
+                    "is", "has", "can", "should", "will", "did"
+                ]
+            }
+        ]
     },
     "settings": {
         "react": {

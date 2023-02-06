@@ -56,10 +56,8 @@ public class MicrosoftGraphService {
 
     public Event createEvent(Event event) {
         GraphServiceClient<Request> graphClient = setUpGraphClient();
-
         String userId = diversityLunchMsTeamsProperties.getDiversityLunchUserId();
-
-        return graphClient.users("57daea79-1c84-41ba-8632-ee596423a836").events().buildRequest().post(event);
+        return graphClient.users(userId).events().buildRequest().post(event);
     }
 
     public void cancelEvent(String eventId, String cancellationMessage)
@@ -69,7 +67,12 @@ public class MicrosoftGraphService {
         EventCancelParameterSet cancelMessage = EventCancelParameterSet.newBuilder()
                 .withComment(cancellationMessage)
                 .build();
-        graphClient.users(userId).events(eventId).cancel(cancelMessage).buildRequest().post();
+
+       graphClient.users(userId).events(eventId)
+                .cancel(cancelMessage)
+                .buildRequest()
+                .post();
+
     }
 
     public List<Event> getAllFutureEvents() {
@@ -113,24 +116,4 @@ public class MicrosoftGraphService {
         return groupCollectionPage != null ? Optional.of(groupCollectionPage.getCurrentPage()) : Optional.empty();
     }
 
-/* TODO test with correct permissions
-
-    public void test() {
-        GraphServiceClient<Request> graphClient = setUpGraphClient();
-        String userId = "c5b1bdf1-f22e-49ad-bbac-db73e31340a4";
-
-        LocalDateTime dateTime = LocalDateTime.now();
-        String dateTimeString = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-        EventCollectionPage eventCollectionPage = graphClient.users(userId)
-                .calendar()
-                .events()
-                .buildRequest()
-                .filter("start/dateTime ge '" + dateTimeString +"'")
-                .top(10)
-                .get();
-        for (Event event : eventCollectionPage.getCurrentPage()) {
-            log.info(event.subject);
-        }
-    }*/
 }

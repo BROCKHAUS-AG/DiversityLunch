@@ -1,3 +1,5 @@
+@import "src/global-styles/index";
+
 .SelectMeetingData {
   width: 100%;
   max-width: 500px;
@@ -14,7 +16,7 @@
   text-align: center;
 }
 
-@media screen and (min-width: 997px){
+@media screen and (min-width: $screen-large){
   .SelectMeetingData {
     width: 100%;
     max-width: 700px;
@@ -29,11 +31,11 @@
     text-align: left;
   }
 
-    .ChooseTime-segment-control {
-      width: 100%;
-      display: block;
-      margin-top: 2rem;
-    }
+  .ChooseTime-segment-control {
+    width: 100%;
+    display: block;
+    margin-top: 2rem;
+  }
 }
 
 .ChooseDate-date-text {
@@ -57,8 +59,6 @@
   margin-top: 5%;
 }
 
-
-
 .ChooseTime-segment-control-segment {
   border: solid 2px;
   padding: 2%;
@@ -70,14 +70,13 @@
 }
 
 .ChooseTime-segment-control-segment:focus {
-  background-color: #b81f40;
+  background-color: $brockhaus-red;
   color: white;
   border-color: black;
 }
 
-
 .ChooseTime-segment-control-segment:hover {
-  background-color: #b81f40;
+  background-color: $brockhaus-red;
   border-color: black;
   color: white;
 }

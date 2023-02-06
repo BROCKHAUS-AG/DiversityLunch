@@ -1,3 +1,5 @@
+@import "src/global-styles/index";
+
 .diversitylunch-logo{
   justify-content: center;
   margin: auto;
@@ -9,20 +11,30 @@
   flex-direction: column;
   align-items: center;
   height: 100%;
-  color: #b81f40;
-
+  color: $brockhaus-red;
 
   .App h4 {
     font-family: GilroyRegular, sans-serif;
-    color: #b81f40;
+    color: $brockhaus-red;
     font-weight: bold;
     font-size: .7rem;
     height: 1rem;
   }
+
   .IconHeader-title-powered-by-container {
     display: flex;
     justify-content: flex-end;
-    font-size: .8rem;
+    font-size: 0.7rem;
+  }
+
+  .IconHeader-title-powered-by{
+    margin-top: 1%;
+    color: black;
+  }
+
+  .IconHeader-title-brockhaus-ag{
+    margin-top: 1%;
+    color: #575757;
   }
 }
 
@@ -32,63 +44,38 @@
 }
 
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: $screen-medium) {
   .IconHeader-diversity-logo-container {
     margin-left: 2rem;
   }
 }
 
-@media screen and (min-width: 997px) {
+@media screen and (min-width: $screen-large) {
+  .diversitylunch-logo{
+    height: 100%;
+    width: 100%;
+  }
 
+  .IconHeader-diversity-logo-container{
+    margin-left: 250px;
+  }
 
-.diversitylunch-logo{
-  height: 100%;
-  width: 100%;
-}
+  .IconHeader-diversity-logo-container.questions {
+    margin-left: 0;
+  }
 
-.IconHeader-diversity-logo-container{
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-  color: #b81f40;
-  margin-left: 250px;
-}
+  .IconHeader-title-container{
+    text-align: right;
+    font-size: 1000px;
+  }
 
-.IconHeader-title-container{
-  text-align: right;
-  font-size: 1000px;
-}
+  .IconHeader-diversity-icon {
+    height: 8rem;
+    width: auto;
+  }
 
-.IconHeader-diversity-icon {
-  height: 8rem;
-  width: auto;
-}
-
-.IconHeader-title{
-  font-size: 2em;
-  margin-top:2%;
-}
-
-.IconHeader-title-powered-by-container{
-  display: flex;
-  justify-content: flex-end;
-}
-
-.IconHeader-title-powered-by{
-  font-size: 0.7em;
-  margin-top: 1%;
-  color: black;
-}
-
-.IconHeader-title-brockhaus-ag{
-  font-size: 0.7em;
-  margin-top: 1%;
-  color: #575757;
-}
-
-.IconHeader-subtitle{
-
-}
+  .IconHeader-title{
+    font-size: 2em;
+    margin-top:2%;
+  }
 }

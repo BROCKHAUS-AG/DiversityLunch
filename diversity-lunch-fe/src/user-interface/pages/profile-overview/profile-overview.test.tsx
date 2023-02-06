@@ -51,7 +51,7 @@ describe('ProfileOverview', () => {
         });
 
         it('correct name is shown in the greeting on top of the page', async () => {
-            const result = await screen.findByText(profileData[0].name);
+            const result = await screen.findByText(`Hallo ${profileData[0].name}`);
 
             expect(result)
                 .toBeInTheDocument();

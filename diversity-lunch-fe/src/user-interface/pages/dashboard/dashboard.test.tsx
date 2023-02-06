@@ -11,7 +11,7 @@ import { loadAccount } from '../../../data/account/account.actions';
 
 const AccountLoader: FC = () => {
     const dispatch = useDispatch();
-    useEffect(() => { dispatch(loadAccount); }, []);
+    useEffect(() => { dispatch(loadAccount); });
     return (
         <Dashboard />
     );

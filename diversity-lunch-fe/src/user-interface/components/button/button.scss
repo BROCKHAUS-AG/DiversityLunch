@@ -1,4 +1,4 @@
-
+@import "src/global-styles/index";
 
 .CustomButton-container {
   padding: 5px;
@@ -9,12 +9,12 @@
 
   .CustomButton{
     width: 100%;
-    background-color: #b81f40;
+    background-color: $brockhaus-red;
     color: white;
   }
 }
 
-@media screen and (min-width: 997px){
+@media screen and (min-width: $screen-large){
   .CustomButton-container{
     padding: 5px;
     display: block;
@@ -31,13 +31,12 @@
   margin:auto;
 }
 
-@media screen and (min-width: 997px){
+@media screen and (min-width: $screen-large){
   .bagBtn{
     background-image: repeating-linear-gradient(1deg, #333333, #333333 20px, transparent 20px, transparent 38px, #333333 38px), repeating-linear-gradient(91deg, #333333, #333333 20px, transparent 20px, transparent 38px, #333333 38px), repeating-linear-gradient(181deg, #333333, #333333 20px, transparent 20px, transparent 38px, #333333 38px), repeating-linear-gradient(271deg, #333333, #333333 20px, transparent 20px, transparent 38px, #333333 38px);
     background-size: 2px 100%, 100% 2px, 2px 100% , 100% 2px;
     background-position: 0 0, 0 0, 100% 0, 0 100%;
     background-repeat: no-repeat;
-    width: 20vw;
     margin:auto;
     width: 80%;
     margin-top: 2rem;

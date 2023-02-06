@@ -1,5 +1,4 @@
-@import "src/global-styles/reset";
-
+@import "src/global-styles/index";
 
 .UpcomingMeetings{
   width: 100%;
@@ -7,16 +6,11 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-}
 
-@media screen and (min-width: 997px){
-  .UpcomingMeetings{
+  @media screen and (min-width: $screen-large) {
     width: 100%;
     display: block;
-
-
   }
-
 }
 
 .UpcomingMeetings-container{
