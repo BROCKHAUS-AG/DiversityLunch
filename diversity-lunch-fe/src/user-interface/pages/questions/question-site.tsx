@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import { AppStoreState } from '../../../data/app-store';
-import './question-site.scss';
 import { ProfileForm } from '../../components/profile-form/profile-form';
 import { useGetUserInformation } from '../../../hooks/authentication/get-user-info.hook';
 import { Profile } from '../../../model/Profile';
@@ -12,6 +11,7 @@ import { AccountStateOk } from '../../../data/account/account-state.type';
 import { isValidProfile } from '../../../utils/validators/profile-validator';
 import { LoadingAnimation } from '../../components/loading-animation/loading-animation';
 import { loadAccount } from '../../../data/account/account.actions';
+import './question-site.scss';
 
 export const QuestionSite = () => {
     const dispatch = useDispatch();
@@ -30,6 +30,7 @@ export const QuestionSite = () => {
             }
         }
     }, [creationState, profileState]);
+
     if (profileState.status === 'OK' && accountState.status === 'OK') return <Redirect to="/dashboard" />;
     if (profileState.status === 'ERROR' || accountState.status === 'ERROR') return <p><strong>error</strong></p>;
     if (profileState.status === 'PENDING'
